@@ -2,6 +2,7 @@
 import {
   Code,
   ConfigFields,
+  Maybe,
   toFixedMaxString,
 } from '@siafoundation/design-system'
 import { hoursInDays, secondsInMinutes } from '@siafoundation/units'
@@ -11,7 +12,8 @@ import {
   Categories,
   ConfigViewMode,
   RecommendationItem,
-  SettingsData,
+  InputValues,
+  AdvancedDefaults,
 } from './types'
 import { currencyOptions } from '@siafoundation/react-core'
 import { AllowanceTips } from './fieldTips/Allowance'
@@ -32,29 +34,24 @@ import { MaxRPCPriceTips } from './fieldTips/MaxRPCPrice'
 export const scDecimalPlaces = 6
 
 type GetFields = {
-  advancedDefaults?: SettingsData
-  maxStoragePriceTBMonth: BigNumber
-  maxUploadPriceTB: BigNumber
-  minShards: BigNumber
-  totalShards: BigNumber
-  redundancyMultiplier: BigNumber
+  advancedDefaults?: AdvancedDefaults
   averagesSc?: {
-    storageAverage?: BigNumber
-    uploadAverage?: BigNumber
-    downloadAverage?: BigNumber
-    contractAverage?: BigNumber
-    rpcAverage?: BigNumber
+    storageAverage: BigNumber
+    uploadAverage: BigNumber
+    downloadAverage: BigNumber
+    contractAverage: BigNumber
+    rpcAverage: BigNumber
   }
   averagesFiat?: {
-    storageAverage?: BigNumber
-    uploadAverage?: BigNumber
-    downloadAverage?: BigNumber
-    contractAverage?: BigNumber
-    rpcAverage?: BigNumber
+    storageAverage: BigNumber
+    uploadAverage: BigNumber
+    downloadAverage: BigNumber
+    contractAverage: BigNumber
+    rpcAverage: BigNumber
   }
   isAutopilotEnabled: boolean
   configViewMode: ConfigViewMode
-  recommendations: Partial<Record<keyof SettingsData, RecommendationItem>>
+  recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
   validationContext: {
     isAutopilotEnabled: boolean
     configViewMode: ConfigViewMode
@@ -71,7 +68,7 @@ export function getFields({
   isAutopilotEnabled,
   configViewMode,
   validationContext,
-}: GetFields): ConfigFields<SettingsData, Categories> {
+}: GetFields): ConfigFields<InputValues, Categories> {
   return {
     // storage
     storageTB: {
@@ -161,10 +158,13 @@ export function getFields({
           ),
           range: requiredIfPinningEnabled(
             'shouldPinAllowance',
-            (value: BigNumber, values) =>
-              !values.shouldPinAllowance ||
-              value?.gt(0) ||
-              'must be greater than 0'
+            (value: Maybe<BigNumber>, values) => {
+              return (
+                !values.shouldPinAllowance ||
+                value?.gt(0) ||
+                'must be greater than 0'
+              )
+            }
           ),
         },
       },
@@ -301,14 +301,16 @@ export function getFields({
       ),
       units: 'hours',
       suggestion: advancedDefaults?.maxDowntimeHours,
-      suggestionTip: `Defaults to ${advancedDefaults?.maxDowntimeHours
-        .toNumber()
-        .toLocaleString()} which is ${toFixedMaxString(
-        new BigNumber(
-          hoursInDays(advancedDefaults?.maxDowntimeHours.toNumber())
-        ),
-        1
-      )} days.`,
+      suggestionTip: advancedDefaults?.maxDowntimeHours
+        ? `Defaults to ${advancedDefaults?.maxDowntimeHours
+            .toNumber()
+            .toLocaleString()} which is ${toFixedMaxString(
+            new BigNumber(
+              hoursInDays(advancedDefaults?.maxDowntimeHours.toNumber())
+            ),
+            1
+          )} days.`
+        : undefined,
       hidden: !isAutopilotEnabled || configViewMode === 'basic',
       validation: {
         validate: {
@@ -329,7 +331,9 @@ export function getFields({
       units: 'scans',
       decimalsLimit: 0,
       suggestion: advancedDefaults?.maxConsecutiveScanFailures,
-      suggestionTip: `Defaults to ${advancedDefaults?.maxConsecutiveScanFailures.toNumber()}.`,
+      suggestionTip: advancedDefaults?.maxConsecutiveScanFailures
+        ? `Defaults to ${advancedDefaults?.maxConsecutiveScanFailures.toNumber()}.`
+        : undefined,
       hidden: !isAutopilotEnabled || configViewMode === 'basic',
       validation: {
         validate: {
@@ -355,9 +359,9 @@ export function getFields({
           required: requiredIfAutopilotAndAdvanced(validationContext),
           version: requiredIfAutopilotAndAdvanced(
             validationContext,
-            (value: string) => {
+            (value: Maybe<string>) => {
               const regex = /^\d+\.\d+\.\d+$/
-              return regex.test(value) || 'must be a valid version number'
+              return regex.test(value || '') || 'must be a valid version number'
             }
           ),
         },
@@ -457,7 +461,7 @@ export function getFields({
         validate: {
           required: requiredIfPinningEnabled(
             'shouldPinMaxStoragePrice',
-            (value: BigNumber, values) => {
+            (value: Maybe<BigNumber>, values) => {
               if (!values.shouldPinMaxStoragePrice) {
                 return true
               }
@@ -471,7 +475,7 @@ export function getFields({
           ),
           range: requiredIfPinningEnabled(
             'shouldPinMaxStoragePrice',
-            (value: BigNumber, values) =>
+            (value: Maybe<BigNumber>, values) =>
               !values.shouldPinMaxStoragePrice ||
               value?.gt(0) ||
               'must be greater than 0'
@@ -531,7 +535,7 @@ export function getFields({
         validate: {
           required: requiredIfPinningEnabled(
             'shouldPinMaxUploadPrice',
-            (value: BigNumber, values) => {
+            (value: Maybe<BigNumber>, values) => {
               if (!values.shouldPinMaxUploadPrice) {
                 return true
               }
@@ -545,7 +549,7 @@ export function getFields({
           ),
           range: requiredIfPinningEnabled(
             'shouldPinMaxUploadPrice',
-            (value: BigNumber, values) =>
+            (value: Maybe<BigNumber>, values) =>
               !values.shouldPinMaxUploadPrice ||
               value?.gt(0) ||
               'must be greater than 0'
@@ -605,7 +609,7 @@ export function getFields({
         validate: {
           required: requiredIfPinningEnabled(
             'shouldPinMaxDownloadPrice',
-            (value: BigNumber, values) => {
+            (value: Maybe<BigNumber>, values) => {
               if (!values.shouldPinMaxDownloadPrice) {
                 return true
               }
@@ -619,7 +623,7 @@ export function getFields({
           ),
           range: requiredIfPinningEnabled(
             'shouldPinMaxDownloadPrice',
-            (value: BigNumber, values) =>
+            (value: Maybe<BigNumber>, values) =>
               !values.shouldPinMaxDownloadPrice ||
               value?.gt(0) ||
               'must be greater than 0'
@@ -703,18 +707,22 @@ export function getFields({
           }
         : {
             suggestion: advancedDefaults?.hostBlockHeightLeeway,
-            suggestionTip: 'The recommended value is 6 blocks.',
+            suggestionTip: `The recommended value is ${advancedDefaults?.hostBlockHeightLeeway
+              .toNumber()
+              .toLocaleString()} blocks.`,
           }),
       hidden: configViewMode === 'basic',
       validation: {
         validate: {
           required: requiredIfAdvanced(validationContext),
-          min: requiredIfAdvanced(validationContext, (value) => {
-            return (
-              new BigNumber(value as BigNumber).gte(3) ||
-              'must be at least 3 blocks'
-            )
-          }),
+          min: requiredIfAdvanced(
+            validationContext,
+            (value: Maybe<BigNumber>) => {
+              return (
+                new BigNumber(value || 0).gte(3) || 'must be at least 3 blocks'
+              )
+            }
+          ),
         },
       },
     },
@@ -733,12 +741,15 @@ export function getFields({
       validation: {
         validate: {
           required: requiredIfAdvanced(validationContext),
-          min: requiredIfAdvanced(validationContext, (value) => {
-            return (
-              new BigNumber(value as BigNumber).gte(secondsInMinutes(10)) ||
-              'must be at least 10 seconds'
-            )
-          }),
+          min: requiredIfAdvanced(
+            validationContext,
+            (value: Maybe<BigNumber>) => {
+              return (
+                new BigNumber(value || 0).gte(secondsInMinutes(10)) ||
+                'must be at least 10 seconds'
+              )
+            }
+          ),
         },
       },
     },
@@ -760,12 +771,15 @@ export function getFields({
       validation: {
         validate: {
           required: requiredIfAdvanced(validationContext),
-          min: requiredIfAdvanced(validationContext, (value) => {
-            return (
-              new BigNumber(value as BigNumber).gte(hoursInDays(1)) ||
-              'must be at least 1 hour'
-            )
-          }),
+          min: requiredIfAdvanced(
+            validationContext,
+            (value: Maybe<BigNumber>) => {
+              return (
+                new BigNumber(value || 0).gte(hoursInDays(1)) ||
+                'must be at least 1 hour'
+              )
+            }
+          ),
         },
       },
     },
@@ -787,12 +801,12 @@ export function getFields({
       validation: {
         validate: {
           required: requiredIfAdvanced(validationContext),
-          min: requiredIfAdvanced(validationContext, (value) => {
-            return (
-              new BigNumber(value as BigNumber).gte(1) ||
-              'must be at least 1 SC'
-            )
-          }),
+          min: requiredIfAdvanced(
+            validationContext,
+            (value: Maybe<BigNumber>) => {
+              return new BigNumber(value || 0).gte(1) || 'must be at least 1 SC'
+            }
+          ),
         },
       },
     },
@@ -845,12 +859,12 @@ export function getFields({
       validation: {
         validate: {
           required: requiredIfAdvanced(validationContext),
-          min: requiredIfAdvanced(validationContext, (value) => {
-            return (
-              new BigNumber(value as BigNumber).gt(0) ||
-              'must be greater than 0'
-            )
-          }),
+          min: requiredIfAdvanced(
+            validationContext,
+            (value: Maybe<BigNumber>) => {
+              return new BigNumber(value || 0).gt(0) || 'must be greater than 0'
+            }
+          ),
         },
       },
       trigger: ['totalShards'],
@@ -869,15 +883,14 @@ export function getFields({
           required: requiredIfAdvanced(validationContext),
           gteMinShards: requiredIfAdvanced(
             validationContext,
-            (value, values) =>
-              new BigNumber(value as BigNumber).gte(values.minShards) ||
+            (value: Maybe<BigNumber>, values) =>
+              new BigNumber(value || 0).gte(values.minShards || 0) ||
               'must be at least equal to min shards'
           ),
           max: requiredIfAdvanced(
             validationContext,
-            (value) =>
-              new BigNumber(value as BigNumber).lt(256) ||
-              'must be less than 256'
+            (value: Maybe<BigNumber>) =>
+              new BigNumber(value || 0).lt(256) || 'must be less than 256'
           ),
         },
       },
@@ -921,22 +934,30 @@ export function getFields({
       validation: {
         required: 'required',
         validate: {
-          max: (value) =>
-            new BigNumber(value as BigNumber).lte(100) ||
-            `must be at most 100%`,
-          min: (value) =>
-            new BigNumber(value as BigNumber).gte(0) || `must be at least 0%`,
+          max: (value: Maybe<BigNumber>) =>
+            new BigNumber(value || 0).lte(100) || `must be at most 100%`,
+          min: (value: Maybe<BigNumber>) =>
+            new BigNumber(value || 0).gte(0) || `must be at least 0%`,
         },
       },
     },
   }
 }
 
-function requiredIfAdvanced<Values>(
+// The following validation helper methods treat the value as any so that the type can
+// be specified by the caller.
+// Theoretically this could be inferred by ConfigFields but I could not figure it out.
+
+function requiredIfAdvanced(
   context: { configViewMode: ConfigViewMode },
-  method?: (value: unknown, values: Values) => string | boolean
+  method?: (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    value: any,
+    values: InputValues
+  ) => string | boolean
 ) {
-  return (value: unknown, values: Values) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (value: any, values: InputValues) => {
     if (context.configViewMode === 'advanced') {
       if (method) {
         return method(value, values)
@@ -947,11 +968,16 @@ function requiredIfAdvanced<Values>(
   }
 }
 
-function requiredIfAutopilot<Values>(
+function requiredIfAutopilot(
   context: { isAutopilotEnabled: boolean },
-  method?: (value: unknown, values: Values) => string | boolean
+  method?: (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    value: any,
+    values: InputValues
+  ) => string | boolean
 ) {
-  return (value: unknown, values: Values) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (value: any, values: InputValues) => {
     if (context.isAutopilotEnabled) {
       if (method) {
         return method(value, values)
@@ -962,14 +988,19 @@ function requiredIfAutopilot<Values>(
   }
 }
 
-function requiredIfAutopilotAndAdvanced<Values>(
+function requiredIfAutopilotAndAdvanced(
   context: {
     isAutopilotEnabled: boolean
     configViewMode: ConfigViewMode
   },
-  method?: (value: unknown, values: Values) => string | boolean
+  method?: (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    value: any,
+    values: InputValues
+  ) => string | boolean
 ) {
-  return (value: unknown, values: Values) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (value: any, values: InputValues) => {
     if (context.isAutopilotEnabled && context.configViewMode === 'advanced') {
       if (method) {
         return method(value, values)
@@ -980,15 +1011,19 @@ function requiredIfAutopilotAndAdvanced<Values>(
   }
 }
 
-function requiredIfPinningEnabled<Values>(
-  field:
-    | 'shouldPinAllowance'
-    | 'shouldPinMaxStoragePrice'
-    | 'shouldPinMaxUploadPrice'
-    | 'shouldPinMaxDownloadPrice',
-  method?: (value: unknown, values: Values) => string | boolean
+type ShouldPinField =
+  | 'shouldPinAllowance'
+  | 'shouldPinMaxStoragePrice'
+  | 'shouldPinMaxUploadPrice'
+  | 'shouldPinMaxDownloadPrice'
+
+function requiredIfPinningEnabled(
+  field: ShouldPinField,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  method?: (value: any, values: InputValues) => string | boolean
 ) {
-  return (value: unknown, values: Values) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (value: any, values: InputValues) => {
     if (values[field]) {
       if (method) {
         return method(value, values)

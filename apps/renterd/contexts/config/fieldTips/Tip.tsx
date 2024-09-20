@@ -7,7 +7,7 @@ import {
 } from '@siafoundation/design-system'
 import React from 'react'
 import { UseFormReturn } from 'react-hook-form'
-import { SettingsData } from '../types'
+import { InputValues } from '../types'
 import BigNumber from 'bignumber.js'
 import { useRedundancyMultiplier } from '../useRedundancyMultiplier'
 import { Calculation16 } from '@siafoundation/react-icons'
@@ -80,8 +80,8 @@ export function PriceWithRedundancyTip({
   priceInSiacoin,
   units,
 }: {
-  form: UseFormReturn<SettingsData>
-  priceInSiacoin: BigNumber
+  form: UseFormReturn<InputValues>
+  priceInSiacoin?: BigNumber
   units: string
 }) {
   const minShards = form.watch('minShards')

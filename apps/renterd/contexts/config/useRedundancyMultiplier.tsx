@@ -6,8 +6,8 @@ export function useRedundancyMultiplier({
   minShards,
   totalShards,
 }: {
-  minShards: BigNumber
-  totalShards: BigNumber
+  minShards?: BigNumber
+  totalShards?: BigNumber
 }) {
   return useMemo(
     () => getRedundancyMultiplier(minShards, totalShards),

@@ -1,6 +1,6 @@
 import { FieldSwitch, Text, Tooltip } from '@siafoundation/design-system'
 import { UseFormReturn } from 'react-hook-form'
-import { SettingsData } from '../../contexts/config/types'
+import { InputValues } from '../../contexts/config/types'
 import { Fields } from '../../contexts/config/fields'
 
 export function ShouldPinSwitch({
@@ -8,8 +8,8 @@ export function ShouldPinSwitch({
   form,
   fields,
 }: {
-  name: keyof SettingsData
-  form: UseFormReturn<SettingsData>
+  name: keyof InputValues
+  form: UseFormReturn<InputValues>
   fields: Fields
 }) {
   return (

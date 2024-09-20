@@ -5,7 +5,7 @@ import {
 } from '@siafoundation/design-system'
 import { fiatToSiacoin, toHastings } from '@siafoundation/units'
 import { UseFormReturn } from 'react-hook-form'
-import { Categories, RecommendationItem, SettingsData } from '../types'
+import { Categories, RecommendationItem, InputValues } from '../types'
 import { useAllowanceDerivedPricingForEnabledFields } from '../useAllowanceDerivedPricing'
 import { useFormExchangeRate } from '../useFormExchangeRate'
 import {
@@ -19,9 +19,9 @@ export function MaxStoragePriceTips({
   fields,
   recommendations,
 }: {
-  form: UseFormReturn<SettingsData>
-  fields: ConfigFields<SettingsData, Categories>
-  recommendations: Partial<Record<keyof SettingsData, RecommendationItem>>
+  form: UseFormReturn<InputValues>
+  fields: ConfigFields<InputValues, Categories>
+  recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
 }) {
   const derived = useAllowanceDerivedPricingForEnabledFields({
     form,
@@ -32,7 +32,7 @@ export function MaxStoragePriceTips({
 
   return (
     <>
-      {derived && (
+      {derived?.maxStoragePriceTBMonth && (
         <TipNumber
           type="siacoin"
           label="Fit current allowance"
@@ -82,9 +82,9 @@ export function MaxStoragePricePinnedTips({
   fields,
   recommendations,
 }: {
-  form: UseFormReturn<SettingsData>
-  fields: ConfigFields<SettingsData, Categories>
-  recommendations: Partial<Record<keyof SettingsData, RecommendationItem>>
+  form: UseFormReturn<InputValues>
+  fields: ConfigFields<InputValues, Categories>
+  recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
 }) {
   const derived = useAllowanceDerivedPricingForEnabledFields({
     form,
@@ -96,21 +96,21 @@ export function MaxStoragePricePinnedTips({
   const currentPriceInSiacoin =
     maxStoragePriceTBMonthPinned && rate
       ? fiatToSiacoin(maxStoragePriceTBMonthPinned, rate)
-      : null
+      : undefined
   const derivedPriceInSiacoin =
     derived?.maxStoragePriceTBMonthPinned && rate
       ? fiatToSiacoin(derived.maxStoragePriceTBMonthPinned, rate)
-      : null
+      : undefined
   const recommendationInFiat =
     recommendations?.maxStoragePriceTBMonthPinned?.targetValue
   const recommendationInSiacoin =
     recommendationInFiat && rate
       ? fiatToSiacoin(recommendationInFiat, rate)
-      : null
+      : undefined
 
   return (
     <>
-      {derived && (
+      {derivedPriceInSiacoin && derived?.maxStoragePriceTBMonthPinned && (
         <TipNumber
           type="siacoin"
           label="Fit current allowance"

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react'
-import { ConfigViewMode, defaultValues, getAdvancedDefaults } from './types'
+import { ConfigViewMode, inputValues, getAdvancedDefaults } from './types'
 import { useForm as useHookForm } from 'react-hook-form'
 import { useAverages } from './useAverages'
 import { useBusState } from '@siafoundation/renterd-react'
@@ -13,7 +13,7 @@ import { getRedundancyMultiplier } from '@siafoundation/units'
 export function useForm({ resources }: { resources: ResourcesMaybeLoaded }) {
   const form = useHookForm({
     mode: 'all',
-    defaultValues,
+    defaultValues: inputValues,
   })
   const maxStoragePriceTBMonth = form.watch('maxStoragePriceTBMonth')
   const maxDownloadPriceTB = form.watch('maxDownloadPriceTB')
@@ -78,13 +78,8 @@ export function useForm({ resources }: { resources: ResourcesMaybeLoaded }) {
         isAutopilotEnabled,
         configViewMode,
         advancedDefaults,
-        maxStoragePriceTBMonth,
-        maxUploadPriceTB,
-        redundancyMultiplier,
         averagesSc,
         averagesFiat,
-        minShards,
-        totalShards,
         recommendations,
       })
     }
@@ -93,11 +88,6 @@ export function useForm({ resources }: { resources: ResourcesMaybeLoaded }) {
       isAutopilotEnabled,
       configViewMode,
       advancedDefaults,
-      maxStoragePriceTBMonth,
-      maxUploadPriceTB,
-      redundancyMultiplier,
-      minShards,
-      totalShards,
       recommendations,
     })
   }, [
@@ -106,11 +96,6 @@ export function useForm({ resources }: { resources: ResourcesMaybeLoaded }) {
     renterdState.data,
     averagesSc,
     averagesFiat,
-    redundancyMultiplier,
-    maxStoragePriceTBMonth,
-    maxUploadPriceTB,
-    minShards,
-    totalShards,
     evaluation.recommendations,
   ])
 

@@ -50,17 +50,17 @@ export function derivePricingFromAllowance({
   downloadWeight = 5,
   uploadWeight = 1,
 }: {
-  allowanceMonth: BigNumber
+  allowanceMonth?: BigNumber
   allowanceFactor?: number
-  storageTB: BigNumber
-  downloadTBMonth: BigNumber
-  uploadTBMonth: BigNumber
-  redundancyMultiplier: BigNumber
+  storageTB?: BigNumber
+  downloadTBMonth?: BigNumber
+  uploadTBMonth?: BigNumber
+  redundancyMultiplier?: BigNumber
   storageWeight?: number
   downloadWeight?: number
   uploadWeight?: number
 }) {
-  // Return null if zero values are provided.
+  // Return undefined if zero values are provided.
   if (
     !allowanceMonth?.gt(0) ||
     allowanceFactor <= 0 ||
@@ -69,7 +69,7 @@ export function derivePricingFromAllowance({
     !downloadTBMonth?.gt(0) ||
     !uploadTBMonth?.gt(0)
   ) {
-    return null
+    return undefined
   }
   // Apply scaling factor to allowance.
   const scaledAllowance = allowanceMonth.times(allowanceFactor)
@@ -123,16 +123,16 @@ export function calculateIdealAllowance({
   uploadTBMonth,
   redundancyMultiplier,
 }: {
-  maxStoragePriceTBMonth: BigNumber
-  maxDownloadPriceTB: BigNumber
-  maxUploadPriceTB: BigNumber
+  maxStoragePriceTBMonth?: BigNumber
+  maxDownloadPriceTB?: BigNumber
+  maxUploadPriceTB?: BigNumber
   allowanceFactor?: number
-  storageTB: BigNumber
-  downloadTBMonth: BigNumber
-  uploadTBMonth: BigNumber
-  redundancyMultiplier: BigNumber
+  storageTB?: BigNumber
+  downloadTBMonth?: BigNumber
+  uploadTBMonth?: BigNumber
+  redundancyMultiplier?: BigNumber
 }) {
-  // Return null if zero or negative values are provided.
+  // Return undefined if zero or negative values are provided.
   if (
     !maxStoragePriceTBMonth?.gt(0) ||
     !maxDownloadPriceTB?.gt(0) ||
@@ -143,7 +143,7 @@ export function calculateIdealAllowance({
     !downloadTBMonth?.gt(0) ||
     !uploadTBMonth?.gt(0)
   ) {
-    return null
+    return undefined
   }
 
   // Calculate the esimated spending.
@@ -158,7 +158,7 @@ export function calculateIdealAllowance({
   })
 
   // Calculate the ideal allowance by dividing the spending by the allowance factor.
-  const allowanceMonth = scaledSpending.div(allowanceFactor)
+  const allowanceMonth = scaledSpending?.div(allowanceFactor)
 
-  return allowanceMonth.integerValue()
+  return allowanceMonth?.integerValue()
 }

@@ -8,7 +8,7 @@ import { humanNumber, humanSiacoin, toHastings } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import { useCallback, useMemo } from 'react'
 import { UseFormReturn } from 'react-hook-form'
-import { Fields, getFields } from './fields'
+import { getFields } from './fields'
 import {
   ResourcesMaybeLoaded,
   ResourcesRequiredLoaded,
@@ -17,10 +17,11 @@ import {
 import { transformDownGouging } from './transformDown'
 import { transformUp } from './transformUp'
 import {
-  GougingData,
+  InputValuesGouging,
   RecommendationItem,
-  SettingsData,
+  InputValues,
   getAdvancedDefaults,
+  Values,
 } from './types'
 import {
   pricesToPinnedPrices,
@@ -28,13 +29,14 @@ import {
   useEnabledPricingValuesInSiacoin,
 } from './useAllowanceDerivedPricing'
 import { useFormExchangeRate } from './useFormExchangeRate'
+import { AutopilotConfigEvaluatePayload } from '@siafoundation/renterd-types'
 
 export function useAutopilotEvaluations({
   form,
   resources,
   isAutopilotEnabled,
 }: {
-  form: UseFormReturn<SettingsData>
+  form: UseFormReturn<InputValues>
   resources: ResourcesMaybeLoaded
   isAutopilotEnabled: boolean
 }) {
@@ -92,7 +94,7 @@ export function useAutopilotEvaluations({
   }, [values, anyPinnedValuesAsSiacoin, resources.autopilotState.data?.network])
 
   const payloads = useMemo(() => {
-    if (!hasDataToEvaluate) {
+    if (!hasDataToEvaluate || !renterdState.data) {
       return
     }
 
@@ -111,7 +113,7 @@ export function useAutopilotEvaluations({
     hasDataToEvaluate,
   ])
 
-  const userContractCountTarget = payloads?.autopilot.contracts.amount || 0
+  const userContractCountTarget = payloads?.autopilot?.contracts.amount || 0
 
   // Find settings where the usable host count is at least 50% more than the
   // amount of contracts the user wants. If that is not possible, try 10% more.
@@ -128,7 +130,7 @@ export function useAutopilotEvaluations({
       gougingSettings: payloads?.gouging,
       redundancySettings: payloads?.upload.redundancy,
       autopilotConfig: payloads?.autopilot,
-    },
+    } as AutopilotConfigEvaluatePayload,
     config: {
       swr: {
         keepPreviousData: eval0Enabled,
@@ -151,11 +153,11 @@ export function useAutopilotEvaluations({
       autopilotConfig: {
         ...payloads?.autopilot,
         contracts: {
-          ...payloads?.autopilot.contracts,
+          ...payloads?.autopilot?.contracts,
           amount: hostTarget50,
         },
       },
-    },
+    } as AutopilotConfigEvaluatePayload,
     config: {
       swr: {
         keepPreviousData: eval50Enabled,
@@ -176,11 +178,11 @@ export function useAutopilotEvaluations({
       autopilotConfig: {
         ...payloads?.autopilot,
         contracts: {
-          ...payloads?.autopilot.contracts,
+          ...payloads?.autopilot?.contracts,
           amount: hostTarget10,
         },
       },
-    },
+    } as AutopilotConfigEvaluatePayload,
     config: {
       swr: {
         keepPreviousData: eval10Enabled,
@@ -211,7 +213,7 @@ export function useAutopilotEvaluations({
       gougingSettings: recommendedGougingSettings,
       redundancySettings: payloads?.upload.redundancy,
       autopilotConfig: payloads?.autopilot,
-    },
+    } as AutopilotConfigEvaluatePayload,
     config: {
       swr: {
         keepPreviousData: usableAfterRecsEvalEnabled,
@@ -226,7 +228,7 @@ export function useAutopilotEvaluations({
 
   const getIsFieldEnabled = useCallback(
     (key: string) => {
-      const map = {
+      const map: Record<string, boolean> = {
         maxStoragePriceTBMonth: !shouldPinMaxStoragePrice,
         maxUploadPriceTB: !shouldPinMaxUploadPrice,
         maxDownloadPriceTB: !shouldPinMaxDownloadPrice,
@@ -279,14 +281,16 @@ export function useAutopilotEvaluations({
 
     // Generate recommendation metadata for each value that differs from current settings.
     const recs: RecommendationItem[] = []
-    objectEntries(recommendedValues).forEach(([key, targetValue]) => {
+    Object.entries(recommendedValues).forEach(([key, targetValue]) => {
       const isEnabled = getIsFieldEnabled(key)
       // Only show recommendations for enabled visible fields.
       if (!isEnabled) {
         return
       }
       // Only show recommendations if the difference is greater than 1%.
-      const currentValue = currentValuesWithPinnedOverridesAndDefaults[key]
+      const currentValue = currentValuesWithPinnedOverridesAndDefaults[
+        key as keyof Values
+      ] as BigNumber
       const percentDifference = targetValue
         .minus(currentValue)
         .div(currentValue)
@@ -295,7 +299,7 @@ export function useAutopilotEvaluations({
         return
       }
       const rec = getRecommendationItem({
-        key,
+        key: key as keyof RecommendableFields,
         currentValue,
         targetValue,
         currencyId: pinnedCurrency,
@@ -341,7 +345,7 @@ function getRecommendationItem({
   targetValue,
   currencyId,
 }: {
-  key: keyof Fields
+  key: keyof RecommendableFields
   currentValue: BigNumber
   targetValue: BigNumber
   currencyId: string
@@ -372,7 +376,8 @@ function getRecommendationItem({
     rec.targetLabel = format(targetValue)
   }
   if (fields[key].type === 'fiat') {
-    const currency = currencyOptions.find((c) => c.id === currencyId)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const currency = currencyOptions.find((c) => c.id === currencyId)!
     const format = (val: BigNumber) =>
       `${currency?.prefix}${humanNumber(val, {
         fixed: currency.fixed,
@@ -391,11 +396,6 @@ const fields = getFields({
   },
   isAutopilotEnabled: true,
   configViewMode: 'basic',
-  maxStoragePriceTBMonth: new BigNumber(0),
-  maxUploadPriceTB: new BigNumber(0),
-  minShards: new BigNumber(0),
-  totalShards: new BigNumber(0),
-  redundancyMultiplier: new BigNumber(0),
   recommendations: {},
 })
 
@@ -405,7 +405,7 @@ type PinnablePrices = {
   maxDownloadPriceTBPinned: BigNumber
 }
 
-type RecommendableFields = GougingData & PinnablePrices
+type RecommendableFields = InputValuesGouging & PinnablePrices
 
 const fieldToHrefId: Record<keyof RecommendableFields, string> = {
   maxStoragePriceTBMonth: 'maxStoragePriceTBMonthGroup',
@@ -439,7 +439,7 @@ const fieldToLabel: Record<keyof RecommendableFields, string> = {
   migrationSurchargeMultiplier: 'migration surcharge multiplier',
 }
 
-export const valuesZeroDefaults: SettingsData = {
+export const valuesZeroDefaults: Values = {
   autopilotContractSet: '',
   amountHosts: new BigNumber(0),
   shouldPinAllowance: false,
@@ -479,22 +479,20 @@ export const valuesZeroDefaults: SettingsData = {
   pinnedThreshold: new BigNumber(0),
 }
 
-// current value, otherwise advanced default if there is one, otherwise zero value.
+// Current value, otherwise advanced default if there is one, otherwise zero value.
 export function mergeValuesWithDefaultsOrZeroValues(
-  values: SettingsData,
-  network: 'mainnet' | 'zen' | 'anagami'
+  values: InputValues,
+  network: 'mainnet' | 'zen' | 'anagami' = 'mainnet'
 ) {
-  const merged: SettingsData = getAdvancedDefaults(network)
-  // advanced defaults include undefined values, for keys without defaults.
-  // Set these to zero values.
-  Object.entries(valuesZeroDefaults).forEach(([key, value]) => {
-    if (merged[key] === undefined) {
-      merged[key] = value
-    }
-  })
+  const defaults = getAdvancedDefaults(network)
+  const merged = {
+    ...valuesZeroDefaults,
+    ...defaults,
+  }
   // Apply any non-zero user values.
-  Object.entries(values).forEach(([key, value]) => {
+  objectEntries(values).forEach(([key, value]) => {
     if (value !== undefined) {
+      // @ts-expect-error Silence type error.
       merged[key] = value
     }
   })

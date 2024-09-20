@@ -24,21 +24,21 @@ import {
 import BigNumber from 'bignumber.js'
 import { firstTimeGougingData } from './resources'
 import {
-  AutopilotData,
-  GougingData,
-  PinningData,
-  SettingsData,
-  UploadData,
-  defaultAutopilot,
+  InputValuesAutopilot,
+  ValuesGouging,
+  ValuesPinned,
+  InputValues,
+  ValuesUpload,
+  inputValuesAutopilot,
   scDecimalPlaces,
 } from './types'
 
 // down
 export function transformDownAutopilot(
   config?: AutopilotConfig
-): AutopilotData {
+): InputValuesAutopilot {
   if (!config) {
-    return defaultAutopilot
+    return inputValuesAutopilot
   }
 
   const autopilotContractSet = config.contracts.set
@@ -110,7 +110,7 @@ export function transformDownGouging({
     }
   }
   hasBeenConfigured: boolean
-}): GougingData {
+}): ValuesGouging {
   const gouging = firstTimeGougingData({
     gouging: _gouging,
     averages,
@@ -158,7 +158,7 @@ export function transformDownPinned(
   p: SettingsPinned,
   autopilotID: string,
   periodBlocks?: number
-): PinningData {
+): ValuesPinned {
   const fixedFiat = currencyOptions.find((c) => c.id === p.currency)?.fixed || 6
   return {
     pinnedCurrency: p.currency,
@@ -187,7 +187,7 @@ export function transformDownPinned(
   }
 }
 
-export function transformDownUpload(u?: SettingsUpload): UploadData {
+export function transformDownUpload(u: SettingsUpload): ValuesUpload {
   return {
     defaultContractSet: u.defaultContractSet ? u.defaultContractSet : '',
     uploadPackingEnabled: u.packing.enabled,
@@ -220,7 +220,7 @@ export function transformDown({
   pinned,
   upload,
   averages,
-}: RemoteData): SettingsData {
+}: RemoteData): InputValues {
   return {
     // autopilot
     ...transformDownAutopilot(autopilot),

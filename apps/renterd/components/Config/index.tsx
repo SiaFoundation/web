@@ -87,7 +87,7 @@ export function Config() {
                         name="allowanceMonthPinned"
                         form={form}
                         fields={fields}
-                        currency={pinnedCurrency || undefined}
+                        currency={pinnedCurrency || ''}
                       />
                     ) : (
                       <PinnedCurrencyWarning
@@ -154,7 +154,7 @@ export function Config() {
                         name="maxStoragePriceTBMonthPinned"
                         form={form}
                         fields={fields}
-                        currency={pinnedCurrency || undefined}
+                        currency={pinnedCurrency || ''}
                       />
                     ) : (
                       <PinnedCurrencyWarning
@@ -189,7 +189,7 @@ export function Config() {
                         name="maxUploadPriceTBPinned"
                         form={form}
                         fields={fields}
-                        currency={pinnedCurrency || undefined}
+                        currency={pinnedCurrency || ''}
                       />
                     ) : (
                       <PinnedCurrencyWarning
@@ -224,7 +224,7 @@ export function Config() {
                         name="maxDownloadPriceTBPinned"
                         form={form}
                         fields={fields}
-                        currency={pinnedCurrency || undefined}
+                        currency={pinnedCurrency || ''}
                       />
                     ) : (
                       <PinnedCurrencyWarning

@@ -7,7 +7,7 @@ import {
   transformUpPinned,
   transformUpUpload,
 } from './transformUp'
-import { SettingsData } from './types'
+import { InputValues, SubmitValues } from './types'
 import {
   blocksToWeeks,
   weeksToBlocks,
@@ -36,7 +36,7 @@ describe('tansforms', () => {
             ...autopilot,
             hosts: {
               ...autopilot.hosts,
-              minProtocolVersion: null,
+              minProtocolVersion: '',
             },
           },
           gouging,
@@ -81,7 +81,7 @@ describe('tansforms', () => {
         shouldPinMaxStoragePrice: false,
         pinnedCurrency: 'usd',
         pinnedThreshold: new BigNumber(10),
-      } as SettingsData)
+      } as InputValues)
     })
 
     it('applies first time user overrides', () => {
@@ -162,7 +162,7 @@ describe('tansforms', () => {
             allowRedundantIPs: false,
             maxDowntimeHours: 1440,
             maxConsecutiveScanFailures: 10,
-            scoreOverrides: null,
+            scoreOverrides: {},
             minProtocolVersion: '1.6.0',
           },
           contracts: {
@@ -218,7 +218,7 @@ describe('tansforms', () => {
             allowRedundantIPs: false,
             maxDowntimeHours: 1440,
             maxConsecutiveScanFailures: 10,
-            scoreOverrides: null,
+            scoreOverrides: {},
             minProtocolVersion: '1.7.0',
           },
           contracts: {
@@ -269,7 +269,7 @@ describe('tansforms', () => {
             allowRedundantIPs: false,
             maxDowntimeHours: 1440,
             maxConsecutiveScanFailures: 10,
-            scoreOverrides: null,
+            scoreOverrides: {},
             minProtocolVersion: '1.7.0',
           },
           contracts: {
@@ -331,7 +331,7 @@ describe('tansforms', () => {
               shouldPinMaxStoragePrice: false,
               pinnedCurrency: 'usd',
               pinnedThreshold: new BigNumber(0),
-            },
+            } as SubmitValues,
             {
               maxStoragePrice: '77777777777',
               foobar: 'value',
@@ -500,7 +500,7 @@ describe('tansforms', () => {
 
       const downUp = transformUp({
         ...transformUpMocks,
-        values: down,
+        values: down as SubmitValues,
       })
       const downUpDown = transformDown({
         hasBeenConfigured: true,
@@ -510,9 +510,10 @@ describe('tansforms', () => {
 
       // Once saved/rounded, values are then always the same.
       expect(down).toEqual(downUpDown)
+
       const downUpDownUp = transformUp({
         ...transformUpMocks,
-        values: downUpDown,
+        values: down as SubmitValues,
       })
       expect(downUp).toEqual(downUpDownUp)
     })
@@ -585,7 +586,7 @@ function buildAllResponses() {
         allowRedundantIPs: false,
         maxDowntimeHours: 1440,
         maxConsecutiveScanFailures: 10,
-        scoreOverrides: null,
+        scoreOverrides: {},
         minProtocolVersion: '1.7.0',
       },
       contracts: {

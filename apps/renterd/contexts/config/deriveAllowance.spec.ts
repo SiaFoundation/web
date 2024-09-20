@@ -27,11 +27,11 @@ test('with estimates of 1 TB, standard weights, 1x redundancy, 1x allowance fact
     uploadWeight,
   })
 
-  expect(prices).not.toBeNull()
+  expect(prices).not.toBeUndefined()
   expect({
-    maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth.toFixed(2),
-    maxDownloadPriceTB: prices.maxDownloadPriceTB.toFixed(2),
-    maxUploadPriceTB: prices.maxUploadPriceTB.toFixed(2),
+    maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth.toFixed(2),
+    maxDownloadPriceTB: prices?.maxDownloadPriceTB.toFixed(2),
+    maxUploadPriceTB: prices?.maxUploadPriceTB.toFixed(2),
   }).toEqual({
     maxDownloadPriceTB: '500.00',
     maxStoragePriceTBMonth: '400.00',
@@ -39,9 +39,9 @@ test('with estimates of 1 TB, standard weights, 1x redundancy, 1x allowance fact
   })
   expect(
     calculateIdealAllowance({
-      maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth,
-      maxDownloadPriceTB: prices.maxDownloadPriceTB,
-      maxUploadPriceTB: prices.maxUploadPriceTB,
+      maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth,
+      maxDownloadPriceTB: prices?.maxDownloadPriceTB,
+      maxUploadPriceTB: prices?.maxUploadPriceTB,
       allowanceFactor,
       storageTB,
       downloadTBMonth,
@@ -74,11 +74,11 @@ test('with estimates of 1 TB, standard weights, 2x redundancy, 1x allowance fact
     uploadWeight,
   })
 
-  expect(prices).not.toBeNull()
+  expect(prices).not.toBeUndefined()
   expect({
-    maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth.toFixed(2),
-    maxDownloadPriceTB: prices.maxDownloadPriceTB.toFixed(2),
-    maxUploadPriceTB: prices.maxUploadPriceTB.toFixed(2),
+    maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth.toFixed(2),
+    maxDownloadPriceTB: prices?.maxDownloadPriceTB.toFixed(2),
+    maxUploadPriceTB: prices?.maxUploadPriceTB.toFixed(2),
   }).toEqual({
     maxDownloadPriceTB: '333.33',
     maxStoragePriceTBMonth: '266.67',
@@ -86,9 +86,9 @@ test('with estimates of 1 TB, standard weights, 2x redundancy, 1x allowance fact
   })
   expect(
     calculateIdealAllowance({
-      maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth,
-      maxDownloadPriceTB: prices.maxDownloadPriceTB,
-      maxUploadPriceTB: prices.maxUploadPriceTB,
+      maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth,
+      maxDownloadPriceTB: prices?.maxDownloadPriceTB,
+      maxUploadPriceTB: prices?.maxUploadPriceTB,
       allowanceFactor,
       storageTB,
       downloadTBMonth,
@@ -121,11 +121,11 @@ test('with estimates of 1 TB, standard weights, 3x redunancy, 1x allowance facto
     uploadWeight,
   })
 
-  expect(prices).not.toBeNull()
+  expect(prices).not.toBeUndefined()
   expect({
-    maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth.toFixed(2),
-    maxDownloadPriceTB: prices.maxDownloadPriceTB.toFixed(2),
-    maxUploadPriceTB: prices.maxUploadPriceTB.toFixed(2),
+    maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth.toFixed(2),
+    maxDownloadPriceTB: prices?.maxDownloadPriceTB.toFixed(2),
+    maxUploadPriceTB: prices?.maxUploadPriceTB.toFixed(2),
   }).toEqual({
     maxDownloadPriceTB: '250.00',
     maxStoragePriceTBMonth: '200.00',
@@ -133,9 +133,9 @@ test('with estimates of 1 TB, standard weights, 3x redunancy, 1x allowance facto
   })
   expect(
     calculateIdealAllowance({
-      maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth,
-      maxDownloadPriceTB: prices.maxDownloadPriceTB,
-      maxUploadPriceTB: prices.maxUploadPriceTB,
+      maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth,
+      maxDownloadPriceTB: prices?.maxDownloadPriceTB,
+      maxUploadPriceTB: prices?.maxUploadPriceTB,
       allowanceFactor,
       storageTB,
       downloadTBMonth,
@@ -168,11 +168,11 @@ test('with estimates of 1 TB, standard weights, 1x redundancy, 2x allowance fact
     uploadWeight,
   })
 
-  expect(prices).not.toBeNull()
+  expect(prices).not.toBeUndefined()
   expect({
-    maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth.toFixed(2),
-    maxDownloadPriceTB: prices.maxDownloadPriceTB.toFixed(2),
-    maxUploadPriceTB: prices.maxUploadPriceTB.toFixed(2),
+    maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth.toFixed(2),
+    maxDownloadPriceTB: prices?.maxDownloadPriceTB.toFixed(2),
+    maxUploadPriceTB: prices?.maxUploadPriceTB.toFixed(2),
   }).toEqual({
     maxDownloadPriceTB: '1000.00',
     maxStoragePriceTBMonth: '800.00',
@@ -180,9 +180,9 @@ test('with estimates of 1 TB, standard weights, 1x redundancy, 2x allowance fact
   })
   expect(
     calculateIdealAllowance({
-      maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth,
-      maxDownloadPriceTB: prices.maxDownloadPriceTB,
-      maxUploadPriceTB: prices.maxUploadPriceTB,
+      maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth,
+      maxDownloadPriceTB: prices?.maxDownloadPriceTB,
+      maxUploadPriceTB: prices?.maxUploadPriceTB,
       allowanceFactor,
       storageTB,
       downloadTBMonth,
@@ -215,11 +215,11 @@ test('with estimates of 1 TB, standard weights, 2x redundancy, 2x allowance fact
     uploadWeight,
   })
 
-  expect(prices).not.toBeNull()
+  expect(prices).not.toBeUndefined()
   expect({
-    maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth.toFixed(2),
-    maxDownloadPriceTB: prices.maxDownloadPriceTB.toFixed(2),
-    maxUploadPriceTB: prices.maxUploadPriceTB.toFixed(2),
+    maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth.toFixed(2),
+    maxDownloadPriceTB: prices?.maxDownloadPriceTB.toFixed(2),
+    maxUploadPriceTB: prices?.maxUploadPriceTB.toFixed(2),
   }).toEqual({
     maxDownloadPriceTB: '666.67',
     maxStoragePriceTBMonth: '533.33',
@@ -227,9 +227,9 @@ test('with estimates of 1 TB, standard weights, 2x redundancy, 2x allowance fact
   })
   expect(
     calculateIdealAllowance({
-      maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth,
-      maxDownloadPriceTB: prices.maxDownloadPriceTB,
-      maxUploadPriceTB: prices.maxUploadPriceTB,
+      maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth,
+      maxDownloadPriceTB: prices?.maxDownloadPriceTB,
+      maxUploadPriceTB: prices?.maxUploadPriceTB,
       allowanceFactor,
       storageTB,
       downloadTBMonth,
@@ -262,11 +262,11 @@ test('with estimates of 1 TB, standard weights, 3x redunancy, 2x allowance facto
     uploadWeight,
   })
 
-  expect(prices).not.toBeNull()
+  expect(prices).not.toBeUndefined()
   expect({
-    maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth.toFixed(2),
-    maxDownloadPriceTB: prices.maxDownloadPriceTB.toFixed(2),
-    maxUploadPriceTB: prices.maxUploadPriceTB.toFixed(2),
+    maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth.toFixed(2),
+    maxDownloadPriceTB: prices?.maxDownloadPriceTB.toFixed(2),
+    maxUploadPriceTB: prices?.maxUploadPriceTB.toFixed(2),
   }).toEqual({
     maxDownloadPriceTB: '500.00',
     maxStoragePriceTBMonth: '400.00',
@@ -274,9 +274,9 @@ test('with estimates of 1 TB, standard weights, 3x redunancy, 2x allowance facto
   })
   expect(
     calculateIdealAllowance({
-      maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth,
-      maxDownloadPriceTB: prices.maxDownloadPriceTB,
-      maxUploadPriceTB: prices.maxUploadPriceTB,
+      maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth,
+      maxDownloadPriceTB: prices?.maxDownloadPriceTB,
+      maxUploadPriceTB: prices?.maxUploadPriceTB,
       allowanceFactor,
       storageTB,
       downloadTBMonth,
@@ -309,11 +309,11 @@ test('with mostly storage, standard weights, 1x redunancy, 2x allowance factor',
     uploadWeight,
   })
 
-  expect(prices).not.toBeNull()
+  expect(prices).not.toBeUndefined()
   expect({
-    maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth.toFixed(2),
-    maxDownloadPriceTB: prices.maxDownloadPriceTB.toFixed(2),
-    maxUploadPriceTB: prices.maxUploadPriceTB.toFixed(2),
+    maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth.toFixed(2),
+    maxDownloadPriceTB: prices?.maxDownloadPriceTB.toFixed(2),
+    maxUploadPriceTB: prices?.maxUploadPriceTB.toFixed(2),
   }).toEqual({
     maxDownloadPriceTB: '952.38',
     maxStoragePriceTBMonth: '761.90',
@@ -321,9 +321,9 @@ test('with mostly storage, standard weights, 1x redunancy, 2x allowance factor',
   })
   expect(
     calculateIdealAllowance({
-      maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth,
-      maxDownloadPriceTB: prices.maxDownloadPriceTB,
-      maxUploadPriceTB: prices.maxUploadPriceTB,
+      maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth,
+      maxDownloadPriceTB: prices?.maxDownloadPriceTB,
+      maxUploadPriceTB: prices?.maxUploadPriceTB,
       allowanceFactor,
       storageTB,
       downloadTBMonth,
@@ -356,11 +356,11 @@ test('with varied estimates, standard weights, 1x redunancy, 2x allowance factor
     uploadWeight,
   })
 
-  expect(prices).not.toBeNull()
+  expect(prices).not.toBeUndefined()
   expect({
-    maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth.toFixed(2),
-    maxDownloadPriceTB: prices.maxDownloadPriceTB.toFixed(2),
-    maxUploadPriceTB: prices.maxUploadPriceTB.toFixed(2),
+    maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth.toFixed(2),
+    maxDownloadPriceTB: prices?.maxDownloadPriceTB.toFixed(2),
+    maxUploadPriceTB: prices?.maxUploadPriceTB.toFixed(2),
   }).toEqual({
     maxDownloadPriceTB: '90.91',
     maxStoragePriceTBMonth: '72.73',
@@ -368,9 +368,9 @@ test('with varied estimates, standard weights, 1x redunancy, 2x allowance factor
   })
   expect(
     calculateIdealAllowance({
-      maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth,
-      maxDownloadPriceTB: prices.maxDownloadPriceTB,
-      maxUploadPriceTB: prices.maxUploadPriceTB,
+      maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth,
+      maxDownloadPriceTB: prices?.maxDownloadPriceTB,
+      maxUploadPriceTB: prices?.maxUploadPriceTB,
       allowanceFactor,
       storageTB,
       downloadTBMonth,
@@ -403,11 +403,11 @@ test('with estimates of 1 TB, standard weights, 1x redundancy, 1.5x allowance fa
     uploadWeight,
   })
 
-  expect(prices).not.toBeNull()
+  expect(prices).not.toBeUndefined()
   expect({
-    maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth.toFixed(2),
-    maxDownloadPriceTB: prices.maxDownloadPriceTB.toFixed(2),
-    maxUploadPriceTB: prices.maxUploadPriceTB.toFixed(2),
+    maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth.toFixed(2),
+    maxDownloadPriceTB: prices?.maxDownloadPriceTB.toFixed(2),
+    maxUploadPriceTB: prices?.maxUploadPriceTB.toFixed(2),
   }).toEqual({
     maxDownloadPriceTB: '750.00',
     maxStoragePriceTBMonth: '600.00',
@@ -415,9 +415,9 @@ test('with estimates of 1 TB, standard weights, 1x redundancy, 1.5x allowance fa
   })
   expect(
     calculateIdealAllowance({
-      maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth,
-      maxDownloadPriceTB: prices.maxDownloadPriceTB,
-      maxUploadPriceTB: prices.maxUploadPriceTB,
+      maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth,
+      maxDownloadPriceTB: prices?.maxDownloadPriceTB,
+      maxUploadPriceTB: prices?.maxUploadPriceTB,
       allowanceFactor,
       storageTB,
       downloadTBMonth,
@@ -450,11 +450,11 @@ test('with varied estimates, standard weights, 1x redundancy, 1.5x allowance fac
     uploadWeight,
   })
 
-  expect(prices).not.toBeNull()
+  expect(prices).not.toBeUndefined()
   expect({
-    maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth.toFixed(2),
-    maxDownloadPriceTB: prices.maxDownloadPriceTB.toFixed(2),
-    maxUploadPriceTB: prices.maxUploadPriceTB.toFixed(2),
+    maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth.toFixed(2),
+    maxDownloadPriceTB: prices?.maxDownloadPriceTB.toFixed(2),
+    maxUploadPriceTB: prices?.maxUploadPriceTB.toFixed(2),
   }).toEqual({
     maxDownloadPriceTB: '68.18',
     maxStoragePriceTBMonth: '54.55',
@@ -462,9 +462,9 @@ test('with varied estimates, standard weights, 1x redundancy, 1.5x allowance fac
   })
   expect(
     calculateIdealAllowance({
-      maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth,
-      maxDownloadPriceTB: prices.maxDownloadPriceTB,
-      maxUploadPriceTB: prices.maxUploadPriceTB,
+      maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth,
+      maxDownloadPriceTB: prices?.maxDownloadPriceTB,
+      maxUploadPriceTB: prices?.maxUploadPriceTB,
       allowanceFactor,
       storageTB,
       downloadTBMonth,
@@ -489,7 +489,7 @@ test('with zero allowance returns null', () => {
     redundancyMultiplier,
   })
 
-  expect(prices).toBeNull()
+  expect(prices).toBeUndefined()
 })
 
 test('with zero prices returns null', () => {
@@ -512,5 +512,5 @@ test('with zero prices returns null', () => {
     redundancyMultiplier,
   })
 
-  expect(allowance).toBeNull()
+  expect(allowance).toBeUndefined()
 })

@@ -16,30 +16,35 @@ import {
   valuePerTBToPerByte,
 } from '@siafoundation/units'
 import {
-  AutopilotData,
-  SettingsData,
-  getAdvancedDefaultAutopilot,
-  PinningData,
-  getAdvancedDefaultUpload,
+  getAdvancedDefaultsAutopilot,
+  getAdvancedDefaultsUpload,
+  ValuesPinned,
+  ValuesUpload,
+  ValuesAutopilot,
+  ValuesGouging,
+  SubmitValuesAutopilot,
+  SubmitValuesGouging,
+  getAdvancedDefaultsGouging,
+  getAdvancedDefaultsPinned,
+  SubmitValuesPinned,
+  SubmitValuesUpload,
+  SubmitValues,
 } from './types'
 import { ResourcesRequiredLoaded } from './resources'
 import BigNumber from 'bignumber.js'
-import { pickBy } from '@technically/lodash'
-import { Dictionary } from 'lodash'
+import { objectEntries } from '@siafoundation/design-system'
 
 // up
 export function transformUpAutopilot(
   network: 'mainnet' | 'zen' | 'anagami',
-  values: AutopilotData,
+  values: SubmitValuesAutopilot,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   existingValues: AutopilotConfig | undefined
 ): AutopilotConfig {
-  // Merge suggestions with values, if advanced values are required they will
-  // be added before this function is called and will override suggestions.
-  const v: AutopilotData = {
-    ...getAdvancedDefaultAutopilot(network),
-    ...filterUndefinedKeys(values),
-  }
+  const v = applyDefaultToAnyEmptyValues(
+    values,
+    getAdvancedDefaultsAutopilot(network)
+  ) as ValuesAutopilot
 
   return {
     ...existingValues,
@@ -72,106 +77,111 @@ export function transformUpAutopilot(
       maxDowntimeHours: v.maxDowntimeHours.toNumber(),
       maxConsecutiveScanFailures: v.maxConsecutiveScanFailures.toNumber(),
       allowRedundantIPs: v.allowRedundantIPs,
-      scoreOverrides: existingValues?.hosts.scoreOverrides || null,
+      scoreOverrides: existingValues?.hosts.scoreOverrides || {},
       minProtocolVersion: v.minProtocolVersion,
     },
   }
 }
 
 export function transformUpGouging(
-  values: SettingsData,
+  values: SubmitValuesGouging,
   existingValues: SettingsGouging
 ): SettingsGouging {
+  const v = applyDefaultToAnyEmptyValues(
+    values,
+    getAdvancedDefaultsGouging()
+  ) as ValuesGouging
   return {
     ...existingValues,
     maxRPCPrice: toHastings(
-      valuePerMillionToPerOne(values.maxRPCPriceMillion)
+      valuePerMillionToPerOne(v.maxRPCPriceMillion)
     ).toString(),
     maxStoragePrice: toHastings(
-      valuePerTBPerMonthToPerBytePerBlock(values.maxStoragePriceTBMonth)
+      valuePerTBPerMonthToPerBytePerBlock(v.maxStoragePriceTBMonth)
     ).toString(),
     maxUploadPrice: toHastings(
-      valuePerTBToPerByte(values.maxUploadPriceTB)
+      valuePerTBToPerByte(v.maxUploadPriceTB)
     ).toString(),
     maxDownloadPrice: toHastings(
-      valuePerTBToPerByte(values.maxDownloadPriceTB)
+      valuePerTBToPerByte(v.maxDownloadPriceTB)
     ).toString(),
-    maxContractPrice: toHastings(values.maxContractPrice).toString(),
-    hostBlockHeightLeeway: Math.round(
-      values.hostBlockHeightLeeway?.toNumber() || 0
-    ),
+    maxContractPrice: toHastings(v.maxContractPrice).toString(),
+    hostBlockHeightLeeway: Math.round(v.hostBlockHeightLeeway.toNumber() || 0),
     minPriceTableValidity: Math.round(
-      minutesInNanoseconds(values.minPriceTableValidityMinutes?.toNumber() || 0)
+      minutesInNanoseconds(v.minPriceTableValidityMinutes.toNumber() || 0)
     ),
     minAccountExpiry: Math.round(
-      daysInNanoseconds(values.minAccountExpiryDays.toNumber())
+      daysInNanoseconds(v.minAccountExpiryDays.toNumber())
     ),
     minMaxEphemeralAccountBalance: toHastings(
-      values.minMaxEphemeralAccountBalance
+      v.minMaxEphemeralAccountBalance
     ).toString(),
-    migrationSurchargeMultiplier:
-      values.migrationSurchargeMultiplier.toNumber(),
+    migrationSurchargeMultiplier: v.migrationSurchargeMultiplier.toNumber(),
   }
 }
 
 export function transformUpPinned(
-  values: PinningData & { periodWeeks: BigNumber },
+  values: SubmitValuesPinned & { periodWeeks?: BigNumber },
   existingValues: SettingsPinned,
   autopilotID: string
 ): SettingsPinned {
+  const v = applyDefaultToAnyEmptyValues(
+    values,
+    getAdvancedDefaultsPinned()
+  ) as ValuesPinned & { periodWeeks: BigNumber }
   return {
     ...existingValues,
-    currency: values.pinnedCurrency,
-    threshold: values.pinnedThreshold.div(100).toNumber(),
+    currency: v.pinnedCurrency,
+    threshold: v.pinnedThreshold.div(100).toNumber(),
     autopilots: {
       [autopilotID]: {
         allowance: {
-          pinned: values.shouldPinAllowance,
+          pinned: v.shouldPinAllowance,
           value: valuePerMonthToPerPeriod(
-            values.allowanceMonthPinned,
+            v.allowanceMonthPinned,
             // If autopilot is disabled the period value may be undefined,
             // but in that case the pinned allowance is also unused.
-            values.periodWeeks || new BigNumber(6)
+            v.periodWeeks || new BigNumber(6)
           ).toNumber(),
         },
       },
     },
     gougingSettingsPins: {
       maxStorage: {
-        pinned: values.shouldPinMaxStoragePrice,
-        value: values.maxStoragePriceTBMonthPinned.toNumber(),
+        pinned: v.shouldPinMaxStoragePrice,
+        value: v.maxStoragePriceTBMonthPinned.toNumber(),
       },
       maxDownload: {
-        pinned: values.shouldPinMaxDownloadPrice,
-        value: values.maxDownloadPriceTBPinned.toNumber(),
+        pinned: v.shouldPinMaxDownloadPrice,
+        value: v.maxDownloadPriceTBPinned.toNumber(),
       },
       maxUpload: {
-        pinned: values.shouldPinMaxUploadPrice,
-        value: values.maxUploadPriceTBPinned.toNumber(),
+        pinned: v.shouldPinMaxUploadPrice,
+        value: v.maxUploadPriceTBPinned.toNumber(),
       },
     },
   }
 }
 
 export function transformUpUpload(
-  values: Partial<SettingsData>,
+  values: SubmitValuesUpload,
   existingValues: SettingsUpload
 ): SettingsUpload {
-  const defaultContractSet =
-    values.defaultContractSet ||
-    existingValues.defaultContractSet ||
-    getAdvancedDefaultUpload('mainnet').defaultContractSet
+  const v = applyDefaultToAnyEmptyValues(
+    values,
+    getAdvancedDefaultsUpload('mainnet')
+  ) as ValuesUpload
   return {
     ...existingValues,
-    defaultContractSet,
+    defaultContractSet: v.defaultContractSet,
     packing: {
       ...existingValues.packing,
-      enabled: values.uploadPackingEnabled,
+      enabled: v.uploadPackingEnabled,
     },
     redundancy: {
       ...existingValues.redundancy,
-      minShards: values.minShards.toNumber(),
-      totalShards: values.totalShards.toNumber(),
+      minShards: v.minShards.toNumber(),
+      totalShards: v.totalShards.toNumber(),
     },
   }
 }
@@ -185,7 +195,7 @@ export function transformUp({
   resources: ResourcesRequiredLoaded
   renterdState: { network: 'mainnet' | 'zen' | 'anagami' }
   isAutopilotEnabled: boolean
-  values: SettingsData
+  values: SubmitValues
 }) {
   const autopilot = isAutopilotEnabled
     ? transformUpAutopilot(
@@ -213,11 +223,18 @@ export function transformUp({
   }
 }
 
-export function filterUndefinedKeys(
-  obj: Dictionary<string | boolean | BigNumber>
+function applyDefaultToAnyEmptyValues<Values extends Record<string, unknown>>(
+  values: Values,
+  defaults: Partial<Values>
 ) {
-  return pickBy(
-    obj,
-    (value) => value !== undefined && value !== null && value !== ''
-  )
+  const merged = { ...values }
+  objectEntries(merged).forEach(([key, value]) => {
+    const defaultValue = defaults[key]
+    if (defaultValue) {
+      if (value === undefined || value === null || value === '') {
+        merged[key] = defaultValue
+      }
+    }
+  })
+  return merged
 }

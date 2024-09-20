@@ -1,7 +1,7 @@
 import { ConfigFields, Text, formSetFields } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import React, { useMemo } from 'react'
-import { Categories, SettingsData } from '../types'
+import { Categories, InputValues } from '../types'
 import { calculateEstimatedSpending } from '@siafoundation/units'
 import {
   CheckmarkFilled16,
@@ -29,8 +29,8 @@ export function AllowanceTips({
   form,
   fields,
 }: {
-  form: UseFormReturn<SettingsData>
-  fields: ConfigFields<SettingsData, Categories>
+  form: UseFormReturn<InputValues>
+  fields: ConfigFields<InputValues, Categories>
 }) {
   const enabledDerivedPrices = useAllowanceDerivedPricingForEnabledFields({
     form,
@@ -85,7 +85,7 @@ export function AllowanceTips({
       return new BigNumber(0)
     }
     const { maxStoragePriceTBMonth, maxUploadPriceTB, maxDownloadPriceTB } =
-      pricesInSiacoin
+      pricesInSiacoin || {}
     const spending = calculateEstimatedSpending({
       maxStoragePriceTBMonth,
       maxDownloadPriceTB,
@@ -95,24 +95,24 @@ export function AllowanceTips({
       uploadTBMonth,
       redundancyMultiplier,
     })
-    const scaledAllowance = allowanceMonth.times(allowanceFactor)
-    const diff = scaledAllowance.minus(spending).abs()
-    const percentage = diff.div(scaledAllowance).times(100)
+    const scaledAllowance = allowanceMonth?.times(allowanceFactor)
+    const diff = scaledAllowance?.minus(spending || 0).abs()
+    const percentage = diff?.div(scaledAllowance || 1).times(100)
     return percentage
   }, [
-    allowanceMonth,
+    canCheckPricing,
     pricesInSiacoin,
     storageTB,
     downloadTBMonth,
     uploadTBMonth,
     redundancyMultiplier,
-    canCheckPricing,
+    allowanceMonth,
   ])
 
   return (
     <>
       {canCheckPricing ? (
-        differencePercentage.gt(1) ? (
+        differencePercentage?.gt(1) ? (
           <TipReadOnly icon={<WarningFilled16 />} iconColor="amber">
             <Text size="12" ellipsis>
               Current pricing may not fit allowance
