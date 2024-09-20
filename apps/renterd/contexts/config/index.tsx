@@ -8,7 +8,7 @@ import {
   useOnInvalid,
 } from '@siafoundation/design-system'
 import { useCallback, useMemo } from 'react'
-import { SettingsData } from './types'
+import { InputValues } from './types'
 import { transformDown } from './transformDown'
 import { useResources } from './useResources'
 import { useOnValid } from './useOnValid'
@@ -92,18 +92,19 @@ export function useConfigMain() {
     setConfigViewMode,
   } = useForm({ resources })
 
-  const remoteValues: SettingsData = useMemo(() => {
-    if (!checkIfAllResourcesLoaded(resources)) {
-      return null
+  const remoteValues: InputValues | undefined = useMemo(() => {
+    const loaded = checkIfAllResourcesLoaded(resources)
+    if (!loaded) {
+      return undefined
     }
     return transformDown({
-      autopilotID: resources.autopilotState.data?.id,
-      hasBeenConfigured: resources.autopilotState.data?.configured,
-      autopilot: resources.autopilot.data,
-      gouging: resources.gouging.data,
-      pinned: resources.pinned.data,
-      upload: resources.upload.data,
-      averages: resources.averages.data,
+      autopilotID: loaded.autopilotState.data.id,
+      hasBeenConfigured: loaded.autopilotState.data.configured,
+      autopilot: loaded.autopilot.data,
+      gouging: loaded.gouging.data,
+      pinned: loaded.pinned.data,
+      upload: loaded.upload.data,
+      averages: loaded.averages.data,
     })
   }, [resources])
 
@@ -122,7 +123,7 @@ export function useConfigMain() {
     const _upload = await upload.mutate()
     if (!_autopilotState || !_gouging || !_upload || !_pinned) {
       triggerErrorToast({ title: 'Error fetching settings' })
-      return null
+      return undefined
     }
     form.reset(
       transformDown({
@@ -169,7 +170,7 @@ export function useConfigMain() {
     [form, onValid, onInvalid]
   )
 
-  const configRef = useRef()
+  const configRef = useRef<HTMLDivElement>(null)
   const takeScreenshot = useCallback(
     async (props: {
       name: string
@@ -177,6 +178,9 @@ export function useConfigMain() {
       copy?: boolean
       download?: boolean
     }) => {
+      if (!configRef.current) {
+        return
+      }
       nodeToImage(configRef.current, props)
     },
     []

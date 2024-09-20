@@ -11,18 +11,20 @@ import { useApp } from '../../contexts/app'
 import { useEstimatedSpending } from './useEstimatedSpending'
 
 export function ConfigStats() {
-  const { autopilot } = useApp()
+  const { isAutopilotEnabled } = useApp()
   const { redundancyMultiplier, storageTB, configViewMode } = useConfig()
 
-  const { canEstimate, estimatedSpendingPerMonth, estimatedSpendingPerTB } =
+  const { estimatedSpendingPerMonth, estimatedSpendingPerTB } =
     useEstimatedSpending()
 
   const perMonth = useSiacoinFiat({ sc: estimatedSpendingPerMonth })
   const perTB = useSiacoinFiat({ sc: estimatedSpendingPerTB })
 
-  if (autopilot.status !== 'on') {
+  if (!isAutopilotEnabled) {
     return null
   }
+  const canEstimate =
+    estimatedSpendingPerMonth && estimatedSpendingPerTB && storageTB
 
   return !canEstimate ? (
     <Text size="12" font="mono" weight="medium">

@@ -73,16 +73,17 @@ export type ResourcesRequiredLoaded = {
   }
 }
 
-export function checkIfAllResourcesLoaded({
-  autopilotState,
-  autopilot,
-  gouging,
-  pinned,
-  upload,
-  averages,
-  appSettings,
-}: ResourcesMaybeLoaded) {
-  return !!(
+export function checkIfAllResourcesLoaded(resources: ResourcesMaybeLoaded) {
+  const {
+    autopilotState,
+    autopilot,
+    gouging,
+    pinned,
+    upload,
+    averages,
+    appSettings,
+  } = resources
+  const loaded = !!(
     // these settings have initial daemon values
     (
       autopilotState.data &&
@@ -100,6 +101,10 @@ export function checkIfAllResourcesLoaded({
       (!appSettings.settings.siaCentral || averages.data)
     )
   )
+  if (loaded) {
+    return resources as ResourcesRequiredLoaded
+  }
+  return false
 }
 
 export function checkIfAnyResourcesErrored({

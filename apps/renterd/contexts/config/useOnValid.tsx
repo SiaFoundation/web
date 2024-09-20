@@ -19,7 +19,7 @@ import {
   checkIfAllResourcesLoaded,
 } from './resources'
 import { transformUp } from './transformUp'
-import { defaultValues } from './types'
+import { InputValues, SubmitValues } from './types'
 import { useSyncContractSet } from './useSyncContractSet'
 
 export function useOnValid({
@@ -40,8 +40,10 @@ export function useOnValid({
   const { maybeSyncDefaultContractSet } = useSyncContractSet()
   const mutate = useMutate()
   const onValid = useCallback(
-    async (values: typeof defaultValues) => {
-      if (!checkIfAllResourcesLoaded(resources)) {
+    async (values: InputValues) => {
+      const loaded = checkIfAllResourcesLoaded(resources)
+
+      if (!loaded || !renterdState.data) {
         return
       }
       const firstTimeSettingConfig =
@@ -51,7 +53,7 @@ export function useOnValid({
         resources: resources as ResourcesRequiredLoaded,
         renterdState: renterdState.data,
         isAutopilotEnabled,
-        values,
+        values: values as SubmitValues,
       })
 
       const autopilotResponse = payloads.autopilot
@@ -86,9 +88,9 @@ export function useOnValid({
         return
       }
 
-      if (isAutopilotEnabled) {
+      if (isAutopilotEnabled && payloads.autopilot) {
         // Sync default contract set if the setting is enabled.
-        maybeSyncDefaultContractSet(values.autopilotContractSet)
+        maybeSyncDefaultContractSet(payloads.autopilot.contracts.set)
 
         // Trigger the autopilot loop with new settings applied.
         autopilotTrigger.post({

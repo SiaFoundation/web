@@ -13,24 +13,25 @@ import {
   storageWeight,
   uploadWeight,
 } from './deriveAllowanceConfig'
-import { SettingsData } from './types'
+import { InputValues } from './types'
 import { useFormExchangeRate } from './useFormExchangeRate'
 import { useRedundancyMultiplier } from './useRedundancyMultiplier'
+import { Maybe } from '@siafoundation/design-system'
 
 // Convert the allowance to pricing values. This method returns values for
 // pinned or non-pinned values depending on which is enabled on a per-field basis.
 export function useAllowanceDerivedPricingForEnabledFields({
   form,
 }: {
-  form: UseFormReturn<SettingsData>
-}): {
+  form: UseFormReturn<InputValues>
+}): Maybe<{
   maxStoragePriceTBMonth?: BigNumber
   maxDownloadPriceTB?: BigNumber
   maxUploadPriceTB?: BigNumber
   maxStoragePriceTBMonthPinned?: BigNumber
   maxDownloadPriceTBPinned?: BigNumber
   maxUploadPriceTBPinned?: BigNumber
-} | null {
+}> {
   const { isAutopilotEnabled } = useApp()
   const allowanceMonth = useEnabledAllowanceInSiacoin({
     form,
@@ -58,7 +59,7 @@ export function useAllowanceDerivedPricingForEnabledFields({
         uploadWeight,
       })
       if (!derivedPricing) {
-        return null
+        return undefined
       }
       // Convert derived siacoin prices to pinned fiat prices.
       const pinnedPricing = rate
@@ -70,13 +71,13 @@ export function useAllowanceDerivedPricingForEnabledFields({
             maxUploadPriceTBPinned:
               derivedPricing?.maxUploadPriceTB.times(rate),
           }
-        : {}
+        : undefined
       return {
         ...derivedPricing,
         ...pinnedPricing,
       }
     }
-    return null
+    return undefined
   }, [
     isAutopilotEnabled,
     allowanceMonth,
@@ -91,10 +92,10 @@ export function useAllowanceDerivedPricingForEnabledFields({
   const shouldPinMaxUploadPrice = form.watch('shouldPinMaxUploadPrice')
   const shouldPinMaxDownloadPrice = form.watch('shouldPinMaxDownloadPrice')
 
-  const results: Partial<SettingsData> = {}
+  const results: Partial<InputValues> = {}
 
   if (!values) {
-    return null
+    return undefined
   }
 
   if (shouldPinMaxStoragePrice) {
@@ -123,7 +124,7 @@ export function useAllowanceDerivedPricingForEnabledFields({
 export function useEnabledPricingValuesInSiacoin({
   form,
 }: {
-  form: UseFormReturn<SettingsData>
+  form: UseFormReturn<InputValues>
 }) {
   const shouldPinMaxStoragePrice = form.watch('shouldPinMaxStoragePrice')
   const shouldPinMaxUploadPrice = form.watch('shouldPinMaxUploadPrice')
@@ -144,31 +145,34 @@ export function useEnabledPricingValuesInSiacoin({
     shouldPinMaxUploadPrice
 
   if (needsExchangeRate && !rate) {
-    return null
+    return undefined
   }
 
   if (shouldPinMaxStoragePrice && !maxStoragePriceTBMonthPinned) {
-    return null
+    return undefined
   }
 
   if (shouldPinMaxDownloadPrice && !maxDownloadPriceTBPinned) {
-    return null
+    return undefined
   }
 
   if (shouldPinMaxUploadPrice && !maxUploadPriceTBPinned) {
-    return null
+    return undefined
   }
 
   return {
-    maxStoragePriceTBMonth: shouldPinMaxStoragePrice
-      ? fiatToSiacoin(maxStoragePriceTBMonthPinned, rate)
-      : maxStoragePriceTBMonth,
-    maxDownloadPriceTB: shouldPinMaxDownloadPrice
-      ? fiatToSiacoin(maxDownloadPriceTBPinned, rate)
-      : maxDownloadPriceTB,
-    maxUploadPriceTB: shouldPinMaxUploadPrice
-      ? fiatToSiacoin(maxUploadPriceTBPinned, rate)
-      : maxUploadPriceTB,
+    maxStoragePriceTBMonth:
+      shouldPinMaxStoragePrice && maxStoragePriceTBMonthPinned && rate
+        ? fiatToSiacoin(maxStoragePriceTBMonthPinned, rate)
+        : maxStoragePriceTBMonth,
+    maxDownloadPriceTB:
+      shouldPinMaxDownloadPrice && maxDownloadPriceTBPinned && rate
+        ? fiatToSiacoin(maxDownloadPriceTBPinned, rate)
+        : maxDownloadPriceTB,
+    maxUploadPriceTB:
+      shouldPinMaxUploadPrice && maxUploadPriceTBPinned && rate
+        ? fiatToSiacoin(maxUploadPriceTBPinned, rate)
+        : maxUploadPriceTB,
   }
 }
 
@@ -177,11 +181,13 @@ export function useEnabledPricingValuesInSiacoin({
 export function useEnabledAllowanceFromEnabledPricingValues({
   form,
 }: {
-  form: UseFormReturn<SettingsData>
-}): {
-  allowanceMonth?: BigNumber
-  allowanceMonthPinned?: BigNumber
-} | null {
+  form: UseFormReturn<InputValues>
+}):
+  | {
+      allowanceMonth?: BigNumber
+      allowanceMonthPinned?: BigNumber
+    }
+  | undefined {
   const minShards = form.watch('minShards')
   const totalShards = form.watch('totalShards')
   const storageTB = form.watch('storageTB')
@@ -198,7 +204,7 @@ export function useEnabledAllowanceFromEnabledPricingValues({
   const { rate } = useFormExchangeRate(form)
 
   if (!prices) {
-    return null
+    return undefined
   }
 
   const { maxStoragePriceTBMonth, maxUploadPriceTB, maxDownloadPriceTB } =
@@ -213,15 +219,15 @@ export function useEnabledAllowanceFromEnabledPricingValues({
     redundancyMultiplier,
   })
 
-  const results: Partial<SettingsData> = {}
+  const results: Partial<InputValues> = {}
 
   if (!allowance) {
-    return null
+    return undefined
   }
 
   if (shouldPinAllowance) {
     if (!rate) {
-      return null
+      return undefined
     }
     results.allowanceMonthPinned = allowance.times(rate)
   } else {
@@ -235,18 +241,20 @@ export function useEnabledAllowanceFromEnabledPricingValues({
 export function useEnabledAllowanceInSiacoin({
   form,
 }: {
-  form: UseFormReturn<SettingsData>
-}): BigNumber | null {
+  form: UseFormReturn<InputValues>
+}): Maybe<BigNumber> {
   const shouldPinAllowance = form.watch('shouldPinAllowance')
   const allowanceMonth = form.watch('allowanceMonth')
   const allowanceMonthPinned = form.watch('allowanceMonthPinned')
   const { rate } = useFormExchangeRate(form)
   const needsExchangeRate = shouldPinAllowance
-  if (needsExchangeRate && !rate) {
-    return null
+  if (needsExchangeRate) {
+    if (rate) {
+      return allowanceMonthPinned?.div(rate)
+    }
+    return undefined
   }
-
-  return shouldPinAllowance ? allowanceMonthPinned?.div(rate) : allowanceMonth
+  return allowanceMonth
 }
 
 export function pricesToPinnedPrices({
@@ -261,7 +269,7 @@ export function pricesToPinnedPrices({
   maxUploadPriceTB: BigNumber
 }) {
   if (!exchangeRate) {
-    return null
+    return undefined
   }
   return {
     maxStoragePriceTBMonthPinned: siacoinToFiat(

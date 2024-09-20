@@ -4,7 +4,7 @@ import {
   formSetField,
 } from '@siafoundation/design-system'
 import React from 'react'
-import { Categories, RecommendationItem, SettingsData } from '../types'
+import { Categories, RecommendationItem, InputValues } from '../types'
 import { toHastings } from '@siafoundation/units'
 import { UseFormReturn } from 'react-hook-form'
 import { recommendationTipContent } from './Tip'
@@ -14,9 +14,9 @@ export function MaxRPCPriceTips({
   fields,
   recommendations,
 }: {
-  form: UseFormReturn<SettingsData>
-  fields: ConfigFields<SettingsData, Categories>
-  recommendations: Partial<Record<keyof SettingsData, RecommendationItem>>
+  form: UseFormReturn<InputValues>
+  fields: ConfigFields<InputValues, Categories>
+  recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
 }) {
   const recommendationPrice = recommendations?.maxRPCPriceMillion?.targetValue
 

@@ -1,3 +1,4 @@
+import { NoUndefined } from '@siafoundation/design-system'
 import { CurrencyId } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 
@@ -16,7 +17,7 @@ export type ConfigViewMode = 'basic' | 'advanced'
 export const scDecimalPlaces = 6
 
 // form defaults
-export const defaultAutopilot = {
+export const inputValuesAutopilot = {
   // contracts
   autopilotContractSet: '',
   amountHosts: undefined as BigNumber | undefined,
@@ -34,7 +35,7 @@ export const defaultAutopilot = {
   minProtocolVersion: '',
 }
 
-export const defaultGouging = {
+export const inputValuesGouging = {
   maxRPCPriceMillion: undefined as BigNumber | undefined,
   maxStoragePriceTBMonth: undefined as BigNumber | undefined,
   maxContractPrice: undefined as BigNumber | undefined,
@@ -47,7 +48,7 @@ export const defaultGouging = {
   migrationSurchargeMultiplier: undefined as BigNumber | undefined,
 }
 
-export const defaultPinned = {
+export const inputValuesPinned = {
   pinnedCurrency: '' as CurrencyId | '',
   pinnedThreshold: undefined as BigNumber | undefined,
   shouldPinMaxStoragePrice: false,
@@ -60,9 +61,9 @@ export const defaultPinned = {
   allowanceMonthPinned: undefined as BigNumber | undefined,
 }
 
-export const defaultUpload = {
+export const inputValuesUpload = {
   // default contract set
-  defaultContractSet: '',
+  defaultContractSet: undefined as string | undefined,
   // packing
   uploadPackingEnabled: true,
   // redundancy
@@ -70,74 +71,110 @@ export const defaultUpload = {
   totalShards: undefined as BigNumber | undefined,
 }
 
-export const defaultRedundancy = {}
-
-export const defaultValues = {
+export const inputValues = {
   // autopilot
-  ...defaultAutopilot,
+  ...inputValuesAutopilot,
   // gouging
-  ...defaultGouging,
+  ...inputValuesGouging,
   // pinning
-  ...defaultPinned,
+  ...inputValuesPinned,
   // upload
-  ...defaultUpload,
+  ...inputValuesUpload,
 }
 
-export type AutopilotData = typeof defaultAutopilot
-export type GougingData = typeof defaultGouging
-export type PinningData = typeof defaultPinned
-export type UploadData = typeof defaultUpload
-export type SettingsData = typeof defaultValues
+// InputValues: form fields can be undefined when they are cleared.
+export type InputValuesAutopilot = typeof inputValuesAutopilot
+export type InputValuesGouging = typeof inputValuesGouging
+export type InputValuesPinned = typeof inputValuesPinned
+export type InputValuesUpload = typeof inputValuesUpload
+export type InputValues = typeof inputValues
+
+// Values: all daemon required fields are present.
+export type ValuesAutopilot = NoUndefined<InputValuesAutopilot>
+export type ValuesGouging = NoUndefined<InputValuesGouging>
+export type ValuesPinned = NoUndefined<InputValuesPinned>
+export type ValuesUpload = NoUndefined<InputValuesUpload>
+export type Values = NoUndefined<InputValues>
+
+// AdvancedDefaults: fields set in the background in basic mode.
+export type AdvancedDefaultsAutopilot = ReturnType<
+  typeof getAdvancedDefaultsAutopilot
+>
+export type AdvancedDefaultsGouging = ReturnType<
+  typeof getAdvancedDefaultsGouging
+>
+export type AdvancedDefaultsPinned = ReturnType<
+  typeof getAdvancedDefaultsPinned
+>
+export type AdvancedDefaultsUpload = ReturnType<
+  typeof getAdvancedDefaultsUpload
+>
+export type AdvancedDefaults = ReturnType<typeof getAdvancedDefaults>
+
+export type GetSubmitValues<Values, Defaults> = Omit<Values, keyof Defaults> &
+  Partial<Defaults>
+
+// SubmitValues: all fields required to submit the form are present.
+export type SubmitValuesAutopilot = GetSubmitValues<
+  ValuesAutopilot,
+  AdvancedDefaultsAutopilot
+>
+export type SubmitValuesGouging = GetSubmitValues<
+  ValuesGouging,
+  AdvancedDefaultsGouging
+>
+export type SubmitValuesPinned = GetSubmitValues<
+  ValuesPinned,
+  AdvancedDefaultsPinned
+>
+export type SubmitValuesUpload = GetSubmitValues<
+  ValuesUpload,
+  AdvancedDefaultsUpload
+>
+export type SubmitValues = GetSubmitValues<Values, AdvancedDefaults>
 
 // advanced defaults
-export function getAdvancedDefaultAutopilot(
+export function getAdvancedDefaultsAutopilot(
   network: 'mainnet' | 'zen' | 'anagami'
-): AutopilotData {
+) {
+  return network === 'mainnet'
+    ? {
+        periodWeeks: new BigNumber(6),
+        renewWindowWeeks: new BigNumber(2),
+        amountHosts: new BigNumber(50),
+        autopilotContractSet: 'autopilot',
+        allowRedundantIPs: false,
+        maxDowntimeHours: new BigNumber(336),
+        maxConsecutiveScanFailures: new BigNumber(10),
+        minProtocolVersion: '1.6.0',
+        prune: true,
+      }
+    : {
+        periodWeeks: new BigNumber(6),
+        renewWindowWeeks: new BigNumber(2),
+        amountHosts: new BigNumber(12),
+        autopilotContractSet: 'autopilot',
+        allowRedundantIPs: false,
+        maxDowntimeHours: new BigNumber(336),
+        maxConsecutiveScanFailures: new BigNumber(10),
+        minProtocolVersion: '1.6.0',
+        prune: true,
+      }
+}
+
+export function getAdvancedDefaultsGouging() {
   return {
-    // must be set
-    storageTB: undefined,
-    downloadTBMonth: undefined,
-    uploadTBMonth: undefined,
-    // calcuated and set
-    allowanceMonth: undefined,
-    // defaults
-    ...(network === 'mainnet'
-      ? {
-          periodWeeks: new BigNumber(6),
-          renewWindowWeeks: new BigNumber(2),
-          amountHosts: new BigNumber(50),
-          autopilotContractSet: 'autopilot',
-          allowRedundantIPs: false,
-          maxDowntimeHours: new BigNumber(336),
-          maxConsecutiveScanFailures: new BigNumber(10),
-          minProtocolVersion: '1.6.0',
-          prune: true,
-        }
-      : {
-          periodWeeks: new BigNumber(6),
-          renewWindowWeeks: new BigNumber(2),
-          amountHosts: new BigNumber(12),
-          autopilotContractSet: 'autopilot',
-          allowRedundantIPs: false,
-          maxDowntimeHours: new BigNumber(336),
-          maxConsecutiveScanFailures: new BigNumber(10),
-          minProtocolVersion: '1.6.0',
-          prune: true,
-        }),
+    hostBlockHeightLeeway: new BigNumber(6),
   }
 }
 
-export const advancedDefaultGouging: GougingData = {
-  ...defaultGouging,
+export function getAdvancedDefaultsPinned() {
+  return {}
 }
 
-export const advancedDefaultPinned: PinningData = {
-  ...defaultPinned,
-}
-
-export function getAdvancedDefaultUpload(
+export function getAdvancedDefaultsUpload(
   network: 'mainnet' | 'zen' | 'anagami'
-): UploadData {
+) {
   const advancedDefaultRedundancy =
     network === 'mainnet'
       ? {
@@ -149,26 +186,24 @@ export function getAdvancedDefaultUpload(
           totalShards: new BigNumber(6),
         }
   return {
-    ...defaultUpload,
     defaultContractSet: 'autopilot',
+    uploadPackingEnabled: true,
     ...advancedDefaultRedundancy,
   }
 }
 
-export function getAdvancedDefaults(
-  network: 'mainnet' | 'zen' | 'anagami'
-): SettingsData {
+export function getAdvancedDefaults(network: 'mainnet' | 'zen' | 'anagami') {
   return {
-    ...getAdvancedDefaultAutopilot(network),
-    ...advancedDefaultGouging,
-    ...advancedDefaultPinned,
-    ...getAdvancedDefaultUpload(network),
+    ...getAdvancedDefaultsAutopilot(network),
+    ...getAdvancedDefaultsGouging(),
+    ...getAdvancedDefaultsPinned(),
+    ...getAdvancedDefaultsUpload(network),
   }
 }
 
 export type RecommendationItem = {
   hrefId: string
-  key: keyof SettingsData
+  key: keyof InputValues
   title: string
   currentLabel: string
   targetLabel: string

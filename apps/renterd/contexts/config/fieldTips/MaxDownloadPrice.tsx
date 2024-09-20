@@ -5,7 +5,7 @@ import {
 } from '@siafoundation/design-system'
 import { fiatToSiacoin, toHastings } from '@siafoundation/units'
 import { UseFormReturn } from 'react-hook-form'
-import { Categories, RecommendationItem, SettingsData } from '../types'
+import { Categories, RecommendationItem, InputValues } from '../types'
 import { useAllowanceDerivedPricingForEnabledFields } from '../useAllowanceDerivedPricing'
 import { useFormExchangeRate } from '../useFormExchangeRate'
 import {
@@ -18,9 +18,9 @@ export function MaxDownloadPriceTips({
   fields,
   recommendations,
 }: {
-  form: UseFormReturn<SettingsData>
-  fields: ConfigFields<SettingsData, Categories>
-  recommendations: Partial<Record<keyof SettingsData, RecommendationItem>>
+  form: UseFormReturn<InputValues>
+  fields: ConfigFields<InputValues, Categories>
+  recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
 }) {
   const derived = useAllowanceDerivedPricingForEnabledFields({
     form,
@@ -29,7 +29,7 @@ export function MaxDownloadPriceTips({
 
   return (
     <>
-      {derived && (
+      {derived?.maxDownloadPriceTB && (
         <TipNumber
           type="siacoin"
           label="Fit current allowance"
@@ -74,9 +74,9 @@ export function MaxDownloadPricePinnedTips({
   fields,
   recommendations,
 }: {
-  form: UseFormReturn<SettingsData>
-  fields: ConfigFields<SettingsData, Categories>
-  recommendations: Partial<Record<keyof SettingsData, RecommendationItem>>
+  form: UseFormReturn<InputValues>
+  fields: ConfigFields<InputValues, Categories>
+  recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
 }) {
   const derived = useAllowanceDerivedPricingForEnabledFields({
     form,
@@ -94,7 +94,7 @@ export function MaxDownloadPricePinnedTips({
       : null
   return (
     <>
-      {derived && (
+      {derivedPriceInSiacoin && derived?.maxDownloadPriceTBPinned && (
         <TipNumber
           type="siacoin"
           label="Fit current allowance"

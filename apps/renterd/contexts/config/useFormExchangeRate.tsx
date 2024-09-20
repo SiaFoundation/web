@@ -1,8 +1,8 @@
 import { UseFormReturn } from 'react-hook-form'
-import { SettingsData } from './types'
+import { InputValues } from './types'
 import { useExchangeRate } from '@siafoundation/react-core'
 
-export function useFormExchangeRate(form: UseFormReturn<SettingsData>) {
+export function useFormExchangeRate(form: UseFormReturn<InputValues>) {
   const pinnedCurrency = form.watch('pinnedCurrency')
   const { rate } = useExchangeRate({
     currency: pinnedCurrency || undefined,

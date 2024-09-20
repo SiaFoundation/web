@@ -10,6 +10,7 @@ import {
 } from '@siafoundation/renterd-react'
 import useLocalStorageState from 'use-local-storage-state'
 import { transformUpUpload } from './transformUp'
+import { transformDownUpload } from './transformDown'
 
 export function useSyncContractSet() {
   const [shouldSyncDefaultContractSet, setShouldSyncDefaultContractSet] =
@@ -36,9 +37,11 @@ export function useSyncContractSet() {
           shouldSyncDefaultContractSet &&
           autopilotContractSet !== csd.defaultContractSet
         ) {
+          const existingSettings = transformDownUpload(uploadSettings.data)
           await settingsUploadUpdate.put({
             payload: transformUpUpload(
               {
+                ...existingSettings,
                 defaultContractSet: autopilotContractSet,
               },
               uploadSettings.data
