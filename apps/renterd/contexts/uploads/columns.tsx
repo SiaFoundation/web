@@ -49,7 +49,11 @@ export const columns: UploadsTableColumn[] = [
         )
       }
       return (
-        <TransferProgress loaded={loaded} size={size} status={uploadStatus} />
+        <TransferProgress
+          loaded={loaded || 0}
+          size={size}
+          status={uploadStatus}
+        />
       )
     },
   },

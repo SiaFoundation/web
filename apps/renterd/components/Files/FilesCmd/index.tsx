@@ -60,7 +60,7 @@ export function FilesCmd({
               router.push(routes.buckets.index)
             }
             closeDialog()
-            afterSelect()
+            afterSelect?.()
           }}
         >
           View files
@@ -70,7 +70,7 @@ export function FilesCmd({
           commandPage={commandPage}
           onSelect={() => {
             pushPage(filesSearchAllPage)
-            afterSelect()
+            afterSelect?.()
           }}
         >
           Search all files
@@ -81,7 +81,7 @@ export function FilesCmd({
             commandPage={commandPage}
             onSelect={() => {
               pushPage(getFilesSearchBucketPage(activeBucket.name))
-              afterSelect()
+              afterSelect?.()
             }}
           >
             Search files in bucket

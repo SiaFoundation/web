@@ -16,7 +16,7 @@ export const filesSearchAllPage = {
   empty: FileSearchEmpty,
 }
 
-export function getFilesSearchBucketPage(activeBucketName: string) {
+export function getFilesSearchBucketPage(activeBucketName?: string) {
   return {
     namespace: 'files/search/bucket',
     label: 'Search files in current bucket',
@@ -44,9 +44,9 @@ export function FilesSearchCmd({
   const { activeBucketName, navigateToModeSpecificFiltering } =
     useFilesManager()
   const activePage =
-    mode === 'global'
-      ? filesSearchAllPage
-      : getFilesSearchBucketPage(activeBucketName)
+    mode === 'bucket' && activeBucketName
+      ? getFilesSearchBucketPage(activeBucketName)
+      : filesSearchAllPage
   const onSearchPage = currentPage?.namespace === activePage.namespace
   const validMode = mode === 'global' || (mode === 'bucket' && activeBucketName)
   const params = useMemo(() => {
@@ -88,9 +88,9 @@ export function FilesSearchCmd({
             currentPage={currentPage}
             key={key}
             onSelect={() => {
-              beforeSelect()
+              beforeSelect?.()
               navigateToModeSpecificFiltering(bucket + key)
-              afterSelect()
+              afterSelect?.()
             }}
             value={key}
           >

@@ -62,11 +62,11 @@ function getFields({
       validation: {
         required: 'required',
         validate: {
-          minLength: (value) =>
+          minLength: (value: string) =>
             value?.length >= 16 || 'must be at least 16 characters',
-          maxLength: (value) =>
+          maxLength: (value: string) =>
             value?.length <= 128 || 'must be at most 128 characters',
-          unique: (value) =>
+          unique: (value: string) =>
             !existingKeys.includes(value) || 'Name must be unique',
         },
       },
@@ -110,6 +110,10 @@ export function KeysCreateDialog({ trigger, open, onOpenChange }: Props) {
 
   const onSubmit = useCallback(
     async (values: Values) => {
+      if (!settingsS3.data) {
+        triggerErrorToast({ title: 'Error creating key' })
+        return
+      }
       const v4Keypairs = {
         ...settingsS3.data?.authentication.v4Keypairs,
         [values.name]: values.secret,

@@ -41,6 +41,7 @@ export function FilesCreateDirectoryDialog({
         params: bucketAndKeyParamsFromPath(
           activeDirectoryPath + values.name + '/'
         ),
+        // @ts-expect-error TODO: fix types
         payload: null,
       })
       if (response.error) {

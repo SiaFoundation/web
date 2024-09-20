@@ -10,7 +10,9 @@ export function usePrunableContractSizes() {
   const { bus } = useApp()
 
   const [prunableSizes, setPrunableSizes] = useState<PrunableSizes>({})
-  const [isFetchingPrunableSizeById, setIsFetchingPrunableById] = useState({})
+  const [isFetchingPrunableSizeById, setIsFetchingPrunableById] = useState<
+    Record<FileContractID, boolean>
+  >({})
   const [isFetchingPrunableSizeAll, setIsFetchingPrunableAll] = useState(false)
 
   const fetchPrunableSizeAll = useCallback(async () => {
@@ -19,7 +21,7 @@ export function usePrunableContractSizes() {
       const prunable = await bus?.contractsPrunable()
       setPrunableSizes((data) => ({
         ...data,
-        ...prunable.data?.contracts.reduce(
+        ...prunable?.data?.contracts.reduce(
           (acc, contract) => ({
             ...acc,
             [contract.id]: {
@@ -32,7 +34,7 @@ export function usePrunableContractSizes() {
         ),
       }))
     } catch (err) {
-      triggerErrorToast({ title: 'Error', body: err.message })
+      triggerErrorToast({ title: 'Error', body: (err as Error).message })
     } finally {
       setIsFetchingPrunableAll(false)
     }
@@ -46,6 +48,9 @@ export function usePrunableContractSizes() {
           [id]: true,
         }))
         const prunable = await bus?.contractSize({ params: { id } })
+        if (!prunable) {
+          return
+        }
         setPrunableSizes((data) => ({
           ...data,
           [id]: {
@@ -54,7 +59,7 @@ export function usePrunableContractSizes() {
           },
         }))
       } catch (err) {
-        triggerErrorToast({ title: 'Error', body: err.message })
+        triggerErrorToast({ title: 'Error', body: (err as Error).message })
       } finally {
         setIsFetchingPrunableById((data) => ({
           ...data,

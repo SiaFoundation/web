@@ -118,6 +118,9 @@ export function ContractContextMenuContent({
       <DropdownMenuItem
         disabled={!hostAddress}
         onSelect={() => {
+          if (!hostAddress) {
+            return
+          }
           resetContractsFilters()
           setContractsFilter(addressContainsFilter(hostAddress))
           router.push(routes.contracts.index)
@@ -131,6 +134,9 @@ export function ContractContextMenuContent({
       <DropdownMenuItem
         disabled={!hostKey}
         onSelect={() => {
+          if (!hostKey) {
+            return
+          }
           resetContractsFilters()
           setContractsFilter(publicKeyContainsFilter(hostKey))
           router.push(routes.contracts.index)
@@ -145,7 +151,12 @@ export function ContractContextMenuContent({
       {blocklist.data?.find((l) => l === hostAddress) ? (
         <DropdownMenuItem
           disabled={!hostAddress}
-          onSelect={() => blocklistUpdate([], [hostAddress])}
+          onSelect={() => {
+            if (!hostAddress) {
+              return
+            }
+            blocklistUpdate([], [hostAddress])
+          }}
         >
           <DropdownMenuLeftSlot>
             <ListChecked16 />
@@ -155,7 +166,12 @@ export function ContractContextMenuContent({
       ) : (
         <DropdownMenuItem
           disabled={!hostAddress}
-          onSelect={() => blocklistUpdate([hostAddress], [])}
+          onSelect={() => {
+            if (!hostAddress) {
+              return
+            }
+            blocklistUpdate([hostAddress], [])
+          }}
         >
           <DropdownMenuLeftSlot>
             <ListChecked16 />
@@ -166,7 +182,12 @@ export function ContractContextMenuContent({
       {allowlist.data?.find((l) => l === hostKey) ? (
         <DropdownMenuItem
           disabled={!hostKey}
-          onSelect={() => allowlistUpdate([], [hostKey])}
+          onSelect={() => {
+            if (!hostKey) {
+              return
+            }
+            allowlistUpdate([], [hostKey])
+          }}
         >
           <DropdownMenuLeftSlot>
             <ListChecked16 />
@@ -176,7 +197,12 @@ export function ContractContextMenuContent({
       ) : (
         <DropdownMenuItem
           disabled={!hostKey}
-          onSelect={() => allowlistUpdate([hostKey], [])}
+          onSelect={() => {
+            if (!hostKey) {
+              return
+            }
+            allowlistUpdate([hostKey], [])
+          }}
         >
           <DropdownMenuLeftSlot>
             <ListChecked16 />
@@ -199,7 +225,12 @@ export function ContractContextMenuContent({
       </DropdownMenuItem>
       <DropdownMenuItem
         disabled={!hostKey}
-        onSelect={() => copyToClipboard(hostKey, 'host public key')}
+        onSelect={() => {
+          if (!hostKey) {
+            return
+          }
+          copyToClipboard(hostKey, 'host public key')
+        }}
       >
         <DropdownMenuLeftSlot>
           <Copy16 />
@@ -208,7 +239,12 @@ export function ContractContextMenuContent({
       </DropdownMenuItem>
       <DropdownMenuItem
         disabled={!hostAddress}
-        onSelect={() => copyToClipboard(hostAddress, 'host address')}
+        onSelect={() => {
+          if (!hostAddress) {
+            return
+          }
+          copyToClipboard(hostAddress, 'host address')
+        }}
       >
         <DropdownMenuLeftSlot>
           <Copy16 />

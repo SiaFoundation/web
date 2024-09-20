@@ -83,6 +83,9 @@ export function FileRenameDialog({ trigger, open, onOpenChange }: Props) {
 
   const onValid = useCallback(
     async (values: Values) => {
+      if (!originalPath) {
+        return
+      }
       const { bucket, to, from, mode } = getRenameFileRenameParams(
         originalPath,
         values.name

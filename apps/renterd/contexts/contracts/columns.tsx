@@ -96,7 +96,7 @@ export const columns: ContractsTableColumn[] = [
       data: { contractSets },
       context: { defaultContractSet, autopilotContractSet },
     }) => {
-      if (!contractSets.length) {
+      if (!contractSets?.length) {
         return null
       }
       return (
@@ -426,14 +426,19 @@ export const columns: ContractsTableColumn[] = [
     render: ({ data: { totalCost } }) => (
       <ValueScFiat displayBoth size="12" value={totalCost.negated()} />
     ),
-    summary: ({ context: { filteredStats } }) => (
-      <ValueScFiat
-        displayBoth
-        size="12"
-        value={filteredStats.totalCostTotal.negated()}
-        tooltip="Total cost across the filtered set of active contracts"
-      />
-    ),
+    summary: ({ context: { filteredStats } }) => {
+      if (!filteredStats.totalCostTotal) {
+        return null
+      }
+      return (
+        <ValueScFiat
+          displayBoth
+          size="12"
+          value={filteredStats.totalCostTotal.negated()}
+          tooltip="Total cost across the filtered set of active contracts"
+        />
+      )
+    },
   },
   {
     id: 'spendingUploads',
@@ -443,14 +448,19 @@ export const columns: ContractsTableColumn[] = [
     render: ({ data: { spendingUploads } }) => (
       <ValueScFiat displayBoth size="12" value={spendingUploads.negated()} />
     ),
-    summary: ({ context: { filteredStats } }) => (
-      <ValueScFiat
-        displayBoth
-        size="12"
-        value={filteredStats.spendingUploadsTotal.negated()}
-        tooltip="Uploads spending across the filtered set of active contracts"
-      />
-    ),
+    summary: ({ context: { filteredStats } }) => {
+      if (!filteredStats.spendingUploadsTotal) {
+        return null
+      }
+      return (
+        <ValueScFiat
+          displayBoth
+          size="12"
+          value={filteredStats.spendingUploadsTotal.negated()}
+          tooltip="Uploads spending across the filtered set of active contracts"
+        />
+      )
+    },
   },
   {
     id: 'spendingDeletions',
@@ -460,14 +470,19 @@ export const columns: ContractsTableColumn[] = [
     render: ({ data: { spendingDeletions } }) => (
       <ValueScFiat displayBoth size="12" value={spendingDeletions.negated()} />
     ),
-    summary: ({ context: { filteredStats } }) => (
-      <ValueScFiat
-        displayBoth
-        size="12"
-        value={filteredStats.spendingDeletionsTotal.negated()}
-        tooltip="Deletions spending across the filtered set of active contracts"
-      />
-    ),
+    summary: ({ context: { filteredStats } }) => {
+      if (!filteredStats.spendingDeletionsTotal) {
+        return null
+      }
+      return (
+        <ValueScFiat
+          displayBoth
+          size="12"
+          value={filteredStats.spendingDeletionsTotal.negated()}
+          tooltip="Deletions spending across the filtered set of active contracts"
+        />
+      )
+    },
   },
   {
     id: 'spendingFundAccount',
@@ -481,14 +496,19 @@ export const columns: ContractsTableColumn[] = [
         value={spendingFundAccount.negated()}
       />
     ),
-    summary: ({ context: { filteredStats } }) => (
-      <ValueScFiat
-        displayBoth
-        size="12"
-        value={filteredStats.spendingFundAccountTotal.negated()}
-        tooltip="Fund account spending across the filtered set of active contracts"
-      />
-    ),
+    summary: ({ context: { filteredStats } }) => {
+      if (!filteredStats.spendingFundAccountTotal) {
+        return null
+      }
+      return (
+        <ValueScFiat
+          displayBoth
+          size="12"
+          value={filteredStats.spendingFundAccountTotal.negated()}
+          tooltip="Fund account spending across the filtered set of active contracts"
+        />
+      )
+    },
   },
   {
     id: 'spendingSectorRoots',
@@ -502,14 +522,19 @@ export const columns: ContractsTableColumn[] = [
         value={spendingSectorRoots.negated()}
       />
     ),
-    summary: ({ context: { filteredStats } }) => (
-      <ValueScFiat
-        displayBoth
-        size="12"
-        value={filteredStats.spendingSectorRootsTotal.negated()}
-        tooltip="Sector roots spending across the filtered set of active contracts"
-      />
-    ),
+    summary: ({ context: { filteredStats } }) => {
+      if (!filteredStats.spendingSectorRootsTotal) {
+        return null
+      }
+      return (
+        <ValueScFiat
+          displayBoth
+          size="12"
+          value={filteredStats.spendingSectorRootsTotal.negated()}
+          tooltip="Sector roots spending across the filtered set of active contracts"
+        />
+      )
+    },
   },
 ]
 

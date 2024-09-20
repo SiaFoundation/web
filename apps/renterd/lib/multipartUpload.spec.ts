@@ -4,6 +4,7 @@ import {
   MultipartParams,
   MultipartUpload,
 } from './multipartUpload'
+import { AxiosResponseHeaders } from 'axios'
 
 describe('MultipartUpload', () => {
   it('should report progress and complete with serial parts', async () => {
@@ -20,11 +21,13 @@ describe('MultipartUpload', () => {
     await multipartUpload.start()
     expect(params.onProgress.mock.calls.length).toBe(20)
     expect(
-      params.onProgress.mock.calls.map(([params]) => [
-        params.sent,
-        params.total,
-        params.percentage,
-      ])
+      params.onProgress.mock.calls.map(
+        ([params]: [{ sent: number; total: number; percentage: number }]) => [
+          params.sent,
+          params.total,
+          params.percentage,
+        ]
+      )
     ).toEqual([
       [1, 20, 5],
       [2, 20, 10],
@@ -84,11 +87,13 @@ describe('MultipartUpload', () => {
     await multipartUpload.start()
     expect(params.onProgress.mock.calls.length).toBe(20)
     expect(
-      params.onProgress.mock.calls.map(([params]) => [
-        params.sent,
-        params.total,
-        params.percentage,
-      ])
+      params.onProgress.mock.calls.map(
+        ([params]: [{ sent: number; total: number; percentage: number }]) => [
+          params.sent,
+          params.total,
+          params.percentage,
+        ]
+      )
     ).toEqual([
       [1, 20, 5],
       [2, 20, 10],
@@ -158,11 +163,13 @@ describe('MultipartUpload', () => {
     await multipartUpload.start()
     expect(params.onProgress.mock.calls.length).toBe(11)
     expect(
-      params.onProgress.mock.calls.map(([params]) => [
-        params.sent,
-        params.total,
-        params.percentage,
-      ])
+      params.onProgress.mock.calls.map(
+        ([params]: [{ sent: number; total: number; percentage: number }]) => [
+          params.sent,
+          params.total,
+          params.percentage,
+        ]
+      )
     ).toEqual([
       [1, 6, 17], // call 0
       [2, 6, 33],
@@ -217,11 +224,13 @@ describe('MultipartUpload', () => {
     await multipartUpload.start()
     expect(params.onProgress.mock.calls.length).toBe(4)
     expect(
-      params.onProgress.mock.calls.map(([params]) => [
-        params.sent,
-        params.total,
-        params.percentage,
-      ])
+      params.onProgress.mock.calls.map(
+        ([params]: [{ sent: number; total: number; percentage: number }]) => [
+          params.sent,
+          params.total,
+          params.percentage,
+        ]
+      )
     ).toEqual([
       [1, 6, 17], // call 0
       [2, 6, 33],
@@ -353,11 +362,16 @@ function buildMockApiWorkerUploadPart({
           } else {
             if (loaded >= partSize) {
               clearInterval(intervalId)
+
+              const headers: AxiosResponseHeaders = {
+                etag: eTag,
+              }
+              if (failure?.type === 'missingEtag') {
+                delete headers.etag
+              }
               resolve({
                 status: 200,
-                headers: {
-                  etag: failure?.type === 'missingEtag' ? undefined : eTag,
-                },
+                headers,
               })
             }
             partIndex++

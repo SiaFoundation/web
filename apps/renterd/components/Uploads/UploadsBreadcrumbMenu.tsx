@@ -25,7 +25,12 @@ export function UploadsBreadcrumbMenu() {
             <ChevronRight16 />
           </Text>
           <Text
-            onClick={() => setActiveDirectory(() => [activeBucket])}
+            onClick={() => {
+              if (!activeBucket) {
+                return
+              }
+              setActiveDirectory(() => [activeBucket])
+            }}
             size="18"
             weight="semibold"
             className="flex items-center cursor-pointer"

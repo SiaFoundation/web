@@ -47,7 +47,7 @@ export function AddressCmdNav({
   commandPage,
 }: {
   currentPage: Page
-  parentPage: Page
+  parentPage?: Page
   commandPage: Page
   select: () => void
 }) {

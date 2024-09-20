@@ -33,9 +33,9 @@ export function useDataset({ id, objects }: Props) {
     setActiveDirectory,
   } = useFilesManager()
   const { dataset: allContracts } = useContracts()
-  const response = useSWR<ObjectData[] | null>(
+  const response = useSWR<ObjectData[] | undefined>(
     objects.isValidating || buckets.isValidating
-      ? null
+      ? undefined
       : [id, activeBucketName, activeDirectoryPath],
     () => {
       const dataMap: Record<string, ObjectData> = {}
@@ -58,7 +58,7 @@ export function useDataset({ id, objects }: Props) {
         })
       } else if (objects.data || uploadsList.length) {
         objects.data?.forEach(({ key, size, health }) => {
-          const path = join(activeBucketName, key)
+          const path = join(activeBucket.name, key)
           const name = getFilename(key)
           dataMap[path] = {
             id: path,

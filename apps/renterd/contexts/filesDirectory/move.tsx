@@ -29,7 +29,9 @@ export function useMove({
   setActiveDirectory,
   refresh,
 }: Props) {
-  const [draggingObject, setDraggingObject] = useState<ObjectData | null>(null)
+  const [draggingObject, setDraggingObject] = useState<ObjectData | undefined>(
+    undefined
+  )
   const [, setNavTimeout] = useState<NodeJS.Timeout>()
   const rename = useObjectsRename()
 
@@ -66,7 +68,7 @@ export function useMove({
           if (t) {
             clearTimeout(t)
           }
-          return null
+          return undefined
         })
         return
       }
@@ -84,8 +86,8 @@ export function useMove({
   )
 
   const scheduleNavigation = useCallback(
-    (e: { collisions: { id: string | number }[] }) => {
-      if (!e.collisions.length) {
+    (e: { collisions: { id: string | number }[] | null }) => {
+      if (!e.collisions?.length) {
         delayedNavigation(undefined)
       } else {
         const path = e.collisions?.[0].id as string
@@ -101,7 +103,7 @@ export function useMove({
 
   const onDragStart = useCallback(
     (e: DragStartEvent) => {
-      setDraggingObject(dataset.find((d) => d.id === e.active.id) || null)
+      setDraggingObject(dataset?.find((d) => d.id === e.active.id))
     },
     [dataset, setDraggingObject]
   )

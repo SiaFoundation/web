@@ -21,7 +21,6 @@ export function Alerts() {
     toggleSort,
     limit,
     dataState,
-    cellContext,
   } = useAlerts()
 
   return (
@@ -35,7 +34,6 @@ export function Alerts() {
     >
       <div className="p-6 min-w-fit">
         <Table
-          context={cellContext}
           isLoading={dataState === 'loading'}
           emptyState={
             dataState === 'noneMatchingFilters' ? (

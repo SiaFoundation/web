@@ -3,7 +3,9 @@ import { useMemo } from 'react'
 import { upperFirst } from '@technically/lodash'
 
 function getProgress(transfer: { loaded?: number; size?: number }) {
-  return transfer.loaded !== undefined ? transfer.loaded / transfer.size : 1
+  return transfer.loaded !== undefined && transfer.size
+    ? transfer.loaded / transfer.size
+    : 1
 }
 
 type Props = {

@@ -14,8 +14,8 @@ export function useDataset({
   defaultContractSet,
 }: {
   selectContract: (id: string) => void
-  autopilotContractSet: string
-  defaultContractSet: string
+  autopilotContractSet?: string
+  defaultContractSet?: string
 }) {
   const response = useContractsData({
     config: {
@@ -53,8 +53,12 @@ export function useDataset({
           hostIp: c.hostIP,
           hostKey: c.hostKey,
           contractSets: c.contractSets || [],
-          inAutopilotSet: c.contractSets?.includes(autopilotContractSet),
-          inDefaultSet: c.contractSets?.includes(defaultContractSet),
+          inAutopilotSet: autopilotContractSet
+            ? !!c.contractSets?.includes(autopilotContractSet)
+            : false,
+          inDefaultSet: defaultContractSet
+            ? !!c.contractSets?.includes(defaultContractSet)
+            : false,
           location: geoHosts.find((h) => h.public_key === c.hostKey)?.location,
           timeline: startTime,
           startTime,

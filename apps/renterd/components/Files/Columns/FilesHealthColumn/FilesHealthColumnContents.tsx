@@ -82,7 +82,7 @@ export function FilesHealthColumnContents({
       displayHealth={displayHealth}
       label={label}
       minShards={slabs.find((s) => s.minShards)?.minShards}
-      totalShards={slabs.find((s) => s.shards)?.shards.length}
+      totalShards={slabs.find((s) => s.shards)?.shards?.length}
     >
       {slabs.map((slab) => (
         <div key={slab.id} className="flex justify-between gap-2">
@@ -96,7 +96,7 @@ export function FilesHealthColumnContents({
           </Text>
           <Text size="12" className="flex items-center">
             {slab.isPartialSlab
-              ? `${slab.contractSetShards}/${slab.shards.length}`
+              ? `${slab.contractSetShards}/${slab.shards?.length}`
               : 'partial slab'}
           </Text>
         </div>

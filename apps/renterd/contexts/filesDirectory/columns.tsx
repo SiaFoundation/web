@@ -184,10 +184,12 @@ export const columns: FilesTableColumn[] = [
         return null
       }
       if (isUploading) {
-        const displayPercent = ((loaded / size) * 100).toFixed(0) + '%'
+        const displayPercent = loaded
+          ? ((loaded / size) * 100).toFixed(0) + '%'
+          : '0%'
         return (
           <Tooltip
-            content={`Uploaded ${humanBytes(loaded)}/${humanBytes(size)}`}
+            content={`Uploaded ${humanBytes(loaded || 0)}/${humanBytes(size)}`}
           >
             <div className="flex items-center gap-1 cursor-pointer">
               <Text color="subtle">

@@ -18,7 +18,7 @@ type Data = {
 
 export type Row<Data, Context> = {
   data: Data
-  context?: Context
+  context: Context
 }
 
 export type TableColumn<Columns, Data, Context> = {
@@ -36,7 +36,7 @@ export type TableColumn<Columns, Data, Context> = {
 
 type Props<Columns extends string, Data, Context> = {
   data: Data
-  context?: Context
+  context: Context
   columns: TableColumn<Columns, Data, Context>[]
   rowSize?: 'dense' | 'default' | 'auto'
   focusId?: string

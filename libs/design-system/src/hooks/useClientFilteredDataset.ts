@@ -12,7 +12,7 @@ type DatumValue =
   | object
 
 type Props<Datum extends Record<string, DatumValue>> = {
-  dataset: Datum[] | null
+  dataset: Datum[] | undefined
   filters: ClientFilterItem<Datum>[]
   sortField: string
   sortDirection: 'asc' | 'desc'
@@ -21,9 +21,9 @@ type Props<Datum extends Record<string, DatumValue>> = {
 export function useClientFilteredDataset<
   Datum extends Record<string, DatumValue>
 >({ dataset, filters, sortField, sortDirection }: Props<Datum>) {
-  return useMemo<Datum[] | null>(() => {
+  return useMemo<Datum[] | undefined>(() => {
     if (!dataset) {
-      return null
+      return undefined
     }
     const filterList = Object.entries(filters).map(([_, f]) => f)
     let data = filterList.length

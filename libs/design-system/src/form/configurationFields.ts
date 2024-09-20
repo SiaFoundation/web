@@ -2,14 +2,27 @@ import BigNumber from 'bignumber.js'
 import { entries } from '@technically/lodash'
 import React, { MouseEvent, useCallback } from 'react'
 import {
+  DeepMap,
+  DeepPartial,
   FieldErrors,
   FieldValues,
   Path,
   PathValue,
-  RegisterOptions,
+  ValidationRule,
   UseFormReturn,
+  Message,
 } from 'react-hook-form'
 import { triggerErrorToast } from '../lib/toast'
+
+type Validate<Values extends FieldValues> = (
+  // Unable to figure out how to get ConfigFields to infer the type.
+  // Making it any so the caller can specify the type.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: any,
+  values: Values
+) => boolean | string
+
+type ValidateMap<Values extends FieldValues> = Record<string, Validate<Values>>
 
 export type ConfigField<
   Values extends FieldValues,
@@ -65,7 +78,15 @@ export type ConfigField<
 
   show?: (values: Values) => boolean
 
-  validation: RegisterOptions<Values>
+  validation: {
+    required?: Message | ValidationRule<boolean>
+    min?: ValidationRule<number | string>
+    max?: ValidationRule<number | string>
+    maxLength?: ValidationRule<number>
+    minLength?: ValidationRule<number>
+    validate?: ValidateMap<Values> | Validate<Values>
+  }
+
   trigger?: Path<Values>[]
 
   // other
@@ -92,7 +113,8 @@ export function useRegisterForm<
 }) {
   const value = form.watch(name)
   const error =
-    form.formState.touchedFields[name] && !!form.formState.errors[name]
+    getFormStateFieldBoolean(form.formState.touchedFields, name) &&
+    !!form.formState.errors[name]
 
   // Do not memoize this register call, for an unknown reason it sometimes
   // causes form updates to stop working.
@@ -183,4 +205,12 @@ export function shouldShowField<
 >({ name, form, fields }: FieldProps<Values, Categories>) {
   const field = fields[name]
   return !field.hidden && (!field.show || field.show(form.getValues()))
+}
+
+// Helper method that works around some TypeScript issues with key access.
+export function getFormStateFieldBoolean<Values>(
+  map: Partial<Readonly<DeepMap<DeepPartial<Values>, boolean>>>,
+  name: string
+) {
+  return (map as Record<string, boolean>)[name]
 }

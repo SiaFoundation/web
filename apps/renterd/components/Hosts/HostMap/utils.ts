@@ -16,14 +16,14 @@ export function getHostLabel({
   exchangeRateUSD?: BigNumber
 }) {
   const storageCost = exchangeRateUSD
-    ? `$${new BigNumber(host.settings.storageprice)
+    ? `$${new BigNumber(host.settings?.storageprice || 0)
         .times(TBToBytes(1))
         .times(monthsToBlocks(1))
         .div(1e24)
         .times(exchangeRateUSD)
         .toFixed(2)}/TB`
     : `${humanSiacoin(
-        new BigNumber(host.settings.storageprice)
+        new BigNumber(host.settings?.storageprice || 0)
           .times(TBToBytes(1))
           .times(monthsToBlocks(1)),
         { fixed: 0 }
@@ -36,10 +36,10 @@ export function getHostLabel({
   )} utilized`
 
   const availableStorage = `${humanBytes(
-    host.settings.remainingstorage
-  )} / ${humanBytes(host.settings.totalstorage)} available`
+    host.settings?.remainingstorage || 0
+  )} / ${humanBytes(host.settings?.totalstorage || 0)} available`
 
-  return `${countryCodeEmoji(
-    host.countryCode
-  )} · ${storageCost} · ${usedStorage} · ${availableStorage}`
+  const cc = host.countryCode ? countryCodeEmoji(host.countryCode) : '🌍'
+
+  return `${cc} · ${storageCost} · ${usedStorage} · ${availableStorage}`
 }

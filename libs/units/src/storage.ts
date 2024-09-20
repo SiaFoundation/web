@@ -89,8 +89,8 @@ export function getRemainingStorage(host: SiaCentralHost) {
 }
 
 export function getRedundancyMultiplier(
-  minShards: BigNumber,
-  totalShards: BigNumber
+  minShards?: BigNumber,
+  totalShards?: BigNumber
 ): BigNumber {
   let redundancyMult = new BigNumber(1)
   const canCalcRedundancy =
@@ -114,15 +114,15 @@ export function calculateEstimatedSpending({
   uploadTBMonth,
   redundancyMultiplier,
 }: {
-  maxStoragePriceTBMonth: BigNumber
-  maxDownloadPriceTB: BigNumber
-  maxUploadPriceTB: BigNumber
-  storageTB: BigNumber
-  downloadTBMonth: BigNumber
-  uploadTBMonth: BigNumber
-  redundancyMultiplier: BigNumber
+  maxStoragePriceTBMonth?: BigNumber
+  maxDownloadPriceTB?: BigNumber
+  maxUploadPriceTB?: BigNumber
+  storageTB?: BigNumber
+  downloadTBMonth?: BigNumber
+  uploadTBMonth?: BigNumber
+  redundancyMultiplier?: BigNumber
 }) {
-  // Return null if zero or negative values are provided.
+  // Return undefined if zero or negative values are provided.
   if (
     !maxStoragePriceTBMonth?.gt(0) ||
     !maxDownloadPriceTB?.gt(0) ||
@@ -132,7 +132,7 @@ export function calculateEstimatedSpending({
     !downloadTBMonth?.gt(0) ||
     !uploadTBMonth?.gt(0)
   ) {
-    return null
+    return undefined
   }
 
   const storageTBWithRedundancy = storageTB.times(redundancyMultiplier)

@@ -2,7 +2,11 @@ import { NumberField } from '../core/NumberField'
 import BigNumber from 'bignumber.js'
 import { FieldValues, Path, PathValue } from 'react-hook-form'
 import { FieldGroup } from '../components/Form'
-import { FieldProps, useRegisterForm } from './configurationFields'
+import {
+  FieldProps,
+  getFormStateFieldBoolean,
+  useRegisterForm,
+} from './configurationFields'
 import { ChartArea16 } from '@siafoundation/react-icons'
 import { Panel } from '../core/Panel'
 import { Text } from '../core/Text'
@@ -47,7 +51,7 @@ export function FieldFiat<
     () => currencyOptions.find((c) => c.id === currency),
     [currency]
   )
-  const changed = form.formState.dirtyFields[name]
+  const changed = getFormStateFieldBoolean(form.formState.dirtyFields, name)
   const el = (
     <div
       className={cx(

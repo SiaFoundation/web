@@ -20,7 +20,7 @@ export function ContractsFilterMenu() {
   const [pages, setPages] = useState<Page[]>([])
   const currentPage = pages[pages.length - 1]
   const rootPage = pages.length === 0
-  const rootRef = useRef(null)
+  const rootRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const pushPage = useCallback(
@@ -35,8 +35,8 @@ export function ContractsFilterMenu() {
   }, [setPages])
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (rootRef.current && !rootRef.current.contains(event.target)) {
+    const handleClickOutside = (event: Event) => {
+      if (rootRef.current && !rootRef.current.contains(event.target as Node)) {
         setOpen(false)
       }
     }

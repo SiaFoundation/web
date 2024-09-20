@@ -9,7 +9,7 @@ export function RenterdTransactionDetailsDialog() {
   // TODO: add transaction endpoint
   const { dataset } = useTransactions()
   const transaction = useMemo(() => {
-    return dataset?.find((t) => t['hash'] === id)
+    return dataset?.find((t) => t.id === id)
   }, [dataset, id])
 
   return (

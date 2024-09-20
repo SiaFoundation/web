@@ -216,7 +216,7 @@ export function Dialogs() {
         open={dialog === 'confirm'}
         params={confirm}
         onOpenChange={(val) =>
-          val ? openConfirmDialog(confirm) : closeDialog()
+          val && confirm ? openConfirmDialog(confirm) : closeDialog()
         }
       />
     </>

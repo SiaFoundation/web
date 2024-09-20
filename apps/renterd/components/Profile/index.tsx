@@ -48,7 +48,7 @@ export function Profile() {
   return (
     <DaemonProfile
       name="renterd"
-      peerCount={peers.data?.length}
+      peerCount={peers.data?.length || 0}
       connectPeer={() => openDialog('connectPeer')}
       isSynced={syncStatus.isSynced}
       syncPercent={syncStatus.syncPercent}
@@ -65,7 +65,7 @@ export function Profile() {
           <ValueCopyable
             size="14"
             maxLength={50}
-            value={wallet.data?.address}
+            value={wallet.data?.address || ''}
             type="address"
           />
         </div>

@@ -116,6 +116,13 @@ export function useUploads({ activeDirectoryPath }: Props) {
       })
 
       const uploadId = await multipartUpload.create()
+      if (!uploadId) {
+        triggerErrorToast({
+          title: 'Error creating upload',
+          body: 'Failed to create upload',
+        })
+        return
+      }
       multipartUpload.setOnError((error) => {
         triggerErrorToast({
           title: 'Error uploading file',
@@ -159,11 +166,15 @@ export function useUploads({ activeDirectoryPath }: Props) {
       name: string
       uploadFile: File
     }) => {
-      const { uploadId, multipartUpload } = await createMultipartUpload({
+      const upload = await createMultipartUpload({
         path,
         bucket,
         uploadFile,
       })
+      if (!upload) {
+        return
+      }
+      const { uploadId, multipartUpload } = upload
       setUploadsMap((map) => ({
         ...map,
         [uploadId]: {
@@ -210,8 +221,11 @@ export function useUploads({ activeDirectoryPath }: Props) {
 
     const availableSlots = maxConcurrentUploads - activeUploads
 
-    // Start uploads if there are available slots and queued uploads
+    // Start uploads if there are available slots and queued uploads.
     queuedUploads.slice(0, availableSlots).forEach((upload) => {
+      if (!upload.upload) {
+        return
+      }
       startMultipartUpload({
         id: upload.id,
         upload: upload.upload,
@@ -223,7 +237,7 @@ export function useUploads({ activeDirectoryPath }: Props) {
   const uploadFiles = useCallback(
     (files: File[]) => {
       files.forEach((file) => {
-        // https://developer.mozilla.org/en-US/docs/Web/API/File
+        // @ts-expect-error: https://developer.mozilla.org/en-US/docs/Web/API/File
         // Documentation does not include `path` but all browsers populate it
         // with the relative path of the file. Whereas webkitRelativePath is
         // empty string in most browsers.
@@ -233,6 +247,13 @@ export function useUploads({ activeDirectoryPath }: Props) {
         const name = file.name
         const bucketName = getBucketFromPath(path)
         const bucket = buckets.data?.find((b) => b.name === bucketName)
+        if (!bucket) {
+          triggerErrorToast({
+            title: `Bucket not found`,
+            body: bucketName,
+          })
+          return
+        }
         if (uploadsMap[path]) {
           triggerErrorToast({
             title: `Already uploading file, aborting previous upload.`,
@@ -306,7 +327,7 @@ export function useUploads({ activeDirectoryPath }: Props) {
     [uploadsMap]
   )
 
-  // Abort local uploads when the browser tab is closed
+  // Abort local uploads when the browser tab is closed.
   useWarnActiveUploadsOnClose({ uploadsMap })
 
   return {

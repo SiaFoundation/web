@@ -106,9 +106,9 @@ function useAlertsMain() {
     [dismiss]
   )
 
-  const datasetPage = useMemo<AlertData[] | null>(() => {
+  const datasetPage = useMemo<AlertData[] | undefined>(() => {
     if (!response.data) {
-      return null
+      return undefined
     }
     const data: AlertData[] =
       response.data?.alerts?.map((a) => ({
@@ -157,8 +157,6 @@ function useAlertsMain() {
     filters
   )
 
-  const cellContext = useMemo(() => ({}), [])
-
   const totals = useMemo(
     () => ({
       ...response.data?.totals,
@@ -182,7 +180,6 @@ function useAlertsMain() {
     totals,
     columns: filteredTableColumns,
     datasetPage,
-    cellContext,
     configurableColumns,
     enabledColumns,
     sortableColumns,

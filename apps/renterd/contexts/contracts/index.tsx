@@ -127,9 +127,9 @@ function useContractsMain() {
     sortDirection,
   })
 
-  const datasetPage = useMemo<ContractData[] | null>(() => {
+  const datasetPage = useMemo<ContractData[] | undefined>(() => {
     if (!datasetFiltered) {
-      return null
+      return undefined
     }
     return datasetFiltered.slice(offset, offset + limit)
   }, [datasetFiltered, offset, limit])

@@ -35,6 +35,7 @@ import { useContracts } from '../contracts'
 import { columns } from './columns'
 import { useDataset } from './dataset'
 import {
+  HostContext,
   HostDataWithLocation,
   TableColumnId,
   ViewMode,
@@ -52,7 +53,7 @@ function useHostsMain() {
     useServerFilters()
 
   const { dataset: allContracts } = useContracts()
-  const { autopilot } = useApp()
+  const { autopilot, isAutopilotEnabled } = useApp()
 
   const keyIn = useMemo(() => {
     let keyIn: string[] = []
@@ -60,8 +61,8 @@ function useHostsMain() {
       keyIn = allContracts.map((c) => c.hostKey)
     }
     const publicKeyEquals = filters.find((f) => f.id === 'publicKeyEquals')
-    if (publicKeyEquals) {
-      keyIn.push(publicKeyEquals?.value)
+    if (publicKeyEquals?.value) {
+      keyIn.push(publicKeyEquals.value)
     }
     return keyIn.length ? keyIn : undefined
   }, [filters, allContracts])
@@ -77,11 +78,15 @@ function useHostsMain() {
       addressContains: filters.find((f) => f.id === 'addressContains')?.value,
       keyIn,
     }
-    if (autopilot.state.data?.id) {
+    if (
+      isAutopilotEnabled &&
+      autopilot.state.data?.configured &&
+      autopilot.state.data?.id
+    ) {
       p.autopilotID = autopilot.state.data.id
     }
     return p
-  }, [autopilot.state.data?.id, filters, keyIn, limit, offset])
+  }, [autopilot.state.data, filters, isAutopilotEnabled, keyIn, limit, offset])
 
   const response = useHostsSearch({
     payload,
@@ -222,8 +227,8 @@ function useHostsMain() {
   const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
 
   const siascanUrl = useSiascanUrl()
-  const isAutopilotConfigured = autopilot.state.data?.configured
-  const tableContext = useMemo(
+  const isAutopilotConfigured = !!autopilot.state.data?.configured
+  const tableContext: HostContext = useMemo(
     () => ({
       isAutopilotConfigured,
       siascanUrl,

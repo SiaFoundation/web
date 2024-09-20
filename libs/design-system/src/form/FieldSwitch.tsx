@@ -1,7 +1,11 @@
 import { FieldValues, Path, PathValue } from 'react-hook-form'
 import { FieldGroup } from '../components/Form'
 import { Switch } from '../core/Switch'
-import { FieldProps, useRegisterForm } from './configurationFields'
+import {
+  FieldProps,
+  getFormStateFieldBoolean,
+  useRegisterForm,
+} from './configurationFields'
 
 export function FieldSwitch<
   Values extends FieldValues,
@@ -38,7 +42,7 @@ export function FieldSwitch<
         state={
           error
             ? 'invalid'
-            : form.formState.dirtyFields[name]
+            : getFormStateFieldBoolean(form.formState.dirtyFields, name)
             ? 'valid'
             : 'default'
         }

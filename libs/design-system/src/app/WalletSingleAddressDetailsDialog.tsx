@@ -4,7 +4,7 @@ import { getTitleId, stripPrefix } from '../lib/utils'
 import { Dialog } from '../core/Dialog'
 
 type Props = {
-  address: string
+  address?: string
   isValidating: boolean
   trigger?: React.ReactNode
   open: boolean
@@ -20,7 +20,7 @@ export function WalletSingleAddressDetailsDialog({
 }: Props) {
   return (
     <Dialog
-      title={getTitleId('Address', stripPrefix(address) || '', 16)}
+      title={getTitleId('Address', stripPrefix(address || '') || '', 16)}
       trigger={trigger}
       open={open}
       onOpenChange={onOpenChange}

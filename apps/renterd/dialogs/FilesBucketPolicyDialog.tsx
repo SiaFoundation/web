@@ -12,12 +12,16 @@ import { useCallback, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDialog } from '../contexts/dialog'
 import { useBucket, useBucketPolicyUpdate } from '@siafoundation/renterd-react'
+import {
+  BucketParams,
+  BucketPolicyUpdateParams,
+} from '@siafoundation/renterd-types'
 
 const defaultValues = {
   visibility: 'public',
 }
 
-function getFields(name: string): ConfigFields<typeof defaultValues, never> {
+function getFields(name?: string): ConfigFields<typeof defaultValues, never> {
   return {
     visibility: {
       type: 'text',
@@ -56,7 +60,7 @@ export function FilesBucketPolicyDialog({
     disabled: !open,
     params: {
       name: name,
-    },
+    } as BucketParams,
     config: {
       swr: {
         revalidateOnFocus: false,
@@ -81,7 +85,7 @@ export function FilesBucketPolicyDialog({
       const response = await policyUpdate.put({
         params: {
           name,
-        },
+        } as BucketPolicyUpdateParams,
         payload: {
           policy: {
             publicReadAccess: values.visibility === 'public',

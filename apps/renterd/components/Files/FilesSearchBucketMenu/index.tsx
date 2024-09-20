@@ -45,9 +45,11 @@ export function FilesSearchBucketMenu({ panel }: Props) {
     >
       <Label className="px-2 flex justify-between items-center">
         File search in current bucket
-        <Button variant="inactive" state="waiting" tabIndex={-1} size="small">
-          {activeBucket.name}
-        </Button>
+        {!!activeBucket && (
+          <Button variant="inactive" state="waiting" tabIndex={-1} size="small">
+            {activeBucket.name}
+          </Button>
+        )}
       </Label>
       <Command.Input
         aria-label="search files"

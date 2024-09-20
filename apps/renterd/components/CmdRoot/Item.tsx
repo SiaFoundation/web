@@ -13,7 +13,7 @@ export function CommandItemNav({
 }: React.ComponentProps<typeof Command.Item> & {
   currentPage?: Page
   parentPage?: Page
-  commandPage: Page
+  commandPage?: Page
 }) {
   const search = useCommandState((state) => state.search)
   // show if user is on parent page and not searching
@@ -21,7 +21,7 @@ export function CommandItemNav({
     return (
       <Command.Item
         className={cx(itemStyles(), 'group', className)}
-        value={`${commandPage?.label} ${props.children.toString()}`}
+        value={`${commandPage?.label} ${props.children?.toString() || ''}`}
         {...props}
       />
     )
@@ -48,7 +48,7 @@ export function CommandItemSearch({
     return (
       <Command.Item
         className={cx(itemStyles(), 'group', className)}
-        value={`${commandPage.label} ${props.children.toString()}`}
+        value={`${commandPage.label} ${props.children?.toString() || ''}`}
         {...props}
       />
     )
@@ -76,7 +76,7 @@ export function CommandItemRootAndSearch({
     return (
       <Command.Item
         className={cx(itemStyles(), 'group', className)}
-        value={`${commandPage.label} ${props.children.toString()}`}
+        value={`${commandPage.label} ${props.children?.toString() || ''}`}
         {...props}
       />
     )

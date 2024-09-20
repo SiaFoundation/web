@@ -12,11 +12,11 @@ export const healthThresholds = {
 }
 
 export function useHealthLabel({
-  health,
+  health = 0,
   size,
   isDirectory,
 }: {
-  health: number
+  health?: number
   size: number
   isDirectory: boolean
 }) {

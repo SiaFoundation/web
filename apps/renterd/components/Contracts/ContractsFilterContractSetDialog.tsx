@@ -17,7 +17,7 @@ export function contractSetsIncludeFilter(contractSet: string) {
     value: contractSet,
     label: `contract in set ${contractSet}`,
     fn: (d: ContractData) => {
-      return d.contractSets?.includes(contractSet)
+      return !!d.contractSets?.includes(contractSet)
     },
   }
 }
@@ -80,6 +80,9 @@ export function ContractsFilterContractSetDialog({
 
   const onValid = useCallback(
     (values: Values) => {
+      if (!values.contractSet) {
+        return
+      }
       setFilter(contractSetsIncludeFilter(values.contractSet))
       closeAndReset()
     },

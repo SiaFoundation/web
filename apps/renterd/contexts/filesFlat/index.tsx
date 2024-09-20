@@ -7,12 +7,11 @@ import { columns } from './columns'
 function useFilesFlatMain() {
   const { sortDirection, sortField, filters, enabledColumns } =
     useFilesManager()
-  const { limit, response, refresh, dataset } = useDataset({
+  const { limit, response, isMore, refresh, dataset } = useDataset({
     sortField,
     sortDirection,
   })
   const nextMarker = response.data?.nextMarker
-  const isMore = response.data?.hasMore
 
   const datasetPage = useMemo(() => {
     return dataset

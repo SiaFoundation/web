@@ -85,6 +85,10 @@ export function useDownloads() {
       let isDone = false
       const bucketName = getBucketFromPath(path)
       const bucket = buckets.data?.find((b) => b.name === bucketName)
+      if (!bucket) {
+        triggerErrorToast({ title: 'Bucket not found', body: bucketName })
+        return
+      }
       const name = getFilename(path)
 
       if (downloadsMap[path]) {

@@ -22,7 +22,7 @@ type Host = SiaCentralHost
 type Props = {
   host: Host
   activeHost: Host
-  setRef?: (el: HTMLButtonElement) => void
+  setRef?: (el: HTMLButtonElement | null) => void
   selectActiveHost: (public_key: string) => void
   rates: {
     usd: string
@@ -39,14 +39,14 @@ export function HostItem({
   const storageCost = useMemo(
     () =>
       rates
-        ? `$${new BigNumber(host.settings.storage_price)
+        ? `$${new BigNumber(host.settings?.storage_price || 0)
             .times(TBToBytes(1))
             .times(monthsToBlocks(1))
             .div(1e24)
             .times(rates?.usd || 1)
             .toFixed(2)}/TB`
         : `${humanSiacoin(
-            new BigNumber(host.settings.storage_price)
+            new BigNumber(host.settings?.storage_price || 0)
               .times(TBToBytes(1))
               .times(monthsToBlocks(1)),
             { fixed: 0 }
@@ -57,13 +57,15 @@ export function HostItem({
   const downloadCost = useMemo(
     () =>
       rates
-        ? `$${new BigNumber(host.settings.download_price)
+        ? `$${new BigNumber(host.settings?.download_price || 0)
             .times(TBToBytes(1))
             .div(1e24)
             .times(rates?.usd || 1)
             .toFixed(2)}/TB`
         : `${humanSiacoin(
-            new BigNumber(host.settings.download_price).times(TBToBytes(1)),
+            new BigNumber(host.settings?.download_price || 0).times(
+              TBToBytes(1)
+            ),
             { fixed: 0 }
           )}/TB`,
     [rates, host]
@@ -72,13 +74,13 @@ export function HostItem({
   const uploadCost = useMemo(
     () =>
       rates
-        ? `$${new BigNumber(host.settings.upload_price)
+        ? `$${new BigNumber(host.settings?.upload_price || 0)
             .times(TBToBytes(1))
             .div(1e24)
             .times(rates?.usd || 1)
             .toFixed(2)}/TB`
         : `${humanSiacoin(
-            new BigNumber(host.settings.upload_price).times(TBToBytes(1)),
+            new BigNumber(host.settings?.upload_price || 0).times(TBToBytes(1)),
             { fixed: 0 }
           )}/TB`,
     [rates, host]
@@ -99,7 +101,7 @@ export function HostItem({
             </div>
             <div className="flex flex-col gap-1">
               <Text color="contrast">
-                {humanBytes(host.settings.total_storage)}
+                {humanBytes(host.settings?.total_storage || 0)}
               </Text>
               <Text color="contrast">{getDownloadSpeed(host)}</Text>
               <Text color="contrast">{getUploadSpeed(host)}</Text>
@@ -144,7 +146,7 @@ export function HostItem({
             host.public_key === activeHost?.public_key ? 'semibold' : 'regular'
           }
         >
-          {humanBytes(host.settings.total_storage)}
+          {humanBytes(host.settings?.total_storage || 0)}
           {host.benchmark && ` · ${getDownloadSpeed(host)}`}
           {' · '}
           {storageCost}

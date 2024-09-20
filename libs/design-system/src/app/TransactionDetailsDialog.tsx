@@ -9,7 +9,7 @@ import { Transaction } from '@siafoundation/types'
 import { upperFirst } from '@technically/lodash'
 
 type Props = {
-  id: string
+  id?: string
   transaction?: {
     txType: TxType
     inflow?: string
@@ -35,7 +35,7 @@ export function TransactionDetailsDialog({
         transaction?.txType
           ? upperFirst(getTxTypeLabel(transaction.txType))
           : 'Transaction',
-        id,
+        id || '',
         16
       )}
       trigger={trigger}

@@ -77,7 +77,7 @@ export function useDataset() {
   return {
     limit,
     marker,
-    isMore: response.data?.hasMore,
+    isMore: !!response.data?.hasMore,
     response,
     dataset: d.data,
     refresh: response.mutate,
