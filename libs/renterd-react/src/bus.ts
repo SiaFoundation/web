@@ -115,8 +115,8 @@ import {
   ObjectDeleteParams,
   ObjectDeletePayload,
   ObjectDeleteResponse,
-  ObjectListParams,
-  ObjectListResponse,
+  ObjectsParams,
+  ObjectsResponse,
   ObjectParams,
   ObjectRenameParams,
   ObjectRenamePayload,
@@ -176,7 +176,7 @@ import {
   busHostsBlocklistRoute,
   busHostsHostKeyRoute,
   busObjectsRoute,
-  busObjectsKeyRoute,
+  busObjectKeyRoute,
   busObjectsRenameRoute,
   busHostsRoute,
   busStateRoute,
@@ -222,8 +222,7 @@ import {
   WalletEventsParams,
   WalletEventsResponse,
   busWalletEventsRoute,
-  busListObjectsPrefixRoute,
-  busListObjectsRoute,
+  busObjectsPrefixRoute,
   busSettingsGougingRoute,
   busSettingsPinnedRoute,
   busSettingsS3Route,
@@ -704,19 +703,19 @@ export function useBucketDelete(
 }
 
 export function useObjectList(
-  args: HookArgsSwr<ObjectListParams, ObjectListResponse>
+  args: HookArgsSwr<ObjectsParams, ObjectsResponse>
 ) {
-  return useGetSwr({ ...args, route: busListObjectsPrefixRoute })
+  return useGetSwr({ ...args, route: busObjectsPrefixRoute })
 }
 
 export function useObject(args: HookArgsSwr<ObjectParams, ObjectResponse>) {
-  return useGetSwr({ ...args, route: busObjectsKeyRoute })
+  return useGetSwr({ ...args, route: busObjectKeyRoute })
 }
 
 export function useObjectAdd(
   args: HookArgsCallback<ObjectAddParams, ObjectAddPayload, ObjectAddResponse>
 ) {
-  return usePutFunc({ ...args, route: busObjectsKeyRoute })
+  return usePutFunc({ ...args, route: busObjectKeyRoute })
 }
 
 export function useObjectRename(
@@ -737,12 +736,9 @@ export function useObjectDelete(
   >
 ) {
   return useDeleteFunc(
-    { ...args, route: busObjectsKeyRoute },
+    { ...args, route: busObjectKeyRoute },
     async (mutate) => {
-      mutate(
-        (key) =>
-          key.startsWith(busObjectsRoute) || key.startsWith(busListObjectsRoute)
-      )
+      mutate((key) => key.startsWith(busObjectsRoute))
     }
   )
 }

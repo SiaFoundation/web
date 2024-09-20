@@ -64,9 +64,8 @@ export const busBucketsRoute = '/bus/buckets'
 export const busBucketNameRoute = '/bus/bucket/:name'
 export const busBucketNamePolicyRoute = '/bus/bucket/:name/policy'
 export const busObjectsRoute = '/bus/objects'
-export const busListObjectsRoute = '/bus/listobjects'
-export const busListObjectsPrefixRoute = '/bus/listobjects/:prefix'
-export const busObjectsKeyRoute = '/bus/objects/:key'
+export const busObjectsPrefixRoute = '/bus/objects/:prefix'
+export const busObjectKeyRoute = '/bus/object/:key'
 export const busObjectsRenameRoute = '/bus/objects/rename'
 export const busStatsObjectsRoute = '/bus/stats/objects'
 export const busSettingRoute = '/bus/setting'
@@ -399,8 +398,8 @@ export type BucketDeleteParams = { name: string }
 export type BucketDeletePayload = void
 export type BucketDeleteResponse = void
 
-export type ObjectListParams = {
-  bucket?: string
+export type ObjectsParams = {
+  bucket: string
   prefix?: string
   delimiter?: string
   limit?: number
@@ -408,10 +407,10 @@ export type ObjectListParams = {
   sortBy?: 'name' | 'health' | 'size'
   sortDir?: 'asc' | 'desc'
   substring?: string
-  slabEncryptionKey?: string
+  slabEncryptionKey: string
 }
-export type ObjectListPayload = void
-export type ObjectListResponse = {
+export type ObjectsPayload = void
+export type ObjectsResponse = {
   hasMore: boolean
   nextMarker: string
   objects?: ObjectMetadata[]
@@ -420,15 +419,6 @@ export type ObjectListResponse = {
 export type ObjectParams = { key: string; bucket: string }
 export type ObjectPayload = void
 export type ObjectResponse = { object: Obj }
-
-export type ObjectSearchParams = {
-  key: string
-  bucket: string
-  offset: number
-  limit: number
-}
-export type ObjectSearchPayload = void
-export type ObjectSearchResponse = ObjectMetadata[]
 
 export type ObjectAddParams = { key: string; bucket: string }
 export type ObjectAddPayload = {

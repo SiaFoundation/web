@@ -32,7 +32,7 @@ import {
   workerObjectsKeyRoute,
   workerRhpScanRoute,
   workerStateRoute,
-  busListObjectsRoute,
+  busObjectsRoute,
   Host,
 } from '@siafoundation/renterd-types'
 
@@ -79,10 +79,7 @@ export function useObjectUpload(
       route: workerObjectsKeyRoute,
     },
     async (mutate) => {
-      mutate(
-        (key) =>
-          key.startsWith(busObjectsRoute) || key.startsWith(busListObjectsRoute)
-      )
+      mutate((key) => key.startsWith(busObjectsRoute))
     }
   )
 }

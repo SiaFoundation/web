@@ -119,9 +119,9 @@ import {
   ObjectDeleteParams,
   ObjectDeletePayload,
   ObjectDeleteResponse,
-  ObjectListParams,
-  ObjectListPayload,
-  ObjectListResponse,
+  ObjectsParams,
+  ObjectsPayload,
+  ObjectsResponse,
   ObjectParams,
   ObjectPayload,
   ObjectRenameParams,
@@ -208,7 +208,7 @@ import {
   busMultipartListpartsRoute,
   busMultipartListuploadsRoute,
   busMultipartPartRoute,
-  busObjectsKeyRoute,
+  busObjectKeyRoute,
   busObjectsRenameRoute,
   busHostsRoute,
   busSlabKeyObjectsRoute,
@@ -230,7 +230,7 @@ import {
   AutopilotsPayload,
   AutopilotsResponse,
   busWalletEventsRoute,
-  busListObjectsPrefixRoute,
+  busObjectsPrefixRoute,
   SettingsGougingParams,
   SettingsGougingPayload,
   SettingsGougingResponse,
@@ -472,20 +472,20 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       BucketDeleteResponse
     >(axios, 'delete', busBucketNameRoute),
     objectList: buildRequestHandler<
-      ObjectListParams,
-      ObjectListPayload,
-      ObjectListResponse
-    >(axios, 'get', busListObjectsPrefixRoute),
+      ObjectsParams,
+      ObjectsPayload,
+      ObjectsResponse
+    >(axios, 'get', busObjectsPrefixRoute),
     object: buildRequestHandler<ObjectParams, ObjectPayload, ObjectResponse>(
       axios,
       'get',
-      busObjectsKeyRoute
+      busObjectKeyRoute
     ),
     objectAdd: buildRequestHandler<
       ObjectAddParams,
       ObjectAddPayload,
       ObjectAddResponse
-    >(axios, 'put', busObjectsKeyRoute),
+    >(axios, 'put', busObjectKeyRoute),
     objectRename: buildRequestHandler<
       ObjectRenameParams,
       ObjectRenamePayload,
@@ -495,7 +495,7 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       ObjectDeleteParams,
       ObjectDeletePayload,
       ObjectDeleteResponse
-    >(axios, 'delete', busObjectsKeyRoute),
+    >(axios, 'delete', busObjectKeyRoute),
     objectStats: buildRequestHandler<
       ObjectsStatsParams,
       ObjectsStatsPayload,
