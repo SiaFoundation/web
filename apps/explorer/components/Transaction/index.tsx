@@ -115,13 +115,13 @@ export function Transaction({
         hash: contract.id,
       })
     })
-    // transaction.host_announcements??.forEach((host) => {
-    //   operations.push({
-    //     label: 'host announcement',
-    //     // type: 'host',
-    //     hash: host.net_address,
-    //   })
-    // })
+    transaction.hostAnnouncements?.forEach((host) => {
+      operations.push({
+        label: 'host announcement',
+        // type: 'host',
+        hash: host.netAddress,
+      })
+    })
     transaction.storageProofs?.forEach((proof) => {
       operations.push({
         label: 'storage proof',
