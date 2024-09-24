@@ -9,6 +9,7 @@ import type {
   FileContractElement,
   FileContractID,
   Hash256,
+  PublicKey,
   SiacoinElement,
   SiacoinInput,
   SiacoinOutputID,
@@ -112,6 +113,16 @@ export type TxpoolTransactions = {
 //      a list of revisions, for example.
 
 /**
+ * HostAnnouncement represents a signed announcement of a host's network address.
+ * Announcements may be made via arbitrary data (in a v1 transaction) or via attestation
+ * (in a v2 transaction).
+ */
+type HostAnnouncement = {
+  publicKey: PublicKey
+  netAddress: string
+}
+
+/**
  * The origin of a `SiacoinOutput`--whether it came from a miner or a transaction.
  */
 type Source = string
@@ -181,6 +192,7 @@ export type ExplorerTransaction = {
   minerFees: Currency
   arbitraryData: string[][]
   signatures: TransactionSignature[]
+  hostAnnouncements: HostAnnouncement[]
 }
 
 /**
