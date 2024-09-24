@@ -1,13 +1,15 @@
 type Props = {
   size?: number
+  className?: string
 }
 
-export function BucketIcon({ size = 24 }: Props) {
+export function BucketIcon({ size = 24, className }: Props) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       height={size}
       width={size}
+      className={className}
       fill="currentColor"
       viewBox="0 0 448 512"
     >

@@ -66,6 +66,7 @@ export const busBucketNamePolicyRoute = '/bus/bucket/:name/policy'
 export const busObjectsRoute = '/bus/objects'
 export const busObjectsPrefixRoute = '/bus/objects/:prefix'
 export const busObjectKeyRoute = '/bus/object/:key'
+export const busObjectsRemoveRoute = '/bus/objects/remove'
 export const busObjectsRenameRoute = '/bus/objects/rename'
 export const busStatsObjectsRoute = '/bus/stats/objects'
 export const busSettingRoute = '/bus/setting'
@@ -400,7 +401,7 @@ export type BucketDeleteResponse = void
 
 export type ObjectsParams = {
   bucket?: string
-  prefix?: string
+  prefix: string
   delimiter?: string
   limit?: number
   marker?: string
@@ -437,13 +438,12 @@ export type ObjectRenamePayload = {
 }
 export type ObjectRenameResponse = void
 
-export type ObjectDeleteParams = {
-  key: string
+export type ObjectsRemoveParams = void
+export type ObjectsRemovePayload = {
   bucket: string
-  batch?: boolean
+  prefix: string
 }
-export type ObjectDeletePayload = void
-export type ObjectDeleteResponse = void
+export type ObjectsRemoveResponse = void
 
 export type ObjectsStatsParams = void
 export type ObjectsStatsPayload = void

@@ -2,16 +2,28 @@ import { CommandGroup, CommandItemSearch } from '../../../CmdRoot/Item'
 import { Page } from '../../../CmdRoot/types'
 import { useObjects } from '@siafoundation/renterd-react'
 import { isDirectory } from '../../../../lib/paths'
-import { Text } from '@siafoundation/design-system'
+import { Button, Text } from '@siafoundation/design-system'
 import { Document16, FolderIcon } from '@siafoundation/react-icons'
 import { FileSearchEmpty } from './FileSearchEmpty'
 import { useFilesManager } from '../../../../contexts/filesManager'
+import { useMemo } from 'react'
+import { ObjectsParams } from '@siafoundation/renterd-types'
 
-export const filesSearchPage = {
-  namespace: 'files/search',
-  label: 'File search',
+export const filesSearchAllPage = {
+  namespace: 'files/search/all',
+  label: 'Search all files',
   prompt: 'Search for files, eg: backups, photo_archive.zip, etc...',
   empty: FileSearchEmpty,
+}
+
+export function getFilesSearchBucketPage(activeBucketName: string) {
+  return {
+    namespace: 'files/search/bucket',
+    label: 'Search files in current bucket',
+    prompt: 'Search for files, eg: backups, photo_archive.zip, etc...',
+    tag: activeBucketName,
+    empty: FileSearchEmpty,
+  }
 }
 
 export function FilesSearchCmd({
@@ -20,25 +32,39 @@ export function FilesSearchCmd({
   currentPage,
   beforeSelect,
   afterSelect,
+  mode,
 }: {
+  mode: 'global' | 'bucket'
   debouncedSearch: string
   search: string
   currentPage?: Page
   beforeSelect?: () => void
   afterSelect?: () => void
 }) {
-  const { activeBucketName: activeBucket, navigateToModeSpecificFiltering } =
+  const { activeBucketName, navigateToModeSpecificFiltering } =
     useFilesManager()
-  const onSearchPage = currentPage?.namespace === filesSearchPage.namespace
-  const searchBucket = activeBucket || 'default'
-  const results = useObjects({
-    disabled: !onSearchPage,
-    params: {
-      bucket: searchBucket,
-      prefix: debouncedSearch,
+  const activePage =
+    mode === 'global'
+      ? filesSearchAllPage
+      : getFilesSearchBucketPage(activeBucketName)
+  const onSearchPage = currentPage?.namespace === activePage.namespace
+  const validMode = mode === 'global' || (mode === 'bucket' && activeBucketName)
+  const params = useMemo(() => {
+    const p: ObjectsParams = {
+      prefix: '',
       limit: 10,
       delimiter: '',
-    },
+      substring: debouncedSearch,
+    }
+    if (mode === 'bucket' && activeBucketName) {
+      p.bucket = activeBucketName
+    }
+    return p
+  }, [mode, activeBucketName, debouncedSearch])
+
+  const results = useObjects({
+    disabled: !onSearchPage || !validMode,
+    params,
     config: {
       swr: {
         keepPreviousData: true,
@@ -51,31 +77,31 @@ export function FilesSearchCmd({
   }
 
   return (
-    <CommandGroup currentPage={currentPage} commandPage={filesSearchPage}>
-      {results.data?.objects.map(({ key }) => {
+    <CommandGroup currentPage={currentPage} commandPage={activePage}>
+      {results.data?.objects.map(({ key, bucket }) => {
         const compressedPath = compressPath(key, search, 55)
         const { startIndex, endIndex } = findLastMatch(compressedPath, search)
 
         return (
           <CommandItemSearch
-            commandPage={filesSearchPage}
+            commandPage={activePage}
             currentPage={currentPage}
             key={key}
             onSelect={() => {
               beforeSelect()
-              navigateToModeSpecificFiltering(searchBucket + key)
+              navigateToModeSpecificFiltering(bucket + key)
               afterSelect()
             }}
             value={key}
           >
-            <div className="flex items-center gap-2 overflow-hidden">
+            <div className="flex items-center gap-2 w-full">
               <Text
                 color="verySubtle"
                 className="group-data-[selected=true]:text-gray-1000 dark:group-data-[selected=true]:text-graydark-1000"
               >
                 {isDirectory(key) ? <FolderIcon size={16} /> : <Document16 />}
               </Text>
-              <Text className="flex items-center">
+              <Text className="flex items-center flex-1 overflow-hidden">
                 <Text color="verySubtle" ellipsis>
                   {compressedPath.slice(0, startIndex)}
                 </Text>
@@ -86,6 +112,16 @@ export function FilesSearchCmd({
                   {compressedPath.slice(endIndex)}
                 </Text>
               </Text>
+              {mode === 'global' ? (
+                <Button
+                  variant="inactive"
+                  state="waiting"
+                  size="small"
+                  tabIndex={-1}
+                >
+                  {bucket}
+                </Button>
+              ) : null}
             </div>
           </CommandItemSearch>
         )

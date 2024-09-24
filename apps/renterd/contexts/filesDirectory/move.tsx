@@ -8,7 +8,7 @@ import {
   DragCancelEvent,
 } from '@dnd-kit/core'
 import { FullPathSegments, getDirectorySegmentsFromPath } from '../../lib/paths'
-import { useObjectRename } from '@siafoundation/renterd-react'
+import { useObjectsRename } from '@siafoundation/renterd-react'
 import { triggerErrorToast } from '@siafoundation/design-system'
 import { getMoveFileRenameParams } from '../../lib/rename'
 
@@ -31,7 +31,7 @@ export function useMove({
 }: Props) {
   const [draggingObject, setDraggingObject] = useState<ObjectData | null>(null)
   const [, setNavTimeout] = useState<NodeJS.Timeout>()
-  const rename = useObjectRename()
+  const rename = useObjectsRename()
 
   const moveFiles = useCallback(
     async (e: DragEndEvent) => {

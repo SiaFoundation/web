@@ -1,5 +1,5 @@
 import { Dialog } from '@siafoundation/design-system'
-import { FilesSearchMenu } from '../../components/Files/FilesSearchMenu'
+import { FilesSearchBucketMenu } from '../../components/Files/FilesSearchBucketMenu'
 
 type Props = {
   open: boolean
@@ -7,7 +7,11 @@ type Props = {
   trigger?: React.ReactNode
 }
 
-export function FilesSearchDialog({ open, onOpenChange, trigger }: Props) {
+export function FilesSearchBucketDialog({
+  open,
+  onOpenChange,
+  trigger,
+}: Props) {
   return (
     <Dialog
       open={open}
@@ -19,7 +23,7 @@ export function FilesSearchDialog({ open, onOpenChange, trigger }: Props) {
       bodyClassName="!px-1 !py-1"
       closeClassName="hidden"
     >
-      <FilesSearchMenu />
+      <FilesSearchBucketMenu />
     </Dialog>
   )
 }

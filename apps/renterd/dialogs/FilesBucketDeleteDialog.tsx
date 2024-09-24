@@ -30,8 +30,6 @@ function getFields(name: string): ConfigFields<Values, never> {
       validation: {
         required: 'required',
         validate: {
-          notDefault: () =>
-            name !== 'default' || 'cannot delete default bucket',
           equals: (value) => value === name || 'bucket name does not match',
         },
       },

@@ -6,12 +6,12 @@ import {
 import { Delete16 } from '@siafoundation/react-icons'
 import { useDialog } from '../../contexts/dialog'
 import { useCallback } from 'react'
-import { useObjectDelete } from '@siafoundation/renterd-react'
-import { bucketAndKeyParamsFromPath } from '../../lib/paths'
+import { useObjectsRemove } from '@siafoundation/renterd-react'
+import { getBucketFromPath, getKeyFromPath } from '../../lib/paths'
 
 export function useFileDelete() {
   const { openConfirmDialog } = useDialog()
-  const deleteObject = useObjectDelete()
+  const deleteObjects = useObjectsRemove()
 
   return useCallback(
     (path: string) =>
@@ -35,8 +35,13 @@ export function useFileDelete() {
           </div>
         ),
         onConfirm: async () => {
-          const response = await deleteObject.delete({
-            params: bucketAndKeyParamsFromPath(path),
+          const bucket = getBucketFromPath(path)
+          const prefix = getKeyFromPath(path)
+          const response = await deleteObjects.post({
+            payload: {
+              bucket,
+              prefix,
+            },
           })
 
           if (response.error) {
@@ -44,10 +49,11 @@ export function useFileDelete() {
               title: 'Error deleting file',
               body: response.error,
             })
+          } else {
+            triggerSuccessToast({ title: 'Deleted file' })
           }
-          triggerSuccessToast({ title: 'Deleted file' })
         },
       }),
-    [openConfirmDialog, deleteObject]
+    [openConfirmDialog, deleteObjects]
   )
 }

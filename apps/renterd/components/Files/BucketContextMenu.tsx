@@ -40,7 +40,6 @@ export function BucketContextMenu({ name }: Props) {
         Change policy
       </DropdownMenuItem>
       <DropdownMenuItem
-        disabled={name === 'default'}
         onSelect={() => {
           openDialog('filesDeleteBucket', name)
         }}

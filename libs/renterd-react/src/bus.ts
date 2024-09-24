@@ -112,9 +112,9 @@ import {
   ObjectAddParams,
   ObjectAddPayload,
   ObjectAddResponse,
-  ObjectDeleteParams,
-  ObjectDeletePayload,
-  ObjectDeleteResponse,
+  ObjectsRemoveParams,
+  ObjectsRemovePayload,
+  ObjectsRemoveResponse,
   ObjectsParams,
   ObjectsResponse,
   ObjectParams,
@@ -247,6 +247,7 @@ import {
   SettingsUploadUpdatePayload,
   SettingsUploadUpdateResponse,
   SettingsPinnedResponse,
+  busObjectsRemoveRoute,
 } from '@siafoundation/renterd-types'
 
 // state
@@ -716,7 +717,7 @@ export function useObjectAdd(
   return usePutFunc({ ...args, route: busObjectKeyRoute })
 }
 
-export function useObjectRename(
+export function useObjectsRename(
   args?: HookArgsCallback<
     ObjectRenameParams,
     ObjectRenamePayload,
@@ -726,15 +727,15 @@ export function useObjectRename(
   return usePostFunc({ ...args, route: busObjectsRenameRoute })
 }
 
-export function useObjectDelete(
+export function useObjectsRemove(
   args?: HookArgsCallback<
-    ObjectDeleteParams,
-    ObjectDeletePayload,
-    ObjectDeleteResponse
+    ObjectsRemoveParams,
+    ObjectsRemovePayload,
+    ObjectsRemoveResponse
   >
 ) {
-  return useDeleteFunc(
-    { ...args, route: busObjectKeyRoute },
+  return usePostFunc(
+    { ...args, route: busObjectsRemoveRoute },
     async (mutate) => {
       mutate((key) => key.startsWith(busObjectsRoute))
     }
