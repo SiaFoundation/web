@@ -8,7 +8,11 @@ export function FilesActionsMenu() {
 
   return (
     <div className="flex gap-2">
-      <Button onClick={() => openDialog('filesSearch')} tip="Search files">
+      <Button
+        onClick={() => openDialog('filesSearch')}
+        tip="Search files"
+        aria-label="search files"
+      >
         <Search16 />
       </Button>
       <FilesViewDropdownMenu />

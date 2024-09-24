@@ -10,7 +10,7 @@ import {
 } from '@siafoundation/design-system'
 import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
-import { useObjectRename } from '@siafoundation/renterd-react'
+import { useObjectsRename } from '@siafoundation/renterd-react'
 import { getFilename, isDirectory } from '../lib/paths'
 import { getRenameFileRenameParams } from '../lib/rename'
 import { useFilesDirectory } from '../contexts/filesDirectory'
@@ -68,7 +68,7 @@ export function FileRenameDialog({ trigger, open, onOpenChange }: Props) {
   }, [originalPath])
   const defaultValues = useMemo(() => getDefaultValues(name), [name])
 
-  const objectRename = useObjectRename()
+  const objectRename = useObjectsRename()
   const form = useForm({
     mode: 'all',
     defaultValues,

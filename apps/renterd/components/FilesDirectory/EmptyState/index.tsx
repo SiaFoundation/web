@@ -6,11 +6,12 @@ import { useAutopilotNotConfigured } from '../../Files/checks/useAutopilotNotCon
 import { useNotEnoughContracts } from '../../Files/checks/useNotEnoughContracts'
 import { StateError } from './StateError'
 import { StateNoneMatching } from './StateNoneMatching'
-import { StateNoneYet } from './StateNoneYet'
+import { StateNoneYetFiles } from './StateNoneYetFiles'
 import { useFilesManager } from '../../../contexts/filesManager'
+import { StateNoneYetBuckets } from './StateNoneYetBuckets'
 
 export function EmptyState() {
-  const { isViewingRootOfABucket } = useFilesManager()
+  const { isViewingRootOfABucket, isViewingBuckets } = useFilesManager()
   const { dataState } = useFilesDirectory()
 
   const autopilotNotConfigured = useAutopilotNotConfigured()
@@ -24,7 +25,7 @@ export function EmptyState() {
     return <StateError />
   }
 
-  // only show on root directory and when there are no files
+  // Only show on root directory and when there are no files.
   if (
     isViewingRootOfABucket &&
     dataState === 'noneYet' &&
@@ -50,7 +51,7 @@ export function EmptyState() {
     )
   }
 
-  // only show on root directory and when there are no files
+  // Only show on root directory and when there are no files.
   if (
     isViewingRootOfABucket &&
     dataState === 'noneYet' &&
@@ -76,7 +77,10 @@ export function EmptyState() {
   }
 
   if (dataState === 'noneYet') {
-    return <StateNoneYet />
+    if (isViewingBuckets) {
+      return <StateNoneYetBuckets />
+    }
+    return <StateNoneYetFiles />
   }
 
   return null

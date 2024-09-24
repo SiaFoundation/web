@@ -21,7 +21,7 @@ export function CmdKDialog({ open, onOpenChange, setOpen }: Props) {
       return
     }
     const down = (e: KeyboardEvent) => {
-      if (e.key === 'k' && e.metaKey) {
+      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
         setOpen()
       }
     }

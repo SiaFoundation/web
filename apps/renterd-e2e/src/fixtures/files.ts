@@ -69,10 +69,17 @@ export async function openDirectory(page: Page, path: string) {
 }
 
 export async function navigateToParentDirectory(page: Page) {
-  await page.getByRole('cell', { name: '..' }).click()
+  const isEmpty = await page
+    .getByText('The current directory does not contain any files yet')
+    .isVisible()
+  if (isEmpty) {
+    await page.getByRole('button', { name: 'Back' }).click()
+  } else {
+    await page.getByRole('cell', { name: '..' }).click()
+  }
 }
 
-export async function crateDirectory(page: Page, name: string) {
+export async function createDirectory(page: Page, name: string) {
   await expect(page.getByLabel('Create directory')).toBeVisible()
   await page.getByLabel('Create directory').click()
   await fillTextInputByName(page, 'name', name)
@@ -86,7 +93,7 @@ export async function createDirectoryIfNotExists(page: Page, name: string) {
     .getByTestId(name)
     .isVisible()
   if (!exists) {
-    await crateDirectory(page, name)
+    await createDirectory(page, name)
   }
 }
 

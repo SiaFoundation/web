@@ -4,6 +4,7 @@ import {
   panelStyles,
   Label,
   Separator,
+  Button,
 } from '@siafoundation/design-system'
 import { Command } from 'cmdk'
 import { WalletCmdGroup } from './WalletCmdGroup'
@@ -74,11 +75,26 @@ export function CmdRoot({ panel }: Props) {
         }
       }}
     >
-      {page && <Label className="px-2">{page.label}</Label>}
+      {!!page && (
+        <Label className="px-2 flex justify-between items-center">
+          {page.label}
+          {page.tag ? (
+            <Button
+              variant="inactive"
+              state="waiting"
+              tabIndex={-1}
+              size="small"
+            >
+              {page.tag}
+            </Button>
+          ) : null}
+        </Label>
+      )}
       <Command.Input
         value={search}
         onValueChange={setSearch}
         className={textFieldStyles({ variant: 'ghost', focus: 'none' })}
+        name="cmdk-input"
         placeholder={
           page?.prompt ||
           (rootPage

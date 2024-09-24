@@ -1,15 +1,10 @@
 import { test, expect } from '@playwright/test'
 import { navigateToBuckets } from '../fixtures/navigate'
-import {
-  createBucket,
-  deleteBucketIfExists,
-  openBucket,
-} from '../fixtures/buckets'
+import { createBucket, deleteBucket, openBucket } from '../fixtures/buckets'
 import path from 'path'
 import {
-  createDirectoryIfNotExists,
-  deleteDirectoryIfExists,
-  deleteFileIfExists,
+  deleteDirectory,
+  deleteFile,
   dragAndDropFile,
   fileInList,
   fileNotInList,
@@ -17,6 +12,7 @@ import {
   navigateToParentDirectory,
   openDirectory,
   openFileContextMenu,
+  createDirectory,
 } from '../fixtures/files'
 import { fillTextInputByName } from '../fixtures/textInput'
 import { clearToasts } from '../fixtures/clearToasts'
@@ -32,20 +28,15 @@ test.afterEach(async () => {
   await afterTest()
 })
 
-test('can create directory, upload file, rename file, navigate, delete a file, delete a directory', async ({
-  page,
-}) => {
-  test.setTimeout(80_000)
+test('can create directory and delete a directory', async ({ page }) => {
+  test.setTimeout(120_000)
   const bucketName = 'files-test'
-  const dirName = `test-dir-${Date.now()}`
-  const originalFileName = 'sample.txt'
-  const newFileName = 'renamed.txt'
-  const dirPath = `${bucketName}/${dirName}/`
-  const originalFilePath = `${bucketName}/${dirName}/${originalFileName}`
-  const newFilePath = `${bucketName}/${dirName}/${newFileName}`
+  const dirName1 = 'test-dir'
+  const dirName2 = 'test-dir-2-same-prefix'
+  const dirPath1 = `${bucketName}/${dirName1}/`
+  const dirPath2 = `${bucketName}/${dirName2}/`
 
   await navigateToBuckets({ page })
-  await deleteBucketIfExists(page, bucketName)
   await createBucket(page, bucketName)
   await openBucket(page, bucketName)
   await expect(
@@ -53,7 +44,37 @@ test('can create directory, upload file, rename file, navigate, delete a file, d
   ).toBeVisible()
 
   // Create directory.
-  await createDirectoryIfNotExists(page, dirName)
+  await createDirectory(page, dirName1)
+  await createDirectory(page, dirName2)
+  await openDirectory(page, dirPath1)
+  await navigateToParentDirectory(page)
+  await deleteDirectory(page, dirPath1)
+  await fileNotInList(page, dirPath1)
+  await fileNotInList(page, dirPath1)
+  await fileInList(page, dirPath2)
+})
+
+test('can create directory, upload file, rename file, navigate, delete a file, delete a directory', async ({
+  page,
+}) => {
+  test.setTimeout(120_000)
+  const bucketName = 'files-test'
+  const dirName = 'test-dir'
+  const originalFileName = 'sample.txt'
+  const newFileName = 'renamed.txt'
+  const dirPath = `${bucketName}/${dirName}/`
+  const originalFilePath = `${bucketName}/${dirName}/${originalFileName}`
+  const newFilePath = `${bucketName}/${dirName}/${newFileName}`
+
+  await navigateToBuckets({ page })
+  await createBucket(page, bucketName)
+  await openBucket(page, bucketName)
+  await expect(
+    page.getByText('bucket does not contain any files')
+  ).toBeVisible()
+
+  // Create directory.
+  await createDirectory(page, dirName)
   await fileInList(page, dirPath)
   await openDirectory(page, dirPath)
   await expect(
@@ -74,13 +95,13 @@ test('can create directory, upload file, rename file, navigate, delete a file, d
   // Rename file.
   await openFileContextMenu(page, originalFilePath)
   await page.getByRole('menuitem', { name: 'Rename file' }).click()
-  await fillTextInputByName(page, 'name', 'renamed.txt')
+  await fillTextInputByName(page, 'name', newFileName)
   await page.locator('input[name=name]').press('Enter')
   await expect(page.getByRole('dialog')).toBeHidden()
   await fileInList(page, newFilePath)
 
   // Delete file.
-  await deleteFileIfExists(page, newFilePath)
+  await deleteFile(page, newFilePath)
   await fileNotInList(page, newFilePath)
   await clearToasts({ page })
 
@@ -97,20 +118,20 @@ test('can create directory, upload file, rename file, navigate, delete a file, d
   // Clean up the directory.
   await navigateToParentDirectory(page)
   await fileInList(page, dirPath)
-  await deleteDirectoryIfExists(page, dirPath)
+  await deleteDirectory(page, dirPath)
   await fileNotInList(page, dirPath)
 
   // Clean up the bucket.
   await navigateToBuckets({ page })
-  await deleteBucketIfExists(page, bucketName)
+  await deleteBucket(page, bucketName)
 })
 
 test('shows a new intermediate directory when uploading nested files', async ({
   page,
 }) => {
-  test.setTimeout(80_000)
+  test.setTimeout(120_000)
   const bucketName = 'files-test'
-  const containerDir = `test-dir-${Date.now()}`
+  const containerDir = 'test-dir'
   const containerDirPath = `${bucketName}/${containerDir}/`
   const systemDir = 'nested-sample'
   const systemFile = 'sample.txt'
@@ -119,7 +140,6 @@ test('shows a new intermediate directory when uploading nested files', async ({
   const filePath = `${dirPath}${systemFile}`
 
   await navigateToBuckets({ page })
-  await deleteBucketIfExists(page, bucketName)
   await createBucket(page, bucketName)
   await openBucket(page, bucketName)
   await expect(
@@ -127,7 +147,7 @@ test('shows a new intermediate directory when uploading nested files', async ({
   ).toBeVisible()
 
   // Create a container directory for the test.
-  await createDirectoryIfNotExists(page, containerDir)
+  await createDirectory(page, containerDir)
   await fileInList(page, containerDirPath)
   await openDirectory(page, containerDirPath)
   await expect(
@@ -163,10 +183,10 @@ test('shows a new intermediate directory when uploading nested files', async ({
   // Clean up the container directory.
   await navigateToParentDirectory(page)
   await fileInList(page, containerDirPath)
-  await deleteDirectoryIfExists(page, containerDirPath)
+  await deleteDirectory(page, containerDirPath)
   await fileNotInList(page, containerDirPath)
 
-  // Clean up the bucket.
+  // Delete the bucket once its empty.
   await navigateToBuckets({ page })
-  await deleteBucketIfExists(page, bucketName)
+  await deleteBucket(page, bucketName)
 })

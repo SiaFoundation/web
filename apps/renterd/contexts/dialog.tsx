@@ -12,7 +12,7 @@ import { HostsFilterAddressDialog } from '../components/Hosts/HostsFilterAddress
 import { ContractsFilterAddressDialog } from '../components/Contracts/ContractsFilterAddressDialog'
 import { ContractsFilterPublicKeyDialog } from '../components/Contracts/ContractsFilterPublicKeyDialog'
 import { ContractsFilterContractSetDialog } from '../components/Contracts/ContractsFilterContractSetDialog'
-import { FilesSearchDialog } from '../dialogs/FilesSearchDialog'
+import { FilesSearchBucketDialog } from '../dialogs/FilesSearchBucketDialog'
 import { useSyncerConnect, useWallet } from '@siafoundation/renterd-react'
 import { RenterdSendSiacoinDialog } from '../dialogs/RenterdSendSiacoinDialog'
 import { RenterdTransactionDetailsDialog } from '../dialogs/RenterdTransactionDetailsDialog'
@@ -176,7 +176,7 @@ export function Dialogs() {
         open={dialog === 'filesCreateDirectory'}
         onOpenChange={onOpenChange}
       />
-      <FilesSearchDialog
+      <FilesSearchBucketDialog
         open={dialog === 'filesSearch'}
         onOpenChange={onOpenChange}
       />

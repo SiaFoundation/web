@@ -37,7 +37,11 @@ export function FilesActionsMenu() {
         </Button>
       ) : (
         <>
-          <Button onClick={() => openDialog('filesSearch')} tip="Search files">
+          <Button
+            onClick={() => openDialog('filesSearch')}
+            tip="Search files"
+            aria-label="search files"
+          >
             <Search16 />
           </Button>
           <Button

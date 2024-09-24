@@ -3,7 +3,7 @@ import { CloudUpload32 } from '@siafoundation/react-icons'
 import { routes } from '../../../config/routes'
 import { useFilesManager } from '../../../contexts/filesManager'
 
-export function StateNoneYet() {
+export function StateNoneYetFiles() {
   const {
     activeBucketName: activeBucket,
     activeDirectory,

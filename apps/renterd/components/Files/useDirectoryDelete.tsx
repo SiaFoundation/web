@@ -6,13 +6,13 @@ import {
 import { Delete16 } from '@siafoundation/react-icons'
 import { useDialog } from '../../contexts/dialog'
 import { useCallback } from 'react'
-import { useObjectDelete } from '@siafoundation/renterd-react'
+import { useObjectsRemove } from '@siafoundation/renterd-react'
 import { humanBytes } from '@siafoundation/units'
-import { bucketAndKeyParamsFromPath } from '../../lib/paths'
+import { getBucketFromPath, getKeyFromPath } from '../../lib/paths'
 
 export function useDirectoryDelete() {
   const { openConfirmDialog } = useDialog()
-  const deleteObject = useObjectDelete()
+  const deleteObjects = useObjectsRemove()
 
   return useCallback(
     (path: string, size: number) =>
@@ -37,19 +37,24 @@ export function useDirectoryDelete() {
           </div>
         ),
         onConfirm: async () => {
-          const response = await deleteObject.delete({
-            params: { ...bucketAndKeyParamsFromPath(path), batch: true },
+          const bucket = getBucketFromPath(path)
+          const prefix = getKeyFromPath(path)
+          const response = await deleteObjects.post({
+            payload: {
+              bucket,
+              prefix,
+            },
           })
-
           if (response.error) {
             triggerErrorToast({
               title: 'Error deleting directory',
               body: response.error,
             })
+          } else {
+            triggerSuccessToast({ title: 'Deleted directory' })
           }
-          triggerSuccessToast({ title: 'Deleted directory' })
         },
       }),
-    [openConfirmDialog, deleteObject]
+    [openConfirmDialog, deleteObjects]
   )
 }

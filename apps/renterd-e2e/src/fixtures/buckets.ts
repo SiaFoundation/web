@@ -6,7 +6,7 @@ import { deleteDirectory, deleteFile } from './files'
 
 export async function createBucket(page: Page, name: string) {
   await navigateToBuckets({ page })
-  await page.getByText('Create bucket').click()
+  await page.getByText('Create bucket').first().click()
   await fillTextInputByName(page, 'name', name)
   await page.locator('input[name=name]').press('Enter')
   await expect(page.getByRole('dialog')).toBeHidden()

@@ -4,5 +4,6 @@ export type Page = {
   namespace: string
   label: string
   prompt?: string
+  tag?: string
   empty?: (props: CmdEmptyProps) => JSX.Element
 }

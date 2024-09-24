@@ -116,9 +116,9 @@ import {
   ObjectAddParams,
   ObjectAddPayload,
   ObjectAddResponse,
-  ObjectDeleteParams,
-  ObjectDeletePayload,
-  ObjectDeleteResponse,
+  ObjectsRemoveParams,
+  ObjectsRemovePayload,
+  ObjectsRemoveResponse,
   ObjectsParams,
   ObjectsPayload,
   ObjectsResponse,
@@ -259,6 +259,7 @@ import {
   busSettingsPinnedRoute,
   busSettingsS3Route,
   busSettingsUploadRoute,
+  busObjectsRemoveRoute,
 } from '@siafoundation/renterd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
@@ -486,16 +487,16 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       ObjectAddPayload,
       ObjectAddResponse
     >(axios, 'put', busObjectKeyRoute),
-    objectRename: buildRequestHandler<
+    objectsRename: buildRequestHandler<
       ObjectRenameParams,
       ObjectRenamePayload,
       ObjectRenameResponse
     >(axios, 'post', busObjectsRenameRoute),
-    objectDelete: buildRequestHandler<
-      ObjectDeleteParams,
-      ObjectDeletePayload,
-      ObjectDeleteResponse
-    >(axios, 'delete', busObjectKeyRoute),
+    objectsRemove: buildRequestHandler<
+      ObjectsRemoveParams,
+      ObjectsRemovePayload,
+      ObjectsRemoveResponse
+    >(axios, 'post', busObjectsRemoveRoute),
     objectStats: buildRequestHandler<
       ObjectsStatsParams,
       ObjectsStatsPayload,

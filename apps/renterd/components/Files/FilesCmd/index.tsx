@@ -3,11 +3,16 @@ import {
   CommandItemNav,
   CommandItemSearch,
 } from '../../CmdRoot/Item'
-import { FilesSearchCmd, filesSearchPage } from './FilesSearchCmd'
+import {
+  FilesSearchCmd,
+  filesSearchAllPage,
+  getFilesSearchBucketPage,
+} from './FilesSearchCmd'
 import { Page } from '../../CmdRoot/types'
 import { useRouter } from 'next/router'
 import { useDialog } from '../../../contexts/dialog'
 import { routes } from '../../../config/routes'
+import { useFilesManager } from '../../../contexts/filesManager'
 
 export const commandPage = {
   namespace: 'files',
@@ -33,6 +38,7 @@ export function FilesCmd({
 }) {
   const router = useRouter()
   const { closeDialog } = useDialog()
+  const { activeBucket } = useFilesManager()
   return (
     <>
       <CommandItemNav
@@ -63,14 +69,35 @@ export function FilesCmd({
           currentPage={currentPage}
           commandPage={commandPage}
           onSelect={() => {
-            pushPage(filesSearchPage)
+            pushPage(filesSearchAllPage)
             afterSelect()
           }}
         >
-          Search files
+          Search all files
         </CommandItemSearch>
+        {activeBucket ? (
+          <CommandItemSearch
+            currentPage={currentPage}
+            commandPage={commandPage}
+            onSelect={() => {
+              pushPage(getFilesSearchBucketPage(activeBucket.name))
+              afterSelect()
+            }}
+          >
+            Search files in bucket
+          </CommandItemSearch>
+        ) : null}
       </CommandGroup>
       <FilesSearchCmd
+        mode="global"
+        debouncedSearch={debouncedSearch}
+        search={search}
+        currentPage={currentPage}
+        beforeSelect={beforeSelect}
+        afterSelect={afterSelect}
+      />
+      <FilesSearchCmd
+        mode="bucket"
         debouncedSearch={debouncedSearch}
         search={search}
         currentPage={currentPage}
