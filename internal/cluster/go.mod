@@ -3,7 +3,7 @@ module go.sia.tech/web/cluster
 go 1.23.0
 
 require (
-	go.sia.tech/cluster v0.0.0-20240916165251-0f09676f19ad
+	go.sia.tech/cluster v0.0.0-20240924203221-6c140b264895
 	go.sia.tech/core v0.4.6
 	go.sia.tech/coreutils v0.3.2
 	go.uber.org/zap v1.27.0
@@ -33,7 +33,7 @@ require (
 	go.sia.tech/hostd v1.1.3-0.20240903081107-6e044db95238 // indirect
 	go.sia.tech/jape v0.12.1 // indirect
 	go.sia.tech/mux v1.2.0 // indirect
-	go.sia.tech/renterd v1.1.0-beta.2.0.20240916134118-61ab4646ef37 // indirect
+	go.sia.tech/renterd v1.1.0-beta.4.0.20240924124211-9a4e6a3aab98 // indirect
 	go.sia.tech/walletd v0.8.1-0.20240830193535-90d18cf2393c // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/crypto v0.27.0 // indirect

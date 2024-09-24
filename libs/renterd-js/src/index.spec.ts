@@ -48,7 +48,7 @@ describe('renterd-js', () => {
     const bucket = 'default'
     const name = 'test.txt'
     const fileKey = `directory/${name}`
-    const url = `/worker/objects/${fileKey}?bucket=${bucket}`
+    const url = `/worker/object/${fileKey}?bucket=${bucket}`
     const fullUrl = `${api}${url}`
 
     mock.onPut(fullUrl).reply((config) => {

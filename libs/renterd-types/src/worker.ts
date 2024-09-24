@@ -2,7 +2,7 @@ import { HostSettings } from './types'
 import { BusStateResponse } from './bus'
 
 export const workerStateRoute = '/worker/state'
-export const workerObjectsKeyRoute = '/worker/objects/:key'
+export const workerObjectKeyRoute = '/worker/object/:key'
 export const workerMultipartKeyRoute = '/worker/multipart/:key'
 export const workerRhpScanRoute = '/worker/rhp/scan'
 export const workerAccountIdResetdriftRoute = '/worker/account/:id/resetdrift'

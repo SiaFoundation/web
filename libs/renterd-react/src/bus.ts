@@ -702,9 +702,7 @@ export function useBucketDelete(
   )
 }
 
-export function useObjectList(
-  args: HookArgsSwr<ObjectsParams, ObjectsResponse>
-) {
+export function useObjects(args: HookArgsSwr<ObjectsParams, ObjectsResponse>) {
   return useGetSwr({ ...args, route: busObjectsPrefixRoute })
 }
 

@@ -399,7 +399,7 @@ export type BucketDeletePayload = void
 export type BucketDeleteResponse = void
 
 export type ObjectsParams = {
-  bucket: string
+  bucket?: string
   prefix?: string
   delimiter?: string
   limit?: number
@@ -407,7 +407,7 @@ export type ObjectsParams = {
   sortBy?: 'name' | 'health' | 'size'
   sortDir?: 'asc' | 'desc'
   substring?: string
-  slabEncryptionKey: string
+  slabEncryptionKey?: string
 }
 export type ObjectsPayload = void
 export type ObjectsResponse = {

@@ -471,7 +471,7 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       BucketDeletePayload,
       BucketDeleteResponse
     >(axios, 'delete', busBucketNameRoute),
-    objectList: buildRequestHandler<
+    objects: buildRequestHandler<
       ObjectsParams,
       ObjectsPayload,
       ObjectsResponse

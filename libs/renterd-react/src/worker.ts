@@ -29,10 +29,9 @@ import {
   busHostsRoute,
   workerAccountIdResetdriftRoute,
   workerMultipartKeyRoute,
-  workerObjectsKeyRoute,
+  workerObjectKeyRoute,
   workerRhpScanRoute,
   workerStateRoute,
-  busObjectsRoute,
   Host,
 } from '@siafoundation/renterd-types'
 
@@ -54,7 +53,7 @@ export function useObjectDownloadFunc(
     ObjectDownloadResponse
   >
 ) {
-  return useGetDownloadFunc({ ...args, route: workerObjectsKeyRoute })
+  return useGetDownloadFunc({ ...args, route: workerObjectKeyRoute })
 }
 
 export function useObjectUpload(
@@ -76,7 +75,7 @@ export function useObjectUpload(
           },
         },
       },
-      route: workerObjectsKeyRoute,
+      route: workerObjectKeyRoute,
     },
     async (mutate) => {
       mutate((key) => key.startsWith(busObjectsRoute))
