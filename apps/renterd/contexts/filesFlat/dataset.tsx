@@ -1,11 +1,11 @@
-import { useObjectList } from '@siafoundation/renterd-react'
+import { useObjects } from '@siafoundation/renterd-react'
 import { SortField } from '../filesManager/types'
 import { useDataset as useDatasetGeneric } from '../filesManager/dataset'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { useFilesManager } from '../filesManager'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
-import { ObjectListParams } from '@siafoundation/renterd-types'
+import { ObjectsParams } from '@siafoundation/renterd-types'
 
 type Props = {
   sortDirection: 'asc' | 'desc'
@@ -27,7 +27,7 @@ export function useDataset({ sortDirection, sortField }: Props) {
         ? fileNamePrefixFilter.slice(1)
         : fileNamePrefixFilter
     }
-    const p: ObjectListParams = {
+    const p: ObjectsParams = {
       prefix,
       bucket: activeBucketName,
       sortBy: sortField,
@@ -48,7 +48,7 @@ export function useDataset({ sortDirection, sortField }: Props) {
     limit,
   ])
 
-  const response = useObjectList({
+  const response = useObjects({
     disabled: !activeBucketName,
     params,
     config: {

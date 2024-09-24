@@ -1,6 +1,6 @@
 import { CommandGroup, CommandItemSearch } from '../../../CmdRoot/Item'
 import { Page } from '../../../CmdRoot/types'
-import { useObjectList } from '@siafoundation/renterd-react'
+import { useObjects } from '@siafoundation/renterd-react'
 import { isDirectory } from '../../../../lib/paths'
 import { Text } from '@siafoundation/design-system'
 import { Document16, FolderIcon } from '@siafoundation/react-icons'
@@ -31,7 +31,7 @@ export function FilesSearchCmd({
     useFilesManager()
   const onSearchPage = currentPage?.namespace === filesSearchPage.namespace
   const searchBucket = activeBucket || 'default'
-  const results = useObjectList({
+  const results = useObjects({
     disabled: !onSearchPage,
     params: {
       bucket: searchBucket,

@@ -19,7 +19,7 @@ import {
   WorkerStateResponse,
   workerAccountIdResetdriftRoute,
   workerMultipartKeyRoute,
-  workerObjectsKeyRoute,
+  workerObjectKeyRoute,
   workerRhpScanRoute,
   workerStateRoute,
 } from '@siafoundation/renterd-types'
@@ -38,7 +38,7 @@ export function Worker({ api, password }: { api: string; password?: string }) {
       ObjectDownloadParams,
       ObjectDownloadPayload,
       ObjectDownloadResponse
-    >(axios, 'get', workerObjectsKeyRoute, {
+    >(axios, 'get', workerObjectKeyRoute, {
       config: {
         responseType: 'blob',
       },
@@ -47,7 +47,7 @@ export function Worker({ api, password }: { api: string; password?: string }) {
       ObjectUploadParams,
       ObjectUploadPayload,
       ObjectUploadResponse
-    >(axios, 'put', workerObjectsKeyRoute, {
+    >(axios, 'put', workerObjectKeyRoute, {
       config: {
         headers: {
           'Content-Type': 'multipart/form-data',

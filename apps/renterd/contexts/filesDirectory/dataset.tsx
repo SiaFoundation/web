@@ -1,11 +1,11 @@
-import { useObjectList } from '@siafoundation/renterd-react'
+import { useObjects } from '@siafoundation/renterd-react'
 import { useDataset as useDatasetGeneric } from '../filesManager/dataset'
 import { bucketAndKeyParamsFromPath } from '../../lib/paths'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { useFilesManager } from '../filesManager'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
-import { ObjectListParams } from '@siafoundation/renterd-types'
+import { ObjectsParams } from '@siafoundation/renterd-types'
 
 const defaultLimit = 50
 
@@ -30,7 +30,7 @@ export function useDataset() {
         ? fileNamePrefixFilter.slice(1)
         : fileNamePrefixFilter
     }
-    const p: ObjectListParams = {
+    const p: ObjectsParams = {
       prefix,
       bucket: pathParams.bucket,
       sortBy: sortField,
@@ -51,7 +51,7 @@ export function useDataset() {
     limit,
   ])
 
-  const response = useObjectList({
+  const response = useObjects({
     disabled: !activeBucketName,
     params,
     config: {

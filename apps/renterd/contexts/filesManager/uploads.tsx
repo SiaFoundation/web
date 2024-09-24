@@ -8,7 +8,7 @@ import {
   useMultipartUploadPart,
   useSettingsUpload,
 } from '@siafoundation/renterd-react'
-import { Bucket, busListObjectsRoute } from '@siafoundation/renterd-types'
+import { Bucket, busObjectsRoute } from '@siafoundation/renterd-types'
 import { MiBToBytes, minutesInMilliseconds } from '@siafoundation/units'
 import { throttle } from '@technically/lodash'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -133,7 +133,7 @@ export function useUploads({ activeDirectoryPath }: Props) {
         }, 1000)
       )
       multipartUpload.setOnComplete(async () => {
-        await ref.current.mutate((key) => key.startsWith(busListObjectsRoute))
+        await ref.current.mutate((key) => key.startsWith(busObjectsRoute))
         ref.current.removeUpload(uploadId)
         setTimeout(() => {
           ref.current.checkAndStartUploads()
