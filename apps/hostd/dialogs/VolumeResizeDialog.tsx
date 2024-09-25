@@ -57,11 +57,11 @@ function getFields(
       validation: {
         required: 'required',
         validate: {
-          between: (value: number) => {
+          between: (value?: BigNumber) => {
             const error = `Must be between ${humanBytes(
               GBToBytes(minSizeGB)
             )} and ${humanBytes(GBToBytes(maxSizeGB), { fixed: 3 })}`
-            return (value <= maxSizeGB && value >= minSizeGB) || error
+            return (value?.lte(maxSizeGB) && value?.gte(minSizeGB)) || error
           },
         },
       },

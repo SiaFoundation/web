@@ -51,6 +51,7 @@ export function Volumes() {
     >
       <div className="p-6 min-w-fit">
         <Table
+          testId="volumesTable"
           isLoading={isLoading}
           pageSize={20}
           data={dataset}
