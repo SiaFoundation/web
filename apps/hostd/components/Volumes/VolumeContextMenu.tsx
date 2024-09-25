@@ -35,7 +35,12 @@ export function VolumeContextMenu({ id, contentProps, buttonProps }: Props) {
   return (
     <DropdownMenu
       trigger={
-        <Button variant="ghost" icon="hover" {...buttonProps}>
+        <Button
+          variant="ghost"
+          icon="hover"
+          aria-label="volume context menu"
+          {...buttonProps}
+        >
           <CaretDown16 />
         </Button>
       }

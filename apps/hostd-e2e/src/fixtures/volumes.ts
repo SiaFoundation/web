@@ -52,7 +52,10 @@ export async function deleteVolumeIfExists(
 }
 
 export async function openVolumeContextMenu(page: Page, name: string) {
-  await page.getByRole('row', { name }).getByRole('button').first().click()
+  await page
+    .getByRole('row', { name })
+    .getByLabel('volume context menu')
+    .click()
 }
 
 export async function volumeInList(page: Page, name: string) {
