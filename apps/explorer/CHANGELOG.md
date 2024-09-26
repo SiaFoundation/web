@@ -1,5 +1,11 @@
 # explorer
 
+## 0.20.0
+
+### Minor Changes
+
+- a4db3e9c: Readded host announcements to transaction route.
+
 ## 0.19.0
 
 ### Minor Changes

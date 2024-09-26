@@ -1,5 +1,15 @@
 # renterd
 
+## 0.63.0
+
+### Minor Changes
+
+- 7a333ffd: The bucket list now has an empty state.
+- 7a333ffd: The cmdk menu now has an two separate files search options, one for across all buckets and one for the current bucket.
+- 7a333ffd: It is now possible to delete a bucket named 'default'.
+- 7a333ffd: The file search feature can now search across all buckets.
+- 7a333ffd: The command menu now opens via Ctrl+K on Linux and Windows.
+
 ## 0.62.0
 
 ### Minor Changes

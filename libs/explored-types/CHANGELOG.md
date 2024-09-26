@@ -1,5 +1,11 @@
 # @siafoundation/explored-types
 
+## 0.5.0
+
+### Minor Changes
+
+- 24b984b2: Added host announcements to the ExplorerTransaction type.
+
 ## 0.4.0
 
 ### Minor Changes

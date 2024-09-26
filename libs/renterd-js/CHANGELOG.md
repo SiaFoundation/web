@@ -1,5 +1,20 @@
 # @siafoundation/renterd-js
 
+## 0.9.0
+
+### Minor Changes
+
+- 5bfdb01e: The single object and list APIs routes have been updated.
+- 7a333ffd: Updated to the new objects remove API.
+- 7a333ffd: Adjusted the name of the objects rename API.
+
+### Patch Changes
+
+- Updated dependencies [5bfdb01e]
+- Updated dependencies [7a333ffd]
+- Updated dependencies [7a333ffd]
+  - @siafoundation/renterd-types@0.9.0
+
 ## 0.8.0
 
 ### Minor Changes
