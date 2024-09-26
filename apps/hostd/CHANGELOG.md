@@ -1,5 +1,11 @@
 # hostd
 
+## 0.48.0
+
+### Minor Changes
+
+- 7a333ffd: The command menu now opens via Ctrl+K on Linux and Windows.
+
 ## 0.47.0
 
 ### Minor Changes
