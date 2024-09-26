@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { ConfigViewMode, inputValues, getAdvancedDefaults } from './types'
 import { useForm as useHookForm } from 'react-hook-form'
-import { useAverages } from './useAverages'
 import { useBusState } from '@siafoundation/renterd-react'
 import { getFields } from './fields'
 import { useApp } from '../app'
@@ -27,8 +26,6 @@ export function useForm({ resources }: { resources: ResourcesMaybeLoaded }) {
     () => getRedundancyMultiplier(minShards, totalShards),
     [minShards, totalShards]
   )
-
-  const { averagesSc, averagesFiat } = useAverages({ form })
 
   const { isAutopilotEnabled } = useApp()
   const [configViewMode, setConfigViewMode] =
@@ -72,17 +69,6 @@ export function useForm({ resources }: { resources: ResourcesMaybeLoaded }) {
         [rec.key]: rec,
       }
     }, {})
-    if (averagesSc) {
-      return getFields({
-        validationContext: validationContext.current,
-        isAutopilotEnabled,
-        configViewMode,
-        advancedDefaults,
-        averagesSc,
-        averagesFiat,
-        recommendations,
-      })
-    }
     return getFields({
       validationContext: validationContext.current,
       isAutopilotEnabled,
@@ -94,8 +80,6 @@ export function useForm({ resources }: { resources: ResourcesMaybeLoaded }) {
     isAutopilotEnabled,
     configViewMode,
     renterdState.data,
-    averagesSc,
-    averagesFiat,
     evaluation.recommendations,
   ])
 

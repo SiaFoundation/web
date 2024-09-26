@@ -50,7 +50,6 @@ test('can create directory and delete a directory', async ({ page }) => {
   await navigateToParentDirectory(page)
   await deleteDirectory(page, dirPath1)
   await fileNotInList(page, dirPath1)
-  await fileNotInList(page, dirPath1)
   await fileInList(page, dirPath2)
 })
 

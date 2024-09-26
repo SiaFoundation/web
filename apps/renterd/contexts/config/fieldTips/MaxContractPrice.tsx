@@ -9,7 +9,7 @@ import { toHastings } from '@siafoundation/units'
 import { UseFormReturn } from 'react-hook-form'
 import { recommendationTipContent } from './Tip'
 
-export function MaxRPCPriceTips({
+export function MaxContractPriceTips({
   form,
   fields,
   recommendations,
@@ -18,7 +18,7 @@ export function MaxRPCPriceTips({
   fields: ConfigFields<InputValues, Categories>
   recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
 }) {
-  const recommendationPrice = recommendations?.maxRPCPriceMillion?.targetValue
+  const recommendationPrice = recommendations?.maxContractPrice?.targetValue
 
   return (
     <>
@@ -33,7 +33,7 @@ export function MaxRPCPriceTips({
             formSetField({
               form,
               fields,
-              name: 'maxRPCPriceMillion',
+              name: 'maxContractPrice',
               value: recommendationPrice,
               options: true,
             })

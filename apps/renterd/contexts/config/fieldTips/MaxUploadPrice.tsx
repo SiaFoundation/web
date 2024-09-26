@@ -13,6 +13,7 @@ import {
   fitPriceToCurrentAllowanceTipContent,
   recommendationTipContent,
 } from './Tip'
+import { useAverages } from '../useAverages'
 
 export function MaxUploadPriceTips({
   form,
@@ -23,6 +24,7 @@ export function MaxUploadPriceTips({
   fields: ConfigFields<InputValues, Categories>
   recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
 }) {
+  const { uploadAverage } = useAverages()
   const derived = useAllowanceDerivedPricingForEnabledFields({
     form,
   })
@@ -31,6 +33,24 @@ export function MaxUploadPriceTips({
 
   return (
     <>
+      {uploadAverage && (
+        <TipNumber
+          type="siacoin"
+          label="Network average"
+          tip="Averages provided by Sia Central."
+          decimalsLimit={0}
+          value={toHastings(uploadAverage)}
+          onClick={() => {
+            formSetField({
+              form,
+              fields,
+              name: 'maxUploadPriceTB',
+              value: uploadAverage,
+              options: true,
+            })
+          }}
+        />
+      )}
       {derived?.maxUploadPriceTB && (
         <TipNumber
           type="siacoin"
@@ -85,10 +105,11 @@ export function MaxUploadPricePinnedTips({
   fields: ConfigFields<InputValues, Categories>
   recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
 }) {
+  const { rate } = useFormExchangeRate(form)
+  const { uploadAverage } = useAverages()
   const derived = useAllowanceDerivedPricingForEnabledFields({
     form,
   })
-  const { rate } = useFormExchangeRate(form)
   const maxUploadPriceTBPinned = form.watch('maxUploadPriceTBPinned')
   const currentPriceInSiacoin =
     maxUploadPriceTBPinned && rate
@@ -106,6 +127,24 @@ export function MaxUploadPricePinnedTips({
       : undefined
   return (
     <>
+      {uploadAverage && rate && (
+        <TipNumber
+          type="siacoin"
+          label="Network average"
+          tip="Averages provided by Sia Central."
+          decimalsLimit={0}
+          value={toHastings(uploadAverage)}
+          onClick={() => {
+            formSetField({
+              form,
+              fields,
+              name: 'maxUploadPriceTBPinned',
+              value: uploadAverage.times(rate),
+              options: true,
+            })
+          }}
+        />
+      )}
       {derivedPriceInSiacoin && derived?.maxUploadPriceTBPinned && (
         <TipNumber
           type="siacoin"

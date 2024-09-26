@@ -13,6 +13,7 @@ import {
   fitPriceToCurrentAllowanceTipContent,
   recommendationTipContent,
 } from './Tip'
+import { useAverages } from '../useAverages'
 
 export function MaxStoragePriceTips({
   form,
@@ -23,6 +24,7 @@ export function MaxStoragePriceTips({
   fields: ConfigFields<InputValues, Categories>
   recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
 }) {
+  const { storageAverage } = useAverages()
   const derived = useAllowanceDerivedPricingForEnabledFields({
     form,
   })
@@ -32,6 +34,24 @@ export function MaxStoragePriceTips({
 
   return (
     <>
+      {storageAverage && (
+        <TipNumber
+          type="siacoin"
+          label="Network average"
+          tip="Averages provided by Sia Central."
+          decimalsLimit={0}
+          value={toHastings(storageAverage)}
+          onClick={() => {
+            formSetField({
+              form,
+              fields,
+              name: 'maxStoragePriceTBMonth',
+              value: storageAverage,
+              options: true,
+            })
+          }}
+        />
+      )}
       {derived?.maxStoragePriceTBMonth && (
         <TipNumber
           type="siacoin"
@@ -89,6 +109,7 @@ export function MaxStoragePricePinnedTips({
   const derived = useAllowanceDerivedPricingForEnabledFields({
     form,
   })
+  const { storageAverage } = useAverages()
   const { rate } = useFormExchangeRate(form)
   const maxStoragePriceTBMonthPinned = form.watch(
     'maxStoragePriceTBMonthPinned'
@@ -110,6 +131,24 @@ export function MaxStoragePricePinnedTips({
 
   return (
     <>
+      {storageAverage && rate && (
+        <TipNumber
+          type="siacoin"
+          label="Network average"
+          tip="Averages provided by Sia Central."
+          decimalsLimit={0}
+          value={toHastings(storageAverage)}
+          onClick={() => {
+            formSetField({
+              form,
+              fields,
+              name: 'maxStoragePriceTBMonthPinned',
+              value: storageAverage.times(rate),
+              options: true,
+            })
+          }}
+        />
+      )}
       {derivedPriceInSiacoin && derived?.maxStoragePriceTBMonthPinned && (
         <TipNumber
           type="siacoin"
