@@ -8,6 +8,8 @@ export function CurrencyFiatSelector() {
 
   return (
     <Select
+      aria-label="currency fiat"
+      name="currencyFiat"
       disabled={!settings.siaCentral}
       value={settings.currency.id}
       onChange={(e) => setCurrency(e.currentTarget.value as CurrencyId)}

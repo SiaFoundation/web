@@ -10,6 +10,7 @@ import { afterTest, beforeTest } from '../fixtures/beforeTest'
 import { setCurrencyDisplay } from '../fixtures/preferences'
 import { configResetAllSettings } from '../fixtures/configResetAllSettings'
 import { fillSelectInputByName } from '../fixtures/selectInput'
+import { clickTwice } from '../fixtures/click'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page)
@@ -20,7 +21,7 @@ test.afterEach(async () => {
   await afterTest()
 })
 
-test('basic field change and save behaviour', async ({ page }) => {
+test('field change and save behaviours', async ({ page }) => {
   // Reset state.
   await navigateToConfig({ page })
   await setViewMode({ page, state: 'basic' })
@@ -62,33 +63,6 @@ test('basic field change and save behaviour', async ({ page }) => {
   for (const part of estimateParts) {
     await expect(page.getByText(part)).toBeVisible()
   }
-
-  // Tips are displayed in the correct currency.
-  await expect(
-    page
-      .getByTestId('maxStoragePriceTBMonthGroup')
-      .getByLabel('Network average')
-      .getByText('341')
-  ).toBeVisible()
-  await expect(
-    page
-      .getByTestId('maxStoragePriceTBMonthGroup')
-      .getByLabel('Fit current allowance')
-      .getByText('300')
-  ).toBeVisible()
-  await setCurrencyDisplay(page, 'bothPreferFiat')
-  await expect(
-    page
-      .getByTestId('maxStoragePriceTBMonthGroup')
-      .getByLabel('Network average')
-      .getByText('$1.34')
-  ).toBeVisible()
-  await expect(
-    page
-      .getByTestId('maxStoragePriceTBMonthGroup')
-      .getByLabel('Fit current allowance')
-      .getByText('$1.18')
-  ).toBeVisible()
 })
 
 test('set max prices to fit current allowance', async ({ page }) => {
@@ -243,11 +217,11 @@ test('set max prices via individual field tips', async ({ page }) => {
   await expect(
     page.getByText('Current pricing may not fit allowance')
   ).toBeVisible()
-  await page
+  const fitButton = page
     .getByTestId('maxStoragePriceTBMonthGroup')
     .getByLabel('Fit current allowance')
-    .click()
   // TODO: remove the need to click twice, there is some sort of glitch after toggling the pinning switch.
+  await clickTwice(fitButton)
   await page
     .getByTestId('maxStoragePriceTBMonthGroup')
     .getByLabel('Fit current allowance')
@@ -272,4 +246,28 @@ test('set max prices via individual field tips', async ({ page }) => {
   await expectTextInputByName(page, 'maxStoragePriceTBMonthPinned', '$3.53')
   await expectTextInputByName(page, 'maxUploadPriceTBPinned', '$0.88')
   await expectTextInputByName(page, 'maxDownloadPriceTB', '1,118.588756')
+})
+
+test('pinned currency and app display currency can be different', async ({
+  page,
+}) => {
+  await navigateToConfig({ page })
+  await setViewMode({ page, state: 'basic' })
+  await fillSelectInputByName(page, 'pinnedCurrency', 'usd')
+  await setCurrencyDisplay(page, 'bothPreferFiat', 'jpy')
+  await setSwitchByLabel(page, 'shouldPinMaxStoragePrice', true)
+  await expectTextInputByName(page, 'maxStoragePriceTBMonthPinned', '$5')
+  await expect(
+    page
+      .getByTestId('maxStoragePriceTBMonthGroup')
+      .getByLabel('Network average')
+      .getByText('¥248.17')
+  ).toBeVisible()
+  const averageButton = page
+    .getByTestId('maxStoragePriceTBMonthGroup')
+    .getByLabel('Network average')
+    .getByText('¥248.17')
+  // TODO: remove the need to click twice, there is some sort of glitch after toggling the pinning switch.
+  await clickTwice(averageButton)
+  await expectTextInputByName(page, 'maxStoragePriceTBMonthPinned', '$1.34')
 })

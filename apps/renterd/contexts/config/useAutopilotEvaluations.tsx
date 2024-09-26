@@ -365,7 +365,7 @@ function getRecommendationItem({
     const format = (val: BigNumber) =>
       `${humanSiacoin(toHastings(val), {
         fixed: 1,
-      })}${fields[key].units?.replace('SC/', '/')}`
+      })}${fields[key].units?.replace('SC/', '/') || ''}`
     rec.currentLabel = format(currentValue)
     rec.targetLabel = format(targetValue)
   }

@@ -33,3 +33,8 @@ export async function clickIf(
   }
   return false
 }
+
+export async function clickTwice(locator: Locator) {
+  await locator.click()
+  await locator.click()
+}

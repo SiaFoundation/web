@@ -30,25 +30,12 @@ import {
   MaxDownloadPricePinnedTips,
 } from './fieldTips/MaxDownloadPrice'
 import { MaxRPCPriceTips } from './fieldTips/MaxRPCPrice'
+import { MaxContractPriceTips } from './fieldTips/MaxContractPrice'
 
 export const scDecimalPlaces = 6
 
 type GetFields = {
   advancedDefaults?: AdvancedDefaults
-  averagesSc?: {
-    storageAverage: BigNumber
-    uploadAverage: BigNumber
-    downloadAverage: BigNumber
-    contractAverage: BigNumber
-    rpcAverage: BigNumber
-  }
-  averagesFiat?: {
-    storageAverage: BigNumber
-    uploadAverage: BigNumber
-    downloadAverage: BigNumber
-    contractAverage: BigNumber
-    rpcAverage: BigNumber
-  }
   isAutopilotEnabled: boolean
   configViewMode: ConfigViewMode
   recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
@@ -62,8 +49,6 @@ export type Fields = ReturnType<typeof getFields>
 
 export function getFields({
   advancedDefaults,
-  averagesSc,
-  averagesFiat,
   recommendations,
   isAutopilotEnabled,
   configViewMode,
@@ -435,8 +420,6 @@ export function getFields({
         </>
       ),
       units: 'SC/TB/month',
-      average: averagesSc?.storageAverage,
-      averageTip: 'Averages provided by Sia Central.',
       decimalsLimitSc: scDecimalPlaces,
       validation: {
         required: 'required',
@@ -455,8 +438,6 @@ export function getFields({
       units: '/TB/month',
       type: 'fiat',
       category: 'gouging',
-      average: averagesFiat?.storageAverage,
-      averageTip: 'Averages provided by Sia Central.',
       validation: {
         validate: {
           required: requiredIfPinningEnabled(
@@ -509,8 +490,6 @@ export function getFields({
         </>
       ),
       units: 'SC/TB',
-      average: averagesSc?.uploadAverage,
-      averageTip: 'Averages provided by Sia Central.',
       decimalsLimitSc: scDecimalPlaces,
       validation: {
         required: 'required',
@@ -528,8 +507,6 @@ export function getFields({
       description: '',
       units: '/TB',
       type: 'fiat',
-      average: averagesFiat?.uploadAverage,
-      averageTip: 'Averages provided by Sia Central.',
       category: 'gouging',
       validation: {
         validate: {
@@ -583,8 +560,6 @@ export function getFields({
         </>
       ),
       units: 'SC/TB',
-      average: averagesSc?.downloadAverage,
-      averageTip: `Averages provided by Sia Central.`,
       decimalsLimitSc: scDecimalPlaces,
       validation: {
         required: 'required',
@@ -602,8 +577,6 @@ export function getFields({
       description: '',
       units: '/TB',
       type: 'fiat',
-      average: averagesFiat?.downloadAverage,
-      averageTip: `Averages provided by Sia Central.`,
       category: 'gouging',
       validation: {
         validate: {
@@ -643,37 +616,37 @@ export function getFields({
       type: 'siacoin',
       title: 'Max contract price',
       description: <>The max allowed price to form a contract.</>,
-      average: averagesSc?.contractAverage,
-      averageTip: `Averages provided by Sia Central.`,
+      suggestion: new BigNumber(1),
+      suggestionTip: 'The suggested value is 1 SC.',
       decimalsLimitSc: scDecimalPlaces,
-      tipsDecimalsLimitSc: 3,
+      tipsDecimalsLimitSc: 0,
       hidden: configViewMode === 'basic',
-      suggestionLabel: 'Match with more hosts',
-      suggestion: recommendations.maxContractPrice?.targetValue,
-      suggestionTip: 'This value will help you match with more hosts.',
       validation: {
         validate: {
           required: requiredIfAdvanced(validationContext),
         },
       },
+      after: ({ form, fields }) => (
+        <MaxContractPriceTips
+          form={form}
+          fields={fields}
+          recommendations={recommendations}
+        />
+      ),
     },
     maxRPCPriceMillion: {
       category: 'gouging',
       type: 'siacoin',
       title: 'Max RPC price',
       description: (
-        <>
-          The max allowed base price for RPCs in siacoins per million calls.
-          Choose whether to set the price in siacoin per million calls or to pin
-          the siacoin price to a fixed fiat value per million calls.
-        </>
+        <>The max allowed base price for RPCs in siacoins per million calls.</>
       ),
       units: 'SC/million',
       decimalsLimitSc: scDecimalPlaces,
+      suggestion: new BigNumber(10),
+      suggestionTip: 'The suggested value is 10 SC.',
+      tipsDecimalsLimitSc: 0,
       hidden: configViewMode === 'basic',
-      average: averagesSc?.rpcAverage,
-      averageTip: 'Averages provided by Sia Central.',
-      suggestionTip: 'This value will help you match with more hosts.',
       validation: {
         validate: {
           required: requiredIfAdvanced(validationContext),

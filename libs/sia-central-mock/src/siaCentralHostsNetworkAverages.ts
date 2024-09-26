@@ -81,3 +81,18 @@ export async function mockApiSiaCentralHostsNetworkAverages({
   )
   return json
 }
+
+export async function mockApiSiaCentralHostsNetworkAveragesHanging({
+  page,
+}: {
+  page: Page
+}) {
+  await page.route(
+    'https://api.siacentral.com/v2/hosts/network/averages',
+    async () => {
+      return new Promise(() => {
+        // Never resolve, leaving the request hanging.
+      })
+    }
+  )
+}

@@ -12,6 +12,7 @@ import {
   fitPriceToCurrentAllowanceTipContent,
   recommendationTipContent,
 } from './Tip'
+import { useAverages } from '../useAverages'
 
 export function MaxDownloadPriceTips({
   form,
@@ -22,6 +23,7 @@ export function MaxDownloadPriceTips({
   fields: ConfigFields<InputValues, Categories>
   recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
 }) {
+  const { downloadAverage } = useAverages()
   const derived = useAllowanceDerivedPricingForEnabledFields({
     form,
   })
@@ -29,6 +31,24 @@ export function MaxDownloadPriceTips({
 
   return (
     <>
+      {downloadAverage && (
+        <TipNumber
+          type="siacoin"
+          label="Network average"
+          tip="Averages provided by Sia Central."
+          decimalsLimit={0}
+          value={toHastings(downloadAverage)}
+          onClick={() => {
+            formSetField({
+              form,
+              fields,
+              name: 'maxDownloadPriceTB',
+              value: downloadAverage,
+              options: true,
+            })
+          }}
+        />
+      )}
       {derived?.maxDownloadPriceTB && (
         <TipNumber
           type="siacoin"
@@ -82,6 +102,7 @@ export function MaxDownloadPricePinnedTips({
     form,
   })
   const { rate } = useFormExchangeRate(form)
+  const { downloadAverage } = useAverages()
   const derivedPriceInSiacoin =
     derived?.maxDownloadPriceTBPinned && rate
       ? fiatToSiacoin(derived.maxDownloadPriceTBPinned, rate)
@@ -94,6 +115,24 @@ export function MaxDownloadPricePinnedTips({
       : null
   return (
     <>
+      {downloadAverage && rate && (
+        <TipNumber
+          type="siacoin"
+          label="Network average"
+          tip="Averages provided by Sia Central."
+          decimalsLimit={0}
+          value={toHastings(downloadAverage)}
+          onClick={() => {
+            formSetField({
+              form,
+              fields,
+              name: 'maxDownloadPriceTBPinned',
+              value: downloadAverage.times(rate),
+              options: true,
+            })
+          }}
+        />
+      )}
       {derivedPriceInSiacoin && derived?.maxDownloadPriceTBPinned && (
         <TipNumber
           type="siacoin"
