@@ -94,7 +94,7 @@ export const dataFields: Record<
   },
   hostKey: {
     render: function HostField({ value }: { value: string }) {
-      const host = useHost({ params: { hostKey: value } })
+      const host = useHost({ params: { hostkey: value } })
       if (!host.data) {
         return null
       }

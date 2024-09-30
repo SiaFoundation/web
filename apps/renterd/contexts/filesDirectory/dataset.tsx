@@ -33,8 +33,8 @@ export function useDataset() {
     const p: ObjectsParams = {
       prefix,
       bucket: pathParams.bucket,
-      sortBy: sortField,
-      sortDir: sortDirection,
+      sortby: sortField,
+      sortdir: sortDirection,
       limit,
       delimiter: '/',
     }

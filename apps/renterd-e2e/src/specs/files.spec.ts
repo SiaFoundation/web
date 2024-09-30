@@ -88,8 +88,8 @@ test('can create directory, upload file, rename file, navigate, delete a file, d
     path.join(__dirname, originalFileName),
     originalFileName
   )
-  await fileInList(page, originalFilePath)
   await expect(page.getByText('100%')).toBeVisible()
+  await fileInList(page, originalFilePath)
 
   // Rename file.
   await openFileContextMenu(page, originalFilePath)
@@ -111,8 +111,8 @@ test('can create directory, upload file, rename file, navigate, delete a file, d
     path.join(__dirname, originalFileName),
     originalFileName
   )
-  await fileInList(page, originalFilePath)
   await expect(page.getByText('100%')).toBeVisible()
+  await fileInList(page, originalFilePath)
 
   // Clean up the directory.
   await navigateToParentDirectory(page)

@@ -42,12 +42,12 @@ export const busWalletSendRoute = '/bus/wallet/send'
 export const busWalletPrepareFormRoute = '/bus/wallet/prepare/form'
 export const busWalletPrepareRenewRoute = '/bus/wallet/prepare/renew'
 export const busHostsRoute = '/bus/hosts'
-export const busHostHostKeyRoute = '/bus/host/:hostKey'
-export const busHostsHostKeyRoute = '/bus/hosts/:hostKey'
+export const busHostHostKeyRoute = '/bus/host/:hostkey'
+export const busHostsHostKeyRoute = '/bus/hosts/:hostkey'
 export const busHostsBlocklistRoute = '/bus/hosts/blocklist'
 export const busHostsAllowlistRoute = '/bus/hosts/allowlist'
 export const busHostPublicKeyResetlostsectorsRoute =
-  '/bus/host/:publicKey/resetlostsectors'
+  '/bus/host/:publickey/resetlostsectors'
 export const busContractsRoute = '/bus/contracts'
 export const busContractIdAcquireRoute = '/bus/contract/:id/acquire'
 export const busContractIdReleaseRoute = '/bus/contract/:id/release'
@@ -239,11 +239,11 @@ export type HostsPayload = {
 }
 export type HostsResponse = Host[]
 
-export type HostParams = { hostKey: string }
+export type HostParams = { hostkey: string }
 export type HostPayload = Host
 export type HostResponse = Host
 
-export type HostInteractionParams = { hostKey: string }
+export type HostInteractionParams = { hostkey: string }
 export type HostInteractionPayload = {
   timestamp: string
   type: string
@@ -405,10 +405,10 @@ export type ObjectsParams = {
   delimiter?: string
   limit?: number
   marker?: string
-  sortBy?: 'name' | 'health' | 'size'
-  sortDir?: 'asc' | 'desc'
+  sortby?: 'name' | 'health' | 'size'
+  sortdir?: 'asc' | 'desc'
   substring?: string
-  slabEncryptionKey?: string
+  slabencryptionkey?: string
 }
 export type ObjectsPayload = void
 export type ObjectsResponse = {
@@ -518,8 +518,8 @@ export type ContractMetric = {
 }
 
 export type ContractMetricsParams = MetricsParams & {
-  contractID?: string
-  hostKey?: string
+  contractid?: string
+  hostkey?: string
 }
 export type ContractMetricsPayload = void
 export type ContractMetricsResponse = ContractMetric[]
