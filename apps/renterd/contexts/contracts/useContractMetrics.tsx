@@ -42,7 +42,7 @@ export function useContractMetrics({
       n: periods,
     }
     if (contractId) {
-      p.contractID = contractId
+      p.contractid = contractId
     }
     return p
   }, [start, interval, periods, contractId])

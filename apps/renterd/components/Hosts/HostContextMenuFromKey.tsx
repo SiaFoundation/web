@@ -41,7 +41,7 @@ export function HostContextMenuFromKey({
 // Only trigger a fetch when the dropdown is opened
 function HostContextMenuFromKeyContent({ hostKey }: { hostKey: string }) {
   const host = useHost({
-    params: { hostKey },
+    params: { hostkey: hostKey },
   })
 
   return (

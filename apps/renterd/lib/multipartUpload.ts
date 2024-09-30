@@ -296,7 +296,7 @@ export class MultipartUpload {
           key: this.#key.slice(1),
           bucket: this.#bucket,
           uploadid: this.#uploadId,
-          offset: partOffset,
+          encryptionoffset: partOffset,
           partnumber: partNumber,
         } as MultipartUploadPartParams,
         payload: partData,

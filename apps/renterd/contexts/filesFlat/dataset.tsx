@@ -30,8 +30,8 @@ export function useDataset({ sortDirection, sortField }: Props) {
     const p: ObjectsParams = {
       prefix,
       bucket: activeBucketName,
-      sortBy: sortField,
-      sortDir: sortDirection,
+      sortby: sortField,
+      sortdir: sortDirection,
       limit,
       delimiter: '',
     }

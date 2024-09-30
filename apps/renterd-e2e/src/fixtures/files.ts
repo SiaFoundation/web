@@ -97,8 +97,10 @@ export async function createDirectoryIfNotExists(page: Page, name: string) {
   }
 }
 
-export async function fileInList(page: Page, path: string) {
-  await expect(page.getByTestId('filesTable').getByTestId(path)).toBeVisible()
+export async function fileInList(page: Page, path: string, timeout?: number) {
+  await expect(page.getByTestId('filesTable').getByTestId(path)).toBeVisible({
+    timeout,
+  })
 }
 
 export async function fileNotInList(page: Page, path: string) {
