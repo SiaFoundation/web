@@ -24,6 +24,10 @@ import {
   ConsensusNetworkParams,
   ConsensusNetworkPayload,
   ConsensusNetworkResponse,
+  ContractRevisionsParams,
+  ContractRevisionsPayload,
+  ContractRevisionsResponse,
+  contractRevisionsRoute,
   consensusStateRoute,
   ConsensusStateParams,
   ConsensusStatePayload,
@@ -239,6 +243,11 @@ export function Explored({
       ContractByPubkeyPayload,
       ContractByPubkeyResponse
     >(axios, 'get', contractByPubkeyRoute),
+    contractRevisions: buildRequestHandler<
+      ContractRevisionsParams,
+      ContractRevisionsPayload,
+      ContractRevisionsResponse
+    >(axios, 'get', contractRevisionsRoute),
     // Metrics
     metrics: buildRequestHandler<
       MetricsParams,
