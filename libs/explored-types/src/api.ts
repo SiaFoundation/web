@@ -194,6 +194,12 @@ export type ContractByPubkeyParams = { key: number }
 export type ContractByPubkeyPayload = void
 export type ContractByPubkeyResponse = ExplorerFileContract
 
+// Returns all the revisions of the contract with the specified ID.
+export const contractRevisionsRoute = '/contracts/:id/revisions'
+export type ContractRevisionsParams = { id: FileContractID }
+export type ContractRevisionsPayload = void
+export type ContractRevisionsResponse = ExplorerFileContract[]
+
 // Metrics
 
 // Returns the most recent metrics about Sia.

@@ -23,6 +23,9 @@ import {
   ContractByPubkeyParams,
   ContractByPubkeyResponse,
   contractByPubkeyRoute,
+  ContractRevisionsParams,
+  ContractRevisionsResponse,
+  contractRevisionsRoute,
   ContractsByIDsParams,
   ContractsByIDsPayload,
   ContractsByIDsResponse,
@@ -307,6 +310,15 @@ export function useContractByPubkey(
   return useGetSwr({
     ...args,
     route: contractByPubkeyRoute,
+  })
+}
+
+export function useContractRevisions(
+  args: HookArgsSwr<ContractRevisionsParams, ContractRevisionsResponse>
+) {
+  return useGetSwr({
+    ...args,
+    route: contractRevisionsRoute,
   })
 }
 
