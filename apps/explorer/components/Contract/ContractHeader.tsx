@@ -2,46 +2,46 @@ import {
   Badge,
   ContractTimeline,
   LinkButton,
+  stripPrefix,
 } from '@siafoundation/design-system'
 import { ArrowLeft16, ArrowRight16 } from '@siafoundation/react-icons'
-import { SiaCentralContract } from '@siafoundation/sia-central-types'
-import { lowerCase } from '@technically/lodash'
 import { routes } from '../../config/routes'
 import { EntityHeading } from '../EntityHeading'
-import { siaCentral } from '../../config/siaCentral'
-import { to } from '@siafoundation/request'
+import { ChainIndex, ExplorerFileContract } from '@siafoundation/explored-types'
+import { determineContractStatus } from '../../lib/contracts'
 
 type Props = {
-  contract: SiaCentralContract
-  renewedToId?: string
-  renewedFromId?: string
+  currentHeight: number
+  contract: ExplorerFileContract
+  renewedToID: string | null
+  renewedFromID: string | null
+  formationTxnChainIndex: ChainIndex[]
 }
 
 export async function ContractHeader({
+  currentHeight,
   contract,
-  renewedFromId,
-  renewedToId,
+  renewedFromID,
+  renewedToID,
+  formationTxnChainIndex,
 }: Props) {
   const { id } = contract
-  const [latest, error] = await to(siaCentral.blockLatest())
-  if (error) {
-    console.error(error.stack)
-  }
+  const contractStatus = determineContractStatus(contract)
   return (
     <div className="flex flex-col gap-x-4 gap-y-4 pb-4">
       <div className="flex flex-wrap gap-x-4 gap-y-4 items-center justify-between">
         <EntityHeading
           label="Contract"
           type="contract"
-          value={id}
+          value={stripPrefix(id)}
           href={routes.contract.view.replace(':id', id)}
         />
         <div className="flex gap-1">
-          {renewedFromId && renewedFromId !== id && (
+          {renewedFromID && renewedFromID !== stripPrefix(id) && (
             <LinkButton
               className="hidden sm:flex"
               variant="gray"
-              href={routes.contract.view.replace(':id', renewedFromId)}
+              href={routes.contract.view.replace(':id', renewedFromID)}
               data-testid="explorer-contract-renewedFrom"
             >
               <ArrowLeft16 />
@@ -51,15 +51,19 @@ export async function ContractHeader({
           <Badge
             interactive={false}
             variant={
-              contract.status === 'obligationSucceeded' ? 'green' : 'gray'
+              contractStatus === 'in progress'
+                ? 'gray'
+                : contractStatus === 'obligation succeeded'
+                ? 'green'
+                : 'red'
             }
           >
-            {lowerCase(contract.status)}
+            {contractStatus}
           </Badge>
-          {renewedToId && renewedToId !== id && (
+          {renewedToID && renewedToID !== stripPrefix(id) && (
             <LinkButton
               className="hidden sm:flex"
-              href={routes.contract.view.replace(':id', renewedToId)}
+              href={routes.contract.view.replace(':id', renewedToID)}
               data-testid="explorer-contract-renewedTo"
             >
               renewed to
@@ -68,22 +72,29 @@ export async function ContractHeader({
           )}
         </div>
       </div>
-      {latest?.block && (
+      {currentHeight && (
         <div className="px-1">
           <ContractTimeline
-            currentHeight={latest.block.height || 0}
-            contractHeightStart={contract.negotiation_height}
-            contractHeightEnd={contract.expiration_height}
-            proofWindowHeightStart={contract.expiration_height}
-            proofWindowHeightEnd={contract.proof_deadline}
-            proofHeight={contract.proof_height}
+            currentHeight={currentHeight || 0}
+            contractHeightStart={
+              contract.confirmationIndex?.height ||
+              formationTxnChainIndex[0].height
+            }
+            contractHeightEnd={contract.windowStart}
+            proofWindowHeightStart={contract.windowStart}
+            proofWindowHeightEnd={contract.windowEnd}
+            proofHeight={contract.proofIndex ? contract.proofIndex.height : 0}
             range={{
-              startHeight: contract.negotiation_height,
+              startHeight:
+                contract.confirmationIndex?.height ||
+                formationTxnChainIndex[0].height,
               endHeight: Math.max(
-                latest.block.height || 0,
+                currentHeight || 0,
                 Math.round(
-                  contract.proof_deadline +
-                    (contract.expiration_height - contract.negotiation_height)
+                  contract.windowEnd +
+                    (contract.windowStart -
+                      (contract.confirmationIndex?.height ||
+                        formationTxnChainIndex[0].height))
                 )
               ),
             }}

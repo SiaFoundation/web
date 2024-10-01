@@ -1,11 +1,13 @@
-import { humanBytes, humanDate } from '@siafoundation/units'
+import { humanBytes } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
 import { siaCentral } from '../../../config/siaCentral'
 import { truncate } from '@siafoundation/design-system'
-import { lowerCase } from '@technically/lodash'
 import { siacoinToFiat } from '../../../lib/currency'
 import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
 import { to } from '@siafoundation/request'
+import { explored } from '../../../config/explored'
+import { blockHeightToHumanDate } from '../../../lib/time'
+import { determineContractStatus } from '../../../lib/contracts'
 
 export const revalidate = 0
 
@@ -22,24 +24,20 @@ const currency = currencyOptions.find((c) => c.id === 'usd') as CurrencyOption
 export default async function Image({ params }) {
   const id = params?.id as string
 
-  const [[c], [r]] = await Promise.all([
-    to(
-      siaCentral.contract({
-        params: {
-          id,
-        },
-      })
-    ),
-    to(
-      siaCentral.exchangeRates({
-        params: {
-          currencies: 'sc',
-        },
-      })
-    ),
-  ])
+  const [[contract, contractError], [currentTip, currentTipError], [r]] =
+    await Promise.all([
+      to(explored.contractByID({ params: { id } })),
+      to(explored.consensusTip()),
+      to(
+        siaCentral.exchangeRates({
+          params: {
+            currencies: 'sc',
+          },
+        })
+      ),
+    ])
 
-  if (!c || !c.contract) {
+  if (contractError || !contract || currentTipError || !currentTip) {
     return getOGImage(
       {
         id,
@@ -54,19 +52,16 @@ export default async function Image({ params }) {
   const values = [
     {
       label: 'data size',
-      value: humanBytes(c.contract.file_size),
+      value: humanBytes(contract.filesize),
     },
     {
       label: 'expiration',
-      value: humanDate(c.contract.expiration_timestamp, {
-        dateStyle: 'short',
-        timeStyle: 'short',
-      }),
+      value: blockHeightToHumanDate(currentTip.height, contract.windowStart),
     },
     {
       label: 'payout',
       value: siacoinToFiat(
-        c.contract.payout,
+        contract.payout,
         r && {
           currency,
           rate: r.rates.sc.usd,
@@ -75,18 +70,20 @@ export default async function Image({ params }) {
     },
   ]
 
+  const contractStatus = determineContractStatus(contract)
+
   return getOGImage(
     {
       id,
-      title: truncate(c.contract.id, 30),
+      title: truncate(contract.id, 30),
       subtitle: 'contract',
-      status: lowerCase(c.contract.status),
+      status: contractStatus,
       statusColor:
-        c.contract.status === 'obligationSucceeded'
+        contractStatus === 'in progress'
+          ? 'amber'
+          : contractStatus === 'obligation succeeded'
           ? 'green'
-          : c.contract.status === 'obligationFailed'
-          ? 'red'
-          : 'amber',
+          : 'red',
       initials: 'C',
       values,
     },

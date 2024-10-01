@@ -1,4 +1,3 @@
-import { SiaCentralContract } from '@siafoundation/sia-central-types'
 import { ContractView } from '../../../components/ContractView'
 import { Metadata } from 'next'
 import { routes } from '../../../config/routes'
@@ -8,6 +7,7 @@ import { notFound } from 'next/navigation'
 import { stripPrefix, truncate } from '@siafoundation/design-system'
 import { to } from '@siafoundation/request'
 import { explored } from '../../../config/explored'
+import { ChainIndex, ExplorerFileContract } from '@siafoundation/explored-types'
 
 export function generateMetadata({ params }): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
@@ -24,15 +24,15 @@ export function generateMetadata({ params }): Metadata {
 export const revalidate = 0
 
 export default async function Page({ params }) {
-  const id = params?.id as string
-  const [[c, error], [r]] = await Promise.all([
-    to(
-      siaCentral.contract({
-        params: {
-          id,
-        },
-      })
-    ),
+  const id = params?.id
+
+  // Grab the contract and previous revisions data.
+  const [
+    [rate, rateError],
+    [contract, contractError],
+    [previousRevisions, previousRevisionsError],
+    [currentTip, currentTipError],
+  ] = await Promise.all([
     to(
       siaCentral.exchangeRates({
         params: {
@@ -40,100 +40,99 @@ export default async function Page({ params }) {
         },
       })
     ),
-  ])
-
-  if (error) {
-    throw error
-  }
-
-  const contract = c?.contract
-
-  if (!contract) {
-    return notFound()
-  }
-
-  const formationTxnId = getFormationTxnId(contract)
-  const finalRevisionTxnId = contract?.transaction_id || ''
-
-  const [[ft], [rt]] = await Promise.all([
-    to(
-      siaCentral.transaction({
-        params: {
-          id: formationTxnId,
-        },
-      })
-    ),
-    to(
-      siaCentral.transaction({
-        params: {
-          id: finalRevisionTxnId,
-        },
-      })
-    ),
-  ])
-
-  const formationTransaction = ft?.transaction
-  const renewedFrom = formationTransaction?.contract_revisions?.[0]
-  const renewalTransaction = rt?.transaction
-  const renewedTo = renewalTransaction?.storage_contracts?.[0]
-
-  // The following is a temporary addition to satisfy new Transaction
-  // component requirements for the Sia Central phase out on the
-  // transaction route.
-  const [
-    [transaction, transactionError],
-    [transactionChainIndices, transactionChainIndicesError],
-    [currentTip, currentTipError],
-  ] = await Promise.all([
-    to(
-      explored.transactionByID({
-        params: { id: formationTransaction?.id || '' },
-      })
-    ),
-    to(
-      explored.transactionChainIndices({
-        params: { id: formationTransaction?.id || '' },
-      })
-    ),
+    to(explored.contractByID({ params: { id } })),
+    to<ExplorerFileContract[]>(explored.contractRevisions({ params: { id } })),
     to(explored.consensusTip()),
   ])
 
-  if (transactionError) throw transactionError
-  if (transactionChainIndicesError) throw transactionChainIndicesError
+  if (rateError) throw rateError
+
+  if (contractError) throw contractError
+  if (!contract) return notFound()
+
+  if (previousRevisionsError) throw previousRevisionsError
+  if (!previousRevisions)
+    throw new Error('No previousRevisions found in successful request')
+
   if (currentTipError) throw currentTipError
-  if (!transaction || !transactionChainIndices || !currentTip) return notFound()
+  if (!currentTip) throw new Error('No currentTip found in successful request')
+
+  const formationTxnID =
+    previousRevisions[0].transactionID ?? contract.transactionID
+  const finalRevisionTxnID =
+    previousRevisions[previousRevisions.length - 1].transactionID ??
+    contract.transactionID
+
+  // Fetch our formation and finalRevision transaction information.
+  const [
+    [formationTransaction, formationTransactionError],
+    [renewalTransaction, renewalTransactionError],
+  ] = await Promise.all([
+    to(
+      explored.transactionByID({
+        params: {
+          id: formationTxnID,
+        },
+      })
+    ),
+    to(
+      explored.transactionByID({
+        params: {
+          id: finalRevisionTxnID,
+        },
+      })
+    ),
+  ])
+
+  if (formationTransactionError) throw formationTransactionError
+  if (!formationTransaction)
+    throw new Error('No formation transaction found in successful request')
+
+  if (renewalTransactionError) throw renewalTransactionError
+  if (!renewalTransaction)
+    throw new Error('No renewal transaction found in successful request')
+
+  const renewedFromID =
+    formationTransaction.fileContractRevisions?.[0].id ?? null
+  const renewedToID = renewalTransaction.fileContracts?.[0].id ?? null
+
+  const [formationTxnChainIndices, formationTxnChainIndicesError] = await to<
+    ChainIndex[]
+  >(
+    explored.transactionChainIndices({
+      params: { id: formationTransaction.id },
+    })
+  )
+
+  if (formationTxnChainIndicesError) throw formationTxnChainIndicesError
+  if (!formationTxnChainIndices)
+    throw new Error('No formationTxnChainIndices found in successful request')
 
   // Use the first chainIndex from the above call to get our parent block.
   const [parentBlock, parentBlockError] = await to(
-    explored.blockByID({ params: { id: transactionChainIndices[0].id } })
+    explored.blockByID({ params: { id: formationTxnChainIndices[0].id } })
   )
 
   if (parentBlockError) throw parentBlockError
-  if (!parentBlock) return notFound()
+  if (!parentBlock)
+    throw new Error('No parentBlock found in successful request')
 
   return (
     <ContractView
+      previousRevisions={previousRevisions}
+      currentHeight={currentTip.height}
       contract={contract}
-      rates={r?.rates}
-      renewedFrom={renewedFrom}
-      renewedTo={renewedTo}
-      formationTransaction={transaction}
+      rates={rate?.rates}
+      renewedFromID={renewedFromID ? stripPrefix(renewedFromID) : renewedFromID}
+      renewedToID={renewedToID ? stripPrefix(renewedToID) : renewedToID}
+      formationTransaction={formationTransaction}
+      formationTxnChainIndex={formationTxnChainIndices}
       formationTransactionHeaderData={{
-        id: stripPrefix(transaction.id),
-        blockHeight: transactionChainIndices[0].height,
-        confirmations: currentTip.height - transactionChainIndices[0].height,
+        id: stripPrefix(formationTransaction.id),
+        blockHeight: formationTxnChainIndices[0].height,
+        confirmations: currentTip.height - formationTxnChainIndices[0].height,
         timestamp: parentBlock.timestamp,
       }}
     />
   )
-}
-
-function getFormationTxnId(contract: SiaCentralContract) {
-  let id = contract?.transaction_id
-  if (contract?.previous_revisions?.length) {
-    id =
-      contract.previous_revisions[contract.previous_revisions?.length - 1]
-        .transaction_id
-  }
-  return id
 }
