@@ -34,7 +34,17 @@
           ]
         },
         "production": {},
+        "production-frozen": {},
         "production-testnet-zen": {
+          "outputPath": "dist/apps/explorer-testnet-zen",
+          "fileReplacements": [
+            {
+              "replace": "apps/explorer/config/index.ts",
+              "with": "apps/explorer/config/testnet-zen.ts"
+            }
+          ]
+        },
+        "production-frozen-testnet-zen": {
           "outputPath": "dist/apps/explorer-testnet-zen",
           "fileReplacements": [
             {
@@ -98,8 +108,18 @@
           "file": "apps/explorer/Dockerfile",
           "push": true
         },
+        "production-frozen": {
+          "tags": ["ghcr.io/siafoundation/web-explorer:frozen"],
+          "file": "apps/explorer/Dockerfile",
+          "push": true
+        },
         "production-testnet-zen": {
           "tags": ["ghcr.io/siafoundation/web-explorer-testnet-zen:latest"],
+          "file": "apps/explorer/Dockerfile.zen",
+          "push": true
+        },
+        "production-frozen-testnet-zen": {
+          "tags": ["ghcr.io/siafoundation/web-explorer-testnet-zen:frozen"],
           "file": "apps/explorer/Dockerfile.zen",
           "push": true
         }
