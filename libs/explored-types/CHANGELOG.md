@@ -1,5 +1,11 @@
 # @siafoundation/explored-types
 
+## 0.6.0
+
+### Minor Changes
+
+- 7767e65a: Added confirmation transaction and proof transaction information to the ExplorerFileContract type.
+
 ## 0.5.0
 
 ### Minor Changes

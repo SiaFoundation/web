@@ -1,5 +1,12 @@
 # @siafoundation/clusterd
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies [ee6e18ce]
+  - @siafoundation/renterd-js@0.10.0
+
 ## 0.0.2
 
 ### Patch Changes

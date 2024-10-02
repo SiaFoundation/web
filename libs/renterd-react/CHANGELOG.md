@@ -1,5 +1,16 @@
 # @siafoundation/renterd-react
 
+## 4.10.0
+
+### Minor Changes
+
+- ee6e18ce: All query parameters are now lowercased for API consistency.
+
+### Patch Changes
+
+- Updated dependencies [ee6e18ce]
+  - @siafoundation/renterd-types@0.10.0
+
 ## 4.9.0
 
 ### Minor Changes
