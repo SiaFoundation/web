@@ -99,7 +99,9 @@ export const openDirectory = step(
       .getByText(name)
       .click()
     for (const dir of path.split('/').slice(0, -1)) {
-      await expect(page.getByTestId('navbar').getByText(dir)).toBeVisible()
+      await expect(
+        page.getByTestId('navbar').getByText(dir, { exact: true })
+      ).toBeVisible()
     }
   }
 )
@@ -216,12 +218,12 @@ async function simulateDragAndDropFile(
 
 export const dragAndDropFileFromSystem = step(
   'drag and drop file from system',
-  async (page: Page, systemFilePath: string, localFileName?: string) => {
+  async (page: Page, localFilePath: string, systemFile?: string) => {
     await simulateDragAndDropFile(
       page,
       `[data-testid=filesDropzone]`,
-      join(__dirname, 'sample-files', systemFilePath),
-      '/' + (localFileName || systemFilePath)
+      join(__dirname, 'sample-files', systemFile || 'sample.txt'),
+      '/' + localFilePath
     )
   }
 )
@@ -244,7 +246,7 @@ export const createFilesMap = step(
           await fileInList(page, path + '/')
           await create(map[name] as FileMap, stack.concat(name))
         } else {
-          await dragAndDropFileFromSystem(page, 'sample.txt', name)
+          await dragAndDropFileFromSystem(page, name)
           await fileInList(page, path)
         }
       }
