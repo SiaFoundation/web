@@ -1,5 +1,15 @@
 # renterd
 
+## 0.64.0
+
+### Minor Changes
+
+- 2a1d787d: Max RPC price and max contract price now show a suggestion instead of a network average.
+
+### Patch Changes
+
+- 2a1d787d: Fixed a bug where the network average prices would show as 0 in the configuration fields. Closes https://github.com/SiaFoundation/renterd/issues/1565
+
 ## 0.63.0
 
 ### Minor Changes
