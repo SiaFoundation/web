@@ -40,21 +40,23 @@ jobs:
           git push origin main --tags
           # cleanup
           git branch -D release
-      - name: Create UI PR on renterd repo
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.PAT_REPOSITORY_DISPATCH }}
-          repository: siafoundation/renterd
-          event-type: update-ui
-      - name: Create UI PR on hostd repo
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.PAT_REPOSITORY_DISPATCH }}
-          repository: siafoundation/hostd
-          event-type: update-ui
-      - name: Create UI PR on walletd repo
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.PAT_REPOSITORY_DISPATCH }}
-          repository: siafoundation/walletd
-          event-type: update-ui
+      # Disabled in favor of Dependabot.
+      # Leaving here in case we ever want to re-enable.
+      # - name: Create UI PR on renterd repo
+      #   uses: peter-evans/repository-dispatch@v3
+      #   with:
+      #     token: ${{ secrets.PAT_REPOSITORY_DISPATCH }}
+      #     repository: siafoundation/renterd
+      #     event-type: update-ui
+      # - name: Create UI PR on hostd repo
+      #   uses: peter-evans/repository-dispatch@v3
+      #   with:
+      #     token: ${{ secrets.PAT_REPOSITORY_DISPATCH }}
+      #     repository: siafoundation/hostd
+      #     event-type: update-ui
+      # - name: Create UI PR on walletd repo
+      #   uses: peter-evans/repository-dispatch@v3
+      #   with:
+      #     token: ${{ secrets.PAT_REPOSITORY_DISPATCH }}
+      #     repository: siafoundation/walletd
+      #     event-type: update-ui
