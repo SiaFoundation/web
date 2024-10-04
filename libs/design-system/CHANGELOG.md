@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.9.1
+
+### Patch Changes
+
+- cba0617d: Updated react-hot-toast to latest version.
+
 ## 4.9.0
 
 ### Minor Changes
