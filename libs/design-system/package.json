@@ -70,7 +70,7 @@
     "@radix-ui/react-switch": "^1.0.0",
     "@radix-ui/react-tabs": "^1.0.0",
     "@radix-ui/react-tooltip": "^1.0.0",
-    "react-hot-toast": "^2.2.0"
+    "react-hot-toast": "^2.4.1"
   },
   "devDependencies": {
     "undici": "5.28.3"
