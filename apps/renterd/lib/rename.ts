@@ -13,7 +13,7 @@ import {
 
 type Id = string | number
 
-// Parameters for moving a directory or file to drag destination
+// Parameters for moving a directory or file to drag destination.
 export function getMoveFileRenameParams(
   e: { active: { id: Id }; collisions: { id: Id }[] | null },
   activeDirectory: FullPathSegments
@@ -39,7 +39,7 @@ export function getMoveFileRenameParams(
   } as const
 }
 
-// Parameters for renaming the name of a file or directory
+// Parameters for renaming the name of a file or directory.
 export function getRenameFileRenameParams(path: FullPath, newName: string) {
   let to = join(getParentDirectoryPath(path), newName)
   const isDir = isDirectory(path)
