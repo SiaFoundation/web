@@ -195,7 +195,7 @@ export function SiacoinField({
           }
         }}
       />
-      {showFiat && settings.siaCentral && (
+      {showFiat && rate && (
         <BaseNumberField
           {...props}
           data-testid="fiatInput"
@@ -210,9 +210,9 @@ export function SiacoinField({
           onValueChange={(value) => {
             setLocalFiat(value.value || '')
           }}
-          placeholder={`${settings.currency.prefix}${
-            rate ? rate.times(placeholder).toFixed(decimalsLimitFiat) : '0.42'
-          }`}
+          placeholder={`${settings.currency.prefix}${rate
+            .times(placeholder)
+            .toFixed(decimalsLimitFiat)}`}
           prefix={prefix || settings.currency.prefix}
           onFocus={(e) => {
             setActive('fiat')

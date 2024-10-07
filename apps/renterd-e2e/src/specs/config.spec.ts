@@ -8,7 +8,7 @@ import {
 } from '../fixtures/textInput'
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
 import { setCurrencyDisplay } from '../fixtures/preferences'
-import { configResetAllSettings } from '../fixtures/configResetAllSettings'
+import { configResetAllSettings } from '../fixtures/configResetSettings'
 import { fillSelectInputByName } from '../fixtures/selectInput'
 import { clickTwice } from '../fixtures/click'
 

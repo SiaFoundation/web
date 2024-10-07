@@ -27,7 +27,7 @@ import useLocalStorageState from 'use-local-storage-state'
 
 export function OnboardingBar() {
   const { isUnlockedAndAuthedRoute } = useAppSettings()
-  const app = useApp()
+  const { isAutopilotEnabled, autopilotInfo } = useApp()
   const { openDialog } = useDialog()
   const wallet = useWallet()
   const autopilot = useAutopilotConfig({
@@ -47,7 +47,7 @@ export function OnboardingBar() {
   const syncStatus = useSyncStatus()
   const notEnoughContracts = useNotEnoughContracts()
 
-  if (!isUnlockedAndAuthedRoute || app.autopilot.status !== 'on') {
+  if (!isUnlockedAndAuthedRoute || !isAutopilotEnabled) {
     return null
   }
 
@@ -56,7 +56,7 @@ export function OnboardingBar() {
   )
   const allowance = new BigNumber(autopilot.data?.contracts.allowance || 0)
 
-  const step1Configured = app.autopilot.state.data?.configured
+  const step1Configured = autopilotInfo.data?.state?.configured
   const step2Synced = syncStatus.isSynced
   const step3Funded = walletBalance.gt(0)
   const step4Contracts = !notEnoughContracts.active

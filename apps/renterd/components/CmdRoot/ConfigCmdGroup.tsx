@@ -21,7 +21,7 @@ export function ConfigCmdGroup({ currentPage, parentPage, pushPage }: Props) {
   const router = useRouter()
   const { configViewMode } = useConfig()
   const { closeDialog } = useDialog()
-  const { autopilot } = useApp()
+  const { autopilotInfo } = useApp()
   return (
     <CommandGroup currentPage={currentPage} commandPage={commandPage}>
       <CommandItemNav
@@ -44,7 +44,7 @@ export function ConfigCmdGroup({ currentPage, parentPage, pushPage }: Props) {
       >
         Open configuration
       </CommandItemSearch>
-      {autopilot.status === 'on' && (
+      {autopilotInfo.data?.isAutopilotEnabled && (
         <CommandItemSearch
           currentPage={currentPage}
           commandPage={commandPage}
@@ -68,7 +68,7 @@ export function ConfigCmdGroup({ currentPage, parentPage, pushPage }: Props) {
       </CommandItemSearch>
       {configViewMode === 'advanced' && (
         <>
-          {autopilot.status === 'on' && (
+          {autopilotInfo.data?.isAutopilotEnabled && (
             <>
               <CommandItemSearch
                 currentPage={currentPage}
