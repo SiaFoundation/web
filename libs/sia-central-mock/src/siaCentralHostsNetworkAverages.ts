@@ -82,6 +82,14 @@ export async function mockApiSiaCentralHostsNetworkAverages({
   return json
 }
 
+export async function mockApiSiaCentralHostsNetworkAveragesUnroute({
+  page,
+}: {
+  page: Page
+}) {
+  await page.unroute('https://api.siacentral.com/v2/hosts/network/averages')
+}
+
 export async function mockApiSiaCentralHostsNetworkAveragesHanging({
   page,
 }: {

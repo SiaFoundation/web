@@ -6,7 +6,7 @@ import { fillTextInputByName } from '../fixtures/textInput'
 import { clearToasts } from '../fixtures/clearToasts'
 import { clickIfEnabledAndWait, clickIf } from '../fixtures/click'
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
-import { configResetAllSettings } from '../fixtures/configResetAllSettings'
+import { configResetAllSettings } from '../fixtures/configResetSettings'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page, {

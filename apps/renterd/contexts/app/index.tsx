@@ -1,15 +1,16 @@
 import React, { createContext, useContext } from 'react'
-import { useAutopilot } from './useAutopilot'
+import { useAutopilotInfo } from './useAutopilotInfo'
 import { useBusSdk } from './useBusSdk'
 
 function useAppMain() {
-  const autopilot = useAutopilot()
+  const autopilotInfo = useAutopilotInfo()
   const bus = useBusSdk()
+  const isAutopilotEnabled = !!autopilotInfo.data?.isAutopilotEnabled
 
   return {
     bus,
-    autopilot,
-    isAutopilotEnabled: autopilot.status === 'on',
+    autopilotInfo,
+    isAutopilotEnabled,
   }
 }
 

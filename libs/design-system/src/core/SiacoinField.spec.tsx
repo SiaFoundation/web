@@ -33,7 +33,7 @@ afterAll(() => server.close())
 
 describe('SiacoinField', () => {
   it('updates fiat and external value immediately', async () => {
-    siascanExchangeRateEndpoint('1')
+    mockEndpoints('1')
     const user = userEvent.setup()
     const onChange = jest.fn()
     const { scInput, fiatInput } = await renderNode({
@@ -64,7 +64,7 @@ describe('SiacoinField', () => {
   })
 
   it('updates value starting with decimal', async () => {
-    siascanExchangeRateEndpoint('1')
+    mockEndpoints('1')
     const user = userEvent.setup()
     const onChange = jest.fn()
     const { scInput, fiatInput } = await renderNode({
@@ -83,7 +83,7 @@ describe('SiacoinField', () => {
   })
 
   it('updates value starting with comma decimal separator', async () => {
-    siascanExchangeRateEndpoint('1')
+    mockEndpoints('1')
     const user = userEvent.setup()
     const onChange = jest.fn()
     const { scInput, fiatInput } = await renderNode({
@@ -103,7 +103,7 @@ describe('SiacoinField', () => {
   })
 
   it('works with alternate locale: DE', async () => {
-    siascanExchangeRateEndpoint('1')
+    mockEndpoints('1')
     const user = userEvent.setup()
     const onChange = jest.fn()
     const { scInput, fiatInput } = await renderNode({
@@ -130,7 +130,7 @@ describe('SiacoinField', () => {
   })
 
   it('works with alternate locale: DE and alternate currency', async () => {
-    siascanExchangeRateEndpoint('1')
+    mockEndpoints('1')
     const user = userEvent.setup()
     const onChange = jest.fn()
     const { scInput, fiatInput } = await renderNode({
@@ -158,7 +158,7 @@ describe('SiacoinField', () => {
   })
 
   it('works with alternate locale: ES', async () => {
-    siascanExchangeRateEndpoint('1')
+    mockEndpoints('1')
     const user = userEvent.setup()
     const onChange = jest.fn()
     const { scInput, fiatInput } = await renderNode({
@@ -186,7 +186,7 @@ describe('SiacoinField', () => {
   })
 
   it('rounds to 6 decimal places', async () => {
-    siascanExchangeRateEndpoint('1')
+    mockEndpoints('1')
     const user = userEvent.setup()
     const onChange = jest.fn()
     const { scInput, fiatInput } = await renderNode({
@@ -223,7 +223,7 @@ describe('SiacoinField', () => {
   })
 
   it('updates sc based on fiat change', async () => {
-    siascanExchangeRateEndpoint('1')
+    mockEndpoints('1')
     const user = userEvent.setup()
     const onChange = jest.fn()
     const { scInput, fiatInput } = await renderNode({
@@ -250,7 +250,7 @@ describe('SiacoinField', () => {
     // since updating fiat immediately updates siacoin, the source of truth
     // this test asserts that the siacoin values does not then immediately
     // re-update the fiat with a new rounded value.
-    siascanExchangeRateEndpoint('0.003494929784')
+    mockEndpoints('0.003494929784')
     const user = userEvent.setup()
     const onChange = jest.fn()
     const { scInput, fiatInput } = await renderNode({
@@ -272,7 +272,7 @@ describe('SiacoinField', () => {
   })
 
   it('rounds when changing fiat with realistic exchange rate', async () => {
-    siascanExchangeRateEndpoint('0.003623859876')
+    mockEndpoints('0.003623859876')
     const user = userEvent.setup()
     const onChange = jest.fn()
     const { scInput, fiatInput } = await renderNode({
@@ -297,7 +297,7 @@ describe('SiacoinField', () => {
   })
 
   it('touching the fiat field without changing it does not trigger', async () => {
-    siascanExchangeRateEndpoint('0.003623859876')
+    mockEndpoints('0.003623859876')
     const onChange = jest.fn()
     const { scInput, fiatInput } = await renderNode({
       sc: new BigNumber(0.444),
@@ -321,6 +321,8 @@ function Component({
   return <SiacoinField sc={sc} onChange={setSc} {...props} />
 }
 
+const daemonExplorerInfoRoute = '/explorer/info'
+
 async function renderNode({
   sc,
   locale = 'en',
@@ -332,28 +334,50 @@ async function renderNode({
 
   const node = render(
     <CoreProvider cacheProvider={() => new Map()}>
-      <AppSettingsProvider>
+      <AppSettingsProvider daemonExplorerInfoRoute={daemonExplorerInfoRoute}>
         <Component sc={sc} {...props} />
       </AppSettingsProvider>
     </CoreProvider>
   )
 
   const scInput = node.getByTestId('scInput') as HTMLInputElement
+  await waitFor(() => {
+    const fiatInput = node.getByTestId('fiatInput') as HTMLInputElement
+    expect(fiatInput).toBeTruthy()
+  })
   const fiatInput = node.getByTestId('fiatInput') as HTMLInputElement
   await waitFor(() => expect(fiatInput.value).toBeTruthy())
-  // let the component set state and finish the next render pass
+  // Let the component set state and finish the next render pass.
   await act(async () => {
     await delay(100)
   })
   return { scInput, fiatInput }
 }
 
-function siascanExchangeRateEndpoint(rate = '1') {
+function mockDaemonExplorerEndpoint() {
+  server.use(
+    http.get(`http://localhost/api${daemonExplorerInfoRoute}`, () => {
+      return HttpResponse.json({
+        explorer: {
+          url: 'https://api.siascan.com',
+          enabled: true,
+        },
+      })
+    })
+  )
+}
+
+function mockSiascanExchangeRateEndpoint(rate = '1') {
   server.use(
     http.get('https://api.siascan.com/exchange-rate/siacoin/*', () => {
       return HttpResponse.json(rate)
     })
   )
+}
+
+function mockEndpoints(rate = '1') {
+  mockDaemonExplorerEndpoint()
+  mockSiascanExchangeRateEndpoint(rate)
 }
 
 function expectOnChangeValues(values: (string | undefined)[], fn: jest.Mock) {

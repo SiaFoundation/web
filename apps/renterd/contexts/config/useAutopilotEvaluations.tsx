@@ -13,7 +13,7 @@ import {
   ResourcesMaybeLoaded,
   ResourcesRequiredLoaded,
   checkIfAllResourcesLoaded,
-} from './resources'
+} from './useResources'
 import { transformDownGouging } from './transformDown'
 import { transformUp } from './transformUp'
 import {
@@ -89,9 +89,13 @@ export function useAutopilotEvaluations({
     // the transformUp calculations that assume all data is valid and present.
     return mergeValuesWithDefaultsOrZeroValues(
       valuesWithPinnedOverrides,
-      resources.autopilotState.data?.network
+      resources.autopilotInfo.data?.state?.network
     )
-  }, [values, anyPinnedValuesAsSiacoin, resources.autopilotState.data?.network])
+  }, [
+    values,
+    anyPinnedValuesAsSiacoin,
+    resources.autopilotInfo.data?.state?.network,
+  ])
 
   const payloads = useMemo(() => {
     if (!hasDataToEvaluate || !renterdState.data) {

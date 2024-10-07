@@ -10,18 +10,18 @@ import {
 import { useCallback, useMemo } from 'react'
 import { InputValues } from './types'
 import { transformDown } from './transformDown'
-import { useResources } from './useResources'
 import { useOnValid } from './useOnValid'
 import { useForm } from './useForm'
 import {
+  useResources,
   checkIfAllResourcesLoaded,
   checkIfAnyResourcesErrored,
-} from './resources'
+} from './useResources'
 import { useApp } from '../app'
 
 export function useConfigMain() {
   const {
-    autopilotState,
+    autopilotInfo,
     autopilot,
     gouging,
     pinned,
@@ -29,58 +29,8 @@ export function useConfigMain() {
     averages,
     shouldSyncDefaultContractSet,
     setShouldSyncDefaultContractSet,
-    appSettings,
+    resources,
   } = useResources()
-
-  // resources required to intialize form
-  const resources = useMemo(
-    () => ({
-      autopilotState: {
-        data: autopilotState.data,
-        error: autopilotState.error,
-      },
-      autopilot: {
-        data: autopilot.data,
-        error: autopilot.error,
-      },
-      gouging: {
-        data: gouging.data,
-        error: gouging.error,
-      },
-      pinned: {
-        data: pinned.data,
-        error: pinned.error,
-      },
-      upload: {
-        data: upload.data,
-        error: upload.error,
-      },
-      averages: {
-        data: averages.data,
-        error: averages.error,
-      },
-      appSettings: {
-        settings: {
-          siaCentral: appSettings.settings.siaCentral,
-        },
-      },
-    }),
-    [
-      autopilotState.data,
-      autopilotState.error,
-      autopilot.data,
-      autopilot.error,
-      gouging.data,
-      gouging.error,
-      pinned.data,
-      pinned.error,
-      upload.data,
-      upload.error,
-      averages.data,
-      averages.error,
-      appSettings.settings.siaCentral,
-    ]
-  )
 
   const {
     form,
@@ -98,8 +48,8 @@ export function useConfigMain() {
       return undefined
     }
     return transformDown({
-      autopilotID: loaded.autopilotState.data.id,
-      hasBeenConfigured: loaded.autopilotState.data.configured,
+      autopilotID: loaded.autopilotInfo.data?.state?.id,
+      hasBeenConfigured: !!loaded.autopilotInfo.data?.state?.configured,
       autopilot: loaded.autopilot.data,
       gouging: loaded.gouging.data,
       pinned: loaded.pinned.data,
@@ -116,19 +66,19 @@ export function useConfigMain() {
   const { isAutopilotEnabled } = useApp()
   const revalidateAndResetForm = useCallback(async () => {
     // these do not seem to throw on errors, just return undefined
-    const _autopilotState = await autopilotState.mutate()
+    const _autopilotInfo = await autopilotInfo.mutate()
     const _autopilot = isAutopilotEnabled ? await autopilot.mutate() : undefined
     const _gouging = await gouging.mutate()
     const _pinned = await pinned.mutate()
     const _upload = await upload.mutate()
-    if (!_autopilotState || !_gouging || !_upload || !_pinned) {
+    if (!_autopilotInfo || !_gouging || !_upload || !_pinned) {
       triggerErrorToast({ title: 'Error fetching settings' })
       return undefined
     }
     form.reset(
       transformDown({
-        autopilotID: _autopilotState.id,
-        hasBeenConfigured: _autopilotState.configured,
+        autopilotID: _autopilotInfo.id,
+        hasBeenConfigured: _autopilotInfo.configured,
         autopilot: _autopilot,
         gouging: _gouging,
         pinned: _pinned,
@@ -138,7 +88,7 @@ export function useConfigMain() {
     )
   }, [
     form,
-    autopilotState,
+    autopilotInfo,
     isAutopilotEnabled,
     autopilot,
     gouging,
@@ -159,7 +109,6 @@ export function useConfigMain() {
 
   const onValid = useOnValid({
     resources,
-    isAutopilotEnabled,
     revalidateAndResetForm,
   })
 

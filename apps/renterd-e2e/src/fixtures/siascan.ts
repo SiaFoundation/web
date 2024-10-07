@@ -13,6 +13,14 @@ export async function mockApiSiaScanExchangeRates({ page }: { page: Page }) {
   )
 }
 
+export async function mockApiSiaScanExchangeRatesUnroute({
+  page,
+}: {
+  page: Page
+}) {
+  await page.unroute('https://api.siascan.com/exchange-rate/siacoin/*')
+}
+
 export async function mockApiSiaScanExchangeRatesHanging({
   page,
 }: {

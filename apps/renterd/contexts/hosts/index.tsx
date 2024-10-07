@@ -53,7 +53,7 @@ function useHostsMain() {
     useServerFilters()
 
   const { dataset: allContracts } = useContracts()
-  const { autopilot, isAutopilotEnabled } = useApp()
+  const { autopilotInfo, isAutopilotEnabled } = useApp()
 
   const keyIn = useMemo(() => {
     let keyIn: string[] = []
@@ -80,13 +80,13 @@ function useHostsMain() {
     }
     if (
       isAutopilotEnabled &&
-      autopilot.state.data?.configured &&
-      autopilot.state.data?.id
+      autopilotInfo.data?.state?.configured &&
+      autopilotInfo.data?.state?.id
     ) {
-      p.autopilotID = autopilot.state.data.id
+      p.autopilotID = autopilotInfo.data?.state?.id
     }
     return p
-  }, [autopilot.state.data, filters, isAutopilotEnabled, keyIn, limit, offset])
+  }, [autopilotInfo.data, filters, isAutopilotEnabled, keyIn, limit, offset])
 
   const response = useHostsSearch({
     payload,
@@ -186,7 +186,7 @@ function useHostsMain() {
   const dataset = useDataset({
     response,
     allContracts,
-    autopilotID: autopilot.state.data?.id,
+    autopilotID: autopilotInfo.data?.state?.id,
     allowlist,
     blocklist,
     isAllowlistActive,
@@ -195,8 +195,8 @@ function useHostsMain() {
   })
 
   const disabledCategories = useMemo(
-    () => (autopilot.status === 'off' ? ['autopilot'] : []),
-    [autopilot.status]
+    () => (autopilotInfo.data?.status === 'off' ? ['autopilot'] : []),
+    [autopilotInfo.data?.status]
   )
 
   const {
@@ -227,7 +227,7 @@ function useHostsMain() {
   const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
 
   const siascanUrl = useSiascanUrl()
-  const isAutopilotConfigured = !!autopilot.state.data?.configured
+  const isAutopilotConfigured = !!autopilotInfo.data?.state?.configured
   const tableContext: HostContext = useMemo(
     () => ({
       isAutopilotConfigured,

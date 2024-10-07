@@ -17,20 +17,21 @@ import {
   ResourcesMaybeLoaded,
   ResourcesRequiredLoaded,
   checkIfAllResourcesLoaded,
-} from './resources'
+} from './useResources'
 import { transformUp } from './transformUp'
 import { InputValues, SubmitValues } from './types'
 import { useSyncContractSet } from './useSyncContractSet'
+import { useApp } from '../app'
 
 export function useOnValid({
   resources,
-  isAutopilotEnabled,
   revalidateAndResetForm,
 }: {
   resources: ResourcesMaybeLoaded
-  isAutopilotEnabled: boolean
   revalidateAndResetForm: () => Promise<void>
 }) {
+  const app = useApp()
+  const isAutopilotEnabled = !!app.autopilotInfo.data?.isAutopilotEnabled
   const autopilotTrigger = useAutopilotTrigger()
   const autopilotUpdate = useAutopilotConfigUpdate()
   const settingsGougingUpdate = useSettingsGougingUpdate()
