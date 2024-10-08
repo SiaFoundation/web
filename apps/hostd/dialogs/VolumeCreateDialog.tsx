@@ -1,5 +1,4 @@
 import {
-  Paragraph,
   Dialog,
   GBToSectors,
   triggerErrorToast,
@@ -211,6 +210,7 @@ export function VolumeCreateDialog({ trigger, open, onOpenChange }: Props) {
   return (
     <Dialog
       title="Create Volume"
+      description="Create a new volume. Select a system directory and specific the size of the volume."
       trigger={trigger}
       open={open}
       onOpenChange={(val) => {
@@ -230,10 +230,6 @@ export function VolumeCreateDialog({ trigger, open, onOpenChange }: Props) {
       }
     >
       <div className="flex flex-col gap-4">
-        <Paragraph size="14">
-          Create a new volume. Select a system directory and specific the size
-          of the volume.
-        </Paragraph>
         <FieldText name="name" form={form} fields={fields} />
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1">

@@ -22,6 +22,7 @@ export function WalletActionsMenu() {
   const { openDialog } = useDialog()
   const walletId = router.query.id as string
   const balance = useWalletBalance({
+    disabled: !walletId,
     params: {
       id: walletId,
     },

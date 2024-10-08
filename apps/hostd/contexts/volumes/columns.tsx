@@ -53,7 +53,7 @@ export const columns: VolumesTableColumn[] = [
             'available'
           ) : (
             <>
-              <Text>unavailable</Text>
+              <Text size="12">unavailable</Text>
               <div className="flex flex-col">
                 {data.errors?.map((reason) => (
                   <Text key={reason} size="10" noWrap>

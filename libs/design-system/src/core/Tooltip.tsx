@@ -14,6 +14,8 @@ type TooltipProps = Omit<
   'content'
 > & {
   children: React.ReactElement
+  /** The content to display in the tooltip.
+   * If a string or React.Fragment is passed the content will be wrapped in a Paragraph. */
   content: React.ReactNode
 }
 
@@ -44,6 +46,7 @@ export function Tooltip({
     open: _open,
     onOpenChange: _onOpenChange,
   })
+
   return (
     <TooltipPrimitive.Root
       open={open}
@@ -90,7 +93,11 @@ export function Tooltip({
                     panelStyles()
                   )}
                 >
-                  <Paragraph size="12">{content}</Paragraph>
+                  {typeof content === 'string' || Array.isArray(content) ? (
+                    <Paragraph size="12">{content}</Paragraph>
+                  ) : (
+                    content
+                  )}
                 </div>
               </motion.div>
             </TooltipPrimitive.Content>

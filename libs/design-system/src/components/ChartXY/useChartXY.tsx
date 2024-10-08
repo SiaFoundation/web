@@ -250,6 +250,7 @@ export function useChartXY<Key extends string, Cat extends string>(
   return {
     id,
     accessors,
+    useAnimatedComponents,
     animationTrajectory,
     config,
     scales,

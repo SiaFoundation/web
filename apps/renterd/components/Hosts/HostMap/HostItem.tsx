@@ -90,26 +90,42 @@ export function HostItem({
     <Tooltip
       content={
         <div className="flex flex-col gap-1">
-          <Text color="contrast" weight="bold">
+          <Text size="12" color="contrast" weight="bold">
             {countryCodeEmoji(host.country_code)} {host.country_code}
           </Text>
           <div className="flex gap-2">
             <div className="flex flex-col gap-1">
-              <Text color="subtle">storage</Text>
-              <Text color="subtle">download</Text>
-              <Text color="subtle">upload</Text>
+              <Text size="12" color="subtle">
+                storage
+              </Text>
+              <Text size="12" color="subtle">
+                download
+              </Text>
+              <Text size="12" color="subtle">
+                upload
+              </Text>
             </div>
             <div className="flex flex-col gap-1">
-              <Text color="contrast">
+              <Text size="12" color="contrast">
                 {humanBytes(host.settings?.total_storage || 0)}
               </Text>
-              <Text color="contrast">{getDownloadSpeed(host)}</Text>
-              <Text color="contrast">{getUploadSpeed(host)}</Text>
+              <Text size="12" color="contrast">
+                {getDownloadSpeed(host)}
+              </Text>
+              <Text size="12" color="contrast">
+                {getUploadSpeed(host)}
+              </Text>
             </div>
             <div className="flex flex-col gap-1">
-              <Text color="contrast">{storageCost}</Text>
-              <Text color="contrast">{downloadCost}</Text>
-              <Text color="contrast">{uploadCost}</Text>
+              <Text size="12" color="contrast">
+                {storageCost}
+              </Text>
+              <Text size="12" color="contrast">
+                {downloadCost}
+              </Text>
+              <Text size="12" color="contrast">
+                {uploadCost}
+              </Text>
             </div>
           </div>
         </div>

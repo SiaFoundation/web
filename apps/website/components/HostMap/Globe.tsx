@@ -17,7 +17,7 @@ import { useTheme } from 'next-themes'
 import { useElementSize } from 'usehooks-ts'
 
 type Props = {
-  activeHost: SiaCentralPartialHost
+  activeHost?: SiaCentralPartialHost
   selectActiveHost: (public_key: string) => void
   hosts: SiaCentralPartialHost[]
   rates: {
@@ -56,7 +56,9 @@ function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
   }, [])
 
   const moveToActiveHost = useCallback(() => {
-    moveToHost(activeHost)
+    if (activeHost) {
+      moveToHost(activeHost)
+    }
   }, [moveToHost, activeHost])
 
   useEffect(() => {
@@ -110,6 +112,9 @@ function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
   }, [hosts])
 
   const activeRoutes = useMemo(() => {
+    if (!activeHost) {
+      return []
+    }
     let routes: Route[] = []
     for (let i = 0; i < hosts.length; i++) {
       const host = hosts[i]
@@ -212,8 +217,11 @@ function distanceBetweenHosts(
 
 function doesIncludeActiveHost(
   route: Route,
-  activeHost: SiaCentralPartialHost
+  activeHost?: SiaCentralPartialHost
 ) {
+  if (!activeHost) {
+    return false
+  }
   return (
     route.dst.public_key === activeHost.public_key ||
     route.src.public_key === activeHost.public_key
