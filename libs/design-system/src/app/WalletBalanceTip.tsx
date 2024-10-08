@@ -26,7 +26,7 @@ export function WalletBalanceTip({
     <Tooltip
       side={side}
       content={
-        <div className="flex flex-col justify-center gap-2">
+        <div className="flex flex-col justify-center gap-2 text-xs">
           <div className="flex gap-4">
             <div className="flex flex-col flex-1">
               <Text>spendable</Text>

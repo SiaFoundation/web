@@ -90,7 +90,16 @@ export const Dialog = React.forwardRef<
         <AnimatePresence>
           {open ? (
             <DialogPrimitive.Portal forceMount>
-              <DialogPrimitive.Content asChild forceMount ref={ref}>
+              <DialogPrimitive.Content
+                asChild
+                forceMount
+                ref={ref}
+                // aria-describedby must be explicitly set to undefined if a
+                // description is not provided.
+                {...(description === undefined
+                  ? { 'aria-describedby': undefined }
+                  : {})}
+              >
                 <div className="fixed w-full h-full top-0 left-0 z-20">
                   <DialogPrimitive.Overlay
                     onClick={() => onOpenChange(false)}

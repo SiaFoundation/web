@@ -12,6 +12,7 @@ import {
   FieldNumber,
   FieldSelect,
   Tooltip,
+  Paragraph,
 } from '@siafoundation/design-system'
 import { useForm } from 'react-hook-form'
 import { useCallback, useMemo } from 'react'
@@ -127,11 +128,11 @@ function getFields({
       actions: (
         <Tooltip
           content={
-            <>
+            <Paragraph size="12">
               The address where any change from the transaction will be sent. If
               a custom change address is not specified it is automatically set
               to the wallet's address 0.
-            </>
+            </Paragraph>
           }
         >
           <Text color="subtle" className="cursor-pointer">
@@ -163,11 +164,11 @@ function getFields({
       actions: (
         <Tooltip
           content={
-            <>
+            <Paragraph size="12">
               The address that will receive any unclaimed siacoin earnings from
               the siafund. If a custom claim address is not specified it is
               automatically set to the wallet's address 0.
-            </>
+            </Paragraph>
           }
         >
           <Text color="subtle" className="cursor-pointer">

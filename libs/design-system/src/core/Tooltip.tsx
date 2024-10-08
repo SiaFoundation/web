@@ -90,7 +90,11 @@ export function Tooltip({
                     panelStyles()
                   )}
                 >
-                  <Paragraph size="12">{content}</Paragraph>
+                  {typeof content === 'string' ? (
+                    <Paragraph size="12">{content}</Paragraph>
+                  ) : (
+                    content
+                  )}
                 </div>
               </motion.div>
             </TooltipPrimitive.Content>

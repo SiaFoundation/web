@@ -3,6 +3,7 @@ import {
   Code,
   ConfigFields,
   Maybe,
+  Paragraph,
   toFixedMaxString,
 } from '@siafoundation/design-system'
 import { hoursInDays, secondsInMinutes } from '@siafoundation/units'
@@ -220,10 +221,10 @@ export function getFields({
       placeholder: advancedDefaults?.autopilotContractSet,
       suggestion: advancedDefaults?.autopilotContractSet,
       suggestionTip: (
-        <>
+        <Paragraph size="12">
           The default contract set is{' '}
           <Code>{advancedDefaults?.autopilotContractSet}</Code>.
-        </>
+        </Paragraph>
       ),
       hidden: !isAutopilotEnabled || configViewMode === 'basic',
       validation: {
@@ -248,9 +249,9 @@ export function getFields({
       ),
       suggestion: advancedDefaults?.prune,
       suggestionTip: (
-        <>
+        <Paragraph size="12">
           The default value is <Code>{advancedDefaults?.prune}</Code>.
-        </>
+        </Paragraph>
       ),
       hidden: !isAutopilotEnabled || configViewMode === 'basic',
       validation: {},
@@ -361,10 +362,10 @@ export function getFields({
       placeholder: advancedDefaults?.defaultContractSet,
       suggestion: advancedDefaults?.defaultContractSet,
       suggestionTip: (
-        <>
+        <Paragraph size="12">
           Autopilot users will typically want to keep this the same as the
           autopilot contract set.
-        </>
+        </Paragraph>
       ),
       description: (
         <>The default contract set is where data is uploaded to by default.</>

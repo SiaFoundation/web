@@ -56,6 +56,7 @@ export function ContractsFilterPublicKeyDialog({
     <Dialog
       trigger={trigger}
       title="Filter by public key"
+      description="Enter the public key of the host you want to filter by."
       open={open}
       onOpenChange={(open) => {
         if (!open) {

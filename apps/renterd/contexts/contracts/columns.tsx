@@ -12,6 +12,7 @@ import {
   ScrollArea,
   Button,
   LoadingDots,
+  Paragraph,
 } from '@siafoundation/design-system'
 import {
   ArrowUpLeft16,
@@ -125,10 +126,10 @@ export const columns: ContractsTableColumn[] = [
                 return (
                   <Tooltip
                     content={
-                      <>
+                      <Paragraph size="12">
                         Contract is part of set{' '}
                         <Badge size="small">{set}</Badge>. {message}
-                      </>
+                      </Paragraph>
                     }
                     key={set}
                   >

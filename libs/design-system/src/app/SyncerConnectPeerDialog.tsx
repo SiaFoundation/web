@@ -1,6 +1,5 @@
 'use client'
 
-import { Paragraph } from '../core/Paragraph'
 import { triggerErrorToast, triggerSuccessToast } from '../lib/toast'
 import { Response } from '@siafoundation/react-core'
 import { Dialog } from '../core/Dialog'
@@ -80,6 +79,7 @@ export function SyncerConnectPeerDialog({
     <Dialog
       trigger={trigger}
       title="Connect peer"
+      description="Connect to a peer by IP address."
       open={open}
       onOpenChange={handleOpenChange}
       contentVariants={{
@@ -95,7 +95,6 @@ export function SyncerConnectPeerDialog({
       }
     >
       <div className="flex flex-col gap-4">
-        <Paragraph size="14">Connect to a peer by IP address.</Paragraph>
         <FieldText form={form} fields={fields} name="address" size="medium" />
       </div>
     </Dialog>

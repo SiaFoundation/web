@@ -4,6 +4,7 @@ import {
   Tooltip,
   ValueScFiat,
   Separator,
+  Paragraph,
 } from '@siafoundation/design-system'
 import React from 'react'
 import { UseFormReturn } from 'react-hook-form'
@@ -98,10 +99,10 @@ export function PriceWithRedundancyTip({
       <Separator />
       <TipReadOnly
         tip={
-          <>
+          <Paragraph size="12">
             Price per {units} when factoring in the configured{' '}
             {minShards?.toString()} of {totalShards?.toString()} redundancy.
-          </>
+          </Paragraph>
         }
         icon={<Calculation16 />}
       >
@@ -120,29 +121,29 @@ export function PriceWithRedundancyTip({
 }
 
 export const fitPriceToCurrentAllowanceTipContent = (
-  <>
+  <Paragraph size="12">
     Set suggested max price that fits the current allowance spending target.
     This suggested value takes into account the current estimated usage and
     keeps storage, upload, and download upload prices proportional to each other
     according to the following weights: {storageWeight}x storage, {uploadWeight}
     x upload, {downloadWeight}x download.
-  </>
+  </Paragraph>
 )
 
 export const fitAllPricesToCurrentAllowanceTipContent = (
-  <>
+  <Paragraph size="12">
     Set suggested max prices for storage, upload, and download that fit the
     current allowance spending target. The suggested values take into account
     the current estimated usage and keeps storage, upload, and download upload
     prices proportional to each other according to the following weights:{' '}
     {storageWeight}x storage, {uploadWeight}x upload, {downloadWeight}x
     download.
-  </>
+  </Paragraph>
 )
 
 export const recommendationTipContent = (
-  <>
+  <Paragraph size="12">
     The system found a recommendation that would increase the number of usable
     hosts.
-  </>
+  </Paragraph>
 )

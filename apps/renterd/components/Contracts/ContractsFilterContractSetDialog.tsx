@@ -95,6 +95,7 @@ export function ContractsFilterContractSetDialog({
     <Dialog
       trigger={trigger}
       title="Filter by contract set"
+      description="Select the contract set you want to filter by."
       open={open}
       onOpenChange={handleOpenChange}
       contentVariants={{

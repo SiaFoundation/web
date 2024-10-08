@@ -74,7 +74,7 @@ export function Contracts() {
             height: listHeight,
           }}
         >
-          <ScrollArea className="z-0" id="scroll-hosts">
+          <ScrollArea className="z-0">
             <div
               className={cx(showDetailView ? 'pb-6 px-6' : 'p-6', 'min-w-fit')}
             >

@@ -51,6 +51,7 @@ export function HostsFilterAddressDialog({
     <Dialog
       trigger={trigger}
       title="Filter by address"
+      description="Enter the address of the host you want to filter by."
       open={open}
       onOpenChange={(open) => {
         if (!open) {
