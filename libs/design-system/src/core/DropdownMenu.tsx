@@ -185,7 +185,7 @@ export const DropdownMenuSub = React.forwardRef<
 
 export const DropdownMenuSeparator = React.forwardRef<
   HTMLDivElement,
-  DropdownMenuPrimitive.MenuSeparatorProps
+  DropdownMenuPrimitive.DropdownMenuSeparatorProps
 >(({ className, ...props }, ref) => {
   return (
     <DropdownMenuPrimitive.Separator
@@ -198,7 +198,7 @@ export const DropdownMenuSeparator = React.forwardRef<
 
 export const DropdownMenuItem = React.forwardRef<
   HTMLDivElement,
-  DropdownMenuPrimitive.MenuItemProps
+  DropdownMenuPrimitive.DropdownMenuItemProps
 >(({ className, ...props }, ref) => {
   return (
     <DropdownMenuPrimitive.Item
@@ -211,7 +211,7 @@ export const DropdownMenuItem = React.forwardRef<
 
 export const DropdownMenuLabel = React.forwardRef<
   HTMLDivElement,
-  DropdownMenuPrimitive.MenuLabelProps
+  DropdownMenuPrimitive.DropdownMenuLabelProps
 >(({ className, ...props }, ref) => {
   return (
     <DropdownMenuPrimitive.Label
