@@ -149,7 +149,9 @@ export function Globe({
         pointAltitude={(h: SiaCentralPartialHost) => {
           let radius = 0
           radius = h.settings.total_storage / 1e15
-          return Math.max(radius, 0.005)
+          const minSize = 0.005
+          const maxSize = 0.1
+          return Math.min(Math.max(radius, minSize), maxSize)
         }}
         pointsTransitionDuration={0}
         pointColor={(h: SiaCentralPartialHost) =>
@@ -160,7 +162,9 @@ export function Globe({
         pointRadius={(h: SiaCentralPartialHost) => {
           let radius = 0
           radius = h.settings.total_storage / 1e13 / 3
-          return Math.max(radius, 0.2)
+          const minSize = 0.2
+          const maxSize = 2
+          return Math.min(Math.max(radius, minSize), maxSize)
         }}
         onPointHover={(h: SiaCentralPartialHost) => {
           if (!h) {

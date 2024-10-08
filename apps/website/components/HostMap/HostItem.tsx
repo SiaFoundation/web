@@ -22,7 +22,7 @@ import {
 
 type Props = {
   host: SiaCentralPartialHost
-  activeHost: SiaCentralPartialHost
+  activeHost?: SiaCentralPartialHost
   setRef?: (el: HTMLButtonElement) => void
   selectActiveHost: (public_key: string) => void
   rates: {
@@ -90,7 +90,12 @@ export function HostItem({
       content={
         <div className="flex flex-col gap-1">
           <div className="w-full flex justify-between items-center">
-            <Text color="contrast" weight="bold" className="text-start">
+            <Text
+              size="12"
+              color="contrast"
+              weight="bold"
+              className="text-start"
+            >
               {countryCodeEmoji(host.country_code)} {host.country_code}
             </Text>
             <LinkButton
@@ -105,21 +110,37 @@ export function HostItem({
           </div>
           <div className="flex gap-2">
             <div className="flex flex-col gap-1">
-              <Text color="subtle">storage</Text>
-              <Text color="subtle">download</Text>
-              <Text color="subtle">upload</Text>
+              <Text size="12" color="subtle">
+                storage
+              </Text>
+              <Text size="12" color="subtle">
+                download
+              </Text>
+              <Text size="12" color="subtle">
+                upload
+              </Text>
             </div>
             <div className="flex flex-col gap-1">
-              <Text color="contrast">
+              <Text size="12" color="contrast">
                 {humanBytes(host.settings.total_storage)}
               </Text>
-              <Text color="contrast">{getDownloadSpeed(host)}</Text>
-              <Text color="contrast">{getUploadSpeed(host)}</Text>
+              <Text size="12" color="contrast">
+                {getDownloadSpeed(host)}
+              </Text>
+              <Text size="12" color="contrast">
+                {getUploadSpeed(host)}
+              </Text>
             </div>
             <div className="flex flex-col gap-1">
-              <Text color="contrast">{storageCost}</Text>
-              <Text color="contrast">{downloadCost}</Text>
-              <Text color="contrast">{uploadCost}</Text>
+              <Text size="12" color="contrast">
+                {storageCost}
+              </Text>
+              <Text size="12" color="contrast">
+                {downloadCost}
+              </Text>
+              <Text size="12" color="contrast">
+                {uploadCost}
+              </Text>
             </div>
           </div>
         </div>

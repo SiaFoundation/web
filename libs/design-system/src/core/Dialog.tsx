@@ -5,6 +5,7 @@ import { cva, cx } from 'class-variance-authority'
 import { panelStyles } from './Panel'
 import { useOpen } from '../hooks/useOpen'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import * as VisuallyHidden from '@radix-ui/react-visually-hidden'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { Close24 } from '@siafoundation/react-icons'
 import { Button } from './Button'
@@ -54,7 +55,9 @@ export const Dialog = React.forwardRef<
       onOpenChange: _onOpenChange,
       onSubmit,
       title,
+      titleVisuallyHidden,
       description,
+      descriptionVisuallyHidden,
       containerVariants,
       contentVariants,
       controls,
@@ -90,7 +93,16 @@ export const Dialog = React.forwardRef<
         <AnimatePresence>
           {open ? (
             <DialogPrimitive.Portal forceMount>
-              <DialogPrimitive.Content asChild forceMount ref={ref}>
+              <DialogPrimitive.Content
+                asChild
+                forceMount
+                ref={ref}
+                // aria-describedby must be explicitly set to undefined if a
+                // description is not provided.
+                {...(description === undefined
+                  ? { 'aria-describedby': undefined }
+                  : {})}
+              >
                 <div className="fixed w-full h-full top-0 left-0 z-20">
                   <DialogPrimitive.Overlay
                     onClick={() => onOpenChange(false)}
@@ -155,6 +167,8 @@ type ContentProps = {
   onSubmit?: React.FormEventHandler<HTMLFormElement>
   title?: React.ReactNode
   description?: React.ReactNode
+  titleVisuallyHidden?: boolean
+  descriptionVisuallyHidden?: boolean
   controls?: React.ReactNode
   children?: React.ReactNode
   contentVariants?: VariantProps<typeof contentStyles>
@@ -170,6 +184,8 @@ const Content = React.forwardRef<HTMLDivElement, ContentProps>(
       onSubmit,
       title,
       description,
+      titleVisuallyHidden,
+      descriptionVisuallyHidden,
       controls,
       contentVariants,
       closeClassName,
@@ -195,13 +211,19 @@ const Content = React.forwardRef<HTMLDivElement, ContentProps>(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         className={contentStyles(contentVariants as any)}
       >
-        {title && (
-          <DialogPrimitive.Title
-            className={dialogTitleStyles({ showSeparator })}
-          >
-            {title}
-          </DialogPrimitive.Title>
-        )}
+        {title ? (
+          titleVisuallyHidden ? (
+            <VisuallyHidden.Root>
+              <DialogPrimitive.Title>{title}</DialogPrimitive.Title>
+            </VisuallyHidden.Root>
+          ) : (
+            <DialogPrimitive.Title
+              className={dialogTitleStyles({ showSeparator })}
+            >
+              {title}
+            </DialogPrimitive.Title>
+          )
+        ) : null}
         <ScrollArea
           style={{
             height: dynamicHeight ? `${height}px` : undefined,
@@ -209,13 +231,21 @@ const Content = React.forwardRef<HTMLDivElement, ContentProps>(
           }}
         >
           <div ref={heightRef} className={cx('p-4', bodyClassName)}>
-            {description && (
-              <DialogPrimitive.Description
-                className={dialogDescriptionStyles()}
-              >
-                {description}
-              </DialogPrimitive.Description>
-            )}
+            {description ? (
+              descriptionVisuallyHidden ? (
+                <VisuallyHidden.Root>
+                  <DialogPrimitive.Description>
+                    {description}
+                  </DialogPrimitive.Description>
+                </VisuallyHidden.Root>
+              ) : (
+                <DialogPrimitive.Description
+                  className={dialogDescriptionStyles()}
+                >
+                  {description}
+                </DialogPrimitive.Description>
+              )
+            ) : null}
             {children}
           </div>
         </ScrollArea>

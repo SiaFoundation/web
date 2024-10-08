@@ -192,37 +192,37 @@ export const columns: ContractsTableColumn[] = [
           content={
             <div className="flex flex-col gap-1.5">
               <div className="flex">
-                <Text className="flex-1" weight="medium">
+                <Text size="12" className="flex-1" weight="medium">
                   pending
                 </Text>
-                <Text className="flex-[2]" color="subtle">
+                <Text size="12" className="flex-[2]" color="subtle">
                   Contract has been added.
                 </Text>
               </div>
               <Separator className="w-full" />
               <div className="flex">
-                <Text className="flex-1" weight="medium">
+                <Text size="12" className="flex-1" weight="medium">
                   active
                 </Text>
-                <Text className="flex-[2]" color="subtle">
+                <Text size="12" className="flex-[2]" color="subtle">
                   Contract has appeared on chain.
                 </Text>
               </div>
               <Separator className="w-full" />
               <div className="flex">
-                <Text className="flex-1" weight="medium">
+                <Text size="12" className="flex-1" weight="medium">
                   complete
                 </Text>
-                <Text className="flex-[2]" color="subtle">
+                <Text size="12" className="flex-[2]" color="subtle">
                   Storage proof has appeared on chain.
                 </Text>
               </div>
               <Separator className="w-full" />
               <div className="flex">
-                <Text className="flex-1" weight="medium">
+                <Text size="12" className="flex-1" weight="medium">
                   failed
                 </Text>
-                <Text className="flex-[2]" color="subtle">
+                <Text size="12" className="flex-[2]" color="subtle">
                   Storage proof was not submitted before the end of proof
                   window.
                 </Text>

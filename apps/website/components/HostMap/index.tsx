@@ -32,9 +32,14 @@ export function HostMap({ className, hosts, rates }: Props) {
   const scrollRef = useRef<HTMLDivElement>()
   const refs = useRef([]) // to store refs for all items
 
-  const [activeIndex, setActiveIndex] = useState<number>(
-    random(0, hosts.length - 1)
-  )
+  const [activeIndex, setActiveIndex] = useState<number>()
+
+  // Once page loads set a random active index. This avoids hydration issues.
+  useEffect(() => {
+    setActiveIndex(random(0, hosts.length - 1))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const activeHost = useMemo(() => hosts[activeIndex], [hosts, activeIndex])
   const [reset, setReset] = useState<string>()
   const selectActiveHostByIndex = useCallback(
