@@ -10,12 +10,14 @@ import { cx } from 'class-variance-authority'
 import { groupBy } from '@technically/lodash'
 import { ChartConfig, ChartPoint } from './types'
 import { humanDate } from '@siafoundation/units'
+import { AnimationTrajectory } from '@visx/react-spring'
 
 export function ChartXYGraph<Key extends string, Cat extends string>({
   id,
   width,
   height,
   accessors,
+  useAnimatedComponents,
   animationTrajectory,
   curve,
   data,
@@ -104,11 +106,15 @@ export function ChartXYGraph<Key extends string, Cat extends string>({
         )
       })}
       <Grid
-        key={`grid-${animationTrajectory}`} // force animate on update
+        // Force animate on update.
+        {...getAnimationProps({
+          key: 'grid',
+          useAnimatedComponents,
+          animationTrajectory,
+        })}
         rows={false}
         columns={true}
         strokeDasharray="1,3"
-        animationTrajectory={animationTrajectory}
         numTicks={numTicks}
       />
       {renderBarStack && (
@@ -190,10 +196,14 @@ export function ChartXYGraph<Key extends string, Cat extends string>({
         </>
       )}
       <Axis
-        key={`time-axis-${animationTrajectory}`}
+        // Force animate on update.
+        {...getAnimationProps({
+          key: 'time-axis',
+          useAnimatedComponents,
+          animationTrajectory,
+        })}
         orientation={xAxisOrientation}
         numTicks={numTicks}
-        animationTrajectory={animationTrajectory}
         tickFormat={(d) => humanDate(d)}
         tickLength={12}
         tickLabelProps={(p) => ({
@@ -206,7 +216,12 @@ export function ChartXYGraph<Key extends string, Cat extends string>({
         })}
       />
       <Axis
-        key={`temp-axis-${animationTrajectory}`}
+        // Force animate on update.
+        {...getAnimationProps({
+          key: 'temp-axis',
+          useAnimatedComponents,
+          animationTrajectory,
+        })}
         label={
           stackOffset == null
             ? 'SC'
@@ -218,7 +233,6 @@ export function ChartXYGraph<Key extends string, Cat extends string>({
         numTicks={numTicks}
         tickLength={12}
         // rangePadding={0}
-        animationTrajectory={animationTrajectory}
         // values don't make sense in stream graph
         // tickFormat={stackOffset === 'wiggle' ? () => '' : undefined}
         tickFormat={config.formatTickY}
@@ -401,4 +415,23 @@ export function getColor<Key extends string, Cat extends string>(
   return config.data[key].pattern
     ? `url(#pattern-${idKey})`
     : `url(#gradient-${idKey})`
+}
+
+function getAnimationProps({
+  key,
+  useAnimatedComponents,
+  animationTrajectory,
+}: {
+  key: string
+  useAnimatedComponents: boolean
+  animationTrajectory?: AnimationTrajectory
+}) {
+  return useAnimatedComponents && animationTrajectory
+    ? {
+        key: `${key}-${animationTrajectory}`,
+        animationTrajectory,
+      }
+    : {
+        key,
+      }
 }

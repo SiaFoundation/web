@@ -6,7 +6,6 @@ import {
   FormSubmitButton,
   ConfigFields,
   useOnInvalid,
-  Paragraph,
   Button,
 } from '@siafoundation/design-system'
 import { useCallback, useMemo } from 'react'
@@ -159,6 +158,7 @@ export function KeysCreateDialog({ trigger, open, onOpenChange }: Props) {
   return (
     <Dialog
       title="Create S3 key"
+      description="Create a new S3 authentication key."
       trigger={trigger}
       open={open}
       onOpenChange={(val) => {
@@ -178,7 +178,6 @@ export function KeysCreateDialog({ trigger, open, onOpenChange }: Props) {
       }
     >
       <div className="flex flex-col gap-4">
-        <Paragraph>Create a new S3 authentication key.</Paragraph>
         <div className="flex flex-col gap-2">
           <FieldText name="name" form={form} fields={fields} />
           <FieldText name="secret" form={form} fields={fields} />

@@ -1,5 +1,4 @@
 import {
-  Paragraph,
   Dialog,
   triggerErrorToast,
   triggerSuccessToast,
@@ -77,6 +76,7 @@ export function FilesBucketCreateDialog({
   return (
     <Dialog
       title="Create Bucket"
+      description="A bucket is an isolated collection of files."
       trigger={trigger}
       open={open}
       onOpenChange={(val) => {
@@ -91,9 +91,6 @@ export function FilesBucketCreateDialog({
       onSubmit={form.handleSubmit(onSubmit, onInvalid)}
     >
       <div className="flex flex-col gap-4">
-        <Paragraph size="14">
-          A bucket is an isolated collection of files.
-        </Paragraph>
         <FieldText name="name" form={form} fields={fields} autoComplete="off" />
         <FormSubmitButton form={form}>Create bucket</FormSubmitButton>
       </div>
