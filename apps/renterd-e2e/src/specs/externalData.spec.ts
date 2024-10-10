@@ -1,43 +1,68 @@
 import { test, expect } from '@playwright/test'
 import { setSwitchByLabel } from '../fixtures/switchValue'
-import { setViewMode } from '../fixtures/configViewMode'
-import { navigateToConfig } from '../fixtures/navigate'
 import { afterTest } from '../fixtures/beforeTest'
-import { mockApiSiaScanExchangeRatesHanging } from '../fixtures/siascan'
+import {
+  mockApiSiaScanExchangeRates,
+  mockApiSiaScanExchangeRatesHanging,
+  mockApiSiaScanExchangeRatesUnroute,
+} from '../fixtures/siascan'
 import { clusterd, setupCluster } from '@siafoundation/clusterd'
 import { login } from '../fixtures/login'
 import { fillSelectInputByName } from '../fixtures/selectInput'
 import {
   mockApiSiaCentralHostsNetworkAverages,
   mockApiSiaCentralHostsNetworkAveragesHanging,
+  mockApiSiaCentralHostsNetworkAveragesUnroute,
 } from '@siafoundation/sia-central-mock'
+import { expectTextInputByName } from '../fixtures/textInput'
+import { configResetBasicSettings } from '../fixtures/configResetSettings'
 
-test.beforeEach(async () => {
+test.beforeEach(async ({ page }) => {
+  await mockApiSiaScanExchangeRates({ page })
+  await mockApiSiaCentralHostsNetworkAverages({ page })
   await setupCluster({ renterdCount: 1 })
-})
-
-test.afterEach(async () => {
-  await afterTest()
-})
-
-test('configuration shows not-enabled message when exchange rates API hangs', async ({
-  page,
-}) => {
-  await mockApiSiaScanExchangeRatesHanging({ page })
   const renterdNode = clusterd.nodes.find((n) => n.type === 'renterd')
   await login({
     page,
     address: renterdNode.apiAddress,
     password: renterdNode.password,
   })
-  await navigateToConfig({ page })
-  await setViewMode({ page, state: 'basic' })
+  await configResetBasicSettings({ page })
+})
+
+test.afterEach(async () => {
+  await afterTest()
+})
+
+test('configuration shows fiat values on siacoin fields', async ({ page }) => {
+  await expectTextInputByName(page, 'maxStoragePriceTBMonth', '3,000')
+  await expectTextInputByName(page, 'maxUploadPriceTB', '3,000')
+  await expectTextInputByName(page, 'maxDownloadPriceTB', '3,000')
+
+  await expectTextInputByName(page, 'maxStoragePriceTBMonth-fiat', '$11.832136')
+  await expectTextInputByName(page, 'maxUploadPriceTB-fiat', '$11.832136')
+  await expectTextInputByName(page, 'maxDownloadPriceTB-fiat', '$11.832136')
+})
+
+test('configuration shows not-enabled message when exchange rates API hangs', async ({
+  page,
+}) => {
+  await mockApiSiaScanExchangeRatesUnroute({ page })
+  await mockApiSiaScanExchangeRatesHanging({ page })
+  await page.reload()
+
   await setSwitchByLabel(page, 'shouldPinAllowance', true)
   await setSwitchByLabel(page, 'shouldPinMaxStoragePrice', true)
   await setSwitchByLabel(page, 'shouldPinMaxUploadPrice', true)
 
   await fillSelectInputByName(page, 'pinnedCurrency', 'usd')
 
+  // Regular field should be shown.
+  await expectTextInputByName(page, 'storageTB', '7')
+  await expectTextInputByName(page, 'uploadTBMonth', '7')
+  await expectTextInputByName(page, 'downloadTBMonth', '7')
+
+  // Pinned fields show not-enabled message.
   await expect(
     page
       .getByTestId('allowanceMonthGroup')
@@ -58,16 +83,16 @@ test('configuration shows not-enabled message when exchange rates API hangs', as
 test('configuration does not show network averages when sia central API hangs', async ({
   page,
 }) => {
+  await mockApiSiaCentralHostsNetworkAveragesUnroute({ page })
   await mockApiSiaCentralHostsNetworkAveragesHanging({ page })
-  const renterdNode = clusterd.nodes.find((n) => n.type === 'renterd')
-  await login({
-    page,
-    address: renterdNode.apiAddress,
-    password: renterdNode.password,
-  })
-  await navigateToConfig({ page })
-  await setViewMode({ page, state: 'basic' })
+  await page.reload()
+
   await fillSelectInputByName(page, 'pinnedCurrency', 'usd')
+
+  // Regular field should still be shown.
+  await expectTextInputByName(page, 'storageTB', '7')
+  await expectTextInputByName(page, 'uploadTBMonth', '7')
+  await expectTextInputByName(page, 'downloadTBMonth', '7')
 
   // Network averages should NOT be shown.
   await setSwitchByLabel(page, 'shouldPinMaxStoragePrice', false)
@@ -95,9 +120,14 @@ test('configuration does not show network averages when sia central API hangs', 
     page.getByTestId('maxDownloadPriceTBGroup').getByText('Network average')
   ).toBeHidden()
 
-  await page.unroute('https://api.siascan.com/exchange-rate/siacoin/*')
+  await mockApiSiaCentralHostsNetworkAveragesUnroute({ page })
   await mockApiSiaCentralHostsNetworkAverages({ page })
   await page.reload()
+
+  // Regular field should be shown.
+  await expectTextInputByName(page, 'storageTB', '7')
+  await expectTextInputByName(page, 'uploadTBMonth', '7')
+  await expectTextInputByName(page, 'downloadTBMonth', '7')
 
   // Network averages should be shown, and not be 0.
   await setSwitchByLabel(page, 'shouldPinMaxStoragePrice', false)

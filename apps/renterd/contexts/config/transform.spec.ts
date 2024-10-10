@@ -23,6 +23,7 @@ import {
   SettingsUpload,
 } from '@siafoundation/renterd-types'
 import { merge } from '@technically/lodash'
+import { AutopilotInfo } from '../app/useAutopilotInfo'
 
 describe('tansforms', () => {
   describe('down', () => {
@@ -455,12 +456,12 @@ describe('tansforms', () => {
 
   describe('down up down - ensure converting back and forth results in the same values', () => {
     it('converts ap download down up down', () => {
-      const { autopilotState, autopilot, gouging, pinned, upload } =
+      const { autopilotInfo, autopilot, gouging, pinned, upload } =
         buildAllResponses()
       const transformUpMocks = {
         resources: {
-          autopilotState: {
-            data: autopilotState,
+          autopilotInfo: {
+            data: autopilotInfo,
           },
           autopilot: {},
           gouging: { data: gouging },
@@ -561,26 +562,29 @@ describe('tansforms', () => {
 
 function buildAllResponses() {
   return {
-    autopilotState: {
-      id: 'autopilot',
-      configured: true,
-      migrating: true,
-      migratingLastStart: new Date().toISOString(),
-      scanning: true,
-      scanningLastStart: new Date().toISOString(),
-      synced: true,
-      uptimeMS: '333',
-      network: 'mainnet' as const,
-      version: '0.0.0',
-      commit: 'commit',
-      OS: 'os',
-      buildTime: new Date().getTime(),
-      explorer: {
-        enabled: true,
-        url: 'https://api.siascan.com',
+    autopilotInfo: {
+      state: {
+        id: 'autopilot',
+        configured: true,
+        migrating: true,
+        migratingLastStart: new Date().toISOString(),
+        scanning: true,
+        scanningLastStart: new Date().toISOString(),
+        synced: true,
+        uptimeMS: '333',
+        network: 'mainnet' as const,
+        version: '0.0.0',
+        commit: 'commit',
+        OS: 'os',
+        buildTime: new Date().getTime(),
+        explorer: {
+          enabled: true,
+          url: 'https://api.siascan.com',
+        },
+        startTime: new Date().getTime(),
       },
-      startTime: new Date().getTime(),
-    },
+      status: 'on',
+    } as AutopilotInfo,
     autopilot: {
       hosts: {
         allowRedundantIPs: false,

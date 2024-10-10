@@ -26,10 +26,10 @@ export function HostsFilterNav({
   pushPage,
   select,
 }: Props) {
-  const { autopilot } = useApp()
+  const { isAutopilotEnabled } = useApp()
   return (
     <>
-      {autopilot.status === 'on' && (
+      {isAutopilotEnabled && (
         <CommandItemNav
           currentPage={currentPage}
           parentPage={parentPage}

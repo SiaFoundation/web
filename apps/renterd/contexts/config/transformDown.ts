@@ -22,7 +22,6 @@ import {
   weeksToBlocks,
 } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
-import { firstTimeGougingData } from './resources'
 import {
   InputValuesAutopilot,
   ValuesGouging,
@@ -96,6 +95,39 @@ export function transformDownAutopilot(
   }
 }
 
+function firstTimeGougingData({
+  gouging,
+  averages,
+  hasBeenConfigured,
+}: {
+  gouging: SettingsGouging
+  averages?: {
+    settings: {
+      download_price: string
+      storage_price: string
+      upload_price: string
+    }
+  }
+  hasBeenConfigured: boolean
+}): SettingsGouging {
+  // Already configured, the user has changed the defaults.
+  if (hasBeenConfigured) {
+    return gouging
+  }
+  // If sia central is disabled, we cant override with averages.
+  if (!averages) {
+    return gouging
+  }
+  return {
+    ...gouging,
+    maxStoragePrice: averages.settings.storage_price,
+    maxDownloadPrice: new BigNumber(
+      averages.settings.download_price
+    ).toString(),
+    maxUploadPrice: new BigNumber(averages.settings.upload_price).toString(),
+  }
+}
+
 export function transformDownGouging({
   gouging: _gouging,
   averages,
@@ -156,7 +188,7 @@ export function transformDownGouging({
 
 export function transformDownPinned(
   p: SettingsPinned,
-  autopilotID: string,
+  autopilotID = 'autopilot',
   periodBlocks?: number
 ): ValuesPinned {
   const fixedFiat = currencyOptions.find((c) => c.id === p.currency)?.fixed || 6
@@ -198,7 +230,7 @@ export function transformDownUpload(u: SettingsUpload): ValuesUpload {
 
 export type RemoteData = {
   hasBeenConfigured: boolean
-  autopilotID: string
+  autopilotID: string | undefined
   autopilot: AutopilotConfig | undefined
   gouging: SettingsGouging
   pinned: SettingsPinned

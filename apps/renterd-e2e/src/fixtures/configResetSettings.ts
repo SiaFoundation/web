@@ -76,3 +76,24 @@ export async function configResetAllSettings({ page }: { page: Page }) {
   await clearToasts({ page })
   await setViewMode({ page, state: 'basic' })
 }
+
+export async function configResetBasicSettings({ page }: { page: Page }) {
+  await navigateToConfig({ page })
+  await setViewMode({ page, state: 'basic' })
+
+  await fillTextInputByName(page, 'storageTB', '7')
+  await fillTextInputByName(page, 'uploadTBMonth', '7')
+  await fillTextInputByName(page, 'downloadTBMonth', '7')
+  await fillTextInputByName(page, 'allowanceMonth', '1000')
+
+  await fillTextInputByName(page, 'maxStoragePriceTBMonth', '3000')
+  await fillTextInputByName(page, 'maxUploadPriceTB', '3000')
+  await fillTextInputByName(page, 'maxDownloadPriceTB', '3000')
+
+  // save
+  await clickIfEnabledAndWait(
+    page.getByText('Save changes'),
+    page.getByText('Configuration has been saved')
+  )
+  await clearToasts({ page })
+}

@@ -30,7 +30,7 @@ import {
   SubmitValuesUpload,
   SubmitValues,
 } from './types'
-import { ResourcesRequiredLoaded } from './resources'
+import { ResourcesRequiredLoaded } from './useResources'
 import BigNumber from 'bignumber.js'
 import { objectEntries } from '@siafoundation/design-system'
 
@@ -123,7 +123,7 @@ export function transformUpGouging(
 export function transformUpPinned(
   values: SubmitValuesPinned & { periodWeeks?: BigNumber },
   existingValues: SettingsPinned,
-  autopilotID: string
+  autopilotID = 'autopilot'
 ): SettingsPinned {
   const v = applyDefaultToAnyEmptyValues(
     values,
@@ -209,7 +209,7 @@ export function transformUp({
   const pinned = transformUpPinned(
     values,
     resources.pinned.data,
-    resources.autopilotState.data.id
+    resources.autopilotInfo.data?.state?.id
   )
   const upload = transformUpUpload(values, resources.upload.data)
 

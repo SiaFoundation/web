@@ -6,7 +6,7 @@ import { getFields } from './fields'
 import { useApp } from '../app'
 import useLocalStorageState from 'use-local-storage-state'
 import { useAutopilotEvaluations } from './useAutopilotEvaluations'
-import { ResourcesMaybeLoaded } from './resources'
+import { ResourcesMaybeLoaded } from './useResources'
 import { getRedundancyMultiplier } from '@siafoundation/units'
 
 export function useForm({ resources }: { resources: ResourcesMaybeLoaded }) {

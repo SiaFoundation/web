@@ -4,11 +4,11 @@ import {
 } from '@siafoundation/renterd-react'
 import { useApp } from '../contexts/app'
 
-// is the autopilot contract set the same as the default contract set
+// Is the autopilot contract set the same as the default contract set.
 export function useIsApcsEqDcs() {
-  const { autopilot } = useApp()
+  const { isAutopilotEnabled } = useApp()
   const apc = useAutopilotConfig({
-    disabled: autopilot.status !== 'on',
+    disabled: !isAutopilotEnabled,
   })
   const su = useSettingsUpload()
 

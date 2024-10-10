@@ -24,7 +24,7 @@ import { cx } from 'class-variance-authority'
 import { pluralize } from '@siafoundation/units'
 
 export function Recommendations() {
-  const app = useApp()
+  const { autopilotInfo } = useApp()
   const [maximized, setMaximized] = useLocalStorageState<boolean>(
     'v0/renterd/config/recommendations',
     {
@@ -45,7 +45,7 @@ export function Recommendations() {
     usableHostsAfterRecommendation,
   } = evaluation
 
-  if (app.autopilot.status !== 'on') {
+  if (!autopilotInfo.data?.isAutopilotEnabled) {
     return null
   }
 

@@ -36,7 +36,7 @@ import { useContractSetMetrics } from './useContractSetMetrics'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { useDataset } from './dataset'
 import { useFilteredStats } from './useFilteredStats'
-import { useAutopilot } from '../app/useAutopilot'
+import { useAutopilotInfo } from '../app/useAutopilotInfo'
 import { daysInMilliseconds } from '@siafoundation/units'
 
 const defaultLimit = 50
@@ -74,10 +74,9 @@ function useContractsMain() {
     [selectedContractId, setSelectedContractId, setViewMode]
   )
 
-  const ap = useAutopilot()
-  const isAutopilotEnabled = ap.status === 'on'
+  const ap = useAutopilotInfo()
   const apConfig = useAutopilotConfig({
-    disabled: !isAutopilotEnabled,
+    disabled: !ap.data?.isAutopilotEnabled,
   })
   const autopilotContractSet = apConfig.data?.contracts.set
   const settingsUpload = useSettingsUpload()
