@@ -13,9 +13,9 @@ export type RequestParams = Record<
 > | void
 
 export function parameterizeRoute(
-  route: string | null,
+  route: string,
   params: RequestParams
-): string | null {
+): string {
   if (route && params) {
     const paramKeys = Object.keys(params)
     for (const key of paramKeys) {

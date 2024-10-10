@@ -15,14 +15,12 @@ export type HookArgsSwr<
 > = Params extends void
   ? {
       api?: string
-      standalone?: string
       config?: RequestConfig<void, Result>
       disabled?: boolean
     }
   : {
       params: Params
       api?: string
-      standalone?: string
       config?: RequestConfig<void, Result>
       disabled?: boolean
     }
@@ -43,13 +41,11 @@ export type HookArgsWithPayloadSwr<
   ? Payload extends void
     ? {
         api?: string
-        standalone?: string
         config?: RequestConfig<void, Result>
         disabled?: boolean
       }
     : {
         api?: string
-        standalone?: string
         payload: Payload
         config?: RequestConfig<void, Result>
         disabled?: boolean
@@ -58,7 +54,6 @@ export type HookArgsWithPayloadSwr<
   ? {
       params: Params
       api?: string
-      standalone?: string
       config?: RequestConfig<void, Result>
       disabled?: boolean
     }
@@ -66,7 +61,6 @@ export type HookArgsWithPayloadSwr<
       params: Params
       payload: Payload
       api?: string
-      standalone?: string
       config?: RequestConfig<void, Result>
       disabled?: boolean
     }
@@ -190,16 +184,16 @@ export type Response<T> = {
   error?: string
 }
 
-function getApi<Params extends RequestParams, Payload, Result>(
-  settings: RequestSettings,
+function getApi(
+  requestSettings: RequestSettings,
   hookArgs:
     | {
         api?: string
       }
     | undefined,
-  callArgs: InternalCallbackArgs<Params, Payload, Result> | undefined
+  callArgs: { api?: string } | undefined
 ): string {
-  return callArgs?.api || hookArgs?.api || settings.api
+  return callArgs?.api || hookArgs?.api || requestSettings.api
 }
 
 function buildHeaders<Params extends RequestParams, Payload, Result>(
@@ -240,7 +234,7 @@ export function buildRouteWithParams<
   Result
 >(
   settings: RequestSettings,
-  route: string | null,
+  route: string,
   hookArgs:
     | {
         api?: string
@@ -248,10 +242,7 @@ export function buildRouteWithParams<
       }
     | undefined,
   callArgs: InternalCallbackArgs<Params, Payload, Result> | undefined
-): string | null {
-  if (!route) {
-    return null
-  }
+): string {
   let params = hookArgs?.params || {}
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   if (callArgs && (callArgs as any).params) {
@@ -262,9 +253,6 @@ export function buildRouteWithParams<
     }
   }
   route = parameterizeRoute(route, params)
-  if (!route) {
-    return null
-  }
   const api = getApi(settings, hookArgs, callArgs)
   if (api === settings.api) {
     return `${api}/api${route}`
@@ -272,22 +260,21 @@ export function buildRouteWithParams<
   return `${api}${route}`
 }
 
-export function getPathFromKey<Params extends RequestParams, Payload, Result>(
+export function getRouteFromKey(
   settings: RequestSettings,
-  route: string,
+  key: [string, string],
   hookArgs:
     | {
         api?: string
-        params?: Params
       }
     | undefined,
-  callArgs: InternalCallbackArgs<Params, Payload, Result> | undefined
+  callArgs: { api?: string } | undefined
 ): string {
   const api = getApi(settings, hookArgs, callArgs)
   if (api === settings.api) {
-    return route.replace(`${api}/api`, '')
+    return key[1].replace(`${api}/api`, '')
   }
-  return route.replace(api, '')
+  return key[1].replace(api, '')
 }
 
 export type After<Params extends RequestParams, Payload, Result> = (
