@@ -1,4 +1,5 @@
 import {
+  ClientSideOnly,
   Link,
   Logo,
   SiteMap,
@@ -64,7 +65,11 @@ export function Footer() {
               {webLinks.email}
             </Link>
             <div className="flex-1" />
-            <ThemeRadio className="hidden md:flex" />
+            <ClientSideOnly
+              fallback={<div className="w-[80px] h-[16px]"></div>}
+            >
+              <ThemeRadio className="hidden md:flex" />
+            </ClientSideOnly>
           </div>
         </div>
       </SectionSolid>

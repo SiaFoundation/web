@@ -29,8 +29,10 @@ export function WalletBalanceTip({
         <div className="flex flex-col justify-center gap-2">
           <div className="flex gap-4">
             <div className="flex flex-col flex-1">
-              <Text>spendable</Text>
-              <Text color="subtle">All confirmed outputs not in-use.</Text>
+              <Text size="12">spendable</Text>
+              <Text size="12" color="subtle">
+                All confirmed outputs not in-use.
+              </Text>
             </div>
             <div className="flex justify-end">
               <ValueScFiat
@@ -45,8 +47,8 @@ export function WalletBalanceTip({
               <Separator className="w-full" />
               <div className="flex gap-4">
                 <div className="flex flex-col flex-1">
-                  <Text>immature</Text>
-                  <Text color="subtle">
+                  <Text size="12">immature</Text>
+                  <Text size="12" color="subtle">
                     All confirmed but still locked outputs.
                   </Text>
                 </div>
@@ -63,8 +65,10 @@ export function WalletBalanceTip({
           <Separator className="w-full" />
           <div className="flex gap-4">
             <div className="flex flex-col flex-1">
-              <Text>confirmed</Text>
-              <Text color="subtle">All confirmed outputs.</Text>
+              <Text size="12">confirmed</Text>
+              <Text size="12" color="subtle">
+                All confirmed outputs.
+              </Text>
             </div>
             <div className="flex justify-end">
               <ValueScFiat
@@ -77,8 +81,10 @@ export function WalletBalanceTip({
           <Separator className="w-full" />
           <div className="flex gap-4">
             <div className="flex flex-col flex-1">
-              <Text>unconfirmed</Text>
-              <Text color="subtle">All unconfirmed outputs not in-use.</Text>
+              <Text size="12">unconfirmed</Text>
+              <Text size="12" color="subtle">
+                All unconfirmed outputs not in-use.
+              </Text>
             </div>
             <div className="flex justify-end">
               <ValueScFiat

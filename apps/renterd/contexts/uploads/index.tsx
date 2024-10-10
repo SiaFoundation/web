@@ -40,6 +40,11 @@ function useUploadsMain() {
   const response = useMultipartUploadListUploads({
     disabled: !activeBucket,
     payload: payload as MultipartUploadListUploadsPayload,
+    config: {
+      swr: {
+        keepPreviousData: true,
+      },
+    },
   })
 
   const abortAll = useCallback(async () => {
@@ -64,9 +69,9 @@ function useUploadsMain() {
     )
   }, [response.data, apiBusUploadAbort, activeBucket, uploadsMap])
 
-  const dataset: ObjectUploadData[] | undefined = useMemo(() => {
+  const dataset: ObjectUploadData[] = useMemo(() => {
     if (!response.data?.uploads || !activeBucket?.name) {
-      return undefined
+      return []
     }
     return response.data.uploads.map((upload) => {
       const id = upload.uploadID

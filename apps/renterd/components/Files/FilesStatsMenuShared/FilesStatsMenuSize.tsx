@@ -36,8 +36,8 @@ export function FilesStatsMenuSize() {
     <Tooltip
       side="bottom"
       content={
-        <Text className="flex justify-between gap-6">
-          <Text className="flex flex-col gap-1">
+        <div className="flex justify-between gap-6">
+          <div className="flex flex-col gap-1">
             <Text size="12" color="subtle">
               size of all files
             </Text>
@@ -53,8 +53,8 @@ export function FilesStatsMenuSize() {
             <Text size="12" color="subtle">
               total storage utilization
             </Text>
-          </Text>
-          <Text className="flex flex-col gap-1 items-end">
+          </div>
+          <div className="flex flex-col gap-1 items-end">
             <Text size="12">{humanBytes(stats.data.totalObjectsSize)}</Text>
             <Text size="12">{humanBytes(stats.data.totalSectorsSize)}</Text>
             {!!averageRedundancyFactor && (
@@ -64,8 +64,8 @@ export function FilesStatsMenuSize() {
             )}
             <Separator className="w-full my-1" />
             <Text size="12">{humanBytes(stats.data.totalUploadedSize)}</Text>
-          </Text>
-        </Text>
+          </div>
+        </div>
       }
     >
       <Text size="12" font="mono">

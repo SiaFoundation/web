@@ -201,7 +201,7 @@ export function Table<
         >
           <thead
             className={cx(
-              'sticky top-0 z-20 bg-white dark:bg-graydark-100',
+              'sticky -top-px z-20 bg-white dark:bg-graydark-100',
               'shadow-border-b shadow-gray-400 dark:shadow-graydark-300'
             )}
           >
