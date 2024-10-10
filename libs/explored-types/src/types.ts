@@ -161,11 +161,13 @@ export type ExplorerSiafundOutput = SiafundElement & { spentIndex: ChainIndex }
 
 /**
  * An `ExplorerFileContract` is a core type FileContractElement with added resolved/
- * valid state and confirmation transaction and proof transaction information.
+ * valid state, transactionID, and confirmation transaction and proof transaction information.
  */
 export type ExplorerFileContract = FileContractElement & {
   resolved: boolean
   valid: boolean
+
+  transactionID: TransactionID
 
   confirmationIndex: ChainIndex
   confirmationTransactionID: TransactionID
