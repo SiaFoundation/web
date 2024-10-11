@@ -67,3 +67,23 @@ jobs:
     uses: ./.github/workflows/e2e-merge-reports.yml
     with:
       project: walletd-e2e
+  explorer-e2e-shard-tests:
+    if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2, 3, 4]
+        shardTotal: [4]
+    uses: ./.github/workflows/e2e-shard-tests.yml
+    with:
+      project: explorer-e2e
+      shardIndex: ${{ matrix.shardIndex }}
+      shardTotal: ${{ matrix.shardTotal }}
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  explorer-e2e-merge-reports:
+    if: ${{ !cancelled() }}
+    needs: [explorer-e2e-shard-tests]
+    uses: ./.github/workflows/e2e-merge-reports.yml
+    with:
+      project: explorer-e2e
