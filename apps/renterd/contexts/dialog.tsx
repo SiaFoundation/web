@@ -22,6 +22,7 @@ import { FilesBucketPolicyDialog } from '../dialogs/FilesBucketPolicyDialog'
 import { FilesBucketCreateDialog } from '../dialogs/FilesBucketCreateDialog'
 import { FileRenameDialog } from '../dialogs/FileRenameDialog'
 import { KeysCreateDialog } from '../components/Keys/KeysCreateDialog'
+import { DebugDialog } from '../dialogs/DebugDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -46,6 +47,7 @@ export type DialogType =
   | 'filesSearch'
   | 'fileRename'
   | 'keysCreate'
+  | 'bugReport'
   | 'confirm'
 
 type ConfirmProps = {
@@ -212,6 +214,7 @@ export function Dialogs() {
         open={dialog === 'keysCreate'}
         onOpenChange={onOpenChange}
       />
+      <DebugDialog open={dialog === 'bugReport'} onOpenChange={onOpenChange} />
       <ConfirmDialog
         open={dialog === 'confirm'}
         params={confirm}

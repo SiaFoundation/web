@@ -34,6 +34,8 @@ export function CmdKDialog({ open, onOpenChange, setOpen }: Props) {
     <>
       <Dialog
         open={open}
+        title="Command palette"
+        titleVisuallyHidden
         onOpenChange={onOpenChange}
         contentVariants={{
           className: '!absolute !p-1 w-[450px] top-[200px]',

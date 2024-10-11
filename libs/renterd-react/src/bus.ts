@@ -845,7 +845,7 @@ export function useSettingsUploadUpdate(
 }
 
 // params are required because omitting them returns a deprecated response structure
-export function useAlerts(args: HookArgsSwr<AlertsParams, AlertsResponse>) {
+export function useAlerts(args?: HookArgsSwr<AlertsParams, AlertsResponse>) {
   return useGetSwr({ ...args, route: busAlertsRoute })
 }
 

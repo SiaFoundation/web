@@ -474,8 +474,8 @@ export type Alert = {
 }
 
 export type AlertsParams = {
-  limit: number
-  offset: number
+  limit?: number
+  offset?: number
   severity?: AlertSeverity
 }
 export type AlertsPayload = void

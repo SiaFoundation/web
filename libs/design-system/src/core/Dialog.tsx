@@ -119,6 +119,8 @@ export const Dialog = React.forwardRef<
                     <Content
                       title={title}
                       description={description}
+                      titleVisuallyHidden={titleVisuallyHidden}
+                      descriptionVisuallyHidden={descriptionVisuallyHidden}
                       contentVariants={contentVariants}
                       onSubmit={onSubmit}
                       controls={controls}
