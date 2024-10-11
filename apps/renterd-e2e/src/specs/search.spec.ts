@@ -3,8 +3,7 @@ import { navigateToBuckets } from '../fixtures/navigate'
 import { createBucket, openBucket } from '../fixtures/buckets'
 import { createDirectory } from '../fixtures/files'
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
-import { fillTextInputByName } from '../fixtures/textInput'
-import { openCmdkMenu } from '../fixtures/cmdk'
+import { fillTextInputByName, openCmdkMenu } from '@siafoundation/e2e'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page, {

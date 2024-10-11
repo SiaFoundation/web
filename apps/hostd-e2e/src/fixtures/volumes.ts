@@ -1,6 +1,6 @@
 import { Page, expect } from '@playwright/test'
 import { navigateToVolumes } from './navigate'
-import { fillTextInputByName } from './textInput'
+import { fillTextInputByName } from '@siafoundation/e2e'
 
 export async function createVolume(page: Page, name: string, path: string) {
   const fullPath = `${path}/${name}`

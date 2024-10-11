@@ -1,10 +1,12 @@
 import { test, expect } from '@playwright/test'
 import { recoverWallet } from '../fixtures/wallet'
 import { navigateToWallet } from '../fixtures/navigateToWallet'
-import { fillTextInputByName } from '../fixtures/textInput'
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
 import { mine } from '@siafoundation/clusterd'
-import { testRequiresClipboardPermissions } from '../fixtures/skip'
+import {
+  fillTextInputByName,
+  testRequiresClipboardPermissions,
+} from '@siafoundation/e2e'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page)

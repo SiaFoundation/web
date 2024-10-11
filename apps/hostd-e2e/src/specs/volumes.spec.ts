@@ -8,7 +8,7 @@ import {
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
 import fs from 'fs'
 import os from 'os'
-import { fillTextInputByName } from '../fixtures/textInput'
+import { fillTextInputByName } from '@siafoundation/e2e'
 
 let dirPath = '/'
 

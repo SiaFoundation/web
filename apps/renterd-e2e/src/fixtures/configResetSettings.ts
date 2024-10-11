@@ -1,10 +1,12 @@
 import { Page } from '@playwright/test'
-import { setSwitchByLabel } from './switchValue'
-import { setViewMode } from './configViewMode'
-import { fillTextInputByName } from './textInput'
-import { clearToasts } from './clearToasts'
-import { clickIfEnabledAndWait } from './click'
-import { fillSelectInputByName } from './selectInput'
+import {
+  setSwitchByLabel,
+  setViewMode,
+  fillTextInputByName,
+  clearToasts,
+  clickIfEnabledAndWait,
+  fillSelectInputByName,
+} from '@siafoundation/e2e'
 import { navigateToConfig } from './navigate'
 
 export async function configResetAllSettings({ page }: { page: Page }) {

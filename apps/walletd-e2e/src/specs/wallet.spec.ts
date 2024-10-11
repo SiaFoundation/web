@@ -13,7 +13,7 @@ import {
 } from '../fixtures/beforeTest'
 import { humanDate, toHastings } from '@siafoundation/units'
 import { getEventRowByIndex } from '../fixtures/events'
-import { testRequiresClipboardPermissions } from '../fixtures/skip'
+import { testRequiresClipboardPermissions } from '@siafoundation/e2e'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page)

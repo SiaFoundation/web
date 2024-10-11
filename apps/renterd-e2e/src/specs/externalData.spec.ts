@@ -1,21 +1,21 @@
 import { test, expect } from '@playwright/test'
-import { setSwitchByLabel } from '../fixtures/switchValue'
 import { afterTest } from '../fixtures/beforeTest'
-import {
-  mockApiSiaScanExchangeRates,
-  mockApiSiaScanExchangeRatesHanging,
-  mockApiSiaScanExchangeRatesUnroute,
-} from '../fixtures/siascan'
 import { clusterd, setupCluster } from '@siafoundation/clusterd'
 import { login } from '../fixtures/login'
-import { fillSelectInputByName } from '../fixtures/selectInput'
 import {
   mockApiSiaCentralHostsNetworkAverages,
   mockApiSiaCentralHostsNetworkAveragesHanging,
   mockApiSiaCentralHostsNetworkAveragesUnroute,
 } from '@siafoundation/sia-central-mock'
-import { expectTextInputByName } from '../fixtures/textInput'
 import { configResetBasicSettings } from '../fixtures/configResetSettings'
+import {
+  expectTextInputByName,
+  setSwitchByLabel,
+  mockApiSiaScanExchangeRates,
+  mockApiSiaScanExchangeRatesUnroute,
+  mockApiSiaScanExchangeRatesHanging,
+  fillSelectInputByName,
+} from '@siafoundation/e2e'
 
 test.beforeEach(async ({ page }) => {
   await mockApiSiaScanExchangeRates({ page })

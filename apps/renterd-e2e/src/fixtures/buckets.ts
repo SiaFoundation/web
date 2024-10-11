@@ -1,7 +1,6 @@
 import { Page, expect } from '@playwright/test'
 import { navigateToBuckets } from './navigate'
-import { fillTextInputByName } from './textInput'
-import { clearToasts } from './clearToasts'
+import { fillTextInputByName, clearToasts } from '@siafoundation/e2e'
 import { deleteDirectory, deleteFile } from './files'
 
 export async function createBucket(page: Page, name: string) {

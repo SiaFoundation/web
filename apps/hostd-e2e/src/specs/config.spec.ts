@@ -1,17 +1,15 @@
 import { test, expect } from '@playwright/test'
 import {
-  expectSwitchByLabel,
-  expectSwitchVisible,
-  setSwitchByLabel,
-} from '../fixtures/switchValue'
-import { setViewMode } from '../fixtures/configViewMode'
-import { navigateToConfig } from '../fixtures/navigate'
-import {
+  setViewMode,
   expectTextInputByName,
   expectTextInputNotVisible,
   fillTextInputByName,
-} from '../fixtures/textInput'
-import { fillSelectInputByName } from '../fixtures/selectInput'
+  fillSelectInputByName,
+  expectSwitchByLabel,
+  expectSwitchVisible,
+  setSwitchByLabel,
+} from '@siafoundation/e2e'
+import { navigateToConfig } from '../fixtures/navigate'
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
 import { configResetAllSettings } from '../fixtures/configResetAllSettings'
 
