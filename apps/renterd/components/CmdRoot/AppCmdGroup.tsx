@@ -106,6 +106,15 @@ export function AppCmdGroup({ currentPage, parentPage }: Props) {
         currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
+          openDialog('bugReport')
+        }}
+      >
+        Generate a bug report
+      </CommandItemSearch>
+      <CommandItemSearch
+        currentPage={currentPage}
+        commandPage={commandPage}
+        onSelect={() => {
           openDialog('settings')
         }}
       >

@@ -6,12 +6,15 @@ import {
   BarsProgressIcon,
   BellIcon,
   KeyIcon,
+  BugIcon,
 } from '@siafoundation/react-icons'
 import { cx } from 'class-variance-authority'
 import { routes } from '../config/routes'
 import { useAlerts } from '../contexts/alerts'
+import { useDialog } from '../contexts/dialog'
 
 export function RenterdSidenav() {
+  const { openDialog } = useDialog()
   const { totals } = useAlerts()
   const onlyInfoAlerts = totals.all === totals.info
   return (
@@ -61,6 +64,9 @@ export function RenterdSidenav() {
           <BellIcon />
         </SidenavItem>
       </div>
+      <SidenavItem title="Bug report" onClick={() => openDialog('bugReport')}>
+        <BugIcon />
+      </SidenavItem>
     </>
   )
 }
