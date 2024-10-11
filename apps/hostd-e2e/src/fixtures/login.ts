@@ -1,5 +1,5 @@
 import { Page, expect } from '@playwright/test'
-import { fillTextInputByName } from './textInput'
+import { fillTextInputByName } from '@siafoundation/e2e'
 
 export async function login({
   page,

@@ -1,6 +1,6 @@
 import { Page, expect } from '@playwright/test'
 import { readFileSync } from 'fs'
-import { fillTextInputByName } from './textInput'
+import { fillTextInputByName } from '@siafoundation/e2e'
 
 export async function deleteFile(page: Page, path: string) {
   await openFileContextMenu(page, path)

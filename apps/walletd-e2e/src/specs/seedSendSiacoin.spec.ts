@@ -9,7 +9,7 @@ import {
   sendSiacoinFromRenterd,
 } from '../fixtures/beforeTest'
 import { toHastings } from '@siafoundation/units'
-import { testRequiresClipboardPermissions } from '../fixtures/skip'
+import { testRequiresClipboardPermissions } from '@siafoundation/e2e'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page)

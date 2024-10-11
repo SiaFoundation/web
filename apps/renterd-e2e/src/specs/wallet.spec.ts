@@ -2,9 +2,8 @@ import { test, expect } from '@playwright/test'
 import { navigateToWallet } from '../fixtures/navigate'
 import { random } from '@technically/lodash'
 import { beforeTest } from '../fixtures/beforeTest'
-import { fillTextInputByName } from '../fixtures/textInput'
 import BigNumber from 'bignumber.js'
-import { setSwitchByLabel } from '../fixtures/switchValue'
+import { setSwitchByLabel, fillTextInputByName } from '@siafoundation/e2e'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page)

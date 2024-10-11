@@ -1,0 +1,42 @@
+{
+  "name": "e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/e2e/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/e2e",
+        "tsConfig": "libs/e2e/tsconfig.lib.json",
+        "project": "libs/e2e/package.json",
+        "entryFile": "libs/e2e/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "compiler": "tsc",
+        "outputFileName": "index.js",
+        "rollupConfig": "libs/e2e/rollup.config.js",
+        "assets": [
+          {
+            "glob": "libs/e2e/*.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      },
+      "configurations": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/e2e"],
+      "options": {
+        "jestConfig": "libs/e2e/jest.config.ts"
+      }
+    }
+  }
+}

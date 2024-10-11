@@ -1,15 +1,17 @@
 import { login } from './login'
 import { Page } from 'playwright'
-import { setCurrencyDisplay } from './preferences'
-import { mockApiSiaScanExchangeRates } from './siascan'
 import { mockApiSiaCentralHostsNetworkAverages } from '@siafoundation/sia-central-mock'
-import { clickIf } from './click'
 import {
   clusterd,
   setupCluster,
   teardownCluster,
   waitForContracts,
 } from '@siafoundation/clusterd'
+import {
+  setCurrencyDisplay,
+  mockApiSiaScanExchangeRates,
+  clickIf,
+} from '@siafoundation/e2e'
 
 export async function beforeTest(page: Page, { hostdCount = 0 } = {}) {
   await mockApiSiaScanExchangeRates({ page })

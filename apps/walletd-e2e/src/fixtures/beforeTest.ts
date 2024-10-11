@@ -1,7 +1,5 @@
 import { login } from './login'
 import { Page } from 'playwright'
-import { setCurrencyDisplay } from './preferences'
-import { mockApiSiaScanExchangeRates } from './siascan'
 import { mockApiSiaCentralHostsNetworkAverages } from '@siafoundation/sia-central-mock'
 import {
   clusterd,
@@ -10,6 +8,10 @@ import {
   teardownCluster,
 } from '@siafoundation/clusterd'
 import { Bus } from '@siafoundation/renterd-js'
+import {
+  setCurrencyDisplay,
+  mockApiSiaScanExchangeRates,
+} from '@siafoundation/e2e'
 
 export async function beforeTest(page: Page) {
   await mockApiSiaScanExchangeRates({ page })

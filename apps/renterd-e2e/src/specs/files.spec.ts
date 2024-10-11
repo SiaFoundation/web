@@ -14,9 +14,8 @@ import {
   openFileContextMenu,
   createDirectory,
 } from '../fixtures/files'
-import { fillTextInputByName } from '../fixtures/textInput'
-import { clearToasts } from '../fixtures/clearToasts'
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
+import { clearToasts, fillTextInputByName } from '@siafoundation/e2e'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page, {

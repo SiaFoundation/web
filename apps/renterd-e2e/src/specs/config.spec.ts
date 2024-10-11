@@ -1,16 +1,16 @@
 import { test, expect } from '@playwright/test'
-import { setSwitchByLabel } from '../fixtures/switchValue'
-import { setViewMode } from '../fixtures/configViewMode'
 import { navigateToConfig } from '../fixtures/navigate'
+import { afterTest, beforeTest } from '../fixtures/beforeTest'
+import { configResetAllSettings } from '../fixtures/configResetSettings'
 import {
+  fillSelectInputByName,
+  clickTwice,
+  setSwitchByLabel,
+  setViewMode,
   expectTextInputByName,
   fillTextInputByName,
-} from '../fixtures/textInput'
-import { afterTest, beforeTest } from '../fixtures/beforeTest'
-import { setCurrencyDisplay } from '../fixtures/preferences'
-import { configResetAllSettings } from '../fixtures/configResetSettings'
-import { fillSelectInputByName } from '../fixtures/selectInput'
-import { clickTwice } from '../fixtures/click'
+  setCurrencyDisplay,
+} from '@siafoundation/e2e'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page)

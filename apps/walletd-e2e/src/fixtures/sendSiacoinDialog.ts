@@ -1,5 +1,5 @@
 import { Page } from 'playwright'
-import { fillTextInputByName } from './textInput'
+import { fillTextInputByName } from '@siafoundation/e2e'
 
 export async function fillComposeTransactionSiacoin({
   page,

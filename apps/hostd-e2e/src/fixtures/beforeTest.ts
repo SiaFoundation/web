@@ -1,14 +1,16 @@
 import { mockApiSiaCentralHostsNetworkAverages } from '@siafoundation/sia-central-mock'
 import { login } from './login'
 import { Page } from 'playwright'
-import { mockApiSiaScanExchangeRates } from './siascan'
-import { setCurrencyDisplay } from './preferences'
 import {
   clusterd,
   setupCluster,
   teardownCluster,
 } from '@siafoundation/clusterd'
-import { clickIf } from './click'
+import {
+  clickIf,
+  setCurrencyDisplay,
+  mockApiSiaScanExchangeRates,
+} from '@siafoundation/e2e'
 
 export async function beforeTest(page: Page) {
   await mockApiSiaScanExchangeRates({ page })

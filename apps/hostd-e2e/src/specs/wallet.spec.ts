@@ -2,8 +2,7 @@ import { test, expect } from '@playwright/test'
 import { navigateToWallet } from '../fixtures/navigate'
 import { random } from '@technically/lodash'
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
-import { fillTextInputByName } from '../fixtures/textInput'
-import { setSwitchByLabel } from '../fixtures/switchValue'
+import { fillTextInputByName, setSwitchByLabel } from '@siafoundation/e2e'
 import BigNumber from 'bignumber.js'
 
 test.beforeEach(async ({ page }) => {

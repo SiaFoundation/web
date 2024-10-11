@@ -1,12 +1,15 @@
 import { test, expect } from '@playwright/test'
-import { setSwitchByLabel } from '../fixtures/switchValue'
-import { setViewMode } from '../fixtures/configViewMode'
 import { navigateToConfig } from '../fixtures/navigate'
-import { fillTextInputByName } from '../fixtures/textInput'
-import { clearToasts } from '../fixtures/clearToasts'
-import { clickIfEnabledAndWait, clickIf } from '../fixtures/click'
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
 import { configResetAllSettings } from '../fixtures/configResetSettings'
+import {
+  setSwitchByLabel,
+  setViewMode,
+  fillTextInputByName,
+  clickIf,
+  clickIfEnabledAndWait,
+  clearToasts,
+} from '@siafoundation/e2e'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page, {

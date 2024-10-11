@@ -1,7 +1,10 @@
 import { expect, Page } from '@playwright/test'
-import { fillTextInputByName } from './textInput'
-import { clickTextareaByName, fillTextareaByName } from './textarea'
-import { waitForTableToReload } from './table'
+import {
+  fillTextInputByName,
+  clickTextareaByName,
+  fillTextareaByName,
+  waitForTableToReload,
+} from '@siafoundation/e2e'
 import { navigateToWallet } from './navigateToWallet'
 
 export async function createNewWallet(page: Page, name: string) {
