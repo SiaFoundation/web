@@ -13,6 +13,7 @@ import {
   openDirectory,
   openFileContextMenu,
   createDirectory,
+  openDirectoryContextMenu,
 } from '../fixtures/files'
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
 import { clearToasts, fillTextInputByName } from '@siafoundation/e2e'
@@ -52,9 +53,7 @@ test('can create directory and delete a directory', async ({ page }) => {
   await fileInList(page, dirPath2)
 })
 
-test('can create directory, upload file, rename file, navigate, delete a file, delete a directory', async ({
-  page,
-}) => {
+test('can upload, rename, and delete files', async ({ page }) => {
   test.setTimeout(120_000)
   const bucketName = 'files-test'
   const dirName = 'test-dir'
@@ -64,14 +63,10 @@ test('can create directory, upload file, rename file, navigate, delete a file, d
   const originalFilePath = `${bucketName}/${dirName}/${originalFileName}`
   const newFilePath = `${bucketName}/${dirName}/${newFileName}`
 
+  // Create bucket and directory.
   await navigateToBuckets({ page })
   await createBucket(page, bucketName)
   await openBucket(page, bucketName)
-  await expect(
-    page.getByText('bucket does not contain any files')
-  ).toBeVisible()
-
-  // Create directory.
   await createDirectory(page, dirName)
   await fileInList(page, dirPath)
   await openDirectory(page, dirPath)
@@ -80,7 +75,7 @@ test('can create directory, upload file, rename file, navigate, delete a file, d
   ).toBeVisible()
   await clearToasts({ page })
 
-  // Upload.
+  // Upload a file.
   await dragAndDropFile(
     page,
     `[data-testid=filesDropzone]`,
@@ -98,12 +93,7 @@ test('can create directory, upload file, rename file, navigate, delete a file, d
   await expect(page.getByRole('dialog')).toBeHidden()
   await fileInList(page, newFilePath)
 
-  // Delete file.
-  await deleteFile(page, newFilePath)
-  await fileNotInList(page, newFilePath)
-  await clearToasts({ page })
-
-  // Upload the file again.
+  // Upload the file again with original name.
   await dragAndDropFile(
     page,
     `[data-testid=filesDropzone]`,
@@ -111,7 +101,15 @@ test('can create directory, upload file, rename file, navigate, delete a file, d
     originalFileName
   )
   await expect(page.getByText('100%')).toBeVisible()
+
+  // Both files exist.
   await fileInList(page, originalFilePath)
+  await fileInList(page, newFilePath)
+
+  // Delete one of the files.
+  await deleteFile(page, newFilePath)
+  await fileNotInList(page, newFilePath)
+  await clearToasts({ page })
 
   // Clean up the directory.
   await navigateToParentDirectory(page)
@@ -122,6 +120,63 @@ test('can create directory, upload file, rename file, navigate, delete a file, d
   // Clean up the bucket.
   await navigateToBuckets({ page })
   await deleteBucket(page, bucketName)
+})
+
+test('can rename and delete a directory with contents', async ({ page }) => {
+  test.setTimeout(120_000)
+  const bucketName = 'files-test'
+  const dirName = 'a'
+  const newDirName = 'b'
+  const fileName = 'sample.txt'
+  const dirPath = `${bucketName}/${dirName}/`
+  const newDirPath = `${bucketName}/${newDirName}/`
+  const originalFilePath = `${bucketName}/${dirName}/${fileName}`
+  const newFilePath = `${bucketName}/${newDirName}/${fileName}`
+
+  // Create bucket and directory.
+  await navigateToBuckets({ page })
+  await createBucket(page, bucketName)
+  await openBucket(page, bucketName)
+  await createDirectory(page, dirName)
+  await fileInList(page, dirPath)
+  await openDirectory(page, dirPath)
+  await expect(
+    page.getByText('The current directory does not contain any files yet')
+  ).toBeVisible()
+  await clearToasts({ page })
+
+  // Upload a file.
+  await dragAndDropFile(
+    page,
+    `[data-testid=filesDropzone]`,
+    path.join(__dirname, fileName),
+    fileName
+  )
+  await expect(page.getByText('100%')).toBeVisible()
+  await fileInList(page, originalFilePath)
+
+  // Rename directory.
+  await navigateToParentDirectory(page)
+  await openDirectoryContextMenu(page, dirPath)
+  await page.getByRole('menuitem', { name: 'Rename directory' }).click()
+  await fillTextInputByName(page, 'name', newDirName)
+  await page.locator('input[name=name]').press('Enter')
+  await expect(page.getByRole('dialog')).toBeHidden()
+  await fileInList(page, newDirPath)
+
+  // File still inside renamed directory.
+  await openDirectory(page, newDirPath)
+  await fileInList(page, newFilePath)
+  await navigateToParentDirectory(page)
+
+  // Delete directory.
+  await deleteDirectory(page, newDirPath)
+  await fileNotInList(page, newDirPath)
+
+  // Confirm no files or directories remain.
+  await expect(
+    page.getByText('The current directory does not contain any files yet')
+  ).toBeVisible()
 })
 
 test('shows a new intermediate directory when uploading nested files', async ({
