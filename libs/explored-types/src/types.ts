@@ -192,17 +192,17 @@ export type ExplorerFileContractRevision = ExplorerFileContract & {
  */
 export type ExplorerTransaction = {
   id: string
-  siacoinInputs: ExplorerSiacoinInput[]
-  siacoinOutputs: ExplorerSiacoinOutput[]
-  siafundInputs: ExplorerSiafundInput[]
-  siafundOutputs: ExplorerSiafundOutput[]
-  fileContracts: ExplorerFileContract[]
-  fileContractRevisions: ExplorerFileContractRevision[]
-  storageProofs: StorageProof[]
-  minerFees: Currency
-  arbitraryData: string[][]
-  signatures: TransactionSignature[]
-  hostAnnouncements: HostAnnouncement[]
+  siacoinInputs?: ExplorerSiacoinInput[]
+  siacoinOutputs?: ExplorerSiacoinOutput[]
+  siafundInputs?: ExplorerSiafundInput[]
+  siafundOutputs?: ExplorerSiafundOutput[]
+  fileContracts?: ExplorerFileContract[]
+  fileContractRevisions?: ExplorerFileContractRevision[]
+  storageProofs?: StorageProof[]
+  minerFees?: Currency
+  arbitraryData?: string[][]
+  signatures?: TransactionSignature[]
+  hostAnnouncements?: HostAnnouncement[]
 }
 
 /**
