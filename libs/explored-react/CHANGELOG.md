@@ -1,5 +1,23 @@
 # @siafoundation/explored-react
 
+## 0.3.0
+
+### Minor Changes
+
+- 24ce33b9: Added contractionRevisions API.
+
+### Patch Changes
+
+- Updated dependencies [24ce33b9]
+- Updated dependencies [56974bbf]
+- Updated dependencies [56974bbf]
+- Updated dependencies [866fc68d]
+- Updated dependencies [9ba91ad7]
+- Updated dependencies [411e378d]
+- Updated dependencies [56974bbf]
+  - @siafoundation/explored-types@0.7.0
+  - @siafoundation/react-core@1.5.0
+
 ## 0.2.2
 
 ### Patch Changes

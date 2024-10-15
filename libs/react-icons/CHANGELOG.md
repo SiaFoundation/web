@@ -1,5 +1,11 @@
 # @siafoundation/react-icons
 
+## 0.3.0
+
+### Minor Changes
+
+- 9277382b: Added BugIcon.
+
 ## 0.2.3
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @siafoundation/react-core
 
+## 1.5.0
+
+### Minor Changes
+
+- 56974bbf: Migrated all settings interaction to the more specific requestSettings.
+- 56974bbf: Hooks keys are now a two element array that includes the request method. This fixes an issue where hooks using the same route on different methods could conflict. The mutation matcher still uses the route string without any method information.
+- 56974bbf: Removed the unused standalone option.
+
 ## 1.4.0
 
 ### Minor Changes

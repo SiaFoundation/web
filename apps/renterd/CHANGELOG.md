@@ -1,5 +1,18 @@
 # renterd
 
+## 0.65.0
+
+### Minor Changes
+
+- 9277382b: There is now an option to generate a metadata debug report for bug reporting purposes. It can be accessed from the sidenav and cmd+k menu. Closes https://github.com/SiaFoundation/renterd/issues/1119 Closes https://github.com/SiaFoundation/renterd/issues/1279
+- 9277382b: The cmd+k menu / command palette dialog now announces itself via assistive technology.
+
+### Patch Changes
+
+- 1d1452d8: Fixed an issue where configured settings would show as blank when the Sia Central API (used for network averages) was down. Closes https://github.com/SiaFoundation/renterd/issues/1601
+- 4cf6c8ea: Fixed an issue with the uploads list loading and empty states.
+- 4cf6c8ea: Added explicit aria descriptions to some primary dialogs.
+
 ## 0.64.0
 
 ### Minor Changes

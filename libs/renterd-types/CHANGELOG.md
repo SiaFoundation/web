@@ -1,5 +1,18 @@
 # @siafoundation/renterd-types
 
+## 0.11.0
+
+### Minor Changes
+
+- 9277382b: The alerts API limit and skip params are now optional.
+
+### Patch Changes
+
+- Updated dependencies [56974bbf]
+- Updated dependencies [56974bbf]
+- Updated dependencies [56974bbf]
+  - @siafoundation/react-core@1.5.0
+
 ## 0.10.0
 
 ### Minor Changes
