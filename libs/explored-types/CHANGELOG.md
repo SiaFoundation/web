@@ -1,5 +1,14 @@
 # @siafoundation/explored-types
 
+## 0.7.0
+
+### Minor Changes
+
+- 24ce33b9: Added contractionRevisions API.
+- 866fc68d: Added transactionID property to the ExplorerFileContract type.
+- 9ba91ad7: Re-export base SiacoinOutput type.
+- 411e378d: Added null case to proof\* fields in the ExplorerFileContract type.
+
 ## 0.6.0
 
 ### Minor Changes

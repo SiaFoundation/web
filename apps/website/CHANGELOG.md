@@ -1,5 +1,13 @@
 # website
 
+## 0.55.1
+
+### Patch Changes
+
+- 4cf6c8ea: Added a max height and radius for hosts on the host map.
+- 4cf6c8ea: Fixed hydration mismatch warnings related to the random selection of a host on the globe.
+- 4cf6c8ea: Fixed a hydration mismatch warning related to the ThemeRadio in footer.
+
 ## 0.55.0
 
 ### Minor Changes

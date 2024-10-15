@@ -1,5 +1,15 @@
 # hostd
 
+## 0.49.0
+
+### Minor Changes
+
+- 9277382b: The cmd+k menu / command palette dialog now announces itself via assistive technology.
+
+### Patch Changes
+
+- 4cf6c8ea: Added explicit aria descriptions to some primary dialogs.
+
 ## 0.48.0
 
 ### Minor Changes

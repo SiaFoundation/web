@@ -1,5 +1,11 @@
 # walletd
 
+## 0.23.1
+
+### Patch Changes
+
+- 4cf6c8ea: Fixed an issue where the app would try to fetch from an invalid URL when first initializing.
+
 ## 0.23.0
 
 ### Minor Changes

@@ -1,5 +1,26 @@
 # Changelog
 
+## 4.10.0
+
+### Minor Changes
+
+- 4cf6c8ea: The Dialog now supports providing a title or description that is visually hidden but still announced by assistive technology.
+- 5cf4f1ba: Upgraded radix libraries.
+- 4cf6c8ea: Adjusted tooltip to only wrap content with Paragraph if prop is a string or React.Fragment.
+
+### Patch Changes
+
+- 4cf6c8ea: Fixed a warning caused by animation props being passed to non-animated graphs.
+- 4cf6c8ea: Fixed a 1 pixel gap that would show between the top of the Table and its sticky header when scrolling.
+- 4cf6c8ea: Fixed warnings caused by the Dialog description prop and aria-describedby.
+- 1d1452d8: Fixed an issue where SiacoinField was depending on the siaCentral setting rather than the active exchange rate API.
+- Updated dependencies [56974bbf]
+- Updated dependencies [9277382b]
+- Updated dependencies [56974bbf]
+- Updated dependencies [56974bbf]
+  - @siafoundation/react-core@1.5.0
+  - @siafoundation/react-icons@0.3.0
+
 ## 4.9.1
 
 ### Patch Changes
