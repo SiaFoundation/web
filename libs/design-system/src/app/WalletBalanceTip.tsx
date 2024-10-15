@@ -36,6 +36,7 @@ export function WalletBalanceTip({
             </div>
             <div className="flex justify-end">
               <ValueScFiat
+                size="12"
                 displayBoth
                 variant="value"
                 value={balanceSc.spendable}
@@ -54,6 +55,7 @@ export function WalletBalanceTip({
                 </div>
                 <div className="flex justify-end">
                   <ValueScFiat
+                    size="12"
                     displayBoth
                     variant="value"
                     value={balanceSc.unconfirmed}
@@ -72,6 +74,7 @@ export function WalletBalanceTip({
             </div>
             <div className="flex justify-end">
               <ValueScFiat
+                size="12"
                 displayBoth
                 variant="value"
                 value={balanceSc.confirmed}
@@ -88,6 +91,7 @@ export function WalletBalanceTip({
             </div>
             <div className="flex justify-end">
               <ValueScFiat
+                size="12"
                 displayBoth
                 variant="value"
                 value={balanceSc.unconfirmed}
