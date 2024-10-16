@@ -32,3 +32,14 @@ export async function expectTextInputByNameAttribute(
 ) {
   await expect(page.locator(`input[name="${name}"]`)).toHaveAttribute(value)
 }
+
+export async function getTextInputValueByName(
+  page: Page,
+  name: string,
+  waitForValue = true
+) {
+  if (waitForValue) {
+    await expect(page.locator(`input[name="${name}"]`)).toHaveValue(/.*/)
+  }
+  return await page.locator(`input[name="${name}"]`).inputValue()
+}

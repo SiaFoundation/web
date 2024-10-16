@@ -28,3 +28,11 @@ export async function navigateToHosts({ page }: { page: Page }) {
   await page.getByTestId('sidenav').getByLabel('Hosts').click()
   await expect(page.getByTestId('navbar').getByText('Hosts')).toBeVisible()
 }
+
+export async function navigateToKeys({ page }: { page: Page }) {
+  await page
+    .getByTestId('sidenav')
+    .getByLabel('S3 authentication keypairs')
+    .click()
+  await expect(page.getByTestId('navbar').getByText('Keys')).toBeVisible()
+}

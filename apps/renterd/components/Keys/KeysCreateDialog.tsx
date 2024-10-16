@@ -157,8 +157,8 @@ export function KeysCreateDialog({ trigger, open, onOpenChange }: Props) {
 
   return (
     <Dialog
-      title="Create S3 key"
-      description="Create a new S3 authentication key."
+      title="Create S3 keypair"
+      description="Create a new S3 authentication keypair."
       trigger={trigger}
       open={open}
       onOpenChange={(val) => {
