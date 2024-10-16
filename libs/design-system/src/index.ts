@@ -166,6 +166,10 @@ export * from './hooks/useDatasetEmptyState'
 export * from './hooks/useSiacoinFiat'
 export * from './hooks/useOS'
 
+// multi
+export * from './multi/useMultiSelect'
+export * from './multi/MultiSelectionMenu'
+
 // data
 export * from './data/webLinks'
 
