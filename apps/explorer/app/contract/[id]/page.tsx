@@ -1,4 +1,3 @@
-import { SiaCentralContract } from '@siafoundation/sia-central-types'
 import { ContractView } from '../../../components/ContractView'
 import { Metadata } from 'next'
 import { routes } from '../../../config/routes'
@@ -8,6 +7,7 @@ import { notFound } from 'next/navigation'
 import { stripPrefix, truncate } from '@siafoundation/design-system'
 import { to } from '@siafoundation/request'
 import { explored } from '../../../config/explored'
+import { ExplorerFileContract } from '@siafoundation/explored-types'
 
 export function generateMetadata({ params }): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
@@ -25,14 +25,13 @@ export const revalidate = 0
 
 export default async function Page({ params }) {
   const id = params?.id as string
-  const [[c, error], [r]] = await Promise.all([
-    to(
-      siaCentral.contract({
-        params: {
-          id,
-        },
-      })
-    ),
+
+  // Grab the contract and previous revisions data.
+  const [
+    [rate, rateError],
+    [contract, contractError],
+    [previousRevisions, previousRevisionsError],
+  ] = await Promise.all([
     to(
       siaCentral.exchangeRates({
         params: {
@@ -40,56 +39,61 @@ export default async function Page({ params }) {
         },
       })
     ),
+    to(explored.contractByID({ params: { id } })),
+    to<ExplorerFileContract[]>(explored.contractRevisions({ params: { id } })),
   ])
 
-  if (error) {
-    throw error
-  }
+  if (rateError) throw rateError
+  if (!rate) throw 'No rate found in successful sia central exchange rates call'
 
-  const contract = c?.contract
+  if (contractError) throw contractError
+  if (!contract) return notFound()
+  if (previousRevisionsError) throw previousRevisionsError
+  if (!previousRevisions)
+    throw `No previousRevisions found in successful request`
 
-  if (!contract) {
-    return notFound()
-  }
+  console.log(contract)
 
-  const formationTxnId = getFormationTxnId(contract)
-  const finalRevisionTxnId = contract?.transaction_id || ''
+  const formationTxnID =
+    previousRevisions[0].transactionID ?? contract.transactionID
+  const finalRevisionTxnID =
+    previousRevisions[previousRevisions.length - 1].transactionID ??
+    contract.transactionID
 
-  const [[ft], [rt]] = await Promise.all([
-    to(
-      siaCentral.transaction({
-        params: {
-          id: formationTxnId,
-        },
-      })
-    ),
-    to(
-      siaCentral.transaction({
-        params: {
-          id: finalRevisionTxnId,
-        },
-      })
-    ),
-  ])
-
-  const formationTransaction = ft?.transaction
-  const renewedFrom = formationTransaction?.contract_revisions?.[0]
-  const renewalTransaction = rt?.transaction
-  const renewedTo = renewalTransaction?.storage_contracts?.[0]
-
-  // The following is a temporary addition to satisfy new Transaction
-  // component requirements for the Sia Central phase out on the
-  // transaction route.
+  // Fetch our formation and finalRevision transaction information.
   const [
-    [transaction, transactionError],
-    [transactionChainIndices, transactionChainIndicesError],
-    [currentTip, currentTipError],
+    [formationTransaction, formationTransactionError],
+    [renewalTransaction, renewalTransactionError],
   ] = await Promise.all([
     to(
       explored.transactionByID({
-        params: { id: formationTransaction?.id || '' },
+        params: {
+          id: formationTxnID,
+        },
       })
     ),
+    to(
+      explored.transactionByID({
+        params: {
+          id: finalRevisionTxnID,
+        },
+      })
+    ),
+  ])
+
+  if (formationTransactionError) throw formationTransactionError
+  if (renewalTransactionError) throw renewalTransactionError
+  if (!formationTransaction || !renewalTransaction) return notFound()
+
+  const renewedFromID =
+    formationTransaction.fileContractRevisions?.[0].id ?? null
+  const renewedToID = renewalTransaction.fileContracts?.[0].id ?? null
+
+  // do our chain indices and tip fetching.
+  const [
+    [formationTxnChainIndices, formationTxnChainIndicesError],
+    [currentTip, currentTipError],
+  ] = await Promise.all([
     to(
       explored.transactionChainIndices({
         params: { id: formationTransaction?.id || '' },
@@ -98,14 +102,14 @@ export default async function Page({ params }) {
     to(explored.consensusTip()),
   ])
 
-  if (transactionError) throw transactionError
-  if (transactionChainIndicesError) throw transactionChainIndicesError
+  if (formationTxnChainIndicesError) throw formationTxnChainIndicesError
   if (currentTipError) throw currentTipError
-  if (!transaction || !transactionChainIndices || !currentTip) return notFound()
+
+  if (!formationTxnChainIndices || !currentTip) return notFound()
 
   // Use the first chainIndex from the above call to get our parent block.
   const [parentBlock, parentBlockError] = await to(
-    explored.blockByID({ params: { id: transactionChainIndices[0].id } })
+    explored.blockByID({ params: { id: formationTxnChainIndices[0].id } })
   )
 
   if (parentBlockError) throw parentBlockError
@@ -113,27 +117,19 @@ export default async function Page({ params }) {
 
   return (
     <ContractView
+      previousRevisions={previousRevisions}
+      currentHeight={currentTip.height}
       contract={contract}
-      rates={r?.rates}
-      renewedFrom={renewedFrom}
-      renewedTo={renewedTo}
-      formationTransaction={transaction}
+      rates={rate.rates}
+      renewedFromID={renewedFromID}
+      renewedToID={renewedToID}
+      formationTransaction={formationTransaction}
       formationTransactionHeaderData={{
-        id: stripPrefix(transaction.id),
-        blockHeight: transactionChainIndices[0].height,
-        confirmations: currentTip.height - transactionChainIndices[0].height,
+        id: stripPrefix(formationTransaction.id),
+        blockHeight: formationTxnChainIndices[0].height,
+        confirmations: currentTip.height - formationTxnChainIndices[0].height,
         timestamp: parentBlock.timestamp,
       }}
     />
   )
-}
-
-function getFormationTxnId(contract: SiaCentralContract) {
-  let id = contract?.transaction_id
-  if (contract?.previous_revisions?.length) {
-    id =
-      contract.previous_revisions[contract.previous_revisions?.length - 1]
-        .transaction_id
-  }
-  return id
 }
