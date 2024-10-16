@@ -2,7 +2,7 @@
 
 import React from 'react'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
-import { Checkmark16 } from '@siafoundation/react-icons'
+import { Checkmark16, Subtract16 } from '@siafoundation/react-icons'
 import { Text } from './Text'
 import { cva } from 'class-variance-authority'
 import { VariantProps } from '../types'
@@ -14,7 +14,7 @@ const styles = cva(
 
     'focus:ring ring-blue-500 dark:ring-blue-200',
     'border',
-    'bg-gray-300 dark:bg-graydark-50',
+    'bg-white dark:bg-graydark-50',
     'autofill:bg-blue-100 autofill:dark:bg-blue-800',
     'border-gray-400 dark:border-graydark-400',
     'enabled:hover:border-gray-500 enabled:hover:dark:border-graydark-500',
@@ -39,13 +39,21 @@ const styles = cva(
 export const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
   VariantProps<typeof styles> & CheckboxPrimitive.CheckboxProps
->(({ size, children, ...props }, ref) => (
-  <div className="flex gap-2 items-center">
+>(({ size, children, ...props }, ref) => {
+  const el = (
     <CheckboxPrimitive.Root className={styles({ size })} {...props} ref={ref}>
       <CheckboxPrimitive.Indicator className="flex items-center justify-center h-full w-full text-white">
-        <Checkmark16 />
+        {props.checked === 'indeterminate' ? <Subtract16 /> : <Checkmark16 />}
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
-    <Text color={props.disabled ? 'subtle' : 'contrast'}>{children}</Text>
-  </div>
-))
+  )
+  if (!children) {
+    return el
+  }
+  return (
+    <div className="flex gap-2 items-center">
+      {el}
+      <Text color={props.disabled ? 'subtle' : 'contrast'}>{children}</Text>
+    </div>
+  )
+})

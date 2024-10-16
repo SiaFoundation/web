@@ -5,7 +5,7 @@ import { Panel } from '../../core/Panel'
 import { Text } from '../../core/Text'
 import { useCallback, useMemo } from 'react'
 import { cx } from 'class-variance-authority'
-import { CaretDown16, CaretUp16 } from '@siafoundation/react-icons'
+import { ChevronDown16, ChevronUp16 } from '@siafoundation/react-icons'
 import { times } from '@technically/lodash'
 import {
   DndContext,
@@ -42,6 +42,7 @@ export type TableColumn<Columns, Data, Context> = {
   id: Columns
   label: string
   icon?: React.ReactNode
+  heading?: React.FC<{ context: Context }>
   tip?: string
   size?: number | string
   cellClassName?: string
@@ -208,7 +209,15 @@ export function Table<
             <tr>
               {columns.map(
                 (
-                  { id, icon, label, tip, cellClassName, contentClassName },
+                  {
+                    id,
+                    icon,
+                    heading: Heading,
+                    label,
+                    tip,
+                    cellClassName,
+                    contentClassName,
+                  },
                   i
                 ) => {
                   const isSortable =
@@ -236,6 +245,7 @@ export function Table<
                             isSortable ? 'cursor-pointer' : ''
                           )}
                         >
+                          {Heading ? <Heading context={context} /> : null}
                           <Tooltip content={tip}>
                             <Text
                               color="subtle"
@@ -251,15 +261,15 @@ export function Table<
                           {isSortActive && (
                             <Text color="contrast">
                               {sortDirection === 'asc' ? (
-                                <CaretUp16 className="scale-75" />
+                                <ChevronUp16 className="scale-75" />
                               ) : (
-                                <CaretDown16 className="scale-75" />
+                                <ChevronDown16 className="scale-75" />
                               )}
                             </Text>
                           )}
                           {isSortable && !isSortActive && (
                             <Text color="verySubtle">
-                              <CaretUp16 className="scale-75" />
+                              <ChevronUp16 className="scale-75" />
                             </Text>
                           )}
                         </div>
