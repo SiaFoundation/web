@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test'
+import { toggleColumnVisibility } from '@siafoundation/e2e'
 import { navigateToContracts } from '../fixtures/navigate'
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
 import {
   getContractRowByIndex,
   getContractRows,
   getContractsSummaryRow,
-  toggleColumnVisibility,
 } from '../fixtures/contracts'
 
 test.beforeEach(async ({ page }) => {

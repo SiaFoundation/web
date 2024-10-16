@@ -1,10 +1,19 @@
+import { MouseEvent } from 'react'
+
 export type KeyData = {
   id: string
   key: string
   secret: string
 }
 
-export type TableColumnId = 'actions' | 'key' | 'secret'
+export type CellContext = {
+  selectionMap: Record<string, KeyData>
+  onSelect: (id: string, e: MouseEvent<HTMLButtonElement>) => void
+  onSelectPage: () => void
+  isPageAllSelected: boolean | 'indeterminate'
+}
+
+export type TableColumnId = 'selection' | 'actions' | 'key' | 'secret'
 
 export const columnsDefaultVisible: TableColumnId[] = ['key', 'secret']
 

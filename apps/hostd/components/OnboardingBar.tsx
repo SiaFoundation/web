@@ -67,7 +67,7 @@ export function OnboardingBar() {
 
   if (maximized) {
     return (
-      <div className="z-20 fixed bottom-5 left-1/2 -translate-x-1/2 flex justify-center">
+      <div className="z-20 fixed bottom-5 right-5 flex justify-center">
         <Panel className="w-[400px] flex flex-col max-h-[600px]">
           <ScrollArea>
             <div className="flex justify-between items-center px-3 py-2 border-b border-gray-200 dark:border-graydark-300">
@@ -232,7 +232,7 @@ export function OnboardingBar() {
     )
   }
   return (
-    <div className="z-30 fixed bottom-5 left-1/2 -translate-x-1/2 flex justify-center">
+    <div className="z-30 fixed bottom-5 right-5 flex justify-center">
       <Button
         onClick={() => setMaximized(true)}
         size="large"

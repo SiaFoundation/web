@@ -3,10 +3,12 @@ import {
   useDatasetEmptyState,
   useClientFilters,
   useClientFilteredDataset,
+  useMultiSelect,
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useMemo } from 'react'
 import {
+  CellContext,
   KeyData,
   columnsDefaultVisible,
   defaultSortField,
@@ -99,6 +101,27 @@ function useKeysMain() {
     filters
   )
 
+  const {
+    onSelect,
+    deselect,
+    deselectAll,
+    selectionMap,
+    selectionCount,
+    onSelectPage,
+    isPageAllSelected,
+  } = useMultiSelect(dataset)
+
+  const cellContext = useMemo(
+    () =>
+      ({
+        selectionMap,
+        onSelect,
+        onSelectPage,
+        isPageAllSelected,
+      } as CellContext),
+    [selectionMap, onSelect, onSelectPage, isPageAllSelected]
+  )
+
   return {
     dataState,
     limit,
@@ -109,6 +132,13 @@ function useKeysMain() {
     datasetCount: dataset?.length || 0,
     datasetFilteredCount: datasetFiltered?.length || 0,
     columns: filteredTableColumns,
+    selectionMap,
+    selectionCount,
+    onSelectPage,
+    isPageAllSelected,
+    deselect,
+    deselectAll,
+    cellContext,
     dataset,
     datasetPage,
     configurableColumns,

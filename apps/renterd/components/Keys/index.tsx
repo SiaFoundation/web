@@ -8,6 +8,7 @@ import { StateNoneYet } from './StateNoneYet'
 import { KeysActionsMenu } from './KeysActionsMenu'
 import { StateError } from './StateError'
 import { useKeys } from '../../contexts/keys'
+import { KeysBatchMenu } from './KeysBatchMenu'
 
 export function Keys() {
   const { openDialog } = useDialog()
@@ -20,6 +21,7 @@ export function Keys() {
     toggleSort,
     limit,
     dataState,
+    cellContext,
   } = useKeys()
 
   return (
@@ -31,7 +33,9 @@ export function Keys() {
       actions={<KeysActionsMenu />}
     >
       <div className="p-6 min-w-fit">
+        <KeysBatchMenu />
         <Table
+          testId="keysTable"
           isLoading={dataState === 'loading'}
           emptyState={
             dataState === 'noneMatchingFilters' ? (
@@ -45,6 +49,7 @@ export function Keys() {
           sortableColumns={sortableColumns}
           pageSize={limit}
           data={datasetPage}
+          context={cellContext}
           columns={columns}
           sortDirection={sortDirection}
           sortField={sortField}

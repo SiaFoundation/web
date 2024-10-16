@@ -47,14 +47,19 @@ export function KeyContextMenu({ s3Key, contentProps, buttonProps }: Props) {
     if (response.error) {
       triggerErrorToast({ title: 'Error deleting key', body: response.error })
     } else {
-      triggerSuccessToast({ title: `Key ${s3Key} removed` })
+      triggerSuccessToast({ title: `Key ${s3Key} deleted` })
     }
   }, [settingsS3.data, s3Key, settingsS3Update])
 
   return (
     <DropdownMenu
       trigger={
-        <Button variant="ghost" icon="hover" {...buttonProps}>
+        <Button
+          aria-label="key context menu"
+          icon="hover"
+          size="none"
+          {...buttonProps}
+        >
           <CaretDown16 />
         </Button>
       }
@@ -76,12 +81,12 @@ export function KeyContextMenu({ s3Key, contentProps, buttonProps }: Props) {
         onSelect={() => {
           openConfirmDialog({
             title: `Delete key ${truncate(s3Key, 15)}`,
-            action: 'Remove',
+            action: 'Delete',
             variant: 'red',
             body: (
               <div className="flex flex-col gap-1">
                 <Paragraph size="14">
-                  Are you sure you would like to remove the following key?
+                  Are you sure you would like to delete the following key?
                 </Paragraph>
                 <Paragraph size="14" font="mono">
                   {truncate(s3Key, 80)}

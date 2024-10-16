@@ -1,10 +1,10 @@
-import { Page, expect } from '@playwright/test'
+import { Page } from '@playwright/test'
 
-export async function getContractRowById(page: Page, id: string) {
+export function getContractRowById(page: Page, id: string) {
   return page.getByTestId('contractsTable').getByTestId(id)
 }
 
-export async function getContractsSummaryRow(page: Page) {
+export function getContractsSummaryRow(page: Page) {
   return page
     .getByTestId('contractsTable')
     .locator('thead')
@@ -12,7 +12,7 @@ export async function getContractsSummaryRow(page: Page) {
     .nth(1)
 }
 
-export async function getContractRowByIndex(page: Page, index: number) {
+export function getContractRowByIndex(page: Page, index: number) {
   return page
     .getByTestId('contractsTable')
     .locator('tbody')
@@ -26,29 +26,4 @@ export async function getContractRows(page: Page) {
     .locator('tbody')
     .getByRole('row')
     .all()
-}
-
-export async function toggleColumnVisibility(
-  page: Page,
-  name: string,
-  visible: boolean
-) {
-  await page.getByLabel('configure view').click()
-  const configureView = page.getByRole('dialog')
-  const columnToggle = configureView.getByRole('checkbox', {
-    name,
-  })
-
-  if (visible) {
-    await expect(columnToggle).toBeVisible()
-    if (!(await columnToggle.isChecked())) {
-      await columnToggle.click()
-    }
-  } else {
-    await expect(columnToggle).toBeHidden()
-    if (await columnToggle.isChecked()) {
-      await columnToggle.click()
-    }
-  }
-  await page.getByLabel('configure view').click()
 }

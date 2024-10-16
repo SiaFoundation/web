@@ -27,7 +27,7 @@ export function MultiSelectionMenu({
   entityWordPlural?: string
 }) {
   return (
-    <div className="fixed bottom-4 left-0 right-0 flex justify-center p-4 dark">
+    <div className="z-20 fixed bottom-5 left-0 right-0 flex justify-center dark pointer-events-none">
       <AnimatePresence>
         {isVisible && (
           <motion.div
@@ -38,7 +38,7 @@ export function MultiSelectionMenu({
           >
             <Panel
               aria-label={entityWord + ' multiselect menu'}
-              className="pl-3 pr-2 py-2 min-w-[250px] flex gap-2 items-center rounded-lg light:bg-black"
+              className="pl-3 pr-2 py-2 min-w-[250px] flex gap-2 items-center rounded-lg light:bg-black pointer-events-auto"
             >
               {!!selectionCount && (
                 <Text size="14">
