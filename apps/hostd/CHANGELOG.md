@@ -1,5 +1,11 @@
 # hostd
 
+## 0.50.0
+
+### Minor Changes
+
+- 6c7e3681: The onboarding wizard is now bottom right aligned.
+
 ## 0.49.0
 
 ### Minor Changes
