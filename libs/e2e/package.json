@@ -1,7 +1,7 @@
 {
   "name": "@siafoundation/e2e",
   "description": "Shared e2e testing code.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
   "dependencies": {
     "@playwright/test": "^1.36.0",
