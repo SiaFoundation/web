@@ -93,7 +93,9 @@ export function Tooltip({
                     panelStyles()
                   )}
                 >
-                  {typeof content === 'string' || Array.isArray(content) ? (
+                  {typeof content === 'string' ||
+                  (React.isValidElement(content) &&
+                    content?.type === React.Fragment) ? (
                     <Paragraph size="12">{content}</Paragraph>
                   ) : (
                     content

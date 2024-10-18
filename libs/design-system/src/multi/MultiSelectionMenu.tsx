@@ -6,26 +6,20 @@ import { Panel } from '../core/Panel'
 import { Text } from '../core/Text'
 import { pluralize } from '@siafoundation/units'
 import { Close16 } from '@siafoundation/react-icons'
+import { MultiSelect, MultiSelectItem } from './useMultiSelect'
 
-export function MultiSelectionMenu({
-  isVisible,
-  selectionCount,
-  isPageAllSelected,
-  deselectAll,
-  pageCount,
+export function MultiSelectionMenu<Item extends MultiSelectItem>({
+  multiSelect,
   children,
   entityWord,
   entityWordPlural,
 }: {
-  isVisible: boolean
-  selectionCount: number
-  isPageAllSelected: boolean | 'indeterminate'
-  pageCount: number
+  multiSelect: MultiSelect<Item>
   children: React.ReactNode
-  deselectAll: () => void
   entityWord: string
   entityWordPlural?: string
 }) {
+  const isVisible = multiSelect.selectionCount > 0
   return (
     <div className="z-20 fixed bottom-5 left-0 right-0 flex justify-center dark pointer-events-none">
       <AnimatePresence>
@@ -40,20 +34,31 @@ export function MultiSelectionMenu({
               aria-label={entityWord + ' multiselect menu'}
               className="pl-3 pr-2 py-2 min-w-[250px] flex gap-2 items-center rounded-lg light:bg-black pointer-events-auto"
             >
-              {!!selectionCount && (
+              {!!multiSelect.selectionCount && (
                 <Text size="14">
-                  {pluralize(selectionCount, entityWord, {
+                  {`${pluralize(multiSelect.selectionCount, entityWord, {
                     plural: entityWordPlural,
-                  })}{' '}
-                  selected
+                  })} selected${
+                    multiSelect.someSelectedItemsOutsideCurrentPage &&
+                    multiSelect.someSelectedOnCurrentPage
+                      ? ' on this and other pages'
+                      : !multiSelect.someSelectedItemsOutsideCurrentPage &&
+                        multiSelect.someSelectedOnCurrentPage
+                      ? ''
+                      : multiSelect.someSelectedItemsOutsideCurrentPage &&
+                        !multiSelect.someSelectedOnCurrentPage
+                      ? ' on other pages'
+                      : ''
+                  }`}
                 </Text>
-              )}
-              {isPageAllSelected && selectionCount > pageCount && (
-                <Text>across multiple pages</Text>
               )}
               <div className="flex-1" />
               {children}
-              <Button tip="Deselect all" onClick={deselectAll} size="small">
+              <Button
+                tip="Deselect all"
+                onClick={multiSelect.deselectAll}
+                size="small"
+              >
                 <Close16 />
               </Button>
             </Panel>

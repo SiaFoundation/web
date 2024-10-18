@@ -15,15 +15,11 @@ import { useDialog } from '../../../contexts/dialog'
 import { useKeys } from '../../../contexts/keys'
 
 export function KeysBatchDelete() {
-  const { selectionMap, deselect } = useKeys()
+  const { multiSelect } = useKeys()
 
-  const ids = useMemo(
-    () => Object.entries(selectionMap).map(([_, item]) => item.id),
-    [selectionMap]
-  )
   const keys = useMemo(
-    () => Object.entries(selectionMap).map(([_, item]) => item.key),
-    [selectionMap]
+    () => Object.entries(multiSelect.selectionMap).map(([_, item]) => item.key),
+    [multiSelect.selectionMap]
   )
   const { openConfirmDialog } = useDialog()
   const settingsS3 = useSettingsS3()
@@ -43,13 +39,13 @@ export function KeysBatchDelete() {
         },
       },
     })
-    deselect(ids)
+    multiSelect.deselectAll()
     if (response.error) {
       triggerErrorToast({ title: 'Error deleting keys', body: response.error })
     } else {
       triggerSuccessToast({ title: `Keys deleted` })
     }
-  }, [settingsS3.data, settingsS3Update, deselect, keys, ids])
+  }, [settingsS3.data, settingsS3Update, multiSelect, keys])
 
   return (
     <Button
@@ -64,7 +60,7 @@ export function KeysBatchDelete() {
             <div className="flex flex-col gap-1">
               <Paragraph size="14">
                 Are you sure you would like to delete the{' '}
-                {ids.length.toLocaleString()} selected keys?
+                {multiSelect.selectionCount.toLocaleString()} selected keys?
               </Paragraph>
             </div>
           ),
