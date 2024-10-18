@@ -6,26 +6,25 @@ import { Panel } from '../core/Panel'
 import { Text } from '../core/Text'
 import { pluralize } from '@siafoundation/units'
 import { Close16 } from '@siafoundation/react-icons'
+import { MultiSelect } from './useMultiSelect'
 
 export function MultiSelectionMenu({
-  isVisible,
-  selectionCount,
-  isPageAllSelected,
-  deselectAll,
-  pageCount,
+  multiSelect: {
+    selectionCount,
+    deselectAll,
+    someSelectedItemsOutsideCurrentPage,
+    someSelectedOnCurrentPage,
+  },
   children,
   entityWord,
   entityWordPlural,
 }: {
-  isVisible: boolean
-  selectionCount: number
-  isPageAllSelected: boolean | 'indeterminate'
-  pageCount: number
+  multiSelect: MultiSelect
   children: React.ReactNode
-  deselectAll: () => void
   entityWord: string
   entityWordPlural?: string
 }) {
+  const isVisible = selectionCount > 0
   return (
     <div className="z-20 fixed bottom-5 left-0 right-0 flex justify-center dark pointer-events-none">
       <AnimatePresence>
@@ -42,14 +41,21 @@ export function MultiSelectionMenu({
             >
               {!!selectionCount && (
                 <Text size="14">
-                  {pluralize(selectionCount, entityWord, {
+                  {`${pluralize(selectionCount, entityWord, {
                     plural: entityWordPlural,
-                  })}{' '}
-                  selected
+                  })} selected${
+                    someSelectedItemsOutsideCurrentPage &&
+                    someSelectedOnCurrentPage
+                      ? ' on this and other pages'
+                      : !someSelectedItemsOutsideCurrentPage &&
+                        someSelectedOnCurrentPage
+                      ? ''
+                      : someSelectedItemsOutsideCurrentPage &&
+                        !someSelectedOnCurrentPage
+                      ? ' on other pages'
+                      : ''
+                  }`}
                 </Text>
-              )}
-              {isPageAllSelected && selectionCount > pageCount && (
-                <Text>across multiple pages</Text>
               )}
               <div className="flex-1" />
               {children}
