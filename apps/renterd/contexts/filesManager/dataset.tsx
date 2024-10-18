@@ -8,6 +8,7 @@ import {
   getFilename,
   join,
   isDirectory,
+  getKeyFromPath,
 } from '../../lib/paths'
 import { useFilesManager } from '.'
 import { useEffect } from 'react'
@@ -43,10 +44,12 @@ export function useDataset({ id, objects }: Props) {
         buckets.data?.forEach((bucket) => {
           const name = bucket.name
           const path = buildDirectoryPath(name, '')
+          const key = getKeyFromPath(path)
           dataMap[name] = {
             id: path,
             path,
             bucket,
+            key,
             size: 0,
             health: 0,
             name,
@@ -64,14 +67,15 @@ export function useDataset({ id, objects }: Props) {
             id: path,
             path,
             bucket: activeBucket,
+            key,
             size,
             health,
             name,
-            onClick: isDirectory(key)
-              ? () => {
-                  setActiveDirectory((p) => p.concat(name.slice(0, -1)))
-                }
-              : undefined,
+            // onClick: isDirectory(key)
+            //   ? () => {
+            //       setActiveDirectory((p) => p.concat(name.slice(0, -1)))
+            //     }
+            //   : undefined,
             type: isDirectory(key) ? 'directory' : 'file',
           }
         })
@@ -99,6 +103,7 @@ export function useDataset({ id, objects }: Props) {
               id: newDirPath,
               path: newDirPath,
               bucket: activeBucket,
+              key: getKeyFromPath(newDirPath),
               size: 0,
               health: 0,
               name: newDirName + '/',

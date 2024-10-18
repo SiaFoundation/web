@@ -39,7 +39,12 @@ export function FileContextMenu({ trigger, path, contentProps }: Props) {
     <DropdownMenu
       trigger={
         trigger || (
-          <Button aria-label="File context menu" variant="ghost" icon="hover">
+          <Button
+            size="none"
+            aria-label="File context menu"
+            variant="ghost"
+            icon="hover"
+          >
             <Document16 />
           </Button>
         )

@@ -1,6 +1,15 @@
-import { useDatasetEmptyState } from '@siafoundation/design-system'
-import { createContext, useContext, useMemo } from 'react'
-import { ObjectData } from '../filesManager/types'
+import {
+  useDatasetEmptyState,
+  useMultiSelect,
+} from '@siafoundation/design-system'
+import {
+  createContext,
+  MouseEvent,
+  useContext,
+  useEffect,
+  useMemo,
+} from 'react'
+import { CellContext, ObjectData } from '../filesManager/types'
 import { useDataset } from './dataset'
 import { useMove } from './move'
 import { useFilesManager } from '../filesManager'
@@ -9,8 +18,7 @@ import { columns } from './columns'
 function useFilesDirectoryMain() {
   const {
     activeDirectory,
-    activeBucketName: activeBucket,
-    activeDirectoryPath,
+    activeBucket,
     setActiveDirectory,
     filters,
     enabledColumns,
@@ -32,17 +40,20 @@ function useFilesDirectoryMain() {
     refresh,
   })
 
-  // Add parent directory to the dataset
+  // Add parent directory to the dataset.
   const _datasetPage = useMemo(() => {
     if (!dataset) {
-      return null
+      return undefined
     }
     if (activeDirectory.length > 0 && dataset.length > 0) {
       return [
         {
+          bucket: activeBucket,
           id: '..',
           name: '..',
           path: '..',
+          key: '..',
+          size: 0,
           type: 'directory',
           onClick: () => {
             setActiveDirectory((p) => p.slice(0, -1))
@@ -57,12 +68,40 @@ function useFilesDirectoryMain() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataset])
 
-  // Add drag and drop properties to the dataset
-  const datasetPage = useMemo(() => {
+  const multiSelect = useMultiSelect(_datasetPage)
+
+  // If the active bucket changes, clear the multi-select.
+  useEffect(() => {
+    if (activeBucket) {
+      multiSelect.deselectAll()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeBucket])
+
+  const datasetPageWithOnClick = useMemo(() => {
     if (!_datasetPage) {
       return undefined
     }
-    return _datasetPage.map((d) => {
+    return _datasetPage.map((datum) => {
+      if (datum.type === 'bucket') {
+        return datum
+      }
+      return {
+        ...datum,
+        isSelected: !!multiSelect.selectionMap[datum.id],
+        onClick: (e: MouseEvent<HTMLTableRowElement>) =>
+          multiSelect.onSelect(datum.id, e),
+      }
+      return datum
+    })
+  }, [_datasetPage, multiSelect])
+
+  // Add drag and drop properties to the dataset.
+  const datasetPage = useMemo(() => {
+    if (!datasetPageWithOnClick) {
+      return undefined
+    }
+    return datasetPageWithOnClick.map((d) => {
       if (
         draggingObject &&
         draggingObject.id !== d.id &&
@@ -78,7 +117,7 @@ function useFilesDirectoryMain() {
         isDraggable: d.type !== 'bucket' && !d.isUploading,
       }
     })
-  }, [_datasetPage, draggingObject])
+  }, [datasetPageWithOnClick, draggingObject])
 
   const dataState = useDatasetEmptyState(
     dataset,
@@ -95,13 +134,19 @@ function useFilesDirectoryMain() {
     [enabledColumns]
   )
 
+  const cellContext = useMemo(
+    () =>
+      ({
+        multiSelect,
+      } as CellContext),
+    [multiSelect]
+  )
+
   return {
-    activeBucket,
-    activeDirectory,
-    setActiveDirectory,
-    activeDirectoryPath,
     dataState,
     columns: filteredTableColumns,
+    multiSelect,
+    cellContext,
     refresh,
     limit,
     marker,

@@ -6,6 +6,7 @@ import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
 import { FilesActionsMenu } from './FilesActionsMenu'
 import { FilesStatsMenu } from './FilesStatsMenu'
 import { FilesExplorer } from './FilesExplorer'
+import { FilesDirectoryBatchMenu } from './FilesDirectoryBatchMenu'
 
 export function FilesDirectory() {
   const { openDialog } = useDialog()
@@ -21,6 +22,7 @@ export function FilesDirectory() {
       actions={<FilesActionsMenu />}
       openSettings={() => openDialog('settings')}
     >
+      <FilesDirectoryBatchMenu />
       <div className="p-6 min-w-fit">
         <FilesExplorer />
       </div>

@@ -23,6 +23,7 @@ export function DirectoryContextMenu({ path, size }: Props) {
       trigger={
         <Button
           aria-label="Directory context menu"
+          size="none"
           variant="ghost"
           icon="hover"
         >
