@@ -1,6 +1,5 @@
 import {
   Checkbox,
-  ControlGroup,
   TableColumn,
   ValueCopyable,
 } from '@siafoundation/design-system'
@@ -19,21 +18,13 @@ export const columns: KeysTableColumn[] = [
     fixed: true,
     contentClassName: '!pl-3 !pr-4',
     cellClassName: 'w-[20px] !pl-0 !pr-0',
-    heading: ({ context: { onSelectPage, isPageAllSelected } }) => (
-      <ControlGroup className="flex h-4">
-        <Checkbox onClick={onSelectPage} checked={isPageAllSelected} />
-      </ControlGroup>
+    heading: ({ context: { multiSelect } }) => (
+      <Checkbox
+        onClick={multiSelect.onSelectPage}
+        checked={multiSelect.isPageAllSelected}
+      />
     ),
-    render: ({ data: { id, key }, context: { selectionMap, onSelect } }) => (
-      <ControlGroup className="flex h-4">
-        <Checkbox
-          aria-label="select key"
-          onClick={(e) => onSelect(id, e)}
-          checked={!!selectionMap[id]}
-        />
-        <KeyContextMenu s3Key={key} />
-      </ControlGroup>
-    ),
+    render: ({ data: { key } }) => <KeyContextMenu s3Key={key} />,
   },
   {
     id: 'key',

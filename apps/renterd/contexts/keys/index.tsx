@@ -79,12 +79,28 @@ function useKeysMain() {
     sortDirection,
   })
 
-  const datasetPage = useMemo<KeyData[] | undefined>(() => {
+  const _datasetPage = useMemo<KeyData[] | undefined>(() => {
     if (!datasetFiltered) {
       return undefined
     }
     return datasetFiltered.slice(offset, offset + limit)
   }, [datasetFiltered, offset, limit])
+
+  const multiSelect = useMultiSelect(_datasetPage)
+
+  const datasetPage = useMemo(() => {
+    if (!_datasetPage) {
+      return undefined
+    }
+    return _datasetPage.map((datum) => {
+      return {
+        ...datum,
+        onClick: (e: React.MouseEvent<HTMLTableRowElement>) =>
+          multiSelect.onSelect(datum.id, e),
+        isSelected: !!multiSelect.selectionMap[datum.id],
+      }
+    })
+  }, [_datasetPage, multiSelect])
 
   const filteredTableColumns = useMemo(
     () =>
@@ -95,31 +111,18 @@ function useKeysMain() {
   )
 
   const dataState = useDatasetEmptyState(
-    datasetFiltered,
+    datasetPage,
     response.isValidating,
     response.error,
     filters
   )
 
-  const {
-    onSelect,
-    deselect,
-    deselectAll,
-    selectionMap,
-    selectionCount,
-    onSelectPage,
-    isPageAllSelected,
-  } = useMultiSelect(dataset)
-
   const cellContext = useMemo(
     () =>
       ({
-        selectionMap,
-        onSelect,
-        onSelectPage,
-        isPageAllSelected,
+        multiSelect,
       } as CellContext),
-    [selectionMap, onSelect, onSelectPage, isPageAllSelected]
+    [multiSelect]
   )
 
   return {
@@ -132,12 +135,7 @@ function useKeysMain() {
     datasetCount: dataset?.length || 0,
     datasetFilteredCount: datasetFiltered?.length || 0,
     columns: filteredTableColumns,
-    selectionMap,
-    selectionCount,
-    onSelectPage,
-    isPageAllSelected,
-    deselect,
-    deselectAll,
+    multiSelect,
     cellContext,
     dataset,
     datasetPage,
