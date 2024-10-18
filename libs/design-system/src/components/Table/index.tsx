@@ -3,7 +3,7 @@
 import { Tooltip } from '../../core/Tooltip'
 import { Panel } from '../../core/Panel'
 import { Text } from '../../core/Text'
-import { useCallback, useMemo } from 'react'
+import { MouseEvent, useCallback, useMemo } from 'react'
 import { cx } from 'class-variance-authority'
 import { ChevronDown16, ChevronUp16 } from '@siafoundation/react-icons'
 import { times } from '@technically/lodash'
@@ -30,7 +30,7 @@ type Data = {
   id: string
   isDraggable?: boolean
   isDroppable?: boolean
-  onClick?: () => void
+  onClick?: (e: MouseEvent<HTMLTableRowElement>) => void
 }
 
 export type Row<Data, Context> = {

@@ -9,6 +9,7 @@ import { KeysActionsMenu } from './KeysActionsMenu'
 import { StateError } from './StateError'
 import { useKeys } from '../../contexts/keys'
 import { KeysBatchMenu } from './KeysBatchMenu'
+import { KeysStatsMenu } from './KeysStatsMenu'
 
 export function Keys() {
   const { openDialog } = useDialog()
@@ -31,6 +32,7 @@ export function Keys() {
       sidenav={<RenterdSidenav />}
       openSettings={() => openDialog('settings')}
       actions={<KeysActionsMenu />}
+      stats={<KeysStatsMenu />}
     >
       <div className="p-6 min-w-fit">
         <KeysBatchMenu />
