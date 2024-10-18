@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react'
+import { MultiSelect } from '@siafoundation/design-system'
 
 export type KeyData = {
   id: string
@@ -7,10 +7,7 @@ export type KeyData = {
 }
 
 export type CellContext = {
-  selectionMap: Record<string, KeyData>
-  onSelect: (id: string, e: MouseEvent<HTMLButtonElement>) => void
-  onSelectPage: () => void
-  isPageAllSelected: boolean | 'indeterminate'
+  multiSelect: MultiSelect<KeyData>
 }
 
 export type TableColumnId = 'selection' | 'actions' | 'key' | 'secret'
