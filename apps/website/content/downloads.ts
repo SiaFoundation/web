@@ -37,12 +37,25 @@ export function getDownloadLinksDesktop(
 
   const final = []
 
-  const macArm = assets.find((asset) => asset.name.includes('.dmg'))
+  const macArm = assets.find(
+    (asset) => asset.name.includes('arm64') && asset.name.includes('dmg')
+  )
   if (macArm) {
     final.push({
       title: 'MacOS ARM64',
       link: macArm.browser_download_url,
       tags: getTags(macArm),
+    })
+  }
+
+  const macAmd = assets.find(
+    (asset) => asset.name.includes('x64') && asset.name.includes('dmg')
+  )
+  if (macAmd) {
+    final.push({
+      title: 'MacOS AMD64',
+      link: macAmd.browser_download_url,
+      tags: getTags(macAmd),
     })
   }
 
@@ -118,7 +131,11 @@ function getTags(asset: GitHubReleaseAsset): DownloadTag[] {
   if (asset.name.includes('linux')) {
     tags.push('linux')
   }
-  if (asset.name.includes('amd64') || asset.name.includes('x86_64')) {
+  if (
+    asset.name.includes('amd64') ||
+    asset.name.includes('x86_64') ||
+    asset.name.includes('x64')
+  ) {
     tags.push('amd64')
   }
   if (asset.name.includes('arm64')) {
@@ -132,6 +149,8 @@ export function findUserDefaultDownload(
 ): DownloadOption | null {
   let d = null
   if (navigator.userAgent.includes('Macintosh')) {
+    // We do not try to detect the architecture for MacOS
+    // because browsers return an Intel user-agent even on ARM Macs.
     d = downloads.find(
       (i) =>
         i.tags.includes('macos') &&
@@ -139,6 +158,9 @@ export function findUserDefaultDownload(
         !i.tags.includes('zen')
     )
   } else if (navigator.userAgent.includes('Windows')) {
+    // We currently do not provide ARM64 builds for Windows
+    // but if we do in the future, we could try:
+    // navigator.userAgent.includes('ARM64')
     d = downloads.find(
       (i) =>
         i.tags.includes('windows') &&
@@ -146,12 +168,24 @@ export function findUserDefaultDownload(
         !i.tags.includes('zen')
     )
   } else if (navigator.userAgent.includes('Linux')) {
-    d = downloads.find(
-      (i) =>
-        i.tags.includes('linux') &&
-        i.tags.includes('amd64') &&
-        !i.tags.includes('zen')
-    )
+    if (
+      navigator.userAgent.includes('aarch64') ||
+      navigator.userAgent.includes('arm64')
+    ) {
+      d = downloads.find(
+        (i) =>
+          i.tags.includes('linux') &&
+          i.tags.includes('arm64') &&
+          !i.tags.includes('zen')
+      )
+    } else {
+      d = downloads.find(
+        (i) =>
+          i.tags.includes('linux') &&
+          i.tags.includes('amd64') &&
+          !i.tags.includes('zen')
+      )
+    }
   }
   return d
 }

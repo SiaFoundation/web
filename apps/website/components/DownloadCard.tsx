@@ -43,7 +43,7 @@ export function DownloadCard({
           {description}
         </Text>
         <div className="flex flex-col gap-2">
-          <div className="flex items-center flex-1">
+          <div className="flex items-center flex-1 gap-1">
             <Checkbox
               aria-label="Acept the Terms of Service"
               onCheckedChange={(checked) => setAccepted(!!checked)}
