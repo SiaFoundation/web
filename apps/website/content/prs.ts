@@ -23,7 +23,11 @@ export async function getPrs() {
               },
             })
           } catch (e) {
-            console.log(e)
+            // Occasionally there is an edge-case error such as:
+            // "Could not parse expression with acorn: Unexpected token"
+            // Simply procceed with source=null in these cases.
+            // We can revisit this next when we do the next website refactor.
+            // Updating all the mdx packages might even do the trick.
           }
           return {
             source,

@@ -84,8 +84,7 @@ export function buildRequestHandler<
       ...mergedArgs.params,
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const paramRoute = parameterizeRoute(route, params as RequestParams)!
+    const paramRoute = parameterizeRoute(route, params as RequestParams)
 
     const data = 'data' in mergedArgs ? mergedArgs.data : undefined
 
