@@ -39,6 +39,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          CCRI_TOKEN: ${{ secrets.CCRI_TOKEN }}
       # If there are changesets, then we are in PR prep mode and will
       # update the release pull request. Note that if there are no changesets
       # this step will be skipped because no publish script is specified.
@@ -104,12 +105,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          CCRI_TOKEN: ${{ secrets.CCRI_TOKEN }}
       - name: Containers zen
         shell: bash
         run: npx nx run-many --target=container --configuration=production-testnet-zen -all --parallel=5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          CCRI_TOKEN: ${{ secrets.CCRI_TOKEN }}
   # This job should always pass because the workflow is running run against code that
   # was already linted and tested in PR.
   # This runs in parallel to the build and release process as an extra check but does
