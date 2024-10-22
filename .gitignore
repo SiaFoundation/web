@@ -57,3 +57,6 @@ dist
 .nx/cache
 
 bin/
+
+# playwright
+/playwright-report
