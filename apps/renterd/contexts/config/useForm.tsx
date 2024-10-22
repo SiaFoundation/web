@@ -33,7 +33,15 @@ export function useForm({ resources }: { resources: ResourcesMaybeLoaded }) {
       defaultValue: 'basic',
     })
 
-  // Trigger input validation on configViewMode change because many field validation
+  // Trigger validation when the form is first setup.
+  // This is necessary because otherwise the form will not validate until the
+  // actual fields are rendered on screen, but we use isValid for other things
+  // such as deciding whether to submit autopilot config evaluations.
+  useEffect(() => {
+    form.trigger()
+  }, [form])
+
+  // Trigger validation on configViewMode change because many field validation
   // objects switch from required to not required.
   useEffect(() => {
     form.trigger()
