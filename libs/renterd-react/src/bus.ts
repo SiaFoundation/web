@@ -248,6 +248,9 @@ import {
   SettingsUploadUpdateResponse,
   SettingsPinnedResponse,
   busObjectsRemoveRoute,
+  ConsensusNetworkParams,
+  ConsensusNetworkResponse,
+  busConsensusNetworkRoute,
 } from '@siafoundation/renterd-types'
 
 // state
@@ -280,6 +283,15 @@ export function useConsensusState(
   return useGetSwr({
     ...args,
     route: busConsensusStateRoute,
+  })
+}
+
+export function useConsensusNetwork(
+  args?: HookArgsSwr<ConsensusNetworkParams, ConsensusNetworkResponse>
+) {
+  return useGetSwr({
+    ...args,
+    route: busConsensusNetworkRoute,
   })
 }
 

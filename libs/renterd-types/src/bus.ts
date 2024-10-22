@@ -26,6 +26,7 @@ import {
 
 export const busStateRoute = '/bus/state'
 export const busAutopilotsRoute = '/bus/autopilots'
+export const busConsensusNetworkRoute = '/bus/consensus/network'
 export const busConsensusStateRoute = '/bus/consensus/state'
 export const busConsensusAcceptblockRoute = '/bus/consensus/acceptblock'
 export const busSyncerPeersRoute = '/bus/syncer/peers'
@@ -120,6 +121,10 @@ export type AutopilotsResponse = Autopilot[]
 export type ConsensusStateParams = void
 export type ConsensusStatePayload = void
 export type ConsensusStateResponse = ConsensusState
+
+export type ConsensusNetworkParams = void
+export type ConsensusNetworkPayload = void
+export type ConsensusNetworkResponse = string
 
 export type ConsensusAcceptBlockParams = void
 export type ConsensusAcceptBlockPayload = Block

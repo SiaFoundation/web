@@ -260,6 +260,10 @@ import {
   busSettingsS3Route,
   busSettingsUploadRoute,
   busObjectsRemoveRoute,
+  ConsensusNetworkParams,
+  ConsensusNetworkPayload,
+  ConsensusNetworkResponse,
+  busConsensusNetworkRoute,
 } from '@siafoundation/renterd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
@@ -282,6 +286,11 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       ConsensusStatePayload,
       ConsensusStateResponse
     >(axios, 'get', busConsensusStateRoute),
+    consensusNetwork: buildRequestHandler<
+      ConsensusNetworkParams,
+      ConsensusNetworkPayload,
+      ConsensusNetworkResponse
+    >(axios, 'get', busConsensusNetworkRoute),
     consensusAcceptBlock: buildRequestHandler<
       ConsensusAcceptBlockParams,
       ConsensusAcceptBlockPayload,
