@@ -183,10 +183,10 @@ export type GitHubRelease = {
 export async function getGitHubRenterdLatestDaemonRelease(): Promise<GitHubRelease | null> {
   try {
     const response = await axios.get(
-      'https://api.github.com/repos/SiaFoundation/renterd/releases?per_page=1'
+      'https://api.github.com/repos/SiaFoundation/renterd/releases/latest'
     )
-    if (response.data.length) {
-      return response.data[0]
+    if (response.data) {
+      return response.data
     } else {
       return null
     }
@@ -215,10 +215,10 @@ export async function getGitHubHostdLatestDaemonRelease(): Promise<GitHubRelease
 export async function getGitHubWalletdLatestDaemonRelease(): Promise<GitHubRelease | null> {
   try {
     const response = await axios.get(
-      'https://api.github.com/repos/SiaFoundation/walletd/releases?per_page=1'
+      'https://api.github.com/repos/SiaFoundation/walletd/releases/latest'
     )
-    if (response.data.length) {
-      return response.data[0]
+    if (response.data) {
+      return response.data
     } else {
       return null
     }
