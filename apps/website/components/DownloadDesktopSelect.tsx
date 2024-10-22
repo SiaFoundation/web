@@ -21,7 +21,7 @@ type Props = {
 }
 
 export function DownloadDesktopSelect({ daemon, release, testnetOnly }: Props) {
-  const downloadLinks = getDownloadLinksDesktop(daemon, release)
+  const downloadLinks = getDownloadLinksDesktop(release)
   const { accepted } = useTermsOfService()
 
   const [download, setDownload] = useState(downloadLinks[0])

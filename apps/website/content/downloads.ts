@@ -1,4 +1,4 @@
-import { GitHubRelease, GitHubReleaseAsset } from '@siafoundation/data-sources'
+import { GitHubRelease } from '@siafoundation/data-sources'
 
 type DownloadOption = { title: string; link: string; tags: DownloadTag[] }
 
@@ -25,15 +25,13 @@ export function getDownloadLinksDaemon(daemon: string, release: GitHubRelease) {
 }
 
 export function getDownloadLinksDesktop(
-  daemon: string,
   release: GitHubRelease
 ): DownloadOption[] {
   if (!release) {
     return []
   }
 
-  // Desktop releases include assets for multiple daemons, so we need to filter.
-  const assets = release.assets.filter((asset) => asset.name.includes(daemon))
+  const { assets } = release
 
   const final = []
 
@@ -117,7 +115,7 @@ export function getDownloadLinksDesktop(
 
 type DownloadTag = 'zen' | 'windows' | 'macos' | 'linux' | 'amd64' | 'arm64'
 
-function getTags(asset: GitHubReleaseAsset): DownloadTag[] {
+export function getTags(asset: { name: string }): DownloadTag[] {
   const tags: DownloadTag[] = []
   if (asset.name.includes('testnet') || asset.name.includes('zen')) {
     tags.push('zen')
@@ -125,10 +123,19 @@ function getTags(asset: GitHubReleaseAsset): DownloadTag[] {
   if (asset.name.includes('windows')) {
     tags.push('windows')
   }
-  if (asset.name.includes('darwin')) {
+  if (asset.name.includes('Setup.exe')) {
+    // For now assume amd64 for Windows exe.
+    tags.push('windows')
+    tags.push('amd64')
+  }
+  if (asset.name.includes('darwin') || asset.name.includes('.dmg')) {
     tags.push('macos')
   }
-  if (asset.name.includes('linux')) {
+  if (
+    asset.name.includes('linux') ||
+    asset.name.includes('.deb') ||
+    asset.name.includes('.rpm')
+  ) {
     tags.push('linux')
   }
   if (
