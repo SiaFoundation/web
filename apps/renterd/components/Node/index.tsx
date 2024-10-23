@@ -4,10 +4,7 @@ import {
   useSyncerPeers,
   useTxPoolTransactions,
 } from '@siafoundation/renterd-react'
-import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
-import { RenterdSidenav } from '../RenterdSidenav'
-import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
 
 export function Node() {
   const peers = useSyncerPeers()
@@ -28,32 +25,25 @@ export function Node() {
   const { openDialog } = useDialog()
 
   return (
-    <RenterdAuthedLayout
-      routes={routes}
-      sidenav={<RenterdSidenav />}
-      openSettings={() => openDialog('settings')}
-      title="Node"
-    >
-      <div className="flex flex-col gap-5 p-5">
-        <div className="flex flex-wrap gap-7">
-          <DatumCard
-            label="Height"
-            value={
-              state.data
-                ? Number(state.data.blockHeight).toLocaleString()
-                : undefined
-            }
-            comment={!state.data?.synced ? 'Syncing' : undefined}
-          />
-          <DatumCard label="Connected peers" value={peers.data?.length} />
-          <DatumCard label="Transactions in pool" value={txPool.data?.length} />
-        </div>
-        <PeerList
-          peers={peers.data}
-          isLoading={peers.isValidating}
-          connectPeer={() => openDialog('connectPeer')}
+    <div className="flex flex-col gap-5 p-5">
+      <div className="flex flex-wrap gap-7">
+        <DatumCard
+          label="Height"
+          value={
+            state.data
+              ? Number(state.data.blockHeight).toLocaleString()
+              : undefined
+          }
+          comment={!state.data?.synced ? 'Syncing' : undefined}
         />
+        <DatumCard label="Connected peers" value={peers.data?.length} />
+        <DatumCard label="Transactions in pool" value={txPool.data?.length} />
       </div>
-    </RenterdAuthedLayout>
+      <PeerList
+        peers={peers.data}
+        isLoading={peers.isValidating}
+        connectPeer={() => openDialog('connectPeer')}
+      />
+    </div>
   )
 }
