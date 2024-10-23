@@ -6,14 +6,12 @@ import { useSyncStatus } from '../hooks/useSyncStatus'
 import { HostdTestnetWarningBanner } from './HostdTestnetWarningBanner'
 import { Profile } from './Profile'
 
-type Props = React.ComponentProps<typeof AppAuthedLayout>
+type Props = Omit<
+  React.ComponentProps<typeof AppAuthedLayout>,
+  'appName' | 'connectivityRoute' | 'walletBalance' | 'profile' | 'isSynced'
+>
 
-export function HostdAuthedLayout(
-  props: Omit<
-    Props,
-    'appName' | 'connectivityRoute' | 'walletBalance' | 'profile' | 'isSynced'
-  >
-) {
+export function HostdAuthedLayout(props: Props) {
   const wallet = useWallet()
   const { isSynced } = useSyncStatus()
   return (
@@ -35,3 +33,5 @@ export function HostdAuthedLayout(
     />
   )
 }
+
+export type HostdAuthedPageLayoutProps = Omit<Props, 'children'>
