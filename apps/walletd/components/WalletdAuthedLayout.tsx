@@ -4,14 +4,12 @@ import { useSyncStatus } from '../hooks/useSyncStatus'
 import { Profile } from './Profile'
 import { WalletdTestnetWarningBanner } from './WalletdTestnetWarningBanner'
 
-type Props = React.ComponentProps<typeof AppAuthedLayout>
+type Props = Omit<
+  React.ComponentProps<typeof AppAuthedLayout>,
+  'appName' | 'connectivityRoute' | 'walletBalance' | 'profile' | 'isSynced'
+>
 
-export function WalletdAuthedLayout(
-  props: Omit<
-    Props,
-    'appName' | 'connectivityRoute' | 'walletBalance' | 'profile' | 'isSynced'
-  >
-) {
+export function WalletdAuthedLayout(props: Props) {
   const { isSynced } = useSyncStatus()
   return (
     <AppAuthedLayout
@@ -25,3 +23,5 @@ export function WalletdAuthedLayout(
     />
   )
 }
+
+export type WalletdAuthedPageLayoutProps = Omit<Props, 'children'>
