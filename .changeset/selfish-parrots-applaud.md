@@ -3,4 +3,4 @@
 'renterd': minor
 ---
 
-The onboarding wizard is now bottom right aligned.
+The onboarding wizard now animates in and out.

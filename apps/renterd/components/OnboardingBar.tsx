@@ -1,4 +1,5 @@
 import {
+  AppDockedControl,
   Button,
   Link,
   Logo,
@@ -65,192 +66,197 @@ export function OnboardingBar() {
   const completedSteps = steps.filter((step) => step).length
 
   if (totalSteps === completedSteps) {
-    return null
+    return <AppDockedControl />
   }
 
   if (maximized) {
     return (
-      <div className="z-20 fixed bottom-5 right-5 flex justify-center">
-        <Panel className="w-[400px] flex flex-col max-h-[600px]">
-          <ScrollArea>
-            <div className="flex justify-between items-center px-3 py-2 border-b border-gray-200 dark:border-graydark-300">
-              <div className="flex gap-2 items-center">
-                <Logo />
-                <Text size="20" weight="semibold">
-                  Welcome to Sia
+      <AppDockedControl>
+        <div className="flex justify-center">
+          <Panel className="w-[400px] flex flex-col max-h-[600px]">
+            <ScrollArea>
+              <div className="flex justify-between items-center px-3 py-2 border-b border-gray-200 dark:border-graydark-300">
+                <div className="flex gap-2 items-center">
+                  <Logo />
+                  <Text size="20" weight="semibold">
+                    Welcome to Sia
+                  </Text>
+                </div>
+                <Button
+                  aria-label="minimize onboarding wizard"
+                  variant="ghost"
+                  onClick={() => setMaximized(false)}
+                >
+                  <Subtract24 />
+                </Button>
+              </div>
+              <div className="flex justify-between items-center px-3 py-2 border-b border-gray-200 dark:border-graydark-300">
+                <Text size="14">
+                  Get set up by completing the following steps. Once they are
+                  complete, you can start uploading files.
                 </Text>
               </div>
-              <Button
-                aria-label="minimize onboarding wizard"
-                variant="ghost"
-                onClick={() => setMaximized(false)}
-              >
-                <Subtract24 />
-              </Button>
-            </div>
-            <div className="flex justify-between items-center px-3 py-2 border-b border-gray-200 dark:border-graydark-300">
-              <Text size="14">
-                Get set up by completing the following steps. Once they are
-                complete, you can start uploading files.
-              </Text>
-            </div>
-            <Section
-              title={
-                <Link
-                  href={routes.config.index}
-                  ellipsis
-                  size="14"
-                  underline="hover"
-                >
-                  Step 1: Configure your storage settings
-                </Link>
-              }
-              description={
-                'Specify how much data you plan to store and your target price.'
-              }
-              action={
-                step1Configured ? (
-                  <Text color="green">
-                    <CheckmarkFilled16 />
-                  </Text>
-                ) : (
-                  <>
-                    <Link href={routes.config.index}>
-                      <Launch16 />
-                    </Link>
-                    <Text color="amber">
-                      <RadioButton16 />
+              <Section
+                title={
+                  <Link
+                    href={routes.config.index}
+                    ellipsis
+                    size="14"
+                    underline="hover"
+                  >
+                    Step 1: Configure your storage settings
+                  </Link>
+                }
+                description={
+                  'Specify how much data you plan to store and your target price.'
+                }
+                action={
+                  step1Configured ? (
+                    <Text color="green">
+                      <CheckmarkFilled16 />
                     </Text>
-                  </>
-                )
-              }
-            />
-            <Section
-              title={
-                <Link
-                  href={routes.node.index}
-                  underline="hover"
-                  ellipsis
-                  size="14"
-                >
-                  Step 2: Wait for the blockchain to sync
-                </Link>
-              }
-              description={
-                'The blockchain will sync in the background, this takes some time. No user action required.'
-              }
-              action={
-                step2Synced ? (
-                  <Text color="green">
-                    <CheckmarkFilled16 />
-                  </Text>
-                ) : (
-                  <>
-                    <Text ellipsis size="14">
-                      {syncStatus.syncPercent}%
+                  ) : (
+                    <>
+                      <Link href={routes.config.index}>
+                        <Launch16 />
+                      </Link>
+                      <Text color="amber">
+                        <RadioButton16 />
+                      </Text>
+                    </>
+                  )
+                }
+              />
+              <Section
+                title={
+                  <Link
+                    href={routes.node.index}
+                    underline="hover"
+                    ellipsis
+                    size="14"
+                  >
+                    Step 2: Wait for the blockchain to sync
+                  </Link>
+                }
+                description={
+                  'The blockchain will sync in the background, this takes some time. No user action required.'
+                }
+                action={
+                  step2Synced ? (
+                    <Text color="green">
+                      <CheckmarkFilled16 />
                     </Text>
-                    <Text color="amber">
-                      <PendingFilled16 />
+                  ) : (
+                    <>
+                      <Text ellipsis size="14">
+                        {syncStatus.syncPercent}%
+                      </Text>
+                      <Text color="amber">
+                        <PendingFilled16 />
+                      </Text>
+                    </>
+                  )
+                }
+              />
+              <Section
+                title={
+                  <Link
+                    href={routes.wallet.view}
+                    onClick={() => openDialog('addressDetails')}
+                    ellipsis
+                    size="14"
+                    underline="hover"
+                  >
+                    Step 3: Fund your wallet
+                  </Link>
+                }
+                description={`Fund your wallet with at least ${humanSiacoin(
+                  allowance
+                )} siacoin to cover the required allowance.${
+                  syncStatus.isWalletSynced
+                    ? ''
+                    : ' Balance will not be accurate until wallet is finished scanning.'
+                }`}
+                action={
+                  step3Funded ? (
+                    <Text color="green">
+                      <CheckmarkFilled16 />
                     </Text>
-                  </>
-                )
-              }
-            />
-            <Section
-              title={
-                <Link
-                  href={routes.wallet.view}
-                  onClick={() => openDialog('addressDetails')}
-                  ellipsis
-                  size="14"
-                  underline="hover"
-                >
-                  Step 3: Fund your wallet
-                </Link>
-              }
-              description={`Fund your wallet with at least ${humanSiacoin(
-                allowance
-              )} siacoin to cover the required allowance.${
-                syncStatus.isWalletSynced
-                  ? ''
-                  : ' Balance will not be accurate until wallet is finished scanning.'
-              }`}
-              action={
-                step3Funded ? (
-                  <Text color="green">
-                    <CheckmarkFilled16 />
-                  </Text>
-                ) : (
-                  <>
-                    {!syncStatus.isWalletSynced && (
-                      <Tooltip
-                        content={`Wallet scanning progress ${syncStatus.walletScanPercent}%`}
+                  ) : (
+                    <>
+                      {!syncStatus.isWalletSynced && (
+                        <Tooltip
+                          content={`Wallet scanning progress ${syncStatus.walletScanPercent}%`}
+                        >
+                          <Text size="14">{syncStatus.walletScanPercent}%</Text>
+                        </Tooltip>
+                      )}
+                      <Link
+                        href={routes.wallet.view}
+                        onClick={() => openDialog('addressDetails')}
                       >
-                        <Text size="14">{syncStatus.walletScanPercent}%</Text>
-                      </Tooltip>
-                    )}
-                    <Link
-                      href={routes.wallet.view}
-                      onClick={() => openDialog('addressDetails')}
-                    >
-                      <Launch16 />
-                    </Link>
-                    <Text color="amber">
-                      <RadioButton16 />
+                        <Launch16 />
+                      </Link>
+                      <Text color="amber">
+                        <RadioButton16 />
+                      </Text>
+                    </>
+                  )
+                }
+              />
+              <Section
+                title={
+                  <Link
+                    href={routes.contracts.index}
+                    ellipsis
+                    size="14"
+                    underline="hover"
+                  >
+                    Step 4: Wait for storage contracts to form
+                  </Link>
+                }
+                description={
+                  'Once all other steps are complete, contracts will automatically form. No user action required.'
+                }
+                action={
+                  step4Contracts ? (
+                    <Text color="green">
+                      <CheckmarkFilled16 />
                     </Text>
-                  </>
-                )
-              }
-            />
-            <Section
-              title={
-                <Link
-                  href={routes.contracts.index}
-                  ellipsis
-                  size="14"
-                  underline="hover"
-                >
-                  Step 4: Wait for storage contracts to form
-                </Link>
-              }
-              description={
-                'Once all other steps are complete, contracts will automatically form. No user action required.'
-              }
-              action={
-                step4Contracts ? (
-                  <Text color="green">
-                    <CheckmarkFilled16 />
-                  </Text>
-                ) : (
-                  <>
-                    <Text ellipsis size="14">
-                      {notEnoughContracts.count}/{notEnoughContracts.required}
-                    </Text>
-                    <Text color="amber">
-                      <PendingFilled16 />
-                    </Text>
-                  </>
-                )
-              }
-            />
-          </ScrollArea>
-        </Panel>
-      </div>
+                  ) : (
+                    <>
+                      <Text ellipsis size="14">
+                        {notEnoughContracts.count}/{notEnoughContracts.required}
+                      </Text>
+                      <Text color="amber">
+                        <PendingFilled16 />
+                      </Text>
+                    </>
+                  )
+                }
+              />
+            </ScrollArea>
+          </Panel>
+        </div>
+      </AppDockedControl>
     )
   }
+
   return (
-    <div className="z-30 fixed bottom-5 right-5 flex justify-center">
-      <Button
-        onClick={() => setMaximized(true)}
-        size="large"
-        className="flex gap-3 !px-3"
-      >
-        <Text size="14" className="flex items-center gap-1">
-          <Logo />
-          Setup: {completedSteps}/{totalSteps} steps complete
-        </Text>
-      </Button>
-    </div>
+    <AppDockedControl>
+      <div className="flex justify-center">
+        <Button
+          onClick={() => setMaximized(true)}
+          size="large"
+          className="flex gap-3 !px-3"
+        >
+          <Text size="14" className="flex items-center gap-1">
+            <Logo />
+            Setup: {completedSteps}/{totalSteps} steps complete
+          </Text>
+        </Button>
+      </div>
+    </AppDockedControl>
   )
 }
 
