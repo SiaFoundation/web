@@ -5,24 +5,41 @@ import { Providers } from '../config/providers'
 import { routes } from '../config/routes'
 import { rootFontClasses } from '@siafoundation/fonts'
 import { busStateRoute } from '@siafoundation/renterd-types'
+import { NextPage } from 'next'
 
-export default function App({
-  Component,
-  pageProps,
-}: AppProps<{
+type NextPageWithLayout = NextPage & {
+  Layout: ({ children }: { children: React.ReactElement }) => React.ReactNode
+  useLayoutProps: () => Record<string, unknown>
+}
+
+type AppPropsWithLayout = AppProps<{
   fallback?: Record<string, unknown>
-}>) {
+}> & {
+  Component: NextPageWithLayout
+}
+
+export default function App(props: AppPropsWithLayout) {
   return (
     <NextAppCsr
       className={rootFontClasses}
-      fallback={pageProps.fallback}
+      fallback={props.pageProps.fallback}
       daemonExplorerInfoRoute={busStateRoute}
       passwordProtectRequestHooks
       lockRoutes={routes}
     >
       <Providers>
-        <Component {...pageProps} />
+        <AppCore {...props} />
       </Providers>
     </NextAppCsr>
+  )
+}
+function AppCore({ Component, pageProps }: AppPropsWithLayout) {
+  const Layout = Component.Layout
+  const layoutProps = Component.useLayoutProps()
+  const { fallback, ...rest } = pageProps
+  return (
+    <Layout {...layoutProps}>
+      <Component {...rest} />
+    </Layout>
   )
 }
