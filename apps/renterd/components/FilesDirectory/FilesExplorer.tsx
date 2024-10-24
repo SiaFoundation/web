@@ -18,6 +18,7 @@ export function FilesExplorer() {
     datasetPage,
     pageCount,
     dataState,
+    cellContext,
     onDragEnd,
     onDragOver,
     onDragStart,
@@ -40,6 +41,7 @@ export function FilesExplorer() {
           emptyState={<EmptyState />}
           pageSize={10}
           data={datasetPage}
+          context={cellContext}
           columns={columns}
           sortableColumns={sortableColumns}
           sortField={sortField}

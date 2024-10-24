@@ -75,7 +75,8 @@ function useUploadsMain() {
     }
     return response.data.uploads.map((upload) => {
       const id = upload.uploadID
-      const name = getFilename(upload.key)
+      const key = upload.key
+      const name = getFilename(key)
       const fullPath = join(activeBucket.name, upload.key)
       const localUpload = uploadsMap[id]
       if (localUpload) {
@@ -84,6 +85,7 @@ function useUploadsMain() {
       return {
         id,
         path: fullPath,
+        key,
         bucket: activeBucket,
         name,
         size: 1,

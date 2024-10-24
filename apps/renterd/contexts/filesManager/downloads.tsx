@@ -8,6 +8,7 @@ import {
   bucketAndKeyParamsFromPath,
   getBucketFromPath,
   getFilename,
+  getKeyFromPath,
 } from '../../lib/paths'
 import { ObjectData } from './types'
 
@@ -26,11 +27,11 @@ export function useDownloads() {
 
   const initDownloadProgress = useCallback(
     (obj: DownloadProgressParams) => {
-      setDownloadsMap((map) => ({
-        ...map,
-        [obj.path]: {
+      setDownloadsMap((map) => {
+        const downloadProgress: DownloadProgress = {
           id: obj.path,
           path: obj.path,
+          key: obj.key,
           bucket: obj.bucket,
           name: obj.name,
           size: obj.size,
@@ -38,8 +39,12 @@ export function useDownloads() {
           isUploading: false,
           controller: obj.controller,
           type: 'file',
-        },
-      }))
+        }
+        return {
+          ...map,
+          [obj.path]: downloadProgress,
+        }
+      })
     },
     [setDownloadsMap]
   )
@@ -84,6 +89,7 @@ export function useDownloads() {
     files.forEach(async (path) => {
       let isDone = false
       const bucketName = getBucketFromPath(path)
+      const key = getKeyFromPath(path)
       const bucket = buckets.data?.find((b) => b.name === bucketName)
       if (!bucket) {
         triggerErrorToast({ title: 'Bucket not found', body: bucketName })
@@ -109,6 +115,7 @@ export function useDownloads() {
       }, 2000)
       initDownloadProgress({
         path,
+        key,
         name,
         bucket,
         loaded: 0,

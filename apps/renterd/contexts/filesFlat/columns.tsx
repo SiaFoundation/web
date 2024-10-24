@@ -1,4 +1,11 @@
-import { Button, Text, Tooltip, ValueNum } from '@siafoundation/design-system'
+import {
+  Button,
+  Checkbox,
+  ControlGroup,
+  Text,
+  Tooltip,
+  ValueNum,
+} from '@siafoundation/design-system'
 import {
   Document16,
   Earth16,
@@ -20,13 +27,27 @@ export const columns: FilesTableColumn[] = [
     id: 'type',
     label: '',
     fixed: true,
-    cellClassName: 'w-[50px] !pl-2 !pr-2 [&+*]:!pl-0',
+    contentClassName: '!pl-3 !pr-4',
+    cellClassName: 'w-[20px] !pl-0 !pr-0',
+    heading: ({ context: { isViewingBuckets, multiSelect } }) => {
+      if (isViewingBuckets) {
+        return null
+      }
+      return (
+        <ControlGroup className="flex h-4">
+          <Checkbox
+            onClick={multiSelect.onSelectPage}
+            checked={multiSelect.isPageAllSelected}
+          />
+        </ControlGroup>
+      )
+    },
     render: function TypeColumn({
       data: { isUploading, type, name, path, size },
     }) {
       if (isUploading) {
         return (
-          <Button variant="ghost" state="waiting">
+          <Button size="none" variant="ghost" state="waiting">
             <Document16 />
           </Button>
         )
@@ -48,16 +69,9 @@ export const columns: FilesTableColumn[] = [
       const { setFileNamePrefixFilter } = useFilesManager()
       const key = getKeyFromPath(path).slice(1)
       if (type === 'bucket') {
-        return (
-          <Text
-            ellipsis
-            color="accent"
-            weight="semibold"
-            className="cursor-pointer"
-          >
-            {name}
-          </Text>
-        )
+        // This should never be possible because the global file browser is
+        // only rendered inside a specific bucket.
+        return null
       }
       if (type === 'directory') {
         return (
@@ -65,6 +79,7 @@ export const columns: FilesTableColumn[] = [
             ellipsis
             color="accent"
             weight="semibold"
+            underline="hover"
             className="cursor-pointer"
             onClick={(e) => {
               e.stopPropagation()
@@ -79,6 +94,7 @@ export const columns: FilesTableColumn[] = [
         <Text
           ellipsis
           weight="semibold"
+          underline="hover"
           className="cursor-pointer"
           onClick={(e) => {
             e.stopPropagation()
