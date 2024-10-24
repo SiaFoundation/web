@@ -182,7 +182,7 @@ func main() {
 		ready := make(chan struct{}, 1)
 		go func() {
 			defer wg.Done()
-			if err := nm.StartHostd(ctx, ready); err != nil {
+			if err := nm.StartHostd(ctx, types.GeneratePrivateKey(), ready); err != nil {
 				log.Panic("hostd failed to start", zap.Error(err))
 			}
 		}()
@@ -194,7 +194,7 @@ func main() {
 		ready := make(chan struct{}, 1)
 		go func() {
 			defer wg.Done()
-			if err := nm.StartRenterd(ctx, ready); err != nil {
+			if err := nm.StartRenterd(ctx, types.GeneratePrivateKey(), ready); err != nil {
 				log.Panic("renterd failed to start", zap.Error(err))
 			}
 		}()
