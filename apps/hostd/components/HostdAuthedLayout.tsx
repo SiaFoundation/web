@@ -5,21 +5,22 @@ import { connectivityRoute } from '../config/routes'
 import { useSyncStatus } from '../hooks/useSyncStatus'
 import { HostdTestnetWarningBanner } from './HostdTestnetWarningBanner'
 import { Profile } from './Profile'
+import { DockedControls } from './DockedControls'
 
 type Props = Omit<
   React.ComponentProps<typeof AppAuthedLayout>,
   'appName' | 'connectivityRoute' | 'walletBalance' | 'profile' | 'isSynced'
 >
 
-export function HostdAuthedLayout(props: Props) {
+export function HostdAuthedLayout({ dockedControls, ...props }: Props) {
   const wallet = useWallet()
   const { isSynced } = useSyncStatus()
   return (
     <AppAuthedLayout
       appName="hostd"
       connectivityRoute={connectivityRoute}
-      banner={<HostdTestnetWarningBanner />}
       profile={<Profile />}
+      banner={<HostdTestnetWarningBanner />}
       isSynced={isSynced}
       walletBalanceSc={
         wallet.data && {
@@ -29,6 +30,7 @@ export function HostdAuthedLayout(props: Props) {
           unconfirmed: new BigNumber(wallet.data.unconfirmed),
         }
       }
+      dockedControls={<DockedControls>{dockedControls}</DockedControls>}
       {...props}
     />
   )

@@ -21,6 +21,7 @@ type Props = {
   nav?: React.ReactNode
   banner?: React.ReactNode
   actions?: React.ReactNode
+  dockedControls?: React.ReactNode
   sidenav?: React.ReactNode
   stats?: React.ReactNode
   after?: React.ReactNode
@@ -59,6 +60,7 @@ export function AppAuthedLayout({
   actions,
   stats,
   after,
+  dockedControls,
   children,
   sidenav,
   connectivityRoute,
@@ -123,6 +125,9 @@ export function AppAuthedLayout({
                 {children}
               </Container>
             )}
+            <div className="z-20 fixed bottom-5 left-0 right-0 flex justify-center dark pointer-events-none">
+              {dockedControls}
+            </div>
           </div>
         </div>
       </div>

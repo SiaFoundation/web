@@ -4,8 +4,6 @@ import { ContractsProvider } from '../contexts/contracts'
 import { HostsProvider } from '../contexts/hosts'
 import { AppProvider } from '../contexts/app'
 import { ConfigProvider } from '../contexts/config'
-import { OnboardingBar } from '../components/OnboardingBar'
-import { TransfersBar } from '../components/TransfersBar'
 import { TransactionsProvider } from '../contexts/transactions'
 import { KeysProvider } from '../contexts/keys'
 import { FilesFlatProvider } from '../contexts/filesFlat'
@@ -34,8 +32,6 @@ export function Providers({ children }: Props) {
                           <AlertsProvider>
                             {/* this is here so that dialogs can use all the other providers,
                   and the other providers can trigger dialogs */}
-                            <OnboardingBar />
-                            <TransfersBar />
                             <Dialogs />
                             {children}
                           </AlertsProvider>

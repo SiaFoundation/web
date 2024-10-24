@@ -31,6 +31,7 @@ export default function App(props: AppPropsWithLayout) {
     </NextAppCsr>
   )
 }
+
 function AppCore({ Component, pageProps }: AppPropsWithLayout) {
   const Layout = Component.Layout
   const layoutProps = Component.useLayoutProps()

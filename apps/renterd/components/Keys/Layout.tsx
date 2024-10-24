@@ -7,6 +7,7 @@ import {
 } from '../RenterdAuthedLayout'
 import { KeysActionsMenu } from './KeysActionsMenu'
 import { KeysStatsMenu } from './KeysStatsMenu'
+import { KeysDockedControls } from './KeysDockedControls'
 
 export const Layout = RenterdAuthedLayout
 export function useLayoutProps(): RenterdAuthedPageLayoutProps {
@@ -18,5 +19,6 @@ export function useLayoutProps(): RenterdAuthedPageLayoutProps {
     openSettings: () => openDialog('settings'),
     actions: <KeysActionsMenu />,
     stats: <KeysStatsMenu />,
+    dockedControls: <KeysDockedControls />,
   }
 }
