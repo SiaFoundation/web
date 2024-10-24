@@ -2,6 +2,8 @@
 
 import { MouseEvent, useCallback, useMemo, useState } from 'react'
 
+export type MultiSelect = ReturnType<typeof useMultiSelect>
+
 export function useMultiSelect<Item extends { id: string }>(dataset?: Item[]) {
   const [selectionMap, setSelectionMap] = useState<Record<string, Item>>({})
   const [, setLastSelectedItem] = useState<{
@@ -10,7 +12,7 @@ export function useMultiSelect<Item extends { id: string }>(dataset?: Item[]) {
   }>()
 
   const onSelect = useCallback(
-    (id: string, e: MouseEvent<HTMLButtonElement>) => {
+    (id: string, e: MouseEvent<HTMLElement>) => {
       if (!dataset) {
         return
       }
@@ -59,6 +61,31 @@ export function useMultiSelect<Item extends { id: string }>(dataset?: Item[]) {
 
   const isPageAllSelected = useMemo(() => {
     return getIsPageAllSelected({ dataset, selectionMap })
+  }, [dataset, selectionMap])
+
+  const selectedIds = useMemo(
+    () =>
+      Object.entries(selectionMap)
+        .filter(([_, item]) => !!item)
+        .map(([id]) => id),
+    [selectionMap]
+  )
+
+  const someSelectedItemsOutsideCurrentPage = useMemo(() => {
+    if (!dataset) {
+      if (selectedIds.length === 0) {
+        return false
+      }
+      return true
+    }
+    return selectedIds.some((id) => !dataset.some((datum) => datum.id === id))
+  }, [dataset, selectedIds])
+
+  const someSelectedOnCurrentPage = useMemo(() => {
+    if (!dataset) {
+      return false
+    }
+    return dataset.some((datum) => selectionMap[datum.id])
   }, [dataset, selectionMap])
 
   const onSelectPage = useCallback(() => {
@@ -112,15 +139,32 @@ export function useMultiSelect<Item extends { id: string }>(dataset?: Item[]) {
     [selectionMap]
   )
 
-  return {
-    onSelect,
-    onSelectPage,
-    selectionMap,
-    isPageAllSelected,
-    selectionCount,
-    deselect,
-    deselectAll,
-  }
+  return useMemo(
+    () => ({
+      onSelect,
+      onSelectPage,
+      selectionMap,
+      selectedIds,
+      isPageAllSelected,
+      selectionCount,
+      someSelectedItemsOutsideCurrentPage,
+      someSelectedOnCurrentPage,
+      deselect,
+      deselectAll,
+    }),
+    [
+      onSelect,
+      onSelectPage,
+      selectionMap,
+      selectedIds,
+      isPageAllSelected,
+      selectionCount,
+      someSelectedItemsOutsideCurrentPage,
+      someSelectedOnCurrentPage,
+      deselect,
+      deselectAll,
+    ]
+  )
 }
 
 function getIsPageAllSelected<Item extends { id: string }>({

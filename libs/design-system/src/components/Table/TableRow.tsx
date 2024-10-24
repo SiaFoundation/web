@@ -1,6 +1,6 @@
 'use client'
 
-import { CSSProperties, forwardRef, useMemo } from 'react'
+import { CSSProperties, forwardRef, MouseEvent, useMemo } from 'react'
 import { cx } from 'class-variance-authority'
 import { useDroppable, useDraggable } from '@dnd-kit/core'
 import {
@@ -13,7 +13,8 @@ type Data = {
   isDraggable?: boolean
   isDroppable?: boolean
   className?: string
-  onClick?: () => void
+  onClick?: (e: MouseEvent<HTMLTableRowElement>) => void
+  isSelected?: boolean
 }
 
 export type Row<Data, Context> = {
@@ -91,7 +92,13 @@ export function createTableRow<
           data-testid={data.id}
           onClick={data.onClick}
           className={cx(
-            'border-b border-gray-200/50 dark:border-graydark-100',
+            'border-b',
+            data.isSelected
+              ? [
+                  'bg-blue-400 border-blue-500/30',
+                  'dark:bg-blue-600/50 dark:border-blue-600/20',
+                ]
+              : 'border-gray-200/50 dark:border-graydark-100',
             data.onClick ? 'cursor-pointer' : '',
             data.className,
             className

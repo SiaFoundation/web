@@ -39,8 +39,8 @@ test('batch delete multiple keys', async ({ page }) => {
   const rowIdx3 = getKeyRowByIndex(page, 3)
 
   // Select all 4 keys.
-  await rowIdx0.getByLabel('select key').click()
-  await rowIdx3.getByLabel('select key').click({ modifiers: ['Shift'] })
+  await rowIdx0.click()
+  await rowIdx3.click({ modifiers: ['Shift'] })
 
   // Delete all 4 keys.
   const menu = page.getByLabel('key multiselect menu')
