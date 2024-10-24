@@ -1,5 +1,17 @@
 # website
 
+## 0.56.0
+
+### Minor Changes
+
+- c72f8265: The software downloads now try to detect and autoselect the correct architecture on Linux via user-agent.
+- 7fe865b6: The latest walletd and renterd releases no longer include prereleases.
+- c72f8265: The desktop downloads now include AMD64 for macOS.
+
+### Patch Changes
+
+- 9ca477c7: Fixed an issue where the desktop download widget would not autoselect the correct OS download.
+
 ## 0.55.1
 
 ### Patch Changes
