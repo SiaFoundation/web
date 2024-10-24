@@ -24,6 +24,7 @@ import BigNumber from 'bignumber.js'
 import { humanSiacoin } from '@siafoundation/units'
 import { useAppSettings } from '@siafoundation/react-core'
 import useLocalStorageState from 'use-local-storage-state'
+import { AnimatePresence, motion } from 'framer-motion'
 
 export function OnboardingBar() {
   const { isUnlockedAndAuthedRoute } = useAppSettings()
@@ -64,13 +65,13 @@ export function OnboardingBar() {
   const totalSteps = steps.length
   const completedSteps = steps.filter((step) => step).length
 
-  if (totalSteps === completedSteps) {
-    return null
-  }
+  let el = null
 
-  if (maximized) {
-    return (
-      <div className="z-20 fixed bottom-5 right-5 flex justify-center">
+  if (totalSteps === completedSteps) {
+    el = null
+  } else if (maximized) {
+    el = (
+      <div className="flex justify-center">
         <Panel className="w-[400px] flex flex-col max-h-[600px]">
           <ScrollArea>
             <div className="flex justify-between items-center px-3 py-2 border-b border-gray-200 dark:border-graydark-300">
@@ -237,20 +238,37 @@ export function OnboardingBar() {
         </Panel>
       </div>
     )
+  } else {
+    el = (
+      <div className="flex justify-center">
+        <Button
+          onClick={() => setMaximized(true)}
+          size="large"
+          className="flex gap-3 !px-3"
+        >
+          <Text size="14" className="flex items-center gap-1">
+            <Logo />
+            Setup: {completedSteps}/{totalSteps} steps complete
+          </Text>
+        </Button>
+      </div>
+    )
   }
+
   return (
-    <div className="z-30 fixed bottom-5 right-5 flex justify-center">
-      <Button
-        onClick={() => setMaximized(true)}
-        size="large"
-        className="flex gap-3 !px-3"
-      >
-        <Text size="14" className="flex items-center gap-1">
-          <Logo />
-          Setup: {completedSteps}/{totalSteps} steps complete
-        </Text>
-      </Button>
-    </div>
+    <AnimatePresence>
+      {el && (
+        <motion.div
+          className="pointer-events-auto"
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 100, opacity: 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          {el}
+        </motion.div>
+      )}
+    </AnimatePresence>
   )
 }
 

@@ -3,7 +3,6 @@ import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
 import { StateError } from './StateError'
 import { useKeys } from '../../contexts/keys'
-import { KeysBatchMenu } from './KeysBatchMenu'
 
 export function Keys() {
   const {
@@ -20,7 +19,6 @@ export function Keys() {
 
   return (
     <div className="p-6 min-w-fit">
-      <KeysBatchMenu />
       <Table
         testId="keysTable"
         isLoading={dataState === 'loading'}
