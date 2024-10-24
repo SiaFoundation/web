@@ -1,16 +1,20 @@
 import { Bucket } from '@siafoundation/renterd-types'
 import { FullPath } from '../../lib/paths'
-import { TableColumn } from '@siafoundation/design-system'
+import { MultiSelect, TableColumn } from '@siafoundation/design-system'
 import { MultipartUpload } from '../../lib/multipartUpload'
+import { MouseEvent } from 'react'
 
 export type ObjectType = 'bucket' | 'directory' | 'file'
 
 export type ObjectData = {
   id: FullPath
-  // path is exacty bucket + returned key
+  bucket: Bucket
+  // path is exacty bucket + returned key.
   // eg: default + /path/to/file.txt = default/path/to/file.txt
   path: FullPath
-  bucket: Bucket
+  // key is the path without the bucket.
+  key: string
+  // name is the last segment of the path.
   name: string
   health?: number
   size: number
@@ -19,7 +23,13 @@ export type ObjectData = {
   isDraggable?: boolean
   isDroppable?: boolean
   loaded?: number
-  onClick?: () => void
+  onClick?: (e: MouseEvent<HTMLTableRowElement>) => void
+  isSelected?: boolean
+}
+
+export type CellContext = {
+  isViewingBuckets: boolean
+  multiSelect: MultiSelect<ObjectData>
 }
 
 export type TableColumnId =
@@ -30,7 +40,11 @@ export type TableColumnId =
   | 'size'
   | 'health'
 
-export type FilesTableColumn = TableColumn<TableColumnId, ObjectData, never> & {
+export type FilesTableColumn = TableColumn<
+  TableColumnId,
+  ObjectData,
+  CellContext
+> & {
   fixed?: boolean
   category?: string
 }

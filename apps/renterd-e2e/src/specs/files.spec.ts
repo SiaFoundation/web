@@ -1,11 +1,9 @@
 import { test, expect } from '@playwright/test'
 import { navigateToBuckets } from '../fixtures/navigate'
 import { createBucket, deleteBucket, openBucket } from '../fixtures/buckets'
-import path from 'path'
 import {
   deleteDirectory,
   deleteFile,
-  dragAndDropFile,
   fileInList,
   fileNotInList,
   getFileRowById,
@@ -13,6 +11,9 @@ import {
   openDirectory,
   openFileContextMenu,
   createDirectory,
+  dragAndDropFileFromSystem,
+  createFilesMap,
+  expectFilesMap,
 } from '../fixtures/files'
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
 import { clearToasts, fillTextInputByName } from '@siafoundation/e2e'
@@ -81,12 +82,7 @@ test('can create directory, upload file, rename file, navigate, delete a file, d
   await clearToasts({ page })
 
   // Upload.
-  await dragAndDropFile(
-    page,
-    `[data-testid=filesDropzone]`,
-    path.join(__dirname, originalFileName),
-    originalFileName
-  )
+  await dragAndDropFileFromSystem(page, originalFileName)
   await expect(page.getByText('100%')).toBeVisible()
   await fileInList(page, originalFilePath)
 
@@ -104,12 +100,7 @@ test('can create directory, upload file, rename file, navigate, delete a file, d
   await clearToasts({ page })
 
   // Upload the file again.
-  await dragAndDropFile(
-    page,
-    `[data-testid=filesDropzone]`,
-    path.join(__dirname, originalFileName),
-    originalFileName
-  )
+  await dragAndDropFileFromSystem(page, originalFileName)
   await expect(page.getByText('100%')).toBeVisible()
   await fileInList(page, originalFilePath)
 
@@ -131,7 +122,7 @@ test('shows a new intermediate directory when uploading nested files', async ({
   const bucketName = 'files-test'
   const containerDir = 'test-dir'
   const containerDirPath = `${bucketName}/${containerDir}/`
-  const systemDir = 'nested-sample'
+  const systemDir = 'sample-files'
   const systemFile = 'sample.txt'
   const systemFilePath = `${systemDir}/${systemFile}`
   const dirPath = `${bucketName}/${containerDir}/${systemDir}/`
@@ -154,12 +145,7 @@ test('shows a new intermediate directory when uploading nested files', async ({
   await clearToasts({ page })
 
   // Upload a nested file.
-  await dragAndDropFile(
-    page,
-    `[data-testid=filesDropzone]`,
-    path.join(__dirname, systemFilePath),
-    '/' + systemFilePath
-  )
+  await dragAndDropFileFromSystem(page, systemFile, systemFilePath)
   await fileInList(page, dirPath)
   const dirRow = await getFileRowById(page, dirPath)
   // The intermediate directory should show up before the file is finished uploading.
@@ -187,4 +173,94 @@ test('shows a new intermediate directory when uploading nested files', async ({
   // Delete the bucket once its empty.
   await navigateToBuckets({ page })
   await deleteBucket(page, bucketName)
+})
+
+test('batch delete across nested directories', async ({ page }) => {
+  test.setTimeout(120_000)
+  const bucketName = 'bucket1'
+  await navigateToBuckets({ page })
+  await createBucket(page, bucketName)
+  await createFilesMap(page, bucketName, {
+    dir1: {
+      'file1.txt': null,
+      'file2.txt': null,
+    },
+    dir2: {
+      'file3.txt': null,
+      'file4.txt': null,
+      'file5.txt': null,
+    },
+  })
+  await navigateToBuckets({ page })
+  await openBucket(page, bucketName)
+
+  // Select entire dir1.
+  await getFileRowById(page, 'bucket1/dir1/').click()
+  await openDirectory(page, 'bucket1/dir2/')
+
+  // Select file3 and file4.
+  await getFileRowById(page, 'bucket1/dir2/file3.txt').click()
+  await getFileRowById(page, 'bucket1/dir2/file4.txt').click()
+  const menu = page.getByLabel('file multiselect menu')
+
+  // Delete selected files.
+  await menu.getByLabel('delete selected files').click()
+  const dialog = page.getByRole('dialog')
+  await dialog.getByRole('button', { name: 'Delete' }).click()
+
+  await expectFilesMap(page, bucketName, {
+    'dir1/': 'hidden',
+    dir2: {
+      'file3.txt': 'hidden',
+      'file4.txt': 'hidden',
+      'file5.txt': 'visible',
+    },
+  })
+})
+
+test('batch delete using the all files explorer mode', async ({ page }) => {
+  test.setTimeout(120_000)
+  const bucketName = 'bucket1'
+  await navigateToBuckets({ page })
+  await createBucket(page, bucketName)
+  await createFilesMap(page, bucketName, {
+    dir1: {
+      'file1.txt': null,
+      'file2.txt': null,
+    },
+    dir2: {
+      'file3.txt': null,
+      'file4.txt': null,
+      'file5.txt': null,
+    },
+  })
+  await navigateToBuckets({ page })
+  await openBucket(page, bucketName)
+  await page.getByLabel('change explorer mode').click()
+  await page.getByRole('menuitem', { name: 'All files' }).click()
+
+  // Select entire dir1.
+  await getFileRowById(page, 'bucket1/dir1/').click()
+  // Select file3 and file4.
+  await getFileRowById(page, 'bucket1/dir2/file3.txt').click()
+  await getFileRowById(page, 'bucket1/dir2/file4.txt').click()
+  const menu = page.getByLabel('file multiselect menu')
+
+  // Delete selected files.
+  await menu.getByLabel('delete selected files').click()
+  const dialog = page.getByRole('dialog')
+  await dialog.getByRole('button', { name: 'Delete' }).click()
+
+  // Change back to directory mode to validate.
+  await page.getByLabel('change explorer mode').click()
+  await page.getByRole('menuitem', { name: 'Directory' }).click()
+
+  await expectFilesMap(page, bucketName, {
+    'dir1/': 'hidden',
+    dir2: {
+      'file3.txt': 'hidden',
+      'file4.txt': 'hidden',
+      'file5.txt': 'visible',
+    },
+  })
 })

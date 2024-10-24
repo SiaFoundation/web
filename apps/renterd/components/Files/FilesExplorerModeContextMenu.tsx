@@ -20,6 +20,7 @@ export function FilesExplorerModeContextMenu() {
     <DropdownMenu
       trigger={
         <Button
+          aria-label="change explorer mode"
           tipSide="bottom"
           tip={
             isViewingUploads

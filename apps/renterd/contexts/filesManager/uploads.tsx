@@ -175,13 +175,14 @@ export function useUploads({ activeDirectoryPath }: Props) {
         return
       }
       const { uploadId, multipartUpload } = upload
-      setUploadsMap((map) => ({
-        ...map,
-        [uploadId]: {
+      setUploadsMap((map) => {
+        const key = getKeyFromPath(path)
+        const uploadItem: ObjectUploadData = {
           id: uploadId,
-          path: path,
-          bucket: bucket,
-          name: name,
+          path,
+          key,
+          bucket,
+          name,
           size: uploadFile.size,
           loaded: 0,
           isUploading: true,
@@ -194,8 +195,12 @@ export function useUploads({ activeDirectoryPath }: Props) {
             ref.current.removeUpload(uploadId)
           },
           type: 'file',
-        },
-      }))
+        }
+        return {
+          ...map,
+          [uploadId]: uploadItem,
+        }
+      })
     },
     [setUploadsMap, createMultipartUpload]
   )

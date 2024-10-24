@@ -1,6 +1,9 @@
 import { Page, expect } from '@playwright/test'
 import { readFileSync } from 'fs'
 import { fillTextInputByName } from '@siafoundation/e2e'
+import { navigateToBuckets } from './navigate'
+import { openBucket } from './buckets'
+import { join } from 'path'
 
 export async function deleteFile(page: Page, path: string) {
   await openFileContextMenu(page, path)
@@ -62,9 +65,23 @@ export async function openFileContextMenu(page: Page, path: string) {
 }
 
 export async function openDirectory(page: Page, path: string) {
-  await page.getByTestId('filesTable').getByTestId(path).click()
+  const parts = path.split('/')
+  const name = parts[parts.length - 2] + '/'
+  await page.getByTestId('filesTable').getByTestId(path).getByText(name).click()
   for (const dir of path.split('/').slice(0, -1)) {
     await expect(page.getByTestId('navbar').getByText(dir)).toBeVisible()
+  }
+}
+
+export async function openDirectoryFromAnywhere(page: Page, path: string) {
+  const bucket = path.split('/')[0]
+  const dirParts = path.split('/').slice(1)
+  await navigateToBuckets({ page })
+  await openBucket(page, path.split('/')[0])
+  let currentPath = bucket + '/'
+  for (const dir of dirParts) {
+    currentPath += dir + '/'
+    await openDirectory(page, currentPath)
   }
 }
 
@@ -107,11 +124,11 @@ export async function fileNotInList(page: Page, path: string) {
   await expect(page.getByTestId('filesTable').getByTestId(path)).toBeHidden()
 }
 
-export async function getFileRowById(page: Page, id: string) {
+export function getFileRowById(page: Page, id: string) {
   return page.getByTestId('filesTable').getByTestId(id)
 }
 
-export async function dragAndDropFile(
+async function simulateDragAndDropFile(
   page: Page,
   selector: string,
   filePath: string,
@@ -138,4 +155,78 @@ export async function dragAndDropFile(
   )
 
   await page.dispatchEvent(selector, 'drop', { dataTransfer })
+}
+
+export async function dragAndDropFileFromSystem(
+  page: Page,
+  systemFilePath: string,
+  localFileName?: string
+) {
+  await simulateDragAndDropFile(
+    page,
+    `[data-testid=filesDropzone]`,
+    join(__dirname, 'sample-files', systemFilePath),
+    '/' + (localFileName || systemFilePath)
+  )
+}
+
+export interface FileMap {
+  [key: string]: string | FileMap
+}
+
+// Iterate through the file map and create files/directories.
+export async function createFilesMap(
+  page: Page,
+  bucketName: string,
+  map: FileMap
+) {
+  const create = async (map: FileMap, stack: string[]) => {
+    for (const name in map) {
+      await openDirectoryFromAnywhere(page, stack.join('/'))
+      const currentDirPath = stack.join('/')
+      const path = `${currentDirPath}/${name}`
+      if (!!map[name] && typeof map[name] === 'object') {
+        await createDirectory(page, name)
+        await fileInList(page, path + '/')
+        await create(map[name] as FileMap, stack.concat(name))
+      } else {
+        await dragAndDropFileFromSystem(page, 'sample.txt', name)
+        await fileInList(page, path)
+      }
+    }
+  }
+  await create(map, [bucketName])
+  await navigateToBuckets({ page })
+  await openBucket(page, bucketName)
+}
+
+interface FileExpectMap {
+  [key: string]: 'visible' | 'hidden' | FileExpectMap
+}
+
+// Check each file and directory in the map exists.
+export async function expectFilesMap(
+  page: Page,
+  bucketName: string,
+  map: FileExpectMap
+) {
+  const check = async (map: FileMap, stack: string[]) => {
+    for (const name in map) {
+      await openDirectoryFromAnywhere(page, stack.join('/'))
+      const currentDirPath = stack.join('/')
+      const path = `${currentDirPath}/${name}`
+      if (typeof map[name] === 'string') {
+        const state = map[name] as 'visible' | 'hidden'
+        if (state === 'visible') {
+          await fileInList(page, path)
+        } else {
+          await fileNotInList(page, path)
+        }
+      } else {
+        await fileInList(page, path + '/')
+        await check(map[name] as FileMap, stack.concat(name))
+      }
+    }
+  }
+  await check(map, [bucketName])
 }
