@@ -1,5 +1,11 @@
 # @siafoundation/explored-types
 
+## 0.8.0
+
+### Minor Changes
+
+- f3686029: Changed all fields except id to optional on the ExplorerTransaction type.
+
 ## 0.7.0
 
 ### Minor Changes

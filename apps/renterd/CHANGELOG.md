@@ -1,5 +1,16 @@
 # renterd
 
+## 0.66.0
+
+### Minor Changes
+
+- 6c7e3681: The key management table now supports multiselect and batch deletion.
+- 6c7e3681: The onboarding wizard is now bottom right aligned.
+
+### Patch Changes
+
+- b68271a1: Fixed an issue where the app was sending invalid autopilot evaluation requests before all the required data was entered by the user.
+
 ## 0.65.0
 
 ### Minor Changes
