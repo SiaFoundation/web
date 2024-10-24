@@ -169,8 +169,8 @@ export type ExplorerFileContract = FileContractElement & {
 
   transactionID: TransactionID
 
-  confirmationIndex: ChainIndex
-  confirmationTransactionID: TransactionID
+  confirmationIndex: ChainIndex | null
+  confirmationTransactionID: TransactionID | null
 
   proofIndex: ChainIndex | null
   proofTransactionID: TransactionID | null
