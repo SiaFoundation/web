@@ -17,7 +17,7 @@ export function BucketContextMenu({ name }: Props) {
   return (
     <DropdownMenu
       trigger={
-        <Button variant="ghost" icon="hover">
+        <Button size="none" variant="ghost" icon="hover">
           <BucketIcon size={16} />
         </Button>
       }

@@ -1,7 +1,7 @@
 import { RenterdSidenav } from '../RenterdSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
-import { FilesBreadcrumbMenu } from '../FilesDirectory/FilesBreadcrumbMenu'
+import { FilesDirectoryBreadcrumbMenu } from '../FilesDirectory/FilesDirectoryBreadcrumbMenu'
 import { FilesFlatBreadcrumbMenu } from '../FilesFlat/FilesFlatBreadcrumbMenu'
 import {
   RenterdAuthedLayout,
@@ -9,6 +9,7 @@ import {
 } from '../RenterdAuthedLayout'
 import { FilesActionsMenu } from '../FilesDirectory/FilesActionsMenu'
 import { FilesStatsMenu } from '../FilesDirectory/FilesStatsMenu'
+import { FilesDirectoryActionsBottomMenu } from '../FilesDirectory/FilesDirectoryActionsBottomMenu'
 import { useFilesManager } from '../../contexts/filesManager'
 
 export const Layout = RenterdAuthedLayout
@@ -27,11 +28,14 @@ export function useLayoutProps(): RenterdAuthedPageLayoutProps {
     openSettings: () => openDialog('settings'),
     nav:
       activeMode === 'directory' ? (
-        <FilesBreadcrumbMenu />
+        <FilesDirectoryBreadcrumbMenu />
       ) : (
         <FilesFlatBreadcrumbMenu />
       ),
     stats: <FilesStatsMenu />,
     actions: <FilesActionsMenu />,
+    actionsBottom: activeMode === 'directory' && (
+      <FilesDirectoryActionsBottomMenu />
+    ),
   }
 }

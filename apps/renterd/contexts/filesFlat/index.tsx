@@ -1,8 +1,12 @@
-import { useDatasetEmptyState } from '@siafoundation/design-system'
+import {
+  useDatasetEmptyState,
+  useMultiSelect,
+} from '@siafoundation/design-system'
 import { createContext, useContext, useMemo } from 'react'
 import { useDataset } from './dataset'
 import { useFilesManager } from '../filesManager'
 import { columns } from './columns'
+import { CellContext } from '../filesManager/types'
 
 function useFilesFlatMain() {
   const { sortDirection, sortField, filters, enabledColumns } =
@@ -32,8 +36,20 @@ function useFilesFlatMain() {
     [enabledColumns]
   )
 
+  const multiSelect = useMultiSelect(dataset)
+
+  const cellContext = useMemo(
+    () =>
+      ({
+        multiSelect,
+      } as CellContext),
+    [multiSelect]
+  )
+
   return {
     dataState,
+    multiSelect,
+    cellContext,
     refresh,
     limit,
     datasetPage,
