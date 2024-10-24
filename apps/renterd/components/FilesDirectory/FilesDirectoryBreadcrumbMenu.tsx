@@ -4,7 +4,7 @@ import { ChevronRight16 } from '@siafoundation/react-icons'
 import { useFilesManager } from '../../contexts/filesManager'
 import { FilesExplorerModeButton } from '../Files/FilesExplorerModeButton'
 
-export function FilesBreadcrumbMenu() {
+export function FilesDirectoryBreadcrumbMenu() {
   const { activeDirectory, setActiveDirectory } = useFilesManager()
   const ref = useRef<HTMLDivElement>(null)
 
