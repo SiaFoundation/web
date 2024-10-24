@@ -2,6 +2,7 @@ import { objectEntries } from '@siafoundation/design-system'
 import { currencyOptions } from '@siafoundation/react-core'
 import {
   useAutopilotConfigEvaluate,
+  useAutopilotState,
   useBusState,
 } from '@siafoundation/renterd-react'
 import { humanNumber, humanSiacoin, toHastings } from '@siafoundation/units'
@@ -42,6 +43,7 @@ export function useAutopilotEvaluations({
 }) {
   const values = form.watch()
   const renterdState = useBusState()
+  const autopilotState = useAutopilotState()
 
   const hasDataToEvaluate = useMemo(() => {
     if (!isAutopilotEnabled) {
@@ -56,8 +58,17 @@ export function useAutopilotEvaluations({
     if (!renterdState.data) {
       return false
     }
+    if (!autopilotState.data?.configured) {
+      return false
+    }
     return true
-  }, [isAutopilotEnabled, form.formState.isValid, resources, renterdState.data])
+  }, [
+    isAutopilotEnabled,
+    form.formState.isValid,
+    resources,
+    renterdState.data,
+    autopilotState.data,
+  ])
 
   // Convert any pinned fields over to siacoin values.
   const allowance = useEnabledAllowanceInSiacoin({
