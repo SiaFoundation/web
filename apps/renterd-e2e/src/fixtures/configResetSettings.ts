@@ -60,7 +60,7 @@ export async function configResetAllSettings({ page }: { page: Page }) {
   await fillTextInputByName(page, 'maxRPCPriceMillion', '10')
 
   await fillTextInputByName(page, 'maxContractPrice', '1')
-  await fillTextInputByName(page, 'hostBlockHeightLeeway', '12')
+  await fillTextInputByName(page, 'hostBlockHeightLeeway', '240')
   await fillTextInputByName(page, 'minPriceTableValidityMinutes', '5')
   await fillTextInputByName(page, 'minAccountExpiryDays', '1')
   await fillTextInputByName(page, 'minMaxEphemeralAccountBalance', '1')
