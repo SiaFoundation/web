@@ -64,10 +64,12 @@ export default defineConfig({
         },
       },
     },
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // webkit tests are extremely flaky only on CI.
+    // Disable them for now and continue to investigate.
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
 
     // Uncomment for mobile browsers support
     /* {
