@@ -42,6 +42,7 @@ export async function ContractHeader({
               className="hidden sm:flex"
               variant="gray"
               href={routes.contract.view.replace(':id', renewedFromId)}
+              data-testid="explorer-contract-renewedFrom"
             >
               <ArrowLeft16 />
               renewed from
@@ -59,6 +60,7 @@ export async function ContractHeader({
             <LinkButton
               className="hidden sm:flex"
               href={routes.contract.view.replace(':id', renewedToId)}
+              data-testid="explorer-contract-renewedTo"
             >
               renewed to
               <ArrowRight16 />

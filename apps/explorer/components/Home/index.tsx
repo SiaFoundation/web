@@ -200,6 +200,7 @@ export function Home({
             <div
               className="flex flex-col gap-6 items-start overflow-hidden"
               key={label}
+              data-testid="explorer-metrics-item"
             >
               <Text color="subtle" scaleSize="14" className="w-full" ellipsis>
                 {label}

@@ -34,7 +34,7 @@ export function EntityAvatar({
     />
   )
   const linkEl = href && (
-    <Link href={href} underline="none">
+    <Link href={href} underline="none" data-testid={`entity-link`}>
       {avatarEl}
     </Link>
   )

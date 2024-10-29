@@ -54,7 +54,7 @@ export function HostPricing({ host, rates }: Props) {
   const remainingStorage = useMemo(() => getRemainingStorage(host), [host])
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col" data-testid="explorer-hostPricing">
       <div className="grid grid-cols-3 gap-4">
         <Tooltip content={`Storage cost ${storageCost}/month`}>
           <div className="flex gap-2 items-center justify-end">

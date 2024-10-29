@@ -69,6 +69,7 @@ export function BlockList({
                 <div
                   className={cx('flex gap-4 p-4', itemBorderStyles())}
                   key={block.height}
+                  data-testid="explorer-latestBlocks-item"
                 >
                   <EntityAvatar
                     label={getEntityTypeLabel('block')}
