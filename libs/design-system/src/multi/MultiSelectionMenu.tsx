@@ -28,7 +28,7 @@ export function MultiSelectionMenu<Item extends MultiSelectItem>({
   return (
     <AppDockedControl>
       <Panel
-        aria-label={entityWord + ' multiselect menu'}
+        aria-label={entityWord + ' multi-select menu'}
         className="pl-3 pr-2 py-2 min-w-[250px] flex gap-2 items-center rounded-lg light:bg-black pointer-events-auto"
       >
         {!!multiSelect.selectionCount && (

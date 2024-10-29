@@ -77,7 +77,8 @@ type Props<
   onDragMove?: (e: DragMoveEvent) => void
   onDragEnd?: (e: DragEndEvent) => void
   onDragCancel?: (e: DragCancelEvent) => void
-  draggingDatum?: D
+  draggingDatums?: D[]
+  draggingMultipleLabel?: (n: number) => string
   testId?: string
 }
 
@@ -105,7 +106,8 @@ export function Table<
   onDragMove,
   onDragEnd,
   onDragCancel,
-  draggingDatum,
+  draggingDatums,
+  draggingMultipleLabel = (n) => `Move selection (${n})`,
   testId,
 }: Props<Columns, SortField, D, Context>) {
   let show = 'emptyState'
@@ -175,24 +177,32 @@ export function Table<
       onDragCancel={onDragCancel}
     >
       <DragOverlay>
-        {draggingDatum && (
-          <Panel className="inline-block">
-            <table>
-              <TableRow
-                className="pointer-events-none"
-                key={draggingDatum.id}
-                data={draggingDatum}
-                context={context}
-                columns={columns}
-                rowSize={rowSize}
-                focusId={focusId}
-                focusColor={focusColor}
-                getCellClassNames={getCellClassNames}
-                getContentClassNames={getContentClassNames}
-              />
-            </table>
-          </Panel>
-        )}
+        {draggingDatums ? (
+          draggingDatums.length === 1 ? (
+            <Panel className="inline-block">
+              <table>
+                <tbody>
+                  <TableRow
+                    className="pointer-events-none"
+                    key={draggingDatums[0].id}
+                    data={draggingDatums[0]}
+                    context={context}
+                    columns={columns}
+                    rowSize={rowSize}
+                    focusId={focusId}
+                    focusColor={focusColor}
+                    getCellClassNames={getCellClassNames}
+                    getContentClassNames={getContentClassNames}
+                  />
+                </tbody>
+              </table>
+            </Panel>
+          ) : (
+            <Panel className="inline-block py-2 px-4">
+              <Text>{draggingMultipleLabel(draggingDatums.length)}</Text>
+            </Panel>
+          )
+        ) : null}
       </DragOverlay>
       <Panel>
         <table
@@ -315,7 +325,7 @@ export function Table<
           <tbody className="bg-gray-50 dark:bg-graydark-50">
             {show === 'currentData' &&
               data?.map((row) => {
-                if (draggingDatum?.id === row.id) {
+                if (draggingDatums?.find((d) => d.id === row.id)) {
                   return null
                 }
 
