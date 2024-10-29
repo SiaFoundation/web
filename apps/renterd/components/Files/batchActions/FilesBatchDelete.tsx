@@ -3,19 +3,15 @@ import {
   Paragraph,
   triggerSuccessToast,
   triggerErrorToast,
-  MultiSelect,
 } from '@siafoundation/design-system'
 import { Delete16 } from '@siafoundation/react-icons'
 import { useCallback, useMemo } from 'react'
 import { useDialog } from '../../../contexts/dialog'
 import { useObjectsRemove } from '@siafoundation/renterd-react'
-import { ObjectData } from '../../../contexts/filesManager/types'
+import { useFilesDirectory } from '../../../contexts/filesDirectory'
 
-export function FilesBatchDelete({
-  multiSelect,
-}: {
-  multiSelect: MultiSelect<ObjectData>
-}) {
+export function FilesBatchDelete() {
+  const { multiSelect } = useFilesDirectory()
   const filesToDelete = useMemo(
     () =>
       Object.entries(multiSelect.selectionMap).map(([_, item]) => ({

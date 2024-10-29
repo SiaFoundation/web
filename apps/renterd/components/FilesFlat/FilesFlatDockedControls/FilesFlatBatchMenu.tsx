@@ -7,7 +7,7 @@ export function FilesFlatBatchMenu() {
 
   return (
     <MultiSelectionMenu multiSelect={multiSelect} entityWord="file">
-      <FilesBatchDelete multiSelect={multiSelect} />
+      <FilesBatchDelete />
     </MultiSelectionMenu>
   )
 }

@@ -27,20 +27,6 @@ function useFilesDirectoryMain() {
 
   const { limit, marker, isMore, response, refresh, dataset } = useDataset()
 
-  const {
-    onDragEnd,
-    onDragOver,
-    onDragCancel,
-    onDragMove,
-    onDragStart,
-    draggingObject,
-  } = useMove({
-    dataset,
-    activeDirectory,
-    setActiveDirectory,
-    refresh,
-  })
-
   // Add parent directory to the dataset.
   const _datasetPage = useMemo(() => {
     if (!dataset) {
@@ -79,6 +65,23 @@ function useFilesDirectoryMain() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeBucket])
 
+  const {
+    onDragEnd,
+    onDragOver,
+    onDragCancel,
+    onDragMove,
+    onDragStart,
+    draggingObjects,
+    moveSelectedFiles,
+    moveSelectedFilesOperationCount,
+  } = useMove({
+    dataset,
+    activeDirectory,
+    setActiveDirectory,
+    refresh,
+    multiSelect,
+  })
+
   const datasetPageWithOnClick = useMemo(() => {
     if (!_datasetPage) {
       return undefined
@@ -106,8 +109,8 @@ function useFilesDirectoryMain() {
     }
     return datasetPageWithOnClick.map((d) => {
       if (
-        draggingObject &&
-        draggingObject.id !== d.id &&
+        draggingObjects &&
+        draggingObjects.find((dobj) => dobj.id !== d.id) &&
         d.type === 'directory'
       ) {
         return {
@@ -120,7 +123,7 @@ function useFilesDirectoryMain() {
         isDraggable: d.type !== 'bucket' && !d.isUploading,
       }
     })
-  }, [datasetPageWithOnClick, draggingObject])
+  }, [datasetPageWithOnClick, draggingObjects])
 
   const dataState = useDatasetEmptyState(
     dataset,
@@ -162,7 +165,9 @@ function useFilesDirectoryMain() {
     onDragMove,
     onDragCancel,
     onDragOver,
-    draggingObject,
+    draggingObjects,
+    moveSelectedFiles,
+    moveSelectedFilesOperationCount,
   }
 }
 

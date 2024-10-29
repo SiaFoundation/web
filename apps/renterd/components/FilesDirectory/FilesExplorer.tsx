@@ -4,6 +4,7 @@ import { EmptyState } from './EmptyState'
 import { useCanUpload } from '../Files/useCanUpload'
 import { useFilesManager } from '../../contexts/filesManager'
 import { columns } from '../../contexts/filesDirectory/columns'
+import { pluralize } from '@siafoundation/units'
 
 export function FilesExplorer() {
   const {
@@ -24,7 +25,7 @@ export function FilesExplorer() {
     onDragStart,
     onDragCancel,
     onDragMove,
-    draggingObject,
+    draggingObjects,
   } = useFilesDirectory()
   const canUpload = useCanUpload()
   return (
@@ -53,7 +54,8 @@ export function FilesExplorer() {
           onDragEnd={onDragEnd}
           onDragCancel={onDragCancel}
           onDragMove={onDragMove}
-          draggingDatum={draggingObject}
+          draggingDatums={draggingObjects}
+          draggingMultipleLabel={(count) => `move ${pluralize(count, 'file')}`}
         />
       </Dropzone>
     </div>
