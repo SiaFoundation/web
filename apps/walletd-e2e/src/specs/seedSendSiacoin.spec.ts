@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { recoverWallet, rescanWallets, walletInList } from '../fixtures/wallet'
-import { navigateToWallet } from '../fixtures/navigateToWallet'
+import { navigateToWallet } from '../fixtures/navigate'
 import { fillComposeTransactionSiacoin } from '../fixtures/sendSiacoinDialog'
 import { random } from '@technically/lodash'
 import {

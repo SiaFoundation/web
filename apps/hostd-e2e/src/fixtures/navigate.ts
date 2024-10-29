@@ -1,23 +1,36 @@
 import { Page, expect } from '@playwright/test'
+import { step } from '@siafoundation/e2e'
 
-export async function navigateToDashboard({ page }: { page: Page }) {
-  await page.getByTestId('sidenav').getByLabel('Overview').click()
-  await expect(page.getByTestId('navbar').getByText('Overview')).toBeVisible()
-}
+export const navigateToDashboard = step(
+  'navigate to dashboard',
+  async ({ page }: { page: Page }) => {
+    await page.getByTestId('sidenav').getByLabel('Overview').click()
+    await expect(page.getByTestId('navbar').getByText('Overview')).toBeVisible()
+  }
+)
 
-export async function navigateToConfig({ page }: { page: Page }) {
-  await page.getByTestId('sidenav').getByLabel('Configuration').click()
-  await expect(
-    page.getByTestId('navbar').getByText('Configuration')
-  ).toBeVisible()
-}
+export const navigateToConfig = step(
+  'navigate to config',
+  async ({ page }: { page: Page }) => {
+    await page.getByTestId('sidenav').getByLabel('Configuration').click()
+    await expect(
+      page.getByTestId('navbar').getByText('Configuration')
+    ).toBeVisible()
+  }
+)
 
-export async function navigateToVolumes({ page }: { page: Page }) {
-  await page.getByTestId('sidenav').getByLabel('Volumes').click()
-  await expect(page.getByTestId('navbar').getByText('Volumes')).toBeVisible()
-}
+export const navigateToVolumes = step(
+  'navigate to volumes',
+  async ({ page }: { page: Page }) => {
+    await page.getByTestId('sidenav').getByLabel('Volumes').click()
+    await expect(page.getByTestId('navbar').getByText('Volumes')).toBeVisible()
+  }
+)
 
-export async function navigateToWallet(page: Page) {
-  await page.getByTestId('sidenav').getByLabel('Wallet').click()
-  await expect(page.getByTestId('navbar').getByText('Wallet')).toBeVisible()
-}
+export const navigateToWallet = step(
+  'navigate to wallet',
+  async (page: Page) => {
+    await page.getByTestId('sidenav').getByLabel('Wallet').click()
+    await expect(page.getByTestId('navbar').getByText('Wallet')).toBeVisible()
+  }
+)

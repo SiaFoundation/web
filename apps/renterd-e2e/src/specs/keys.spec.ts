@@ -17,7 +17,7 @@ test.afterEach(async () => {
 
 test('create and delete a key', async ({ page }) => {
   const key = await createKey(page)
-  const row = getKeyRowById(page, key)
+  const row = await getKeyRowById(page, key, true)
   await openKeyContextMenu(page, key)
   await page.getByRole('menu').getByText('Delete').click()
   const dialog = page.getByRole('dialog')
@@ -30,13 +30,13 @@ test('batch delete multiple keys', async ({ page }) => {
   const key1 = await createKey(page)
   const key2 = await createKey(page)
   const key3 = await createKey(page)
-  const row1 = getKeyRowById(page, key1)
-  const row2 = getKeyRowById(page, key2)
-  const row3 = getKeyRowById(page, key3)
+  const row1 = await getKeyRowById(page, key1, true)
+  const row2 = await getKeyRowById(page, key2, true)
+  const row3 = await getKeyRowById(page, key3, true)
 
   // There are 4 keys total. Get the first and last row.
-  const rowIdx0 = getKeyRowByIndex(page, 0)
-  const rowIdx3 = getKeyRowByIndex(page, 3)
+  const rowIdx0 = await getKeyRowByIndex(page, 0, true)
+  const rowIdx3 = await getKeyRowByIndex(page, 3, true)
 
   // Select all 4 keys.
   await rowIdx0.click()

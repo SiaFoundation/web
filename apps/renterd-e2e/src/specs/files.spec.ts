@@ -195,12 +195,15 @@ test('batch delete across nested directories', async ({ page }) => {
   await openBucket(page, bucketName)
 
   // Select entire dir1.
-  await getFileRowById(page, 'bucket1/dir1/').click()
+  const dir1 = await getFileRowById(page, 'bucket1/dir1/')
+  await dir1.click()
   await openDirectory(page, 'bucket1/dir2/')
 
   // Select file3 and file4.
-  await getFileRowById(page, 'bucket1/dir2/file3.txt').click()
-  await getFileRowById(page, 'bucket1/dir2/file4.txt').click()
+  const file3 = await getFileRowById(page, 'bucket1/dir2/file3.txt')
+  await file3.click()
+  const file4 = await getFileRowById(page, 'bucket1/dir2/file4.txt')
+  await file4.click()
   const menu = page.getByLabel('file multiselect menu')
 
   // Delete selected files.
@@ -240,10 +243,13 @@ test('batch delete using the all files explorer mode', async ({ page }) => {
   await page.getByRole('menuitem', { name: 'All files' }).click()
 
   // Select entire dir1.
-  await getFileRowById(page, 'bucket1/dir1/').click()
+  const dir1 = await getFileRowById(page, 'bucket1/dir1/')
+  await dir1.click()
   // Select file3 and file4.
-  await getFileRowById(page, 'bucket1/dir2/file3.txt').click()
-  await getFileRowById(page, 'bucket1/dir2/file4.txt').click()
+  const file3 = await getFileRowById(page, 'bucket1/dir2/file3.txt')
+  await file3.click()
+  const file4 = await getFileRowById(page, 'bucket1/dir2/file4.txt')
+  await file4.click()
   const menu = page.getByLabel('file multiselect menu')
 
   // Delete selected files.
