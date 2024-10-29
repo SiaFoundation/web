@@ -41,7 +41,7 @@ export function Transaction({
     transaction.siacoinInputs?.forEach((o) => {
       list.push({
         label: 'siacoin output',
-        addressHref: routes.address.view.replace(':id', o.address),
+        addressHref: routes.address.view.replace(':id', stripPrefix(o.address)),
         address: o.address,
         sc: new BigNumber(o.value),
         outputId: o.parentID,
@@ -50,7 +50,7 @@ export function Transaction({
     transaction.siafundInputs?.forEach((o) => {
       list.push({
         label: 'siafund output',
-        addressHref: routes.address.view.replace(':id', o.address),
+        addressHref: routes.address.view.replace(':id', stripPrefix(o.address)),
         address: o.address,
         sc: new BigNumber(o.value),
         outputId: o.parentID,
@@ -72,7 +72,7 @@ export function Transaction({
             : o.source.replace(/_/g, ' '),
         addressHref: routes.address.view.replace(
           ':id',
-          o.siacoinOutput.address
+          stripPrefix(o.siacoinOutput.address)
         ),
         address: o.siacoinOutput.address,
         sc: new BigNumber(o.siacoinOutput.value),
@@ -84,7 +84,7 @@ export function Transaction({
         label: 'siafund output',
         addressHref: routes.address.view.replace(
           ':id',
-          o.siafundOutput.address
+          stripPrefix(o.siafundOutput.address)
         ),
         address: o.siafundOutput.address,
         sf: Number(o.siafundOutput.value),
