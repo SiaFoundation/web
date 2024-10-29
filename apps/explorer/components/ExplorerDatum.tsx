@@ -54,6 +54,7 @@ export function ExplorerDatum({
               type={entityType}
               displayValue={displayValue}
               // className="relative top-0.5"
+              data-testid="explorer-datum-value"
             />
           ) : (
             <Text font="mono" weight="semibold" scaleSize="18">
@@ -61,15 +62,26 @@ export function ExplorerDatum({
             </Text>
           ))}
         {value !== undefined && copyable && (
-          <ValueCopyable scaleSize="18" label={label} value={String(value)} />
+          <ValueCopyable
+            scaleSize="18"
+            label={label}
+            value={String(value)}
+            data-testid="explorer-datum-value"
+          />
         )}
         {value !== undefined && !copyable && (
-          <Text font="mono" weight="semibold" scaleSize="18" ellipsis>
+          <Text
+            font="mono"
+            weight="semibold"
+            scaleSize="18"
+            ellipsis
+            data-testid="explorer-datum-value"
+          >
             {value}
           </Text>
         )}
         {comment && (
-          <Text color="subtle" size="12">
+          <Text color="subtle" size="12" data-testid="explorer-datum-value">
             {comment}
           </Text>
         )}

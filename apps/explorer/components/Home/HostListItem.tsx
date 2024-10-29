@@ -58,7 +58,10 @@ export function HostListItem({ host, rates, entity }: Props) {
 
   return (
     <EntityListItemLayout {...entity}>
-      <div className="flex flex-col items-center gap-1 w-full">
+      <div
+        className="flex flex-col items-center gap-1 w-full"
+        data-testid="explorer-topHosts-item"
+      >
         <div className="flex gap-2 items-center w-full">
           <div className="flex gap-2 items-center">
             <Link
