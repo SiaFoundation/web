@@ -250,7 +250,7 @@ test('batch delete across nested directories', async ({ page }) => {
   await file3.click()
   const file4 = await getFileRowById(page, 'bucket1/dir2/file4.txt')
   await file4.click()
-  const menu = page.getByLabel('file multiselect menu')
+  const menu = page.getByLabel('file multi-select menu')
 
   // Delete selected files.
   await menu.getByLabel('delete selected files').click()
@@ -295,7 +295,7 @@ test('batch delete using the all files explorer mode', async ({ page }) => {
   await file3.click()
   const file4 = await getFileRowById(page, 'bucket1/dir2/file4.txt')
   await file4.click()
-  const menu = page.getByLabel('file multiselect menu')
+  const menu = page.getByLabel('file multi-select menu')
 
   // Delete selected files.
   await menu.getByLabel('delete selected files').click()

@@ -1,5 +1,5 @@
 import { ObjectData } from '../filesManager/types'
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import {
   DragStartEvent,
   DragEndEvent,
@@ -9,10 +9,14 @@ import {
 } from '@dnd-kit/core'
 import { FullPathSegments, getDirectorySegmentsFromPath } from '../../lib/paths'
 import { useObjectsRename } from '@siafoundation/renterd-react'
-import { triggerErrorToast } from '@siafoundation/design-system'
-import { getMoveFileRenameParams } from '../../lib/rename'
+import { MultiSelect, triggerErrorToast } from '@siafoundation/design-system'
+import {
+  getMoveFileDestinationDirectory,
+  getMoveFileOperations,
+} from '../../lib/rename'
 
 type Props = {
+  multiSelect: MultiSelect<ObjectData>
   activeDirectory: FullPathSegments
   setActiveDirectory: (
     func: (directory: FullPathSegments) => FullPathSegments
@@ -24,41 +28,77 @@ type Props = {
 const navigationDelay = 500
 
 export function useMove({
+  multiSelect,
   dataset,
   activeDirectory,
   setActiveDirectory,
   refresh,
 }: Props) {
-  const [draggingObject, setDraggingObject] = useState<ObjectData | undefined>(
-    undefined
-  )
+  const [draggingObjects, setDraggingObjects] = useState<
+    ObjectData[] | undefined
+  >(undefined)
   const [, setNavTimeout] = useState<NodeJS.Timeout>()
   const rename = useObjectsRename()
 
   const moveFiles = useCallback(
-    async (e: DragEndEvent) => {
-      const { bucket, from, to, mode } = getMoveFileRenameParams(
-        e,
-        activeDirectory
-      )
-      if (from === to) {
+    async (paths: string[], destinationPath: string) => {
+      if (!paths.length) {
         return
       }
-      const response = await rename.post({
-        payload: {
-          force: false,
-          bucket,
-          from,
-          to,
-          mode,
-        },
-      })
-      refresh()
-      if (response.error) {
-        triggerErrorToast({ title: 'Error moving files', body: response.error })
+      const moveOperations = getMoveFileOperations(paths, destinationPath)
+
+      for (const operation of moveOperations) {
+        const { bucket, from, to, mode } = operation
+        const response = await rename.post({
+          payload: {
+            force: false,
+            bucket,
+            from,
+            to,
+            mode,
+          },
+        })
+        if (response.error) {
+          triggerErrorToast({
+            title: 'Error moving files',
+            body: response.error,
+          })
+        }
       }
+      refresh()
+      multiSelect.deselectAll()
     },
-    [refresh, rename, activeDirectory]
+    [refresh, rename, multiSelect]
+  )
+
+  const moveSelectedFilesOperationCount = useMemo(() => {
+    const destinationPath = getMoveFileDestinationDirectory(activeDirectory)
+    return getMoveFileOperations(multiSelect.selectedIds, destinationPath)
+      .length
+  }, [multiSelect.selectedIds, activeDirectory])
+
+  const moveSelectedFiles = useCallback(async () => {
+    if (!multiSelect.selectedIds.length) {
+      return
+    }
+    const paths = multiSelect.selectedIds
+    const destinationPath = getMoveFileDestinationDirectory(activeDirectory)
+    moveFiles(paths, destinationPath)
+  }, [multiSelect.selectedIds, activeDirectory, moveFiles])
+
+  const moveDraggedFiles = useCallback(
+    async (e: DragEndEvent) => {
+      if (!draggingObjects) {
+        return
+      }
+      const paths = draggingObjects.map((o) => o.path)
+      const destinationPath = getMoveFileDestinationDirectory(
+        activeDirectory,
+        e
+      )
+      moveFiles(paths, destinationPath)
+    },
+    [draggingObjects, activeDirectory, moveFiles]
   )
 
   const delayedNavigation = useCallback(
@@ -103,9 +143,19 @@ export function useMove({
 
   const onDragStart = useCallback(
     (e: DragStartEvent) => {
-      setDraggingObject(dataset?.find((d) => d.id === e.active.id))
+      // If an object included in active multi-selection is dragged,
+      // drag the selection.
+      const id = String(e.active.id)
+      if (multiSelect.selectedIds.includes(id)) {
+        setDraggingObjects(
+          Object.entries(multiSelect.selectionMap).map(([, obj]) => obj)
+        )
+      } else {
+        const ob = dataset?.find((d) => d.id === e.active.id)
+        setDraggingObjects(ob ? [ob] : undefined)
+      }
     },
-    [dataset, setDraggingObject]
+    [dataset, setDraggingObjects, multiSelect]
   )
 
   const onDragOver = useCallback(
@@ -125,18 +175,18 @@ export function useMove({
   const onDragEnd = useCallback(
     async (e: DragEndEvent) => {
       delayedNavigation(undefined)
-      setDraggingObject(undefined)
-      moveFiles(e)
+      setDraggingObjects(undefined)
+      moveDraggedFiles(e)
     },
-    [setDraggingObject, delayedNavigation, moveFiles]
+    [setDraggingObjects, delayedNavigation, moveDraggedFiles]
   )
 
   const onDragCancel = useCallback(
     async (e: DragCancelEvent) => {
       delayedNavigation(undefined)
-      setDraggingObject(undefined)
+      setDraggingObjects(undefined)
     },
-    [setDraggingObject, delayedNavigation]
+    [setDraggingObjects, delayedNavigation]
   )
 
   return {
@@ -145,6 +195,8 @@ export function useMove({
     onDragCancel,
     onDragMove,
     onDragStart,
-    draggingObject,
+    draggingObjects,
+    moveSelectedFiles,
+    moveSelectedFilesOperationCount,
   }
 }
