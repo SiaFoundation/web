@@ -33,24 +33,28 @@ export function generateMetadata({ params }): Metadata {
 export const revalidate = 0
 
 export default async function Page({ params }) {
-  const id = params?.id as number
+  let id: string
 
-  // 1. Grab the tip at this height.
-  const [tipInfo, tipInfoError] = await to(
-    explored.consensusTipByHeight({ params: { height: id } })
-  )
+  // Check if the incoming id is referencing height.
+  if (!isNaN(Number(params?.id))) {
+    // If it is, we need the block ID.
 
-  if (tipInfoError) {
-    throw tipInfoError
+    // Grab the tip at this height.
+    const [tipInfo, tipInfoError] = await to(
+      explored.consensusTipByHeight({ params: { height: params?.id } })
+    )
+
+    if (tipInfoError) throw tipInfoError
+    if (!tipInfo) throw notFound()
+
+    id = tipInfo.id
+  } else {
+    // If it is not the height, it is referencing the ID. No call necessary.
+    id = params?.id
   }
-  if (!tipInfo) {
-    throw notFound()
-  }
 
-  // 2. Get the block using the id from the previous request.
-  const [block, blockError] = await to(
-    explored.blockByID({ params: { id: tipInfo.id } })
-  )
+  // Get the block using the id from the previous request.
+  const [block, blockError] = await to(explored.blockByID({ params: { id } }))
 
   if (blockError) {
     throw blockError
@@ -59,5 +63,5 @@ export default async function Page({ params }) {
     return notFound()
   }
 
-  return <Block block={block} blockID={tipInfo.id} />
+  return <Block block={block} blockID={id} />
 }
