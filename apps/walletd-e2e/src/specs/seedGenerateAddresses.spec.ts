@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { recoverWallet } from '../fixtures/wallet'
-import { navigateToWallet } from '../fixtures/navigateToWallet'
+import { navigateToWallet } from '../fixtures/navigate'
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
 import { mine } from '@siafoundation/clusterd'
 import {

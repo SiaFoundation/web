@@ -1,41 +1,64 @@
 import { Page, expect } from '@playwright/test'
 import { navigateToKeys } from './navigate'
-import { getTextInputValueByName } from '@siafoundation/e2e'
+import {
+  getTextInputValueByName,
+  maybeExpectAndReturn,
+  step,
+} from '@siafoundation/e2e'
 
-export function getKeyRowById(page: Page, id: string) {
-  return page.getByTestId('keysTable').getByTestId(id)
-}
+export const getKeyRowById = step(
+  'get key row by ID',
+  async (page: Page, id: string, shouldExpect?: boolean) => {
+    return maybeExpectAndReturn(
+      page.getByTestId('keysTable').getByTestId(id),
+      shouldExpect
+    )
+  }
+)
 
-export function getKeysSummaryRow(page: Page) {
-  return page.getByTestId('keysTable').locator('thead').getByRole('row').nth(1)
-}
+export const getKeysSummaryRow = step(
+  'get keys summary row',
+  async (page: Page, shouldExpect?: boolean) => {
+    return maybeExpectAndReturn(
+      page.getByTestId('keysTable').locator('thead').getByRole('row').nth(1),
+      shouldExpect
+    )
+  }
+)
 
-export function getKeyRowByIndex(page: Page, index: number) {
-  return page
-    .getByTestId('keysTable')
-    .locator('tbody')
-    .getByRole('row')
-    .nth(index)
-}
+export const getKeyRowByIndex = step(
+  'get key row by index',
+  async (page: Page, index: number, shouldExpect?: boolean) => {
+    return maybeExpectAndReturn(
+      page
+        .getByTestId('keysTable')
+        .locator('tbody')
+        .getByRole('row')
+        .nth(index),
+      shouldExpect
+    )
+  }
+)
 
-export async function getKeyRows(page: Page) {
-  return page.getByTestId('keysTable').locator('tbody').getByRole('row').all()
-}
+export const createKey = step(
+  'create key',
+  async (page: Page): Promise<string> => {
+    await navigateToKeys({ page })
+    await page.getByTestId('navbar').getByText('Create keypair').click()
+    const dialog = page.getByRole('dialog')
+    const accessKeyId = await getTextInputValueByName(page, 'name')
+    await dialog.getByRole('button', { name: 'Create' }).click()
+    await getKeyRowById(page, accessKeyId, true)
+    await expect(dialog).toBeHidden()
+    return accessKeyId
+  }
+)
 
-export async function createKey(page: Page): Promise<string> {
-  await navigateToKeys({ page })
-  await page.getByTestId('navbar').getByText('Create keypair').click()
-  const dialog = page.getByRole('dialog')
-  const accessKeyId = await getTextInputValueByName(page, 'name')
-  await dialog.getByRole('button', { name: 'Create' }).click()
-  const row = getKeyRowById(page, accessKeyId)
-  await expect(dialog).toBeHidden()
-  await expect(row).toBeVisible()
-  return accessKeyId
-}
-
-export async function openKeyContextMenu(page: Page, key: string) {
-  const selector = page.getByTestId(key).getByLabel('key context menu')
-  await expect(selector).toBeVisible()
-  await selector.click()
-}
+export const openKeyContextMenu = step(
+  'open key context menu',
+  async (page: Page, key: string) => {
+    const selector = page.getByTestId(key).getByLabel('key context menu')
+    await expect(selector).toBeVisible()
+    await selector.click()
+  }
+)

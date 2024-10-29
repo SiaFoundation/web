@@ -5,7 +5,7 @@ import {
   recoverWallet,
   walletInList,
 } from '../fixtures/wallet'
-import { navigateToWallet } from '../fixtures/navigateToWallet'
+import { navigateToWallet } from '../fixtures/navigate'
 import {
   afterTest,
   beforeTest,
@@ -61,9 +61,9 @@ test('recover wallet and see existing transactions', async ({
     rescanStartHeight: 0,
   })
   await navigateToWallet(page, name)
-  const row1 = await getEventRowByIndex(page, 0)
-  const row2 = await getEventRowByIndex(page, 1)
-  const row3 = await getEventRowByIndex(page, 2)
+  const row1 = await getEventRowByIndex(page, 0, true)
+  const row2 = await getEventRowByIndex(page, 1, true)
+  const row3 = await getEventRowByIndex(page, 2, true)
   const today = humanDate(new Date(), { timeStyle: 'short' })
   await expect(row1.getByText(today)).toBeVisible()
   await expect(row1.getByText('siacoin transfer')).toBeVisible()
