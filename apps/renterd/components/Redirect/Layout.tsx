@@ -10,7 +10,7 @@ export const Layout = RenterdAuthedLayout
 export function useLayoutProps(): RenterdAuthedPageLayoutProps {
   const { openDialog } = useDialog()
   return {
-    title: 'Dashboard',
+    title: 'Home',
     routes,
     sidenav: <RenterdSidenav />,
     openSettings: () => openDialog('settings'),
