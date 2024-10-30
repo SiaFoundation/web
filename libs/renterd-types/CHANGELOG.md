@@ -1,5 +1,11 @@
 # @siafoundation/renterd-types
 
+## 0.12.0
+
+### Minor Changes
+
+- ae5aeec9: Added consensus network API.
+
 ## 0.11.0
 
 ### Minor Changes

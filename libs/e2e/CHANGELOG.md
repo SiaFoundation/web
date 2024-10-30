@@ -1,5 +1,13 @@
 # @siafoundation/e2e
 
+## 0.2.0
+
+### Minor Changes
+
+- 6c7e3681: Add getTextInputValueByName method.
+- 6c7e3681: Add toggleColumnVisibility view preferences method.
+- be794d55: Refactored all fixtures into boxed steps.
+
 ## 0.1.0
 
 ### Minor Changes

@@ -1,5 +1,16 @@
 # @siafoundation/renterd-react
 
+## 4.12.0
+
+### Minor Changes
+
+- ae5aeec9: Added consensus network API.
+
+### Patch Changes
+
+- Updated dependencies [ae5aeec9]
+  - @siafoundation/renterd-types@0.12.0
+
 ## 4.11.0
 
 ### Minor Changes

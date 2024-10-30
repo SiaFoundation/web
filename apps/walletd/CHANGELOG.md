@@ -1,5 +1,11 @@
 # walletd
 
+## 0.23.2
+
+### Patch Changes
+
+- e9995c5d: The page layout is now persisted between page transitions.
+
 ## 0.23.1
 
 ### Patch Changes
