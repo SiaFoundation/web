@@ -1,5 +1,12 @@
 # @siafoundation/explored-types
 
+## 0.8.0
+
+### Minor Changes
+
+- 2bb6a0d3: In ExplorerFileContract, changed confirmationIndex and confirmationTxnID to possibly null.
+- f3686029: Changed all fields except id to optional on the ExplorerTransaction type.
+
 ## 0.7.0
 
 ### Minor Changes

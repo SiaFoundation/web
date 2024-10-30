@@ -1,5 +1,16 @@
 # @siafoundation/renterd-js
 
+## 0.11.0
+
+### Minor Changes
+
+- ae5aeec9: Added consensus network API.
+
+### Patch Changes
+
+- Updated dependencies [ae5aeec9]
+  - @siafoundation/renterd-types@0.12.0
+
 ## 0.10.1
 
 ### Patch Changes

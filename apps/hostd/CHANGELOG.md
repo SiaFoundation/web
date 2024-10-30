@@ -1,5 +1,15 @@
 # hostd
 
+## 0.50.0
+
+### Minor Changes
+
+- 6c7e3681: The onboarding wizard now animates in and out.
+
+### Patch Changes
+
+- e9995c5d: The page layout is now persisted between page transitions.
+
 ## 0.49.0
 
 ### Minor Changes

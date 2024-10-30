@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.0
+
+### Minor Changes
+
+- 7fe865b6: The latest walletd and renterd releases no longer include prereleases.
+
 ## 0.4.0
 
 ### Minor Changes

@@ -1,5 +1,13 @@
 # @siafoundation/explored-react
 
+## 0.3.1
+
+### Patch Changes
+
+- Updated dependencies [2bb6a0d3]
+- Updated dependencies [f3686029]
+  - @siafoundation/explored-types@0.8.0
+
 ## 0.3.0
 
 ### Minor Changes
