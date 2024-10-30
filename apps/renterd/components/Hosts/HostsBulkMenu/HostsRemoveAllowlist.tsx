@@ -7,10 +7,8 @@ export function HostsRemoveAllowlist() {
 
   const publicKeys = useMemo(
     () =>
-      Object.entries(multiSelect.selectionMap).map(
-        ([_, item]) => item.publicKey
-      ),
-    [multiSelect.selectionMap]
+      Object.entries(multiSelect.selection).map(([_, item]) => item.publicKey),
+    [multiSelect.selection]
   )
 
   return (

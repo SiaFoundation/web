@@ -148,7 +148,7 @@ export function useMove({
       const id = String(e.active.id)
       if (multiSelect.selectedIds.includes(id)) {
         setDraggingObjects(
-          Object.entries(multiSelect.selectionMap).map(([, obj]) => obj)
+          Object.entries(multiSelect.selection).map(([, obj]) => obj)
         )
       } else {
         const ob = dataset?.find((d) => d.id === e.active.id)

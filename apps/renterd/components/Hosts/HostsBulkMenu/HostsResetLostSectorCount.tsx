@@ -11,10 +11,8 @@ export function HostsResetLostSectorCount() {
 
   const publicKeys = useMemo(
     () =>
-      Object.entries(multiSelect.selectionMap).map(
-        ([_, item]) => item.publicKey
-      ),
-    [multiSelect.selectionMap]
+      Object.entries(multiSelect.selection).map(([_, item]) => item.publicKey),
+    [multiSelect.selection]
   )
   const resetAll = useCallback(async () => {
     await handleBatchOperation(

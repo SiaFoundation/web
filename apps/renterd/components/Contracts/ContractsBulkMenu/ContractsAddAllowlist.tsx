@@ -7,8 +7,8 @@ export function ContractsAddAllowlist() {
 
   const publicKeys = useMemo(
     () =>
-      Object.entries(multiSelect.selectionMap).map(([_, item]) => item.hostKey),
-    [multiSelect.selectionMap]
+      Object.entries(multiSelect.selection).map(([_, item]) => item.hostKey),
+    [multiSelect.selection]
   )
 
   return <BulkAddAllowlist multiSelect={multiSelect} publicKeys={publicKeys} />

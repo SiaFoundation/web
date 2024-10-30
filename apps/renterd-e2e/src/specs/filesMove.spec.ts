@@ -50,7 +50,7 @@ test('move two files by selecting and dragging from one directory out to another
   const file3 = await getFileRowById(page, 'bucket1/dir2/file3.txt', true)
   await file3.click()
   const dir3 = await getFileRowById(page, 'bucket1/dir2/dir3/', true)
-  await dir3.click()
+  await dir3.click({ modifiers: ['ControlOrMeta'] })
 
   // Move all selected files by dragging one of them.
   await moveMouseOver(page, file3)
@@ -108,7 +108,7 @@ test('move a file via drag and drop while leaving a separate set of selected fil
   const file3 = await getFileRowById(page, 'bucket1/dir2/file3.txt', true)
   await file3.click()
   const file4 = await getFileRowById(page, 'bucket1/dir2/file4.txt', true)
-  await file4.click()
+  await file4.click({ modifiers: ['ControlOrMeta'] })
 
   // Move file5 which is not in the selection.
   const file5 = await getFileRowById(page, 'bucket1/dir2/file5.txt', true)
@@ -165,7 +165,7 @@ test('move files by selecting and using the docked menu bulk action', async ({
   const file3 = await getFileRowById(page, 'bucket1/dir2/file3.txt', true)
   await file3.click()
   const dir3 = await getFileRowById(page, 'bucket1/dir2/dir3/', true)
-  await dir3.click()
+  await dir3.click({ modifiers: ['ControlOrMeta'] })
 
   await navigateToParentDirectory(page)
 

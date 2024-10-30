@@ -32,9 +32,9 @@ test('hosts explorer shows all hosts', async ({ page }) => {
 test('hosts bulk allowlist', async ({ page }) => {
   await navigateToHosts({ page })
   const rows = await getHostRowsAll(page)
-  for (const row of rows) {
-    await row.click()
-  }
+  // Range select the rows, add position as default location is a context menu button.
+  rows.at(0).click()
+  rows.at(-1).click({ modifiers: ['Shift'], position: { x: 5, y: 5 } })
 
   const menu = page.getByLabel('host multi-select menu')
   const dialog = page.getByRole('dialog')
@@ -57,9 +57,8 @@ test('hosts bulk allowlist', async ({ page }) => {
     getHostRows(page).getByTestId('allow').getByTestId('allowed')
   ).toHaveCount(3)
 
-  for (const row of rows) {
-    await row.click()
-  }
+  rows.at(0).click()
+  rows.at(-1).click({ modifiers: ['Shift'], position: { x: 5, y: 5 } })
 
   // Remove selected hosts from the allowlist.
   await menu.getByLabel('remove host public keys from allowlist').click()
@@ -81,9 +80,9 @@ test('hosts bulk allowlist', async ({ page }) => {
 test('hosts bulk blocklist', async ({ page }) => {
   await navigateToHosts({ page })
   const rows = await getHostRowsAll(page)
-  for (const row of rows) {
-    await row.click()
-  }
+  // Range select the rows, add position as default location is a context menu button.
+  rows.at(0).click()
+  rows.at(-1).click({ modifiers: ['Shift'], position: { x: 5, y: 5 } })
 
   const menu = page.getByLabel('host multi-select menu')
   const dialog = page.getByRole('dialog')
@@ -106,9 +105,8 @@ test('hosts bulk blocklist', async ({ page }) => {
     getHostRows(page).getByTestId('allow').getByTestId('allowed')
   ).toHaveCount(0)
 
-  for (const row of rows) {
-    await row.click()
-  }
+  rows.at(0).click()
+  rows.at(-1).click({ modifiers: ['Shift'], position: { x: 5, y: 5 } })
 
   // Remove selected hosts from the blocklist.
   await menu.getByLabel('remove host addresses from blocklist').click()

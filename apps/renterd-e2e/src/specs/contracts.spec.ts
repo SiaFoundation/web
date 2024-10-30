@@ -66,9 +66,8 @@ test('contracts prunable size', async ({ page }) => {
 test('contracts bulk delete', async ({ page }) => {
   await navigateToContracts({ page })
   const rows = await getContractRowsAll(page)
-  for (const row of rows) {
-    await row.click()
-  }
+  rows.at(0).click()
+  rows.at(-1).click({ modifiers: ['Shift'] })
 
   // Delete selected contracts.
   const menu = page.getByLabel('contract multi-select menu')
@@ -82,9 +81,8 @@ test('contracts bulk delete', async ({ page }) => {
 test('contracts bulk allowlist', async ({ page }) => {
   await navigateToContracts({ page })
   const rows = await getContractRowsAll(page)
-  for (const row of rows) {
-    await row.click()
-  }
+  rows.at(0).click()
+  rows.at(-1).click({ modifiers: ['Shift'] })
 
   const menu = page.getByLabel('contract multi-select menu')
   const dialog = page.getByRole('dialog')
@@ -101,9 +99,8 @@ test('contracts bulk allowlist', async ({ page }) => {
   ).toHaveCount(3)
   await dialog.getByLabel('close').click()
 
-  for (const row of rows) {
-    await row.click()
-  }
+  rows.at(0).click()
+  rows.at(-1).click({ modifiers: ['Shift'] })
 
   // Remove selected contract hosts from the allowlist.
   await menu.getByLabel('remove host public keys from allowlist').click()
@@ -118,9 +115,8 @@ test('contracts bulk allowlist', async ({ page }) => {
 test('contracts bulk blocklist', async ({ page }) => {
   await navigateToContracts({ page })
   const rows = await getContractRowsAll(page)
-  for (const row of rows) {
-    await row.click()
-  }
+  rows.at(0).click()
+  rows.at(-1).click({ modifiers: ['Shift'] })
 
   const menu = page.getByLabel('contract multi-select menu')
   const dialog = page.getByRole('dialog')
@@ -137,9 +133,8 @@ test('contracts bulk blocklist', async ({ page }) => {
   await expect(dialog.getByText('The allowlist is empty')).toBeVisible()
   await dialog.getByLabel('close').click()
 
-  for (const row of rows) {
-    await row.click()
-  }
+  rows.at(0).click()
+  rows.at(-1).click({ modifiers: ['Shift'] })
 
   // Remove selected contract hosts from the blocklist.
   await menu.getByLabel('remove host addresses from blocklist').click()

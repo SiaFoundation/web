@@ -7,10 +7,8 @@ export function HostsAddBlocklist() {
 
   const hostAddresses = useMemo(
     () =>
-      Object.entries(multiSelect.selectionMap).map(
-        ([_, item]) => item.netAddress
-      ),
-    [multiSelect.selectionMap]
+      Object.entries(multiSelect.selection).map(([_, item]) => item.netAddress),
+    [multiSelect.selection]
   )
   return (
     <BulkAddBlocklist multiSelect={multiSelect} hostAddresses={hostAddresses} />

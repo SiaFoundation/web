@@ -65,7 +65,7 @@ function useFilesFlatMain() {
     return _datasetPage.map((datum) => {
       return {
         ...datum,
-        isSelected: !!multiSelect.selectionMap[datum.id],
+        isSelected: !!multiSelect.selection[datum.id],
         onClick: (e: MouseEvent<HTMLTableRowElement>) =>
           multiSelect.onSelect(datum.id, e),
       }
