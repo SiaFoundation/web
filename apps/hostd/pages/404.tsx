@@ -3,7 +3,7 @@ import { Layout, useLayoutProps } from '../components/Redirect/Layout'
 import { routes } from '../config/routes'
 
 export default function Page() {
-  return <Redirect route={routes.buckets.index} />
+  return <Redirect route={routes.home} />
 }
 
 Page.Layout = Layout

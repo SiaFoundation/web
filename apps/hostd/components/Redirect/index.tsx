@@ -1,13 +1,12 @@
-import { routes } from '../../config/routes'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
-export function Home() {
+export function Redirect({ route }: { route: string }) {
   const router = useRouter()
 
   useEffect(() => {
-    router.replace(routes.buckets.index)
-  }, [router])
+    router.replace(route)
+  }, [router, route])
 
   return <div />
 }
