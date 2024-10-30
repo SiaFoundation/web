@@ -6,9 +6,8 @@ export function ContractsAddBlocklist() {
   const { multiSelect } = useContracts()
 
   const hostAddresses = useMemo(
-    () =>
-      Object.entries(multiSelect.selectionMap).map(([_, item]) => item.hostIp),
-    [multiSelect.selectionMap]
+    () => Object.entries(multiSelect.selection).map(([_, item]) => item.hostIp),
+    [multiSelect.selection]
   )
   return (
     <BulkAddBlocklist multiSelect={multiSelect} hostAddresses={hostAddresses} />

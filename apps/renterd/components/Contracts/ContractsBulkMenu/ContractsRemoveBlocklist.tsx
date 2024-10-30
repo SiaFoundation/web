@@ -6,9 +6,8 @@ export function ContractsRemoveBlocklist() {
   const { multiSelect } = useContracts()
 
   const hostAddresses = useMemo(
-    () =>
-      Object.entries(multiSelect.selectionMap).map(([_, item]) => item.hostIp),
-    [multiSelect.selectionMap]
+    () => Object.entries(multiSelect.selection).map(([_, item]) => item.hostIp),
+    [multiSelect.selection]
   )
 
   return (

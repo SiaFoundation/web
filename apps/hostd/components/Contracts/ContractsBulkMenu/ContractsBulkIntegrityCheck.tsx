@@ -17,8 +17,8 @@ export function ContractsBulkIntegrityCheck() {
   const integrityCheck = useContractsIntegrityCheck()
 
   const ids = useMemo(
-    () => Object.entries(multiSelect.selectionMap).map(([_, item]) => item.id),
-    [multiSelect.selectionMap]
+    () => Object.entries(multiSelect.selection).map(([_, item]) => item.id),
+    [multiSelect.selection]
   )
   const checkAll = useCallback(async () => {
     await handleBatchOperation(

@@ -190,7 +190,7 @@ function useHostsMain() {
         ...datum,
         onClick: (e: React.MouseEvent<HTMLTableRowElement>) =>
           multiSelect.onSelect(datum.id, e),
-        isSelected: !!multiSelect.selectionMap[datum.id],
+        isSelected: !!multiSelect.selection[datum.id],
       }
     })
   }, [dataset, multiSelect])

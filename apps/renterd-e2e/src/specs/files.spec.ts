@@ -242,14 +242,14 @@ test('bulk delete across nested directories', async ({ page }) => {
 
   // Select entire dir1.
   const dir1 = await getFileRowById(page, 'bucket1/dir1/')
-  await dir1.click()
+  await dir1.click({ modifiers: ['ControlOrMeta'] })
   await openDirectory(page, 'bucket1/dir2/')
 
   // Select file3 and file4.
   const file3 = await getFileRowById(page, 'bucket1/dir2/file3.txt')
-  await file3.click()
+  await file3.click({ modifiers: ['ControlOrMeta'] })
   const file4 = await getFileRowById(page, 'bucket1/dir2/file4.txt')
-  await file4.click()
+  await file4.click({ modifiers: ['ControlOrMeta'] })
   const menu = page.getByLabel('file multi-select menu')
 
   // Delete selected files.
@@ -289,12 +289,12 @@ test('bulk delete using the all files explorer mode', async ({ page }) => {
 
   // Select entire dir1.
   const dir1 = await getFileRowById(page, 'bucket1/dir1/')
-  await dir1.click()
+  await dir1.click({ modifiers: ['ControlOrMeta'] })
   // Select file3 and file4.
   const file3 = await getFileRowById(page, 'bucket1/dir2/file3.txt')
-  await file3.click()
+  await file3.click({ modifiers: ['ControlOrMeta'] })
   const file4 = await getFileRowById(page, 'bucket1/dir2/file4.txt')
-  await file4.click()
+  await file4.click({ modifiers: ['ControlOrMeta'] })
   const menu = page.getByLabel('file multi-select menu')
 
   // Delete selected files.

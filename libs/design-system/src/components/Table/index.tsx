@@ -207,6 +207,11 @@ export function Table<
       <Panel>
         <table
           data-testid={testId}
+          onMouseDown={(e) => {
+            if (e.shiftKey) {
+              e.preventDefault()
+            }
+          }}
           data-loading={show === 'skeleton'}
           className="relative z-10 table-auto border-collapse w-full"
         >

@@ -16,9 +16,8 @@ test.afterEach(async () => {
 test('contracts bulk integrity check', async ({ page }) => {
   await navigateToContracts(page)
   const rows = await getContractRowsAll(page)
-  for (const row of rows) {
-    await row.click()
-  }
+  rows.at(0).click()
+  rows.at(-1).click({ modifiers: ['Shift'] })
 
   const menu = page.getByLabel('contract multi-select menu')
 

@@ -18,11 +18,11 @@ export function FilesBulkDelete({
 }) {
   const filesToDelete = useMemo(
     () =>
-      Object.entries(multiSelect.selectionMap).map(([_, item]) => ({
+      Object.entries(multiSelect.selection).map(([_, item]) => ({
         bucket: item.bucket.name,
         prefix: item.key,
       })),
-    [multiSelect.selectionMap]
+    [multiSelect.selection]
   )
   const { openConfirmDialog } = useDialog()
   const objectsRemove = useObjectsRemove()

@@ -97,7 +97,7 @@ function useKeysMain() {
         ...datum,
         onClick: (e: React.MouseEvent<HTMLTableRowElement>) =>
           multiSelect.onSelect(datum.id, e),
-        isSelected: !!multiSelect.selectionMap[datum.id],
+        isSelected: !!multiSelect.selection[datum.id],
       }
     })
   }, [_datasetPage, multiSelect])

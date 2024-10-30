@@ -5,16 +5,16 @@ import { Panel } from '../core/Panel'
 import { Text } from '../core/Text'
 import { pluralize } from '@siafoundation/units'
 import { Close16 } from '@siafoundation/react-icons'
-import { MultiSelect, MultiSelectItem } from './useMultiSelect'
+import { MultiSelect, MultiSelectRow } from './useMultiSelect'
 import { AppDockedControl } from '../app/AppDockedControl'
 
-export function MultiSelectionMenu<Item extends MultiSelectItem>({
+export function MultiSelectionMenu<Row extends MultiSelectRow>({
   multiSelect,
   children,
   entityWord,
   entityWordPlural,
 }: {
-  multiSelect: MultiSelect<Item>
+  multiSelect: MultiSelect<Row>
   children: React.ReactNode
   entityWord: string
   entityWordPlural?: string
@@ -36,13 +36,13 @@ export function MultiSelectionMenu<Item extends MultiSelectItem>({
             {`${pluralize(multiSelect.selectionCount, entityWord, {
               plural: entityWordPlural,
             })} selected${
-              multiSelect.someSelectedItemsOutsideCurrentPage &&
+              multiSelect.someSelectedRowsOutsideCurrentPage &&
               multiSelect.someSelectedOnCurrentPage
                 ? ' on this and other pages'
-                : !multiSelect.someSelectedItemsOutsideCurrentPage &&
+                : !multiSelect.someSelectedRowsOutsideCurrentPage &&
                   multiSelect.someSelectedOnCurrentPage
                 ? ''
-                : multiSelect.someSelectedItemsOutsideCurrentPage &&
+                : multiSelect.someSelectedRowsOutsideCurrentPage &&
                   !multiSelect.someSelectedOnCurrentPage
                 ? ' on other pages'
                 : ''

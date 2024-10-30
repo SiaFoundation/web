@@ -18,8 +18,8 @@ export function KeysBulkDelete() {
   const { multiSelect } = useKeys()
 
   const keys = useMemo(
-    () => Object.entries(multiSelect.selectionMap).map(([_, item]) => item.key),
-    [multiSelect.selectionMap]
+    () => Object.entries(multiSelect.selection).map(([_, item]) => item.key),
+    [multiSelect.selection]
   )
   const { openConfirmDialog } = useDialog()
   const settingsS3 = useSettingsS3()
