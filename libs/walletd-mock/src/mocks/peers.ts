@@ -4,7 +4,7 @@ import { Page } from 'playwright'
 export function getMockPeersResponse(): SyncerPeersResponse {
   return [
     {
-      addr: '51.81.242.140:9881',
+      address: '51.81.242.140:9881',
       inbound: false,
       version: '1.5.4',
       firstSeen: '2024-03-20T17:14:43Z',
@@ -12,7 +12,7 @@ export function getMockPeersResponse(): SyncerPeersResponse {
       syncDuration: 1321006459,
     },
     {
-      addr: '3.36.68.121:9881',
+      address: '3.36.68.121:9881',
       inbound: false,
       version: '1.5.4',
       firstSeen: '2024-03-20T13:39:10Z',
@@ -20,7 +20,7 @@ export function getMockPeersResponse(): SyncerPeersResponse {
       syncDuration: 4230014834,
     },
     {
-      addr: '185.200.116.131:9807',
+      address: '185.200.116.131:9807',
       inbound: false,
       version: '1.5.4',
       firstSeen: '2024-03-20T17:14:43Z',
@@ -29,7 +29,7 @@ export function getMockPeersResponse(): SyncerPeersResponse {
       syncDuration: 6018991169,
     },
     {
-      addr: '62.30.63.90:9881',
+      address: '62.30.63.90:9881',
       inbound: false,
       version: '1.5.4',
       firstSeen: '2024-03-20T13:39:10Z',
@@ -37,7 +37,7 @@ export function getMockPeersResponse(): SyncerPeersResponse {
       syncDuration: 6341708209,
     },
     {
-      addr: '43.203.121.70:9881',
+      address: '43.203.121.70:9881',
       inbound: false,
       version: '1.5.4',
       firstSeen: '2024-03-20T17:14:44Z',
@@ -46,7 +46,7 @@ export function getMockPeersResponse(): SyncerPeersResponse {
       syncDuration: 6860545337,
     },
     {
-      addr: '23.239.8.40:9881',
+      address: '23.239.8.40:9881',
       inbound: false,
       version: '1.5.4',
       firstSeen: '2024-03-20T13:39:10Z',
@@ -54,7 +54,7 @@ export function getMockPeersResponse(): SyncerPeersResponse {
       syncDuration: 580416082,
     },
     {
-      addr: '141.94.161.198:9881',
+      address: '141.94.161.198:9881',
       inbound: false,
       version: '1.5.4',
       firstSeen: '2024-03-20T13:39:10Z',
@@ -63,7 +63,7 @@ export function getMockPeersResponse(): SyncerPeersResponse {
       syncDuration: 4894896166,
     },
     {
-      addr: '64.227.180.244:9881',
+      address: '64.227.180.244:9881',
       inbound: false,
       version: '1.5.4',
       firstSeen: '2024-03-20T13:39:25Z',
