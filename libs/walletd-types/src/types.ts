@@ -1,7 +1,7 @@
 import { SpendPolicy, UnlockConditions } from '@siafoundation/types'
 
 export type GatewayPeer = {
-  addr: string
+  address: string
   inbound: boolean
   version: string
   firstSeen?: string

@@ -46,7 +46,7 @@ export function Node() {
         <div className="flex-1">
           <PeerList
             isLoading={peers.isValidating}
-            peers={peers.data?.map((p) => p.addr)}
+            peers={peers.data?.map((p) => p.address)}
             connectPeer={() => openDialog('connectPeer')}
           />
         </div>

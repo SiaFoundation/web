@@ -131,7 +131,12 @@ export type IndexTipResponse = ChainIndex
 
 type Peer = {
   address: string
+  inbound: boolean
   version: string
+  firstSeen?: string
+  connectedSince?: string
+  syncedBlocks?: number
+  syncDuration?: number
 }
 
 export type SyncerPeersParams = void
