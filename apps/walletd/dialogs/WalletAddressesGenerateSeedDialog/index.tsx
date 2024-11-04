@@ -3,6 +3,7 @@ import {
   Dialog,
   FieldNumber,
   FormSubmitButton,
+  stripPrefix,
   triggerErrorToast,
   triggerSuccessToast,
   useDialogFormHelpers,
@@ -179,7 +180,7 @@ export function WalletAddressesGenerateSeedDialog({
             id: walletId,
           },
           payload: {
-            address: suh.address,
+            address: stripPrefix(suh.address),
             description: '',
             // TODO: add spendPolicy?
             metadata,
