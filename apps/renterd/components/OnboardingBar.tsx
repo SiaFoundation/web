@@ -20,24 +20,18 @@ import { useSyncStatus } from '../hooks/useSyncStatus'
 import { routes } from '../config/routes'
 import { useDialog } from '../contexts/dialog'
 import { useNotEnoughContracts } from './Files/checks/useNotEnoughContracts'
-import { useAutopilotConfig, useWallet } from '@siafoundation/renterd-react'
+import { useWallet } from '@siafoundation/renterd-react'
 import BigNumber from 'bignumber.js'
 import { humanSiacoin } from '@siafoundation/units'
 import { useAppSettings } from '@siafoundation/react-core'
 import useLocalStorageState from 'use-local-storage-state'
+import { useSpendingEstimate } from '../contexts/config/useSpendingEstimate'
 
 export function OnboardingBar() {
   const { isUnlockedAndAuthedRoute } = useAppSettings()
   const { isAutopilotEnabled, autopilotInfo } = useApp()
   const { openDialog } = useDialog()
   const wallet = useWallet()
-  const autopilot = useAutopilotConfig({
-    config: {
-      swr: {
-        errorRetryInterval: 10_000,
-      },
-    },
-  })
   const [maximized, setMaximized] = useLocalStorageState<boolean>(
     'v0/renterd/onboarding/maximized',
     {
@@ -47,6 +41,7 @@ export function OnboardingBar() {
 
   const syncStatus = useSyncStatus()
   const notEnoughContracts = useNotEnoughContracts()
+  const { estimatedSpendingPerMonth } = useSpendingEstimate()
 
   if (!isUnlockedAndAuthedRoute || !isAutopilotEnabled) {
     return null
@@ -55,7 +50,6 @@ export function OnboardingBar() {
   const walletBalance = new BigNumber(
     wallet.data ? wallet.data.confirmed + wallet.data.unconfirmed : 0
   )
-  const allowance = new BigNumber(autopilot.data?.contracts.allowance || 0)
 
   const step1Configured = autopilotInfo.data?.state?.configured
   const step2Synced = syncStatus.isSynced
@@ -171,8 +165,8 @@ export function OnboardingBar() {
                   </Link>
                 }
                 description={`Fund your wallet with at least ${humanSiacoin(
-                  allowance
-                )} siacoin to cover the required allowance.${
+                  estimatedSpendingPerMonth || 0
+                )} siacoin to cover the estimated spending for a month.${
                   syncStatus.isWalletSynced
                     ? ''
                     : ' Balance will not be accurate until wallet is finished scanning.'

@@ -259,18 +259,6 @@ export const dataFields: Record<
       )
     } as Render,
   },
-  allowance: {
-    render: function Component({ value }: { value: string }) {
-      return (
-        <div className="flex justify-between w-full gap-2">
-          <Text size="12" color="subtle" ellipsis>
-            allowance
-          </Text>
-          <ValueSc size="12" variant="value" value={new BigNumber(value)} />
-        </div>
-      )
-    } as Render,
-  },
   balance: {
     render: function Component({ value }: { value: string }) {
       return (

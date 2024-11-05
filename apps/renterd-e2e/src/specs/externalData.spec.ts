@@ -27,7 +27,7 @@ test.beforeEach(async ({ page }) => {
     address: renterdNode.apiAddress,
     password: renterdNode.password,
   })
-  await configResetBasicSettings({ page })
+  await configResetBasicSettings(page)
 })
 
 test.afterEach(async () => {
@@ -51,9 +51,9 @@ test('configuration shows not-enabled message when exchange rates API hangs', as
   await mockApiSiaScanExchangeRatesHanging({ page })
   await page.reload()
 
-  await setSwitchByLabel(page, 'shouldPinAllowance', true)
   await setSwitchByLabel(page, 'shouldPinMaxStoragePrice', true)
   await setSwitchByLabel(page, 'shouldPinMaxUploadPrice', true)
+  await setSwitchByLabel(page, 'shouldPinMaxDownloadPrice', true)
 
   await fillSelectInputByName(page, 'pinnedCurrency', 'usd')
 
@@ -65,17 +65,17 @@ test('configuration shows not-enabled message when exchange rates API hangs', as
   // Pinned fields show not-enabled message.
   await expect(
     page
-      .getByTestId('allowanceMonthGroup')
-      .getByText('Enable an exchange rate API')
-  ).toBeVisible()
-  await expect(
-    page
       .getByTestId('maxStoragePriceTBMonthGroup')
       .getByText('Enable an exchange rate API')
   ).toBeVisible()
   await expect(
     page
       .getByTestId('maxUploadPriceTBGroup')
+      .getByText('Enable an exchange rate API')
+  ).toBeVisible()
+  await expect(
+    page
+      .getByTestId('maxDownloadPriceTBGroup')
       .getByText('Enable an exchange rate API')
   ).toBeVisible()
 })

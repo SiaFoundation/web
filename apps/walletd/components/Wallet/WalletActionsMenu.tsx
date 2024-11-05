@@ -15,6 +15,7 @@ import { useDialog } from '../../contexts/dialog'
 import { WalletContextMenu } from '../WalletContextMenu'
 import { WalletBalanceWithSf } from './WalletBalanceWithSf'
 import { useAddresses } from '../../contexts/addresses'
+import { defaultDatasetRefreshInterval } from '../../config/swr'
 
 export function WalletActionsMenu() {
   const status = useSyncStatus()
@@ -25,6 +26,11 @@ export function WalletActionsMenu() {
     disabled: !walletId,
     params: {
       id: walletId,
+    },
+    config: {
+      swr: {
+        refreshInterval: defaultDatasetRefreshInterval,
+      },
     },
   })
   const { wallet } = useWallets()

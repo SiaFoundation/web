@@ -41,6 +41,8 @@ test('send siacoin with a seed wallet', async ({ page, browserName }) => {
   await walletInList(page, name)
   await rescanWallets(page)
   await navigateToWallet(page, name)
+  const navbar = page.getByTestId('navbar')
+  await expect(navbar.getByText('1.000 MS')).toBeVisible({ timeout: 20_000 })
   await page.getByLabel('send').click()
   await fillComposeTransactionSiacoin({
     page,

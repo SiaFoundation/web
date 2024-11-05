@@ -26,7 +26,7 @@ export default defineConfig({
     video: 'on-first-retry',
   },
   // Timeout per test.
-  timeout: 120_000,
+  timeout: 180_000,
   expect: {
     // Raise the timeout because it is running against next dev mode
     // which requires compilation the first to a page is visited

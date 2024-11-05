@@ -1,8 +1,4 @@
-import {
-  toFixedMaxBigNumber,
-  toFixedMaxString,
-} from '@siafoundation/design-system'
-import { currencyOptions } from '@siafoundation/react-core'
+import { toFixedMaxString } from '@siafoundation/design-system'
 import {
   AutopilotConfig,
   SettingsGouging,
@@ -19,7 +15,6 @@ import {
   valuePerByteToPerTB,
   valuePerOneToPerMillion,
   valuePerPeriodToPerMonth,
-  weeksToBlocks,
 } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import {
@@ -41,13 +36,6 @@ export function transformDownAutopilot(
   }
 
   const autopilotContractSet = config.contracts.set
-  const allowanceMonth = toSiacoins(
-    valuePerPeriodToPerMonth(
-      new BigNumber(config.contracts.allowance),
-      config.contracts.period
-    ),
-    scDecimalPlaces
-  )
   const amountHosts = new BigNumber(config.contracts.amount)
   const periodWeeks = new BigNumber(blocksToWeeks(config.contracts.period))
   const renewWindowWeeks = new BigNumber(
@@ -77,7 +65,6 @@ export function transformDownAutopilot(
   return {
     // contracts
     autopilotContractSet,
-    allowanceMonth,
     amountHosts,
     periodWeeks,
     renewWindowWeeks,
@@ -186,24 +173,10 @@ export function transformDownGouging({
   }
 }
 
-export function transformDownPinned(
-  p: SettingsPinned,
-  autopilotID = 'autopilot',
-  periodBlocks?: number
-): ValuesPinned {
-  const fixedFiat = currencyOptions.find((c) => c.id === p.currency)?.fixed || 6
+export function transformDownPinned(p: SettingsPinned): ValuesPinned {
   return {
     pinnedCurrency: p.currency,
     pinnedThreshold: new BigNumber(p.threshold).times(100),
-    shouldPinAllowance: p.autopilots?.[autopilotID]?.allowance.pinned || false,
-    allowanceMonthPinned: toFixedMaxBigNumber(
-      valuePerPeriodToPerMonth(
-        new BigNumber(p.autopilots?.[autopilotID]?.allowance.value || 0),
-        // If pinned allowance is non zero, the period value will be defined.
-        periodBlocks || weeksToBlocks(6)
-      ),
-      fixedFiat
-    ),
     shouldPinMaxStoragePrice: p.gougingSettingsPins?.maxStorage.pinned,
     maxStoragePriceTBMonthPinned: new BigNumber(
       p.gougingSettingsPins.maxStorage.value
@@ -263,7 +236,7 @@ export function transformDown({
       hasBeenConfigured,
     }),
     // pinning
-    ...transformDownPinned(pinned, autopilotID, autopilot?.contracts.period),
+    ...transformDownPinned(pinned),
     // upload
     ...transformDownUpload(upload),
   }

@@ -21,7 +21,6 @@ export const inputValuesAutopilot = {
   // contracts
   autopilotContractSet: '',
   amountHosts: undefined as BigNumber | undefined,
-  allowanceMonth: undefined as BigNumber | undefined,
   periodWeeks: undefined as BigNumber | undefined,
   renewWindowWeeks: undefined as BigNumber | undefined,
   downloadTBMonth: undefined as BigNumber | undefined,
@@ -57,8 +56,6 @@ export const inputValuesPinned = {
   maxDownloadPriceTBPinned: undefined as BigNumber | undefined,
   shouldPinMaxUploadPrice: false,
   maxUploadPriceTBPinned: undefined as BigNumber | undefined,
-  shouldPinAllowance: false,
-  allowanceMonthPinned: undefined as BigNumber | undefined,
 }
 
 export const inputValuesUpload = {

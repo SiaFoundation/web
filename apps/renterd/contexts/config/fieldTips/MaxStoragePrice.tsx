@@ -6,13 +6,8 @@ import {
 import { fiatToSiacoin, toHastings } from '@siafoundation/units'
 import { UseFormReturn } from 'react-hook-form'
 import { Categories, RecommendationItem, InputValues } from '../types'
-import { useAllowanceDerivedPricingForEnabledFields } from '../useAllowanceDerivedPricing'
 import { useFormExchangeRate } from '../useFormExchangeRate'
-import {
-  PriceWithRedundancyTip,
-  fitPriceToCurrentAllowanceTipContent,
-  recommendationTipContent,
-} from './Tip'
+import { PriceWithRedundancyTip, recommendationTipContent } from './Tip'
 import { useAverages } from '../useAverages'
 
 export function MaxStoragePriceTips({
@@ -25,9 +20,6 @@ export function MaxStoragePriceTips({
   recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
 }) {
   const { storageAverage } = useAverages()
-  const derived = useAllowanceDerivedPricingForEnabledFields({
-    form,
-  })
   const maxStoragePriceTBMonth = form.watch('maxStoragePriceTBMonth')
   const recommendationPrice =
     recommendations?.maxStoragePriceTBMonth?.targetValue
@@ -47,24 +39,6 @@ export function MaxStoragePriceTips({
               fields,
               name: 'maxStoragePriceTBMonth',
               value: storageAverage,
-              options: true,
-            })
-          }}
-        />
-      )}
-      {derived?.maxStoragePriceTBMonth && (
-        <TipNumber
-          type="siacoin"
-          label="Fit current allowance"
-          tip={fitPriceToCurrentAllowanceTipContent}
-          decimalsLimit={0}
-          value={toHastings(derived.maxStoragePriceTBMonth)}
-          onClick={() => {
-            formSetField({
-              form,
-              fields,
-              name: 'maxStoragePriceTBMonth',
-              value: derived.maxStoragePriceTBMonth,
               options: true,
             })
           }}
@@ -106,9 +80,6 @@ export function MaxStoragePricePinnedTips({
   fields: ConfigFields<InputValues, Categories>
   recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
 }) {
-  const derived = useAllowanceDerivedPricingForEnabledFields({
-    form,
-  })
   const { storageAverage } = useAverages()
   const { rate } = useFormExchangeRate(form)
   const maxStoragePriceTBMonthPinned = form.watch(
@@ -117,10 +88,6 @@ export function MaxStoragePricePinnedTips({
   const currentPriceInSiacoin =
     maxStoragePriceTBMonthPinned && rate
       ? fiatToSiacoin(maxStoragePriceTBMonthPinned, rate)
-      : undefined
-  const derivedPriceInSiacoin =
-    derived?.maxStoragePriceTBMonthPinned && rate
-      ? fiatToSiacoin(derived.maxStoragePriceTBMonthPinned, rate)
       : undefined
   const recommendationInFiat =
     recommendations?.maxStoragePriceTBMonthPinned?.targetValue
@@ -144,24 +111,6 @@ export function MaxStoragePricePinnedTips({
               fields,
               name: 'maxStoragePriceTBMonthPinned',
               value: storageAverage.times(rate),
-              options: true,
-            })
-          }}
-        />
-      )}
-      {derivedPriceInSiacoin && derived?.maxStoragePriceTBMonthPinned && (
-        <TipNumber
-          type="siacoin"
-          label="Fit current allowance"
-          tip={fitPriceToCurrentAllowanceTipContent}
-          decimalsLimit={0}
-          value={toHastings(derivedPriceInSiacoin)}
-          onClick={() => {
-            formSetField({
-              form,
-              fields,
-              name: 'maxStoragePriceTBMonthPinned',
-              value: derived.maxStoragePriceTBMonthPinned,
               options: true,
             })
           }}

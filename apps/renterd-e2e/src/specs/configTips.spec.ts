@@ -1,17 +1,22 @@
 import { test, expect } from '@playwright/test'
-import { navigateToConfig } from '../fixtures/navigate'
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
 import {
   clickTwice,
   setSwitchByLabel,
-  setViewMode,
   expectTextInputByName,
-  fillTextInputByName,
   setCurrencyDisplay,
+  setViewMode,
 } from '@siafoundation/e2e'
+import {
+  configResetBasicSettings,
+  configFillEstimatesFiat,
+  configFillEstimatesSiacoin,
+} from '../fixtures/configResetSettings'
 
 test.beforeEach(async ({ page }) => {
+  test.setTimeout(150_000)
   await beforeTest(page)
+  await configResetBasicSettings(page)
 })
 
 test.afterEach(async () => {
@@ -19,15 +24,8 @@ test.afterEach(async () => {
 })
 
 test('field tips for storage', async ({ page }) => {
-  await navigateToConfig({ page })
-  await setViewMode({ page, state: 'advanced' })
-
-  await fillTextInputByName(page, 'allowanceMonth', '7000')
-  await fillTextInputByName(page, 'storageTB', '7')
-  await fillTextInputByName(page, 'uploadTBMonth', '7')
-  await fillTextInputByName(page, 'downloadTBMonth', '7')
-  await fillTextInputByName(page, 'minShards', '1')
-  await fillTextInputByName(page, 'totalShards', '3')
+  const spendingEstimate = page.getByTestId('spendingEstimate')
+  const rebalanceButton = spendingEstimate.getByLabel('rebalance prices')
 
   // Storage siacoin.
   await setCurrencyDisplay(page, 'bothPreferSc', 'usd')
@@ -38,13 +36,10 @@ test('field tips for storage', async ({ page }) => {
   await expect(storageNetworkAverage).toBeVisible()
   await clickTwice(storageNetworkAverage)
   await expectTextInputByName(page, 'maxStoragePriceTBMonth', '341')
-  let storageFitCurrentAllowance = page
-    .getByTestId('maxStoragePriceTBMonthGroup')
-    .getByLabel('Fit current allowance')
-    .getByText('300')
-  await expect(storageFitCurrentAllowance).toBeVisible()
-  await clickTwice(storageFitCurrentAllowance)
-  await expectTextInputByName(page, 'maxStoragePriceTBMonth', '300')
+  await rebalanceButton.click()
+  await expectTextInputByName(page, 'maxStoragePriceTBMonth', '2,604.6')
+
+  await configFillEstimatesSiacoin(page)
   await setCurrencyDisplay(page, 'bothPreferFiat', 'usd')
   let storageNetworkAverageFiat = page
     .getByTestId('maxStoragePriceTBMonthGroup')
@@ -53,13 +48,10 @@ test('field tips for storage', async ({ page }) => {
   await expect(storageNetworkAverageFiat).toBeVisible()
   await clickTwice(storageNetworkAverageFiat)
   await expectTextInputByName(page, 'maxStoragePriceTBMonth', '341')
-  let storageFitCurrentAllowanceFiat = page
-    .getByTestId('maxStoragePriceTBMonthGroup')
-    .getByLabel('Fit current allowance')
-    .getByText('$1.18')
-  await expect(storageFitCurrentAllowanceFiat).toBeVisible()
-  await clickTwice(storageFitCurrentAllowanceFiat)
-  await expectTextInputByName(page, 'maxStoragePriceTBMonth', '300')
+  await rebalanceButton.click()
+  await expectTextInputByName(page, 'maxStoragePriceTBMonth', '2,604.6')
+
+  await configFillEstimatesSiacoin(page)
   await setCurrencyDisplay(page, 'bothPreferFiat', 'jpy')
   let storageNetworkAverageFiatJPY = page
     .getByTestId('maxStoragePriceTBMonthGroup')
@@ -68,20 +60,16 @@ test('field tips for storage', async ({ page }) => {
   await expect(storageNetworkAverageFiatJPY).toBeVisible()
   await clickTwice(storageNetworkAverageFiatJPY)
   await expectTextInputByName(page, 'maxStoragePriceTBMonth', '341')
-  let storageFitCurrentAllowanceFiatJPY = page
-    .getByTestId('maxStoragePriceTBMonthGroup')
-    .getByLabel('Fit current allowance')
-    .getByText('¥218.33')
-  await expect(storageFitCurrentAllowanceFiatJPY).toBeVisible()
-  await clickTwice(storageFitCurrentAllowanceFiatJPY)
-  await expectTextInputByName(page, 'maxStoragePriceTBMonth', '300')
+  await rebalanceButton.click()
+  await expectTextInputByName(page, 'maxStoragePriceTBMonth', '2,604.6')
 
   // Fiat.
-  await setSwitchByLabel(page, 'shouldPinAllowance', true)
   await setSwitchByLabel(page, 'shouldPinMaxStoragePrice', true)
-  await fillTextInputByName(page, 'allowanceMonthPinned', '30')
+  await setSwitchByLabel(page, 'shouldPinMaxUploadPrice', true)
+  await setSwitchByLabel(page, 'shouldPinMaxDownloadPrice', true)
 
   // Storage fiat.
+  await configFillEstimatesFiat(page)
   await setCurrencyDisplay(page, 'bothPreferSc', 'usd')
   storageNetworkAverage = page
     .getByTestId('maxStoragePriceTBMonthGroup')
@@ -90,13 +78,10 @@ test('field tips for storage', async ({ page }) => {
   await expect(storageNetworkAverage).toBeVisible()
   await clickTwice(storageNetworkAverage)
   await expectTextInputByName(page, 'maxStoragePriceTBMonthPinned', '$1.34')
-  storageFitCurrentAllowance = page
-    .getByTestId('maxStoragePriceTBMonthGroup')
-    .getByLabel('Fit current allowance')
-    .getByText('326')
-  await expect(storageFitCurrentAllowance).toBeVisible()
-  await clickTwice(storageFitCurrentAllowance)
-  await expectTextInputByName(page, 'maxStoragePriceTBMonthPinned', '$1.29')
+  await rebalanceButton.click()
+  await expectTextInputByName(page, 'maxStoragePriceTBMonthPinned', '$10.27')
+
+  await configFillEstimatesFiat(page)
   await setCurrencyDisplay(page, 'bothPreferFiat', 'usd')
   storageNetworkAverageFiat = page
     .getByTestId('maxStoragePriceTBMonthGroup')
@@ -105,13 +90,10 @@ test('field tips for storage', async ({ page }) => {
   await expect(storageNetworkAverageFiat).toBeVisible()
   await clickTwice(storageNetworkAverageFiat)
   await expectTextInputByName(page, 'maxStoragePriceTBMonthPinned', '$1.34')
-  storageFitCurrentAllowanceFiat = page
-    .getByTestId('maxStoragePriceTBMonthGroup')
-    .getByLabel('Fit current allowance')
-    .getByText('$1.29')
-  await expect(storageFitCurrentAllowanceFiat).toBeVisible()
-  await clickTwice(storageFitCurrentAllowanceFiat)
-  await expectTextInputByName(page, 'maxStoragePriceTBMonthPinned', '$1.29')
+  await rebalanceButton.click()
+  await expectTextInputByName(page, 'maxStoragePriceTBMonthPinned', '$10.27')
+
+  await configFillEstimatesFiat(page)
   await setCurrencyDisplay(page, 'bothPreferFiat', 'jpy')
   storageNetworkAverageFiatJPY = page
     .getByTestId('maxStoragePriceTBMonthGroup')
@@ -120,25 +102,13 @@ test('field tips for storage', async ({ page }) => {
   await expect(storageNetworkAverageFiatJPY).toBeVisible()
   await clickTwice(storageNetworkAverageFiatJPY)
   await expectTextInputByName(page, 'maxStoragePriceTBMonthPinned', '$1.34')
-  storageFitCurrentAllowanceFiatJPY = page
-    .getByTestId('maxStoragePriceTBMonthGroup')
-    .getByLabel('Fit current allowance')
-    .getByText('¥237.25')
-  await expect(storageFitCurrentAllowanceFiatJPY).toBeVisible()
-  await clickTwice(storageFitCurrentAllowanceFiatJPY)
-  await expectTextInputByName(page, 'maxStoragePriceTBMonthPinned', '$1.29')
+  await rebalanceButton.click()
+  await expectTextInputByName(page, 'maxStoragePriceTBMonthPinned', '$10.27')
 })
 
 test('field tips for upload', async ({ page }) => {
-  await navigateToConfig({ page })
-  await setViewMode({ page, state: 'advanced' })
-
-  await fillTextInputByName(page, 'allowanceMonth', '7000')
-  await fillTextInputByName(page, 'storageTB', '7')
-  await fillTextInputByName(page, 'uploadTBMonth', '7')
-  await fillTextInputByName(page, 'downloadTBMonth', '7')
-  await fillTextInputByName(page, 'minShards', '1')
-  await fillTextInputByName(page, 'totalShards', '3')
+  const spendingEstimate = page.getByTestId('spendingEstimate')
+  const rebalanceButton = spendingEstimate.getByLabel('rebalance prices')
 
   // Upload siacoin.
   await setCurrencyDisplay(page, 'bothPreferSc', 'usd')
@@ -149,13 +119,10 @@ test('field tips for upload', async ({ page }) => {
   await expect(uploadNetworkAverage).toBeVisible()
   await clickTwice(uploadNetworkAverage)
   await expectTextInputByName(page, 'maxUploadPriceTB', '76')
-  let uploadFitCurrentAllowance = page
-    .getByTestId('maxUploadPriceTBGroup')
-    .getByLabel('Fit current allowance')
-    .getByText('75')
-  await expect(uploadFitCurrentAllowance).toBeVisible()
-  await clickTwice(uploadFitCurrentAllowance)
-  await expectTextInputByName(page, 'maxUploadPriceTB', '75')
+  await rebalanceButton.click()
+  await expectTextInputByName(page, 'maxUploadPriceTB', '611.4')
+
+  await configFillEstimatesSiacoin(page)
   await setCurrencyDisplay(page, 'bothPreferFiat', 'usd')
   let uploadNetworkAverageFiat = page
     .getByTestId('maxUploadPriceTBGroup')
@@ -164,13 +131,10 @@ test('field tips for upload', async ({ page }) => {
   await expect(uploadNetworkAverageFiat).toBeVisible()
   await clickTwice(uploadNetworkAverageFiat)
   await expectTextInputByName(page, 'maxUploadPriceTB', '76')
-  let uploadFitCurrentAllowanceFiat = page
-    .getByTestId('maxUploadPriceTBGroup')
-    .getByLabel('Fit current allowance')
-    .getByText('$0.30')
-  await expect(uploadFitCurrentAllowanceFiat).toBeVisible()
-  await clickTwice(uploadFitCurrentAllowanceFiat)
-  await expectTextInputByName(page, 'maxUploadPriceTB', '75')
+  await rebalanceButton.click()
+  await expectTextInputByName(page, 'maxUploadPriceTB', '611.4')
+
+  await configFillEstimatesSiacoin(page)
   await setCurrencyDisplay(page, 'bothPreferFiat', 'jpy')
   let uploadNetworkAverageFiatJPY = page
     .getByTestId('maxUploadPriceTBGroup')
@@ -179,20 +143,16 @@ test('field tips for upload', async ({ page }) => {
   await expect(uploadNetworkAverageFiatJPY).toBeVisible()
   await clickTwice(uploadNetworkAverageFiatJPY)
   await expectTextInputByName(page, 'maxUploadPriceTB', '76')
-  let uploadFitCurrentAllowanceFiatJPY = page
-    .getByTestId('maxUploadPriceTBGroup')
-    .getByLabel('Fit current allowance')
-    .getByText('¥54.58')
-  await expect(uploadFitCurrentAllowanceFiatJPY).toBeVisible()
-  await clickTwice(uploadFitCurrentAllowanceFiatJPY)
-  await expectTextInputByName(page, 'maxUploadPriceTB', '75')
+  await rebalanceButton.click()
+  await expectTextInputByName(page, 'maxUploadPriceTB', '611.4')
 
   // Fiat.
-  await setSwitchByLabel(page, 'shouldPinAllowance', true)
+  await setSwitchByLabel(page, 'shouldPinMaxStoragePrice', true)
   await setSwitchByLabel(page, 'shouldPinMaxUploadPrice', true)
-  await fillTextInputByName(page, 'allowanceMonthPinned', '30')
+  await setSwitchByLabel(page, 'shouldPinMaxDownloadPrice', true)
 
   // Upload fiat.
+  await configFillEstimatesFiat(page)
   await setCurrencyDisplay(page, 'bothPreferSc', 'usd')
   uploadNetworkAverage = page
     .getByTestId('maxUploadPriceTBGroup')
@@ -201,13 +161,10 @@ test('field tips for upload', async ({ page }) => {
   await expect(uploadNetworkAverage).toBeVisible()
   await clickTwice(uploadNetworkAverage)
   await expectTextInputByName(page, 'maxUploadPriceTBPinned', '$0.30')
-  uploadFitCurrentAllowance = page
-    .getByTestId('maxUploadPriceTBGroup')
-    .getByLabel('Fit current allowance')
-    .getByText('81')
-  await expect(uploadFitCurrentAllowance).toBeVisible()
-  await clickTwice(uploadFitCurrentAllowance)
-  await expectTextInputByName(page, 'maxUploadPriceTBPinned', '$0.32')
+  await rebalanceButton.click()
+  await expectTextInputByName(page, 'maxUploadPriceTBPinned', '$2.41')
+
+  await configFillEstimatesFiat(page)
   await setCurrencyDisplay(page, 'bothPreferFiat', 'usd')
   uploadNetworkAverageFiat = page
     .getByTestId('maxUploadPriceTBGroup')
@@ -216,13 +173,10 @@ test('field tips for upload', async ({ page }) => {
   await expect(uploadNetworkAverageFiat).toBeVisible()
   await clickTwice(uploadNetworkAverageFiat)
   await expectTextInputByName(page, 'maxUploadPriceTBPinned', '$0.30')
-  uploadFitCurrentAllowanceFiat = page
-    .getByTestId('maxUploadPriceTBGroup')
-    .getByLabel('Fit current allowance')
-    .getByText('$0.32')
-  await expect(uploadFitCurrentAllowanceFiat).toBeVisible()
-  await clickTwice(uploadFitCurrentAllowanceFiat)
-  await expectTextInputByName(page, 'maxUploadPriceTBPinned', '$0.32')
+  await rebalanceButton.click()
+  await expectTextInputByName(page, 'maxUploadPriceTBPinned', '$2.41')
+
+  await configFillEstimatesFiat(page)
   await setCurrencyDisplay(page, 'bothPreferFiat', 'jpy')
   uploadNetworkAverageFiatJPY = page
     .getByTestId('maxUploadPriceTBGroup')
@@ -231,25 +185,13 @@ test('field tips for upload', async ({ page }) => {
   await expect(uploadNetworkAverageFiatJPY).toBeVisible()
   await clickTwice(uploadNetworkAverageFiatJPY)
   await expectTextInputByName(page, 'maxUploadPriceTBPinned', '$0.30')
-  uploadFitCurrentAllowanceFiatJPY = page
-    .getByTestId('maxUploadPriceTBGroup')
-    .getByLabel('Fit current allowance')
-    .getByText('¥59.31')
-  await expect(uploadFitCurrentAllowanceFiatJPY).toBeVisible()
-  await clickTwice(uploadFitCurrentAllowanceFiatJPY)
-  await expectTextInputByName(page, 'maxUploadPriceTBPinned', '$0.32')
+  await rebalanceButton.click()
+  await expectTextInputByName(page, 'maxUploadPriceTBPinned', '$2.41')
 })
 
 test('field tips for download', async ({ page }) => {
-  await navigateToConfig({ page })
-  await setViewMode({ page, state: 'advanced' })
-
-  await fillTextInputByName(page, 'allowanceMonth', '7000')
-  await fillTextInputByName(page, 'storageTB', '7')
-  await fillTextInputByName(page, 'uploadTBMonth', '7')
-  await fillTextInputByName(page, 'downloadTBMonth', '7')
-  await fillTextInputByName(page, 'minShards', '1')
-  await fillTextInputByName(page, 'totalShards', '3')
+  const spendingEstimate = page.getByTestId('spendingEstimate')
+  const rebalanceButton = spendingEstimate.getByLabel('rebalance prices')
 
   // Download siacoin.
   await setCurrencyDisplay(page, 'bothPreferSc', 'usd')
@@ -260,13 +202,10 @@ test('field tips for download', async ({ page }) => {
   await expect(downloadNetworkAverage).toBeVisible()
   await clickTwice(downloadNetworkAverage)
   await expectTextInputByName(page, 'maxDownloadPriceTB', '899')
-  let downloadFitCurrentAllowance = page
-    .getByTestId('maxDownloadPriceTBGroup')
-    .getByLabel('Fit current allowance')
-    .getByText('375')
-  await expect(downloadFitCurrentAllowance).toBeVisible()
-  await clickTwice(downloadFitCurrentAllowance)
-  await expectTextInputByName(page, 'maxDownloadPriceTB', '375')
+  await rebalanceButton.click()
+  await expectTextInputByName(page, 'maxDownloadPriceTB', '4,724.732143')
+
+  await configFillEstimatesSiacoin(page)
   await setCurrencyDisplay(page, 'bothPreferFiat', 'usd')
   let downloadNetworkAverageFiat = page
     .getByTestId('maxDownloadPriceTBGroup')
@@ -275,13 +214,10 @@ test('field tips for download', async ({ page }) => {
   await expect(downloadNetworkAverageFiat).toBeVisible()
   await clickTwice(downloadNetworkAverageFiat)
   await expectTextInputByName(page, 'maxDownloadPriceTB', '899')
-  let downloadFitCurrentAllowanceFiat = page
-    .getByTestId('maxDownloadPriceTBGroup')
-    .getByLabel('Fit current allowance')
-    .getByText('$1.48')
-  await expect(downloadFitCurrentAllowanceFiat).toBeVisible()
-  await clickTwice(downloadFitCurrentAllowanceFiat)
-  await expectTextInputByName(page, 'maxDownloadPriceTB', '375')
+  await rebalanceButton.click()
+  await expectTextInputByName(page, 'maxDownloadPriceTB', '4,724.732143')
+
+  await configFillEstimatesSiacoin(page)
   await setCurrencyDisplay(page, 'bothPreferFiat', 'jpy')
   let downloadNetworkAverageFiatJPY = page
     .getByTestId('maxDownloadPriceTBGroup')
@@ -290,20 +226,16 @@ test('field tips for download', async ({ page }) => {
   await expect(downloadNetworkAverageFiatJPY).toBeVisible()
   await clickTwice(downloadNetworkAverageFiatJPY)
   await expectTextInputByName(page, 'maxDownloadPriceTB', '899')
-  let downloadFitCurrentAllowanceFiatJPY = page
-    .getByTestId('maxDownloadPriceTBGroup')
-    .getByLabel('Fit current allowance')
-    .getByText('¥272.92')
-  await expect(downloadFitCurrentAllowanceFiatJPY).toBeVisible()
-  await clickTwice(downloadFitCurrentAllowanceFiatJPY)
-  await expectTextInputByName(page, 'maxDownloadPriceTB', '375')
+  await rebalanceButton.click()
+  await expectTextInputByName(page, 'maxDownloadPriceTB', '4,724.732143')
 
   // Fiat.
-  await setSwitchByLabel(page, 'shouldPinAllowance', true)
+  await setSwitchByLabel(page, 'shouldPinMaxStoragePrice', true)
+  await setSwitchByLabel(page, 'shouldPinMaxUploadPrice', true)
   await setSwitchByLabel(page, 'shouldPinMaxDownloadPrice', true)
-  await fillTextInputByName(page, 'allowanceMonthPinned', '30')
 
   // Download fiat.
+  await configFillEstimatesFiat(page)
   await setCurrencyDisplay(page, 'bothPreferSc', 'usd')
   downloadNetworkAverage = page
     .getByTestId('maxDownloadPriceTBGroup')
@@ -312,13 +244,10 @@ test('field tips for download', async ({ page }) => {
   await expect(downloadNetworkAverage).toBeVisible()
   await clickTwice(downloadNetworkAverage)
   await expectTextInputByName(page, 'maxDownloadPriceTBPinned', '$3.55')
-  downloadFitCurrentAllowance = page
-    .getByTestId('maxDownloadPriceTBGroup')
-    .getByLabel('Fit current allowance')
-    .getByText('407')
-  await expect(downloadFitCurrentAllowance).toBeVisible()
-  await clickTwice(downloadFitCurrentAllowance)
-  await expectTextInputByName(page, 'maxDownloadPriceTBPinned', '$1.61')
+  await rebalanceButton.click()
+  await expectTextInputByName(page, 'maxDownloadPriceTBPinned', '$18.63')
+
+  await configFillEstimatesFiat(page)
   await setCurrencyDisplay(page, 'bothPreferFiat', 'usd')
   downloadNetworkAverageFiat = page
     .getByTestId('maxDownloadPriceTBGroup')
@@ -327,13 +256,10 @@ test('field tips for download', async ({ page }) => {
   await expect(downloadNetworkAverageFiat).toBeVisible()
   await clickTwice(downloadNetworkAverageFiat)
   await expectTextInputByName(page, 'maxDownloadPriceTBPinned', '$3.55')
-  downloadFitCurrentAllowanceFiat = page
-    .getByTestId('maxDownloadPriceTBGroup')
-    .getByLabel('Fit current allowance')
-    .getByText('$1.61')
-  await expect(downloadFitCurrentAllowanceFiat).toBeVisible()
-  await clickTwice(downloadFitCurrentAllowanceFiat)
-  await expectTextInputByName(page, 'maxDownloadPriceTBPinned', '$1.61')
+  await rebalanceButton.click()
+  await expectTextInputByName(page, 'maxDownloadPriceTBPinned', '$18.63')
+
+  await configFillEstimatesFiat(page)
   await setCurrencyDisplay(page, 'bothPreferFiat', 'jpy')
   downloadNetworkAverageFiatJPY = page
     .getByTestId('maxDownloadPriceTBGroup')
@@ -342,25 +268,12 @@ test('field tips for download', async ({ page }) => {
   await expect(downloadNetworkAverageFiatJPY).toBeVisible()
   await clickTwice(downloadNetworkAverageFiatJPY)
   await expectTextInputByName(page, 'maxDownloadPriceTBPinned', '$3.55')
-  downloadFitCurrentAllowanceFiatJPY = page
-    .getByTestId('maxDownloadPriceTBGroup')
-    .getByLabel('Fit current allowance')
-    .getByText('¥296.56')
-  await expect(downloadFitCurrentAllowanceFiatJPY).toBeVisible()
-  await clickTwice(downloadFitCurrentAllowanceFiatJPY)
-  await expectTextInputByName(page, 'maxDownloadPriceTBPinned', '$1.61')
+  await rebalanceButton.click()
+  await expectTextInputByName(page, 'maxDownloadPriceTBPinned', '$18.63')
 })
 
 test('field tips max contract and rpc prices', async ({ page }) => {
-  await navigateToConfig({ page })
   await setViewMode({ page, state: 'advanced' })
-
-  await fillTextInputByName(page, 'allowanceMonth', '7000')
-  await fillTextInputByName(page, 'storageTB', '7')
-  await fillTextInputByName(page, 'uploadTBMonth', '7')
-  await fillTextInputByName(page, 'downloadTBMonth', '7')
-  await fillTextInputByName(page, 'minShards', '1')
-  await fillTextInputByName(page, 'totalShards', '3')
 
   // Contract.
   await setCurrencyDisplay(page, 'bothPreferSc', 'usd')

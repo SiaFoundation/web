@@ -29,7 +29,6 @@ test.afterEach(async () => {
 })
 
 test('can create directory and delete a directory', async ({ page }) => {
-  test.setTimeout(120_000)
   const bucketName = 'files-test'
   const dirName1 = 'test-dir'
   const dirName2 = 'test-dir-2-same-prefix'
@@ -56,7 +55,6 @@ test('can create directory and delete a directory', async ({ page }) => {
 test('can create directory, upload file, rename file, navigate, delete a file, delete a directory', async ({
   page,
 }) => {
-  test.setTimeout(120_000)
   const bucketName = 'files-test'
   const dirName = 'test-dir'
   const originalFileName = 'sample.txt'
@@ -118,7 +116,6 @@ test('can create directory, upload file, rename file, navigate, delete a file, d
 test('shows a new intermediate directory when uploading nested files', async ({
   page,
 }) => {
-  test.setTimeout(120_000)
   const bucketName = 'files-test'
   const containerDir = 'test-dir'
   const containerDirPath = `${bucketName}/${containerDir}/`
@@ -176,7 +173,6 @@ test('shows a new intermediate directory when uploading nested files', async ({
 })
 
 test('batch delete across nested directories', async ({ page }) => {
-  test.setTimeout(120_000)
   const bucketName = 'bucket1'
   await navigateToBuckets({ page })
   await createBucket(page, bucketName)
@@ -222,7 +218,6 @@ test('batch delete across nested directories', async ({ page }) => {
 })
 
 test('batch delete using the all files explorer mode', async ({ page }) => {
-  test.setTimeout(120_000)
   const bucketName = 'bucket1'
   await navigateToBuckets({ page })
   await createBucket(page, bucketName)

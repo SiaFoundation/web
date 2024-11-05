@@ -5,7 +5,12 @@ import {
   useAutopilotState,
   useBusState,
 } from '@siafoundation/renterd-react'
-import { humanNumber, humanSiacoin, toHastings } from '@siafoundation/units'
+import {
+  humanNumber,
+  humanSiacoin,
+  siacoinToFiat,
+  toHastings,
+} from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import { useCallback, useMemo } from 'react'
 import { UseFormReturn } from 'react-hook-form'
@@ -24,11 +29,7 @@ import {
   getAdvancedDefaults,
   Values,
 } from './types'
-import {
-  pricesToPinnedPrices,
-  useEnabledAllowanceInSiacoin,
-  useEnabledPricingValuesInSiacoin,
-} from './useAllowanceDerivedPricing'
+import { useEnabledPricingValuesInSiacoin } from './useEnabledPricingValuesInSiacoin'
 import { useFormExchangeRate } from './useFormExchangeRate'
 import { AutopilotConfigEvaluatePayload } from '@siafoundation/renterd-types'
 
@@ -71,28 +72,16 @@ export function useAutopilotEvaluations({
   ])
 
   // Convert any pinned fields over to siacoin values.
-  const allowance = useEnabledAllowanceInSiacoin({
-    form,
-  })
   const pricing = useEnabledPricingValuesInSiacoin({
     form,
   })
-  const anyPinnedValuesAsSiacoin = useMemo(() => {
-    if (allowance) {
-      return {
-        allowanceMonth: allowance,
-        ...pricing,
-      }
-    }
-    return pricing
-  }, [allowance, pricing])
 
   const currentValuesWithPinnedOverridesAndDefaults = useMemo(() => {
     // Any pinned values are converted to siacoin and merged into the
     // corresponding non-pinned fields.
     const valuesWithPinnedOverrides = {
       ...values,
-      ...anyPinnedValuesAsSiacoin,
+      ...pricing,
     }
     // We need to pass valid settings data into transformUp to get the payloads.
     // The form can be invalid or have empty fields depending on the mode, so we
@@ -102,11 +91,7 @@ export function useAutopilotEvaluations({
       valuesWithPinnedOverrides,
       resources.autopilotInfo.data?.state?.network
     )
-  }, [
-    values,
-    anyPinnedValuesAsSiacoin,
-    resources.autopilotInfo.data?.state?.network,
-  ])
+  }, [values, pricing, resources.autopilotInfo.data?.state?.network])
 
   const payloads = useMemo(() => {
     if (!hasDataToEvaluate || !renterdState.data) {
@@ -403,6 +388,30 @@ function getRecommendationItem({
   return rec
 }
 
+function pricesToPinnedPrices({
+  exchangeRate,
+  maxStoragePriceTBMonth,
+  maxDownloadPriceTB,
+  maxUploadPriceTB,
+}: {
+  exchangeRate?: BigNumber
+  maxStoragePriceTBMonth: BigNumber
+  maxDownloadPriceTB: BigNumber
+  maxUploadPriceTB: BigNumber
+}) {
+  if (!exchangeRate) {
+    return undefined
+  }
+  return {
+    maxStoragePriceTBMonthPinned: siacoinToFiat(
+      maxStoragePriceTBMonth,
+      exchangeRate
+    ),
+    maxDownloadPriceTBPinned: siacoinToFiat(maxDownloadPriceTB, exchangeRate),
+    maxUploadPriceTBPinned: siacoinToFiat(maxUploadPriceTB, exchangeRate),
+  }
+}
+
 // We just need some of the static metadata so pass in dummy values.
 const fields = getFields({
   validationContext: {
@@ -457,9 +466,6 @@ const fieldToLabel: Record<keyof RecommendableFields, string> = {
 export const valuesZeroDefaults: Values = {
   autopilotContractSet: '',
   amountHosts: new BigNumber(0),
-  shouldPinAllowance: false,
-  allowanceMonth: new BigNumber(0),
-  allowanceMonthPinned: new BigNumber(0),
   periodWeeks: new BigNumber(0),
   renewWindowWeeks: new BigNumber(0),
   downloadTBMonth: new BigNumber(0),
