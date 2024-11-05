@@ -5,10 +5,9 @@ import {
   RenterdAuthedLayout,
   RenterdAuthedPageLayoutProps,
 } from '../RenterdAuthedLayout'
-import { ConfigStats } from './ConfigStats'
 import { ConfigActions } from './ConfigActions'
 import { ConfigNav } from './ConfigNav'
-import { Recommendations } from './Recommendations'
+import { HangingNav } from './HangingNav'
 
 export const Layout = RenterdAuthedLayout
 export function useLayoutProps(): RenterdAuthedPageLayoutProps {
@@ -18,9 +17,8 @@ export function useLayoutProps(): RenterdAuthedPageLayoutProps {
     routes,
     nav: <ConfigNav />,
     sidenav: <RenterdSidenav />,
-    stats: <ConfigStats />,
     actions: <ConfigActions />,
-    after: <Recommendations />,
+    after: <HangingNav />,
     openSettings: () => openDialog('settings'),
     size: '3',
   }

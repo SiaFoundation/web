@@ -16,7 +16,7 @@ export const clusterd = {
   nodes: [] as Node[],
 }
 
-const maxTimeWaitingForAllNodesToStartup = 60_000
+const maxTimeWaitingForAllNodesToStartup = 100_000
 const maxTimeWaitingForContractsToForm = 60_000
 
 export async function setupCluster({
@@ -53,6 +53,8 @@ export async function setupCluster({
         const nodes = await Axios.get<
           { type: string; apiAddress: string; password: string }[]
         >(`http://localhost:${clusterd.managementPort}/nodes`)
+        const runningCount = nodes.data.length
+        const totalCount = renterdCount + hostdCount + walletdCount
         if (nodes.data.length === renterdCount + hostdCount + walletdCount) {
           clusterd.nodes = nodes.data.map((n) => ({
             ...n,
@@ -60,7 +62,7 @@ export async function setupCluster({
           }))
           return true
         }
-        console.log('waiting for nodes...')
+        console.log(`waiting for nodes (${runningCount}/${totalCount})...`)
         return false
       } catch (e) {
         console.log(`Error fetching nodes: ${addr}`)

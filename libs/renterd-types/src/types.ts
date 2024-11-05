@@ -176,10 +176,6 @@ export type GougingSettingsPins = {
   maxUpload: Pin
 }
 
-export type AutopilotPins = {
-  allowance: Pin
-}
-
 // SettingsPinned holds the configuration for pinning certain settings to
 // a specific currency (e.g., USD). It uses a Forex API to fetch the current
 // exchange rate, allowing users to set prices in USD instead of SC.
@@ -190,9 +186,6 @@ export type SettingsPinned = {
   // Threshold is a percentage between 0 and 1 that determines when the
   // pinned settings are updated based on the exchange rate at the time.
   threshold: number
-
-  // Autopilots contains the pinned settings for every autopilot.
-  autopilots: Record<string, AutopilotPins>
 
   // GougingSettingsPins contains the pinned settings for the gouging
   // settings.
@@ -305,7 +298,6 @@ export type AutopilotHostsConfig = {
 export type AutopilotContractsConfig = {
   set: string
   amount: number
-  allowance: Currency
   period: number
   renewWindow: number
   download: number

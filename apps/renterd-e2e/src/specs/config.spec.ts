@@ -33,12 +33,11 @@ test('field change and save behaviours', async ({ page }) => {
   await fillTextInputByName(page, 'maxStoragePriceTBMonth', '7000')
   await fillTextInputByName(page, 'maxUploadPriceTB', '7000')
   await fillTextInputByName(page, 'maxDownloadPriceTB', '7000')
-  await fillTextInputByName(page, 'allowanceMonth', '7000')
 
   // Correct number of changes is shown.
-  await expect(page.getByText('7 changes')).toBeVisible()
+  await expect(page.getByText('6 changes')).toBeVisible()
   await page.getByText('Save changes').click()
-  await expect(page.getByText('7 changes')).toBeHidden()
+  await expect(page.getByText('6 changes')).toBeHidden()
 
   // Values are the same after save.
   await expectTextInputByName(page, 'storageTB', '7')
@@ -47,70 +46,58 @@ test('field change and save behaviours', async ({ page }) => {
   await expectTextInputByName(page, 'maxStoragePriceTBMonth', '7,000')
   await expectTextInputByName(page, 'maxUploadPriceTB', '7,000')
   await expectTextInputByName(page, 'maxDownloadPriceTB', '7,000')
-  await expectTextInputByName(page, 'allowanceMonth', '7,000')
 
-  // Estimate is based off the allowance.
-  const estimateParts = [
-    'Estimate',
-    '1,000 SC',
-    '($3.94)',
-    'per TB/month with 3.0x redundancy',
-    '7,000 SC',
-    '($27.61)',
-    'to store 7.00 TB/month with 3.0x redundancy',
-  ]
+  await expect(
+    page
+      .getByTestId('spendingEstimate')
+      .locator('input[name=estimatedSpendingPerMonth]')
+  ).toHaveValue('228,667')
+  await expect(
+    page
+      .getByTestId('spendingEstimate')
+      .locator('input[name=estimatedSpendingPerMonth-fiat]')
+  ).toHaveValue('$902')
 
-  for (const part of estimateParts) {
-    await expect(page.getByText(part)).toBeVisible()
-  }
+  await fillSelectInputByName(page, 'spendingEstimateMode', 'tb')
+
+  await expect(
+    page
+      .getByTestId('spendingEstimate')
+      .locator('input[name=estimatedSpendingPerTBPerMonth]')
+  ).toHaveValue('32,667')
+  await expect(
+    page
+      .getByTestId('spendingEstimate')
+      .locator('input[name=estimatedSpendingPerTBPerMonth-fiat]')
+  ).toHaveValue('$129')
 })
 
-test('set max prices to fit current allowance', async ({ page }) => {
+test('set max prices to fit current spending estimate', async ({ page }) => {
   // Reset state.
   await navigateToConfig({ page })
   await setViewMode({ page, state: 'basic' })
+
+  const spendingEstimate = page.getByTestId('spendingEstimate')
+  const rebalanceButton = spendingEstimate.getByLabel('rebalance prices')
+
+  // If a component of the fit calculation is missing, it should not be shown.
+  await fillTextInputByName(page, 'storageTB', '')
+  await expect(spendingEstimate).toBeHidden()
 
   // Set all values that affect the pricing calculation.
   await fillTextInputByName(page, 'storageTB', '10')
   await fillTextInputByName(page, 'uploadTBMonth', '10')
   await fillTextInputByName(page, 'downloadTBMonth', '4')
-  await fillTextInputByName(page, 'allowanceMonth', '95,000')
-  await page.getByText('Set max prices to fit current allowance').click()
 
-  // The following values are fit to the allowance.
-  await expectTextInputByName(page, 'maxStoragePriceTBMonth', '3,352.941176')
-  await expectTextInputByName(page, 'maxUploadPriceTB', '838.235294')
-  await expectTextInputByName(page, 'maxDownloadPriceTB', '4,191.176471')
+  await rebalanceButton.click()
 
-  // If a component of the fit calculation is missing, it should not be shown.
-  await fillTextInputByName(page, 'storageTB', '')
-  await expect(
-    page.getByText('Set max prices to fit current allowance')
-  ).toBeDisabled()
-})
+  // The following values are fit to the estimated spending.
+  await expectTextInputByName(page, 'maxStoragePriceTBMonth', '4,517.647059')
+  await expectTextInputByName(page, 'maxUploadPriceTB', '1,129.411765')
+  await expectTextInputByName(page, 'maxDownloadPriceTB', '5,647.058824')
 
-test('set allowance to fit current max prices', async ({ page }) => {
-  // Reset state.
-  await navigateToConfig({ page })
-  await setViewMode({ page, state: 'basic' })
-
-  // Set all values that affect the allowance calculation.
-  await fillTextInputByName(page, 'storageTB', '10')
-  await fillTextInputByName(page, 'uploadTBMonth', '10')
-  await fillTextInputByName(page, 'downloadTBMonth', '4')
-  await fillTextInputByName(page, 'maxStoragePriceTBMonth', '1500')
-  await fillTextInputByName(page, 'maxUploadPriceTB', '1000')
-  await fillTextInputByName(page, 'maxDownloadPriceTB', '5000')
-  await page.getByText('Set allowance to fit current max prices').click()
-
-  // The following allowance is fit to the max prices.
-  await expectTextInputByName(page, 'allowanceMonth', '63,333')
-
-  // If a component of the fit calculation is missing, it should not be shown.
-  await fillTextInputByName(page, 'storageTB', '')
-  await expect(
-    page.getByText('Set allowance to fit current max prices')
-  ).toBeDisabled()
+  // If the prices fit the estimate the button should be disabled.
+  await expect(rebalanceButton).toBeDisabled()
 })
 
 test('should show warning if pinning is not fully configured', async ({
@@ -120,23 +107,29 @@ test('should show warning if pinning is not fully configured', async ({
   await navigateToConfig({ page })
   await setViewMode({ page, state: 'basic' })
 
-  await setSwitchByLabel(page, 'shouldPinAllowance', true)
   await setSwitchByLabel(page, 'shouldPinMaxStoragePrice', true)
+  await setSwitchByLabel(page, 'shouldPinMaxUploadPrice', true)
+  await setSwitchByLabel(page, 'shouldPinMaxDownloadPrice', true)
   await fillSelectInputByName(page, 'pinnedCurrency', '')
 
-  await expect(
-    page
-      .getByTestId('allowanceMonthGroup')
-      .getByText('Select a pinned currency')
-  ).toBeVisible()
   await expect(
     page
       .getByTestId('maxStoragePriceTBMonthGroup')
       .getByText('Select a pinned currency')
   ).toBeVisible()
+  await expect(
+    page
+      .getByTestId('maxUploadPriceTBGroup')
+      .getByText('Select a pinned currency')
+  ).toBeVisible()
+  await expect(
+    page
+      .getByTestId('maxDownloadPriceTBGroup')
+      .getByText('Select a pinned currency')
+  ).toBeVisible()
 })
 
-test('set max prices with pinned fields to fit current allowance', async ({
+test('set max prices with pinned fields to fit current spending estimate', async ({
   page,
 }) => {
   // Reset state.
@@ -150,102 +143,28 @@ test('set max prices with pinned fields to fit current allowance', async ({
   await fillTextInputByName(page, 'storageTB', '10')
   await fillTextInputByName(page, 'uploadTBMonth', '10')
   await fillTextInputByName(page, 'downloadTBMonth', '4')
-  await fillTextInputByName(page, 'allowanceMonth', '95,000')
-  await expect(
-    page.getByText('Current pricing may not fit allowance')
-  ).toBeVisible()
-  await page.getByText('Set max prices to fit current allowance').click()
-  await expect(page.getByText('Current pricing fits allowance')).toBeVisible()
 
-  // The following values are fit to the allowance.
-  await expectTextInputByName(page, 'maxStoragePriceTBMonthPinned', '$13.22')
-  await expectTextInputByName(page, 'maxUploadPriceTBPinned', '$3.31')
-  await expectTextInputByName(page, 'maxDownloadPriceTBPinned', '$16.53')
+  const spendingEstimate = page.getByTestId('spendingEstimate')
+  const rebalanceButton = spendingEstimate.getByLabel('rebalance prices')
 
+  await expect(rebalanceButton).toBeEnabled()
+  await rebalanceButton.click()
+  await expect(rebalanceButton).toBeDisabled()
+
+  // The following values are fit to the spending estimate.
+  await expectTextInputByName(page, 'maxStoragePriceTBMonthPinned', '$7.53')
+  await expectTextInputByName(page, 'maxUploadPriceTBPinned', '$1.88')
+  await expectTextInputByName(page, 'maxDownloadPriceTBPinned', '$9.41')
+
+  // Unpin one field while leaving the other two pinned.
   await setSwitchByLabel(page, 'shouldPinMaxDownloadPrice', false)
-  await expect(
-    page.getByText('Current pricing may not fit allowance')
-  ).toBeVisible()
-  await page.getByText('Set max prices to fit current allowance').click()
-  await expect(page.getByText('Current pricing fits allowance')).toBeVisible()
+  await expect(rebalanceButton).toBeEnabled()
+  await rebalanceButton.click()
+  await expect(rebalanceButton).toBeDisabled()
 
-  await expectTextInputByName(page, 'maxStoragePriceTBMonthPinned', '$13.22')
-  await expectTextInputByName(page, 'maxUploadPriceTBPinned', '$3.31')
-  await expectTextInputByName(page, 'maxDownloadPriceTB', '4,191.176471')
-})
-
-test('set max prices with pinned fields to fit pinned allowance', async ({
-  page,
-}) => {
-  // Reset state.
-  await navigateToConfig({ page })
-  await setViewMode({ page, state: 'basic' })
-  await setSwitchByLabel(page, 'shouldPinAllowance', true)
-  await setSwitchByLabel(page, 'shouldPinMaxStoragePrice', true)
-  await setSwitchByLabel(page, 'shouldPinMaxUploadPrice', true)
-
-  // Set all values that affect the pricing calculation.
-  await fillTextInputByName(page, 'storageTB', '10')
-  await fillTextInputByName(page, 'uploadTBMonth', '10')
-  await fillTextInputByName(page, 'downloadTBMonth', '4')
-  await fillTextInputByName(page, 'allowanceMonthPinned', '100')
-  await expect(
-    page.getByText('Current pricing may not fit allowance')
-  ).toBeVisible()
-  await page.getByText('Set max prices to fit current allowance').click()
-  await expect(page.getByText('Current pricing fits allowance')).toBeVisible()
-
-  // The following values are fit to the allowance.
-  await expectTextInputByName(page, 'maxStoragePriceTBMonthPinned', '$3.53')
-  await expectTextInputByName(page, 'maxUploadPriceTBPinned', '$0.88')
-  await expectTextInputByName(page, 'maxDownloadPriceTB', '1,118.588756')
-})
-
-test('set max prices via individual field tips', async ({ page }) => {
-  // Reset state.
-  await navigateToConfig({ page })
-  await setViewMode({ page, state: 'basic' })
-  await setSwitchByLabel(page, 'shouldPinAllowance', true)
-  await setSwitchByLabel(page, 'shouldPinMaxStoragePrice', true)
-  await setSwitchByLabel(page, 'shouldPinMaxUploadPrice', true)
-
-  // Set all values that affect the pricing calculation.
-  await fillTextInputByName(page, 'storageTB', '10')
-  await fillTextInputByName(page, 'uploadTBMonth', '10')
-  await fillTextInputByName(page, 'downloadTBMonth', '4')
-  await fillTextInputByName(page, 'allowanceMonthPinned', '100')
-  await expect(
-    page.getByText('Current pricing may not fit allowance')
-  ).toBeVisible()
-  const fitButton = page
-    .getByTestId('maxStoragePriceTBMonthGroup')
-    .getByLabel('Fit current allowance')
-  // TODO: remove the need to click twice, there is some sort of glitch after toggling the pinning switch.
-  await clickTwice(fitButton)
-  await page
-    .getByTestId('maxStoragePriceTBMonthGroup')
-    .getByLabel('Fit current allowance')
-    .click()
-  await expect(
-    page.getByText('Current pricing may not fit allowance')
-  ).toBeVisible()
-  await page
-    .getByTestId('maxUploadPriceTBGroup')
-    .getByLabel('Fit current allowance')
-    .click()
-  await expect(
-    page.getByText('Current pricing may not fit allowance')
-  ).toBeVisible()
-  await page
-    .getByTestId('maxDownloadPriceTBGroup')
-    .getByLabel('Fit current allowance')
-    .click()
-  await expect(page.getByText('Current pricing fits allowance')).toBeVisible()
-
-  // The following values are fit to the allowance.
-  await expectTextInputByName(page, 'maxStoragePriceTBMonthPinned', '$3.53')
-  await expectTextInputByName(page, 'maxUploadPriceTBPinned', '$0.88')
-  await expectTextInputByName(page, 'maxDownloadPriceTB', '1,118.588756')
+  await expectTextInputByName(page, 'maxStoragePriceTBMonthPinned', '$7.76')
+  await expectTextInputByName(page, 'maxUploadPriceTBPinned', '$1.94')
+  await expectTextInputByName(page, 'maxDownloadPriceTB', '2,458.147059')
 })
 
 test('pinned currency and app display currency can be different', async ({

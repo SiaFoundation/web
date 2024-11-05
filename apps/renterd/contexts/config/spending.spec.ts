@@ -1,12 +1,12 @@
 import BigNumber from 'bignumber.js'
 import {
-  calculateIdealAllowance,
-  derivePricingFromAllowance,
-} from './deriveAllowance'
+  calculateSpendingEstimate as calculateSpendingEstimate,
+  derivePricingFromSpendingEstimate,
+} from './spending'
 
-test('with estimates of 1 TB, standard weights, 1x redundancy, 1x allowance factor', () => {
-  const allowanceMonth = new BigNumber(1000)
-  const allowanceFactor = 1
+test('with estimates of 1 TB, standard weights, 1x redundancy, 1x spending factor', () => {
+  const estimatedSpendingPerMonth = new BigNumber(1000)
+  const maxPricingFactor = 1
   const storageTB = new BigNumber(1)
   const downloadTBMonth = new BigNumber(1)
   const uploadTBMonth = new BigNumber(1)
@@ -15,9 +15,9 @@ test('with estimates of 1 TB, standard weights, 1x redundancy, 1x allowance fact
   const downloadWeight = 5
   const uploadWeight = 1
 
-  const prices = derivePricingFromAllowance({
-    allowanceMonth,
-    allowanceFactor,
+  const prices = derivePricingFromSpendingEstimate({
+    estimatedSpendingPerMonth,
+    maxPricingFactor,
     storageTB,
     downloadTBMonth,
     uploadTBMonth,
@@ -38,22 +38,22 @@ test('with estimates of 1 TB, standard weights, 1x redundancy, 1x allowance fact
     maxUploadPriceTB: '100.00',
   })
   expect(
-    calculateIdealAllowance({
+    calculateSpendingEstimate({
       maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth,
       maxDownloadPriceTB: prices?.maxDownloadPriceTB,
       maxUploadPriceTB: prices?.maxUploadPriceTB,
-      allowanceFactor,
+      maxPricingFactor,
       storageTB,
       downloadTBMonth,
       uploadTBMonth,
       redundancyMultiplier,
     })
-  ).toEqual(allowanceMonth)
+  ).toEqual(estimatedSpendingPerMonth)
 })
 
-test('with estimates of 1 TB, standard weights, 2x redundancy, 1x allowance factor', () => {
-  const allowanceMonth = new BigNumber(1000)
-  const allowanceFactor = 1
+test('with estimates of 1 TB, standard weights, 2x redundancy, 1x spending factor', () => {
+  const estimatedSpendingPerMonth = new BigNumber(1000)
+  const maxPricingFactor = 1
   const storageTB = new BigNumber(1)
   const downloadTBMonth = new BigNumber(1)
   const uploadTBMonth = new BigNumber(1)
@@ -62,9 +62,9 @@ test('with estimates of 1 TB, standard weights, 2x redundancy, 1x allowance fact
   const downloadWeight = 5
   const uploadWeight = 1
 
-  const prices = derivePricingFromAllowance({
-    allowanceMonth,
-    allowanceFactor,
+  const prices = derivePricingFromSpendingEstimate({
+    estimatedSpendingPerMonth,
+    maxPricingFactor,
     storageTB,
     downloadTBMonth,
     uploadTBMonth,
@@ -85,22 +85,22 @@ test('with estimates of 1 TB, standard weights, 2x redundancy, 1x allowance fact
     maxUploadPriceTB: '66.67',
   })
   expect(
-    calculateIdealAllowance({
+    calculateSpendingEstimate({
       maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth,
       maxDownloadPriceTB: prices?.maxDownloadPriceTB,
       maxUploadPriceTB: prices?.maxUploadPriceTB,
-      allowanceFactor,
+      maxPricingFactor,
       storageTB,
       downloadTBMonth,
       uploadTBMonth,
       redundancyMultiplier,
     })
-  ).toEqual(allowanceMonth)
+  ).toEqual(estimatedSpendingPerMonth)
 })
 
-test('with estimates of 1 TB, standard weights, 3x redunancy, 1x allowance factor', () => {
-  const allowanceMonth = new BigNumber(1000)
-  const allowanceFactor = 1
+test('with estimates of 1 TB, standard weights, 3x redunancy, 1x spending factor', () => {
+  const estimatedSpendingPerMonth = new BigNumber(1000)
+  const maxPricingFactor = 1
   const storageTB = new BigNumber(1)
   const downloadTBMonth = new BigNumber(1)
   const uploadTBMonth = new BigNumber(1)
@@ -109,9 +109,9 @@ test('with estimates of 1 TB, standard weights, 3x redunancy, 1x allowance facto
   const downloadWeight = 5
   const uploadWeight = 1
 
-  const prices = derivePricingFromAllowance({
-    allowanceMonth,
-    allowanceFactor,
+  const prices = derivePricingFromSpendingEstimate({
+    estimatedSpendingPerMonth,
+    maxPricingFactor,
     storageTB,
     downloadTBMonth,
     uploadTBMonth,
@@ -132,22 +132,22 @@ test('with estimates of 1 TB, standard weights, 3x redunancy, 1x allowance facto
     maxUploadPriceTB: '50.00',
   })
   expect(
-    calculateIdealAllowance({
+    calculateSpendingEstimate({
       maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth,
       maxDownloadPriceTB: prices?.maxDownloadPriceTB,
       maxUploadPriceTB: prices?.maxUploadPriceTB,
-      allowanceFactor,
+      maxPricingFactor,
       storageTB,
       downloadTBMonth,
       uploadTBMonth,
       redundancyMultiplier,
     })
-  ).toEqual(allowanceMonth)
+  ).toEqual(estimatedSpendingPerMonth)
 })
 
-test('with estimates of 1 TB, standard weights, 1x redundancy, 2x allowance factor', () => {
-  const allowanceMonth = new BigNumber(1000)
-  const allowanceFactor = 2
+test('with estimates of 1 TB, standard weights, 1x redundancy, 2x spending factor', () => {
+  const estimatedSpendingPerMonth = new BigNumber(1000)
+  const maxPricingFactor = 2
   const storageTB = new BigNumber(1)
   const downloadTBMonth = new BigNumber(1)
   const uploadTBMonth = new BigNumber(1)
@@ -156,9 +156,9 @@ test('with estimates of 1 TB, standard weights, 1x redundancy, 2x allowance fact
   const downloadWeight = 5
   const uploadWeight = 1
 
-  const prices = derivePricingFromAllowance({
-    allowanceMonth,
-    allowanceFactor,
+  const prices = derivePricingFromSpendingEstimate({
+    estimatedSpendingPerMonth,
+    maxPricingFactor,
     storageTB,
     downloadTBMonth,
     uploadTBMonth,
@@ -179,22 +179,22 @@ test('with estimates of 1 TB, standard weights, 1x redundancy, 2x allowance fact
     maxUploadPriceTB: '200.00',
   })
   expect(
-    calculateIdealAllowance({
+    calculateSpendingEstimate({
       maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth,
       maxDownloadPriceTB: prices?.maxDownloadPriceTB,
       maxUploadPriceTB: prices?.maxUploadPriceTB,
-      allowanceFactor,
+      maxPricingFactor,
       storageTB,
       downloadTBMonth,
       uploadTBMonth,
       redundancyMultiplier,
     })
-  ).toEqual(allowanceMonth)
+  ).toEqual(estimatedSpendingPerMonth)
 })
 
-test('with estimates of 1 TB, standard weights, 2x redundancy, 2x allowance factor', () => {
-  const allowanceMonth = new BigNumber(1000)
-  const allowanceFactor = 2
+test('with estimates of 1 TB, standard weights, 2x redundancy, 2x spending factor', () => {
+  const estimatedSpendingPerMonth = new BigNumber(1000)
+  const maxPricingFactor = 2
   const storageTB = new BigNumber(1)
   const downloadTBMonth = new BigNumber(1)
   const uploadTBMonth = new BigNumber(1)
@@ -203,9 +203,9 @@ test('with estimates of 1 TB, standard weights, 2x redundancy, 2x allowance fact
   const downloadWeight = 5
   const uploadWeight = 1
 
-  const prices = derivePricingFromAllowance({
-    allowanceMonth,
-    allowanceFactor,
+  const prices = derivePricingFromSpendingEstimate({
+    estimatedSpendingPerMonth,
+    maxPricingFactor,
     storageTB,
     downloadTBMonth,
     uploadTBMonth,
@@ -226,22 +226,22 @@ test('with estimates of 1 TB, standard weights, 2x redundancy, 2x allowance fact
     maxUploadPriceTB: '133.33',
   })
   expect(
-    calculateIdealAllowance({
+    calculateSpendingEstimate({
       maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth,
       maxDownloadPriceTB: prices?.maxDownloadPriceTB,
       maxUploadPriceTB: prices?.maxUploadPriceTB,
-      allowanceFactor,
+      maxPricingFactor,
       storageTB,
       downloadTBMonth,
       uploadTBMonth,
       redundancyMultiplier,
     })
-  ).toEqual(allowanceMonth)
+  ).toEqual(estimatedSpendingPerMonth)
 })
 
-test('with estimates of 1 TB, standard weights, 3x redunancy, 2x allowance factor', () => {
-  const allowanceMonth = new BigNumber(1000)
-  const allowanceFactor = 2
+test('with estimates of 1 TB, standard weights, 3x redunancy, 2x spending factor', () => {
+  const estimatedSpendingPerMonth = new BigNumber(1000)
+  const maxPricingFactor = 2
   const storageTB = new BigNumber(1)
   const downloadTBMonth = new BigNumber(1)
   const uploadTBMonth = new BigNumber(1)
@@ -250,9 +250,9 @@ test('with estimates of 1 TB, standard weights, 3x redunancy, 2x allowance facto
   const downloadWeight = 5
   const uploadWeight = 1
 
-  const prices = derivePricingFromAllowance({
-    allowanceMonth,
-    allowanceFactor,
+  const prices = derivePricingFromSpendingEstimate({
+    estimatedSpendingPerMonth,
+    maxPricingFactor,
     storageTB,
     downloadTBMonth,
     uploadTBMonth,
@@ -273,22 +273,22 @@ test('with estimates of 1 TB, standard weights, 3x redunancy, 2x allowance facto
     maxUploadPriceTB: '100.00',
   })
   expect(
-    calculateIdealAllowance({
+    calculateSpendingEstimate({
       maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth,
       maxDownloadPriceTB: prices?.maxDownloadPriceTB,
       maxUploadPriceTB: prices?.maxUploadPriceTB,
-      allowanceFactor,
+      maxPricingFactor,
       storageTB,
       downloadTBMonth,
       uploadTBMonth,
       redundancyMultiplier,
     })
-  ).toEqual(allowanceMonth)
+  ).toEqual(estimatedSpendingPerMonth)
 })
 
-test('with mostly storage, standard weights, 1x redunancy, 2x allowance factor', () => {
-  const allowanceMonth = new BigNumber(10_000)
-  const allowanceFactor = 2
+test('with mostly storage, standard weights, 1x redunancy, 2x spending factor', () => {
+  const estimatedSpendingPerMonth = new BigNumber(10_000)
+  const maxPricingFactor = 2
   const storageTB = new BigNumber(1)
   const downloadTBMonth = new BigNumber(20)
   const uploadTBMonth = new BigNumber(1)
@@ -297,9 +297,9 @@ test('with mostly storage, standard weights, 1x redunancy, 2x allowance factor',
   const downloadWeight = 5
   const uploadWeight = 1
 
-  const prices = derivePricingFromAllowance({
-    allowanceMonth,
-    allowanceFactor,
+  const prices = derivePricingFromSpendingEstimate({
+    estimatedSpendingPerMonth,
+    maxPricingFactor,
     storageTB,
     downloadTBMonth,
     uploadTBMonth,
@@ -320,22 +320,22 @@ test('with mostly storage, standard weights, 1x redunancy, 2x allowance factor',
     maxUploadPriceTB: '190.48',
   })
   expect(
-    calculateIdealAllowance({
+    calculateSpendingEstimate({
       maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth,
       maxDownloadPriceTB: prices?.maxDownloadPriceTB,
       maxUploadPriceTB: prices?.maxUploadPriceTB,
-      allowanceFactor,
+      maxPricingFactor,
       storageTB,
       downloadTBMonth,
       uploadTBMonth,
       redundancyMultiplier,
     })
-  ).toEqual(allowanceMonth)
+  ).toEqual(estimatedSpendingPerMonth)
 })
 
-test('with varied estimates, standard weights, 1x redunancy, 2x allowance factor', () => {
-  const allowanceMonth = new BigNumber(1000)
-  const allowanceFactor = 2
+test('with varied estimates, standard weights, 1x redunancy, 2x spending factor', () => {
+  const estimatedSpendingPerMonth = new BigNumber(1000)
+  const maxPricingFactor = 2
   const storageTB = new BigNumber(8)
   const downloadTBMonth = new BigNumber(15)
   const uploadTBMonth = new BigNumber(3)
@@ -344,9 +344,9 @@ test('with varied estimates, standard weights, 1x redunancy, 2x allowance factor
   const downloadWeight = 5
   const uploadWeight = 1
 
-  const prices = derivePricingFromAllowance({
-    allowanceMonth,
-    allowanceFactor,
+  const prices = derivePricingFromSpendingEstimate({
+    estimatedSpendingPerMonth,
+    maxPricingFactor,
     storageTB,
     downloadTBMonth,
     uploadTBMonth,
@@ -367,21 +367,21 @@ test('with varied estimates, standard weights, 1x redunancy, 2x allowance factor
     maxUploadPriceTB: '18.18',
   })
   expect(
-    calculateIdealAllowance({
+    calculateSpendingEstimate({
       maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth,
       maxDownloadPriceTB: prices?.maxDownloadPriceTB,
       maxUploadPriceTB: prices?.maxUploadPriceTB,
-      allowanceFactor,
+      maxPricingFactor,
       storageTB,
       downloadTBMonth,
       uploadTBMonth,
       redundancyMultiplier,
     })
-  ).toEqual(allowanceMonth)
+  ).toEqual(estimatedSpendingPerMonth)
 })
 
-test('with estimates of 1 TB, standard weights, 1x redundancy, 1.5x allowance factor', () => {
-  const allowanceMonth = new BigNumber(1000)
+test('with estimates of 1 TB, standard weights, 1x redundancy, 1.5x spending factor', () => {
+  const estimatedSpendingPerMonth = new BigNumber(1000)
   const storageTB = new BigNumber(1)
   const downloadTBMonth = new BigNumber(1)
   const uploadTBMonth = new BigNumber(1)
@@ -389,11 +389,11 @@ test('with estimates of 1 TB, standard weights, 1x redundancy, 1.5x allowance fa
   const storageWeight = 4
   const downloadWeight = 5
   const uploadWeight = 1
-  const allowanceFactor = 1.5
+  const maxPricingFactor = 1.5
 
-  const prices = derivePricingFromAllowance({
-    allowanceMonth,
-    allowanceFactor,
+  const prices = derivePricingFromSpendingEstimate({
+    estimatedSpendingPerMonth,
+    maxPricingFactor,
     storageTB,
     downloadTBMonth,
     uploadTBMonth,
@@ -414,21 +414,21 @@ test('with estimates of 1 TB, standard weights, 1x redundancy, 1.5x allowance fa
     maxUploadPriceTB: '150.00',
   })
   expect(
-    calculateIdealAllowance({
+    calculateSpendingEstimate({
       maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth,
       maxDownloadPriceTB: prices?.maxDownloadPriceTB,
       maxUploadPriceTB: prices?.maxUploadPriceTB,
-      allowanceFactor,
+      maxPricingFactor,
       storageTB,
       downloadTBMonth,
       uploadTBMonth,
       redundancyMultiplier,
     })
-  ).toEqual(allowanceMonth)
+  ).toEqual(estimatedSpendingPerMonth)
 })
 
-test('with varied estimates, standard weights, 1x redundancy, 1.5x allowance factor', () => {
-  const allowanceMonth = new BigNumber(1000)
+test('with varied estimates, standard weights, 1x redundancy, 1.5x spending factor', () => {
+  const estimatedSpendingPerMonth = new BigNumber(1000)
   const storageTB = new BigNumber(8)
   const downloadTBMonth = new BigNumber(15)
   const uploadTBMonth = new BigNumber(3)
@@ -436,11 +436,11 @@ test('with varied estimates, standard weights, 1x redundancy, 1.5x allowance fac
   const storageWeight = 4
   const downloadWeight = 5
   const uploadWeight = 1
-  const allowanceFactor = 1.5
+  const maxPricingFactor = 1.5
 
-  const prices = derivePricingFromAllowance({
-    allowanceMonth,
-    allowanceFactor,
+  const prices = derivePricingFromSpendingEstimate({
+    estimatedSpendingPerMonth,
+    maxPricingFactor,
     storageTB,
     downloadTBMonth,
     uploadTBMonth,
@@ -461,28 +461,28 @@ test('with varied estimates, standard weights, 1x redundancy, 1.5x allowance fac
     maxUploadPriceTB: '13.64',
   })
   expect(
-    calculateIdealAllowance({
+    calculateSpendingEstimate({
       maxStoragePriceTBMonth: prices?.maxStoragePriceTBMonth,
       maxDownloadPriceTB: prices?.maxDownloadPriceTB,
       maxUploadPriceTB: prices?.maxUploadPriceTB,
-      allowanceFactor,
+      maxPricingFactor,
       storageTB,
       downloadTBMonth,
       uploadTBMonth,
       redundancyMultiplier,
     })
-  ).toEqual(allowanceMonth)
+  ).toEqual(estimatedSpendingPerMonth)
 })
 
-test('with zero allowance returns null', () => {
-  const allowanceMonth = new BigNumber(0)
+test('with zero spending returns null', () => {
+  const estimatedSpendingPerMonth = new BigNumber(0)
   const storageTB = new BigNumber(8)
   const downloadTBMonth = new BigNumber(15)
   const uploadTBMonth = new BigNumber(3)
   const redundancyMultiplier = new BigNumber(1)
 
-  const prices = derivePricingFromAllowance({
-    allowanceMonth,
+  const prices = derivePricingFromSpendingEstimate({
+    estimatedSpendingPerMonth,
     storageTB,
     downloadTBMonth,
     uploadTBMonth,
@@ -501,16 +501,16 @@ test('with zero prices returns null', () => {
   const uploadTBMonth = new BigNumber(1)
   const redundancyMultiplier = new BigNumber(1)
 
-  const allowance = calculateIdealAllowance({
+  const spending = calculateSpendingEstimate({
     maxDownloadPriceTB,
     maxStoragePriceTBMonth,
     maxUploadPriceTB,
-    allowanceFactor: 1.5,
+    maxPricingFactor: 1.5,
     storageTB,
     downloadTBMonth,
     uploadTBMonth,
     redundancyMultiplier,
   })
 
-  expect(allowance).toBeUndefined()
+  expect(spending).toBeUndefined()
 })

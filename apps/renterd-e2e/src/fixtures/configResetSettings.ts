@@ -24,10 +24,6 @@ export const configResetAllSettings = step(
     await fillTextInputByName(page, 'storageTB', '1')
     await fillTextInputByName(page, 'uploadTBMonth', '1')
     await fillTextInputByName(page, 'downloadTBMonth', '1')
-    await setSwitchByLabel(page, 'shouldPinAllowance', true)
-    await fillTextInputByName(page, 'allowanceMonthPinned', '10')
-    await setSwitchByLabel(page, 'shouldPinAllowance', false)
-    await fillTextInputByName(page, 'allowanceMonth', '21000')
     await fillTextInputByName(page, 'periodWeeks', '6')
     await fillTextInputByName(page, 'renewWindowWeeks', '2')
     await fillTextInputByName(page, 'amountHosts', '3')
@@ -85,18 +81,20 @@ export const configResetAllSettings = step(
 
 export const configResetBasicSettings = step(
   'config reset basic settings',
-  async ({ page }: { page: Page }) => {
+  async (page: Page) => {
     await navigateToConfig({ page })
-    await setViewMode({ page, state: 'basic' })
+    await setViewMode({ page, state: 'advanced' })
 
     await fillTextInputByName(page, 'storageTB', '7')
     await fillTextInputByName(page, 'uploadTBMonth', '7')
     await fillTextInputByName(page, 'downloadTBMonth', '7')
-    await fillTextInputByName(page, 'allowanceMonth', '1000')
 
-    await fillTextInputByName(page, 'maxStoragePriceTBMonth', '3000')
-    await fillTextInputByName(page, 'maxUploadPriceTB', '3000')
-    await fillTextInputByName(page, 'maxDownloadPriceTB', '3000')
+    await configFillEstimatesSiacoin(page)
+
+    await fillTextInputByName(page, 'minShards', '1')
+    await fillTextInputByName(page, 'totalShards', '3')
+
+    await setViewMode({ page, state: 'basic' })
 
     // save
     await clickIfEnabledAndWait(
@@ -104,5 +102,23 @@ export const configResetBasicSettings = step(
       page.getByText('Configuration has been saved')
     )
     await clearToasts({ page })
+  }
+)
+
+export const configFillEstimatesSiacoin = step(
+  'config fill estimates and prices',
+  async (page: Page) => {
+    await fillTextInputByName(page, 'maxStoragePriceTBMonth', '3000')
+    await fillTextInputByName(page, 'maxUploadPriceTB', '3000')
+    await fillTextInputByName(page, 'maxDownloadPriceTB', '3000')
+  }
+)
+
+export const configFillEstimatesFiat = step(
+  'config fill estimates fiat',
+  async (page: Page) => {
+    await fillTextInputByName(page, 'maxStoragePriceTBMonthPinned', '11.832136')
+    await fillTextInputByName(page, 'maxUploadPriceTBPinned', '11.832136')
+    await fillTextInputByName(page, 'maxDownloadPriceTBPinned', '11.832136')
   }
 )

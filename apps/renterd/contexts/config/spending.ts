@@ -1,15 +1,20 @@
-import { calculateEstimatedSpending } from '@siafoundation/units'
+import { calculateMaxSpending } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
+
+export const defaultMaxPricingFactor = 1.5
+export const defaultStorageWeight = 4
+export const defaultDownloadWeight = 5
+export const defaultUploadWeight = 1
 
 /**
  * This function calculates the max price per TB for storage, download, and
- * upload given a total spending allowance and estimated usage in TB for each
+ * upload given a monthly spending estimate and usage estimates in TB for each
  * type. The prices are kept proportional to each other using the weight factors
  * provided as parameters. Storage and upload are also scaled by the redundancy
  * multiplier.
  *
  * The total cost equation is:
- * allowance * allowanceFactor = scaledAllowance =
+ * spendingMonth * maxPricingFactor = scaledSpending =
  *   storageTBWithRedundancy * storageWeight * unitCost +
  *   downloadTBMonth * downloadWeight * unitCost +
  *   uploadTBMonthWithRedundancy * uploadWeight * unitCost
@@ -19,15 +24,15 @@ import BigNumber from 'bignumber.js'
  * maxDownloadPriceTB = unitCost * downloadWeight
  * maxStoragePriceTBMonth = unitCost * storageWeight
  *
- * The function also includes an allowance scaling factor to account for
+ * The function also includes an spending scaling factor to account for
  * contract price variation. For example, if a user expects to pay $2 per TB,
  * they should set the max value to $4 per TB because the optimal contracts may
  * vary, eg: one contract at $1 and another at $3 which average to $2. The
  * scaling factor helps avoid unnecessary churn.
  *
  * @param params - The parameters for the function.
- * @param params.allowanceMonth - The total spending allowance per month.
- * @param params.allowanceFactor - The scaling factor to apply to the allowance.
+ * @param params.spendingMonth - The total spending per month.
+ * @param params.maxPricingFactor - The scaling factor to apply to the max prices.
  * @param params.storageTB - The estimated amount of storage in TB.
  * @param params.downloadTBMonth - The estimated amount of download in TB per
  * month.
@@ -39,19 +44,19 @@ import BigNumber from 'bignumber.js'
  * @returns An object containing the price per TB for storage, download, and
  * upload.
  */
-export function derivePricingFromAllowance({
-  allowanceMonth,
-  allowanceFactor = 1.5,
+export function derivePricingFromSpendingEstimate({
+  estimatedSpendingPerMonth,
+  maxPricingFactor = defaultMaxPricingFactor,
   storageTB,
   downloadTBMonth,
   uploadTBMonth,
   redundancyMultiplier,
-  storageWeight = 4,
-  downloadWeight = 5,
-  uploadWeight = 1,
+  storageWeight = defaultStorageWeight,
+  downloadWeight = defaultDownloadWeight,
+  uploadWeight = defaultUploadWeight,
 }: {
-  allowanceMonth?: BigNumber
-  allowanceFactor?: number
+  estimatedSpendingPerMonth?: BigNumber
+  maxPricingFactor?: number
   storageTB?: BigNumber
   downloadTBMonth?: BigNumber
   uploadTBMonth?: BigNumber
@@ -62,8 +67,8 @@ export function derivePricingFromAllowance({
 }) {
   // Return undefined if zero values are provided.
   if (
-    !allowanceMonth?.gt(0) ||
-    allowanceFactor <= 0 ||
+    !estimatedSpendingPerMonth?.gt(0) ||
+    maxPricingFactor <= 0 ||
     !redundancyMultiplier?.gt(0) ||
     !storageTB?.gt(0) ||
     !downloadTBMonth?.gt(0) ||
@@ -71,14 +76,14 @@ export function derivePricingFromAllowance({
   ) {
     return undefined
   }
-  // Apply scaling factor to allowance.
-  const scaledAllowance = allowanceMonth.times(allowanceFactor)
+  // Apply scaling factor to spending.
+  const scaledSpending = estimatedSpendingPerMonth.times(maxPricingFactor)
 
   const storageTBWithRedundancy = storageTB.times(redundancyMultiplier)
   const uploadTBMonthWithRedundancy = uploadTBMonth.times(redundancyMultiplier)
 
-  // Calculate the unit cost based on the provided allowance and usage estimates.
-  const unitCost = scaledAllowance.div(
+  // Calculate the unit cost based on the provided spending and usage estimates.
+  const unitCost = scaledSpending.div(
     storageTBWithRedundancy
       .times(storageWeight)
       .plus(downloadTBMonth.times(downloadWeight))
@@ -98,7 +103,7 @@ export function derivePricingFromAllowance({
 }
 
 /**
- * This function calculates the ideal allowance per month given the
+ * This function calculates the estimated spending per month given the
  * max price per TB for storage, download, and upload, along with estimated
  * usage in TB for each type.
  *
@@ -106,18 +111,18 @@ export function derivePricingFromAllowance({
  * @param params.maxStoragePriceTBMonth - The max price per TB per month for storage.
  * @param params.maxDownloadPriceTB - The max price per TB for download.
  * @param params.maxUploadPriceTB - The max price per TB for upload.
- * @param params.allowanceFactor - The scaling factor applied to the allowance.
+ * @param params.maxPricingFactor - The scaling factor applied to the spending.
  * @param params.storageTB - The estimated amount of storage in TB.
  * @param params.downloadTBMonth - The estimated amount of download in TB per month.
  * @param params.uploadTBMonth - The estimated amount of upload in TB per month.
  * @param params.redundancyMultiplier - The redundancy multiplier.
- * @returns The calculated allowance per month.
+ * @returns The calculated spending per month.
  */
-export function calculateIdealAllowance({
+export function calculateSpendingEstimate({
   maxStoragePriceTBMonth,
   maxDownloadPriceTB,
   maxUploadPriceTB,
-  allowanceFactor = 1.5,
+  maxPricingFactor = defaultMaxPricingFactor,
   storageTB,
   downloadTBMonth,
   uploadTBMonth,
@@ -126,7 +131,7 @@ export function calculateIdealAllowance({
   maxStoragePriceTBMonth?: BigNumber
   maxDownloadPriceTB?: BigNumber
   maxUploadPriceTB?: BigNumber
-  allowanceFactor?: number
+  maxPricingFactor?: number
   storageTB?: BigNumber
   downloadTBMonth?: BigNumber
   uploadTBMonth?: BigNumber
@@ -137,7 +142,7 @@ export function calculateIdealAllowance({
     !maxStoragePriceTBMonth?.gt(0) ||
     !maxDownloadPriceTB?.gt(0) ||
     !maxUploadPriceTB?.gt(0) ||
-    allowanceFactor <= 0 ||
+    maxPricingFactor <= 0 ||
     !redundancyMultiplier?.gt(0) ||
     !storageTB?.gt(0) ||
     !downloadTBMonth?.gt(0) ||
@@ -146,8 +151,8 @@ export function calculateIdealAllowance({
     return undefined
   }
 
-  // Calculate the esimated spending.
-  const scaledSpending = calculateEstimatedSpending({
+  // Calculate the max spending.
+  const maxSpending = calculateMaxSpending({
     maxStoragePriceTBMonth,
     maxDownloadPriceTB,
     maxUploadPriceTB,
@@ -157,8 +162,9 @@ export function calculateIdealAllowance({
     redundancyMultiplier,
   })
 
-  // Calculate the ideal allowance by dividing the spending by the allowance factor.
-  const allowanceMonth = scaledSpending?.div(allowanceFactor)
+  // Calculate the spending estimate by dividing the max spending by the
+  // max pricing factor.
+  const spendingMonth = maxSpending?.div(maxPricingFactor)
 
-  return allowanceMonth?.integerValue()
+  return spendingMonth?.integerValue()
 }

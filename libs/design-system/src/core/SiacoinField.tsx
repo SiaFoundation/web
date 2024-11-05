@@ -17,6 +17,7 @@ type Props = Omit<
   sc?: BigNumber
   onChange?: (sc?: BigNumber) => void
   units?: string
+  unitsFiatPostfix?: string
   decimalsLimitSc?: number
   decimalsLimitFiat?: number
   placeholder?: BigNumber
@@ -33,6 +34,7 @@ export function SiacoinField({
   onChange,
   size = 'medium',
   units = 'SC',
+  unitsFiatPostfix,
   showFiat = true,
   error,
   changed,
@@ -157,9 +159,7 @@ export function SiacoinField({
           ? 'bg-gray-200 dark:bg-graydark-300'
           : 'bg-white dark:bg-graydark-50',
         props.readOnly ? 'pointer-events-none' : '',
-        props.readOnly
-          ? 'border-blue-400 dark:border-blue-400'
-          : error
+        error
           ? 'border-red-500 dark:border-red-400'
           : changed
           ? 'border-green-500 dark:border-green-400'
@@ -204,7 +204,7 @@ export function SiacoinField({
           variant="ghost"
           focus="none"
           value={localFiat !== 'NaN' ? localFiat : ''}
-          units={settings.currency.label}
+          units={settings.currency.label + (unitsFiatPostfix || '')}
           decimalScale={decimalsLimitSc}
           allowNegative={false}
           onValueChange={(value) => {

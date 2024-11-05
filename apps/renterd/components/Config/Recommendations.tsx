@@ -1,15 +1,11 @@
 import {
   Button,
-  HoverCard,
   Link,
-  ScrollArea,
   Separator,
   Text,
   formSetField,
 } from '@siafoundation/design-system'
 import {
-  Subtract24,
-  Add24,
   CaretUp16,
   CaretDown16,
   Information20,
@@ -18,20 +14,12 @@ import {
 } from '@siafoundation/react-icons'
 import { useApp } from '../../contexts/app'
 import { routes } from '../../config/routes'
-import useLocalStorageState from 'use-local-storage-state'
 import { useConfig } from '../../contexts/config'
-import { cx } from 'class-variance-authority'
 import { pluralize } from '@siafoundation/units'
+import { HangingNavItem } from './HangingNavItem'
 
 export function Recommendations() {
   const { autopilotInfo } = useApp()
-  const [maximized, setMaximized] = useLocalStorageState<boolean>(
-    'v0/renterd/config/recommendations',
-    {
-      defaultValue: true,
-    }
-  )
-
   const { form, fields, evaluation } = useConfig()
   const {
     hostMargin50,
@@ -120,16 +108,17 @@ export function Recommendations() {
 
   if (!hasDataToEvaluate) {
     return (
-      <Layout
-        maximized={maximized}
-        setMaximized={setMaximized}
-        maximizeControls={false}
-        title={
+      <HangingNavItem
+        testId="recommendations"
+        localStorageKey="config/recommendations"
+        canMaximizeControls={false}
+        tip={tip}
+        heading={
           <>
             <Text color="contrast">
               <PendingFilled20 />
             </Text>
-            <Text size="16" weight="medium">
+            <Text size="16" weight="medium" color="subtle">
               The system will review your configuration once all fields are
               filled
             </Text>
@@ -139,21 +128,33 @@ export function Recommendations() {
     )
   }
 
+  const matchingCountEl = (
+    <div className="flex gap-1 items-center">
+      <Text size="16" weight="medium" color="contrast">
+        Matching
+      </Text>
+      <Text size="16" weight="medium" color="contrast">
+        {usableHostsCurrent}/{hostTarget50}
+      </Text>
+      <Text size="16" weight="medium" color="contrast">
+        hosts
+      </Text>
+    </div>
+  )
+
   if (!needsRecommendations) {
     return (
-      <Layout
-        maximized={maximized}
-        setMaximized={setMaximized}
-        maximizeControls={false}
+      <HangingNavItem
+        testId="recommendations"
+        localStorageKey="config/recommendations"
+        canMaximizeControls={false}
         tip={tip}
-        title={
+        heading={
           <>
             <Text color="green">
               <CheckmarkFilled20 />
             </Text>
-            <Text size="16" weight="medium" color="subtle">
-              {usableHostsCurrent}/{hostTarget50}
-            </Text>
+            {matchingCountEl}
             <Text size="16" weight="medium">
               Configuration matches with a sufficient number of hosts
             </Text>
@@ -164,79 +165,79 @@ export function Recommendations() {
   }
 
   return (
-    <Layout
-      maximized={maximized}
-      setMaximized={setMaximized}
-      maximizeControls={!!recommendations.length}
+    <HangingNavItem
+      testId="recommendations"
+      localStorageKey="config/recommendations"
       tip={tip}
-      title={
-        <>
+      canMaximizeControls={!!recommendations.length}
+      heading={
+        <div className="flex gap-2 items-center">
           <Text color="amber">
             <Information20 />
           </Text>
-          <Text size="16" weight="medium" color="subtle">
-            {usableHostsCurrent}/{hostTarget50}
-          </Text>
-          <Text size="16" weight="medium">
+          {matchingCountEl}
+          <Text size="16" weight="medium" color="subtle" noWrap>
             {pluralize(recommendations.length, 'recommendation', {
               customZero: 'No recommendations',
             })}{' '}
             to match with more hosts
           </Text>
-        </>
+        </div>
       }
     >
-      {maximized &&
-        foundRecommendation &&
-        recommendations.map(
-          ({
-            hrefId,
-            key,
-            title,
-            currentLabel,
-            targetLabel,
-            targetValue,
-            direction,
-          }) => (
-            <Section
-              key={key}
-              testId={key}
-              title={
-                <Text size="14">
-                  {direction === 'up' ? 'Increase ' : 'Decrease '}
-                  <Link
-                    href={routes.config.index + '#' + hrefId}
-                    size="14"
-                    underline="hover"
-                  >
-                    {title}
-                  </Link>{' '}
-                  from {currentLabel} to{' '}
-                  <Button
-                    size="none"
-                    onClick={() =>
-                      formSetField({
-                        form,
-                        fields,
-                        name: key,
-                        value: targetValue,
-                        options: true,
-                      })
-                    }
-                  >
-                    {targetLabel}
-                  </Button>
-                </Text>
-              }
-              action={
-                <Text>
-                  {direction === 'up' ? <CaretUp16 /> : <CaretDown16 />}
-                </Text>
-              }
-            />
-          )
-        )}
-    </Layout>
+      {foundRecommendation ? (
+        <div data-testid="recommendationsList">
+          {recommendations.map(
+            ({
+              hrefId,
+              key,
+              title,
+              currentLabel,
+              targetLabel,
+              targetValue,
+              direction,
+            }) => (
+              <Section
+                key={key}
+                testId={key}
+                title={
+                  <Text size="14">
+                    {direction === 'up' ? 'Increase ' : 'Decrease '}
+                    <Link
+                      href={routes.config.index + '#' + hrefId}
+                      size="14"
+                      underline="hover"
+                    >
+                      {title}
+                    </Link>{' '}
+                    from {currentLabel} to{' '}
+                    <Button
+                      size="none"
+                      onClick={() =>
+                        formSetField({
+                          form,
+                          fields,
+                          name: key,
+                          value: targetValue,
+                          options: true,
+                        })
+                      }
+                    >
+                      {targetLabel}
+                    </Button>
+                  </Text>
+                }
+                action={
+                  <Text>
+                    {direction === 'up' ? <CaretUp16 /> : <CaretDown16 />}
+                  </Text>
+                }
+              />
+            )
+          )}
+        </div>
+      ) : null}
+    </HangingNavItem>
   )
 }
 
@@ -255,60 +256,6 @@ function Section({ testId, title, action }: SectionProps) {
       <div className="flex gap-2 items-center">
         <div className="flex-1 flex items-center">{title}</div>
         {action}
-      </div>
-    </div>
-  )
-}
-
-function Layout({
-  children,
-  maximized,
-  setMaximized,
-  maximizeControls,
-  title,
-  tip,
-}: {
-  children?: React.ReactNode
-  maximized: boolean
-  setMaximized: (maximized: boolean) => void
-  maximizeControls: boolean
-  title: React.ReactNode
-  tip?: React.ReactNode
-}) {
-  const el = (
-    <div
-      className={cx(
-        'flex justify-between items-center px-3 py-1.5',
-        maximized && children
-          ? 'border-b border-gray-200 dark:border-graydark-300'
-          : '',
-        maximizeControls ? 'cursor-pointer' : ''
-      )}
-      onClick={() => {
-        if (maximizeControls) {
-          setMaximized(!maximized)
-        }
-      }}
-    >
-      <div className={cx('flex gap-2 items-center')}>{title}</div>
-      {maximizeControls && (
-        <Button variant="ghost" onClick={() => setMaximized(!maximized)}>
-          {maximized ? <Subtract24 /> : <Add24 />}
-        </Button>
-      )}
-    </div>
-  )
-  return (
-    <div className="relative">
-      <div className="z-10 absolute top-0 left-1/2 -translate-x-1/2 flex justify-center">
-        <div className="w-[600px] flex flex-col max-h-[600px] bg-gray-50 dark:bg-graydark-50 border-b border-x border-gray-300 dark:border-graydark-400 rounded-b">
-          <ScrollArea>
-            {tip ? <HoverCard trigger={el}>{tip}</HoverCard> : el}
-            {children && (
-              <div data-testid="recommendationsList">{children}</div>
-            )}
-          </ScrollArea>
-        </div>
       </div>
     </div>
   )

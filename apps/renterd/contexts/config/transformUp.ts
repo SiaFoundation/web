@@ -52,9 +52,6 @@ export function transformUpAutopilot(
       ...existingValues?.contracts,
       set: v.autopilotContractSet,
       amount: Math.round(v.amountHosts.toNumber()),
-      allowance: toHastings(
-        valuePerMonthToPerPeriod(v.allowanceMonth, v.periodWeeks)
-      ).toString(),
       period: Math.round(weeksToBlocks(v.periodWeeks.toNumber())),
       renewWindow: Math.round(weeksToBlocks(v.renewWindowWeeks.toNumber())),
       download: Number(
@@ -133,19 +130,6 @@ export function transformUpPinned(
     ...existingValues,
     currency: v.pinnedCurrency,
     threshold: v.pinnedThreshold.div(100).toNumber(),
-    autopilots: {
-      [autopilotID]: {
-        allowance: {
-          pinned: v.shouldPinAllowance,
-          value: valuePerMonthToPerPeriod(
-            v.allowanceMonthPinned,
-            // If autopilot is disabled the period value may be undefined,
-            // but in that case the pinned allowance is also unused.
-            v.periodWeeks || new BigNumber(6)
-          ).toNumber(),
-        },
-      },
-    },
     gougingSettingsPins: {
       maxStorage: {
         pinned: v.shouldPinMaxStoragePrice,

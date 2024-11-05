@@ -12,11 +12,6 @@ import BigNumber from 'bignumber.js'
 import { useRedundancyMultiplier } from '../useRedundancyMultiplier'
 import { Calculation16 } from '@siafoundation/react-icons'
 import { toHastings } from '@siafoundation/units'
-import {
-  downloadWeight,
-  storageWeight,
-  uploadWeight,
-} from '../deriveAllowanceConfig'
 
 export function TipAction({
   children,
@@ -118,27 +113,6 @@ export function PriceWithRedundancyTip({
     </>
   )
 }
-
-export const fitPriceToCurrentAllowanceTipContent = (
-  <>
-    Set suggested max price that fits the current allowance spending target.
-    This suggested value takes into account the current estimated usage and
-    keeps storage, upload, and download upload prices proportional to each other
-    according to the following weights: {storageWeight}x storage, {uploadWeight}
-    x upload, {downloadWeight}x download.
-  </>
-)
-
-export const fitAllPricesToCurrentAllowanceTipContent = (
-  <>
-    Set suggested max prices for storage, upload, and download that fit the
-    current allowance spending target. The suggested values take into account
-    the current estimated usage and keeps storage, upload, and download upload
-    prices proportional to each other according to the following weights:{' '}
-    {storageWeight}x storage, {uploadWeight}x upload, {downloadWeight}x
-    download.
-  </>
-)
 
 export const recommendationTipContent = (
   <>

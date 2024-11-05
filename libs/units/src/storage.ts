@@ -105,7 +105,7 @@ export function getRedundancyMultiplier(
   return redundancyMult
 }
 
-export function calculateEstimatedSpending({
+export function calculateMaxSpending({
   maxStoragePriceTBMonth,
   maxDownloadPriceTB,
   maxUploadPriceTB,

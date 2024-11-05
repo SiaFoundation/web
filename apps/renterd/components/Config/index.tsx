@@ -16,7 +16,6 @@ export function Config() {
   const { form, fields, remoteError, configRef } = useConfig()
 
   const pinnedCurrency = form.watch('pinnedCurrency')
-  const shouldPinAllowance = form.watch('shouldPinAllowance')
   const shouldPinMaxStoragePrice = form.watch('shouldPinMaxStoragePrice')
   const shouldPinMaxUploadPrice = form.watch('shouldPinMaxUploadPrice')
   const shouldPinMaxDownloadPrice = form.watch('shouldPinMaxDownloadPrice')
@@ -29,7 +28,7 @@ export function Config() {
   return remoteError ? (
     <StateConnError />
   ) : (
-    <div ref={configRef} className="px-5 py-6 flex flex-col gap-16">
+    <div ref={configRef} className="px-5 pt-10 pb-6 flex flex-col gap-16">
       <PanelMenuSection title="Storage">
         <ConfigurationPanelSetting
           autoVisibility
@@ -48,41 +47,6 @@ export function Config() {
           name="downloadTBMonth"
           form={form}
           fields={fields}
-        />
-        <PanelMenuSetting
-          id="allowanceMonthGroup"
-          title="Allowance"
-          description={fields.allowanceMonth.description}
-          control={
-            <div className="flex flex-col gap-1 w-[260px]">
-              <ShouldPinSwitch
-                name="shouldPinAllowance"
-                form={form}
-                fields={fields}
-              />
-              {shouldPinAllowance ? (
-                canUseExchangeRates ? (
-                  <ConfigurationFiat
-                    name="allowanceMonthPinned"
-                    form={form}
-                    fields={fields}
-                    currency={pinnedCurrency || ''}
-                  />
-                ) : (
-                  <PinnedCurrencyWarning
-                    canUseExchangeRates={canUseExchangeRates}
-                    pinnedCurrency={pinnedCurrency}
-                  />
-                )
-              ) : (
-                <ConfigurationSiacoin
-                  name="allowanceMonth"
-                  form={form}
-                  fields={fields}
-                />
-              )}
-            </div>
-          }
         />
         <ConfigurationPanelSetting
           autoVisibility

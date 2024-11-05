@@ -16,7 +16,6 @@ import {
   AdvancedDefaults,
 } from './types'
 import { currencyOptions } from '@siafoundation/react-core'
-import { AllowanceTips } from './fieldTips/Allowance'
 import {
   MaxStoragePriceTips,
   MaxStoragePricePinnedTips,
@@ -98,62 +97,6 @@ export function getFields({
           required: requiredIfAutopilot(validationContext),
         },
       },
-    },
-    shouldPinAllowance: {
-      title: '',
-      description: '',
-      type: 'boolean',
-      category: 'storage',
-      validation: {},
-    },
-    allowanceMonth: {
-      type: 'siacoin',
-      category: 'storage',
-      title: 'Allowance',
-      description: (
-        <>
-          The amount you would like to spend per month. Choose whether to set
-          your allowance in siacoin per month or to pin the siacoin price to a
-          fixed fiat value per month.
-        </>
-      ),
-      units: 'SC/month',
-      decimalsLimitSc: scDecimalPlaces,
-      hidden: !isAutopilotEnabled,
-      validation: {
-        validate: {
-          required: requiredIfAutopilot(validationContext),
-        },
-      },
-      after: AllowanceTips,
-    },
-    allowanceMonthPinned: {
-      title: '',
-      description: '',
-      units: '/month',
-      type: 'fiat',
-      category: 'storage',
-      validation: {
-        validate: {
-          required: requiredIfPinningEnabled('shouldPinAllowance'),
-          currency: requiredIfPinningEnabled(
-            'shouldPinAllowance',
-            (_, values) =>
-              !!values.pinnedCurrency || 'must select a pinned currency'
-          ),
-          range: requiredIfPinningEnabled(
-            'shouldPinAllowance',
-            (value: Maybe<BigNumber>, values) => {
-              return (
-                !values.shouldPinAllowance ||
-                value?.gt(0) ||
-                'must be greater than 0'
-              )
-            }
-          ),
-        },
-      },
-      after: AllowanceTips,
     },
     periodWeeks: {
       type: 'number',
@@ -985,7 +928,6 @@ function requiredIfAutopilotAndAdvanced(
 }
 
 type ShouldPinField =
-  | 'shouldPinAllowance'
   | 'shouldPinMaxStoragePrice'
   | 'shouldPinMaxUploadPrice'
   | 'shouldPinMaxDownloadPrice'

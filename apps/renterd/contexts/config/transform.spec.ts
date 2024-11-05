@@ -11,7 +11,6 @@ import { InputValues, SubmitValues } from './types'
 import {
   blocksToWeeks,
   weeksToBlocks,
-  toHastings,
   valuePerPeriodToPerMonth,
   valuePerMonthToPerPeriod,
 } from '@siafoundation/units'
@@ -46,7 +45,6 @@ describe('tansforms', () => {
         })
       ).toEqual({
         autopilotContractSet: 'autopilot',
-        allowanceMonth: new BigNumber('357.142857'),
         amountHosts: new BigNumber('51'),
         periodWeeks: new BigNumber('6'),
         renewWindowWeeks: new BigNumber('2.2301587301587302'),
@@ -72,11 +70,9 @@ describe('tansforms', () => {
         migrationSurchargeMultiplier: new BigNumber(10),
         minShards: new BigNumber(10),
         totalShards: new BigNumber(30),
-        allowanceMonthPinned: new BigNumber('71.43'),
         maxStoragePriceTBMonthPinned: new BigNumber('5'),
         maxDownloadPriceTBPinned: new BigNumber('4'),
         maxUploadPriceTBPinned: new BigNumber('2'),
-        shouldPinAllowance: false,
         shouldPinMaxDownloadPrice: false,
         shouldPinMaxUploadPrice: false,
         shouldPinMaxStoragePrice: false,
@@ -141,7 +137,6 @@ describe('tansforms', () => {
             'mainnet',
             {
               autopilotContractSet: 'autopilot',
-              allowanceMonth: new BigNumber('6006'),
               amountHosts: new BigNumber('51'),
               periodWeeks: new BigNumber('6'),
               renewWindowWeeks: new BigNumber('2.2301587301587302'),
@@ -169,7 +164,6 @@ describe('tansforms', () => {
           contracts: {
             set: 'autopilot',
             amount: 51,
-            allowance: '8408400000000000000000000000',
             period: 6048,
             renewWindow: 2248,
             download: 1099511627776,
@@ -185,7 +179,6 @@ describe('tansforms', () => {
             'mainnet',
             {
               autopilotContractSet: 'autopilot',
-              allowanceMonth: new BigNumber('6006'),
               amountHosts: new BigNumber('51'),
               periodWeeks: new BigNumber('6'),
               renewWindowWeeks: new BigNumber('2.2301587301587302'),
@@ -226,7 +219,6 @@ describe('tansforms', () => {
             foobar: 'value',
             set: 'autopilot',
             amount: 51,
-            allowance: '8408400000000000000000000000',
             period: 6048,
             renewWindow: 2248,
             download: 1099511627776,
@@ -242,7 +234,6 @@ describe('tansforms', () => {
             'zen',
             {
               autopilotContractSet: 'autopilot',
-              allowanceMonth: new BigNumber('6006'),
               amountHosts: undefined,
               periodWeeks: new BigNumber('6'),
               renewWindowWeeks: new BigNumber('2.2301587301587302'),
@@ -276,7 +267,6 @@ describe('tansforms', () => {
           contracts: {
             set: 'autopilot',
             amount: 12,
-            allowance: '8408400000000000000000000000',
             period: 6048,
             renewWindow: 2248,
             download: 1099511627776,
@@ -294,7 +284,6 @@ describe('tansforms', () => {
           transformUpGouging(
             {
               autopilotContractSet: 'autopilot',
-              allowanceMonth: new BigNumber('6006'),
               amountHosts: new BigNumber('51'),
               periodWeeks: new BigNumber('6'),
               renewWindowWeeks: new BigNumber('2.2301587301587302'),
@@ -322,11 +311,9 @@ describe('tansforms', () => {
               minShards: new BigNumber(10),
               totalShards: new BigNumber(30),
               migrationSurchargeMultiplier: new BigNumber(10),
-              allowanceMonthPinned: new BigNumber('0'),
               maxStoragePriceTBMonthPinned: new BigNumber('0'),
               maxDownloadPriceTBPinned: new BigNumber('0'),
               maxUploadPriceTBPinned: new BigNumber('0'),
-              shouldPinAllowance: false,
               shouldPinMaxDownloadPrice: false,
               shouldPinMaxUploadPrice: false,
               shouldPinMaxStoragePrice: false,
@@ -362,8 +349,6 @@ describe('tansforms', () => {
             {
               pinnedCurrency: 'usd',
               pinnedThreshold: new BigNumber(1),
-              shouldPinAllowance: true,
-              allowanceMonthPinned: new BigNumber('1000'),
               shouldPinMaxStoragePrice: true,
               maxStoragePriceTBMonthPinned: new BigNumber('2000'),
               shouldPinMaxUploadPrice: true,
@@ -382,14 +367,6 @@ describe('tansforms', () => {
         ).toEqual({
           currency: 'usd' as CurrencyId,
           threshold: 0.01,
-          autopilots: {
-            autopilot: {
-              allowance: {
-                pinned: true,
-                value: 1400,
-              },
-            },
-          },
           gougingSettingsPins: {
             maxStorage: {
               pinned: true,
@@ -596,7 +573,6 @@ function buildAllResponses() {
       contracts: {
         set: 'autopilot',
         amount: 51,
-        allowance: toHastings(500).toString(),
         period: weeksToBlocks(6),
         renewWindow: 2248,
         download: 1099511627776,
@@ -620,15 +596,6 @@ function buildAllResponses() {
     pinned: {
       currency: 'usd' as CurrencyId,
       threshold: 0.1,
-      autopilots: {
-        // The default autopilot named 'autopilot'.
-        autopilot: {
-          allowance: {
-            pinned: false,
-            value: 100,
-          },
-        },
-      },
       gougingSettingsPins: {
         maxStorage: {
           pinned: false,
