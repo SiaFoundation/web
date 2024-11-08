@@ -11,7 +11,6 @@ import { HostsAllowBlockDialog } from '../components/Hosts/HostsAllowBlockDialog
 import { HostsFilterAddressDialog } from '../components/Hosts/HostsFilterAddressDialog'
 import { ContractsFilterAddressDialog } from '../components/Contracts/ContractsFilterAddressDialog'
 import { ContractsFilterPublicKeyDialog } from '../components/Contracts/ContractsFilterPublicKeyDialog'
-import { ContractsFilterContractSetDialog } from '../components/Contracts/ContractsFilterContractSetDialog'
 import { FilesSearchBucketDialog } from '../dialogs/FilesSearchBucketDialog'
 import { useSyncerConnect, useWallet } from '@siafoundation/renterd-react'
 import { RenterdSendSiacoinDialog } from '../dialogs/RenterdSendSiacoinDialog'
@@ -39,7 +38,6 @@ export type DialogType =
   | 'hostsFilterPublicKey'
   | 'contractsFilterAddress'
   | 'contractsFilterPublicKey'
-  | 'contractsFilterContractSet'
   | 'filesCreateBucket'
   | 'filesDeleteBucket'
   | 'filesCreateDirectory'
@@ -200,10 +198,6 @@ export function Dialogs() {
       />
       <ContractsFilterAddressDialog
         open={dialog === 'contractsFilterAddress'}
-        onOpenChange={onOpenChange}
-      />
-      <ContractsFilterContractSetDialog
-        open={dialog === 'contractsFilterContractSet'}
         onOpenChange={onOpenChange}
       />
       <ContractsFilterPublicKeyDialog

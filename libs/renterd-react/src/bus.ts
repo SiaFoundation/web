@@ -53,15 +53,10 @@ import {
   ContractRenewedPayload,
   ContractRenewedResponse,
   ContractResponse,
-  ContractSetChurnMetricsParams,
-  ContractSetChurnMetricsResponse,
-  ContractSetMetricsParams,
-  ContractSetMetricsResponse,
-  ContractSetUpdateParams,
-  ContractSetUpdatePayload,
-  ContractSetUpdateResponse,
-  ContractSetsParams,
-  ContractSetsResponse,
+  ContractsMetricsParams,
+  ContractsMetricsResponse,
+  ContractsChurnMetricsParams,
+  ContractsChurnMetricsResponse,
   ContractsAddParams,
   ContractsAddPayload,
   ContractsAddResponse,
@@ -168,8 +163,6 @@ import {
   busContractIdRenewedRoute,
   busContractIdRoute,
   busContractsRoute,
-  busContractsSetsRoute,
-  busContractsSetsSetRoute,
   busHostHostKeyRoute,
   busHostPublicKeyResetlostsectorsRoute,
   busHostsAllowlistRoute,
@@ -196,7 +189,7 @@ import {
   busAlertsDismissRoute,
   busSlabKeyObjectsRoute,
   busMetricContractRoute,
-  busMetricContractsetRoute,
+  busMetricContractsRoute,
   busMetricChurnRoute,
   busMetricWalletRoute,
   busMultipartCreateRoute,
@@ -641,22 +634,6 @@ export function useContractSize(
   return useGetSwr({ ...args, route: busContractIdSize })
 }
 
-export function useContractSets(
-  args?: HookArgsSwr<ContractSetsParams, ContractSetsResponse>
-) {
-  return useGetSwr({ ...args, route: busContractsSetsRoute })
-}
-
-export function useContractSetUpdate(
-  args: HookArgsCallback<
-    ContractSetUpdateParams,
-    ContractSetUpdatePayload,
-    ContractSetUpdateResponse
-  >
-) {
-  return usePutFunc({ ...args, route: busContractsSetsSetRoute })
-}
-
 export function useContractsPrunable(
   args?: HookArgsSwr<ContractsPrunableParams, ContractsPrunableResponse>
 ) {
@@ -894,17 +871,13 @@ export function useMetricsContract(
   return useGetSwr({ ...args, route: busMetricContractRoute })
 }
 
-export function useMetricsContractSet(
-  args: HookArgsSwr<ContractSetMetricsParams, ContractSetMetricsResponse>
+export function useMetricsContracts(
+  args: HookArgsSwr<ContractsMetricsParams, ContractsMetricsResponse>
 ) {
-  return useGetSwr({ ...args, route: busMetricContractsetRoute })
+  return useGetSwr({ ...args, route: busMetricContractsRoute })
 }
-
-export function useMetricsContractSetChurn(
-  args: HookArgsSwr<
-    ContractSetChurnMetricsParams,
-    ContractSetChurnMetricsResponse
-  >
+export function useMetricsContractsChurn(
+  args: HookArgsSwr<ContractsChurnMetricsParams, ContractsChurnMetricsResponse>
 ) {
   return useGetSwr({ ...args, route: busMetricChurnRoute })
 }

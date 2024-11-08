@@ -21,7 +21,6 @@ export function mockApiBusSettingsUpload(server: SetupServer) {
   server.use(
     http.get('/api/bus/settings/upload', () => {
       return HttpResponse.json({
-        defaultContractSet: 'myset',
         packing: {
           enabled: true,
           slabBufferMaxSizeSoft: 1,

@@ -39,7 +39,6 @@ export type MultipartUploadPartParams = {
   partnumber: number
   encryptionoffset: number
   bucket?: string
-  contractset?: string
   minshards?: number
   totalshards?: number
 }

@@ -5,17 +5,14 @@ import {
   colors,
   getDataIntervalLabelFormatter,
 } from '@siafoundation/design-system'
-import {
-  useAutopilotConfig,
-  useMetricsContractSet,
-} from '@siafoundation/renterd-react'
+import { useMetricsContracts } from '@siafoundation/renterd-react'
 import { useMemo } from 'react'
-import { ChartContractSetCategory, ChartContractSetKey } from './types'
+import { ChartContractsCategory, ChartContractsKey } from './types'
 import { getTimeClampedToNearest5min } from './utils'
 import { daysInMilliseconds } from '@siafoundation/units'
-import { ContractSetMetricsParams } from '@siafoundation/renterd-types'
+import { ContractsMetricsParams } from '@siafoundation/renterd-types'
 
-export function useContractSetMetrics() {
+export function useContractsMetrics() {
   // don't use exact times, round to 5 minutes so that swr can cache
   // if the user flips back and forth between contracts.
   const start = getTimeClampedToNearest5min(
@@ -28,20 +25,15 @@ export function useContractSetMetrics() {
     const span = today - start
     return Math.round(span / interval)
   }, [start, interval])
-
-  const config = useAutopilotConfig()
-  const response = useMetricsContractSet({
-    disabled: !config.data,
+  const response = useMetricsContracts({
     params: {
-      name: config.data?.contracts.set,
       start: new Date(start).toISOString(),
       interval,
       n: periods,
-    } as ContractSetMetricsParams,
+    } as ContractsMetricsParams,
   })
-
-  const contractSetMetrics = useMemo<
-    Chart<ChartContractSetKey, ChartContractSetCategory>
+  const contractsMetrics = useMemo<
+    Chart<ChartContractsKey, ChartContractsCategory>
   >(() => {
     const data = formatChartData(
       response.data?.map((m) => ({
@@ -79,8 +71,7 @@ export function useContractSetMetrics() {
       isLoading: response.isValidating && !response.data,
     }
   }, [response.data, response.isValidating, interval])
-
   return {
-    contractSetMetrics,
+    contractsMetrics,
   }
 }

@@ -7,7 +7,7 @@ export function ContractMetrics() {
     selectedContract,
     allContractsSpendingMetrics,
     selectedContractSpendingMetrics,
-    contractSetCountMetrics,
+    contractsCountMetrics,
     graphMode,
     setGraphMode,
   } = useContracts()
@@ -70,9 +70,9 @@ export function ContractMetrics() {
         <ChartXY
           id="renterd/v0/contracts/graphs/count"
           height="100%"
-          data={contractSetCountMetrics.data}
-          config={contractSetCountMetrics.config}
-          isLoading={contractSetCountMetrics.isLoading}
+          data={contractsCountMetrics.data}
+          config={contractsCountMetrics.config}
+          isLoading={contractsCountMetrics.isLoading}
           actionsLeft={tabsEl}
           emptyState={<StateNoData />}
         />

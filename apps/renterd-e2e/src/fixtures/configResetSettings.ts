@@ -27,7 +27,6 @@ export const configResetAllSettings = step(
     await fillTextInputByName(page, 'periodWeeks', '6')
     await fillTextInputByName(page, 'renewWindowWeeks', '2')
     await fillTextInputByName(page, 'amountHosts', '3')
-    await fillTextInputByName(page, 'autopilotContractSet', 'autopilot')
     await setSwitchByLabel(page, 'prune', false)
 
     // hosts
@@ -37,7 +36,6 @@ export const configResetAllSettings = step(
     await fillTextInputByName(page, 'minProtocolVersion', '1.6.0')
 
     // contracts
-    await fillTextInputByName(page, 'defaultContractSet', 'autopilot')
     await setSwitchByLabel(page, 'uploadPackingEnabled', true)
 
     // gouging

@@ -5,7 +5,6 @@ import { contractFilterRenewPage } from '../ContractFilterCmdGroups/Renew'
 import { Page } from '../../../../CmdRoot/types'
 import { AddressCmdNav } from '../ContractFilterCmdGroups/Address'
 import { PublicKeyCmdNav } from '../ContractFilterCmdGroups/PublicKey'
-import { ContractSetCmdNav } from '../ContractFilterCmdGroups/ContractSet'
 
 export const commandPage = {
   namespace: 'contracts',
@@ -34,12 +33,6 @@ export function ContractFilterNav({
         select={select}
       />
       <PublicKeyCmdNav
-        currentPage={currentPage}
-        parentPage={parentPage}
-        commandPage={commandPage}
-        select={select}
-      />
-      <ContractSetCmdNav
         currentPage={currentPage}
         parentPage={parentPage}
         commandPage={commandPage}
