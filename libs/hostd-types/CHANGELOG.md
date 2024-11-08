@@ -1,5 +1,11 @@
 # @siafoundation/hostd-types
 
+## 0.4.0
+
+### Minor Changes
+
+- d794e604: The syncer peers response now includes more information and matches walletd.
+
 ## 0.3.0
 
 ### Minor Changes

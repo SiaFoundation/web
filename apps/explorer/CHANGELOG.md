@@ -1,5 +1,12 @@
 # explorer
 
+## 0.21.0
+
+### Minor Changes
+
+- d6e4c8a5: Stripped 'addr' from transaction inputs and output hrefs.
+- 61724842: Fixed bug experienced when navigating directly to a block by its height.
+
 ## 0.20.0
 
 ### Minor Changes

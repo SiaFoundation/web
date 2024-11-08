@@ -1,5 +1,11 @@
 # @siafoundation/walletd-types
 
+## 0.5.0
+
+### Minor Changes
+
+- d794e604: The syncer peers response type updated to include address rather than addr.
+
 ## 0.4.1
 
 ### Patch Changes

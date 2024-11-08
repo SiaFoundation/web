@@ -1,5 +1,11 @@
 # renterd
 
+## 0.67.0
+
+### Minor Changes
+
+- fe888991: Invalid and not found routes now redirect to the home page.
+
 ## 0.66.0
 
 ### Minor Changes
