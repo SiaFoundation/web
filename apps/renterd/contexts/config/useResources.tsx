@@ -15,7 +15,6 @@ import { useSiaCentralHostsNetworkAverages } from '@siafoundation/sia-central-re
 import { SiaCentralHostsNetworkAveragesResponse } from '@siafoundation/sia-central-types'
 import { minutesInMilliseconds } from '@siafoundation/units'
 import { useApp } from '../app'
-import { useSyncContractSet } from './useSyncContractSet'
 import { useMemo } from 'react'
 import { AutopilotInfo } from '../app/useAutopilotInfo'
 
@@ -59,11 +58,6 @@ export function useResources() {
       },
     },
   })
-  const {
-    shouldSyncDefaultContractSet,
-    setShouldSyncDefaultContractSet,
-    maybeSyncDefaultContractSet,
-  } = useSyncContractSet()
 
   const appSettings = useAppSettings()
 
@@ -125,9 +119,6 @@ export function useResources() {
     pinned,
     upload,
     averages,
-    shouldSyncDefaultContractSet,
-    setShouldSyncDefaultContractSet,
-    maybeSyncDefaultContractSet,
     appSettings,
   }
 }

@@ -29,7 +29,7 @@ test('contracts prunable size', async ({ page }) => {
   const summaryRowCell = summaryRow.getByTestId('prunableSize')
   await expect(summaryRowCell).toBeVisible()
   await expect(summaryRowCell.getByRole('button')).toBeVisible()
-  await expect(summaryRowCell.getByLabel('prunable sizes')).toBeHidden({
+  await expect(summaryRowCell.getByLabel('prunable size')).toBeHidden({
     timeout: 30_000,
   })
 
@@ -38,32 +38,27 @@ test('contracts prunable size', async ({ page }) => {
   const row1Cell = row1.getByTestId('prunableSize')
   await expect(row1Cell).toBeVisible()
   await expect(row1Cell.getByRole('button')).toBeVisible()
-  await expect(row1Cell.getByLabel('prunable sizes')).toBeHidden()
+  await expect(row1Cell.getByLabel('prunable size')).toBeHidden()
 
   // Fetch prunable size on the first row.
   await row1Cell.getByRole('button').click()
 
   // Check that the prunable size is visible on the first row but not the summary.
-  await expect(row1Cell.getByLabel('prunable sizes')).toBeVisible()
-  await expect(summaryRowCell.getByLabel('prunable sizes')).toBeHidden()
+  await expect(row1Cell.getByLabel('prunable size')).toBeVisible()
+  await expect(summaryRowCell.getByLabel('prunable size')).toBeHidden()
 
   // Fetch prunable size for all contracts.
   await summaryRowCell.getByRole('button').click()
 
   // Check that the prunable summary is visible.
-  const summarySizes = summaryRowCell.getByLabel('prunable sizes')
+  const summarySizes = summaryRowCell.getByLabel('prunable size')
   await expect(summarySizes).toBeVisible()
   await expect(summarySizes.getByLabel('prunable')).toBeVisible()
-  await expect(summarySizes.getByLabel('expiring')).toBeVisible()
 
   // Check that the prunable size is visible for all contracts.
   const rows = await getContractRows(page)
   for (const row of rows) {
-    const prunableSizes = row.getByLabel('prunable sizes')
-    await expect(prunableSizes).toBeVisible()
-    await expect(prunableSizes).toHaveAttribute(
-      'aria-label',
-      /prunable|expiring/
-    )
+    const prunableSize = row.getByLabel('prunable size')
+    await expect(prunableSize).toBeVisible()
   }
 })

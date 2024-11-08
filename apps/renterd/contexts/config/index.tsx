@@ -27,8 +27,6 @@ export function useConfigMain() {
     pinned,
     upload,
     averages,
-    shouldSyncDefaultContractSet,
-    setShouldSyncDefaultContractSet,
     resources,
   } = useResources()
 
@@ -143,8 +141,6 @@ export function useConfigMain() {
     changeCount,
     redundancyMultiplier,
     storageTB,
-    shouldSyncDefaultContractSet,
-    setShouldSyncDefaultContractSet,
     configViewMode,
     setConfigViewMode,
     remoteError,

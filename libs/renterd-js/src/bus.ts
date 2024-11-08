@@ -44,18 +44,12 @@ import {
   ContractRenewedPayload,
   ContractRenewedResponse,
   ContractResponse,
-  ContractSetChurnMetricsParams,
-  ContractSetChurnMetricsPayload,
-  ContractSetChurnMetricsResponse,
-  ContractSetMetricsParams,
-  ContractSetMetricsPayload,
-  ContractSetMetricsResponse,
-  ContractSetUpdateParams,
-  ContractSetUpdatePayload,
-  ContractSetUpdateResponse,
-  ContractSetsParams,
-  ContractSetsPayload,
-  ContractSetsResponse,
+  ContractsMetricsParams,
+  ContractsMetricsPayload,
+  ContractsMetricsResponse,
+  ContractsChurnMetricsParams,
+  ContractsChurnMetricsPayload,
+  ContractsChurnMetricsResponse,
   ContractSizeParams,
   ContractSizePayload,
   ContractSizeResponse,
@@ -191,16 +185,14 @@ import {
   busContractIdSize,
   busContractsPrunableRoute,
   busContractsRoute,
-  busContractsSetsRoute,
-  busContractsSetsSetRoute,
   busHostHostKeyRoute,
   busHostPublicKeyResetlostsectorsRoute,
   busHostsAllowlistRoute,
   busHostsBlocklistRoute,
   busHostsHostKeyRoute,
-  busMetricChurnRoute,
   busMetricContractRoute,
-  busMetricContractsetRoute,
+  busMetricContractsRoute,
+  busMetricChurnRoute,
   busMetricWalletRoute,
   busMultipartAbortRoute,
   busMultipartCompleteRoute,
@@ -441,16 +433,6 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       ContractSizePayload,
       ContractSizeResponse
     >(axios, 'get', busContractIdSize),
-    contractSets: buildRequestHandler<
-      ContractSetsParams,
-      ContractSetsPayload,
-      ContractSetsResponse
-    >(axios, 'get', busContractsSetsRoute),
-    contractSetUpdate: buildRequestHandler<
-      ContractSetUpdateParams,
-      ContractSetUpdatePayload,
-      ContractSetUpdateResponse
-    >(axios, 'put', busContractsSetsSetRoute),
     contractsPrunable: buildRequestHandler<
       ContractsPrunableParams,
       ContractsPrunablePayload,
@@ -571,15 +553,15 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       ContractMetricsPayload,
       ContractMetricsResponse
     >(axios, 'get', busMetricContractRoute),
-    contractSetMetrics: buildRequestHandler<
-      ContractSetMetricsParams,
-      ContractSetMetricsPayload,
-      ContractSetMetricsResponse
-    >(axios, 'get', busMetricContractsetRoute),
-    contractSetChurnMetrics: buildRequestHandler<
-      ContractSetChurnMetricsParams,
-      ContractSetChurnMetricsPayload,
-      ContractSetChurnMetricsResponse
+    contractsMetrics: buildRequestHandler<
+      ContractsMetricsParams,
+      ContractsMetricsPayload,
+      ContractsMetricsResponse
+    >(axios, 'get', busMetricContractsRoute),
+    contractsChurnMetrics: buildRequestHandler<
+      ContractsChurnMetricsParams,
+      ContractsChurnMetricsPayload,
+      ContractsChurnMetricsResponse
     >(axios, 'get', busMetricChurnRoute),
     walletMetrics: buildRequestHandler<
       WalletMetricsParams,

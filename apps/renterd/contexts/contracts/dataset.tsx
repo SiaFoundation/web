@@ -10,12 +10,8 @@ import { usePrunableContractSizes } from './usePrunableContractSizes'
 
 export function useDataset({
   selectContract,
-  autopilotContractSet,
-  defaultContractSet,
 }: {
   selectContract: (id: string) => void
-  autopilotContractSet?: string
-  defaultContractSet?: string
 }) {
   const response = useContractsData({
     config: {
@@ -52,15 +48,9 @@ export function useDataset({
           state: c.state,
           hostIp: c.hostIP,
           hostKey: c.hostKey,
-          contractSets: c.contractSets || [],
-          inAutopilotSet: autopilotContractSet
-            ? !!c.contractSets?.includes(autopilotContractSet)
-            : false,
-          inDefaultSet: defaultContractSet
-            ? !!c.contractSets?.includes(defaultContractSet)
-            : false,
           location: geoHosts.find((h) => h.public_key === c.hostKey)?.location,
           timeline: startTime,
+          usability: c.usability,
           startTime,
           endTime,
           contractHeightStart: c.startHeight,
@@ -81,14 +71,7 @@ export function useDataset({
         return datum
       }) || []
     return datums
-  }, [
-    response.data,
-    geoHosts,
-    currentHeight,
-    selectContract,
-    autopilotContractSet,
-    defaultContractSet,
-  ])
+  }, [response.data, geoHosts, currentHeight, selectContract])
 
   const {
     prunableSizes,

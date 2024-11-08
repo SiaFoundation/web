@@ -150,31 +150,6 @@ export function getFields({
         },
       },
     },
-    autopilotContractSet: {
-      type: 'text',
-      category: 'storage',
-      title: 'Contract set',
-      description: (
-        <>
-          The contract set that autopilot should use. This should typically be
-          the same as the default contract set.
-        </>
-      ),
-      placeholder: advancedDefaults?.autopilotContractSet,
-      suggestion: advancedDefaults?.autopilotContractSet,
-      suggestionTip: (
-        <>
-          The default contract set is{' '}
-          <Code>{advancedDefaults?.autopilotContractSet}</Code>.
-        </>
-      ),
-      hidden: !isAutopilotEnabled || configViewMode === 'basic',
-      validation: {
-        validate: {
-          required: requiredIfAutopilotAndAdvanced(validationContext),
-        },
-      },
-    },
     prune: {
       type: 'boolean',
       category: 'storage',
@@ -296,29 +271,6 @@ export function getFields({
       },
     },
 
-    // contract
-    defaultContractSet: {
-      category: 'contractset',
-      type: 'text',
-      title: 'Default contract set',
-      placeholder: advancedDefaults?.defaultContractSet,
-      suggestion: advancedDefaults?.defaultContractSet,
-      suggestionTip: (
-        <>
-          Autopilot users will typically want to keep this the same as the
-          autopilot contract set.
-        </>
-      ),
-      description: (
-        <>The default contract set is where data is uploaded to by default.</>
-      ),
-      hidden: configViewMode === 'basic',
-      validation: {
-        validate: {
-          required: requiredIfAdvanced(validationContext),
-        },
-      },
-    },
     uploadPackingEnabled: {
       category: 'uploadpacking',
       type: 'boolean',

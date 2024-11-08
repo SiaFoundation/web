@@ -1,27 +1,12 @@
-import {
-  Text,
-  Button,
-  Switch,
-  ControlGroup,
-  Popover,
-  Label,
-  Paragraph,
-} from '@siafoundation/design-system'
-import { Reset16, Save16, Settings16 } from '@siafoundation/react-icons'
+import { Text, Button, ControlGroup } from '@siafoundation/design-system'
+import { Reset16, Save16 } from '@siafoundation/react-icons'
 import { useConfig } from '../../contexts/config'
 import { ConfigContextMenu } from './ConfigContextMenu'
 import { ConfigViewDropdownMenu } from './ConfigViewDropdownMenu'
 import { pluralize } from '@siafoundation/units'
 
 export function ConfigActions() {
-  const {
-    onSubmit,
-    changeCount,
-    shouldSyncDefaultContractSet,
-    setShouldSyncDefaultContractSet,
-    revalidateAndResetForm,
-    form,
-  } = useConfig()
+  const { onSubmit, changeCount, revalidateAndResetForm, form } = useConfig()
 
   return (
     <div className="flex items-center gap-2">
@@ -48,32 +33,6 @@ export function ConfigActions() {
           <Save16 />
           Save changes
         </Button>
-        <Popover
-          contentProps={{
-            align: 'end',
-          }}
-          trigger={
-            <Button variant="accent" icon="hover">
-              <Settings16 />
-            </Button>
-          }
-        >
-          <div className="px-1">
-            <Label>Options</Label>
-            <div>
-              <Switch
-                checked={shouldSyncDefaultContractSet}
-                onCheckedChange={(val) => setShouldSyncDefaultContractSet(val)}
-              >
-                sync default contract set
-              </Switch>
-              <Paragraph size="12">
-                Automatically update the default contract set to be the same as
-                the autopilot contract set when changes are saved.
-              </Paragraph>
-            </div>
-          </div>
-        </Popover>
       </ControlGroup>
       <ConfigContextMenu />
       <ConfigViewDropdownMenu />

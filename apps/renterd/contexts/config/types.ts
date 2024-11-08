@@ -7,7 +7,6 @@ export type Categories =
   | 'gouging'
   | 'hosts'
   | 'wallet'
-  | 'contractset'
   | 'uploadpacking'
   | 'redundancy'
   | 'pinning'
@@ -19,7 +18,6 @@ export const scDecimalPlaces = 6
 // form defaults
 export const inputValuesAutopilot = {
   // contracts
-  autopilotContractSet: '',
   amountHosts: undefined as BigNumber | undefined,
   periodWeeks: undefined as BigNumber | undefined,
   renewWindowWeeks: undefined as BigNumber | undefined,
@@ -59,8 +57,6 @@ export const inputValuesPinned = {
 }
 
 export const inputValuesUpload = {
-  // default contract set
-  defaultContractSet: undefined as string | undefined,
   // packing
   uploadPackingEnabled: true,
   // redundancy
@@ -139,7 +135,6 @@ export function getAdvancedDefaultsAutopilot(
         periodWeeks: new BigNumber(6),
         renewWindowWeeks: new BigNumber(2),
         amountHosts: new BigNumber(50),
-        autopilotContractSet: 'autopilot',
         allowRedundantIPs: false,
         maxDowntimeHours: new BigNumber(336),
         maxConsecutiveScanFailures: new BigNumber(10),
@@ -150,7 +145,6 @@ export function getAdvancedDefaultsAutopilot(
         periodWeeks: new BigNumber(6),
         renewWindowWeeks: new BigNumber(2),
         amountHosts: new BigNumber(12),
-        autopilotContractSet: 'autopilot',
         allowRedundantIPs: false,
         maxDowntimeHours: new BigNumber(336),
         maxConsecutiveScanFailures: new BigNumber(10),
@@ -183,7 +177,6 @@ export function getAdvancedDefaultsUpload(
           totalShards: new BigNumber(6),
         }
   return {
-    defaultContractSet: 'autopilot',
     uploadPackingEnabled: true,
     ...advancedDefaultRedundancy,
   }

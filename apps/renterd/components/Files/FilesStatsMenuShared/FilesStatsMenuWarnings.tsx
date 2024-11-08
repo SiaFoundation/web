@@ -7,7 +7,6 @@ import {
   Text,
 } from '@siafoundation/design-system'
 import { Warning16 } from '@siafoundation/react-icons'
-import { useContractSetMismatch } from '../checks/useContractSetMismatch'
 import { useMemo } from 'react'
 import { useSyncStatus } from '../../../hooks/useSyncStatus'
 import { useAutopilotNotConfigured } from '../checks/useAutopilotNotConfigured'
@@ -15,7 +14,6 @@ import { useNotEnoughContracts } from '../checks/useNotEnoughContracts'
 
 export function FilesStatsMenuWarnings() {
   const syncStatus = useSyncStatus()
-  const contractSetMismatch = useContractSetMismatch()
   const autopilotNotConfigured = useAutopilotNotConfigured()
   const notEnoughContracts = useNotEnoughContracts()
 
@@ -73,40 +71,12 @@ export function FilesStatsMenuWarnings() {
     return null
   }, [notEnoughContracts])
 
-  const contractSetMismatchEl = useMemo(() => {
-    if (contractSetMismatch.active) {
-      return (
-        <div key="contractSetMismatch" className="flex flex-col gap-1">
-          <Text size="12" font="mono" weight="medium" color="amber">
-            Uploaded data will not be managed by autopilot.
-          </Text>
-          <Paragraph size="12">
-            The autopilot contract set does not match the default contract set.
-            This means that by default workers will not upload data to contracts
-            that autopilot manages. Unless these contract are being manually
-            maintained, this will result in data loss. Continue with caution or
-            update the autopilot contract set to match the default contract set.
-          </Paragraph>
-        </div>
-      )
-    }
-    return null
-  }, [contractSetMismatch.active])
-
   const warningList = useMemo(
     () =>
-      [
-        syncStatusEl,
-        autopilotNotConfiguredEl,
-        notEnoughContractsEl,
-        contractSetMismatchEl,
-      ].filter(Boolean),
-    [
-      syncStatusEl,
-      autopilotNotConfiguredEl,
-      notEnoughContractsEl,
-      contractSetMismatchEl,
-    ]
+      [syncStatusEl, autopilotNotConfiguredEl, notEnoughContractsEl].filter(
+        Boolean
+      ),
+    [syncStatusEl, autopilotNotConfiguredEl, notEnoughContractsEl]
   )
 
   if (warningList.length)

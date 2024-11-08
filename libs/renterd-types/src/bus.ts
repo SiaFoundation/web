@@ -57,8 +57,6 @@ export const busContractIdRoute = '/bus/contract/:id'
 export const busContractIdNewRoute = '/bus/contract/:id/new'
 export const busContractIdRenewedRoute = '/bus/contract/:id/renewed'
 export const busContractIdSize = '/bus/contract/:id/size'
-export const busContractsSetsRoute = '/bus/contracts/sets'
-export const busContractsSetsSetRoute = '/bus/contracts/sets/:set'
 export const busContractsPrunableRoute = '/bus/contracts/prunable'
 export const busBucketRoute = '/bus/bucket'
 export const busBucketsRoute = '/bus/buckets'
@@ -79,7 +77,7 @@ export const busAlertsRoute = '/bus/alerts'
 export const busAlertsDismissRoute = '/bus/alerts/dismiss'
 export const busSlabKeyObjectsRoute = '/bus/slab/:key/objects'
 export const busMetricContractRoute = '/bus/metric/contract'
-export const busMetricContractsetRoute = '/bus/metric/contractset'
+export const busMetricContractsRoute = '/bus/metric/contracts'
 export const busMetricChurnRoute = '/bus/metric/churn'
 export const busMetricWalletRoute = '/bus/metric/wallet'
 export const busMultipartRoute = '/bus/multipart'
@@ -339,16 +337,6 @@ export type ContractDeleteParams = {
 export type ContractDeletePayload = void
 export type ContractDeleteResponse = void
 
-export type ContractSetsParams = void
-export type ContractSetsPayload = void
-export type ContractSetsResponse = string[]
-
-export type ContractSetUpdateParams = {
-  name: string
-}
-export type ContractSetUpdatePayload = string[]
-export type ContractSetUpdateResponse = void
-
 export type ContractSizeParams = {
   id: string
 }
@@ -529,33 +517,25 @@ export type ContractMetricsParams = MetricsParams & {
 export type ContractMetricsPayload = void
 export type ContractMetricsResponse = ContractMetric[]
 
-export type ContractSetMetric = {
+export type ContractsMetric = {
   contracts: number
-  name: string
   timestamp: string
 }
-
-export type ContractSetMetricsParams = MetricsParams & {
-  name: string
-}
-export type ContractSetMetricsPayload = void
-export type ContractSetMetricsResponse = ContractSetMetric[]
-
-export type ContractSetChurnMetric = {
+export type ContractsMetricsParams = MetricsParams
+export type ContractsMetricsPayload = void
+export type ContractsMetricsResponse = ContractsMetric[]
+export type ContractsChurnMetric = {
   direction: string
   contractID: string
-  name: string
   reason: string
   timestamp: string
 }
-
-export type ContractSetChurnMetricsParams = MetricsParams & {
-  name: string
+export type ContractsChurnMetricsParams = MetricsParams & {
   direction?: string
   reason?: string
 }
-export type ContractSetChurnMetricsPayload = void
-export type ContractSetChurnMetricsResponse = ContractSetChurnMetric[]
+export type ContractsChurnMetricsPayload = void
+export type ContractsChurnMetricsResponse = ContractsChurnMetric[]
 
 export type WalletMetric = {
   timestamp: string
@@ -666,7 +646,6 @@ export type MultipartUploadAddPartPayload = {
   uploadID: string
   eTag: string
   partNumber: number
-  contractSet?: string
   partialSlabs?: SlabSlice[]
   slices?: SlabSlice[]
   usedContracts?: Contract[]

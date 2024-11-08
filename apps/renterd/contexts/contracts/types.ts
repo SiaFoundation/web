@@ -1,4 +1,4 @@
-import { ContractState } from '@siafoundation/renterd-types'
+import { ContractState, ContractUsability } from '@siafoundation/renterd-types'
 import BigNumber from 'bignumber.js'
 import { useFilteredStats } from './useFilteredStats'
 
@@ -8,8 +8,6 @@ export type ContractTableContext = {
     startHeight: number
     endHeight: number
   }
-  defaultContractSet?: string
-  autopilotContractSet?: string
   siascanUrl: string
   // prunable
   hasFetchedAllPrunableSize: boolean
@@ -26,9 +24,7 @@ export type ContractDataWithoutPrunable = {
   hostKey: string
   state: ContractState
   location?: [number, number]
-  contractSets?: string[]
-  inAutopilotSet: boolean
-  inDefaultSet: boolean
+  usability: ContractUsability
   isRenewed: boolean
   renewedFrom: string
   timeline: number
@@ -58,7 +54,7 @@ export type ContractData = ContractDataWithoutPrunable & {
 export type TableColumnId =
   | 'actions'
   | 'contractId'
-  | 'contractSets'
+  | 'usability'
   | 'hostIp'
   | 'hostKey'
   | 'state'
@@ -75,7 +71,7 @@ export type TableColumnId =
 
 export const columnsDefaultVisible: TableColumnId[] = [
   'contractId',
-  'contractSets',
+  'usability',
   'hostIp',
   'hostKey',
   'state',
@@ -197,10 +193,10 @@ export type ChartContractKey =
 
 export type ChartContractCategory = 'funding' | 'spending'
 
-export type ChartContractSetKey = 'contracts'
+export type ChartContractsKey = 'contracts'
 
-export type ChartContractSetCategory = never
+export type ChartContractsCategory = never
 
-export type ChartContractSetChurnKey = 'contracts'
+export type ChartContractsChurnKey = 'contracts'
 
-export type ChartContractSetChurnCategory = never
+export type ChartContractsChurnCategory = never

@@ -44,7 +44,6 @@ describe('tansforms', () => {
           upload,
         })
       ).toEqual({
-        autopilotContractSet: 'autopilot',
         amountHosts: new BigNumber('51'),
         periodWeeks: new BigNumber('6'),
         renewWindowWeeks: new BigNumber('2.2301587301587302'),
@@ -56,7 +55,6 @@ describe('tansforms', () => {
         maxDowntimeHours: new BigNumber('1440'),
         maxConsecutiveScanFailures: new BigNumber('10'),
         minProtocolVersion: '',
-        defaultContractSet: 'myset',
         uploadPackingEnabled: true,
         hostBlockHeightLeeway: new BigNumber(4),
         maxContractPrice: new BigNumber('20'),
@@ -136,7 +134,6 @@ describe('tansforms', () => {
           transformUpAutopilot(
             'mainnet',
             {
-              autopilotContractSet: 'autopilot',
               amountHosts: new BigNumber('51'),
               periodWeeks: new BigNumber('6'),
               renewWindowWeeks: new BigNumber('2.2301587301587302'),
@@ -162,7 +159,6 @@ describe('tansforms', () => {
             minProtocolVersion: '1.6.0',
           },
           contracts: {
-            set: 'autopilot',
             amount: 51,
             period: 6048,
             renewWindow: 2248,
@@ -178,7 +174,6 @@ describe('tansforms', () => {
           transformUpAutopilot(
             'mainnet',
             {
-              autopilotContractSet: 'autopilot',
               amountHosts: new BigNumber('51'),
               periodWeeks: new BigNumber('6'),
               renewWindowWeeks: new BigNumber('2.2301587301587302'),
@@ -217,7 +212,6 @@ describe('tansforms', () => {
           },
           contracts: {
             foobar: 'value',
-            set: 'autopilot',
             amount: 51,
             period: 6048,
             renewWindow: 2248,
@@ -233,7 +227,6 @@ describe('tansforms', () => {
           transformUpAutopilot(
             'zen',
             {
-              autopilotContractSet: 'autopilot',
               amountHosts: undefined,
               periodWeeks: new BigNumber('6'),
               renewWindowWeeks: new BigNumber('2.2301587301587302'),
@@ -265,7 +258,6 @@ describe('tansforms', () => {
             minProtocolVersion: '1.7.0',
           },
           contracts: {
-            set: 'autopilot',
             amount: 12,
             period: 6048,
             renewWindow: 2248,
@@ -283,7 +275,6 @@ describe('tansforms', () => {
         expect(
           transformUpGouging(
             {
-              autopilotContractSet: 'autopilot',
               amountHosts: new BigNumber('51'),
               periodWeeks: new BigNumber('6'),
               renewWindowWeeks: new BigNumber('2.2301587301587302'),
@@ -297,7 +288,6 @@ describe('tansforms', () => {
               maxDowntimeHours: new BigNumber('1440'),
               maxConsecutiveScanFailures: new BigNumber('10'),
               minProtocolVersion: '1.7.0',
-              defaultContractSet: 'myset',
               uploadPackingEnabled: false,
               hostBlockHeightLeeway: new BigNumber(4),
               maxContractPrice: new BigNumber('20'),
@@ -394,14 +384,12 @@ describe('tansforms', () => {
       expect(
         transformUpUpload(
           {
-            defaultContractSet: 'myset',
             uploadPackingEnabled: false,
             minShards: new BigNumber(11),
             totalShards: new BigNumber(30),
           },
           {
             ...upload,
-            defaultContractSet: '77777777777',
             extraUploadValue: 'value',
             packing: {
               ...upload.packing,
@@ -414,7 +402,6 @@ describe('tansforms', () => {
           } as SettingsUpload
         )
       ).toEqual({
-        defaultContractSet: 'myset',
         packing: {
           ...upload.packing,
           enabled: false,
@@ -571,7 +558,6 @@ function buildAllResponses() {
         minProtocolVersion: '1.7.0',
       },
       contracts: {
-        set: 'autopilot',
         amount: 51,
         period: weeksToBlocks(6),
         renewWindow: 2248,
@@ -612,7 +598,6 @@ function buildAllResponses() {
       },
     } as SettingsPinned,
     upload: {
-      defaultContractSet: 'myset',
       packing: {
         enabled: true,
         slabBufferMaxSizeSoft: 1,

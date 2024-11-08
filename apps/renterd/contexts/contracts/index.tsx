@@ -6,12 +6,7 @@ import {
   useClientFilteredDataset,
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
-import {
-  useAutopilotConfig,
-  useContracts as useContractsData,
-  useContractSets,
-  useSettingsUpload,
-} from '@siafoundation/renterd-react'
+import { useContracts as useContractsData } from '@siafoundation/renterd-react'
 import {
   createContext,
   useCallback,
@@ -32,12 +27,11 @@ import { columns } from './columns'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 import { useContractMetrics } from './useContractMetrics'
-import { useContractSetMetrics } from './useContractSetMetrics'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { useDataset } from './dataset'
 import { useFilteredStats } from './useFilteredStats'
-import { useAutopilotInfo } from '../app/useAutopilotInfo'
 import { daysInMilliseconds } from '@siafoundation/units'
+import { useContractsMetrics } from './useContractsMetrics'
 
 const defaultLimit = 50
 
@@ -74,14 +68,6 @@ function useContractsMain() {
     [selectedContractId, setSelectedContractId, setViewMode]
   )
 
-  const ap = useAutopilotInfo()
-  const apConfig = useAutopilotConfig({
-    disabled: !ap.data?.isAutopilotEnabled,
-  })
-  const autopilotContractSet = apConfig.data?.contracts.set
-  const settingsUpload = useSettingsUpload()
-  const defaultContractSet = settingsUpload.data?.defaultContractSet
-
   const {
     dataset,
     isFetchingPrunableSizeAll,
@@ -89,7 +75,7 @@ function useContractsMain() {
     fetchPrunableSize,
     fetchPrunableSizeAll,
     hasFetchedAllPrunableSize,
-  } = useDataset({ selectContract, autopilotContractSet, defaultContractSet })
+  } = useDataset({ selectContract })
 
   const selectedContract = useMemo(
     () => dataset?.find((d) => d.id === selectedContractId),
@@ -160,8 +146,6 @@ function useContractsMain() {
   const cellContext = useMemo(() => {
     const context: ContractTableContext = {
       currentHeight: syncStatus.estimatedBlockHeight,
-      defaultContractSet,
-      autopilotContractSet,
       contractsTimeRange,
       siascanUrl,
       hasFetchedAllPrunableSize,
@@ -178,8 +162,6 @@ function useContractsMain() {
     isFetchingPrunableSizeAll,
     fetchPrunableSizeAll,
     filteredStats,
-    defaultContractSet,
-    autopilotContractSet,
   ])
 
   const thirtyDaysAgo = new Date().getTime() - daysInMilliseconds(30)
@@ -192,10 +174,8 @@ function useContractsMain() {
       start: selectedContract?.startTime || 0,
       disabled: !selectedContract,
     })
-  const { contractSetMetrics: contractSetCountMetrics } =
-    useContractSetMetrics()
 
-  const contractSets = useContractSets()
+  const { contractsMetrics: contractsCountMetrics } = useContractsMetrics()
 
   return {
     dataState,
@@ -235,8 +215,7 @@ function useContractsMain() {
     selectContract,
     allContractsSpendingMetrics,
     selectedContractSpendingMetrics,
-    contractSetCountMetrics,
-    contractSets,
+    contractsCountMetrics,
     isFetchingPrunableSizeAll,
     isFetchingPrunableSizeById,
     fetchPrunableSize,

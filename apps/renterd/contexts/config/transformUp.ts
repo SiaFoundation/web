@@ -50,7 +50,6 @@ export function transformUpAutopilot(
     ...existingValues,
     contracts: {
       ...existingValues?.contracts,
-      set: v.autopilotContractSet,
       amount: Math.round(v.amountHosts.toNumber()),
       period: Math.round(weeksToBlocks(v.periodWeeks.toNumber())),
       renewWindow: Math.round(weeksToBlocks(v.renewWindowWeeks.toNumber())),
@@ -157,7 +156,6 @@ export function transformUpUpload(
   ) as ValuesUpload
   return {
     ...existingValues,
-    defaultContractSet: v.defaultContractSet,
     packing: {
       ...existingValues.packing,
       enabled: v.uploadPackingEnabled,

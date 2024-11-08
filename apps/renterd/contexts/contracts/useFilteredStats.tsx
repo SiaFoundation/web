@@ -21,22 +21,10 @@ export function useFilteredStats({
       return undefined
     }
     return datasetFiltered.reduce((acc, datum) => {
-      if (!datum.inAutopilotSet || !datum.prunableSize) {
+      if (!datum.prunableSize) {
         return acc
       }
       return acc.plus(datum.prunableSize)
-    }, new BigNumber(0))
-  }, [datasetFiltered])
-
-  const expiringSizeTotal = useMemo(() => {
-    if (!datasetFiltered) {
-      return undefined
-    }
-    return datasetFiltered.reduce((acc, datum) => {
-      if (datum.inAutopilotSet || !datum.prunableSize) {
-        return acc
-      }
-      return acc.plus(datum.size).minus(datum.prunableSize)
     }, new BigNumber(0))
   }, [datasetFiltered])
 
@@ -89,7 +77,6 @@ export function useFilteredStats({
     return {
       sizeTotal,
       prunableSizeTotal,
-      expiringSizeTotal,
       totalCostTotal,
       spendingUploadsTotal,
       spendingDeletionsTotal,
@@ -99,7 +86,6 @@ export function useFilteredStats({
   }, [
     sizeTotal,
     prunableSizeTotal,
-    expiringSizeTotal,
     totalCostTotal,
     spendingUploadsTotal,
     spendingDeletionsTotal,
