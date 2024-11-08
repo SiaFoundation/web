@@ -1,5 +1,15 @@
 # walletd
 
+## 0.24.0
+
+### Minor Changes
+
+- fe888991: Invalid and not found routes now redirect to the home page.
+
+### Patch Changes
+
+- 03221146: Updated the seed wallet address generation process to strip the address prefix, which matches the recent API change. Closes https://github.com/SiaFoundation/walletd/issues/190
+
 ## 0.23.2
 
 ### Patch Changes

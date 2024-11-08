@@ -1,5 +1,11 @@
 # hostd
 
+## 0.51.0
+
+### Minor Changes
+
+- fe888991: Invalid and not found routes now redirect to the home page.
+
 ## 0.50.0
 
 ### Minor Changes
