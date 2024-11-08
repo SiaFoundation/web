@@ -35,7 +35,6 @@ export function transformDownAutopilot(
     return inputValuesAutopilot
   }
 
-  const autopilotContractSet = config.contracts.set
   const amountHosts = new BigNumber(config.contracts.amount)
   const periodWeeks = new BigNumber(blocksToWeeks(config.contracts.period))
   const renewWindowWeeks = new BigNumber(
@@ -64,7 +63,6 @@ export function transformDownAutopilot(
 
   return {
     // contracts
-    autopilotContractSet,
     amountHosts,
     periodWeeks,
     renewWindowWeeks,
@@ -194,7 +192,6 @@ export function transformDownPinned(p: SettingsPinned): ValuesPinned {
 
 export function transformDownUpload(u: SettingsUpload): ValuesUpload {
   return {
-    defaultContractSet: u.defaultContractSet ? u.defaultContractSet : '',
     uploadPackingEnabled: u.packing.enabled,
     minShards: new BigNumber(u.redundancy.minShards),
     totalShards: new BigNumber(u.redundancy.totalShards),

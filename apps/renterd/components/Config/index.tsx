@@ -70,12 +70,6 @@ export function Config() {
           autoVisibility
           form={form}
           fields={fields}
-          name="autopilotContractSet"
-        />
-        <ConfigurationPanelSetting
-          autoVisibility
-          form={form}
-          fields={fields}
           name="prune"
         />
       </PanelMenuSection>
@@ -237,12 +231,6 @@ export function Config() {
       <ConfigurationPanel
         title="Wallet"
         category="wallet"
-        fields={fields}
-        form={form}
-      />
-      <ConfigurationPanel
-        title="Contracts"
-        category="contractset"
         fields={fields}
         form={form}
       />

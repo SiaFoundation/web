@@ -20,7 +20,6 @@ import {
 } from './useResources'
 import { transformUp } from './transformUp'
 import { InputValues, SubmitValues } from './types'
-import { useSyncContractSet } from './useSyncContractSet'
 import { useApp } from '../app'
 
 export function useOnValid({
@@ -38,7 +37,6 @@ export function useOnValid({
   const settingsPinnedUpdate = useSettingsPinnedUpdate()
   const settingsUploadUpdate = useSettingsUploadUpdate()
   const renterdState = useBusState()
-  const { maybeSyncDefaultContractSet } = useSyncContractSet()
   const mutate = useMutate()
   const onValid = useCallback(
     async (values: InputValues) => {
@@ -90,9 +88,6 @@ export function useOnValid({
       }
 
       if (isAutopilotEnabled && payloads.autopilot) {
-        // Sync default contract set if the setting is enabled.
-        maybeSyncDefaultContractSet(payloads.autopilot.contracts.set)
-
         // Trigger the autopilot loop with new settings applied.
         autopilotTrigger.post({
           payload: {
@@ -126,7 +121,6 @@ export function useOnValid({
       settingsPinnedUpdate,
       settingsUploadUpdate,
       revalidateAndResetForm,
-      maybeSyncDefaultContractSet,
       autopilotTrigger,
       mutate,
     ]

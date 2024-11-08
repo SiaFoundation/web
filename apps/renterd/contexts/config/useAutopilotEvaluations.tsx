@@ -464,7 +464,6 @@ const fieldToLabel: Record<keyof RecommendableFields, string> = {
 }
 
 export const valuesZeroDefaults: Values = {
-  autopilotContractSet: '',
   amountHosts: new BigNumber(0),
   periodWeeks: new BigNumber(0),
   renewWindowWeeks: new BigNumber(0),
@@ -476,7 +475,6 @@ export const valuesZeroDefaults: Values = {
   maxDowntimeHours: new BigNumber(0),
   maxConsecutiveScanFailures: new BigNumber(0),
   minProtocolVersion: '',
-  defaultContractSet: '',
   uploadPackingEnabled: true,
   maxRPCPriceMillion: new BigNumber(0),
   shouldPinMaxStoragePrice: false,

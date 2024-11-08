@@ -89,7 +89,6 @@ export type SettingsRedundancy = {
 }
 
 export type SettingsUpload = {
-  defaultContractSet: string
   packing: SettingsUploadPacking
   redundancy: SettingsRedundancy
 }
@@ -142,11 +141,13 @@ export type ContractSpending = {
 
 export type ContractState = 'pending' | 'active' | 'complete' | 'failed'
 
+export type ContractUsability = 'good' | 'bad'
+
 export type Contract = {
   id: string
+  usability: ContractUsability
   hostIP: string
   hostKey: string
-  contractSets?: string[]
   proofHeight: number
   revisionHeight: number
   revisionNumber: number
@@ -235,7 +236,6 @@ export type AutopilotHostsConfig = {
 }
 
 export type AutopilotContractsConfig = {
-  set: string
   amount: number
   period: number
   renewWindow: number
