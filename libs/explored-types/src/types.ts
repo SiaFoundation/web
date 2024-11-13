@@ -6,7 +6,6 @@ import type {
   ConsensusNetwork,
   ConsensusState,
   Currency,
-  FileContractElement,
   FileContractID,
   Hash256,
   PublicKey,
@@ -163,7 +162,7 @@ export type ExplorerSiafundOutput = SiafundElement & { spentIndex: ChainIndex }
  * An `ExplorerFileContract` is a core type FileContractElement with added resolved/
  * valid state, transactionID, and confirmation transaction and proof transaction information.
  */
-export type ExplorerFileContract = FileContractElement & {
+export type ExplorerFileContract = {
   resolved: boolean
   valid: boolean
 
@@ -174,6 +173,17 @@ export type ExplorerFileContract = FileContractElement & {
 
   proofIndex: ChainIndex | null
   proofTransactionID: TransactionID | null
+
+  id: FileContractID
+  filesize: number
+  fileMerkleRoot: Hash256
+  windowStart: number
+  windowEnd: number
+  payout: Currency
+  validProofOutputs: (SiacoinOutput & { id: SiacoinOutputID })[]
+  missedProofOutputs: (SiacoinOutput & { id: SiacoinOutputID })[]
+  unlockHash: Hash256
+  revisionNumber: number
 }
 
 /**
