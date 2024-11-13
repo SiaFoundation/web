@@ -61,7 +61,6 @@ export const TEST_ADDRESS_1 = {
   display: {
     title: 'Address 68bf48e81536f22...',
     transactionNumber: '500 transactions',
-    amount: '1.262 MS',
     transactionID: '23e427949a63...',
   },
 }
