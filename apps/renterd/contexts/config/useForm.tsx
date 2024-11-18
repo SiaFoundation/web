@@ -3,7 +3,6 @@ import { ConfigViewMode, inputValues, getAdvancedDefaults } from './types'
 import { useForm as useHookForm } from 'react-hook-form'
 import { useBusState } from '@siafoundation/renterd-react'
 import { getFields } from './fields'
-import { useApp } from '../app'
 import useLocalStorageState from 'use-local-storage-state'
 import { useAutopilotEvaluations } from './useAutopilotEvaluations'
 import { ResourcesMaybeLoaded } from './useResources'
@@ -27,7 +26,6 @@ export function useForm({ resources }: { resources: ResourcesMaybeLoaded }) {
     [minShards, totalShards]
   )
 
-  const { isAutopilotEnabled } = useApp()
   const [configViewMode, setConfigViewMode] =
     useLocalStorageState<ConfigViewMode>('v0/config/mode', {
       defaultValue: 'basic',
@@ -51,7 +49,6 @@ export function useForm({ resources }: { resources: ResourcesMaybeLoaded }) {
   const evaluation = useAutopilotEvaluations({
     form,
     resources,
-    isAutopilotEnabled,
   })
 
   const renterdState = useBusState()
@@ -59,13 +56,11 @@ export function useForm({ resources }: { resources: ResourcesMaybeLoaded }) {
   // Field validation is only re-applied on re-mount,
   // so we pass a ref with latest data that can be used interally.
   const validationContext = useRef({
-    isAutopilotEnabled,
     configViewMode,
   })
   useEffect(() => {
-    validationContext.current.isAutopilotEnabled = isAutopilotEnabled
     validationContext.current.configViewMode = configViewMode
-  }, [isAutopilotEnabled, configViewMode])
+  }, [configViewMode])
 
   const fields = useMemo(() => {
     const advancedDefaults = renterdState.data
@@ -79,17 +74,11 @@ export function useForm({ resources }: { resources: ResourcesMaybeLoaded }) {
     }, {})
     return getFields({
       validationContext: validationContext.current,
-      isAutopilotEnabled,
       configViewMode,
       advancedDefaults,
       recommendations,
     })
-  }, [
-    isAutopilotEnabled,
-    configViewMode,
-    renterdState.data,
-    evaluation.recommendations,
-  ])
+  }, [configViewMode, renterdState.data, evaluation.recommendations])
 
   return {
     form,

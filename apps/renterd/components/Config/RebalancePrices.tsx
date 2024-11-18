@@ -17,7 +17,6 @@ import {
   downloadWeight,
   uploadWeight,
 } from '../../contexts/config/spendingConfig'
-import { useApp } from '../../contexts/app'
 import { useRedundancyMultiplier } from '../../contexts/config/useRedundancyMultiplier'
 import { useFormExchangeRate } from '../../contexts/config/useFormExchangeRate'
 import { useSpendingEstimate } from '../../contexts/config/useSpendingEstimate'
@@ -89,7 +88,6 @@ function useSpendingDerivedPricingFromEnabledFields({
   maxUploadPriceTBPinned?: BigNumber
 }> {
   const { form } = useConfig()
-  const { isAutopilotEnabled } = useApp()
   const storageTB = form.watch('storageTB')
   const downloadTBMonth = form.watch('downloadTBMonth')
   const uploadTBMonth = form.watch('uploadTBMonth')
@@ -99,40 +97,35 @@ function useSpendingDerivedPricingFromEnabledFields({
   })
   const { rate } = useFormExchangeRate(form)
   const values = useMemo(() => {
-    if (isAutopilotEnabled) {
-      const derivedPricing = derivePricingFromSpendingEstimate({
-        estimatedSpendingPerMonth,
-        maxPricingFactor,
-        storageTB,
-        downloadTBMonth,
-        uploadTBMonth,
-        redundancyMultiplier,
-        storageWeight,
-        downloadWeight,
-        uploadWeight,
-      })
-      if (!derivedPricing) {
-        return undefined
-      }
-      // Convert derived siacoin prices to pinned fiat prices.
-      const pinnedPricing = rate
-        ? {
-            maxStoragePriceTBMonthPinned:
-              derivedPricing?.maxStoragePriceTBMonth.times(rate),
-            maxDownloadPriceTBPinned:
-              derivedPricing?.maxDownloadPriceTB.times(rate),
-            maxUploadPriceTBPinned:
-              derivedPricing?.maxUploadPriceTB.times(rate),
-          }
-        : undefined
-      return {
-        ...derivedPricing,
-        ...pinnedPricing,
-      }
+    const derivedPricing = derivePricingFromSpendingEstimate({
+      estimatedSpendingPerMonth,
+      maxPricingFactor,
+      storageTB,
+      downloadTBMonth,
+      uploadTBMonth,
+      redundancyMultiplier,
+      storageWeight,
+      downloadWeight,
+      uploadWeight,
+    })
+    if (!derivedPricing) {
+      return undefined
     }
-    return undefined
+    // Convert derived siacoin prices to pinned fiat prices.
+    const pinnedPricing = rate
+      ? {
+          maxStoragePriceTBMonthPinned:
+            derivedPricing?.maxStoragePriceTBMonth.times(rate),
+          maxDownloadPriceTBPinned:
+            derivedPricing?.maxDownloadPriceTB.times(rate),
+          maxUploadPriceTBPinned: derivedPricing?.maxUploadPriceTB.times(rate),
+        }
+      : undefined
+    return {
+      ...derivedPricing,
+      ...pinnedPricing,
+    }
   }, [
-    isAutopilotEnabled,
     estimatedSpendingPerMonth,
     storageTB,
     downloadTBMonth,

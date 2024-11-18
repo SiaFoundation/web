@@ -4,7 +4,6 @@ import { useDialog } from '../../contexts/dialog'
 import { CommandGroup, CommandItemNav, CommandItemSearch } from './Item'
 import { Page } from './types'
 import { useConfig } from '../../contexts/config'
-import { useApp } from '../../contexts/app'
 
 const commandPage = {
   namespace: 'configuration',
@@ -21,7 +20,6 @@ export function ConfigCmdGroup({ currentPage, parentPage, pushPage }: Props) {
   const router = useRouter()
   const { configViewMode } = useConfig()
   const { closeDialog } = useDialog()
-  const { autopilotInfo } = useApp()
   return (
     <CommandGroup currentPage={currentPage} commandPage={commandPage}>
       <CommandItemNav
@@ -44,18 +42,16 @@ export function ConfigCmdGroup({ currentPage, parentPage, pushPage }: Props) {
       >
         Open configuration
       </CommandItemSearch>
-      {autopilotInfo.data?.isAutopilotEnabled && (
-        <CommandItemSearch
-          currentPage={currentPage}
-          commandPage={commandPage}
-          onSelect={() => {
-            router.push(routes.config.storage)
-            closeDialog()
-          }}
-        >
-          Configure storage
-        </CommandItemSearch>
-      )}
+      <CommandItemSearch
+        currentPage={currentPage}
+        commandPage={commandPage}
+        onSelect={() => {
+          router.push(routes.config.storage)
+          closeDialog()
+        }}
+      >
+        Configure storage
+      </CommandItemSearch>
       <CommandItemSearch
         currentPage={currentPage}
         commandPage={commandPage}
@@ -68,30 +64,26 @@ export function ConfigCmdGroup({ currentPage, parentPage, pushPage }: Props) {
       </CommandItemSearch>
       {configViewMode === 'advanced' && (
         <>
-          {autopilotInfo.data?.isAutopilotEnabled && (
-            <>
-              <CommandItemSearch
-                currentPage={currentPage}
-                commandPage={commandPage}
-                onSelect={() => {
-                  router.push(routes.config.hosts)
-                  closeDialog()
-                }}
-              >
-                Configure hosts
-              </CommandItemSearch>
-              <CommandItemSearch
-                currentPage={currentPage}
-                commandPage={commandPage}
-                onSelect={() => {
-                  router.push(routes.config.wallet)
-                  closeDialog()
-                }}
-              >
-                Configure wallet
-              </CommandItemSearch>
-            </>
-          )}
+          <CommandItemSearch
+            currentPage={currentPage}
+            commandPage={commandPage}
+            onSelect={() => {
+              router.push(routes.config.hosts)
+              closeDialog()
+            }}
+          >
+            Configure hosts
+          </CommandItemSearch>
+          <CommandItemSearch
+            currentPage={currentPage}
+            commandPage={commandPage}
+            onSelect={() => {
+              router.push(routes.config.wallet)
+              closeDialog()
+            }}
+          >
+            Configure wallet
+          </CommandItemSearch>
           <CommandItemSearch
             currentPage={currentPage}
             commandPage={commandPage}

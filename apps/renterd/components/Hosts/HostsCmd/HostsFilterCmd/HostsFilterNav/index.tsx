@@ -6,7 +6,6 @@ import { ServerFilterItem } from '@siafoundation/design-system'
 import { hostsFilterContractsPage } from '../HostsFilterCmdGroups/Contracts'
 import { hostsFilterUsablePage } from '../HostsFilterCmdGroups/Usable'
 import { PublicKeyCmdNav } from '../HostsFilterCmdGroups/PublicKey'
-import { useApp } from '../../../../../contexts/app'
 
 export const commandPage = {
   namespace: 'hosts',
@@ -26,21 +25,18 @@ export function HostsFilterNav({
   pushPage,
   select,
 }: Props) {
-  const { isAutopilotEnabled } = useApp()
   return (
     <>
-      {isAutopilotEnabled && (
-        <CommandItemNav
-          currentPage={currentPage}
-          parentPage={parentPage}
-          commandPage={commandPage}
-          onSelect={() => {
-            pushPage(hostsFilterUsablePage)
-          }}
-        >
-          {hostsFilterUsablePage.label}
-        </CommandItemNav>
-      )}
+      <CommandItemNav
+        currentPage={currentPage}
+        parentPage={parentPage}
+        commandPage={commandPage}
+        onSelect={() => {
+          pushPage(hostsFilterUsablePage)
+        }}
+      >
+        {hostsFilterUsablePage.label}
+      </CommandItemNav>
       <PublicKeyCmdNav
         currentPage={currentPage}
         parentPage={parentPage}

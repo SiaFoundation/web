@@ -2,7 +2,6 @@ import { objectEntries } from '@siafoundation/design-system'
 import { currencyOptions } from '@siafoundation/react-core'
 import {
   useAutopilotConfigEvaluate,
-  useAutopilotState,
   useBusState,
 } from '@siafoundation/renterd-react'
 import {
@@ -36,21 +35,16 @@ import { AutopilotConfigEvaluatePayload } from '@siafoundation/renterd-types'
 export function useAutopilotEvaluations({
   form,
   resources,
-  isAutopilotEnabled,
 }: {
   form: UseFormReturn<InputValues>
   resources: ResourcesMaybeLoaded
-  isAutopilotEnabled: boolean
 }) {
   const values = form.watch()
   const renterdState = useBusState()
-  const autopilotState = useAutopilotState()
 
   const hasDataToEvaluate = useMemo(() => {
-    if (!isAutopilotEnabled) {
-      return false
-    }
-    if (!checkIfAllResourcesLoaded(resources)) {
+    const loaded = checkIfAllResourcesLoaded(resources)
+    if (!loaded) {
       return false
     }
     if (!form.formState.isValid) {
@@ -59,17 +53,11 @@ export function useAutopilotEvaluations({
     if (!renterdState.data) {
       return false
     }
-    if (!autopilotState.data?.configured) {
+    if (!loaded.autopilotState.data.configured) {
       return false
     }
     return true
-  }, [
-    isAutopilotEnabled,
-    form.formState.isValid,
-    resources,
-    renterdState.data,
-    autopilotState.data,
-  ])
+  }, [form.formState.isValid, resources, renterdState.data])
 
   // Convert any pinned fields over to siacoin values.
   const pricing = useEnabledPricingValuesInSiacoin({
@@ -89,9 +77,9 @@ export function useAutopilotEvaluations({
     // the transformUp calculations that assume all data is valid and present.
     return mergeValuesWithDefaultsOrZeroValues(
       valuesWithPinnedOverrides,
-      resources.autopilotInfo.data?.state?.network
+      renterdState.data?.network
     )
-  }, [values, pricing, resources.autopilotInfo.data?.state?.network])
+  }, [values, pricing, renterdState.data?.network])
 
   const payloads = useMemo(() => {
     if (!hasDataToEvaluate || !renterdState.data) {
@@ -101,7 +89,6 @@ export function useAutopilotEvaluations({
     const { payloads } = transformUp({
       resources: resources as ResourcesRequiredLoaded,
       renterdState: renterdState.data,
-      isAutopilotEnabled,
       values: currentValuesWithPinnedOverridesAndDefaults,
     })
     return payloads
@@ -109,7 +96,6 @@ export function useAutopilotEvaluations({
     currentValuesWithPinnedOverridesAndDefaults,
     resources,
     renterdState,
-    isAutopilotEnabled,
     hasDataToEvaluate,
   ])
 
@@ -415,10 +401,8 @@ function pricesToPinnedPrices({
 // We just need some of the static metadata so pass in dummy values.
 const fields = getFields({
   validationContext: {
-    isAutopilotEnabled: true,
     configViewMode: 'basic',
   },
-  isAutopilotEnabled: true,
   configViewMode: 'basic',
   recommendations: {},
 })

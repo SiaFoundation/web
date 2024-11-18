@@ -17,11 +17,10 @@ import {
   checkIfAllResourcesLoaded,
   checkIfAnyResourcesErrored,
 } from './useResources'
-import { useApp } from '../app'
 
 export function useConfigMain() {
   const {
-    autopilotInfo,
+    autopilotState,
     autopilot,
     gouging,
     pinned,
@@ -46,8 +45,7 @@ export function useConfigMain() {
       return undefined
     }
     return transformDown({
-      autopilotID: loaded.autopilotInfo.data?.state?.id,
-      hasBeenConfigured: !!loaded.autopilotInfo.data?.state?.configured,
+      hasBeenConfigured: !!loaded.autopilotState.data?.configured,
       autopilot: loaded.autopilot.data,
       gouging: loaded.gouging.data,
       pinned: loaded.pinned.data,
@@ -61,22 +59,20 @@ export function useConfigMain() {
     [resources]
   )
 
-  const { isAutopilotEnabled } = useApp()
   const revalidateAndResetForm = useCallback(async () => {
     // these do not seem to throw on errors, just return undefined
-    const _autopilotInfo = await autopilotInfo.mutate()
-    const _autopilot = isAutopilotEnabled ? await autopilot.mutate() : undefined
+    const _autopilotState = await autopilotState.mutate()
+    const _autopilot = await autopilot.mutate()
     const _gouging = await gouging.mutate()
     const _pinned = await pinned.mutate()
     const _upload = await upload.mutate()
-    if (!_autopilotInfo || !_gouging || !_upload || !_pinned) {
+    if (!_autopilotState || !_gouging || !_upload || !_pinned) {
       triggerErrorToast({ title: 'Error fetching settings' })
       return undefined
     }
     form.reset(
       transformDown({
-        autopilotID: _autopilotInfo.id,
-        hasBeenConfigured: _autopilotInfo.configured,
+        hasBeenConfigured: _autopilotState.configured,
         autopilot: _autopilot,
         gouging: _gouging,
         pinned: _pinned,
@@ -84,16 +80,7 @@ export function useConfigMain() {
         averages: averages.data,
       })
     )
-  }, [
-    form,
-    autopilotInfo,
-    isAutopilotEnabled,
-    autopilot,
-    gouging,
-    pinned,
-    upload,
-    averages.data,
-  ])
+  }, [form, autopilotState, autopilot, gouging, pinned, upload, averages.data])
 
   useFormInit({
     form,

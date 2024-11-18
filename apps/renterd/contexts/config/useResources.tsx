@@ -1,12 +1,14 @@
 import { useAppSettings, SWRError } from '@siafoundation/react-core'
 import {
   AutopilotConfig,
+  AutopilotState,
   SettingsGouging,
   SettingsPinned,
   SettingsUpload,
 } from '@siafoundation/renterd-types'
 import {
   useAutopilotConfig,
+  useAutopilotState,
   useSettingsGouging,
   useSettingsPinned,
   useSettingsUpload,
@@ -14,12 +16,16 @@ import {
 import { useSiaCentralHostsNetworkAverages } from '@siafoundation/sia-central-react'
 import { SiaCentralHostsNetworkAveragesResponse } from '@siafoundation/sia-central-types'
 import { minutesInMilliseconds } from '@siafoundation/units'
-import { useApp } from '../app'
 import { useMemo } from 'react'
-import { AutopilotInfo } from '../app/useAutopilotInfo'
 
 export function useResources() {
-  const { autopilotInfo } = useApp()
+  const autopilotState = useAutopilotState({
+    config: {
+      swr: {
+        refreshInterval: minutesInMilliseconds(1),
+      },
+    },
+  })
   // Settings that 404 when empty.
   const autopilot = useAutopilotConfig({
     config: {
@@ -64,9 +70,9 @@ export function useResources() {
   // Resources required to intialize form.
   const resources: ResourcesMaybeLoaded = useMemo(
     () => ({
-      autopilotInfo: {
-        data: autopilotInfo.data,
-        error: autopilotInfo.error,
+      autopilotState: {
+        data: autopilotState.data,
+        error: autopilotState.error,
       },
       autopilot: {
         data: autopilot.data,
@@ -95,8 +101,8 @@ export function useResources() {
       },
     }),
     [
-      autopilotInfo.data,
-      autopilotInfo.error,
+      autopilotState.data,
+      autopilotState.error,
       autopilot.data,
       autopilot.error,
       gouging.data,
@@ -113,7 +119,7 @@ export function useResources() {
 
   return {
     resources,
-    autopilotInfo,
+    autopilotState,
     autopilot,
     gouging,
     pinned,
@@ -124,12 +130,12 @@ export function useResources() {
 }
 
 export function checkIfAllResourcesLoaded(resources: ResourcesMaybeLoaded) {
-  const { autopilotInfo, autopilot, gouging, pinned, upload } = resources
+  const { autopilotState, autopilot, gouging, pinned, upload } = resources
   const loaded = !!(
     // These settings have initial daemon values.
     (
-      autopilotInfo.data &&
-      !autopilotInfo.error &&
+      autopilotState.data &&
+      !autopilotState.error &&
       gouging.data &&
       !gouging.error &&
       pinned.data &&
@@ -160,8 +166,8 @@ export function checkIfAnyResourcesErrored({
 }
 
 export type ResourcesMaybeLoaded = {
-  autopilotInfo: {
-    data?: AutopilotInfo
+  autopilotState: {
+    data?: AutopilotState
     error?: SWRError
   }
   autopilot: {
@@ -192,8 +198,8 @@ export type ResourcesMaybeLoaded = {
 }
 
 export type ResourcesRequiredLoaded = {
-  autopilotInfo: {
-    data?: AutopilotInfo
+  autopilotState: {
+    data: AutopilotState
     error?: SWRError
   }
   autopilot: {

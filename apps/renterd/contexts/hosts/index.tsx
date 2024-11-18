@@ -7,6 +7,7 @@ import {
 } from '@siafoundation/design-system'
 import { useAppSettings } from '@siafoundation/react-core'
 import {
+  useAutopilotState,
   useHostsAllowlist,
   useHostsBlocklist,
   useHosts as useHostsSearch,
@@ -30,7 +31,6 @@ import {
 import { Commands, emptyCommands } from '../../components/Hosts/HostMap/Globe'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
-import { useApp } from '../app'
 import { useContracts } from '../contracts'
 import { columns } from './columns'
 import { useDataset } from './dataset'
@@ -53,7 +53,7 @@ function useHostsMain() {
     useServerFilters()
 
   const { dataset: allContracts } = useContracts()
-  const { autopilotInfo, isAutopilotEnabled } = useApp()
+  const autopilotState = useAutopilotState()
 
   const keyIn = useMemo(() => {
     let keyIn: string[] = []
@@ -78,15 +78,8 @@ function useHostsMain() {
       addressContains: filters.find((f) => f.id === 'addressContains')?.value,
       keyIn,
     }
-    if (
-      isAutopilotEnabled &&
-      autopilotInfo.data?.state?.configured &&
-      autopilotInfo.data?.state?.id
-    ) {
-      p.autopilotID = autopilotInfo.data?.state?.id
-    }
     return p
-  }, [autopilotInfo.data, filters, isAutopilotEnabled, keyIn, limit, offset])
+  }, [filters, keyIn, limit, offset])
 
   const response = useHostsSearch({
     payload,
@@ -186,18 +179,13 @@ function useHostsMain() {
   const dataset = useDataset({
     response,
     allContracts,
-    autopilotID: autopilotInfo.data?.state?.id,
+    autopilotID: autopilotState.data?.id,
     allowlist,
     blocklist,
     isAllowlistActive,
     geoHosts,
     onHostSelect: onHostListClick,
   })
-
-  const disabledCategories = useMemo(
-    () => (autopilotInfo.data?.status === 'off' ? ['autopilot'] : []),
-    [autopilotInfo.data?.status]
-  )
 
   const {
     configurableColumns,
@@ -214,7 +202,6 @@ function useHostsMain() {
   } = useTableState<TableColumnId, never>('renterd/v0/hosts', {
     columns,
     columnsDefaultVisible,
-    disabledCategories,
   })
 
   const filteredTableColumns = useMemo(
@@ -227,7 +214,7 @@ function useHostsMain() {
   const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
 
   const siascanUrl = useSiascanUrl()
-  const isAutopilotConfigured = !!autopilotInfo.data?.state?.configured
+  const isAutopilotConfigured = !!autopilotState.data?.configured
   const tableContext: HostContext = useMemo(
     () => ({
       isAutopilotConfigured,

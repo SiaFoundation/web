@@ -1,5 +1,5 @@
+import { BuildState } from './bus'
 import { AutopilotConfig, SettingsGouging, SettingsRedundancy } from './types'
-import { BusStateResponse } from './bus'
 
 export const autopilotStateRoute = '/autopilot/state'
 export const autopilotConfigRoute = '/autopilot/config'
@@ -10,13 +10,15 @@ type AutopilotStatus = {
   configured: boolean
   migrating: boolean
   migratingLastStart: string
+  pruning: boolean
+  pruningLastStart: string
   scanning: boolean
   scanningLastStart: string
-  synced: boolean
   uptimeMS: string
+  startTime: number
 }
 
-export type AutopilotState = AutopilotStatus & BusStateResponse
+export type AutopilotState = AutopilotStatus & BuildState
 
 export type AutopilotStateParams = void
 export type AutopilotStatePayload = void
