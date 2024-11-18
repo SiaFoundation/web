@@ -1,0 +1,69 @@
+{
+  "name": "filedev",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/filedev",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/filedev",
+        "postcssConfig": "apps/filedev/postcss.config.js"
+      }
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "filedev:build",
+        "port": 3010
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "filedev:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "filedev:build:production",
+          "dev": false
+        }
+      }
+    },
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "dependsOn": ["build"],
+      "defaultConfiguration": "local",
+      "options": {
+        "engine": "docker",
+        "context": "./",
+        "file": "apps/filedev/Dockerfile"
+      },
+      "configurations": {
+        "local": {
+          "tags": ["siafoundation/web-filedev:latest"],
+          "file": "apps/filedev/Dockerfile",
+          "push": false
+        },
+        "production": {
+          "tags": ["ghcr.io/siafoundation/web-filedev:latest"],
+          "file": "apps/filedev/Dockerfile",
+          "push": true
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/filedev"],
+      "options": {
+        "jestConfig": "apps/filedev/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": []
+}

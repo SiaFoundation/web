@@ -1,0 +1,7 @@
+{
+  "name": "filedev",
+  "description": "The `filedev` user interface, a Sia blockchain filedev interface that powers siascan.com.",
+  "version": "0.20.0",
+  "private": true,
+  "license": "MIT"
+}
