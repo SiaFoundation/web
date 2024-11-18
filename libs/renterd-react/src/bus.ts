@@ -9,6 +9,7 @@ import {
   HookArgsCallback,
   HookArgsWithPayloadSwr,
   delay,
+  usePatchFunc,
 } from '@siafoundation/react-core'
 import {
   getMainnetBlockHeight,
@@ -239,6 +240,18 @@ import {
   SettingsUploadUpdateParams,
   SettingsUploadUpdatePayload,
   SettingsUploadUpdateResponse,
+  SettingsGougingPatchResponse,
+  SettingsGougingPatchPayload,
+  SettingsGougingPatchParams,
+  SettingsPinnedPatchParams,
+  SettingsPinnedPatchPayload,
+  SettingsPinnedPatchResponse,
+  SettingsS3PatchParams,
+  SettingsS3PatchPayload,
+  SettingsS3PatchResponse,
+  SettingsUploadPatchParams,
+  SettingsUploadPatchPayload,
+  SettingsUploadPatchResponse,
   SettingsPinnedResponse,
   busObjectsRemoveRoute,
   ConsensusNetworkParams,
@@ -823,6 +836,78 @@ export function useSettingsUploadUpdate(
   >
 ) {
   return usePutFunc(
+    {
+      ...args,
+      route: busSettingsUploadRoute,
+    },
+    async (mutate) => {
+      mutate((key) => key.startsWith(busSettingsUploadRoute))
+    }
+  )
+}
+
+export function useSettingsGougingPatch(
+  args?: HookArgsCallback<
+    SettingsGougingPatchParams,
+    SettingsGougingPatchPayload,
+    SettingsGougingPatchResponse
+  >
+) {
+  return usePatchFunc(
+    {
+      ...args,
+      route: busSettingsGougingRoute,
+    },
+    async (mutate) => {
+      mutate((key) => key.startsWith(busSettingsGougingRoute))
+    }
+  )
+}
+
+export function useSettingsPinnedPatch(
+  args?: HookArgsCallback<
+    SettingsPinnedPatchParams,
+    SettingsPinnedPatchPayload,
+    SettingsPinnedPatchResponse
+  >
+) {
+  return usePatchFunc(
+    {
+      ...args,
+      route: busSettingsPinnedRoute,
+    },
+    async (mutate) => {
+      mutate((key) => key.startsWith(busSettingsPinnedRoute))
+    }
+  )
+}
+
+export function useSettingsS3Patch(
+  args?: HookArgsCallback<
+    SettingsS3PatchParams,
+    SettingsS3PatchPayload,
+    SettingsS3PatchResponse
+  >
+) {
+  return usePatchFunc(
+    {
+      ...args,
+      route: busSettingsS3Route,
+    },
+    async (mutate) => {
+      mutate((key) => key.startsWith(busSettingsS3Route))
+    }
+  )
+}
+
+export function useSettingsUploadPatch(
+  args?: HookArgsCallback<
+    SettingsUploadPatchParams,
+    SettingsUploadPatchPayload,
+    SettingsUploadPatchResponse
+  >
+) {
+  return usePatchFunc(
     {
       ...args,
       route: busSettingsUploadRoute,

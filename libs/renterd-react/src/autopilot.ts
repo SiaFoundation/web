@@ -56,8 +56,8 @@ export function useAutopilotConfigUpdate(
     { ...args, route: autopilotConfigRoute },
     async (mutate) => {
       mutate((key) => key === autopilotConfigRoute)
-      // might need a delay before revalidating status which returns whether
-      // or not autopilot is configured
+      // Might need a delay before revalidating status which returns whether
+      // or not autopilot is configured.
       const func = async () => {
         await delay(1000)
         mutate((key) => key === autopilotStateRoute)

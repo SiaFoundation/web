@@ -256,6 +256,18 @@ import {
   ConsensusNetworkPayload,
   ConsensusNetworkResponse,
   busConsensusNetworkRoute,
+  SettingsGougingPatchParams,
+  SettingsGougingPatchPayload,
+  SettingsGougingPatchResponse,
+  SettingsPinnedPatchParams,
+  SettingsPinnedPatchPayload,
+  SettingsPinnedPatchResponse,
+  SettingsS3PatchParams,
+  SettingsS3PatchPayload,
+  SettingsS3PatchResponse,
+  SettingsUploadPatchParams,
+  SettingsUploadPatchPayload,
+  SettingsUploadPatchResponse,
 } from '@siafoundation/renterd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
@@ -533,6 +545,26 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       SettingsUploadUpdatePayload,
       SettingsUploadUpdateResponse
     >(axios, 'put', busSettingsUploadRoute),
+    settingsGougingPatch: buildRequestHandler<
+      SettingsGougingPatchParams,
+      SettingsGougingPatchPayload,
+      SettingsGougingPatchResponse
+    >(axios, 'patch', busSettingsGougingRoute),
+    settingsPinnedPatch: buildRequestHandler<
+      SettingsPinnedPatchParams,
+      SettingsPinnedPatchPayload,
+      SettingsPinnedPatchResponse
+    >(axios, 'patch', busSettingsPinnedRoute),
+    settingsS3Patch: buildRequestHandler<
+      SettingsS3PatchParams,
+      SettingsS3PatchPayload,
+      SettingsS3PatchResponse
+    >(axios, 'patch', busSettingsS3Route),
+    settingsUploadPatch: buildRequestHandler<
+      SettingsUploadPatchParams,
+      SettingsUploadPatchPayload,
+      SettingsUploadPatchResponse
+    >(axios, 'patch', busSettingsUploadRoute),
     alerts: buildRequestHandler<AlertsParams, AlertsPayload, AlertsResponse>(
       axios,
       'get',

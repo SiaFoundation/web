@@ -23,6 +23,7 @@ import {
   SettingsUpload,
   SlabSlice,
 } from './types'
+import { DeepPartial } from './utils'
 
 export const busStateRoute = '/bus/state'
 export const busAutopilotsRoute = '/bus/autopilots'
@@ -685,3 +686,19 @@ export type SettingsS3UpdateResponse = void
 export type SettingsUploadUpdateParams = void
 export type SettingsUploadUpdatePayload = SettingsUpload
 export type SettingsUploadUpdateResponse = void
+
+export type SettingsGougingPatchParams = void
+export type SettingsGougingPatchPayload = DeepPartial<SettingsGouging>
+export type SettingsGougingPatchResponse = SettingsGouging
+
+export type SettingsPinnedPatchParams = void
+export type SettingsPinnedPatchPayload = DeepPartial<SettingsPinned>
+export type SettingsPinnedPatchResponse = SettingsPinned
+
+export type SettingsS3PatchParams = void
+export type SettingsS3PatchPayload = DeepPartial<SettingsS3>
+export type SettingsS3PatchResponse = SettingsS3
+
+export type SettingsUploadPatchParams = void
+export type SettingsUploadPatchPayload = DeepPartial<SettingsUpload>
+export type SettingsUploadPatchResponse = SettingsUpload
