@@ -15,12 +15,11 @@ import {
   PendingFilled16,
   Subtract24,
 } from '@siafoundation/react-icons'
-import { useApp } from '../contexts/app'
 import { useSyncStatus } from '../hooks/useSyncStatus'
 import { routes } from '../config/routes'
 import { useDialog } from '../contexts/dialog'
 import { useNotEnoughContracts } from './Files/checks/useNotEnoughContracts'
-import { useWallet } from '@siafoundation/renterd-react'
+import { useAutopilotState, useWallet } from '@siafoundation/renterd-react'
 import BigNumber from 'bignumber.js'
 import { humanSiacoin } from '@siafoundation/units'
 import { useAppSettings } from '@siafoundation/react-core'
@@ -29,7 +28,7 @@ import { useSpendingEstimate } from '../contexts/config/useSpendingEstimate'
 
 export function OnboardingBar() {
   const { isUnlockedAndAuthedRoute } = useAppSettings()
-  const { isAutopilotEnabled, autopilotInfo } = useApp()
+  const autopilotState = useAutopilotState()
   const { openDialog } = useDialog()
   const wallet = useWallet()
   const [maximized, setMaximized] = useLocalStorageState<boolean>(
@@ -43,7 +42,7 @@ export function OnboardingBar() {
   const notEnoughContracts = useNotEnoughContracts()
   const { estimatedSpendingPerMonth } = useSpendingEstimate()
 
-  if (!isUnlockedAndAuthedRoute || !isAutopilotEnabled) {
+  if (!isUnlockedAndAuthedRoute) {
     return null
   }
 
@@ -51,7 +50,7 @@ export function OnboardingBar() {
     wallet.data ? wallet.data.confirmed + wallet.data.unconfirmed : 0
   )
 
-  const step1Configured = autopilotInfo.data?.state?.configured
+  const step1Configured = autopilotState.data?.configured
   const step2Synced = syncStatus.isSynced
   const step3Funded = walletBalance.gt(0)
   const step4Contracts = !notEnoughContracts.active

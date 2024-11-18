@@ -200,7 +200,6 @@ export function transformDownUpload(u: SettingsUpload): ValuesUpload {
 
 export type RemoteData = {
   hasBeenConfigured: boolean
-  autopilotID: string | undefined
   autopilot: AutopilotConfig | undefined
   gouging: SettingsGouging
   pinned: SettingsPinned
@@ -216,7 +215,6 @@ export type RemoteData = {
 
 export function transformDown({
   hasBeenConfigured,
-  autopilotID,
   autopilot,
   gouging,
   pinned,

@@ -118,8 +118,7 @@ export function transformUpGouging(
 
 export function transformUpPinned(
   values: SubmitValuesPinned & { periodWeeks?: BigNumber },
-  existingValues: SettingsPinned,
-  autopilotID = 'autopilot'
+  existingValues: SettingsPinned
 ): SettingsPinned {
   const v = applyDefaultToAnyEmptyValues(
     values,
@@ -171,28 +170,19 @@ export function transformUpUpload(
 export function transformUp({
   resources,
   renterdState,
-  isAutopilotEnabled,
   values,
 }: {
   resources: ResourcesRequiredLoaded
   renterdState: { network: 'mainnet' | 'zen' | 'anagami' }
-  isAutopilotEnabled: boolean
   values: SubmitValues
 }) {
-  const autopilot = isAutopilotEnabled
-    ? transformUpAutopilot(
-        renterdState.network,
-        values,
-        resources.autopilot.data
-      )
-    : undefined
-
-  const gouging = transformUpGouging(values, resources.gouging.data)
-  const pinned = transformUpPinned(
+  const autopilot = transformUpAutopilot(
+    renterdState.network,
     values,
-    resources.pinned.data,
-    resources.autopilotInfo.data?.state?.id
+    resources.autopilot.data
   )
+  const gouging = transformUpGouging(values, resources.gouging.data)
+  const pinned = transformUpPinned(values, resources.pinned.data)
   const upload = transformUpUpload(values, resources.upload.data)
 
   return {

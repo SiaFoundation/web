@@ -4,23 +4,18 @@ import {
 } from '@siafoundation/design-system'
 import { delay, useMutate } from '@siafoundation/react-core'
 import {
-  useAutopilotConfigUpdate,
   useAutopilotTrigger,
   useBusState,
+  useAutopilotConfigUpdate,
   useSettingsGougingUpdate,
   useSettingsPinnedUpdate,
   useSettingsUploadUpdate,
 } from '@siafoundation/renterd-react'
 import { busHostsRoute } from '@siafoundation/renterd-types'
 import { useCallback } from 'react'
-import {
-  ResourcesMaybeLoaded,
-  ResourcesRequiredLoaded,
-  checkIfAllResourcesLoaded,
-} from './useResources'
+import { ResourcesMaybeLoaded, checkIfAllResourcesLoaded } from './useResources'
 import { transformUp } from './transformUp'
 import { InputValues, SubmitValues } from './types'
-import { useApp } from '../app'
 
 export function useOnValid({
   resources,
@@ -29,8 +24,6 @@ export function useOnValid({
   resources: ResourcesMaybeLoaded
   revalidateAndResetForm: () => Promise<void>
 }) {
-  const app = useApp()
-  const isAutopilotEnabled = !!app.autopilotInfo.data?.isAutopilotEnabled
   const autopilotTrigger = useAutopilotTrigger()
   const autopilotUpdate = useAutopilotConfigUpdate()
   const settingsGougingUpdate = useSettingsGougingUpdate()
@@ -45,56 +38,45 @@ export function useOnValid({
       if (!loaded || !renterdState.data) {
         return
       }
-      const firstTimeSettingConfig =
-        isAutopilotEnabled && !resources.autopilot.data
+      const firstTimeSettingConfig = !loaded.autopilotState.data?.configured
 
       const { payloads } = transformUp({
-        resources: resources as ResourcesRequiredLoaded,
+        resources: loaded,
         renterdState: renterdState.data,
-        isAutopilotEnabled,
         values: values as SubmitValues,
       })
 
-      const autopilotResponse = payloads.autopilot
-        ? await autopilotUpdate.put({
-            payload: payloads.autopilot,
-          })
-        : undefined
+      const promises = [
+        autopilotUpdate.put({
+          payload: payloads.autopilot,
+        }),
+        settingsGougingUpdate.put({
+          payload: payloads.gouging,
+        }),
+        settingsPinnedUpdate.put({
+          payload: payloads.pinned,
+        }),
+        settingsUploadUpdate.put({
+          payload: payloads.upload,
+        }),
+      ]
 
-      const [gougingResponse, pinnedResponse, uploadResponse] =
-        await Promise.all([
-          settingsGougingUpdate.put({
-            payload: payloads.gouging,
-          }),
-          settingsPinnedUpdate.put({
-            payload: payloads.pinned,
-          }),
-          settingsUploadUpdate.put({
-            payload: payloads.upload,
-          }),
-        ])
-
-      const error =
-        autopilotResponse?.error ||
-        gougingResponse.error ||
-        pinnedResponse.error ||
-        uploadResponse.error
-      if (error) {
+      const results = await Promise.all(promises)
+      const err = results.find((result) => result.error)
+      if (err) {
         triggerErrorToast({
           title: 'Error updating configuration',
-          body: error,
+          body: err.error,
         })
         return
       }
 
-      if (isAutopilotEnabled && payloads.autopilot) {
-        // Trigger the autopilot loop with new settings applied.
-        autopilotTrigger.post({
-          payload: {
-            forceScan: true,
-          },
-        })
-      }
+      // Trigger the autopilot loop with new settings applied.
+      autopilotTrigger.post({
+        payload: {
+          forceScan: true,
+        },
+      })
 
       triggerSuccessToast({ title: 'Configuration has been saved' })
 
@@ -115,7 +97,6 @@ export function useOnValid({
     [
       resources,
       renterdState.data,
-      isAutopilotEnabled,
       autopilotUpdate,
       settingsGougingUpdate,
       settingsPinnedUpdate,

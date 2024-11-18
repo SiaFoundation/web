@@ -21,7 +21,6 @@ import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import JSZip from 'jszip'
 import { saveAs } from 'file-saver'
-import { useApp } from '../contexts/app'
 
 function getDefaultValues() {
   return {
@@ -84,7 +83,6 @@ type Props = {
 }
 
 export function DebugDialog({ trigger, open, onOpenChange }: Props) {
-  const { isAutopilotEnabled } = useApp()
   const defaultValues = useMemo(() => getDefaultValues(), [])
 
   const contracts = useContracts()
@@ -93,9 +91,7 @@ export function DebugDialog({ trigger, open, onOpenChange }: Props) {
       limit: 1000,
     },
   })
-  const autopilot = useAutopilotConfig({
-    disabled: !isAutopilotEnabled,
-  })
+  const autopilot = useAutopilotConfig()
   const gouging = useSettingsGouging()
   const upload = useSettingsUpload()
   const pinned = useSettingsPinned()
@@ -123,7 +119,7 @@ export function DebugDialog({ trigger, open, onOpenChange }: Props) {
       if (values.contracts) {
         zip.file('contracts.json', JSON.stringify(contracts.data, null, 2))
       }
-      if (isAutopilotEnabled && values.autopilot) {
+      if (values.autopilot) {
         zip.file('autopilot.json', JSON.stringify(autopilot.data, null, 2))
       }
       if (values.gouging) {
@@ -150,7 +146,6 @@ export function DebugDialog({ trigger, open, onOpenChange }: Props) {
       }
     },
     [
-      isAutopilotEnabled,
       contracts.data,
       alerts.data,
       autopilot.data,
@@ -209,14 +204,12 @@ export function DebugDialog({ trigger, open, onOpenChange }: Props) {
             Configuration
           </Label>
           <div className="flex gap-4">
-            {isAutopilotEnabled && (
-              <FieldSwitch
-                size="small"
-                form={form}
-                fields={fields}
-                name="autopilot"
-              />
-            )}
+            <FieldSwitch
+              size="small"
+              form={form}
+              fields={fields}
+              name="autopilot"
+            />
             <FieldSwitch
               size="small"
               form={form}

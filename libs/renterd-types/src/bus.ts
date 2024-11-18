@@ -90,22 +90,22 @@ export const busMultipartPartRoute = '/bus/multipart/part'
 
 // state
 
-type BuildState = {
-  network: 'mainnet' | 'zen' | 'anagami'
+export type BuildState = {
   version: string
   commit: string
   OS: string
   buildTime: number
-  explorer: {
-    enabled: boolean
-    url: string
-  }
 }
 
 export type BusStateParams = void
 export type BusStatePayload = void
 export type BusStateResponse = BuildState & {
+  network: 'mainnet' | 'zen' | 'anagami'
   startTime: number
+  explorer: {
+    enabled: boolean
+    url: string
+  }
 }
 
 // autopilots

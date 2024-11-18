@@ -4,7 +4,6 @@ import { AllowBlockCmdGroup } from './AllowBlock'
 import { ServerFilterItem } from '@siafoundation/design-system'
 import { ContractsCmdGroup } from './Contracts'
 import { UsableCmdGroup } from './Usable'
-import { useApp } from '../../../../../contexts/app'
 import { PublicKeyCmdGroup } from './PublicKey'
 
 type Props = {
@@ -14,12 +13,9 @@ type Props = {
 }
 
 export function ContractFilterCmdGroups({ currentPage, select }: Props) {
-  const { isAutopilotEnabled } = useApp()
   return (
     <>
-      {isAutopilotEnabled && (
-        <UsableCmdGroup currentPage={currentPage} select={select} />
-      )}
+      <UsableCmdGroup currentPage={currentPage} select={select} />
       <ContractsCmdGroup currentPage={currentPage} select={select} />
       <AddressCmdGroup currentPage={currentPage} select={select} />
       <PublicKeyCmdGroup currentPage={currentPage} select={select} />

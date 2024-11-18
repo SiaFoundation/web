@@ -12,14 +12,12 @@ import {
   CheckmarkFilled20,
   PendingFilled20,
 } from '@siafoundation/react-icons'
-import { useApp } from '../../contexts/app'
 import { routes } from '../../config/routes'
 import { useConfig } from '../../contexts/config'
 import { pluralize } from '@siafoundation/units'
 import { HangingNavItem } from './HangingNavItem'
 
 export function Recommendations() {
-  const { autopilotInfo } = useApp()
   const { form, fields, evaluation } = useConfig()
   const {
     hostMargin50,
@@ -32,10 +30,6 @@ export function Recommendations() {
     userContractCountTarget,
     usableHostsAfterRecommendation,
   } = evaluation
-
-  if (!autopilotInfo.data?.isAutopilotEnabled) {
-    return null
-  }
 
   const tip = (
     <div className="flex flex-col gap-1 px-3 py-2">

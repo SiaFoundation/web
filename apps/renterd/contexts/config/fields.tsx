@@ -35,11 +35,9 @@ export const scDecimalPlaces = 6
 
 type GetFields = {
   advancedDefaults?: AdvancedDefaults
-  isAutopilotEnabled: boolean
   configViewMode: ConfigViewMode
   recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
   validationContext: {
-    isAutopilotEnabled: boolean
     configViewMode: ConfigViewMode
   }
 }
@@ -49,7 +47,6 @@ export type Fields = ReturnType<typeof getFields>
 export function getFields({
   advancedDefaults,
   recommendations,
-  isAutopilotEnabled,
   configViewMode,
   validationContext,
 }: GetFields): ConfigFields<InputValues, Categories> {
@@ -61,11 +58,8 @@ export function getFields({
       title: 'Expected storage',
       description: <>The amount of storage you would like to rent in TB.</>,
       units: 'TB',
-      hidden: !isAutopilotEnabled,
       validation: {
-        validate: {
-          required: requiredIfAutopilot(validationContext),
-        },
+        required: 'required',
       },
     },
     uploadTBMonth: {
@@ -76,11 +70,8 @@ export function getFields({
         <>The amount of upload bandwidth you plan to use each month in TB.</>
       ),
       units: 'TB/month',
-      hidden: !isAutopilotEnabled,
       validation: {
-        validate: {
-          required: requiredIfAutopilot(validationContext),
-        },
+        required: 'required',
       },
     },
     downloadTBMonth: {
@@ -91,11 +82,8 @@ export function getFields({
         <>The amount of download bandwidth you plan to use each month in TB.</>
       ),
       units: 'TB/month',
-      hidden: !isAutopilotEnabled,
       validation: {
-        validate: {
-          required: requiredIfAutopilot(validationContext),
-        },
+        required: 'required',
       },
     },
     periodWeeks: {
@@ -106,10 +94,10 @@ export function getFields({
       units: 'weeks',
       suggestion: advancedDefaults?.periodWeeks,
       suggestionTip: `Typically ${advancedDefaults?.periodWeeks} weeks.`,
-      hidden: !isAutopilotEnabled || configViewMode === 'basic',
+      hidden: configViewMode === 'basic',
       validation: {
         validate: {
-          required: requiredIfAutopilotAndAdvanced(validationContext),
+          required: requiredIfAdvanced(validationContext),
         },
       },
     },
@@ -127,10 +115,10 @@ export function getFields({
       decimalsLimit: 6,
       suggestion: advancedDefaults?.renewWindowWeeks,
       suggestionTip: `Typically ${advancedDefaults?.renewWindowWeeks} weeks.`,
-      hidden: !isAutopilotEnabled || configViewMode === 'basic',
+      hidden: configViewMode === 'basic',
       validation: {
         validate: {
-          required: requiredIfAutopilotAndAdvanced(validationContext),
+          required: requiredIfAdvanced(validationContext),
         },
       },
     },
@@ -143,10 +131,10 @@ export function getFields({
       decimalsLimit: 0,
       suggestion: advancedDefaults?.amountHosts,
       suggestionTip: `Typically ${advancedDefaults?.amountHosts} hosts.`,
-      hidden: !isAutopilotEnabled || configViewMode === 'basic',
+      hidden: configViewMode === 'basic',
       validation: {
         validate: {
-          required: requiredIfAutopilotAndAdvanced(validationContext),
+          required: requiredIfAdvanced(validationContext),
         },
       },
     },
@@ -170,7 +158,7 @@ export function getFields({
           The default value is <Code>{advancedDefaults?.prune}</Code>.
         </>
       ),
-      hidden: !isAutopilotEnabled || configViewMode === 'basic',
+      hidden: configViewMode === 'basic',
       validation: {},
     },
 
@@ -189,7 +177,7 @@ export function getFields({
       suggestionTip: `Defaults to ${
         advancedDefaults?.allowRedundantIPs ? 'on' : 'off'
       }.`,
-      hidden: !isAutopilotEnabled || configViewMode === 'basic',
+      hidden: configViewMode === 'basic',
       validation: {},
     },
     maxDowntimeHours: {
@@ -214,10 +202,10 @@ export function getFields({
             1
           )} days.`
         : undefined,
-      hidden: !isAutopilotEnabled || configViewMode === 'basic',
+      hidden: configViewMode === 'basic',
       validation: {
         validate: {
-          required: requiredIfAutopilotAndAdvanced(validationContext),
+          required: requiredIfAdvanced(validationContext),
         },
       },
     },
@@ -237,10 +225,10 @@ export function getFields({
       suggestionTip: advancedDefaults?.maxConsecutiveScanFailures
         ? `Defaults to ${advancedDefaults?.maxConsecutiveScanFailures.toNumber()}.`
         : undefined,
-      hidden: !isAutopilotEnabled || configViewMode === 'basic',
+      hidden: configViewMode === 'basic',
       validation: {
         validate: {
-          required: requiredIfAutopilotAndAdvanced(validationContext),
+          required: requiredIfAdvanced(validationContext),
         },
       },
     },
@@ -256,11 +244,11 @@ export function getFields({
       ),
       suggestion: advancedDefaults?.minProtocolVersion,
       suggestionTip: `Defaults to ${advancedDefaults?.minProtocolVersion}.`,
-      hidden: !isAutopilotEnabled || configViewMode === 'basic',
+      hidden: configViewMode === 'basic',
       validation: {
         validate: {
-          required: requiredIfAutopilotAndAdvanced(validationContext),
-          version: requiredIfAutopilotAndAdvanced(
+          required: requiredIfAdvanced(validationContext),
+          version: requiredIfAdvanced(
             validationContext,
             (value: Maybe<string>) => {
               const regex = /^\d+\.\d+\.\d+$/
@@ -827,49 +815,6 @@ function requiredIfAdvanced(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (value: any, values: InputValues) => {
     if (context.configViewMode === 'advanced') {
-      if (method) {
-        return method(value, values)
-      }
-      return !!value || 'required'
-    }
-    return true
-  }
-}
-
-function requiredIfAutopilot(
-  context: { isAutopilotEnabled: boolean },
-  method?: (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    value: any,
-    values: InputValues
-  ) => string | boolean
-) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (value: any, values: InputValues) => {
-    if (context.isAutopilotEnabled) {
-      if (method) {
-        return method(value, values)
-      }
-      return !!value || 'required'
-    }
-    return true
-  }
-}
-
-function requiredIfAutopilotAndAdvanced(
-  context: {
-    isAutopilotEnabled: boolean
-    configViewMode: ConfigViewMode
-  },
-  method?: (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    value: any,
-    values: InputValues
-  ) => string | boolean
-) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (value: any, values: InputValues) => {
-    if (context.isAutopilotEnabled && context.configViewMode === 'advanced') {
       if (method) {
         return method(value, values)
       }
