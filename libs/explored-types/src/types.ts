@@ -8,6 +8,8 @@ import type {
   Currency,
   FileContractID,
   Hash256,
+  HostSettings,
+  HostPriceTable,
   PublicKey,
   SiacoinElement,
   SiacoinInput,
@@ -36,6 +38,7 @@ export {
   Currency,
   FileContractID,
   Hash256,
+  PublicKey,
   SiacoinOutput,
   SiacoinOutputID,
   SiafundElement,
@@ -105,13 +108,6 @@ export type TxpoolTransactions = {
 }
 
 // Novel Explored Types - There are three main differences that inform what's below:
-//   1. New keys ExplorerSiacoinInput/Output and ExplorerSiafundInput/Output, which cascades
-//      into Transaction and Block.
-//   2. The Resolved and Valid keys with a FileContract.
-//   3. Payout included with FileContractRevision, where the core type removes payout
-//      because a revision cannot change this field. This is still true here but included
-//      for more independent data types--one would not need the original contract to display
-//      a list of revisions, for example.
 
 /**
  * HostAnnouncement represents a signed announcement of a host's network address.
@@ -226,4 +222,24 @@ export type ExplorerBlock = {
   timestamp: string
   minerPayouts: ExplorerSiacoinOutput[]
   transactions: ExplorerTransaction[]
+}
+
+/**
+ * An ExplorerHost represents a host and the information gathered from scanning it.
+ */
+export type ExplorerHost = {
+  publicKey: PublicKey
+  netAddress: string
+  countryCode: string
+
+  knownSince: string
+  lastScan: string
+  lastScanSuccessful: boolean
+  lastAnnouncement: string
+  totalScans: number
+  successfulInteractions: number
+  failedInteractions: number
+
+  settings: HostSettings
+  priceTable: HostPriceTable
 }
