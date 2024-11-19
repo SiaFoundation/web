@@ -4,23 +4,20 @@ import {
 } from '@siafoundation/design-system'
 import { delay, useMutate } from '@siafoundation/react-core'
 import {
-  useAutopilotConfigUpdate,
   useAutopilotTrigger,
   useBusState,
-  useSettingsGougingUpdate,
-  useSettingsPinnedUpdate,
-  useSettingsUploadUpdate,
+  useAutopilotConfigUpdate,
+  useSettingsGougingPatch,
+  useSettingsPinnedPatch,
+  useSettingsUploadPatch,
 } from '@siafoundation/renterd-react'
 import { busHostsRoute } from '@siafoundation/renterd-types'
 import { useCallback } from 'react'
-import {
-  ResourcesMaybeLoaded,
-  ResourcesRequiredLoaded,
-  checkIfAllResourcesLoaded,
-} from './useResources'
+import { ResourcesMaybeLoaded, checkIfAllResourcesLoaded } from './useResources'
 import { transformUp } from './transformUp'
 import { InputValues, SubmitValues } from './types'
-import { useApp } from '../app'
+import { getPatchPayloads } from './patchPayloads'
+import { useApp } from '../../contexts/app'
 
 export function useOnValid({
   resources,
@@ -33,9 +30,9 @@ export function useOnValid({
   const isAutopilotEnabled = !!app.autopilotInfo.data?.isAutopilotEnabled
   const autopilotTrigger = useAutopilotTrigger()
   const autopilotUpdate = useAutopilotConfigUpdate()
-  const settingsGougingUpdate = useSettingsGougingUpdate()
-  const settingsPinnedUpdate = useSettingsPinnedUpdate()
-  const settingsUploadUpdate = useSettingsUploadUpdate()
+  const settingsGougingPatch = useSettingsGougingPatch()
+  const settingsPinnedPatch = useSettingsPinnedPatch()
+  const settingsUploadPatch = useSettingsUploadPatch()
   const renterdState = useBusState()
   const mutate = useMutate()
   const onValid = useCallback(
@@ -49,45 +46,63 @@ export function useOnValid({
         isAutopilotEnabled && !resources.autopilot.data
 
       const { payloads } = transformUp({
-        resources: resources as ResourcesRequiredLoaded,
+        resources: loaded,
         renterdState: renterdState.data,
         isAutopilotEnabled,
         values: values as SubmitValues,
       })
 
-      const autopilotResponse = payloads.autopilot
-        ? await autopilotUpdate.put({
+      const patches = getPatchPayloads({
+        resources: loaded,
+        payloads,
+      })
+
+      const promises = []
+
+      if (isAutopilotEnabled && payloads.autopilot && patches.autopilot) {
+        promises.push(
+          autopilotUpdate.put({
             payload: payloads.autopilot,
           })
-        : undefined
+        )
+      }
 
-      const [gougingResponse, pinnedResponse, uploadResponse] =
-        await Promise.all([
-          settingsGougingUpdate.put({
-            payload: payloads.gouging,
-          }),
-          settingsPinnedUpdate.put({
-            payload: payloads.pinned,
-          }),
-          settingsUploadUpdate.put({
-            payload: payloads.upload,
-          }),
-        ])
+      if (patches.gouging) {
+        promises.push(
+          settingsGougingPatch.patch({
+            payload: patches.gouging,
+          })
+        )
+      }
 
-      const error =
-        autopilotResponse?.error ||
-        gougingResponse.error ||
-        pinnedResponse.error ||
-        uploadResponse.error
-      if (error) {
+      if (patches.pinned) {
+        promises.push(
+          settingsPinnedPatch.patch({
+            payload: patches.pinned,
+          })
+        )
+      }
+
+      if (patches.upload) {
+        promises.push(
+          settingsUploadPatch.patch({
+            payload: patches.upload,
+          })
+        )
+      }
+
+      const results = await Promise.all(promises)
+
+      const err = results.find((result) => result.error)
+      if (err) {
         triggerErrorToast({
           title: 'Error updating configuration',
-          body: error,
+          body: err.error,
         })
         return
       }
 
-      if (isAutopilotEnabled && payloads.autopilot) {
+      if (isAutopilotEnabled && patches.autopilot) {
         // Trigger the autopilot loop with new settings applied.
         autopilotTrigger.post({
           payload: {
@@ -116,11 +131,11 @@ export function useOnValid({
       resources,
       renterdState.data,
       isAutopilotEnabled,
-      autopilotUpdate,
-      settingsGougingUpdate,
-      settingsPinnedUpdate,
-      settingsUploadUpdate,
       revalidateAndResetForm,
+      autopilotUpdate,
+      settingsGougingPatch,
+      settingsPinnedPatch,
+      settingsUploadPatch,
       autopilotTrigger,
       mutate,
     ]
