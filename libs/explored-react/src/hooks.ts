@@ -30,6 +30,9 @@ import {
   ContractsByIDsPayload,
   ContractsByIDsResponse,
   contractsByIDsRoute,
+  HostByPubkeyParams,
+  HostByPubkeyResponse,
+  hostByPubkeyRoute,
   MetricsByIDParams,
   MetricsByIDResponse,
   metricsByIDRoute,
@@ -348,5 +351,15 @@ export function useSearchResultType(
   return useGetSwr({
     ...args,
     route: searchResultTypeRoute,
+  })
+}
+
+// Host
+export function useHostByPubkey(
+  args: HookArgsSwr<HostByPubkeyParams, HostByPubkeyResponse>
+) {
+  return useGetSwr({
+    ...args,
+    route: hostByPubkeyRoute,
   })
 }

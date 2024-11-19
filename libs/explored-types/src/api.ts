@@ -9,6 +9,7 @@ import {
   Currency,
   ExplorerBlock,
   ExplorerFileContract,
+  ExplorerHost,
   ExplorerSiacoinOutput,
   ExplorerSiafundOutput,
   ExplorerTransaction,
@@ -16,6 +17,7 @@ import {
   Hash256,
   Metrics,
   Peer,
+  PublicKey,
   SearchResultType,
   SiacoinOutputID,
   SiafundElement,
@@ -221,3 +223,11 @@ export const searchResultTypeRoute = '/search/:id'
 export type SearchResultTypeParams = { id: Hash256 }
 export type SearchResultTypePayload = void
 export type SearchResultTypeResponse = SearchResultType
+
+// Host
+
+// Returns the host with the specified public key
+export const hostByPubkeyRoute = '/pubkey/:id/host'
+export type HostByPubkeyParams = { id: PublicKey }
+export type HostByPubkeyPayload = void
+export type HostByPubkeyResponse = ExplorerHost
