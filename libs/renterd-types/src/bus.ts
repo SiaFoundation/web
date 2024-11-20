@@ -1,10 +1,11 @@
 import {
+  Block,
   Currency,
+  HostSettings,
+  FileContractID,
+  FileContractRevision,
   PublicKey,
   Transaction,
-  FileContractRevision,
-  FileContractID,
-  Block,
   TransactionID,
   WalletEvent,
 } from '@siafoundation/types'
@@ -14,7 +15,6 @@ import {
   Contract,
   ContractRevision,
   Host,
-  HostSettings,
   Obj,
   ObjectMetadata,
   SettingsGouging,

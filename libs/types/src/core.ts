@@ -198,3 +198,144 @@ export type ConsensusState = {
   }
   attestations: number
 }
+
+/**
+ * HostSettings are the settings and prices used when interacting with a host.
+ */
+export type HostSettings = {
+  acceptingcontracts: boolean
+  maxdownloadbatchsize: number
+  maxduration: number
+  maxrevisebatchsize: number
+  netaddress: string
+  remainingstorage: number
+  sectorsize: number
+  totalstorage: number
+  unlockhash: Address
+  windowsize: number
+  collateral: Currency
+  maxcollateral: Currency
+  baserpcprice: Currency
+  contractprice: Currency
+  downloadbandwidthprice: Currency
+  sectoraccessprice: Currency
+  storageprice: Currency
+  uploadbandwidthprice: Currency
+  ephemeralaccountexpiry: string
+  maxephemeralaccountbalance: Currency
+  revisionnumber: number
+  version: string
+  release: string
+  siamuxport: string
+}
+
+/**
+ * An HostPriceTable contains the host's current prices for each RPC.
+ */
+export type HostPriceTable = {
+  // UID is a unique specifier that identifies this price table
+  uid: string
+
+  // Validity is a duration that specifies how long the host guarantees these
+  // prices for and are thus considered valid.
+  validity: string
+
+  // HostBlockHeight is the block height of the host. This allows the renter
+  // to create valid withdrawal messages in case it is not synced yet.
+  hostblockheight: number
+
+  // UpdatePriceTableCost refers to the cost of fetching a new price table
+  // from the host.
+  updatepricetablecost: Currency
+
+  // AccountBalanceCost refers to the cost of fetching the balance of an
+  // ephemeral account.
+  accountbalancecost: Currency
+
+  // FundAccountCost refers to the cost of funding an ephemeral account on the
+  // host.
+  fundaccountcost: Currency
+
+  // LatestRevisionCost refers to the cost of asking the host for the latest
+  // revision of a contract.
+  latestrevisioncost: Currency
+
+  // SubscriptionMemoryCost is the cost of storing a byte of data for
+  // SubscriptionPeriod time.
+  subscriptionmemorycost: Currency
+
+  // SubscriptionNotificationCost is the cost of a single notification on top
+  // of what is charged for bandwidth.
+  subscriptionnotificationcost: Currency
+
+  // MDM related costs
+  //
+  // InitBaseCost is the amount of cost that is incurred when an MDM program
+  // starts to run. This doesn't include the memory used by the program data.
+  // The total cost to initialize a program is calculated as
+  // InitCost = InitBaseCost + MemoryTimeCost * Time
+  initbasecost: Currency
+
+  // MemoryTimeCost is the amount of cost per byte per time that is incurred
+  // by the memory consumption of the program.
+  memorytimecost: Currency
+
+  // Cost values specific to the bandwidth consumption.
+  downloadbandwidthcost: Currency
+  uploadbandwidthcost: Currency
+
+  // Cost values specific to the DropSectors instruction.
+  dropsectorsbasecost: Currency
+  dropsectorsunitcost: Currency
+
+  // Cost values specific to the HasSector command.
+  hassectorbasecost: Currency
+
+  // Cost values specific to the Read instruction.
+  readbasecost: Currency
+  readlengthcost: Currency
+
+  // Cost values specific to the RenewContract instruction.
+  renewcontractcost: Currency
+
+  // Cost values specific to the Revision command.
+  revisionbasecost: Currency
+
+  // SwapSectorBaseCost is the cost of swapping 2 full sectors by root.
+  swapsectorcost: Currency
+
+  // Cost values specific to the Write instruction.
+  writebasecost: Currency
+  writelengthcost: Currency
+  writestorecost: Currency
+
+  // TxnFee estimations.
+  txnfeeminrecommended: Currency
+  txnfeemaxrecommended: Currency
+
+  // ContractPrice is the additional fee a host charges when forming/renewing
+  // a contract to cover the miner fees when submitting the contract and
+  // revision to the blockchain.
+  contractprice: Currency
+
+  // CollateralCost is the amount of money per byte the host is promising to
+  // lock away as collateral when adding new data to a contract. It's paid out
+  // to the host regardless of the outcome of the storage proof.
+  collateralcost: Currency
+
+  // MaxCollateral is the maximum amount of collateral the host is willing to
+  // put into a single file contract.
+  maxcollateral: Currency
+
+  // MaxDuration is the max duration for which the host is willing to form a
+  // contract.
+  maxduration: number
+
+  // WindowSize is the minimum time in blocks the host requests the
+  // renewWindow of a new contract to be.
+  windowsize: number
+
+  // Registry related fields.
+  registryentriesleft: number
+  registryentriestotal: number
+}

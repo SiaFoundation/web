@@ -1,4 +1,4 @@
-import { HostPriceTable, HostSettings } from '@siafoundation/renterd-types'
+import { HostPriceTable, HostSettings } from '@siafoundation/types'
 import BigNumber from 'bignumber.js'
 import { ContractData } from '../contracts/types'
 
