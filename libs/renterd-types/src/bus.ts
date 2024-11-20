@@ -1,6 +1,7 @@
 import {
   Block,
   Currency,
+  HostPriceTable,
   HostSettings,
   FileContractID,
   FileContractRevision,
@@ -44,6 +45,7 @@ export const busWalletPrepareFormRoute = '/bus/wallet/prepare/form'
 export const busWalletPrepareRenewRoute = '/bus/wallet/prepare/renew'
 export const busHostsRoute = '/bus/hosts'
 export const busHostHostKeyRoute = '/bus/host/:hostkey'
+export const busHostHostKeyScanRoute = '/bus/host/:hostkey/scan'
 export const busHostsHostKeyRoute = '/bus/hosts/:hostkey'
 export const busHostsBlocklistRoute = '/bus/hosts/blocklist'
 export const busHostsAllowlistRoute = '/bus/hosts/allowlist'
@@ -281,6 +283,19 @@ export type HostResetLostSectorCountParams = {
 }
 export type HostResetLostSectorCountPayload = void
 export type HostResetLostSectorCountResponse = void
+
+export type HostScanParams = {
+  hostkey: string
+}
+export type HostScanPayload = {
+  timeout: number
+}
+export type HostScanResponse = {
+  ping: string
+  scanError?: string
+  settings?: HostSettings
+  priceTable?: HostPriceTable
+}
 
 // contracts
 

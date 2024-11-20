@@ -20,7 +20,7 @@ import {
   useHostResetLostSectorCount,
   useHostsAllowlist,
   useHostsBlocklist,
-  useRhpScan,
+  useHostScan,
 } from '@siafoundation/renterd-react'
 import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
@@ -86,7 +86,7 @@ export function HostContextMenuContent({
   const allowlist = useHostsAllowlist()
   const blocklistUpdate = useBlocklistUpdate()
   const allowlistUpdate = useAllowlistUpdate()
-  const rescan = useRhpScan()
+  const rescan = useHostScan()
   const resetLostSectors = useHostResetLostSectorCount()
   return (
     <>
@@ -164,9 +164,10 @@ export function HostContextMenuContent({
             return
           }
           rescan.post({
+            params: {
+              hostkey: publicKey,
+            },
             payload: {
-              hostKey: publicKey,
-              hostIP: address,
               timeout: secondsInMilliseconds(30),
             },
           })
