@@ -11,16 +11,12 @@ import {
   ObjectUploadParams,
   ObjectUploadPayload,
   ObjectUploadResponse,
-  RhpScanParams,
-  RhpScanPayload,
-  RhpScanResponse,
   WorkerStateParams,
   WorkerStatePayload,
   WorkerStateResponse,
   workerAccountIdResetdriftRoute,
   workerMultipartKeyRoute,
   workerObjectKeyRoute,
-  workerRhpScanRoute,
   workerStateRoute,
 } from '@siafoundation/renterd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
@@ -65,11 +61,6 @@ export function Worker({ api, password }: { api: string; password?: string }) {
         },
       },
     }),
-    rhpScan: buildRequestHandler<
-      RhpScanParams,
-      RhpScanPayload,
-      RhpScanResponse
-    >(axios, 'post', workerRhpScanRoute),
     accountResetDrift: buildRequestHandler<
       AccountResetDriftParams,
       AccountResetDriftPayload,

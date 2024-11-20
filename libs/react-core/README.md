@@ -101,18 +101,19 @@ The lifecycle of imperative methods are tracked by a workflow ID. Workflows allo
 
 ```ts
 // Hook
-export function useRhpScan(
-  args?: HookArgsCallback<RhpScanParams, RhpScanPayload, RhpScanResponse>
+export function useHostScan(
+  args?: HookArgsCallback<HostScanParams, HostScanPayload, HostScanResponse>
 ) {
-  return usePostFunc({ ...args, route: workerRhpScanRoute })
+  return usePostFunc({ ...args, route: busHostScanRoute })
 }
 
 // Usage
-const rescan = useRhpScan()
+const rescan = useHostScan()
 await rescan.post({
+  params: {
+    hostkey: publicKey,
+  },
   payload: {
-    hostKey: publicKey,
-    hostIP: address,
     timeout: secondsInMilliseconds(30),
   },
 })

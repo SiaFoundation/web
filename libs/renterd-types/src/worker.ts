@@ -1,10 +1,8 @@
-import { HostSettings } from '@siafoundation/types'
 import { BusStateResponse } from './bus'
 
 export const workerStateRoute = '/worker/state'
 export const workerObjectKeyRoute = '/worker/object/:key'
 export const workerMultipartKeyRoute = '/worker/multipart/:key'
-export const workerRhpScanRoute = '/worker/rhp/scan'
 export const workerAccountIdResetdriftRoute = '/worker/account/:id/resetdrift'
 
 // state
@@ -44,20 +42,6 @@ export type MultipartUploadPartParams = {
 }
 export type MultipartUploadPartPayload = Blob | Buffer | ArrayBuffer | string
 export type MultipartUploadPartResponse = void
-
-// rhp
-
-export type RhpScanParams = void
-export type RhpScanPayload = {
-  hostKey: string
-  hostIP: string
-  timeout: number
-}
-export type RhpScanResponse = {
-  ping: string
-  scanError?: string
-  settings?: HostSettings
-}
 
 // accounts
 

@@ -1,4 +1,3 @@
-import { debounce } from '@technically/lodash'
 import {
   useGetDownloadFunc,
   usePutFunc,
@@ -20,19 +19,13 @@ import {
   ObjectUploadParams,
   ObjectUploadPayload,
   ObjectUploadResponse,
-  RhpScanParams,
-  RhpScanPayload,
-  RhpScanResponse,
   WorkerStateParams,
   WorkerStateResponse,
   busObjectsRoute,
-  busHostsRoute,
   workerAccountIdResetdriftRoute,
   workerMultipartKeyRoute,
   workerObjectKeyRoute,
-  workerRhpScanRoute,
   workerStateRoute,
-  Host,
 } from '@siafoundation/renterd-types'
 
 // state
@@ -103,53 +96,6 @@ export function useMultipartUploadPart(
     },
     route: workerMultipartKeyRoute,
   })
-}
-
-const debouncedListRevalidate = debounce((func: () => void) => func(), 5_000)
-
-export function useRhpScan(
-  args?: HookArgsCallback<RhpScanParams, RhpScanPayload, RhpScanResponse>
-) {
-  return usePostFunc(
-    { ...args, route: workerRhpScanRoute },
-    async (mutate, { payload: { hostKey } }, response) => {
-      // Fetching immediately after the response returns stale data so
-      // we optimistically update without triggering revalidation,
-      // and then revalidate after a 5s delay. The list revalidation
-      // is debounced so if the user rescans multiple hosts in quick
-      // succession the list is optimistically updated n times followed
-      // by a single network revalidate.
-      mutate<Host[]>(
-        (key) => key.startsWith(busHostsRoute),
-        (data) =>
-          data?.map((h) => {
-            if (h.publicKey === hostKey) {
-              return {
-                ...h,
-                host: {
-                  ...h,
-                  interactions: {
-                    ...h.interactions,
-                    lastScan: new Date().toISOString(),
-                    lastScanSuccess: !response.data.scanError,
-                  },
-                  settings: response.data.settings,
-                },
-              }
-            }
-            return h
-          }),
-        false
-      )
-      debouncedListRevalidate(() => {
-        mutate(
-          (key) => key.startsWith(busHostsRoute),
-          (d) => d,
-          true
-        )
-      })
-    }
-  )
 }
 
 // accounts

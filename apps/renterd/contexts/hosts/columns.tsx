@@ -21,8 +21,8 @@ import { format, formatDistance, formatRelative } from 'date-fns'
 import { HostContextMenu } from '../../components/Hosts/HostContextMenu'
 import { useWorkflows } from '@siafoundation/react-core'
 import {
-  RhpScanPayload,
-  workerRhpScanRoute,
+  HostScanPayload,
+  busHostHostKeyScanRoute,
 } from '@siafoundation/renterd-types'
 import { HostPriceTable, HostSettings } from '@siafoundation/types'
 import { useHostsAllowlist } from '@siafoundation/renterd-react'
@@ -218,10 +218,9 @@ export const columns: HostsTableColumn[] = (
       render: function LastScan({ data }) {
         const { workflows } = useWorkflows()
         const isPending = workflows.find((w) => {
-          const rhpw = w as { route?: string; payload?: RhpScanPayload }
-          return (
-            rhpw.route?.startsWith(workerRhpScanRoute) &&
-            rhpw.payload?.hostKey === data.publicKey
+          const rhpw = w as { route?: string; payload?: HostScanPayload }
+          return rhpw.route?.startsWith(
+            busHostHostKeyScanRoute.replace(':hostkey', data.publicKey)
           )
         })
         if (isPending) {

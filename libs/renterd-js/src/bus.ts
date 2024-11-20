@@ -256,6 +256,10 @@ import {
   ConsensusNetworkPayload,
   ConsensusNetworkResponse,
   busConsensusNetworkRoute,
+  HostScanParams,
+  HostScanPayload,
+  HostScanResponse,
+  busHostHostKeyScanRoute,
 } from '@siafoundation/renterd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
@@ -393,6 +397,11 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       HostResetLostSectorCountPayload,
       HostResetLostSectorCountResponse
     >(axios, 'post', busHostPublicKeyResetlostsectorsRoute),
+    hostScan: buildRequestHandler<
+      HostScanParams,
+      HostScanPayload,
+      HostScanResponse
+    >(axios, 'post', busHostHostKeyScanRoute),
     contracts: buildRequestHandler<
       ContractsParams,
       ContractsPayload,

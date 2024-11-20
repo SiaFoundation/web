@@ -1,4 +1,5 @@
 import useSWR from 'swr'
+import { debounce } from '@technically/lodash'
 import {
   useDeleteFunc,
   useGetSwr,
@@ -244,6 +245,11 @@ import {
   ConsensusNetworkParams,
   ConsensusNetworkResponse,
   busConsensusNetworkRoute,
+  HostScanParams,
+  HostScanPayload,
+  HostScanResponse,
+  busHostHostKeyScanRoute,
+  Host,
 } from '@siafoundation/renterd-types'
 
 // state
@@ -464,6 +470,8 @@ export function useWalletPrepareRenew(
   return usePostFunc({ ...args, route: busWalletPrepareRenewRoute })
 }
 
+// host
+
 export function useHosts(
   args: HookArgsWithPayloadSwr<HostsParams, HostsPayload, HostsResponse>
 ) {
@@ -557,6 +565,53 @@ export function useHostResetLostSectorCount(
     ...args,
     route: busHostPublicKeyResetlostsectorsRoute,
   })
+}
+
+const debouncedListRevalidate = debounce((func: () => void) => func(), 5_000)
+
+export function useHostScan(
+  args?: HookArgsCallback<HostScanParams, HostScanPayload, HostScanResponse>
+) {
+  return usePostFunc(
+    { ...args, route: busHostHostKeyScanRoute },
+    async (mutate, { params: { hostkey } }, response) => {
+      // Fetching immediately after the response returns stale data so
+      // we optimistically update without triggering revalidation,
+      // and then revalidate after a 5s delay. The list revalidation
+      // is debounced so if the user rescans multiple hosts in quick
+      // succession the list is optimistically updated n times followed
+      // by a single network revalidate.
+      mutate<Host[]>(
+        (key) => key.startsWith(busHostsRoute),
+        (data) =>
+          data?.map((h) => {
+            if (h.publicKey === hostkey) {
+              return {
+                ...h,
+                host: {
+                  ...h,
+                  interactions: {
+                    ...h.interactions,
+                    lastScan: new Date().toISOString(),
+                    lastScanSuccess: !response.data.scanError,
+                  },
+                  settings: response.data.settings,
+                },
+              }
+            }
+            return h
+          }),
+        false
+      )
+      debouncedListRevalidate(() => {
+        mutate(
+          (key) => key.startsWith(busHostsRoute),
+          (d) => d,
+          true
+        )
+      })
+    }
+  )
 }
 
 // contracts
