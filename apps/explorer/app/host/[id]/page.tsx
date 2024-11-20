@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation'
 import { truncate } from '@siafoundation/design-system'
 import { siaCentral } from '../../../config/siaCentral'
 import { to } from '@siafoundation/request'
+import { explored } from '../../../config/explored'
 
 export function generateMetadata({ params }): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
@@ -23,14 +24,8 @@ export const revalidate = 0
 
 export default async function Page({ params }) {
   const id = params?.id as string
-  const [[h, error], [r]] = await Promise.all([
-    to(
-      siaCentral.host({
-        params: {
-          id,
-        },
-      })
-    ),
+  const [[host, hostError], [r]] = await Promise.all([
+    to(explored.hostByPubkey({ params: { id } })),
     to(
       siaCentral.exchangeRates({
         params: {
@@ -40,13 +35,13 @@ export default async function Page({ params }) {
     ),
   ])
 
-  if (error) {
-    throw error
+  if (hostError) {
+    throw hostError
   }
 
-  if (!h?.host) {
+  if (!host) {
     return notFound()
   }
 
-  return <Host host={h.host} rates={r?.rates} />
+  return <Host host={host} rates={r?.rates} />
 }
