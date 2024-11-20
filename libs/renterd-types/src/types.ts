@@ -1,11 +1,13 @@
 import { CurrencyId } from '@siafoundation/react-core'
 import {
   ChainIndex,
-  FileContractRevision,
-  Transaction,
   Currency,
   EncryptionKey,
+  FileContractRevision,
+  HostSettings,
+  HostPriceTable,
   PublicKey,
+  Transaction,
   TransactionSignature,
 } from '@siafoundation/types'
 
@@ -18,69 +20,6 @@ export type ConsensusState = {
 export type ContractRevision = {
   revision: FileContractRevision
   signatures: TransactionSignature[]
-}
-
-export type HostSettings = {
-  acceptingcontracts: boolean
-  maxdownloadbatchsize: number
-  maxduration: number
-  maxrevisebatchsize: number
-  netaddress: string
-  remainingstorage: number
-  sectorsize: number
-  totalstorage: number
-  unlockhash: string
-  windowsize: number
-  collateral: Currency
-  maxcollateral: Currency
-  baserpcprice: Currency
-  contractprice: Currency
-  downloadbandwidthprice: Currency
-  sectoraccessprice: Currency
-  storageprice: Currency
-  uploadbandwidthprice: Currency
-  ephemeralaccountexpiry: number
-  maxephemeralaccountbalance: Currency
-  revisionnumber: number
-  version: string
-  siamuxport: string
-}
-
-export type HostPriceTable = {
-  accountbalancecost: string
-  collateralcost: string
-  contractprice: string
-  downloadbandwidthcost: string
-  dropsectorsbasecost: string
-  dropsectorsunitcost: string
-  expiry: string // date
-  fundaccountcost: string
-  hassectorbasecost: string
-  hostblockheight: number
-  initbasecost: string
-  latestrevisioncost: string
-  maxcollateral: string
-  maxduration: number
-  memorytimecost: string
-  readbasecost: string
-  readlengthcost: string
-  registryentriesleft: number
-  registryentriestotal: number
-  renewcontractcost: string
-  revisionbasecost: string
-  subscriptionmemorycost: string
-  subscriptionnotificationcost: string
-  swapsectorcost: string
-  txnfeemaxrecommended: string
-  txnfeeminrecommended: string
-  uid: string
-  updatepricetablecost: string
-  uploadbandwidthcost: string
-  validity: number
-  windowsize: number
-  writebasecost: string
-  writelengthcost: string
-  writestorecost: string
 }
 
 export type Sector = {

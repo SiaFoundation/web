@@ -1,4 +1,4 @@
-import { HostSettings } from './types'
+import { HostSettings } from '@siafoundation/types'
 import { BusStateResponse } from './bus'
 
 export const workerStateRoute = '/worker/state'

@@ -21,11 +21,10 @@ import { format, formatDistance, formatRelative } from 'date-fns'
 import { HostContextMenu } from '../../components/Hosts/HostContextMenu'
 import { useWorkflows } from '@siafoundation/react-core'
 import {
-  HostPriceTable,
-  HostSettings,
   RhpScanPayload,
   workerRhpScanRoute,
 } from '@siafoundation/renterd-types'
+import { HostPriceTable, HostSettings } from '@siafoundation/types'
 import { useHostsAllowlist } from '@siafoundation/renterd-react'
 import BigNumber from 'bignumber.js'
 import React, { memo } from 'react'
