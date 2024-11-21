@@ -50,7 +50,6 @@ describe('tansforms', () => {
         uploadTBMonth: new BigNumber('0.79'),
         storageTB: new BigNumber('1'),
         prune: true,
-        allowRedundantIPs: false,
         maxDowntimeHours: new BigNumber('1440'),
         maxConsecutiveScanFailures: new BigNumber('10'),
         minProtocolVersion: '',
@@ -140,7 +139,6 @@ describe('tansforms', () => {
               uploadTBMonth: new BigNumber('0.785714285714285714285714285714'),
               storageTB: new BigNumber('1'),
               prune: true,
-              allowRedundantIPs: false,
               maxDowntimeHours: new BigNumber('1440'),
               maxConsecutiveScanFailures: new BigNumber('10'),
               minProtocolVersion: '',
@@ -150,7 +148,6 @@ describe('tansforms', () => {
         ).toEqual({
           enabled: true,
           hosts: {
-            allowRedundantIPs: false,
             maxDowntimeHours: 1440,
             maxConsecutiveScanFailures: 10,
             scoreOverrides: {},
@@ -181,7 +178,6 @@ describe('tansforms', () => {
               uploadTBMonth: new BigNumber('0.785714285714285714285714285714'),
               storageTB: new BigNumber('1'),
               prune: true,
-              allowRedundantIPs: false,
               maxDowntimeHours: new BigNumber('1440'),
               maxConsecutiveScanFailures: new BigNumber('10'),
               minProtocolVersion: '1.7.0',
@@ -204,7 +200,6 @@ describe('tansforms', () => {
           enabled: false,
           hosts: {
             foobar: 'value',
-            allowRedundantIPs: false,
             maxDowntimeHours: 1440,
             maxConsecutiveScanFailures: 10,
             scoreOverrides: {},
@@ -236,7 +231,6 @@ describe('tansforms', () => {
               uploadTBMonth: new BigNumber('0.785714285714285714285714285714'),
               storageTB: new BigNumber('1'),
               prune: true,
-              allowRedundantIPs: false,
               maxDowntimeHours: new BigNumber('1440'),
               maxConsecutiveScanFailures: new BigNumber('10'),
               minProtocolVersion: '1.7.0',
@@ -252,7 +246,6 @@ describe('tansforms', () => {
         ).toEqual({
           enabled: true,
           hosts: {
-            allowRedundantIPs: false,
             maxDowntimeHours: 1440,
             maxConsecutiveScanFailures: 10,
             scoreOverrides: {},
@@ -285,7 +278,6 @@ describe('tansforms', () => {
               uploadTBMonth: new BigNumber('0.785714285714285714285714285714'),
               storageTB: new BigNumber('1'),
               prune: true,
-              allowRedundantIPs: false,
               maxDowntimeHours: new BigNumber('1440'),
               maxConsecutiveScanFailures: new BigNumber('10'),
               minProtocolVersion: '1.7.0',
@@ -542,7 +534,6 @@ function buildAllResponses() {
     autopilot: {
       enabled: false,
       hosts: {
-        allowRedundantIPs: false,
         maxDowntimeHours: 1440,
         maxConsecutiveScanFailures: 10,
         scoreOverrides: {},

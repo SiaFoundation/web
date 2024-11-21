@@ -30,7 +30,6 @@ export const configResetAllSettings = step(
     await setSwitchByLabel(page, 'prune', false)
 
     // hosts
-    await setSwitchByLabel(page, 'allowRedundantIPs', false)
     await fillTextInputByName(page, 'maxDowntimeHours', '330')
     await fillTextInputByName(page, 'maxConsecutiveScanFailures', '10')
     await fillTextInputByName(page, 'minProtocolVersion', '1.6.0')

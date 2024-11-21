@@ -71,7 +71,6 @@ export function transformDownAutopilot(
     storageTB,
     prune,
     // hosts
-    allowRedundantIPs: config.hosts.allowRedundantIPs,
     maxDowntimeHours: new BigNumber(config.hosts.maxDowntimeHours),
     maxConsecutiveScanFailures: new BigNumber(
       config.hosts.maxConsecutiveScanFailures

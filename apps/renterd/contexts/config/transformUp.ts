@@ -74,7 +74,6 @@ export function transformUpAutopilot(
       ...existingValues?.hosts,
       maxDowntimeHours: v.maxDowntimeHours.toNumber(),
       maxConsecutiveScanFailures: v.maxConsecutiveScanFailures.toNumber(),
-      allowRedundantIPs: v.allowRedundantIPs,
       scoreOverrides: existingValues?.hosts.scoreOverrides || {},
       minProtocolVersion: v.minProtocolVersion,
     },

@@ -455,7 +455,6 @@ export const valuesZeroDefaults: Values = {
   uploadTBMonth: new BigNumber(0),
   storageTB: new BigNumber(0),
   prune: false,
-  allowRedundantIPs: false,
   maxDowntimeHours: new BigNumber(0),
   maxConsecutiveScanFailures: new BigNumber(0),
   minProtocolVersion: '',

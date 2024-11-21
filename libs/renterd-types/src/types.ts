@@ -228,7 +228,6 @@ export type SiacoinElement = {
 }
 
 export type AutopilotHostsConfig = {
-  allowRedundantIPs: boolean
   scoreOverrides: { [key: PublicKey]: number }
   maxDowntimeHours: number
   maxConsecutiveScanFailures: number
