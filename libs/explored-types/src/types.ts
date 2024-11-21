@@ -164,8 +164,8 @@ export type ExplorerFileContract = {
 
   transactionID: TransactionID
 
-  confirmationIndex: ChainIndex | null
-  confirmationTransactionID: TransactionID | null
+  confirmationIndex: ChainIndex
+  confirmationTransactionID: TransactionID
 
   proofIndex: ChainIndex | null
   proofTransactionID: TransactionID | null
