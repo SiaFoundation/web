@@ -148,6 +148,7 @@ describe('tansforms', () => {
             undefined
           )
         ).toEqual({
+          enabled: true,
           hosts: {
             allowRedundantIPs: false,
             maxDowntimeHours: 1440,
@@ -187,6 +188,7 @@ describe('tansforms', () => {
             },
             {
               foobar1: 'value',
+              enabled: false,
               contracts: {
                 foobar: 'value',
                 period: 7777,
@@ -199,6 +201,7 @@ describe('tansforms', () => {
           )
         ).toEqual({
           foobar1: 'value',
+          enabled: false,
           hosts: {
             foobar: 'value',
             allowRedundantIPs: false,
@@ -247,6 +250,7 @@ describe('tansforms', () => {
             } as any
           )
         ).toEqual({
+          enabled: true,
           hosts: {
             allowRedundantIPs: false,
             maxDowntimeHours: 1440,
@@ -536,6 +540,7 @@ function buildAllResponses() {
       startTime: new Date().getTime(),
     } as AutopilotState,
     autopilot: {
+      enabled: false,
       hosts: {
         allowRedundantIPs: false,
         maxDowntimeHours: 1440,
