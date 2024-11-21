@@ -26,7 +26,6 @@ export const inputValuesAutopilot = {
   storageTB: undefined as BigNumber | undefined,
   prune: false,
   // hosts
-  allowRedundantIPs: false,
   maxDowntimeHours: undefined as BigNumber | undefined,
   maxConsecutiveScanFailures: undefined as BigNumber | undefined,
   minProtocolVersion: '',
@@ -135,7 +134,6 @@ export function getAdvancedDefaultsAutopilot(
         periodWeeks: new BigNumber(6),
         renewWindowWeeks: new BigNumber(2),
         amountHosts: new BigNumber(50),
-        allowRedundantIPs: false,
         maxDowntimeHours: new BigNumber(336),
         maxConsecutiveScanFailures: new BigNumber(10),
         minProtocolVersion: '1.6.0',
@@ -145,7 +143,6 @@ export function getAdvancedDefaultsAutopilot(
         periodWeeks: new BigNumber(6),
         renewWindowWeeks: new BigNumber(2),
         amountHosts: new BigNumber(12),
-        allowRedundantIPs: false,
         maxDowntimeHours: new BigNumber(336),
         maxConsecutiveScanFailures: new BigNumber(10),
         minProtocolVersion: '1.6.0',

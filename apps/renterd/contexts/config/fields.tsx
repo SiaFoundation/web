@@ -163,23 +163,6 @@ export function getFields({
     },
 
     // hosts
-    allowRedundantIPs: {
-      type: 'boolean',
-      category: 'hosts',
-      title: 'Redundant IPs',
-      description: (
-        <>
-          Whether or not to allow forming contracts with multiple hosts in the
-          same IP subnet. The subnets used are /16 for IPv4, and /64 for IPv6.
-        </>
-      ),
-      suggestion: advancedDefaults?.allowRedundantIPs,
-      suggestionTip: `Defaults to ${
-        advancedDefaults?.allowRedundantIPs ? 'on' : 'off'
-      }.`,
-      hidden: configViewMode === 'basic',
-      validation: {},
-    },
     maxDowntimeHours: {
       type: 'number',
       category: 'hosts',
