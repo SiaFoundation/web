@@ -246,14 +246,9 @@ export type AutopilotContractsConfig = {
 }
 
 export type AutopilotConfig = {
+  enabled: boolean
   hosts: AutopilotHostsConfig
   contracts: AutopilotContractsConfig
-}
-
-export type Autopilot = {
-  id: string
-  config: AutopilotConfig
-  currentPeriod: number
 }
 
 export type WalletTransaction = {

@@ -217,10 +217,6 @@ import {
   busWalletRedistributeRoute,
   busWalletRoute,
   busWalletSendRoute,
-  busAutopilotsRoute,
-  AutopilotsParams,
-  AutopilotsPayload,
-  AutopilotsResponse,
   busWalletEventsRoute,
   busObjectsPrefixRoute,
   SettingsGougingParams,
@@ -272,11 +268,6 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       BusStatePayload,
       BusStateResponse
     >(axios, 'get', busStateRoute),
-    autopilots: buildRequestHandler<
-      AutopilotsParams,
-      AutopilotsPayload,
-      AutopilotsResponse
-    >(axios, 'get', busAutopilotsRoute),
     consensusState: buildRequestHandler<
       ConsensusStateParams,
       ConsensusStatePayload,

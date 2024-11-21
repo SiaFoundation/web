@@ -210,9 +210,6 @@ import {
   WalletSendPayload,
   WalletSendResponse,
   busWalletSendRoute,
-  busAutopilotsRoute,
-  AutopilotsParams,
-  AutopilotsResponse,
   WalletEventsParams,
   WalletEventsResponse,
   busWalletEventsRoute,
@@ -260,17 +257,6 @@ export function useBusState(
   return useGetSwr({
     ...args,
     route: busStateRoute,
-  })
-}
-
-// autopilots
-
-export function useAutopilots(
-  args?: HookArgsSwr<AutopilotsParams, AutopilotsResponse>
-) {
-  return useGetSwr({
-    ...args,
-    route: busAutopilotsRoute,
   })
 }
 

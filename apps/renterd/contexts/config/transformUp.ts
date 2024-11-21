@@ -48,6 +48,8 @@ export function transformUpAutopilot(
 
   return {
     ...existingValues,
+    enabled:
+      existingValues?.enabled !== undefined ? existingValues.enabled : true,
     contracts: {
       ...existingValues?.contracts,
       amount: Math.round(v.amountHosts.toNumber()),

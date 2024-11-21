@@ -11,7 +11,6 @@ import {
   WalletEvent,
 } from '@siafoundation/types'
 import {
-  Autopilot,
   ConsensusState,
   Contract,
   ContractRevision,
@@ -26,7 +25,6 @@ import {
 } from './types'
 
 export const busStateRoute = '/bus/state'
-export const busAutopilotsRoute = '/bus/autopilots'
 export const busConsensusNetworkRoute = '/bus/consensus/network'
 export const busConsensusStateRoute = '/bus/consensus/state'
 export const busConsensusAcceptblockRoute = '/bus/consensus/acceptblock'
@@ -109,12 +107,6 @@ export type BusStateResponse = BuildState & {
     url: string
   }
 }
-
-// autopilots
-
-export type AutopilotsParams = void
-export type AutopilotsPayload = void
-export type AutopilotsResponse = Autopilot[]
 
 // consensus
 
