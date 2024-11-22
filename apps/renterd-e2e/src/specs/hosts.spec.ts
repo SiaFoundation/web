@@ -1,7 +1,12 @@
 import { test, expect } from '@playwright/test'
 import { navigateToHosts } from '../fixtures/navigate'
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
-import { getHostRowByIndex } from '../fixtures/hosts'
+import {
+  getHostRowByIndex,
+  getHostRows,
+  getHostRowsAll,
+  openManageListsDialog,
+} from '../fixtures/hosts'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page, {
@@ -22,4 +27,102 @@ test('hosts explorer shows all hosts', async ({ page }) => {
   await expect(row1).toBeVisible()
   await expect(row2).toBeVisible()
   await expect(row3).toBeVisible()
+})
+
+test('hosts bulk allowlist', async ({ page }) => {
+  await navigateToHosts({ page })
+  const rows = await getHostRowsAll(page)
+  for (const row of rows) {
+    await row.click()
+  }
+
+  const menu = page.getByLabel('host multi-select menu')
+  const dialog = page.getByRole('dialog')
+
+  // Add selected hosts to the allowlist.
+  await menu.getByLabel('add host public keys to allowlist').click()
+  await dialog.getByRole('button', { name: 'Add to allowlist' }).click()
+
+  await openManageListsDialog(page)
+  await expect(dialog.getByText('The blocklist is empty')).toBeVisible()
+  await dialog.getByLabel('view allowlist').click()
+  await expect(
+    dialog.getByTestId('allowlistPublicKeys').getByTestId('item')
+  ).toHaveCount(3)
+  await dialog.getByLabel('close').click()
+  await expect(
+    getHostRows(page).getByTestId('allow').getByTestId('blocked')
+  ).toHaveCount(0)
+  await expect(
+    getHostRows(page).getByTestId('allow').getByTestId('allowed')
+  ).toHaveCount(3)
+
+  for (const row of rows) {
+    await row.click()
+  }
+
+  // Remove selected hosts from the allowlist.
+  await menu.getByLabel('remove host public keys from allowlist').click()
+  await dialog.getByRole('button', { name: 'Remove from allowlist' }).click()
+
+  await openManageListsDialog(page)
+  await expect(dialog.getByText('The blocklist is empty')).toBeVisible()
+  await dialog.getByLabel('view allowlist').click()
+  await expect(dialog.getByText('The allowlist is empty')).toBeVisible()
+  await dialog.getByLabel('close').click()
+  await expect(
+    getHostRows(page).getByTestId('allow').getByTestId('blocked')
+  ).toHaveCount(0)
+  await expect(
+    getHostRows(page).getByTestId('allow').getByTestId('allowed')
+  ).toHaveCount(3)
+})
+
+test('hosts bulk blocklist', async ({ page }) => {
+  await navigateToHosts({ page })
+  const rows = await getHostRowsAll(page)
+  for (const row of rows) {
+    await row.click()
+  }
+
+  const menu = page.getByLabel('host multi-select menu')
+  const dialog = page.getByRole('dialog')
+
+  // Add selected hosts to the allowlist.
+  await menu.getByLabel('add host addresses to blocklist').click()
+  await dialog.getByRole('button', { name: 'Add to blocklist' }).click()
+
+  await openManageListsDialog(page)
+  await expect(
+    dialog.getByTestId('blocklistAddresses').getByTestId('item')
+  ).toHaveCount(3)
+  await dialog.getByLabel('view allowlist').click()
+  await expect(dialog.getByText('The allowlist is empty')).toBeVisible()
+  await dialog.getByLabel('close').click()
+  await expect(
+    getHostRows(page).getByTestId('allow').getByTestId('blocked')
+  ).toHaveCount(3)
+  await expect(
+    getHostRows(page).getByTestId('allow').getByTestId('allowed')
+  ).toHaveCount(0)
+
+  for (const row of rows) {
+    await row.click()
+  }
+
+  // Remove selected hosts from the blocklist.
+  await menu.getByLabel('remove host addresses from blocklist').click()
+  await dialog.getByRole('button', { name: 'Remove from blocklist' }).click()
+
+  await openManageListsDialog(page)
+  await expect(dialog.getByText('The blocklist is empty')).toBeVisible()
+  await dialog.getByLabel('view allowlist').click()
+  await expect(dialog.getByText('The allowlist is empty')).toBeVisible()
+  await dialog.getByLabel('close').click()
+  await expect(
+    getHostRows(page).getByTestId('allow').getByTestId('blocked')
+  ).toHaveCount(0)
+  await expect(
+    getHostRows(page).getByTestId('allow').getByTestId('allowed')
+  ).toHaveCount(3)
 })

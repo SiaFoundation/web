@@ -63,6 +63,14 @@ export const openRowHostContextMenu = step(
   }
 )
 
+export function getHostRows(page: Page) {
+  return page.getByTestId('hostsTable').locator('tbody').getByRole('row')
+}
+
+export const getHostRowsAll = step('get host rows', async (page: Page) => {
+  return getHostRows(page).all()
+})
+
 export const openManageListsDialog = step(
   'open manage lists dialog',
   async (page: Page) => {

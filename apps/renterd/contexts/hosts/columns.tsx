@@ -6,6 +6,7 @@ import {
   Tooltip,
   LoadingDots,
   ValueScFiat,
+  Checkbox,
 } from '@siafoundation/design-system'
 import {
   WarningSquareFilled16,
@@ -42,7 +43,14 @@ export const columns: HostsTableColumn[] = (
       label: '',
       fixed: true,
       category: 'general',
-      cellClassName: 'w-[50px] !pl-2 !pr-4 [&+*]:!pl-0',
+      contentClassName: '!pl-3 !pr-4',
+      cellClassName: 'w-[20px] !pl-0 !pr-0',
+      heading: ({ context: { multiSelect } }) => (
+        <Checkbox
+          onClick={multiSelect.onSelectPage}
+          checked={multiSelect.isPageAllSelected}
+        />
+      ),
       render: ({ data }) => (
         <HostContextMenu address={data.netAddress} publicKey={data.publicKey} />
       ),
@@ -79,7 +87,10 @@ export const columns: HostsTableColumn[] = (
               }`
             }
           >
-            <div className="flex gap-2 items-center">
+            <div
+              className="flex gap-2 items-center"
+              data-testid={data.isBlocked ? 'blocked' : 'allowed'}
+            >
               <div className="mt-[5px]">
                 <Text color={data.isBlocked ? 'red' : 'green'}>
                   {data.isBlocked ? (

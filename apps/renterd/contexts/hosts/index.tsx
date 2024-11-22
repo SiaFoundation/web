@@ -1,7 +1,8 @@
 import {
-  triggerErrorToast,
+  triggerToast,
   truncate,
   useDatasetEmptyState,
+  useMultiSelect,
   useServerFilters,
   useTableState,
 } from '@siafoundation/design-system'
@@ -119,8 +120,6 @@ function useHostsMain() {
     [cmdRef]
   )
 
-  const [activeHostPublicKey, setActiveHostPublicKey] = useState<string>()
-
   const scrollToHost = useCallback((publicKey: string) => {
     // move table to host, select via data id data-table
     const rowEl = document.getElementById(publicKey)
@@ -134,46 +133,6 @@ function useHostsMain() {
     })
   }, [])
 
-  const onHostMapClick = useCallback(
-    (publicKey: string, location?: [number, number]) => {
-      if (activeHostPublicKey === publicKey) {
-        setActiveHostPublicKey(undefined)
-        return
-      }
-      setActiveHostPublicKey(publicKey)
-      if (location) {
-        cmdRef.current.moveToLocation(location)
-      }
-      scrollToHost(publicKey)
-    },
-    [setActiveHostPublicKey, cmdRef, activeHostPublicKey, scrollToHost]
-  )
-
-  const onHostListClick = useCallback(
-    (publicKey: string, location?: [number, number]) => {
-      if (activeHostPublicKey === publicKey) {
-        setActiveHostPublicKey(undefined)
-        return
-      }
-      setActiveHostPublicKey(publicKey)
-      if (location) {
-        cmdRef.current.moveToLocation(location)
-      } else {
-        triggerErrorToast({
-          title: 'Geographic location is unknown for host',
-          body: truncate(publicKey, 20),
-        })
-      }
-      scrollToHost(publicKey)
-    },
-    [setActiveHostPublicKey, cmdRef, activeHostPublicKey, scrollToHost]
-  )
-
-  const onHostMapHover = useCallback(
-    (publicKey: string, location?: [number, number]) => null,
-    []
-  )
-
   const dataset = useDataset({
     response,
     allContracts,
@@ -181,7 +140,6 @@ function useHostsMain() {
     blocklist,
     isAllowlistActive,
     geoHosts,
-    onHostSelect: onHostListClick,
   })
 
   const {
@@ -210,29 +168,81 @@ function useHostsMain() {
   const error = response.error
   const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
 
-  const siascanUrl = useSiascanUrl()
-  const tableContext: HostContext = useMemo(
-    () => ({
-      siascanUrl,
-    }),
-    [siascanUrl]
-  )
-
   const hostsWithLocation = useMemo(
     () => dataset?.filter((h) => h.location) as HostDataWithLocation[],
     [dataset]
   )
 
-  const activeHost = useMemo(
-    () => dataset?.find((d) => d.publicKey === activeHostPublicKey),
-    [dataset, activeHostPublicKey]
+  const multiSelect = useMultiSelect(dataset)
+
+  const activeHost = useMemo(() => {
+    if (multiSelect.selectedIds.length === 1) {
+      return dataset?.find((d) => d.publicKey === multiSelect.selectedIds[0])
+    }
+  }, [dataset, multiSelect.selectedIds])
+
+  const datasetPage = useMemo(() => {
+    if (!dataset) {
+      return undefined
+    }
+    return dataset.map((datum) => {
+      return {
+        ...datum,
+        onClick: (e: React.MouseEvent<HTMLTableRowElement>) =>
+          multiSelect.onSelect(datum.id, e),
+        isSelected: !!multiSelect.selectionMap[datum.id],
+      }
+    })
+  }, [dataset, multiSelect])
+
+  const siascanUrl = useSiascanUrl()
+  const tableContext: HostContext = useMemo(
+    () => ({
+      siascanUrl,
+      multiSelect,
+    }),
+    [siascanUrl, multiSelect]
   )
+
+  const onHostMapClick = useCallback(
+    (publicKey: string, location?: [number, number]) => {
+      if (activeHost?.publicKey !== publicKey) {
+        multiSelect.deselectAll()
+        multiSelect.onSelect(publicKey)
+        if (location) {
+          cmdRef.current.moveToLocation(location)
+        }
+        scrollToHost(publicKey)
+      }
+    },
+    [activeHost, multiSelect, cmdRef, scrollToHost]
+  )
+
+  useEffect(() => {
+    if (!activeHost) {
+      return
+    }
+    if (viewMode !== 'map') {
+      return
+    }
+    const { location } = activeHost || {}
+    if (location) {
+      cmdRef.current.moveToLocation(location)
+    } else {
+      triggerToast({
+        title: `Location not available for host ${truncate(
+          activeHost.publicKey,
+          20
+        )}`,
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeHost])
 
   return {
     setCmd,
     viewMode,
     activeHost,
-    onHostMapHover,
     onHostMapClick,
     setViewMode,
     hostsWithLocation,
@@ -240,9 +250,9 @@ function useHostsMain() {
     dataState,
     offset,
     limit,
-    pageCount: dataset?.length || 0,
+    pageCount: datasetPage?.length || 0,
     columns: filteredTableColumns,
-    dataset,
+    datasetPage,
     tableContext,
     configurableColumns,
     enabledColumns,
@@ -260,6 +270,7 @@ function useHostsMain() {
     removeFilter,
     removeLastFilter,
     resetFilters,
+    multiSelect,
   }
 }
 

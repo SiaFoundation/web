@@ -26,7 +26,7 @@ type Props = {
   activeHost?: HostDataWithLocation
   hosts?: HostDataWithLocation[]
   onHostClick: (publicKey: string, location: [number, number]) => void
-  onHostHover: (publicKey: string, location: [number, number]) => void
+  onHostHover?: (publicKey: string, location: [number, number]) => void
   onMount?: (cmd: Commands) => void
 }
 

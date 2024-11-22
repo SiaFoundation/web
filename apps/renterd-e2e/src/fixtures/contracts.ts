@@ -33,10 +33,13 @@ export const getContractRowByIndex = step(
   }
 )
 
-export const getContractRows = step('get contract rows', async (page: Page) => {
-  return page
-    .getByTestId('contractsTable')
-    .locator('tbody')
-    .getByRole('row')
-    .all()
-})
+export function getContractRows(page: Page) {
+  return page.getByTestId('contractsTable').locator('tbody').getByRole('row')
+}
+
+export const getContractRowsAll = step(
+  'get contract rows',
+  async (page: Page) => {
+    return getContractRows(page).all()
+  }
+)

@@ -4,7 +4,7 @@ import { navigateToContracts } from '../fixtures/navigate'
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
 import {
   getContractRowByIndex,
-  getContractRows,
+  getContractRowsAll,
   getContractsSummaryRow,
 } from '../fixtures/contracts'
 import { openManageListsDialog } from '../fixtures/hosts'
@@ -56,7 +56,7 @@ test('contracts prunable size', async ({ page }) => {
   await expect(summarySize).toBeVisible()
 
   // Check that the prunable size is visible for all contracts.
-  const rows = await getContractRows(page)
+  const rows = await getContractRowsAll(page)
   for (const row of rows) {
     const prunableSize = row.getByLabel('prunable size')
     await expect(prunableSize).toBeVisible()
@@ -65,7 +65,7 @@ test('contracts prunable size', async ({ page }) => {
 
 test('contracts bulk delete', async ({ page }) => {
   await navigateToContracts({ page })
-  const rows = await getContractRows(page)
+  const rows = await getContractRowsAll(page)
   for (const row of rows) {
     await row.click()
   }
@@ -83,7 +83,7 @@ test('contracts bulk delete', async ({ page }) => {
 
 test('contracts bulk allowlist', async ({ page }) => {
   await navigateToContracts({ page })
-  const rows = await getContractRows(page)
+  const rows = await getContractRowsAll(page)
   for (const row of rows) {
     await row.click()
   }
@@ -119,7 +119,7 @@ test('contracts bulk allowlist', async ({ page }) => {
 
 test('contracts bulk blocklist', async ({ page }) => {
   await navigateToContracts({ page })
-  const rows = await getContractRows(page)
+  const rows = await getContractRowsAll(page)
   for (const row of rows) {
     await row.click()
   }
