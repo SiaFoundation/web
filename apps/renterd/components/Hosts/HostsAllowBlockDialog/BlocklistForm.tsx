@@ -153,16 +153,18 @@ export function BlocklistForm() {
               </>
             )}
             {filtered.length ? (
-              <PoolSelected
-                options={
-                  filtered.map((address) => ({
-                    value: address,
-                    label: `${address.slice(0, 20)}...`,
-                  })) || []
-                }
-                onClick={(value) => copyToClipboard(value, 'blocked address')}
-                onRemove={(value) => blocklistUpdate([], [value])}
-              />
+              <div data-testid="blocklistAddresses">
+                <PoolSelected
+                  options={
+                    filtered.map((address) => ({
+                      value: address,
+                      label: `${address.slice(0, 20)}...`,
+                    })) || []
+                  }
+                  onClick={(value) => copyToClipboard(value, 'blocked address')}
+                  onRemove={(value) => blocklistUpdate([], [value])}
+                />
+              </div>
             ) : isFiltered ? (
               <div className="flex flex-col gap-3 items-center justify-center h-[200px]">
                 <Text color="subtle">

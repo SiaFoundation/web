@@ -104,7 +104,7 @@ export function AllowlistForm() {
       <div className="flex-1 overflow-hidden !-m-2">
         {filtered.length ? (
           <ScrollArea>
-            <div className="p-2">
+            <div className="p-2" data-testid="allowlistPublicKeys">
               <PoolSelected
                 options={
                   filtered.map((publicKey) => ({

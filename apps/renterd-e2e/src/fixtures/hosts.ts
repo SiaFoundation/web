@@ -1,5 +1,10 @@
 import { Locator, Page, expect } from '@playwright/test'
-import { maybeExpectAndReturn, step } from '@siafoundation/e2e'
+import {
+  fillTextInputByName,
+  maybeExpectAndReturn,
+  openCmdkMenu,
+  step,
+} from '@siafoundation/e2e'
 
 export const getHostRowById = step(
   'get host row by ID',
@@ -55,5 +60,18 @@ export const openRowHostContextMenu = step(
     const menu = row.getByTestId('actions').getByRole('button').first()
     await expect(menu).toBeVisible()
     return menu.click()
+  }
+)
+
+export const openManageListsDialog = step(
+  'open manage lists dialog',
+  async (page: Page) => {
+    const dialog = await openCmdkMenu(page)
+    await fillTextInputByName(page, 'cmdk-input', 'manage filter lists')
+    await expect(dialog.locator('div[cmdk-item]')).toHaveCount(1)
+    await dialog
+      .locator('div[cmdk-item]')
+      .getByText('manage filter lists')
+      .click()
   }
 )

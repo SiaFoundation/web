@@ -7,6 +7,7 @@ import {
   getContractRows,
   getContractsSummaryRow,
 } from '../fixtures/contracts'
+import { openManageListsDialog } from '../fixtures/hosts'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page, {
@@ -62,7 +63,7 @@ test('contracts prunable size', async ({ page }) => {
   }
 })
 
-test('bulk delete contracts', async ({ page }) => {
+test('contracts bulk delete', async ({ page }) => {
   await navigateToContracts({ page })
   const rows = await getContractRows(page)
   for (const row of rows) {
@@ -78,4 +79,76 @@ test('bulk delete contracts', async ({ page }) => {
   await expect(
     page.getByText('There are currently no active contracts')
   ).toBeVisible()
+})
+
+test('contracts bulk allowlist', async ({ page }) => {
+  await navigateToContracts({ page })
+  const rows = await getContractRows(page)
+  for (const row of rows) {
+    await row.click()
+  }
+
+  const menu = page.getByLabel('contract multi-select menu')
+  const dialog = page.getByRole('dialog')
+
+  // Add selected contract hosts to the allowlist.
+  await menu.getByLabel('add host public keys to allowlist').click()
+  await dialog.getByRole('button', { name: 'Add to allowlist' }).click()
+
+  await openManageListsDialog(page)
+  await expect(dialog.getByText('The blocklist is empty')).toBeVisible()
+  await dialog.getByLabel('view allowlist').click()
+  await expect(
+    dialog.getByTestId('allowlistPublicKeys').getByTestId('item')
+  ).toHaveCount(3)
+  await dialog.getByLabel('close').click()
+
+  for (const row of rows) {
+    await row.click()
+  }
+
+  // Remove selected contract hosts from the allowlist.
+  await menu.getByLabel('remove host public keys from allowlist').click()
+  await dialog.getByRole('button', { name: 'Remove from allowlist' }).click()
+
+  await openManageListsDialog(page)
+  await expect(dialog.getByText('The blocklist is empty')).toBeVisible()
+  await dialog.getByLabel('view allowlist').click()
+  await expect(dialog.getByText('The allowlist is empty')).toBeVisible()
+})
+
+test('contracts bulk blocklist', async ({ page }) => {
+  await navigateToContracts({ page })
+  const rows = await getContractRows(page)
+  for (const row of rows) {
+    await row.click()
+  }
+
+  const menu = page.getByLabel('contract multi-select menu')
+  const dialog = page.getByRole('dialog')
+
+  // Add selected contract hosts to the allowlist.
+  await menu.getByLabel('add host addresses to blocklist').click()
+  await dialog.getByRole('button', { name: 'Add to blocklist' }).click()
+
+  await openManageListsDialog(page)
+  await expect(
+    dialog.getByTestId('blocklistAddresses').getByTestId('item')
+  ).toHaveCount(3)
+  await dialog.getByLabel('view allowlist').click()
+  await expect(dialog.getByText('The allowlist is empty')).toBeVisible()
+  await dialog.getByLabel('close').click()
+
+  for (const row of rows) {
+    await row.click()
+  }
+
+  // Remove selected contract hosts from the blocklist.
+  await menu.getByLabel('remove host addresses from blocklist').click()
+  await dialog.getByRole('button', { name: 'Remove from blocklist' }).click()
+
+  await openManageListsDialog(page)
+  await expect(dialog.getByText('The blocklist is empty')).toBeVisible()
+  await dialog.getByLabel('view allowlist').click()
+  await expect(dialog.getByText('The allowlist is empty')).toBeVisible()
 })
