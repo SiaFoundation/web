@@ -18,7 +18,6 @@ export function useDataset({
   blocklist,
   isAllowlistActive,
   geoHosts,
-  onHostSelect,
 }: {
   response: ReturnType<typeof useHosts>
   allContracts: Maybe<ContractData[]>
@@ -26,9 +25,8 @@ export function useDataset({
   blocklist: ReturnType<typeof useHostsBlocklist>
   isAllowlistActive: boolean
   geoHosts: SiaCentralHost[]
-  onHostSelect: (publicKey: string, location?: [number, number]) => void
 }) {
-  return useMemo<HostData[] | undefined>(() => {
+  return useMemo<Maybe<HostData[]>>(() => {
     const allow = allowlist.data
     const block = blocklist.data
     if (!response.data || !allow || !block) {
@@ -37,7 +35,6 @@ export function useDataset({
     return response.data.map((host) => {
       const sch = geoHosts.find((gh) => gh.public_key === host.publicKey)
       return {
-        onClick: () => onHostSelect(host.publicKey, sch?.location),
         ...getHostFields(host, allContracts),
         ...getAllowedFields({
           host,
@@ -48,10 +45,12 @@ export function useDataset({
         ...getAutopilotFields(host.checks),
         location: sch?.location,
         countryCode: sch?.country_code,
+        // selectable
+        onClick: () => null,
+        isSelected: false,
       }
     })
   }, [
-    onHostSelect,
     response.data,
     allContracts,
     allowlist.data,

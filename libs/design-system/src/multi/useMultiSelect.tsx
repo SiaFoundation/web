@@ -16,7 +16,7 @@ export function useMultiSelect<Item extends { id: string }>(dataset?: Item[]) {
   }>()
 
   const onSelect = useCallback(
-    (id: string, e: MouseEvent<HTMLElement>) => {
+    (id: string, e?: MouseEvent<HTMLElement>) => {
       if (!dataset) {
         return
       }
@@ -34,7 +34,7 @@ export function useMultiSelect<Item extends { id: string }>(dataset?: Item[]) {
         const newSelection = { ...prevSelectionMap }
         setLastSelectedItem((prevSelection) => {
           // If shift click, select all items between current and last selection indices.
-          if (e.shiftKey && prevSelection) {
+          if (e?.shiftKey && prevSelection) {
             if (prevSelection.index < selected.index) {
               for (let i = prevSelection.index; i <= selected.index; i++) {
                 const item = dataset[i]

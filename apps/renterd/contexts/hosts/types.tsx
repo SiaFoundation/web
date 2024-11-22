@@ -1,8 +1,12 @@
 import { HostPriceTable, HostSettings } from '@siafoundation/types'
 import BigNumber from 'bignumber.js'
 import { ContractData } from '../contracts/types'
+import { MultiSelect } from '@siafoundation/design-system'
 
-export type HostContext = { siascanUrl: string }
+export type HostContext = {
+  siascanUrl: string
+  multiSelect: MultiSelect<HostData>
+}
 
 export type HostData = {
   id: string
@@ -60,7 +64,12 @@ export type HostData = {
 
   location?: [number, number]
   countryCode?: string
+
+  onClick: (e: React.MouseEvent<HTMLTableRowElement>) => void
+  isSelected: boolean
 }
+
+export type HostDataWithoutSelectable = Omit<HostData, 'isSelected' | 'onClick'>
 
 const generalColumns = [
   'actions',

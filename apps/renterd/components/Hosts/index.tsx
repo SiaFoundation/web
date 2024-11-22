@@ -7,7 +7,7 @@ import { getHostStatus } from '../../contexts/hosts/status'
 
 export function Hosts() {
   const {
-    dataset,
+    datasetPage,
     activeHost,
     columns,
     limit,
@@ -37,8 +37,8 @@ export function Hosts() {
           bottom: 0,
           height:
             viewMode === 'map'
-              ? dataset && dataset.length
-                ? 400 - Math.max((2 - dataset.length) * 100, 0)
+              ? datasetPage && datasetPage.length
+                ? 400 - Math.max((2 - datasetPage.length) * 100, 0)
                 : 400
               : '100%',
         }}
@@ -60,7 +60,7 @@ export function Hosts() {
               emptyState={<StateEmpty />}
               context={tableContext}
               pageSize={limit}
-              data={dataset}
+              data={datasetPage}
               columns={columns}
               rowSize="default"
             />

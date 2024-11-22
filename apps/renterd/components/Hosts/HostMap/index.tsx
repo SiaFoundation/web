@@ -7,13 +7,7 @@ import { hostColors } from '../../../contexts/hosts/status'
 
 export function HostMap() {
   const { gpu, settings } = useAppSettings()
-  const {
-    setCmd,
-    activeHost,
-    onHostMapClick: onHostSelect,
-    onHostMapHover: onHostHover,
-    hostsWithLocation,
-  } = useHosts()
+  const { setCmd, activeHost, onHostMapClick, hostsWithLocation } = useHosts()
 
   if (settings.siaCentral && !gpu.shouldRender) {
     return null
@@ -28,8 +22,7 @@ export function HostMap() {
             : undefined
         }
         hosts={hostsWithLocation}
-        onHostClick={onHostSelect}
-        onHostHover={onHostHover}
+        onHostClick={onHostMapClick}
         onMount={(cmd) => {
           setCmd(cmd)
         }}

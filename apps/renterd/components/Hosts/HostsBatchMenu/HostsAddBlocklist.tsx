@@ -1,13 +1,15 @@
 import { useMemo } from 'react'
-import { useContracts } from '../../../contexts/contracts'
+import { useHosts } from '../../../contexts/hosts'
 import { BulkAddBlocklist } from '../../bulkActions/BulkAddBlocklist'
 
-export function ContractsAddBlocklist() {
-  const { multiSelect } = useContracts()
+export function HostsAddBlocklist() {
+  const { multiSelect } = useHosts()
 
   const hostAddresses = useMemo(
     () =>
-      Object.entries(multiSelect.selectionMap).map(([_, item]) => item.hostIp),
+      Object.entries(multiSelect.selectionMap).map(
+        ([_, item]) => item.netAddress
+      ),
     [multiSelect.selectionMap]
   )
   return (

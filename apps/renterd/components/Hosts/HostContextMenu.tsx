@@ -52,7 +52,12 @@ export function HostContextMenu({
     <DropdownMenu
       trigger={
         trigger || (
-          <Button variant="ghost" icon="hover" {...buttonProps}>
+          <Button
+            aria-label="host context menu"
+            icon="hover"
+            size="none"
+            {...buttonProps}
+          >
             <CaretDown16 />
           </Button>
         )
@@ -223,7 +228,7 @@ export function HostContextMenuContent({
         onSelect={() =>
           resetLostSectors.post({
             params: {
-              publicKey,
+              hostkey: publicKey,
             },
           })
         }

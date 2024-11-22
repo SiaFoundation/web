@@ -1,13 +1,15 @@
 import { useMemo } from 'react'
-import { useContracts } from '../../../contexts/contracts'
+import { useHosts } from '../../../contexts/hosts'
 import { BulkAddAllowlist } from '../../bulkActions/BulkAddAllowlist'
 
-export function ContractsAddAllowlist() {
-  const { multiSelect } = useContracts()
+export function HostsAddAllowlist() {
+  const { multiSelect } = useHosts()
 
   const publicKeys = useMemo(
     () =>
-      Object.entries(multiSelect.selectionMap).map(([_, item]) => item.hostKey),
+      Object.entries(multiSelect.selectionMap).map(
+        ([_, item]) => item.publicKey
+      ),
     [multiSelect.selectionMap]
   )
 

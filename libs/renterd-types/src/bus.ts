@@ -48,7 +48,7 @@ export const busHostsHostKeyRoute = '/bus/hosts/:hostkey'
 export const busHostsBlocklistRoute = '/bus/hosts/blocklist'
 export const busHostsAllowlistRoute = '/bus/hosts/allowlist'
 export const busHostPublicKeyResetlostsectorsRoute =
-  '/bus/host/:publickey/resetlostsectors'
+  '/bus/host/:hostkey/resetlostsectors'
 export const busContractsRoute = '/bus/contracts'
 export const busContractIdAcquireRoute = '/bus/contract/:id/acquire'
 export const busContractIdReleaseRoute = '/bus/contract/:id/release'
@@ -268,7 +268,7 @@ export type HostsBlocklistUpdatePayload = {
 export type HostsBlocklistUpdateResponse = void
 
 export type HostResetLostSectorCountParams = {
-  publicKey: string
+  hostkey: string
 }
 export type HostResetLostSectorCountPayload = void
 export type HostResetLostSectorCountResponse = void
