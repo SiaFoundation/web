@@ -42,8 +42,12 @@ export function HostsAllowBlockDialog({ trigger, open, onOpenChange }: Props) {
         </Paragraph>
         <Tabs defaultValue="blocklist">
           <TabsList aria-label="blocklist and allowlist tabs">
-            <TabsTrigger value="blocklist">Block</TabsTrigger>
-            <TabsTrigger value="allowlist">Allow</TabsTrigger>
+            <TabsTrigger aria-label="view blocklist" value="blocklist">
+              Block
+            </TabsTrigger>
+            <TabsTrigger aria-label="view allowlist" value="allowlist">
+              Allow
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="blocklist">
             <BlocklistForm />

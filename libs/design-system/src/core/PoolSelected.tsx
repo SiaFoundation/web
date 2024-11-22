@@ -18,7 +18,7 @@ export function PoolSelected({ options, onClick, onRemove }: Props) {
     <div className="flex flex-wrap gap-1">
       {options.map((option) => {
         return (
-          <ControlGroup key={option.value}>
+          <ControlGroup data-testid="item" key={option.value}>
             <Button
               variant="active"
               onClick={() => {
