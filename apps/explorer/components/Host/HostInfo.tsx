@@ -93,20 +93,24 @@ export function HostInfo({ host }: Props) {
         )}
       </div>
       <div className="flex flex-wrap gap-x-2 gap-y-1 items-center">
-        <Tooltip content={`Host version ${host.settings.version}`}>
-          <Text size="14" color="subtle" className="flex gap-1 items-center">
-            <Fork16 />
-            {host.settings.version}
-          </Text>
-        </Tooltip>
-        <Tooltip content={`Host located in ${host.countryCode}`}>
-          <div className="flex gap-1 items-center">
-            <Text size="14">{countryCodeEmoji(host.countryCode)}</Text>
-            <Text size="14" color="subtle">
-              {host.countryCode}
+        {host.settings.version.length ? (
+          <Tooltip content={`Host version ${host.settings.version}`}>
+            <Text size="14" color="subtle" className="flex gap-1 items-center">
+              <Fork16 />
+              {host.settings.version}
             </Text>
-          </div>
-        </Tooltip>
+          </Tooltip>
+        ) : null}
+        {host.countryCode.length ? (
+          <Tooltip content={`Host located in ${host.countryCode}`}>
+            <div className="flex gap-1 items-center">
+              <Text size="14">{countryCodeEmoji(host.countryCode)}</Text>
+              <Text size="14" color="subtle">
+                {host.countryCode}
+              </Text>
+            </div>
+          </Tooltip>
+        ) : null}
         <Tooltip
           content={`Host first seen at ${humanDate(host.knownSince, {
             dateStyle: 'medium',
