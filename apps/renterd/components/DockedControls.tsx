@@ -1,6 +1,7 @@
 import React from 'react'
 import { OnboardingBar } from './OnboardingBar'
 import { TransfersBar } from './TransfersBar'
+import { EnabledBar } from './EnabledBar'
 
 export function DockedControls({ children }: { children?: React.ReactNode }) {
   return (
@@ -8,6 +9,7 @@ export function DockedControls({ children }: { children?: React.ReactNode }) {
       {children}
       <TransfersBar />
       <OnboardingBar />
+      <EnabledBar />
     </div>
   )
 }

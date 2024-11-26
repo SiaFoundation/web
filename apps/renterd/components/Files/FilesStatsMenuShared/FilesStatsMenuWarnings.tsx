@@ -1,6 +1,5 @@
 import {
   Button,
-  Code,
   Paragraph,
   Popover,
   Separator,
@@ -9,12 +8,12 @@ import {
 import { Warning16 } from '@siafoundation/react-icons'
 import { useMemo } from 'react'
 import { useSyncStatus } from '../../../hooks/useSyncStatus'
-import { useAutopilotNotConfigured } from '../checks/useAutopilotNotConfigured'
+import { useAutopilotNotEnabled } from '../checks/useAutopilotNotConfigured'
 import { useNotEnoughContracts } from '../checks/useNotEnoughContracts'
 
 export function FilesStatsMenuWarnings() {
   const syncStatus = useSyncStatus()
-  const autopilotNotConfigured = useAutopilotNotConfigured()
+  const autopilotNotEnabled = useAutopilotNotEnabled()
   const notEnoughContracts = useNotEnoughContracts()
 
   const syncStatusEl = useMemo(() => {
@@ -34,24 +33,22 @@ export function FilesStatsMenuWarnings() {
     return null
   }, [syncStatus.isSynced])
 
-  const autopilotNotConfiguredEl = useMemo(() => {
-    if (autopilotNotConfigured.active) {
+  const autopilotNotEnabledEl = useMemo(() => {
+    if (autopilotNotEnabled.active) {
       return (
         <div key="autopilotNotConfigured" className="flex flex-col gap-1">
           <Text size="12" font="mono" weight="medium" color="amber">
-            Uploads are disabled until settings are configured.
+            Autopilot is currently disabled.
           </Text>
           <Paragraph size="12">
-            Before you can upload files you must configure your settings. Once
-            configured, <Code>renterd</Code> will find contracts with hosts
-            based on the settings you choose. <Code>renterd</Code> will also
-            repair your data as hosts come and go.
+            Files and contracts will not be automatically maintained while
+            autopilot is disabled.
           </Paragraph>
         </div>
       )
     }
     return null
-  }, [autopilotNotConfigured.active])
+  }, [autopilotNotEnabled.active])
 
   const notEnoughContractsEl = useMemo(() => {
     if (notEnoughContracts.active) {
@@ -73,10 +70,10 @@ export function FilesStatsMenuWarnings() {
 
   const warningList = useMemo(
     () =>
-      [syncStatusEl, autopilotNotConfiguredEl, notEnoughContractsEl].filter(
+      [syncStatusEl, autopilotNotEnabledEl, notEnoughContractsEl].filter(
         Boolean
       ),
-    [syncStatusEl, autopilotNotConfiguredEl, notEnoughContractsEl]
+    [syncStatusEl, autopilotNotEnabledEl, notEnoughContractsEl]
   )
 
   if (warningList.length)

@@ -2,7 +2,7 @@ import { HostPriceTable, HostSettings } from '@siafoundation/types'
 import BigNumber from 'bignumber.js'
 import { ContractData } from '../contracts/types'
 
-export type HostContext = { isAutopilotConfigured: boolean; siascanUrl: string }
+export type HostContext = { siascanUrl: string }
 
 export type HostData = {
   id: string

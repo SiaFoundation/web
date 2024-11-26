@@ -1,8 +1,8 @@
-import { useAutopilotState } from '@siafoundation/renterd-react'
+import { useAutopilotConfig } from '@siafoundation/renterd-react'
 
-export function useAutopilotNotConfigured() {
-  const autopilotState = useAutopilotState()
+export function useAutopilotNotEnabled() {
+  const autopilotConfig = useAutopilotConfig()
   return {
-    active: !autopilotState.data?.configured,
+    active: !autopilotConfig.data?.enabled,
   }
 }

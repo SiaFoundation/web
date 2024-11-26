@@ -19,15 +19,8 @@ import {
 } from './useResources'
 
 export function useConfigMain() {
-  const {
-    autopilotState,
-    autopilot,
-    gouging,
-    pinned,
-    upload,
-    averages,
-    resources,
-  } = useResources()
+  const { autopilotState, autopilot, gouging, pinned, upload, resources } =
+    useResources()
 
   const {
     form,
@@ -45,12 +38,10 @@ export function useConfigMain() {
       return undefined
     }
     return transformDown({
-      hasBeenConfigured: !!loaded.autopilotState.data?.configured,
       autopilot: loaded.autopilot.data,
       gouging: loaded.gouging.data,
       pinned: loaded.pinned.data,
       upload: loaded.upload.data,
-      averages: loaded.averages.data,
     })
   }, [resources])
 
@@ -66,21 +57,19 @@ export function useConfigMain() {
     const _gouging = await gouging.mutate()
     const _pinned = await pinned.mutate()
     const _upload = await upload.mutate()
-    if (!_autopilotState || !_gouging || !_upload || !_pinned) {
+    if (!_autopilotState || !_autopilot || !_gouging || !_upload || !_pinned) {
       triggerErrorToast({ title: 'Error fetching settings' })
       return undefined
     }
     form.reset(
       transformDown({
-        hasBeenConfigured: _autopilotState.configured,
         autopilot: _autopilot,
         gouging: _gouging,
         pinned: _pinned,
         upload: _upload,
-        averages: averages.data,
       })
     )
-  }, [form, autopilotState, autopilot, gouging, pinned, upload, averages.data])
+  }, [form, autopilotState, autopilot, gouging, pinned, upload])
 
   useFormInit({
     form,

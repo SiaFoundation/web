@@ -22,7 +22,6 @@ import {
   SettingsPinned,
   SettingsUpload,
 } from '@siafoundation/renterd-types'
-import { merge } from '@technically/lodash'
 
 describe('tansforms', () => {
   describe('down', () => {
@@ -30,7 +29,6 @@ describe('tansforms', () => {
       const { autopilot, gouging, pinned, upload } = buildAllResponses()
       expect(
         transformDown({
-          hasBeenConfigured: true,
           autopilot: {
             ...autopilot,
             hosts: {
@@ -76,56 +74,12 @@ describe('tansforms', () => {
         pinnedThreshold: new BigNumber(10),
       } as InputValues)
     })
-
-    it('applies first time user overrides', () => {
-      const { gouging, pinned, upload } = buildAllResponses()
-      const values = transformDown({
-        hasBeenConfigured: false,
-        autopilot: undefined,
-        pinned,
-        gouging,
-        upload: merge(upload, {
-          packing: {
-            enabled: false,
-          },
-        }),
-        averages: {
-          settings: {
-            download_price: (4e24).toString(),
-            storage_price: (4e24).toString(),
-            upload_price: (4e24).toString(),
-          },
-        },
-      })
-      expect(values.maxUploadPriceTB).toEqual(new BigNumber('4000000000000'))
-      expect(values.maxDownloadPriceTB).toEqual(new BigNumber('4000000000000'))
-      expect(values.maxStoragePriceTBMonth).toEqual(
-        new BigNumber('17280000000000000')
-      )
-    })
-
-    it('does not apply overrides if missing averages', () => {
-      const { gouging, pinned, upload } = buildAllResponses()
-      const values = transformDown({
-        hasBeenConfigured: false,
-        autopilot: undefined,
-        gouging,
-        pinned,
-        upload: merge(upload, {
-          packing: {
-            enabled: false,
-          },
-        }),
-      })
-      expect(values.maxUploadPriceTB).toEqual(new BigNumber('1000.232323'))
-      expect(values.maxDownloadPriceTB).toEqual(new BigNumber('1004.31'))
-      expect(values.maxStoragePriceTBMonth).toEqual(new BigNumber('909.494702'))
-    })
   })
 
   describe('up', () => {
     describe('autopilot', () => {
       it('up autopilot', () => {
+        const { autopilot } = buildAllResponses()
         expect(
           transformUpAutopilot(
             'mainnet',
@@ -143,10 +97,10 @@ describe('tansforms', () => {
               maxConsecutiveScanFailures: new BigNumber('10'),
               minProtocolVersion: '',
             },
-            undefined
+            autopilot
           )
         ).toEqual({
-          enabled: true,
+          enabled: false,
           hosts: {
             maxDowntimeHours: 1440,
             maxConsecutiveScanFailures: 10,
@@ -236,6 +190,7 @@ describe('tansforms', () => {
               minProtocolVersion: '1.7.0',
             },
             {
+              enabled: true,
               contracts: {
                 period: 7777,
               },
@@ -419,11 +374,10 @@ describe('tansforms', () => {
           autopilotState: {
             data: autopilotState,
           },
-          autopilot: {},
+          autopilot: { data: autopilot },
           gouging: { data: gouging },
           pinned: { data: pinned },
           upload: { data: upload },
-          averages: {},
           appSettings: {
             settings: {
               siaCentral: false,
@@ -435,7 +389,6 @@ describe('tansforms', () => {
         },
       }
       const down = transformDown({
-        hasBeenConfigured: true,
         autopilot: {
           ...autopilot,
           contracts: {
@@ -457,7 +410,6 @@ describe('tansforms', () => {
         values: down as SubmitValues,
       })
       const downUpDown = transformDown({
-        hasBeenConfigured: true,
         ...downUp.payloads,
       })
 
@@ -515,8 +467,6 @@ describe('tansforms', () => {
 function buildAllResponses() {
   return {
     autopilotState: {
-      id: 'autopilot',
-      configured: true,
       migrating: true,
       migratingLastStart: new Date().toISOString(),
       scanning: true,
