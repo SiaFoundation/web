@@ -2,7 +2,7 @@ import { Code, LinkButton, Text } from '@siafoundation/design-system'
 import { CloudUpload32 } from '@siafoundation/react-icons'
 import { routes } from '../../../config/routes'
 import { useFilesDirectory } from '../../../contexts/filesDirectory'
-import { useAutopilotNotConfigured } from '../../Files/checks/useAutopilotNotConfigured'
+import { useAutopilotNotEnabled } from '../../Files/checks/useAutopilotNotConfigured'
 import { useNotEnoughContracts } from '../../Files/checks/useNotEnoughContracts'
 import { StateError } from './StateError'
 import { StateNoneMatching } from './StateNoneMatching'
@@ -14,7 +14,7 @@ export function EmptyState() {
   const { isViewingRootOfABucket, isViewingBuckets } = useFilesManager()
   const { dataState } = useFilesDirectory()
 
-  const autopilotNotConfigured = useAutopilotNotConfigured()
+  const autopilotNotEnabled = useAutopilotNotEnabled()
   const notEnoughContracts = useNotEnoughContracts()
 
   if (dataState === 'noneMatchingFilters') {
@@ -29,7 +29,7 @@ export function EmptyState() {
   if (
     isViewingRootOfABucket &&
     dataState === 'noneYet' &&
-    autopilotNotConfigured.active
+    autopilotNotEnabled.active
   ) {
     return (
       <div className="flex flex-col gap-10 justify-center items-center h-[400px] cursor-pointer">
@@ -38,9 +38,9 @@ export function EmptyState() {
         </Text>
         <div className="flex flex-col gap-6 justify-center items-center">
           <Text color="subtle" className="text-center max-w-[500px]">
-            Before you can upload files you must configure your settings. Once
-            configured, <Code>renterd</Code> will find contracts with hosts
-            based on the settings you choose. <Code>renterd</Code> will also
+            Before you can upload files you must configure and enable your
+            settings. Once enabled, <Code>renterd</Code> will find contracts
+            with hosts based on the settings. <Code>renterd</Code> will also
             repair your data as hosts come and go.
           </Text>
           <LinkButton variant="accent" href={routes.config.index}>

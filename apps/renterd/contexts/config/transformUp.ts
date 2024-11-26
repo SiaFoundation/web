@@ -38,8 +38,7 @@ import { objectEntries } from '@siafoundation/design-system'
 export function transformUpAutopilot(
   network: 'mainnet' | 'zen' | 'anagami',
   values: SubmitValuesAutopilot,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  existingValues: AutopilotConfig | undefined
+  existingValues: AutopilotConfig
 ): AutopilotConfig {
   const v = applyDefaultToAnyEmptyValues(
     values,
@@ -48,8 +47,6 @@ export function transformUpAutopilot(
 
   return {
     ...existingValues,
-    enabled:
-      existingValues?.enabled !== undefined ? existingValues.enabled : true,
     contracts: {
       ...existingValues?.contracts,
       amount: Math.round(v.amountHosts.toNumber()),

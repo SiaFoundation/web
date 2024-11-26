@@ -38,7 +38,6 @@ export function useOnValid({
       if (!loaded || !renterdState.data) {
         return
       }
-      const firstTimeSettingConfig = !loaded.autopilotState.data?.configured
 
       const { payloads } = transformUp({
         resources: loaded,
@@ -80,17 +79,11 @@ export function useOnValid({
 
       triggerSuccessToast({ title: 'Configuration has been saved' })
 
-      // If autopilot is being configured for the first time,
-      // revalidate the empty hosts list.
-      if (firstTimeSettingConfig) {
-        const refreshHostsAfterDelay = async () => {
-          await delay(5_000)
-          mutate((key) => key.startsWith(busHostsRoute))
-          await delay(5_000)
-          mutate((key) => key.startsWith(busHostsRoute))
-        }
-        refreshHostsAfterDelay()
+      const refreshHostsAfterDelay = async () => {
+        await delay(5_000)
+        mutate((key) => key.startsWith(busHostsRoute))
       }
+      refreshHostsAfterDelay()
 
       await revalidateAndResetForm()
     },

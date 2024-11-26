@@ -13,8 +13,6 @@ import {
   useSettingsPinned,
   useSettingsUpload,
 } from '@siafoundation/renterd-react'
-import { useSiaCentralHostsNetworkAverages } from '@siafoundation/sia-central-react'
-import { SiaCentralHostsNetworkAveragesResponse } from '@siafoundation/sia-central-types'
 import { minutesInMilliseconds } from '@siafoundation/units'
 import { useMemo } from 'react'
 
@@ -26,16 +24,13 @@ export function useResources() {
       },
     },
   })
-  // Settings that 404 when empty.
   const autopilot = useAutopilotConfig({
     config: {
       swr: {
-        errorRetryCount: 0,
         refreshInterval: minutesInMilliseconds(1),
       },
     },
   })
-  // Settings with initial defaults.
   const gouging = useSettingsGouging({
     config: {
       swr: {
@@ -54,13 +49,6 @@ export function useResources() {
     config: {
       swr: {
         refreshInterval: minutesInMilliseconds(1),
-      },
-    },
-  })
-  const averages = useSiaCentralHostsNetworkAverages({
-    config: {
-      swr: {
-        revalidateOnFocus: false,
       },
     },
   })
@@ -90,10 +78,6 @@ export function useResources() {
         data: upload.data,
         error: upload.error,
       },
-      averages: {
-        data: averages.data,
-        error: averages.error,
-      },
       appSettings: {
         settings: {
           siaCentral: appSettings.settings.siaCentral,
@@ -111,8 +95,6 @@ export function useResources() {
       pinned.error,
       upload.data,
       upload.error,
-      averages.data,
-      averages.error,
       appSettings.settings.siaCentral,
     ]
   )
@@ -124,7 +106,6 @@ export function useResources() {
     gouging,
     pinned,
     upload,
-    averages,
     appSettings,
   }
 }
@@ -132,21 +113,16 @@ export function useResources() {
 export function checkIfAllResourcesLoaded(resources: ResourcesMaybeLoaded) {
   const { autopilotState, autopilot, gouging, pinned, upload } = resources
   const loaded = !!(
-    // These settings have initial daemon values.
-    (
-      autopilotState.data &&
-      !autopilotState.error &&
-      gouging.data &&
-      !gouging.error &&
-      pinned.data &&
-      !pinned.error &&
-      upload.data &&
-      !upload.error &&
-      // These settings are undefined and will error until the user sets them.
-      (autopilot.data || autopilot.error)
-    )
-    // We do not wait for exchange rate or averages to load,
-    // in case the third party API is down.
+    autopilotState.data &&
+    !autopilotState.error &&
+    autopilot.data &&
+    !autopilot.error &&
+    gouging.data &&
+    !gouging.error &&
+    pinned.data &&
+    !pinned.error &&
+    upload.data &&
+    !upload.error
   )
   if (loaded) {
     return resources as ResourcesRequiredLoaded
@@ -186,10 +162,6 @@ export type ResourcesMaybeLoaded = {
     data?: SettingsUpload
     error?: SWRError
   }
-  averages: {
-    data?: SiaCentralHostsNetworkAveragesResponse
-    error?: SWRError
-  }
   appSettings: {
     settings: {
       siaCentral: boolean
@@ -203,7 +175,7 @@ export type ResourcesRequiredLoaded = {
     error?: SWRError
   }
   autopilot: {
-    data?: AutopilotConfig
+    data: AutopilotConfig
     error?: SWRError
   }
   gouging: {
@@ -217,10 +189,6 @@ export type ResourcesRequiredLoaded = {
   upload: {
     data: SettingsUpload
     error?: undefined
-  }
-  averages: {
-    data?: SiaCentralHostsNetworkAveragesResponse
-    error?: SWRError
   }
   appSettings: {
     settings: {

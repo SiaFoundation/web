@@ -79,60 +79,11 @@ export function transformDownAutopilot(
   }
 }
 
-function firstTimeGougingData({
-  gouging,
-  averages,
-  hasBeenConfigured,
-}: {
-  gouging: SettingsGouging
-  averages?: {
-    settings: {
-      download_price: string
-      storage_price: string
-      upload_price: string
-    }
-  }
-  hasBeenConfigured: boolean
-}): SettingsGouging {
-  // Already configured, the user has changed the defaults.
-  if (hasBeenConfigured) {
-    return gouging
-  }
-  // If sia central is disabled, we cant override with averages.
-  if (!averages) {
-    return gouging
-  }
-  return {
-    ...gouging,
-    maxStoragePrice: averages.settings.storage_price,
-    maxDownloadPrice: new BigNumber(
-      averages.settings.download_price
-    ).toString(),
-    maxUploadPrice: new BigNumber(averages.settings.upload_price).toString(),
-  }
-}
-
 export function transformDownGouging({
-  gouging: _gouging,
-  averages,
-  hasBeenConfigured,
+  gouging,
 }: {
   gouging: SettingsGouging
-  averages?: {
-    settings: {
-      download_price: string
-      storage_price: string
-      upload_price: string
-    }
-  }
-  hasBeenConfigured: boolean
 }): ValuesGouging {
-  const gouging = firstTimeGougingData({
-    gouging: _gouging,
-    averages,
-    hasBeenConfigured,
-  })
-
   return {
     maxStoragePriceTBMonth: toSiacoins(
       valuePerBytePerBlockToPerTBPerMonth(
@@ -198,27 +149,17 @@ export function transformDownUpload(u: SettingsUpload): ValuesUpload {
 }
 
 export type RemoteData = {
-  hasBeenConfigured: boolean
-  autopilot: AutopilotConfig | undefined
+  autopilot: AutopilotConfig
   gouging: SettingsGouging
   pinned: SettingsPinned
   upload: SettingsUpload
-  averages?: {
-    settings: {
-      download_price: string
-      storage_price: string
-      upload_price: string
-    }
-  }
 }
 
 export function transformDown({
-  hasBeenConfigured,
   autopilot,
   gouging,
   pinned,
   upload,
-  averages,
 }: RemoteData): InputValues {
   return {
     // autopilot
@@ -226,8 +167,6 @@ export function transformDown({
     // gouging
     ...transformDownGouging({
       gouging,
-      averages,
-      hasBeenConfigured,
     }),
     // pinning
     ...transformDownPinned(pinned),

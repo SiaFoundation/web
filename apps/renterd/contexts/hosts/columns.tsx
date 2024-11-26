@@ -120,18 +120,7 @@ export const columns: HostsTableColumn[] = (
       id: 'ap_usable',
       label: 'usable',
       category: 'autopilot',
-      render: ({ data, context }) => {
-        if (!context.isAutopilotConfigured) {
-          return (
-            <Tooltip side="right" content="Autopilot is not configured">
-              <div className="mt-[5px]">
-                <Text color="subtle">
-                  <UndefinedFilled16 />
-                </Text>
-              </div>
-            </Tooltip>
-          )
-        }
+      render: ({ data }) => {
         return (
           <Tooltip
             side="right"
@@ -166,18 +155,7 @@ export const columns: HostsTableColumn[] = (
       id: 'ap_gouging',
       label: 'gouging',
       category: 'autopilot',
-      render: ({ data, context }) => {
-        if (!context.isAutopilotConfigured) {
-          return (
-            <Tooltip side="right" content="Autopilot is not configured">
-              <div className="mt-[5px]">
-                <Text color="subtle">
-                  <UndefinedFilled16 />
-                </Text>
-              </div>
-            </Tooltip>
-          )
-        }
+      render: ({ data }) => {
         return (
           <Tooltip
             side="right"
@@ -457,14 +435,7 @@ export const columns: HostsTableColumn[] = (
       label: 'overall score',
       category: 'autopilot',
       contentClassName: 'w-[120px] justify-end',
-      render: ({ data, context }) => {
-        if (!context.isAutopilotConfigured) {
-          return (
-            <Tooltip content="Autopilot is not configured">
-              <Text color="verySubtle">-</Text>
-            </Tooltip>
-          )
-        }
+      render: ({ data }) => {
         return (
           <ValueNum
             size="12"
@@ -480,14 +451,7 @@ export const columns: HostsTableColumn[] = (
       label: 'age score',
       category: 'autopilot',
       contentClassName: 'w-[120px] justify-end',
-      render: ({ data, context }) => {
-        if (!context.isAutopilotConfigured) {
-          return (
-            <Tooltip content="Autopilot is not configured">
-              <Text color="verySubtle">-</Text>
-            </Tooltip>
-          )
-        }
+      render: ({ data }) => {
         return (
           <ValueNum
             size="12"
@@ -503,14 +467,7 @@ export const columns: HostsTableColumn[] = (
       label: 'collateral score',
       category: 'autopilot',
       contentClassName: 'w-[120px] justify-end',
-      render: ({ data, context }) => {
-        if (!context.isAutopilotConfigured) {
-          return (
-            <Tooltip content="Autopilot is not configured">
-              <Text color="verySubtle">-</Text>
-            </Tooltip>
-          )
-        }
+      render: ({ data }) => {
         return (
           <ValueNum
             size="12"
@@ -526,14 +483,7 @@ export const columns: HostsTableColumn[] = (
       label: 'interactions score',
       category: 'autopilot',
       contentClassName: 'w-[120px] justify-end',
-      render: ({ data, context }) => {
-        if (!context.isAutopilotConfigured) {
-          return (
-            <Tooltip content="Autopilot is not configured">
-              <Text color="verySubtle">-</Text>
-            </Tooltip>
-          )
-        }
+      render: ({ data }) => {
         return (
           <ValueNum
             size="12"
@@ -549,14 +499,7 @@ export const columns: HostsTableColumn[] = (
       label: 'prices score',
       category: 'autopilot',
       contentClassName: 'w-[120px] justify-end',
-      render: ({ data, context }) => {
-        if (!context.isAutopilotConfigured) {
-          return (
-            <Tooltip content="Autopilot is not configured">
-              <Text color="verySubtle">-</Text>
-            </Tooltip>
-          )
-        }
+      render: ({ data }) => {
         return (
           <ValueNum
             size="12"
@@ -572,14 +515,7 @@ export const columns: HostsTableColumn[] = (
       label: 'storage remaining score',
       category: 'autopilot',
       contentClassName: 'w-[120px] justify-end',
-      render: ({ data, context }) => {
-        if (!context.isAutopilotConfigured) {
-          return (
-            <Tooltip content="Autopilot is not configured">
-              <Text color="verySubtle">-</Text>
-            </Tooltip>
-          )
-        }
+      render: ({ data }) => {
         return (
           <ValueNum
             size="12"
@@ -595,14 +531,7 @@ export const columns: HostsTableColumn[] = (
       label: 'uptime score',
       category: 'autopilot',
       contentClassName: 'w-[120px] justify-end',
-      render: ({ data, context }) => {
-        if (!context.isAutopilotConfigured) {
-          return (
-            <Tooltip content="Autopilot is not configured">
-              <Text color="verySubtle">-</Text>
-            </Tooltip>
-          )
-        }
+      render: ({ data }) => {
         return (
           <ValueNum
             size="12"
@@ -618,22 +547,13 @@ export const columns: HostsTableColumn[] = (
       label: 'version score',
       category: 'autopilot',
       contentClassName: 'w-[120px] justify-end',
-      render: ({ data, context }) => {
-        if (!context.isAutopilotConfigured) {
-          return (
-            <Tooltip content="Autopilot is not configured">
-              <Text color="verySubtle">-</Text>
-            </Tooltip>
-          )
-        }
+      render: ({ data }) => {
         return (
           <ValueNum
             size="12"
             value={data.scoreBreakdown.version}
             variant="value"
-            format={(v) =>
-              context.isAutopilotConfigured ? '-' : v.toPrecision(2)
-            }
+            format={(v) => v.toPrecision(2)}
           />
         )
       },

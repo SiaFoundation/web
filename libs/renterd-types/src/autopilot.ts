@@ -6,9 +6,8 @@ export const autopilotConfigEvaluateRoute = '/autopilot/config/evaluate'
 export const autopilotTriggerRoute = '/autopilot/trigger'
 export const busAutopilotRoute = '/bus/autopilot'
 
-type AutopilotStatus = {
-  id: string
-  configured: boolean
+export type AutopilotState = {
+  enabled: boolean
   migrating: boolean
   migratingLastStart: string
   pruning: boolean
@@ -17,9 +16,7 @@ type AutopilotStatus = {
   scanningLastStart: string
   uptimeMS: string
   startTime: number
-}
-
-export type AutopilotState = AutopilotStatus & BuildState
+} & BuildState
 
 export type AutopilotStateParams = void
 export type AutopilotStatePayload = void

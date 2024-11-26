@@ -53,9 +53,6 @@ export function useAutopilotEvaluations({
     if (!renterdState.data) {
       return false
     }
-    if (!loaded.autopilotState.data.configured) {
-      return false
-    }
     return true
   }, [form.formState.isValid, resources, renterdState.data])
 
@@ -250,8 +247,6 @@ export function useAutopilotEvaluations({
 
     const recommended = transformDownGouging({
       gouging: recommendedGougingSettings,
-      averages: resources.averages.data,
-      hasBeenConfigured: true,
     })
     const recommendedPinned = pricesToPinnedPrices({
       exchangeRate: rate,
@@ -297,7 +292,6 @@ export function useAutopilotEvaluations({
     return recs
   }, [
     recommendedGougingSettings,
-    resources,
     payloads,
     currentValuesWithPinnedOverridesAndDefaults,
     getIsFieldEnabled,

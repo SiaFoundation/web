@@ -7,7 +7,6 @@ import {
 } from '@siafoundation/design-system'
 import { useAppSettings } from '@siafoundation/react-core'
 import {
-  useAutopilotState,
   useHostsAllowlist,
   useHostsBlocklist,
   useHosts as useHostsSearch,
@@ -53,7 +52,6 @@ function useHostsMain() {
     useServerFilters()
 
   const { dataset: allContracts } = useContracts()
-  const autopilotState = useAutopilotState()
 
   const keyIn = useMemo(() => {
     let keyIn: string[] = []
@@ -213,13 +211,11 @@ function useHostsMain() {
   const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
 
   const siascanUrl = useSiascanUrl()
-  const isAutopilotConfigured = !!autopilotState.data?.configured
   const tableContext: HostContext = useMemo(
     () => ({
-      isAutopilotConfigured,
       siascanUrl,
     }),
-    [isAutopilotConfigured, siascanUrl]
+    [siascanUrl]
   )
 
   const hostsWithLocation = useMemo(

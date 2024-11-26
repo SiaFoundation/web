@@ -19,7 +19,7 @@ import { useSyncStatus } from '../hooks/useSyncStatus'
 import { routes } from '../config/routes'
 import { useDialog } from '../contexts/dialog'
 import { useNotEnoughContracts } from './Files/checks/useNotEnoughContracts'
-import { useAutopilotState, useWallet } from '@siafoundation/renterd-react'
+import { useWallet } from '@siafoundation/renterd-react'
 import BigNumber from 'bignumber.js'
 import { humanSiacoin } from '@siafoundation/units'
 import { useAppSettings } from '@siafoundation/react-core'
@@ -28,7 +28,6 @@ import { useSpendingEstimate } from '../contexts/config/useSpendingEstimate'
 
 export function OnboardingBar() {
   const { isUnlockedAndAuthedRoute } = useAppSettings()
-  const autopilotState = useAutopilotState()
   const { openDialog } = useDialog()
   const wallet = useWallet()
   const [maximized, setMaximized] = useLocalStorageState<boolean>(
@@ -50,7 +49,7 @@ export function OnboardingBar() {
     wallet.data ? wallet.data.confirmed + wallet.data.unconfirmed : 0
   )
 
-  const step1Configured = autopilotState.data?.configured
+  const step1Configured = true
   const step2Synced = syncStatus.isSynced
   const step3Funded = walletBalance.gt(0)
   const step4Contracts = !notEnoughContracts.active
@@ -101,23 +100,12 @@ export function OnboardingBar() {
                   </Link>
                 }
                 description={
-                  'Specify how much data you plan to store and your target price.'
+                  'Specify your estimated usage and maximum pricing values.'
                 }
                 action={
-                  step1Configured ? (
-                    <Text color="green">
-                      <CheckmarkFilled16 />
-                    </Text>
-                  ) : (
-                    <>
-                      <Link href={routes.config.index}>
-                        <Launch16 />
-                      </Link>
-                      <Text color="amber">
-                        <RadioButton16 />
-                      </Text>
-                    </>
-                  )
+                  <Link href={routes.config.index}>
+                    <Launch16 />
+                  </Link>
                 }
               />
               <Section
