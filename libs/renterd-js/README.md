@@ -53,7 +53,6 @@ export async function example() {
 
   const hosts = await bus.hosts({
     data: {
-      autopilotID: 'autopilot',
       filterMode: 'allowed',
       usabilityMode: 'usable',
       addressContains: 'example.com',

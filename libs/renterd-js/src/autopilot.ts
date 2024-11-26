@@ -2,21 +2,15 @@ import {
   AutopilotConfigEvaluateParams,
   AutopilotConfigEvaluatePayload,
   AutopilotConfigEvaluateResponse,
-  AutopilotConfigParams,
-  AutopilotConfigPayload,
-  AutopilotConfigResponse,
-  AutopilotConfigUpdateParams,
-  AutopilotConfigUpdatePayload,
-  AutopilotConfigUpdateResponse,
   AutopilotStateParams,
   AutopilotStatePayload,
   AutopilotStateResponse,
   AutopilotTriggerParams,
   AutopilotTriggerPayload,
   AutopilotTriggerResponse,
-  autopilotConfigRoute,
   autopilotStateRoute,
   autopilotTriggerRoute,
+  autopilotConfigEvaluateRoute,
 } from '@siafoundation/renterd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
@@ -35,21 +29,11 @@ export function Autopilot({
       AutopilotStatePayload,
       AutopilotStateResponse
     >(axios, 'get', autopilotStateRoute),
-    config: buildRequestHandler<
-      AutopilotConfigParams,
-      AutopilotConfigPayload,
-      AutopilotConfigResponse
-    >(axios, 'get', autopilotConfigRoute),
-    configUpdate: buildRequestHandler<
-      AutopilotConfigUpdateParams,
-      AutopilotConfigUpdatePayload,
-      AutopilotConfigUpdateResponse
-    >(axios, 'put', autopilotConfigRoute),
     configEvaluate: buildRequestHandler<
       AutopilotConfigEvaluateParams,
       AutopilotConfigEvaluatePayload,
       AutopilotConfigEvaluateResponse
-    >(axios, 'post', autopilotConfigRoute),
+    >(axios, 'post', autopilotConfigEvaluateRoute),
     trigger: buildRequestHandler<
       AutopilotTriggerParams,
       AutopilotTriggerPayload,

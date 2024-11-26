@@ -21,6 +21,12 @@ import {
   AlertsDismissResponse,
   AlertsParams,
   AlertsResponse,
+  AutopilotConfigParams,
+  AutopilotConfigResponse,
+  AutopilotConfigUpdateParams,
+  AutopilotConfigUpdatePayload,
+  AutopilotConfigUpdateResponse,
+  busAutopilotRoute,
   BucketCreateParams,
   BucketCreatePayload,
   BucketCreateResponse,
@@ -247,6 +253,7 @@ import {
   HostScanResponse,
   busHostHostKeyScanRoute,
   Host,
+  autopilotStateRoute,
 } from '@siafoundation/renterd-types'
 
 // state
@@ -1023,4 +1030,34 @@ export function useMultipartUploadAddPart(
       })
     }
   )
+}
+
+// autopilot
+
+export function useAutopilotConfig(
+  args?: HookArgsSwr<AutopilotConfigParams, AutopilotConfigResponse>
+) {
+  return useGetSwr({
+    ...args,
+    route: busAutopilotRoute,
+  })
+}
+
+export function useAutopilotConfigUpdate(
+  args?: HookArgsCallback<
+    AutopilotConfigUpdateParams,
+    AutopilotConfigUpdatePayload,
+    AutopilotConfigUpdateResponse
+  >
+) {
+  return usePutFunc({ ...args, route: busAutopilotRoute }, async (mutate) => {
+    mutate((key) => key === busAutopilotRoute)
+    // Might need a delay before revalidating status which returns whether
+    // or not autopilot is configured.
+    const func = async () => {
+      await delay(1000)
+      mutate((key) => key === autopilotStateRoute)
+    }
+    func()
+  })
 }

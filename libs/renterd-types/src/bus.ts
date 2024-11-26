@@ -225,7 +225,6 @@ export type HostsParams = void
 export type HostsFilterMode = 'all' | 'allowed' | 'blocked'
 export type HostsUsabilityMode = 'all' | 'usable' | 'unusable'
 export type HostsPayload = {
-  autopilotID?: string
   filterMode: HostsFilterMode
   usabilityMode?: HostsUsabilityMode
   addressContains?: string
