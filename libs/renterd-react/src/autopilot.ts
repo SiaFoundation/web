@@ -1,19 +1,12 @@
 import {
   useGetSwr,
   usePostSwr,
-  usePutFunc,
   HookArgsSwr,
   HookArgsCallback,
   HookArgsWithPayloadSwr,
-  delay,
   usePostFunc,
 } from '@siafoundation/react-core'
 import {
-  AutopilotConfigParams,
-  AutopilotConfigResponse,
-  AutopilotConfigUpdateParams,
-  AutopilotConfigUpdatePayload,
-  AutopilotConfigUpdateResponse,
   AutopilotConfigEvaluateParams,
   AutopilotConfigEvaluatePayload,
   AutopilotConfigEvaluateResponse,
@@ -22,9 +15,9 @@ import {
   AutopilotTriggerParams,
   AutopilotTriggerPayload,
   AutopilotTriggerResponse,
-  autopilotConfigRoute,
   autopilotStateRoute,
   autopilotTriggerRoute,
+  autopilotConfigEvaluateRoute,
 } from '@siafoundation/renterd-types'
 
 export function useAutopilotState(
@@ -36,37 +29,6 @@ export function useAutopilotState(
   })
 }
 
-export function useAutopilotConfig(
-  args?: HookArgsSwr<AutopilotConfigParams, AutopilotConfigResponse>
-) {
-  return useGetSwr({
-    ...args,
-    route: autopilotConfigRoute,
-  })
-}
-
-export function useAutopilotConfigUpdate(
-  args?: HookArgsCallback<
-    AutopilotConfigUpdateParams,
-    AutopilotConfigUpdatePayload,
-    AutopilotConfigUpdateResponse
-  >
-) {
-  return usePutFunc(
-    { ...args, route: autopilotConfigRoute },
-    async (mutate) => {
-      mutate((key) => key === autopilotConfigRoute)
-      // Might need a delay before revalidating status which returns whether
-      // or not autopilot is configured.
-      const func = async () => {
-        await delay(1000)
-        mutate((key) => key === autopilotStateRoute)
-      }
-      func()
-    }
-  )
-}
-
 export function useAutopilotConfigEvaluate(
   args: HookArgsWithPayloadSwr<
     AutopilotConfigEvaluateParams,
@@ -74,7 +36,7 @@ export function useAutopilotConfigEvaluate(
     AutopilotConfigEvaluateResponse
   >
 ) {
-  return usePostSwr({ ...args, route: autopilotConfigRoute })
+  return usePostSwr({ ...args, route: autopilotConfigEvaluateRoute })
 }
 
 export function useAutopilotTrigger(

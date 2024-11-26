@@ -186,7 +186,7 @@ export type Host = {
   storedData: number
   resolvedAddresses?: string[]
   subnets?: string[]
-  checks?: Record<string, HostAutopilotChecks>
+  checks?: HostAutopilotChecks
 }
 
 export type HostAutopilotChecks = {

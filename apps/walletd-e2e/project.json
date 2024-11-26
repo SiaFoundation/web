@@ -9,7 +9,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          // "cd internal/cluster && go get -u go.sia.tech/hostd@master",
+          "cd internal/cluster && go get -u go.sia.tech/hostd@master",
           "cd internal/cluster && go get -u go.sia.tech/renterd@dev",
           "cd internal/cluster && go get -u go.sia.tech/walletd@master",
           "cd internal/cluster && go mod tidy",

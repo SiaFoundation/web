@@ -179,7 +179,6 @@ function useHostsMain() {
   const dataset = useDataset({
     response,
     allContracts,
-    autopilotID: autopilotState.data?.id,
     allowlist,
     blocklist,
     isAllowlistActive,

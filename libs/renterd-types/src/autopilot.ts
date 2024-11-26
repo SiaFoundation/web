@@ -2,8 +2,9 @@ import { BuildState } from './bus'
 import { AutopilotConfig, SettingsGouging, SettingsRedundancy } from './types'
 
 export const autopilotStateRoute = '/autopilot/state'
-export const autopilotConfigRoute = '/autopilot/config'
+export const autopilotConfigEvaluateRoute = '/autopilot/config/evaluate'
 export const autopilotTriggerRoute = '/autopilot/trigger'
+export const busAutopilotRoute = '/bus/autopilot'
 
 type AutopilotStatus = {
   id: string

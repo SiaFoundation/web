@@ -14,7 +14,6 @@ import { objectEntries } from '@siafoundation/design-system'
 export function useDataset({
   response,
   allContracts,
-  autopilotID,
   allowlist,
   blocklist,
   isAllowlistActive,
@@ -22,7 +21,6 @@ export function useDataset({
   onHostSelect,
 }: {
   response: ReturnType<typeof useHosts>
-  autopilotID?: string
   allContracts: ContractData[]
   allowlist: ReturnType<typeof useHostsAllowlist>
   blocklist: ReturnType<typeof useHostsBlocklist>
@@ -47,16 +45,13 @@ export function useDataset({
           blocklist: block,
           isAllowlistActive,
         }),
-        ...getAutopilotFields(
-          autopilotID ? host.checks?.[autopilotID] : undefined
-        ),
+        ...getAutopilotFields(host.checks),
         location: sch?.location,
         countryCode: sch?.country_code,
       }
     })
   }, [
     onHostSelect,
-    autopilotID,
     response.data,
     allContracts,
     allowlist.data,

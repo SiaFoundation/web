@@ -256,6 +256,13 @@ import {
   HostScanPayload,
   HostScanResponse,
   busHostHostKeyScanRoute,
+  AutopilotConfigParams,
+  AutopilotConfigPayload,
+  AutopilotConfigResponse,
+  AutopilotConfigUpdateParams,
+  AutopilotConfigUpdatePayload,
+  AutopilotConfigUpdateResponse,
+  busAutopilotRoute,
 } from '@siafoundation/renterd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
@@ -598,5 +605,15 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       MultipartUploadAddPartPayload,
       MultipartUploadAddPartResponse
     >(axios, 'post', busMultipartPartRoute),
+    autopilotConfig: buildRequestHandler<
+      AutopilotConfigParams,
+      AutopilotConfigPayload,
+      AutopilotConfigResponse
+    >(axios, 'get', busAutopilotRoute),
+    autopilotConfigUpdate: buildRequestHandler<
+      AutopilotConfigUpdateParams,
+      AutopilotConfigUpdatePayload,
+      AutopilotConfigUpdateResponse
+    >(axios, 'put', busAutopilotRoute),
   }
 }
