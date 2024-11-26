@@ -181,7 +181,7 @@ export const sortOptions: {
 ]
 
 export type ViewMode = 'list' | 'detail'
-export type GraphMode = 'spending' | 'count'
+export type GraphMode = 'spending'
 
 export type ChartContractKey =
   | 'uploadSpending'
@@ -196,7 +196,3 @@ export type ChartContractCategory = 'funding' | 'spending'
 export type ChartContractsKey = 'contracts'
 
 export type ChartContractsCategory = never
-
-export type ChartContractsChurnKey = 'contracts'
-
-export type ChartContractsChurnCategory = never

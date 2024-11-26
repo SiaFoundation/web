@@ -60,10 +60,6 @@ import {
   ContractRenewedPayload,
   ContractRenewedResponse,
   ContractResponse,
-  ContractsMetricsParams,
-  ContractsMetricsResponse,
-  ContractsChurnMetricsParams,
-  ContractsChurnMetricsResponse,
   ContractsAddParams,
   ContractsAddPayload,
   ContractsAddResponse,
@@ -196,8 +192,6 @@ import {
   busAlertsDismissRoute,
   busSlabKeyObjectsRoute,
   busMetricContractRoute,
-  busMetricContractsRoute,
-  busMetricChurnRoute,
   busMetricWalletRoute,
   busMultipartCreateRoute,
   busMultipartRoute,
@@ -917,17 +911,6 @@ export function useMetricsContract(
   args: HookArgsSwr<ContractMetricsParams, ContractMetricsResponse>
 ) {
   return useGetSwr({ ...args, route: busMetricContractRoute })
-}
-
-export function useMetricsContracts(
-  args: HookArgsSwr<ContractsMetricsParams, ContractsMetricsResponse>
-) {
-  return useGetSwr({ ...args, route: busMetricContractsRoute })
-}
-export function useMetricsContractsChurn(
-  args: HookArgsSwr<ContractsChurnMetricsParams, ContractsChurnMetricsResponse>
-) {
-  return useGetSwr({ ...args, route: busMetricChurnRoute })
 }
 
 export function useMetricsWallet(

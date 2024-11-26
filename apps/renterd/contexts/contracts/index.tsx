@@ -31,7 +31,6 @@ import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { useDataset } from './dataset'
 import { useFilteredStats } from './useFilteredStats'
 import { daysInMilliseconds } from '@siafoundation/units'
-import { useContractsMetrics } from './useContractsMetrics'
 
 const defaultLimit = 50
 
@@ -175,8 +174,6 @@ function useContractsMain() {
       disabled: !selectedContract,
     })
 
-  const { contractsMetrics: contractsCountMetrics } = useContractsMetrics()
-
   return {
     dataState,
     limit,
@@ -215,7 +212,6 @@ function useContractsMain() {
     selectContract,
     allContractsSpendingMetrics,
     selectedContractSpendingMetrics,
-    contractsCountMetrics,
     isFetchingPrunableSizeAll,
     isFetchingPrunableSizeById,
     fetchPrunableSize,

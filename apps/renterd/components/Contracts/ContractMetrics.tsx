@@ -7,7 +7,6 @@ export function ContractMetrics() {
     selectedContract,
     allContractsSpendingMetrics,
     selectedContractSpendingMetrics,
-    contractsCountMetrics,
     graphMode,
     setGraphMode,
   } = useContracts()
@@ -29,14 +28,6 @@ export function ContractMetrics() {
         >
           Funding & spending: Contract{' '}
           {stripPrefix(selectedContract.id).slice(0, 6)}
-        </Button>
-      )}
-      {!selectedContract && (
-        <Button
-          variant={graphMode === 'count' ? 'accent' : 'gray'}
-          onClick={() => setGraphMode('count')}
-        >
-          Count
         </Button>
       )}
     </div>
@@ -62,17 +53,6 @@ export function ContractMetrics() {
           data={selectedContractSpendingMetrics.data}
           config={selectedContractSpendingMetrics.config}
           isLoading={selectedContractSpendingMetrics.isLoading}
-          actionsLeft={tabsEl}
-          emptyState={<StateNoData />}
-        />
-      )}
-      {graphMode === 'count' && !selectedContract && (
-        <ChartXY
-          id="renterd/v0/contracts/graphs/count"
-          height="100%"
-          data={contractsCountMetrics.data}
-          config={contractsCountMetrics.config}
-          isLoading={contractsCountMetrics.isLoading}
           actionsLeft={tabsEl}
           emptyState={<StateNoData />}
         />
