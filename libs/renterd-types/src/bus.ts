@@ -77,8 +77,6 @@ export const busAlertsRoute = '/bus/alerts'
 export const busAlertsDismissRoute = '/bus/alerts/dismiss'
 export const busSlabKeyObjectsRoute = '/bus/slab/:key/objects'
 export const busMetricContractRoute = '/bus/metric/contract'
-export const busMetricContractsRoute = '/bus/metric/contracts'
-export const busMetricChurnRoute = '/bus/metric/churn'
 export const busMetricWalletRoute = '/bus/metric/wallet'
 export const busMultipartRoute = '/bus/multipart'
 export const busMultipartCreateRoute = '/bus/multipart/create'
@@ -523,26 +521,6 @@ export type ContractMetricsParams = MetricsParams & {
 export type ContractMetricsPayload = void
 export type ContractMetricsResponse = ContractMetric[]
 
-export type ContractsMetric = {
-  contracts: number
-  timestamp: string
-}
-export type ContractsMetricsParams = MetricsParams
-export type ContractsMetricsPayload = void
-export type ContractsMetricsResponse = ContractsMetric[]
-export type ContractsChurnMetric = {
-  direction: string
-  contractID: string
-  reason: string
-  timestamp: string
-}
-export type ContractsChurnMetricsParams = MetricsParams & {
-  direction?: string
-  reason?: string
-}
-export type ContractsChurnMetricsPayload = void
-export type ContractsChurnMetricsResponse = ContractsChurnMetric[]
-
 export type WalletMetric = {
   timestamp: string
   confirmed: string
@@ -553,20 +531,6 @@ export type WalletMetric = {
 export type WalletMetricsParams = MetricsParams
 export type WalletMetricsPayload = void
 export type WalletMetricsResponse = WalletMetric[]
-
-// export type PerformanceMetric = {
-//   action: string
-//   hostKey: string
-//   origin: string
-//   duration: number
-//   timestamp: string
-// }
-
-// export type PerformanceMetricsParams = MetricsParams & {
-//   action: string
-//   hostKey: string
-//   origin: string
-// }
 
 // multipart
 

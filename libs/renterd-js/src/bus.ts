@@ -44,12 +44,6 @@ import {
   ContractRenewedPayload,
   ContractRenewedResponse,
   ContractResponse,
-  ContractsMetricsParams,
-  ContractsMetricsPayload,
-  ContractsMetricsResponse,
-  ContractsChurnMetricsParams,
-  ContractsChurnMetricsPayload,
-  ContractsChurnMetricsResponse,
   ContractSizeParams,
   ContractSizePayload,
   ContractSizeResponse,
@@ -191,8 +185,6 @@ import {
   busHostsBlocklistRoute,
   busHostsHostKeyRoute,
   busMetricContractRoute,
-  busMetricContractsRoute,
-  busMetricChurnRoute,
   busMetricWalletRoute,
   busMultipartAbortRoute,
   busMultipartCompleteRoute,
@@ -560,16 +552,6 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       ContractMetricsPayload,
       ContractMetricsResponse
     >(axios, 'get', busMetricContractRoute),
-    contractsMetrics: buildRequestHandler<
-      ContractsMetricsParams,
-      ContractsMetricsPayload,
-      ContractsMetricsResponse
-    >(axios, 'get', busMetricContractsRoute),
-    contractsChurnMetrics: buildRequestHandler<
-      ContractsChurnMetricsParams,
-      ContractsChurnMetricsPayload,
-      ContractsChurnMetricsResponse
-    >(axios, 'get', busMetricChurnRoute),
     walletMetrics: buildRequestHandler<
       WalletMetricsParams,
       WalletMetricsPayload,
