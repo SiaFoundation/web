@@ -3,6 +3,7 @@ import { random } from '@technically/lodash'
 import Axios from 'axios'
 import { Bus } from '@siafoundation/renterd-js'
 import { pluralize } from '@siafoundation/units'
+import { Hostd } from '@siafoundation/hostd-js'
 
 type Node = {
   type: string
@@ -81,7 +82,7 @@ export async function setupCluster({
   )
 }
 
-export async function waitForContracts({
+export async function renterdWaitForContracts({
   renterdNode,
   hostdCount,
 }: {
@@ -117,6 +118,43 @@ export async function waitForContracts({
       return (
         hosts.data.length >= hostdCount && contracts.data.length >= hostdCount
       )
+    },
+    {
+      timeout: maxTimeWaitingForContractsToForm,
+      interval: 2_000,
+    }
+  )
+  console.timeEnd('waiting for contracts to form')
+}
+
+export async function hostdWaitForContracts({
+  hostdNode,
+  renterdCount,
+}: {
+  hostdNode: Node
+  renterdCount: number
+}) {
+  const hostdApi = `${hostdNode.apiAddress}/api`
+  const hostd = Hostd({
+    api: hostdApi,
+    password: hostdNode.password,
+  })
+
+  if (renterdCount === 0) {
+    return
+  }
+
+  console.time('waiting for contracts to form')
+  await waitFor(
+    async () => {
+      await mine(1)
+      const contracts = await hostd.contracts({
+        data: {
+          limit: renterdCount,
+        },
+      })
+      console.log(`contracts: ${contracts.data.count}/${renterdCount}`)
+      return contracts.data.count >= renterdCount
     },
     {
       timeout: maxTimeWaitingForContractsToForm,

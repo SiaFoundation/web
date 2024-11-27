@@ -7,7 +7,7 @@ import { StateError } from './StateError'
 export function Contracts() {
   const {
     columns,
-    dataset,
+    datasetPage,
     sortField,
     sortDirection,
     sortableColumns,
@@ -20,6 +20,7 @@ export function Contracts() {
   return (
     <div className="p-6 min-w-fit">
       <Table
+        testId="contractsTable"
         context={cellContext}
         isLoading={dataState === 'loading'}
         emptyState={
@@ -32,7 +33,7 @@ export function Contracts() {
           ) : null
         }
         pageSize={limit}
-        data={dataset}
+        data={datasetPage}
         columns={columns}
         sortableColumns={sortableColumns}
         sortDirection={sortDirection}

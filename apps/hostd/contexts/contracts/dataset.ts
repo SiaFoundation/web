@@ -3,15 +3,16 @@ import { Contract } from '@siafoundation/hostd-types'
 import { useContracts } from '@siafoundation/hostd-react'
 import { ContractData } from './types'
 import BigNumber from 'bignumber.js'
+import { Maybe } from '@siafoundation/design-system'
 
 export function useDataset({
   response,
 }: {
   response: ReturnType<typeof useContracts>
 }) {
-  return useMemo<ContractData[] | null>(() => {
+  return useMemo<Maybe<ContractData[]>>(() => {
     if (!response.data) {
-      return null
+      return undefined
     }
     return (
       response.data.contracts?.map((contract) => {

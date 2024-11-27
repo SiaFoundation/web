@@ -7,6 +7,7 @@ import {
 } from '../HostdAuthedLayout'
 import { ContractsActionsMenu } from './ContractsActionsMenu'
 import { ContractsFiltersBar } from './ContractsFiltersBar'
+import { ContractsBulkMenu } from './ContractsBulkMenu'
 
 export const Layout = HostdAuthedLayout
 export function useLayoutProps(): HostdAuthedPageLayoutProps {
@@ -19,5 +20,6 @@ export function useLayoutProps(): HostdAuthedPageLayoutProps {
     actions: <ContractsActionsMenu />,
     stats: <ContractsFiltersBar />,
     size: 'full',
+    dockedControls: <ContractsBulkMenu />,
   }
 }

@@ -34,3 +34,13 @@ export const navigateToWallet = step(
     await expect(page.getByTestId('navbar').getByText('Wallet')).toBeVisible()
   }
 )
+
+export const navigateToContracts = step(
+  'navigate to contracts',
+  async (page: Page) => {
+    await page.getByTestId('sidenav').getByLabel('Contracts').click()
+    await expect(
+      page.getByTestId('navbar').getByText('Contracts')
+    ).toBeVisible()
+  }
+)
