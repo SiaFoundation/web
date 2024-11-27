@@ -11,6 +11,7 @@ import {
   Separator,
   Button,
   LoadingDots,
+  Checkbox,
 } from '@siafoundation/design-system'
 import {
   ArrowUpLeft16,
@@ -40,7 +41,14 @@ export const columns: ContractsTableColumn[] = [
     id: 'actions',
     label: '',
     fixed: true,
-    cellClassName: 'w-[50px] !pl-2 !pr-4 [&+*]:!pl-0',
+    contentClassName: '!pl-3 !pr-4',
+    cellClassName: 'w-[20px] !pl-0 !pr-0',
+    heading: ({ context: { multiSelect } }) => (
+      <Checkbox
+        onClick={multiSelect.onSelectPage}
+        checked={multiSelect.isPageAllSelected}
+      />
+    ),
     render: ({ data: { id, hostIp, hostKey } }) => (
       <ContractContextMenu id={id} hostAddress={hostIp} hostKey={hostKey} />
     ),

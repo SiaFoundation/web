@@ -81,7 +81,6 @@ export function Contracts() {
               sortDirection={sortDirection}
               sortField={sortField}
               toggleSort={toggleSort}
-              focusId={selectedContract?.id}
               rowSize="default"
             />
           </div>
