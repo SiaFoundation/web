@@ -57,7 +57,7 @@ export function useDataset() {
           revisionHeight: c.revisionHeight,
           isRenewed,
           renewedFrom: c.renewedFrom,
-          totalCost: new BigNumber(c.totalCost),
+          initialRenterFunds: new BigNumber(c.initialRenterFunds),
           spendingUploads: new BigNumber(c.spending.uploads),
           spendingDeletions: new BigNumber(c.spending.deletions),
           spendingSectorRoots: new BigNumber(c.spending.sectorRoots),

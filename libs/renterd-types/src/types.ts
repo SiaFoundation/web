@@ -155,7 +155,7 @@ export type Contract = {
   windowEnd: number
   renewedFrom: string
   spending: ContractSpending
-  totalCost: Currency
+  initialRenterFunds: Currency
   size: number
   state: ContractState
 }

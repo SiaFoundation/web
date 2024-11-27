@@ -376,23 +376,23 @@ export const columns: ContractsTableColumn[] = [
     },
   },
   {
-    id: 'totalCost',
-    label: 'total cost',
+    id: 'initialRenterFunds',
+    label: 'initial renter funds',
     category: 'financial',
     contentClassName: 'w-[120px] justify-end',
-    render: ({ data: { totalCost } }) => (
-      <ValueScFiat displayBoth size="12" value={totalCost.negated()} />
+    render: ({ data: { initialRenterFunds } }) => (
+      <ValueScFiat displayBoth size="12" value={initialRenterFunds.negated()} />
     ),
     summary: ({ context: { filteredStats } }) => {
-      if (!filteredStats.totalCostTotal) {
+      if (!filteredStats.initialRenterFundsTotal) {
         return null
       }
       return (
         <ValueScFiat
           displayBoth
           size="12"
-          value={filteredStats.totalCostTotal.negated()}
-          tooltip="Total cost across the filtered set of active contracts"
+          value={filteredStats.initialRenterFundsTotal.negated()}
+          tooltip="Total initial renter funds across the filtered set of active contracts"
         />
       )
     },

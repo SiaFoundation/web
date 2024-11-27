@@ -320,7 +320,7 @@ export type ContractsAddParams = {
 export type ContractsAddPayload = {
   contract: ContractRevision
   startHeight: number
-  totalCost: Currency
+  initialRenterFunds: Currency
 }
 export type ContractsAddResponse = Contract
 
@@ -331,7 +331,7 @@ export type ContractRenewedPayload = {
   contract: ContractRevision
   renewedFrom: string
   startHeight: number
-  totalCost: Currency
+  initialRenterFunds: Currency
 }
 export type ContractRenewedResponse = Contract
 
