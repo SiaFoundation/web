@@ -11,9 +11,9 @@ import { useMetrics } from '../../contexts/metrics'
 export function HomeStorage() {
   const { storage } = useMetrics()
   return (
-    <div className="flex flex-col gap-3 flex-1 overflow-hidden">
+    <div className="flex flex-col gap-3 flex-1">
       <Heading>Storage</Heading>
-      <DatumScrollArea>
+      <DatumScrollArea bleed>
         <DatumCardConfigurable
           category="storage"
           label="storage - physical"

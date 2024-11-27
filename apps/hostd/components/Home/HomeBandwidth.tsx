@@ -11,9 +11,9 @@ import { useMetrics } from '../../contexts/metrics'
 export function HomeBandwidth() {
   const { bandwidth } = useMetrics()
   return (
-    <div className="flex flex-col gap-3 flex-1 overflow-hidden">
+    <div className="flex flex-col gap-3 flex-1">
       <Heading>Bandwidth</Heading>
-      <DatumScrollArea>
+      <DatumScrollArea bleed>
         <DatumCardConfigurable
           category="bandwidth"
           label="ingress"
