@@ -4,16 +4,12 @@ import {
   useDatasetEmptyState,
   useClientFilters,
   useClientFilteredDataset,
+  useMultiSelect,
+  Maybe,
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import { useContracts as useContractsData } from '@siafoundation/renterd-react'
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react'
+import { createContext, useContext, useMemo, useState } from 'react'
 import {
   ContractData,
   ContractTableContext,
@@ -53,20 +49,6 @@ function useContractsMain() {
     ? syncStatus.nodeBlockHeight
     : syncStatus.estimatedBlockHeight
 
-  const [selectedContractId, setSelectedContractId] = useState<string>()
-  const selectContract = useCallback(
-    (id: string) => {
-      if (selectedContractId === id) {
-        setSelectedContractId(undefined)
-        return
-      }
-      setSelectedContractId(id)
-      setViewMode('detail')
-      setGraphMode('spending')
-    },
-    [selectedContractId, setSelectedContractId, setViewMode]
-  )
-
   const {
     dataset,
     isFetchingPrunableSizeAll,
@@ -74,12 +56,7 @@ function useContractsMain() {
     fetchPrunableSize,
     fetchPrunableSizeAll,
     hasFetchedAllPrunableSize,
-  } = useDataset({ selectContract })
-
-  const selectedContract = useMemo(
-    () => dataset?.find((d) => d.id === selectedContractId),
-    [dataset, selectedContractId]
-  )
+  } = useDataset()
 
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
     useClientFilters<ContractData>()
@@ -111,7 +88,7 @@ function useContractsMain() {
     sortDirection,
   })
 
-  const datasetPage = useMemo<ContractData[] | undefined>(() => {
+  const _datasetPage = useMemo<Maybe<ContractData[]>>(() => {
     if (!datasetFiltered) {
       return undefined
     }
@@ -119,8 +96,8 @@ function useContractsMain() {
   }, [datasetFiltered, offset, limit])
 
   const { range: contractsTimeRange } = useMemo(
-    () => getContractsTimeRangeBlockHeight(currentHeight, datasetPage || []),
-    [currentHeight, datasetPage]
+    () => getContractsTimeRangeBlockHeight(currentHeight, _datasetPage || []),
+    [currentHeight, _datasetPage]
   )
 
   const filteredTableColumns = useMemo(
@@ -142,6 +119,22 @@ function useContractsMain() {
 
   const filteredStats = useFilteredStats({ datasetFiltered })
 
+  const multiSelect = useMultiSelect(_datasetPage)
+
+  const datasetPage = useMemo<Maybe<ContractData[]>>(() => {
+    if (!_datasetPage) {
+      return undefined
+    }
+    return _datasetPage.map((datum) => {
+      return {
+        ...datum,
+        onClick: (e: React.MouseEvent<HTMLTableRowElement>) =>
+          multiSelect.onSelect(datum.id, e),
+        isSelected: !!multiSelect.selectionMap[datum.id],
+      }
+    })
+  }, [_datasetPage, multiSelect])
+
   const cellContext = useMemo(() => {
     const context: ContractTableContext = {
       currentHeight: syncStatus.estimatedBlockHeight,
@@ -151,6 +144,7 @@ function useContractsMain() {
       isFetchingPrunableSizeAll,
       fetchPrunableSizeAll,
       filteredStats,
+      multiSelect,
     }
     return context
   }, [
@@ -161,7 +155,15 @@ function useContractsMain() {
     isFetchingPrunableSizeAll,
     fetchPrunableSizeAll,
     filteredStats,
+    multiSelect,
   ])
+
+  const selectedContract = useMemo(() => {
+    if (multiSelect.selectedIds.length === 1) {
+      const selectedContractId = multiSelect.selectedIds[0]
+      return dataset?.find((d) => d.id === selectedContractId)
+    }
+  }, [dataset, multiSelect.selectedIds])
 
   const thirtyDaysAgo = new Date().getTime() - daysInMilliseconds(30)
   const { contractMetrics: allContractsSpendingMetrics } = useContractMetrics({
@@ -169,7 +171,7 @@ function useContractsMain() {
   })
   const { contractMetrics: selectedContractSpendingMetrics } =
     useContractMetrics({
-      contractId: selectedContractId,
+      contractId: selectedContract?.id,
       start: selectedContract?.startTime || 0,
       disabled: !selectedContract,
     })
@@ -209,13 +211,13 @@ function useContractsMain() {
     graphMode,
     setGraphMode,
     selectedContract,
-    selectContract,
     allContractsSpendingMetrics,
     selectedContractSpendingMetrics,
     isFetchingPrunableSizeAll,
     isFetchingPrunableSizeById,
     fetchPrunableSize,
     fetchPrunableSizeAll,
+    multiSelect,
   }
 }
 

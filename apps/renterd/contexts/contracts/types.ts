@@ -1,6 +1,7 @@
 import { ContractState, ContractUsability } from '@siafoundation/renterd-types'
 import BigNumber from 'bignumber.js'
 import { useFilteredStats } from './useFilteredStats'
+import { MultiSelect } from '@siafoundation/design-system'
 
 export type ContractTableContext = {
   currentHeight: number
@@ -15,11 +16,11 @@ export type ContractTableContext = {
   isFetchingPrunableSizeAll: boolean
   // totals
   filteredStats: ReturnType<typeof useFilteredStats>
+  multiSelect: MultiSelect<ContractData>
 }
 
-export type ContractDataWithoutPrunable = {
+export type ContractData = {
   id: string
-  onClick: () => void
   hostIp: string
   hostKey: string
   state: ContractState
@@ -42,14 +43,25 @@ export type ContractDataWithoutPrunable = {
   spendingSectorRoots: BigNumber
   spendingFundAccount: BigNumber
   size: BigNumber
-}
 
-export type ContractData = ContractDataWithoutPrunable & {
+  // selectable
+  onClick: (e: React.MouseEvent<HTMLTableRowElement>) => void
+  isSelected: boolean
+
+  // prunable
   prunableSize?: BigNumber
   isFetchingPrunableSize: boolean
   hasFetchedPrunableSize: boolean
   fetchPrunableSize: () => void
 }
+
+export type ContractDataWithoutPrunable = Omit<
+  ContractData,
+  | 'prunableSize'
+  | 'isFetchingPrunableSize'
+  | 'hasFetchedPrunableSize'
+  | 'fetchPrunableSize'
+>
 
 export type TableColumnId =
   | 'actions'

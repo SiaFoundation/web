@@ -49,7 +49,12 @@ export function ContractContextMenu({
     <DropdownMenu
       trigger={
         trigger || (
-          <Button variant="ghost" icon="hover" {...buttonProps}>
+          <Button
+            aria-label="contract context menu"
+            icon="hover"
+            size="none"
+            {...buttonProps}
+          >
             <CaretDown16 />
           </Button>
         )

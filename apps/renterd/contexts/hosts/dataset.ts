@@ -9,7 +9,7 @@ import {
 } from '@siafoundation/renterd-react'
 import { ContractData } from '../contracts/types'
 import { SiaCentralHost } from '@siafoundation/sia-central-types'
-import { objectEntries } from '@siafoundation/design-system'
+import { Maybe, objectEntries } from '@siafoundation/design-system'
 
 export function useDataset({
   response,
@@ -21,7 +21,7 @@ export function useDataset({
   onHostSelect,
 }: {
   response: ReturnType<typeof useHosts>
-  allContracts: ContractData[]
+  allContracts: Maybe<ContractData[]>
   allowlist: ReturnType<typeof useHostsAllowlist>
   blocklist: ReturnType<typeof useHostsBlocklist>
   isAllowlistActive: boolean
@@ -61,7 +61,7 @@ export function useDataset({
   ])
 }
 
-function getHostFields(host: Host, allContracts: ContractData[]) {
+function getHostFields(host: Host, allContracts: Maybe<ContractData[]>) {
   return {
     id: host.publicKey,
     netAddress: host.netAddress,

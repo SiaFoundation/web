@@ -7,12 +7,9 @@ import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { blockHeightToTime } from '@siafoundation/units'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { usePrunableContractSizes } from './usePrunableContractSizes'
+import { Maybe } from '@siafoundation/design-system'
 
-export function useDataset({
-  selectContract,
-}: {
-  selectContract: (id: string) => void
-}) {
+export function useDataset() {
   const response = useContractsData({
     config: {
       swr: {
@@ -29,10 +26,10 @@ export function useDataset({
     : syncStatus.estimatedBlockHeight
 
   const datasetWithoutPrunable = useMemo<
-    ContractDataWithoutPrunable[] | null
+    Maybe<ContractDataWithoutPrunable[]>
   >(() => {
     if (!response.data) {
-      return null
+      return undefined
     }
     const datums =
       response.data?.map((c) => {
@@ -44,7 +41,6 @@ export function useDataset({
         const endTime = blockHeightToTime(currentHeight, endHeight)
         const datum: ContractDataWithoutPrunable = {
           id: c.id,
-          onClick: () => selectContract(c.id),
           state: c.state,
           hostIp: c.hostIP,
           hostKey: c.hostKey,
@@ -67,11 +63,14 @@ export function useDataset({
           spendingSectorRoots: new BigNumber(c.spending.sectorRoots),
           spendingFundAccount: new BigNumber(c.spending.fundAccount),
           size: new BigNumber(c.size),
+          // selectable
+          onClick: () => null,
+          isSelected: false,
         }
         return datum
       }) || []
     return datums
-  }, [response.data, geoHosts, currentHeight, selectContract])
+  }, [response.data, geoHosts, currentHeight])
 
   const {
     prunableSizes,
@@ -81,7 +80,7 @@ export function useDataset({
     fetchPrunableSizeAll,
   } = usePrunableContractSizes()
 
-  const dataset = useMemo(
+  const dataset = useMemo<Maybe<ContractData[]>>(
     () =>
       datasetWithoutPrunable?.map((d) => {
         const datum: ContractData = {
@@ -105,7 +104,7 @@ export function useDataset({
   )
 
   const hasFetchedAllPrunableSize = useMemo(
-    () => dataset?.every((d) => d.hasFetchedPrunableSize),
+    () => !!dataset?.every((d) => d.hasFetchedPrunableSize),
     [dataset]
   )
 
