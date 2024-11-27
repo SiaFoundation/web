@@ -9,6 +9,14 @@ export const navigateToBuckets = step(
   }
 )
 
+export const navigateToAlerts = step(
+  'navigate to alerts',
+  async ({ page }: { page: Page }) => {
+    await page.getByTestId('sidenav').getByLabel('Alerts').click()
+    await expect(page.getByTestId('navbar').getByText('Alerts')).toBeVisible()
+  }
+)
+
 export const navigateToContracts = step(
   'navigate to contracts',
   async ({ page }: { page: Page }) => {

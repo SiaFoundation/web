@@ -11,7 +11,7 @@ export const healthThresholds = {
   poor: 0,
 }
 
-export function useHealthLabel({
+export function getFileHealth({
   health = 0,
   size,
   isDirectory,

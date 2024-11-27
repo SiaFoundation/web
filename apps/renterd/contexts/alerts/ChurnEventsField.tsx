@@ -1,4 +1,9 @@
-import { Text, Tooltip, ValueCopyable } from '@siafoundation/design-system'
+import {
+  objectEntries,
+  Text,
+  Tooltip,
+  ValueCopyable,
+} from '@siafoundation/design-system'
 import { HostContextMenuFromKey } from '../../components/Hosts/HostContextMenuFromKey'
 import { ContractContextMenuFromId } from '../../components/Contracts/ContractContextMenuFromId'
 import { humanBytes } from '@siafoundation/units'
@@ -6,74 +11,30 @@ import { formatRelative } from 'date-fns'
 import { useMemo } from 'react'
 import { Add16, Subtract16 } from '@siafoundation/react-icons'
 import { cx } from 'class-variance-authority'
-import { uniq } from '@technically/lodash'
-
-type ChangeEvent = {
-  type: 'addition' | 'removal'
-  reasons?: string
-  size: number
-  time: string
-}
+import { AlertChurnEvent } from '@siafoundation/renterd-types'
 
 type Change = {
   contractId: string
   hostKey: string
-  events: ChangeEvent[]
+  events: AlertChurnEvent[]
 }
 
-export type SetAdditions = Record<
-  string,
-  {
-    hostKey: string
-    additions: { size: number; time: string }[]
-  }
->
+export type ChurnData = Record<string, AlertChurnEvent[]>
 
-export type SetRemovals = Record<
-  string,
-  {
-    hostKey: string
-    removals: { reasons: string; size: number; time: string }[]
-  }
->
-
-export function SetChangesField({
-  setAdditions,
-  setRemovals,
+export function ChurnEventsField({
+  data,
 }: {
-  setAdditions: SetAdditions
-  setRemovals: SetRemovals
+  data: Record<string, AlertChurnEvent[]>
 }) {
-  const changes = useMemo(() => {
-    // Merge all unique contract ids from additions and removals together
-    const contractIds = uniq([
-      ...Object.keys(setAdditions),
-      ...Object.keys(setRemovals),
-    ])
-    return contractIds
-      .map((contractId) => {
-        const additions = setAdditions[contractId]?.additions || []
-        const removals = setRemovals[contractId]?.removals || []
+  const churnEvents = useMemo(() => {
+    return objectEntries(data)
+      .map(([contractId, events]) => {
         return {
           contractId,
-          hostKey:
-            setAdditions[contractId]?.hostKey ||
-            setRemovals[contractId]?.hostKey,
-          events: [
-            ...additions.map((a) => ({
-              type: 'addition',
-              size: a.size,
-              time: a.time,
-            })),
-            ...removals.map((r) => ({
-              type: 'removal',
-              size: r.size,
-              time: r.time,
-              reasons: r.reasons,
-            })),
-          ].sort((a, b) =>
+          hostKey: events[0].hostKey,
+          events: events.sort((a, b) =>
             new Date(a.time).getTime() < new Date(b.time).getTime() ? 1 : -1
-          ) as ChangeEvent[],
+          ),
         }
       })
       .sort((a, b) => {
@@ -82,39 +43,39 @@ export function SetChangesField({
         const bSize = b.events[0].size
         return aSize < bSize ? 1 : -1
       })
-  }, [setAdditions, setRemovals])
+  }, [data])
 
-  // calculate churn %: contracts removed size / total size
+  // calculate churn %: contracts bad size / total size
   const totalSize = useMemo(
-    () => changes.reduce((acc, { events }) => acc + events[0].size, 0),
-    [changes]
+    () => churnEvents.reduce((acc, { events }) => acc + events[0].size, 0),
+    [churnEvents]
   )
-  const removals = useMemo(
-    () => changes.filter(({ events }) => events[0].type === 'removal'),
-    [changes]
+  const bads = useMemo(
+    () => churnEvents.filter(({ events }) => events[0].to === 'bad'),
+    [churnEvents]
   )
-  const additions = useMemo(
-    () => changes.filter(({ events }) => events[0].type === 'addition'),
-    [changes]
+  const goods = useMemo(
+    () => churnEvents.filter(({ events }) => events[0].to === 'good'),
+    [churnEvents]
   )
-  const removedSize = useMemo(
-    () => removals.reduce((acc, { events }) => acc + events[0].size, 0),
-    [removals]
+  const badSize = useMemo(
+    () => bads.reduce((acc, { events }) => acc + events[0].size, 0),
+    [bads]
   )
   const churn = useMemo(
-    () => (totalSize > 0 ? (removedSize / totalSize) * 100 : 0),
-    [removedSize, totalSize]
+    () => (totalSize > 0 ? (badSize / totalSize) * 100 : 0),
+    [badSize, totalSize]
   )
 
   return (
-    <div className="flex flex-col gap-2">
+    <div data-testid="churn" className="flex flex-col gap-2">
       <div className="flex gap-2 items-center pr-1">
         <Text size="12" color="subtle" ellipsis>
-          contract set changes
+          contract changes
         </Text>
         <div className="flex-1" />
         <Tooltip
-          content={`${humanBytes(removedSize)} of ${humanBytes(
+          content={`${humanBytes(badSize)} of ${humanBytes(
             totalSize
           )} contract size removed`}
         >
@@ -123,12 +84,12 @@ export function SetChangesField({
               churn: {churn.toFixed(2)}%
             </Text>
             <Text size="12" color="subtle" ellipsis>
-              ({humanBytes(removedSize)} / {humanBytes(totalSize)})
+              ({humanBytes(badSize)} / {humanBytes(totalSize)})
             </Text>
           </div>
         </Tooltip>
         <div className="flex gap-1 items-center">
-          <Tooltip content={`${additions.length} contracts added`}>
+          <Tooltip content={`${goods.length} contracts marked good`}>
             <Text
               size="12"
               color="green"
@@ -136,20 +97,20 @@ export function SetChangesField({
               className="flex items-center"
             >
               <Add16 />
-              {additions.length}
+              {goods.length}
             </Text>
           </Tooltip>
-          <Tooltip content={`${removals.length} contracts removed`}>
+          <Tooltip content={`${bads.length} contracts marked bad`}>
             <Text size="12" color="red" ellipsis className="flex items-center">
               <Subtract16 />
-              {removals.length}
+              {bads.length}
             </Text>
           </Tooltip>
         </div>
       </div>
       <div className="flex flex-col gap-3 mb-2">
-        {changes.map(({ contractId, hostKey, events }, i) => (
-          <ContractSetChange
+        {churnEvents.map(({ contractId, hostKey, events }, i) => (
+          <ChurnEventItem
             key={contractId + hostKey}
             contractId={contractId}
             hostKey={hostKey}
@@ -162,7 +123,7 @@ export function SetChangesField({
   )
 }
 
-function ContractSetChange({
+function ChurnEventItem({
   contractId,
   hostKey,
   events,
@@ -171,7 +132,7 @@ function ContractSetChange({
   i: number
 }) {
   return (
-    <div className="flex flex-col gap-[3px]">
+    <div data-testid={contractId} className="flex flex-col gap-[3px]">
       <div className="flex gap-2 items-center px-[3px]">
         <Text size="12" weight="medium" ellipsis>
           {i + 1}.
@@ -219,10 +180,10 @@ function ContractSetChange({
           />
         </div>
       </div>
-      {events.map(({ type, reasons, size, time }, i) => (
+      {events.map(({ to, reason, size, time }, i) => (
         <Tooltip
-          key={type + reasons + time}
-          content={type === 'addition' ? 'added' : `removed: ${reasons}`}
+          key={to + reason + time}
+          content={to === 'good' ? 'good' : `bad: ${reason}`}
           align="start"
           side="bottom"
         >
@@ -230,18 +191,18 @@ function ContractSetChange({
             className={cx(
               'flex gap-2 justify-between mr-2 pr-1',
               i === 0
-                ? type === 'addition'
+                ? to === 'good'
                   ? 'bg-green-400/20'
                   : 'bg-red-400/20'
                 : 'opacity-50'
             )}
           >
             <div className="flex gap-1 items-center overflow-hidden">
-              <Text size="12" color={type === 'addition' ? 'green' : 'red'}>
-                {type === 'addition' ? <Add16 /> : <Subtract16 />}
+              <Text size="12" color={to === 'good' ? 'green' : 'red'}>
+                {to === 'good' ? <Add16 /> : <Subtract16 />}
               </Text>
               <Text size="12" ellipsis>
-                {reasons}
+                {reason}
               </Text>
             </div>
             <div className="flex-1" />

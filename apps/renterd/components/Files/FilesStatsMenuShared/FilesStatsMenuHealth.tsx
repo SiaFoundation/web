@@ -1,6 +1,6 @@
 import { Separator, Text, Tooltip } from '@siafoundation/design-system'
 import { useObjectStats } from '@siafoundation/renterd-react'
-import { healthThresholds, useHealthLabel } from '../../../hooks/useHealthLabel'
+import { healthThresholds, getFileHealth } from '../../../lib/fileHealth'
 
 export function FilesStatsMenuHealth() {
   const stats = useObjectStats({
@@ -14,7 +14,7 @@ export function FilesStatsMenuHealth() {
     },
   })
 
-  const { displayHealth, label } = useHealthLabel({
+  const { displayHealth, label } = getFileHealth({
     health: stats.data?.minHealth,
     size: 1,
     isDirectory: true,
