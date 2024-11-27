@@ -89,7 +89,7 @@ function handleSubmit(values: Values) {
     payload: {
       contract: contractRevision
       startHeight: 40000
-      totalCost: '2424242421223232'
+      initialRenterFunds: '2424242421223232'
     }
   })
 }

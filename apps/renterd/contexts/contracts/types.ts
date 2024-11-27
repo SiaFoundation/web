@@ -37,7 +37,7 @@ export type ContractData = {
   proofWindowHeightEnd: number
   proofHeight: number
   revisionHeight: number
-  totalCost: BigNumber
+  initialRenterFunds: BigNumber
   spendingUploads: BigNumber
   spendingDeletions: BigNumber
   spendingSectorRoots: BigNumber
@@ -75,7 +75,7 @@ export type TableColumnId =
   | 'endTime'
   | 'size'
   | 'prunableSize'
-  | 'totalCost'
+  | 'initialRenterFunds'
   | 'spendingUploads'
   | 'spendingDeletions'
   | 'spendingFundAccount'
@@ -90,7 +90,7 @@ export const columnsDefaultVisible: TableColumnId[] = [
   'timeline',
   'size',
   'prunableSize',
-  'totalCost',
+  'initialRenterFunds',
   'spendingUploads',
   'spendingDeletions',
   'spendingFundAccount',
@@ -107,7 +107,7 @@ export type SortField =
   | 'endTime'
   | 'size'
   | 'prunableSize'
-  | 'totalCost'
+  | 'initialRenterFunds'
   | 'spendingUploads'
   | 'spendingDeletions'
   | 'spendingFundAccount'
@@ -166,8 +166,8 @@ export const sortOptions: {
     category: 'general',
   },
   {
-    id: 'totalCost',
-    label: 'total cost',
+    id: 'initialRenterFunds',
+    label: 'initial renter funds',
     category: 'financial',
   },
   {

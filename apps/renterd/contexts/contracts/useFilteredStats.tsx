@@ -28,12 +28,12 @@ export function useFilteredStats({
     }, new BigNumber(0))
   }, [datasetFiltered])
 
-  const totalCostTotal = useMemo(() => {
+  const initialRenterFundsTotal = useMemo(() => {
     if (!datasetFiltered) {
       return undefined
     }
     return datasetFiltered.reduce((acc, datum) => {
-      return acc.plus(datum.totalCost)
+      return acc.plus(datum.initialRenterFunds)
     }, new BigNumber(0))
   }, [datasetFiltered])
 
@@ -77,7 +77,7 @@ export function useFilteredStats({
     return {
       sizeTotal,
       prunableSizeTotal,
-      totalCostTotal,
+      initialRenterFundsTotal,
       spendingUploadsTotal,
       spendingDeletionsTotal,
       spendingFundAccountTotal,
@@ -86,7 +86,7 @@ export function useFilteredStats({
   }, [
     sizeTotal,
     prunableSizeTotal,
-    totalCostTotal,
+    initialRenterFundsTotal,
     spendingUploadsTotal,
     spendingDeletionsTotal,
     spendingFundAccountTotal,
