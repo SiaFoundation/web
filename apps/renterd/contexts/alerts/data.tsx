@@ -3,6 +3,7 @@ import {
   Link,
   ScrollArea,
   Text,
+  Tooltip,
   ValueCopyable,
   ValueMenu,
   ValueNum,
@@ -18,15 +19,17 @@ import { ContractContextMenuFromId } from '../../components/Contracts/ContractCo
 import { AccountContextMenu } from '../../components/AccountContextMenu'
 import { FileContextMenu } from '../../components/Files/FileContextMenu'
 import { CaretDown16 } from '@siafoundation/react-icons'
+import { ChurnEventsField } from './ChurnEventsField'
+import { AlertData } from '@siafoundation/renterd-types'
+import { getFileHealth } from '../../lib/fileHealth'
 
-type Render = (props: { value: unknown }) => JSX.Element
-
-export const dataFields: Record<
-  string,
-  { render: (props: { value: unknown }) => JSX.Element }
-> = {
+export const dataFields: {
+  [K in keyof AlertData]: {
+    render: (props: { value: NonNullable<AlertData[K]> }) => JSX.Element | null
+  }
+} = {
   origin: {
-    render: function OriginField({ value }: { value: string }) {
+    render({ value }) {
       return (
         <div className="flex justify-between w-full gap-2">
           <Text size="12" color="subtle" ellipsis>
@@ -37,10 +40,10 @@ export const dataFields: Record<
           </Text>
         </div>
       )
-    } as Render,
+    },
   },
   contractID: {
-    render: function ContractField({ value }: { value: string }) {
+    render({ value }) {
       return (
         <div className="flex justify-between w-full gap-2">
           <Text size="12" color="subtle" ellipsis>
@@ -63,10 +66,10 @@ export const dataFields: Record<
           />
         </div>
       )
-    } as Render,
+    },
   },
   accountID: {
-    render: function AccountField({ value }: { value: string }) {
+    render({ value }) {
       return (
         <div className="flex justify-between w-full gap-2">
           <Text size="12" color="subtle" ellipsis>
@@ -90,10 +93,10 @@ export const dataFields: Record<
           />
         </div>
       )
-    } as Render,
+    },
   },
   hostKey: {
-    render: function HostField({ value }: { value: string }) {
+    render: function HostKey({ value }) {
       const host = useHost({ params: { hostkey: value } })
       if (!host.data) {
         return null
@@ -121,10 +124,10 @@ export const dataFields: Record<
           />
         </div>
       )
-    } as Render,
+    },
   },
   slabKey: {
-    render: function SlabField({ value }: { value: string }) {
+    render({ value }) {
       return (
         <div className="flex justify-between w-full gap-2">
           <Text size="12" color="subtle" ellipsis>
@@ -133,12 +136,12 @@ export const dataFields: Record<
           <ValueCopyable size="12" value={value} label="slab key" />
         </div>
       )
-    } as Render,
+    },
   },
   health: {
-    render: function OriginField({ value }: { value: string }) {
+    render({ value }) {
       return (
-        <div className="flex justify-between w-full gap-2">
+        <div className="flex justify-between items-center w-full gap-2">
           <Text size="12" color="subtle" ellipsis>
             health
           </Text>
@@ -147,34 +150,46 @@ export const dataFields: Record<
           </Text>
         </div>
       )
-    } as Render,
+    },
   },
-  objectIDs: {
-    render: function ObjectIdsField({
-      value,
-    }: {
-      value: Record<string, string[]>
-    }) {
+  objects: {
+    render: function ObjectIDs({ value }) {
       const { setActiveDirectory } = useFilesManager()
       const { closeDialog } = useDialog()
       return (
-        <div className="flex flex-col gap-2 max-h-[100px]">
-          <div className="flex justify-between w-full gap-2">
+        <div
+          data-testid="objects"
+          className="flex flex-col h-[150px] overflow-hidden"
+        >
+          <div className="flex justify-between items-center w-full gap-2">
             <Text size="12" color="subtle" ellipsis>
-              object IDs
+              objects
+            </Text>
+            <Text size="12" color="contrast" ellipsis>
+              {value.length}
             </Text>
           </div>
-          <div className="-mx-2">
+          <div className="-mx-2 flex-1 overflow-hidden">
             <ScrollArea>
               <div className="flex flex-col gap-2 mt-2 mb-2 px-2">
-                {Object.entries(value).map(([bucket, paths]) =>
-                  paths.map((path) => {
-                    const fullPath = `${bucket}${path}`
-                    return (
-                      <div
-                        key={fullPath}
-                        className="flex justify-between w-full gap-2"
-                      >
+                {value.map(({ bucket, key, health, size }) => {
+                  const fullPath = `${bucket}${key}`
+                  const { color, icon, label } = getFileHealth({
+                    health,
+                    size,
+                    isDirectory: key.endsWith('/'),
+                  })
+                  return (
+                    <div
+                      key={fullPath}
+                      className="flex justify-between items-center w-full gap-2"
+                    >
+                      <div className="flex gap-2 items-center">
+                        <Tooltip content={label}>
+                          <Text size="12" color={color}>
+                            {icon}
+                          </Text>
+                        </Tooltip>
                         <Link
                           color="accent"
                           underline="hover"
@@ -190,35 +205,35 @@ export const dataFields: Record<
                         >
                           {fullPath}
                         </Link>
-                        <FileContextMenu
-                          path={fullPath}
-                          contentProps={{
-                            align: 'end',
-                          }}
-                          trigger={
-                            <Button
-                              aria-label="File context menu"
-                              variant="ghost"
-                              icon="hover"
-                              size="none"
-                            >
-                              <CaretDown16 />
-                            </Button>
-                          }
-                        />
                       </div>
-                    )
-                  })
-                )}
+                      <FileContextMenu
+                        path={fullPath}
+                        contentProps={{
+                          align: 'end',
+                        }}
+                        trigger={
+                          <Button
+                            aria-label="File context menu"
+                            variant="ghost"
+                            icon="hover"
+                            size="none"
+                          >
+                            <CaretDown16 />
+                          </Button>
+                        }
+                      />
+                    </div>
+                  )
+                })}
               </div>
             </ScrollArea>
           </div>
         </div>
       )
-    } as Render,
+    },
   },
   added: {
-    render: function Component({ value }: { value: number }) {
+    render({ value }) {
       return (
         <div className="flex justify-between w-full gap-2">
           <Text size="12" color="subtle" ellipsis>
@@ -229,10 +244,10 @@ export const dataFields: Record<
           </Text>
         </div>
       )
-    } as Render,
+    },
   },
   removed: {
-    render: function Component({ value }: { value: number }) {
+    render({ value }) {
       return (
         <div className="flex justify-between w-full gap-2">
           <Text size="12" color="subtle" ellipsis>
@@ -243,10 +258,10 @@ export const dataFields: Record<
           </Text>
         </div>
       )
-    } as Render,
+    },
   },
   migrationsInterrupted: {
-    render: function Component({ value }: { value: string }) {
+    render({ value }) {
       return (
         <div className="flex justify-between w-full gap-2">
           <Text size="12" color="subtle" ellipsis>
@@ -257,10 +272,10 @@ export const dataFields: Record<
           </Text>
         </div>
       )
-    } as Render,
+    },
   },
   balance: {
-    render: function Component({ value }: { value: string }) {
+    render({ value }) {
       return (
         <div className="flex justify-between w-full gap-2">
           <Text size="12" color="subtle" ellipsis>
@@ -269,10 +284,10 @@ export const dataFields: Record<
           <ValueSc size="12" variant="value" value={new BigNumber(value)} />
         </div>
       )
-    } as Render,
+    },
   },
   address: {
-    render: function Component({ value }: { value: string }) {
+    render({ value }) {
       return (
         <div className="flex justify-between w-full gap-2">
           <Text size="12" color="subtle" ellipsis>
@@ -281,10 +296,10 @@ export const dataFields: Record<
           <ValueCopyable size="12" value={value} type="address" />
         </div>
       )
-    } as Render,
+    },
   },
   account: {
-    render: function Component({ value }: { value: string }) {
+    render({ value }) {
       return (
         <div className="flex justify-between w-full gap-2">
           <Text size="12" color="subtle" ellipsis>
@@ -308,10 +323,10 @@ export const dataFields: Record<
           />
         </div>
       )
-    } as Render,
+    },
   },
   lostSectors: {
-    render: function Component({ value }: { value: number }) {
+    render({ value }) {
       return (
         <div className="flex justify-between w-full gap-2">
           <Text size="12" color="subtle" ellipsis>
@@ -325,6 +340,11 @@ export const dataFields: Record<
           />
         </div>
       )
-    } as Render,
+    },
+  },
+  churn: {
+    render({ value }) {
+      return <ChurnEventsField data={value} />
+    },
   },
 }

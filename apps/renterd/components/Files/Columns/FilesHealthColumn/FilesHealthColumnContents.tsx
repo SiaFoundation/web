@@ -10,7 +10,7 @@ import { cx } from 'class-variance-authority'
 import { sortBy } from '@technically/lodash'
 import { computeSlabContractSetShards } from '../../../../lib/health'
 import { ObjectData } from '../../../../contexts/filesManager/types'
-import { useHealthLabel } from '../../../../hooks/useHealthLabel'
+import { getFileHealth } from '../../../../lib/fileHealth'
 import { bucketAndKeyParamsFromPath } from '../../../../lib/paths'
 
 export function FilesHealthColumnContents({
@@ -31,7 +31,7 @@ export function FilesHealthColumnContents({
     },
   })
 
-  const { displayHealth, label } = useHealthLabel({
+  const { displayHealth, label } = getFileHealth({
     health,
     size,
     isDirectory,

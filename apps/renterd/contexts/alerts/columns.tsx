@@ -9,7 +9,6 @@ import {
 } from '@siafoundation/design-system'
 import { AlertData, TableColumnId } from './types'
 import { dataFields } from './data'
-import { SetAdditions, SetChangesField, SetRemovals } from './SetChange'
 import { Checkmark16 } from '@siafoundation/react-icons'
 import { formatRelative } from 'date-fns'
 import { Fragment, useMemo } from 'react'
@@ -102,32 +101,9 @@ export const columns: AlertsTableColumn[] = [
             .filter(Boolean) as { key: string; value: unknown }[],
         [data]
       )
-      // Collect set changes for the custom SetChangeField component
-      // which is a special case that combines two keys of data
-      const setAdditions = useMemo(
-        () => data['setAdditions'] as SetAdditions,
-        [data]
-      )
-      const setRemovals = useMemo(
-        () => data['setRemovals'] as SetRemovals,
-        [data]
-      )
       return (
         <div className="py-4 w-full">
           <Panel color="subtle" className="flex flex-col gap-1 w-full py-1">
-            {(setAdditions || setRemovals) && (
-              <Fragment key="setChanges">
-                <div className="py-1 px-2">
-                  <SetChangesField
-                    setAdditions={setAdditions}
-                    setRemovals={setRemovals}
-                  />
-                </div>
-                {datums.length >= 1 && (
-                  <Separator color="verySubtle" className="w-full" />
-                )}
-              </Fragment>
-            )}
             {datums.map(({ key, value }, i) => {
               const Component = dataFields?.[key]?.render
               if (!Component) {

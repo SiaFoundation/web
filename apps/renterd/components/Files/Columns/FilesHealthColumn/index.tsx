@@ -1,12 +1,12 @@
 import { HoverCard, LoadingDots, Text } from '@siafoundation/design-system'
 import { ObjectData } from '../../../../contexts/filesManager/types'
-import { useHealthLabel } from '../../../../hooks/useHealthLabel'
+import { getFileHealth } from '../../../../lib/fileHealth'
 import { FilesHealthColumnContents } from './FilesHealthColumnContents'
 
 export function FilesHealthColumn(props: ObjectData) {
   const { name, isUploading, type, health: _health, size } = props
   const isDirectory = type === 'directory'
-  const { displayHealth, label, color, icon } = useHealthLabel({
+  const { displayHealth, label, color, icon } = getFileHealth({
     health: _health,
     size,
     isDirectory,

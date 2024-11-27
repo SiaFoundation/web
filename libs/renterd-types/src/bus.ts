@@ -458,16 +458,41 @@ export type ObjectsStatsResponse = {
 
 export type AlertSeverity = 'info' | 'warning' | 'error' | 'critical'
 
+export type AlertChurnEvent = {
+  from: 'good' | 'bad'
+  to: 'good' | 'bad'
+  reason?: string
+  size: number
+  hostKey: string
+  time: string
+}
+
+export type AlertData = {
+  error?: string
+  hint?: string
+  origin?: string
+  contractID?: string
+  accountID?: string
+  hostKey?: string
+  slabKey?: string
+  health?: number
+  objects?: ObjectMetadata[]
+  added?: number
+  removed?: number
+  migrationsInterrupted?: string
+  balance?: string
+  address?: string
+  account?: string
+  lostSectors?: number
+  churn?: Record<string, AlertChurnEvent[]>
+}
+
 export type Alert = {
   id: string
   severity: AlertSeverity
   message: string
   timestamp: string
-  data: {
-    account?: string
-    host?: string
-    key?: string
-  }
+  data: AlertData
 }
 
 export type AlertsParams = {
