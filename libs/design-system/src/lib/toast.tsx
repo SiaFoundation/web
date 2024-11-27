@@ -69,7 +69,7 @@ function ToastLayout({
   )
 }
 
-type ToastParams = {
+export type ToastParams = {
   title: React.ReactNode
   body?: React.ReactNode
   icon?: React.ReactNode

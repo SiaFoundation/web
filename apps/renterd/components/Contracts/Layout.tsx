@@ -7,6 +7,7 @@ import {
 } from '../RenterdAuthedLayout'
 import { ContractsActionsMenu } from './ContractsActionsMenu'
 import { ContractsFilterBar } from './ContractsFilterBar'
+import { ContractsBatchMenu } from './ContractsBatchMenu'
 
 export const Layout = RenterdAuthedLayout
 export function useLayoutProps(): RenterdAuthedPageLayoutProps {
@@ -20,5 +21,6 @@ export function useLayoutProps(): RenterdAuthedPageLayoutProps {
     stats: <ContractsFilterBar />,
     size: 'full',
     scroll: false,
+    dockedControls: <ContractsBatchMenu />,
   }
 }

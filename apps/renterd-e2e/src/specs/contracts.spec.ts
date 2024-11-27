@@ -61,3 +61,21 @@ test('contracts prunable size', async ({ page }) => {
     await expect(prunableSize).toBeVisible()
   }
 })
+
+test('bulk delete contracts', async ({ page }) => {
+  await navigateToContracts({ page })
+  const rows = await getContractRows(page)
+  for (const row of rows) {
+    await row.click()
+  }
+
+  // Delete selected contracts.
+  const menu = page.getByLabel('contract multi-select menu')
+  await menu.getByLabel('delete selected contracts').click()
+  const dialog = page.getByRole('dialog')
+  await dialog.getByRole('button', { name: 'Delete' }).click()
+
+  await expect(
+    page.getByText('There are currently no active contracts')
+  ).toBeVisible()
+})

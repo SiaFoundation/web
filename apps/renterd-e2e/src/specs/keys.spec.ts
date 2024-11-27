@@ -25,7 +25,7 @@ test('create and delete a key', async ({ page }) => {
   await expect(row).toBeHidden()
 })
 
-test('batch delete multiple keys', async ({ page }) => {
+test('bulk delete multiple keys', async ({ page }) => {
   // Create 3 keys. Note: 1 already exists.
   const key1 = await createKey(page)
   const key2 = await createKey(page)
