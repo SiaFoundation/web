@@ -7,7 +7,7 @@
 - d891861b: Checkbox now supports an indeterminate state.
 - d891861b: Added useMultiSelect hook that tracks multiselect state. It supports selection, shift-selecting for ranges, deselection, and works across pagination.
 - ed264a0d: Added dockedControls to AppAuthedLayout.
-- d891861b: Added MultiSelectMenu. The component can be used along with useMultiSelect for batch menus.
+- d891861b: Added MultiSelectMenu. The component can be used along with useMultiSelect for bulk menus.
 - 09142864: Table row data now supports an isSelected prop.
 - d891861b: Checkbox light mode background color is now white.
 - d891861b: Table column sort icons are now chevrons to differentiate from context menus which often use carets.

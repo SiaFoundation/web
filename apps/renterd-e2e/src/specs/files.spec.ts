@@ -222,7 +222,7 @@ test('shows a new intermediate directory when uploading nested files', async ({
   await deleteBucket(page, bucketName)
 })
 
-test('batch delete across nested directories', async ({ page }) => {
+test('bulk delete across nested directories', async ({ page }) => {
   const bucketName = 'bucket1'
   await navigateToBuckets({ page })
   await createBucket(page, bucketName)
@@ -267,7 +267,7 @@ test('batch delete across nested directories', async ({ page }) => {
   })
 })
 
-test('batch delete using the all files explorer mode', async ({ page }) => {
+test('bulk delete using the all files explorer mode', async ({ page }) => {
   const bucketName = 'bucket1'
   await navigateToBuckets({ page })
   await createBucket(page, bucketName)

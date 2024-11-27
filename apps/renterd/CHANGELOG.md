@@ -12,13 +12,13 @@
 
 - 17b29cf3: Navigating into a directory in the file explorer is now by clicking on the directory name rather than anywhere on the row.
 - 17b29cf3: The directory-based file explorer now supports multiselect across any files and directories.
-- 6c7e3681: The key management table now supports multiselect and batch deletion.
+- 6c7e3681: The key management table now supports multiselect and bulk deletion.
 - 17b29cf3: The "all files" file explorer now supports multiselect across any files.
-- 17b29cf3: The "all files" file explorer multiselect menu now supports batch deletion of selected files.
+- 17b29cf3: The "all files" file explorer multiselect menu now supports bulk deletion of selected files.
 - 6c7e3681: The onboarding wizard now animates in and out.
 - ed264a0d: The transfers bar now animates in and out.
 - 09142864: The keys table now has pagination controls.
-- 17b29cf3: The directory-based file explorer multiselect menu now supports batch deletion of selected files and directories.
+- 17b29cf3: The directory-based file explorer multiselect menu now supports bulk deletion of selected files and directories.
 
 ### Patch Changes
 

@@ -1,15 +1,15 @@
 import {
   Button,
   Paragraph,
-  triggerSuccessToast,
-  triggerErrorToast,
   MultiSelect,
+  handleBatchOperation,
 } from '@siafoundation/design-system'
 import { Delete16 } from '@siafoundation/react-icons'
 import { useCallback, useMemo } from 'react'
 import { useDialog } from '../../../contexts/dialog'
 import { useObjectsRemove } from '@siafoundation/renterd-react'
 import { ObjectData } from '../../../contexts/filesManager/types'
+import { pluralize } from '@siafoundation/units'
 
 export function FilesBatchDelete({
   multiSelect,
@@ -26,29 +26,29 @@ export function FilesBatchDelete({
   )
   const { openConfirmDialog } = useDialog()
   const objectsRemove = useObjectsRemove()
-  const deleteFiles = useCallback(async () => {
-    const totalCount = filesToDelete.length
-    let errorCount = 0
-    for (const { bucket, prefix } of filesToDelete) {
-      const response = await objectsRemove.post({
-        payload: {
-          bucket,
-          prefix,
+  const deleteAll = useCallback(async () => {
+    await handleBatchOperation(
+      filesToDelete.map(({ bucket, prefix }) =>
+        objectsRemove.post({
+          payload: {
+            bucket,
+            prefix,
+          },
+        })
+      ),
+      {
+        toastError: ({ totalCount, errorCount, successCount }) => ({
+          title: `${pluralize(successCount, 'file')} deleted`,
+          body: `Error deleting ${errorCount}/${totalCount} total files.`,
+        }),
+        toastSuccess: ({ totalCount }) => ({
+          title: `${pluralize(totalCount, 'file')} deleted`,
+        }),
+        after: () => {
+          multiSelect.deselectAll()
         },
-      })
-      if (response.error) {
-        errorCount++
       }
-    }
-    if (errorCount > 0) {
-      triggerErrorToast({
-        title: `${totalCount - errorCount} files deleted`,
-        body: `Error deleting ${errorCount}/${totalCount} total files.`,
-      })
-    } else {
-      triggerSuccessToast({ title: `${totalCount} files deleted` })
-    }
-    multiSelect.deselectAll()
+    )
   }, [multiSelect, filesToDelete, objectsRemove])
 
   return (
@@ -64,12 +64,12 @@ export function FilesBatchDelete({
             <div className="flex flex-col gap-1">
               <Paragraph size="14">
                 Are you sure you would like to delete the{' '}
-                {multiSelect.selectionCount.toLocaleString()} selected files?
+                {pluralize(multiSelect.selectionCount, 'selected file')}?
               </Paragraph>
             </div>
           ),
           onConfirm: async () => {
-            deleteFiles()
+            deleteAll()
           },
         })
       }}

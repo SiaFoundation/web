@@ -136,7 +136,7 @@ test('move a file via drag and drop while leaving a separate set of selected fil
   })
 })
 
-test('move files by selecting and using the docked menu batch action', async ({
+test('move files by selecting and using the docked menu bulk action', async ({
   page,
 }) => {
   const bucketName = 'bucket1'
