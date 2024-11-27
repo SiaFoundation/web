@@ -3,6 +3,7 @@ import { login } from './login'
 import { Page } from 'playwright'
 import {
   clusterd,
+  hostdWaitForContracts,
   setupCluster,
   teardownCluster,
 } from '@siafoundation/clusterd'
@@ -12,11 +13,12 @@ import {
   mockApiSiaScanExchangeRates,
 } from '@siafoundation/e2e'
 
-export async function beforeTest(page: Page) {
+export async function beforeTest(page: Page, { renterdCount = 0 } = {}) {
   await mockApiSiaScanExchangeRates({ page })
   await mockApiSiaCentralHostsNetworkAverages({ page })
-  await setupCluster({ hostdCount: 1 })
+  await setupCluster({ hostdCount: 1, renterdCount })
   const hostdNode = clusterd.nodes.find((n) => n.type === 'hostd')
+  await hostdWaitForContracts({ hostdNode, renterdCount })
   await login({
     page,
     address: hostdNode.apiAddress,

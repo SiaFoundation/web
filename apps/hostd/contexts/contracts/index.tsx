@@ -3,6 +3,8 @@ import {
   useDatasetEmptyState,
   useServerFilters,
   getContractsTimeRangeBlockHeight,
+  Maybe,
+  useMultiSelect,
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import { ContractStatus } from '@siafoundation/hostd-types'
@@ -10,6 +12,7 @@ import { useContracts as useContractsData } from '@siafoundation/hostd-react'
 import { createContext, useContext, useMemo } from 'react'
 import {
   columnsDefaultVisible,
+  ContractData,
   defaultSortField,
   SortField,
   sortOptions,
@@ -70,7 +73,7 @@ function useContractsMain() {
     },
   })
 
-  const dataset = useDataset({
+  const _datasetPage = useDataset({
     response,
   })
 
@@ -81,15 +84,36 @@ function useContractsMain() {
 
   const isValidating = response.isValidating
   const error = response.error
-  const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
+  const dataState = useDatasetEmptyState(
+    _datasetPage,
+    isValidating,
+    error,
+    filters
+  )
 
   const { estimatedBlockHeight, isSynced, nodeBlockHeight } = useSyncStatus()
   const currentHeight = isSynced ? nodeBlockHeight : estimatedBlockHeight
 
   const { range: contractsTimeRange } = useMemo(
-    () => getContractsTimeRangeBlockHeight(currentHeight, dataset || []),
-    [currentHeight, dataset]
+    () => getContractsTimeRangeBlockHeight(currentHeight, _datasetPage || []),
+    [currentHeight, _datasetPage]
   )
+
+  const multiSelect = useMultiSelect(_datasetPage)
+
+  const datasetPage = useMemo<Maybe<ContractData[]>>(() => {
+    if (!_datasetPage) {
+      return undefined
+    }
+    return _datasetPage.map((datum) => {
+      return {
+        ...datum,
+        onClick: (e: React.MouseEvent<HTMLTableRowElement>) =>
+          multiSelect.onSelect(datum.id, e),
+        isSelected: !!multiSelect.selectionMap[datum.id],
+      }
+    })
+  }, [_datasetPage, multiSelect])
 
   const siascanUrl = useSiascanUrl()
 
@@ -98,8 +122,9 @@ function useContractsMain() {
       contractsTimeRange,
       currentHeight,
       siascanUrl,
+      multiSelect,
     }),
-    [contractsTimeRange, currentHeight, siascanUrl]
+    [contractsTimeRange, currentHeight, siascanUrl, multiSelect]
   )
 
   return {
@@ -107,10 +132,10 @@ function useContractsMain() {
     offset,
     limit,
     cellContext,
-    pageCount: dataset?.length || 0,
+    pageCount: datasetPage?.length || 0,
     totalCount: response.data?.count,
     columns: filteredTableColumns,
-    dataset,
+    datasetPage,
     configurableColumns,
     enabledColumns,
     sortableColumns,
@@ -128,6 +153,7 @@ function useContractsMain() {
     removeFilter,
     removeLastFilter,
     resetFilters,
+    multiSelect,
   }
 }
 

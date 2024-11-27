@@ -8,6 +8,8 @@ import {
   ContractTimeline,
   ValueNum,
   ValueScFiat,
+  Checkbox,
+  MultiSelect,
 } from '@siafoundation/design-system'
 import {
   ArrowUpLeft16,
@@ -26,6 +28,7 @@ type Context = {
     endHeight: number
   }
   siascanUrl: string
+  multiSelect: MultiSelect<ContractData>
 }
 
 type ContractsTableColumn = TableColumn<
@@ -43,7 +46,14 @@ export const columns: ContractsTableColumn[] = (
       id: 'actions',
       label: '',
       fixed: true,
-      cellClassName: 'w-[50px] !pl-2 !pr-4 [&+*]:!pl-0',
+      contentClassName: '!pl-3 !pr-4',
+      cellClassName: 'w-[20px] !pl-0 !pr-0',
+      heading: ({ context: { multiSelect } }) => (
+        <Checkbox
+          onClick={multiSelect.onSelectPage}
+          checked={multiSelect.isPageAllSelected}
+        />
+      ),
       render: ({ data: { id, status } }) => (
         <ContractContextMenu id={id} status={status} />
       ),

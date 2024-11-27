@@ -5,7 +5,7 @@ import {
   clusterd,
   setupCluster,
   teardownCluster,
-  waitForContracts,
+  renterdWaitForContracts,
 } from '@siafoundation/clusterd'
 import {
   setCurrencyDisplay,
@@ -18,7 +18,7 @@ export async function beforeTest(page: Page, { hostdCount = 0 } = {}) {
   await mockApiSiaCentralHostsNetworkAverages({ page })
   await setupCluster({ renterdCount: 1, hostdCount })
   const renterdNode = clusterd.nodes.find((n) => n.type === 'renterd')
-  await waitForContracts({ renterdNode, hostdCount })
+  await renterdWaitForContracts({ renterdNode, hostdCount })
   await login({
     page,
     address: renterdNode.apiAddress,
