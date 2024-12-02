@@ -215,12 +215,6 @@ export function Config() {
           form={form}
           fields={fields}
         />
-        <ConfigurationPanelSetting
-          autoVisibility
-          name="migrationSurchargeMultiplier"
-          form={form}
-          fields={fields}
-        />
       </PanelMenuSection>
       <ConfigurationPanel
         title="Hosts"

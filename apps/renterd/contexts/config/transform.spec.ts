@@ -61,7 +61,6 @@ describe('tansforms', () => {
         minAccountExpiryDays: new BigNumber(1),
         minMaxEphemeralAccountBalance: new BigNumber('1'),
         minPriceTableValidityMinutes: new BigNumber(5),
-        migrationSurchargeMultiplier: new BigNumber(10),
         minShards: new BigNumber(10),
         totalShards: new BigNumber(30),
         maxStoragePriceTBMonthPinned: new BigNumber('5'),
@@ -248,7 +247,6 @@ describe('tansforms', () => {
               minPriceTableValidityMinutes: new BigNumber(5),
               minShards: new BigNumber(10),
               totalShards: new BigNumber(30),
-              migrationSurchargeMultiplier: new BigNumber(10),
               maxStoragePriceTBMonthPinned: new BigNumber('0'),
               maxDownloadPriceTBPinned: new BigNumber('0'),
               maxUploadPriceTBPinned: new BigNumber('0'),
@@ -275,7 +273,6 @@ describe('tansforms', () => {
           minAccountExpiry: 86400000000000,
           minMaxEphemeralAccountBalance: '1000000000000000000000000',
           minPriceTableValidity: 300000000000,
-          migrationSurchargeMultiplier: 10,
         })
       })
     })
@@ -509,7 +506,6 @@ function buildAllResponses() {
       minAccountExpiry: 86400000000000,
       minMaxEphemeralAccountBalance: '1000000000000000000000000',
       minPriceTableValidity: 300000000000,
-      migrationSurchargeMultiplier: 10,
     } as SettingsGouging,
     pinned: {
       currency: 'usd' as CurrencyId,

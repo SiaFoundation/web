@@ -41,7 +41,6 @@ export const inputValuesGouging = {
   minPriceTableValidityMinutes: undefined as BigNumber | undefined,
   minAccountExpiryDays: undefined as BigNumber | undefined,
   minMaxEphemeralAccountBalance: undefined as BigNumber | undefined,
-  migrationSurchargeMultiplier: undefined as BigNumber | undefined,
 }
 
 export const inputValuesPinned = {

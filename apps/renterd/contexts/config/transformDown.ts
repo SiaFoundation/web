@@ -115,9 +115,6 @@ export function transformDownGouging({
       gouging.minMaxEphemeralAccountBalance,
       scDecimalPlaces
     ),
-    migrationSurchargeMultiplier: new BigNumber(
-      gouging.migrationSurchargeMultiplier
-    ),
   }
 }
 
