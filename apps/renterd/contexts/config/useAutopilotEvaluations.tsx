@@ -422,7 +422,6 @@ const fieldToHrefId: Record<keyof RecommendableFields, string> = {
   minPriceTableValidityMinutes: 'minPriceTableValidityMinutes',
   minAccountExpiryDays: 'minAccountExpiryDays',
   minMaxEphemeralAccountBalance: 'minMaxEphemeralAccountBalance',
-  migrationSurchargeMultiplier: 'migrationSurchargeMultiplier',
 }
 
 const fieldToLabel: Record<keyof RecommendableFields, string> = {
@@ -438,7 +437,6 @@ const fieldToLabel: Record<keyof RecommendableFields, string> = {
   minPriceTableValidityMinutes: 'min price table validity',
   minAccountExpiryDays: 'min account expiry',
   minMaxEphemeralAccountBalance: 'min max ephemeral account balance',
-  migrationSurchargeMultiplier: 'migration surcharge multiplier',
 }
 
 export const valuesZeroDefaults: Values = {
@@ -468,7 +466,6 @@ export const valuesZeroDefaults: Values = {
   minPriceTableValidityMinutes: new BigNumber(0),
   minAccountExpiryDays: new BigNumber(0),
   minMaxEphemeralAccountBalance: new BigNumber(0),
-  migrationSurchargeMultiplier: new BigNumber(0),
   minShards: new BigNumber(0),
   totalShards: new BigNumber(0),
   pinnedCurrency: 'usd',

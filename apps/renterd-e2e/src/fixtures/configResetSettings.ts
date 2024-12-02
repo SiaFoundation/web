@@ -60,7 +60,6 @@ export const configResetAllSettings = step(
     await fillTextInputByName(page, 'minPriceTableValidityMinutes', '5')
     await fillTextInputByName(page, 'minAccountExpiryDays', '1')
     await fillTextInputByName(page, 'minMaxEphemeralAccountBalance', '1')
-    await fillTextInputByName(page, 'migrationSurchargeMultiplier', '1')
 
     // redundancy
     await fillTextInputByName(page, 'minShards', '1')

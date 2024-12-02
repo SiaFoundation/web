@@ -110,7 +110,6 @@ export function transformUpGouging(
     minMaxEphemeralAccountBalance: toHastings(
       v.minMaxEphemeralAccountBalance
     ).toString(),
-    migrationSurchargeMultiplier: v.migrationSurchargeMultiplier.toNumber(),
   }
 }
 
