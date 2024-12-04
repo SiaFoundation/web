@@ -167,7 +167,7 @@ func main() {
 	defer s.Close()
 	go s.Run(ctx)
 
-	nm := nodes.NewManager(dir, cm, s, log.Named("cluster"))
+	nm := nodes.NewManager(dir, cm, s, nodes.WithSharedConsensus(true))
 
 	server := &http.Server{
 		Handler:     api.Handler(cm, s, nm, log.Named("api")),
