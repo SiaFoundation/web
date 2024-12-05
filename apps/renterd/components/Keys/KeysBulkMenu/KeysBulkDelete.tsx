@@ -14,7 +14,7 @@ import { omit } from '@technically/lodash'
 import { useDialog } from '../../../contexts/dialog'
 import { useKeys } from '../../../contexts/keys'
 
-export function KeysBatchDelete() {
+export function KeysBulkDelete() {
   const { multiSelect } = useKeys()
 
   const keys = useMemo(

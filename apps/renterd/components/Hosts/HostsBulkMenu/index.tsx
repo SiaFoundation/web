@@ -6,7 +6,7 @@ import { HostsRemoveBlocklist } from './HostsRemoveBlocklist'
 import { HostsRemoveAllowlist } from './HostsRemoveAllowlist'
 import { useHosts } from '../../../contexts/hosts'
 
-export function HostsBatchMenu() {
+export function HostsBulkMenu() {
   const { multiSelect } = useHosts()
 
   return (

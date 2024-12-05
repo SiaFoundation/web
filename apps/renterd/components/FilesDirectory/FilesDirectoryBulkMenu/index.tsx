@@ -1,15 +1,15 @@
 import { MultiSelectionMenu } from '@siafoundation/design-system'
-import { FilesBatchDelete } from '../../Files/batchActions/FilesBatchDelete'
+import { FilesBulkDelete } from '../../Files/bulkActions/FilesBulkDelete'
 import { useFilesDirectory } from '../../../contexts/filesDirectory'
-import { FilesBatchMove } from './FilesBatchMove'
+import { FilesBulkMove } from './FilesBulkMove'
 
-export function FilesDirectoryBatchMenu() {
+export function FilesDirectoryBulkMenu() {
   const { multiSelect } = useFilesDirectory()
 
   return (
     <MultiSelectionMenu multiSelect={multiSelect} entityWord="file">
-      <FilesBatchMove />
-      <FilesBatchDelete multiSelect={multiSelect} />
+      <FilesBulkMove />
+      <FilesBulkDelete multiSelect={multiSelect} />
     </MultiSelectionMenu>
   )
 }

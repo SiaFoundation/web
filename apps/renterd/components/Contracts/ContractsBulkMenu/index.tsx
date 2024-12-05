@@ -1,12 +1,12 @@
 import { MultiSelectionMenu } from '@siafoundation/design-system'
 import { useContracts } from '../../../contexts/contracts'
-import { ContractsBatchDelete } from './ContractsBatchDelete'
+import { ContractsBulkDelete } from './ContractsBulkDelete'
 import { ContractsAddBlocklist } from './ContractsAddBlocklist'
 import { ContractsAddAllowlist } from './ContractsAddAllowlist'
 import { ContractsRemoveBlocklist } from './ContractsRemoveBlocklist'
 import { ContractsRemoveAllowlist } from './ContractsRemoveAllowlist'
 
-export function ContractsBatchMenu() {
+export function ContractsBulkMenu() {
   const { multiSelect } = useContracts()
 
   return (
@@ -19,7 +19,7 @@ export function ContractsBatchMenu() {
         <ContractsRemoveAllowlist />
         <ContractsRemoveBlocklist />
       </div>
-      <ContractsBatchDelete />
+      <ContractsBulkDelete />
     </MultiSelectionMenu>
   )
 }
