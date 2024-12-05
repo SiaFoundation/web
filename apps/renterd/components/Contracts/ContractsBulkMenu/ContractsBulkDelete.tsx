@@ -10,7 +10,7 @@ import { useDialog } from '../../../contexts/dialog'
 import { useContracts } from '../../../contexts/contracts'
 import { pluralize } from '@siafoundation/units'
 
-export function ContractsBatchDelete() {
+export function ContractsBulkDelete() {
   const { multiSelect } = useContracts()
 
   const ids = useMemo(

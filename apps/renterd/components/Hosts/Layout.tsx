@@ -7,7 +7,7 @@ import {
 } from '../RenterdAuthedLayout'
 import { HostsActionsMenu } from './HostsActionsMenu'
 import { HostsFilterBar } from './HostsFilterBar'
-import { HostsBatchMenu } from './HostsBatchMenu'
+import { HostsBulkMenu } from './HostsBulkMenu'
 
 export const Layout = RenterdAuthedLayout
 export function useLayoutProps(): RenterdAuthedPageLayoutProps {
@@ -21,6 +21,6 @@ export function useLayoutProps(): RenterdAuthedPageLayoutProps {
     actions: <HostsActionsMenu />,
     stats: <HostsFilterBar />,
     scroll: false,
-    dockedControls: <HostsBatchMenu />,
+    dockedControls: <HostsBulkMenu />,
   }
 }

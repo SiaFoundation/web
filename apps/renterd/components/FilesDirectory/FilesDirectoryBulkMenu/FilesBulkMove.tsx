@@ -3,7 +3,7 @@ import { FolderMoveTo16 } from '@siafoundation/react-icons'
 import { useFilesDirectory } from '../../../contexts/filesDirectory'
 import { useDialog } from '../../../contexts/dialog'
 
-export function FilesBatchMove() {
+export function FilesBulkMove() {
   const { openConfirmDialog } = useDialog()
   const { multiSelect, moveSelectedFiles, moveSelectedFilesOperationCount } =
     useFilesDirectory()

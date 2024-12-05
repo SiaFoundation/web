@@ -1,13 +1,13 @@
 import { MultiSelectionMenu } from '@siafoundation/design-system'
 import { useKeys } from '../../../contexts/keys'
-import { KeysBatchDelete } from './KeysBatchDelete'
+import { KeysBulkDelete } from './KeysBulkDelete'
 
-export function KeysBatchMenu() {
+export function KeysBulkMenu() {
   const { multiSelect } = useKeys()
 
   return (
     <MultiSelectionMenu multiSelect={multiSelect} entityWord="key">
-      <KeysBatchDelete />
+      <KeysBulkDelete />
     </MultiSelectionMenu>
   )
 }

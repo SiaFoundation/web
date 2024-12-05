@@ -11,7 +11,7 @@ import { useObjectsRemove } from '@siafoundation/renterd-react'
 import { ObjectData } from '../../../contexts/filesManager/types'
 import { pluralize } from '@siafoundation/units'
 
-export function FilesBatchDelete({
+export function FilesBulkDelete({
   multiSelect,
 }: {
   multiSelect: MultiSelect<ObjectData>

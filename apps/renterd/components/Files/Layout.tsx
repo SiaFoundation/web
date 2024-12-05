@@ -9,9 +9,9 @@ import {
 } from '../RenterdAuthedLayout'
 import { FilesActionsMenu } from '../FilesDirectory/FilesActionsMenu'
 import { FilesStatsMenu } from '../FilesDirectory/FilesStatsMenu'
-import { FilesDirectoryDockedControls } from '../FilesDirectory/FilesDirectoryDockedControls'
+import { FilesDirectoryBulkMenu } from '../FilesDirectory/FilesDirectoryBulkMenu'
 import { useFilesManager } from '../../contexts/filesManager'
-import { FilesFlatDockedControls } from '../FilesFlat/FilesFlatDockedControls'
+import { FilesFlatBulkMenu } from '../FilesFlat/FilesFlatBulkMenu'
 
 export const Layout = RenterdAuthedLayout
 export function useLayoutProps(): RenterdAuthedPageLayoutProps {
@@ -31,7 +31,7 @@ export function useLayoutProps(): RenterdAuthedPageLayoutProps {
       nav: <FilesDirectoryBreadcrumbMenu />,
       stats: <FilesStatsMenu />,
       actions: <FilesActionsMenu />,
-      dockedControls: <FilesDirectoryDockedControls />,
+      dockedControls: <FilesDirectoryBulkMenu />,
     }
   }
 
@@ -44,6 +44,6 @@ export function useLayoutProps(): RenterdAuthedPageLayoutProps {
     nav: <FilesFlatBreadcrumbMenu />,
     stats: <FilesStatsMenu />,
     actions: <FilesActionsMenu />,
-    dockedControls: <FilesFlatDockedControls />,
+    dockedControls: <FilesFlatBulkMenu />,
   }
 }
