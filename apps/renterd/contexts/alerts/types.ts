@@ -1,11 +1,14 @@
-export type AlertSeverity = 'info' | 'warning' | 'error' | 'critical'
+import {
+  AlertSeverity,
+  AlertData as AlertDataField,
+} from '@siafoundation/renterd-types'
 
 export type AlertData = {
   id: string
   severity: AlertSeverity
   message: string
   timestamp: string
-  data: Record<string, unknown>
+  data: AlertDataField
   dismiss: () => void
 }
 

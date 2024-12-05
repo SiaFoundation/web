@@ -3,7 +3,7 @@ import { Contract } from '@siafoundation/hostd-types'
 import { useContracts } from '@siafoundation/hostd-react'
 import { ContractData } from './types'
 import BigNumber from 'bignumber.js'
-import { Maybe } from '@siafoundation/design-system'
+import { Maybe } from '@siafoundation/types'
 
 export function useDataset({
   response,

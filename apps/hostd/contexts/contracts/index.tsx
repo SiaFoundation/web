@@ -3,9 +3,9 @@ import {
   useDatasetEmptyState,
   useServerFilters,
   getContractsTimeRangeBlockHeight,
-  Maybe,
   useMultiSelect,
 } from '@siafoundation/design-system'
+import { Maybe } from '@siafoundation/types'
 import { useRouter } from 'next/router'
 import { ContractStatus } from '@siafoundation/hostd-types'
 import { useContracts as useContractsData } from '@siafoundation/hostd-react'

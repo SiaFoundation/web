@@ -51,7 +51,7 @@ export async function example() {
     },
   })
 
-  hosts.data.forEach((host) => {
+  hosts.data?.forEach((host) => {
     console.log(host.publicKey, host.priceTable)
   })
 

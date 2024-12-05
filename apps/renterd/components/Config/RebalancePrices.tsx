@@ -4,10 +4,10 @@ import { useConfig } from '../../contexts/config'
 import {
   Button,
   formSetFields,
-  Maybe,
   Text,
   Tooltip,
 } from '@siafoundation/design-system'
+import { Maybe } from '@siafoundation/types'
 import { InputValues } from '../../contexts/config/types'
 import BigNumber from 'bignumber.js'
 import { derivePricingFromSpendingEstimate } from '../../contexts/config/spending'

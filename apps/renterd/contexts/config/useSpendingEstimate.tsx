@@ -1,6 +1,6 @@
 import { useConfig } from '.'
 import { useMemo } from 'react'
-import { Maybe } from '@siafoundation/design-system'
+import { Maybe } from '@siafoundation/types'
 import BigNumber from 'bignumber.js'
 import { useRedundancyMultiplier } from './useRedundancyMultiplier'
 import { calculateSpendingEstimate } from './spending'

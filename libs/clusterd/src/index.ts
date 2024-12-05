@@ -4,6 +4,7 @@ import Axios from 'axios'
 import { Bus } from '@siafoundation/renterd-js'
 import { pluralize } from '@siafoundation/units'
 import { Hostd } from '@siafoundation/hostd-js'
+import { Maybe } from '@siafoundation/types'
 
 type Node = {
   type: string
@@ -52,12 +53,12 @@ export async function setupCluster({
       const addr = `http://localhost:${clusterd.managementPort}/nodes`
       try {
         const nodes = await Axios.get<
-          { type: string; apiAddress: string; password: string }[]
+          Maybe<{ type: string; apiAddress: string; password: string }[]>
         >(`http://localhost:${clusterd.managementPort}/nodes`)
-        const runningCount = nodes.data.length
+        const runningCount = nodes.data?.length
         const totalCount = renterdCount + hostdCount + walletdCount
-        if (nodes.data.length === renterdCount + hostdCount + walletdCount) {
-          clusterd.nodes = nodes.data.map((n) => ({
+        if (nodes.data?.length === renterdCount + hostdCount + walletdCount) {
+          clusterd.nodes = nodes.data?.map((n) => ({
             ...n,
             apiAddress: n.apiAddress.replace('[::]', '127.0.0.1'),
           }))
@@ -112,12 +113,14 @@ export async function renterdWaitForContracts({
         },
       })
       const contracts = await bus.contracts()
+
+      const hostCount = hosts.data?.length || 0
+      const contractCount = contracts.data?.length || 0
+
       console.log(
-        `usable hosts: ${hosts.data.length}/${hostdCount} - active contracts: ${contracts.data.length}/${hostdCount}`
+        `usable hosts: ${hostCount}/${hostdCount} - active contracts: ${contractCount}/${hostdCount}`
       )
-      return (
-        hosts.data.length >= hostdCount && contracts.data.length >= hostdCount
-      )
+      return hostCount >= hostdCount && contractCount >= hostdCount
     },
     {
       timeout: maxTimeWaitingForContractsToForm,
