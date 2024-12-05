@@ -5,8 +5,8 @@ import {
   useClientFilters,
   useClientFilteredDataset,
   useMultiSelect,
-  Maybe,
 } from '@siafoundation/design-system'
+import { Maybe } from '@siafoundation/types'
 import { useRouter } from 'next/router'
 import { useContracts as useContractsData } from '@siafoundation/renterd-react'
 import { createContext, useContext, useMemo, useState } from 'react'

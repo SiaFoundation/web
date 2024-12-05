@@ -2,6 +2,7 @@ import {
   Badge,
   Button,
   ControlGroup,
+  objectEntries,
   Panel,
   Separator,
   TableColumn,
@@ -86,8 +87,8 @@ export const columns: AlertsTableColumn[] = [
       // Collect data for data fields
       const datums = useMemo(
         () =>
-          Object.keys(dataFields)
-            .map((key) => {
+          objectEntries(dataFields)
+            .map(([key]) => {
               const value = data[key]
               if (
                 value === undefined ||
@@ -98,14 +99,17 @@ export const columns: AlertsTableColumn[] = [
               }
               return { key, value }
             })
-            .filter(Boolean) as { key: string; value: unknown }[],
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            .filter((data) => data) as { key: string; value: any }[],
         [data]
       )
       return (
         <div className="py-4 w-full">
           <Panel color="subtle" className="flex flex-col gap-1 w-full py-1">
             {datums.map(({ key, value }, i) => {
-              const Component = dataFields?.[key]?.render
+              const Component: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              ((props: { value: any }) => React.ReactNode) | undefined =
+                dataFields?.[key as keyof AlertData['data']]?.render
               if (!Component) {
                 return null
               }

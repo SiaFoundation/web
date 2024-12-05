@@ -7,7 +7,7 @@ import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { blockHeightToTime } from '@siafoundation/units'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { usePrunableContractSizes } from './usePrunableContractSizes'
-import { Maybe } from '@siafoundation/design-system'
+import { Maybe } from '@siafoundation/types'
 
 export function useDataset() {
   const response = useContractsData({

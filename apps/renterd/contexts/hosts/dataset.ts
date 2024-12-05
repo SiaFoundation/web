@@ -9,7 +9,8 @@ import {
 } from '@siafoundation/renterd-react'
 import { ContractData } from '../contracts/types'
 import { SiaCentralHost } from '@siafoundation/sia-central-types'
-import { Maybe, objectEntries } from '@siafoundation/design-system'
+import { Maybe } from '@siafoundation/types'
+import { objectEntries } from '@siafoundation/design-system'
 
 export function useDataset({
   response,

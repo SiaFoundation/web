@@ -76,9 +76,7 @@ test('contracts bulk delete', async ({ page }) => {
   const dialog = page.getByRole('dialog')
   await dialog.getByRole('button', { name: 'Delete' }).click()
 
-  await expect(
-    page.getByText('There are currently no active contracts')
-  ).toBeVisible()
+  await expect(page.getByText('3 contracts deleted')).toBeVisible()
 })
 
 test('contracts bulk allowlist', async ({ page }) => {

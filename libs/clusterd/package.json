@@ -9,7 +9,8 @@
     "axios": "^0.27.2",
     "@siafoundation/renterd-js": "0.11.0",
     "@siafoundation/units": "3.2.0",
-    "@siafoundation/hostd-js": "0.3.1"
+    "@siafoundation/hostd-js": "0.3.1",
+    "@siafoundation/types": "0.6.0"
   },
   "types": "./src/index.d.ts"
 }

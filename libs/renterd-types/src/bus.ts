@@ -9,6 +9,7 @@ import {
   Transaction,
   TransactionID,
   WalletEvent,
+  Maybe,
 } from '@siafoundation/types'
 import {
   ConsensusState,
@@ -231,7 +232,7 @@ export type HostsPayload = {
   limit?: number
   maxLastScan?: string
 }
-export type HostsResponse = Host[]
+export type HostsResponse = Maybe<Host[]>
 
 export type HostParams = { hostkey: string }
 export type HostPayload = Host
@@ -290,7 +291,7 @@ export type HostScanResponse = {
 
 export type ContractsParams = void
 export type ContractsPayload = void
-export type ContractsResponse = Contract[]
+export type ContractsResponse = Maybe<Contract[]>
 
 export type ContractAcquireParams = {
   id: string

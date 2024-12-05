@@ -2,9 +2,9 @@
 import {
   Code,
   ConfigFields,
-  Maybe,
   toFixedMaxString,
 } from '@siafoundation/design-system'
+import { Maybe } from '@siafoundation/types'
 import { hoursInDays, secondsInMinutes } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import React from 'react'

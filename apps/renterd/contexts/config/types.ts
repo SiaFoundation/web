@@ -1,4 +1,4 @@
-import { NoUndefined } from '@siafoundation/design-system'
+import { NoUndefined } from '@siafoundation/types'
 import { CurrencyId } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 
