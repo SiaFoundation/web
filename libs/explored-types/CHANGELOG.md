@@ -1,5 +1,18 @@
 # @siafoundation/explored-types
 
+## 0.9.0
+
+### Minor Changes
+
+- 288841e4: Removed possibly null option for confirmation fields on ExplorerFileContract.
+- cf5c2842: Added the HostByPubkey API.
+- ecec83f1: Updated ExplorerFileContract type for refactored inclusion of output ID.
+
+### Patch Changes
+
+- Updated dependencies [36b55f89]
+  - @siafoundation/types@0.7.0
+
 ## 0.8.0
 
 ### Minor Changes

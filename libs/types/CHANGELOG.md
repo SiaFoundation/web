@@ -1,5 +1,11 @@
 # @siafoundation/types
 
+## 0.7.0
+
+### Minor Changes
+
+- 36b55f89: Moved HostSettings and HostPriceTable to core types.
+
 ## 0.6.0
 
 ### Minor Changes

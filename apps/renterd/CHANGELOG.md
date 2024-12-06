@@ -1,5 +1,44 @@
 # renterd
 
+## 0.68.0
+
+### Minor Changes
+
+- afc1830a: Removed the allow redundant IPs setting.
+- 852ba06f: The contract graphs are now explicitly toggled open with the action button in the navbar.
+- b8dd101b: Remove contract sets and autopilot set indicator from the contracts list.
+- 9d8b9d74: Files and directories can now be selected and moved in bulk to a destination folder via drag and drop or the multi-select actions menu. This works even when selecting files (and entire directories) from across multiple different origin directories.
+- 6737374b: Uploading files is no longer disabled if the user has not configured their settings.
+- 6737374b: The configuration page navbar now has a switch for enabling or disabling autopilot.
+- b8dd101b: Remove the autopilot contract set contracts count metrics graph.
+- 6c9adb00: The slab migration failure alert was updated to match the new data format.
+- cd4789d7: The contract total cost value is now called initial renter funds.
+- 6737374b: The configuration no longer fills Sia Central network averages for max prices during first time configuration.
+- 852ba06f: The contracts table now supports multi-select.
+- c3778e08: The hosts multi-select menu now supports bulk adding and removing to both the allowlist and blocklists.
+- b8dd101b: Remove the autopilot contract set from configuration.
+- c3778e08: - The hosts table now supports multi-select.
+- e41da146: The contracts graphs no longer include a count metric.
+- b8dd101b: Remove contract set contracts filters.
+- 6c9adb00: The slab migration failure alert was updated to include a file health indicator.
+- 6737374b: The file explorer warnings now include a warning for when autopilot is disabled, the warning relating to configuration status was removed.
+- 4eba392b: The contracts multi-select menu now supports bulk deletion.
+- 6c9adb00: The set change alert was replaced with a churn alert that features a similar breakdown of contract changes with details such as reason and size.
+- 6737374b: The onboarding bar no longer shows depending on the status of configuration but the first step still suggests configuring settings and enabling autopilot.
+- 0b9994c7: The contracts multi-select menu now supports bulk adding and removing to both the allowlist and blocklists.
+- b8dd101b: Remove expiring (out of set) concept from the prunable data features.
+- 5e7fedb9: The allowance fitting and price fitting features were removed.
+- 5e7fedb9: The configuration page has a new spending estimate widget that includes an option to rebalance prices within the current estimate.
+- c3778e08: The host map must now be explicitly toggled open with the action button in the navbar.
+- 6737374b: If the autopilot is disabling a warning will appear on the bottom dock. The widget includes a switch for re-enabling the autopilot.
+- 5078fc02: The gouging settings no longer include hostBlockHeightLeeway or migrationSurchargeMultiplier.
+- b8dd101b: Remove contract set mismatch warnings.
+- b8dd101b: Add usability column showing good for renewal or bad states to the contracts list.
+- dfde6e1c: The app was refactored to assume there is a singular autopilot and its API always exists, even if it is disabled.
+- b8dd101b: Remove the default contract set from configuration.
+- b8dd101b: Remove the configuration feature for syncing the default contract set with changes to the autopilot set.
+- 5e7fedb9: The allowance concept was removed.
+
 ## 0.67.0
 
 ### Minor Changes

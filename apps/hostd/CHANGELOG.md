@@ -1,5 +1,16 @@
 # hostd
 
+## 0.52.0
+
+### Minor Changes
+
+- 83aa5a58: The contracts table now supports bulk integrity checks.
+- 83aa5a58: The contracts table now support multi-select.
+
+### Patch Changes
+
+- 2f4378d0: Fixed an issue where the metrics graphs were much wider than the screen. Closes https://github.com/SiaFoundation/hostd/issues/500
+
 ## 0.51.0
 
 ### Minor Changes

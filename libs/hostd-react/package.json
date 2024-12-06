@@ -1,13 +1,13 @@
 {
   "name": "@siafoundation/hostd-react",
   "description": "React hooks for interacting with `hostd`.",
-  "version": "4.4.1",
+  "version": "4.4.2",
   "license": "MIT",
   "dependencies": {
     "swr": "^2.1.1",
     "@siafoundation/react-core": "^1.4.0",
-    "@siafoundation/hostd-types": "0.4.0",
-    "@siafoundation/units": "3.2.0"
+    "@siafoundation/hostd-types": "0.4.1",
+    "@siafoundation/units": "3.2.1"
   },
   "types": "./src/index.d.ts"
 }

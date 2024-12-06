@@ -1,5 +1,12 @@
 # @siafoundation/hostd-types
 
+## 0.4.1
+
+### Patch Changes
+
+- Updated dependencies [36b55f89]
+  - @siafoundation/types@0.7.0
+
 ## 0.4.0
 
 ### Minor Changes

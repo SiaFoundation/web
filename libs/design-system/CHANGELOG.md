@@ -1,5 +1,21 @@
 # Changelog
 
+## 4.12.0
+
+### Minor Changes
+
+- 5e7fedb9: SiacoinField border is no longer blue in readOnly state.
+- 5e7fedb9: SiacoinField now has a unitsFiatPostfix prop.
+- 4eba392b: Add handleBatchOperation method.
+- 9d8b9d74: The table now supports multiple dragging datums.
+
+### Patch Changes
+
+- 2f4378d0: Fixed a bug with ScrollArea where it would adopt its contents width.
+- Updated dependencies [36b55f89]
+  - @siafoundation/types@0.7.0
+  - @siafoundation/units@3.2.1
+
 ## 4.11.0
 
 ### Minor Changes
