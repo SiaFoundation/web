@@ -1,5 +1,18 @@
 # @siafoundation/explored-react
 
+## 0.4.0
+
+### Minor Changes
+
+- cf5c2842: Added the HostByPubkey API.
+
+### Patch Changes
+
+- Updated dependencies [288841e4]
+- Updated dependencies [cf5c2842]
+- Updated dependencies [ecec83f1]
+  - @siafoundation/explored-types@0.9.0
+
 ## 0.3.1
 
 ### Patch Changes

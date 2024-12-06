@@ -1,5 +1,11 @@
 # @siafoundation/e2e
 
+## 0.3.0
+
+### Minor Changes
+
+- 9d8b9d74: Added methods for mouse move and hover behaviours.
+
 ## 0.2.0
 
 ### Minor Changes

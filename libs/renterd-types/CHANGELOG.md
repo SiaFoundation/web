@@ -1,5 +1,38 @@
 # @siafoundation/renterd-types
 
+## 0.13.0
+
+### Minor Changes
+
+- afc1830a: Removed the allow redundant IPs setting.
+- 7a7b0408: The host scanning API was moved from the worker to the bus. Closes https://github.com/SiaFoundation/renterd/issues/1644
+- 6737374b: The configured boolean was removed from AutopilotState.
+- 36b55f89: Moved HostSettings and HostPriceTable to core types.
+- b8dd101b: Remove contract set list and update APIs.
+- 5b7d6ae7: Add enabled flag to autopilot config type.
+- cd4789d7: The contract total cost value is now called initial renter funds.
+- 5b7d6ae7: Removed autopilots API.
+- b8dd101b: Remove set from the autopilot config API.
+- b8dd101b: Remove default contract set from config settings API.
+- 5e7fedb9: Allowance was removed from autopilot contracts config API.
+- 74f1f28f: The host checks field is now just HostAutopilotChecks.
+- b8dd101b: Remove contractSets from contracts list API.
+- b8dd101b: Add overall contract count metrics API.
+- b8dd101b: Remove contractset param from worker multipart upload part API.
+- 6c9adb00: The alerts data field is now full typed.
+- b8dd101b: Remove the contract set contract churn metrics API.
+- 5078fc02: The gouging settings no longer include hostBlockHeightLeeway or migrationSurchargeMultiplier.
+- 74f1f28f: Autopilot config routes moved to the bus.
+- 74f1f28f: Removed the autopilotID parameter from the hosts API.
+- b8dd101b: Remove the contract set contract count metrics API.
+- 5e7fedb9: The autopilots key was removed from the pinned settings API.
+
+### Patch Changes
+
+- dfde6e1c: Fixed missing fields and structure of bus and autopilot state types.
+- Updated dependencies [36b55f89]
+  - @siafoundation/types@0.7.0
+
 ## 0.12.0
 
 ### Minor Changes

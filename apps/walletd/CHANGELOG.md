@@ -1,5 +1,11 @@
 # walletd
 
+## 0.25.0
+
+### Minor Changes
+
+- 5e7fedb9: The wallet balance is now refreshed at least every 15 seconds.
+
 ## 0.24.0
 
 ### Minor Changes

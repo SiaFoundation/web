@@ -1,5 +1,13 @@
 # explorer
 
+## 0.22.0
+
+### Minor Changes
+
+- f9ba968b: The contracts route now uses explored except for the rates request.
+- 5071f9de: Replaced Sia Central with explored API for the host route (minus benchmarks).
+- a95d6cc5: Fixed UI display for empty host version or country code string cases.
+
 ## 0.21.0
 
 ### Minor Changes

@@ -1,5 +1,39 @@
 # @siafoundation/clusterd
 
+## 0.1.0
+
+### Minor Changes
+
+- 83aa5a58: Added distinct renterdWaitForContracts and hostdWaitForContracts methods.
+
+### Patch Changes
+
+- Updated dependencies [afc1830a]
+- Updated dependencies [7a7b0408]
+- Updated dependencies [6737374b]
+- Updated dependencies [36b55f89]
+- Updated dependencies [b8dd101b]
+- Updated dependencies [5b7d6ae7]
+- Updated dependencies [cd4789d7]
+- Updated dependencies [5b7d6ae7]
+- Updated dependencies [b8dd101b]
+- Updated dependencies [b8dd101b]
+- Updated dependencies [dfde6e1c]
+- Updated dependencies [74f1f28f]
+- Updated dependencies [b8dd101b]
+- Updated dependencies [b8dd101b]
+- Updated dependencies [b8dd101b]
+- Updated dependencies [6c9adb00]
+- Updated dependencies [b8dd101b]
+- Updated dependencies [5078fc02]
+- Updated dependencies [74f1f28f]
+- Updated dependencies [74f1f28f]
+- Updated dependencies [b8dd101b]
+  - @siafoundation/renterd-js@0.12.0
+  - @siafoundation/types@0.7.0
+  - @siafoundation/units@3.2.1
+  - @siafoundation/hostd-js@0.3.2
+
 ## 0.0.5
 
 ### Patch Changes

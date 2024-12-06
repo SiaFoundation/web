@@ -1,5 +1,58 @@
 # @siafoundation/renterd-react
 
+## 4.13.0
+
+### Minor Changes
+
+- afc1830a: Removed the allow redundant IPs setting.
+- 7a7b0408: The host scanning API was moved from the worker to the bus. Closes https://github.com/SiaFoundation/renterd/issues/1644
+- 6737374b: The configured boolean was removed from AutopilotState.
+- b8dd101b: Remove contract set list and update APIs.
+- 5b7d6ae7: Add enabled flag to autopilot config type.
+- cd4789d7: The contract total cost value is now called initial renter funds.
+- 5b7d6ae7: Removed autopilots API.
+- b8dd101b: Remove set from the autopilot config API.
+- b8dd101b: Remove default contract set from config settings API.
+- 74f1f28f: The host checks field is now just HostAutopilotChecks.
+- b8dd101b: Remove contractSets from contracts list API.
+- b8dd101b: Add overall contract count metrics API.
+- b8dd101b: Remove contractset param from worker multipart upload part API.
+- 6c9adb00: The alerts data field is now full typed.
+- b8dd101b: Remove the contract set contract churn metrics API.
+- 5078fc02: The gouging settings no longer include hostBlockHeightLeeway or migrationSurchargeMultiplier.
+- 74f1f28f: Autopilot config routes moved to the bus.
+- 74f1f28f: Removed the autopilotID parameter from the hosts API.
+- b8dd101b: Remove the contract set contract count metrics API.
+
+### Patch Changes
+
+- dfde6e1c: Fixed missing fields and structure of bus and autopilot state types.
+- Updated dependencies [afc1830a]
+- Updated dependencies [7a7b0408]
+- Updated dependencies [6737374b]
+- Updated dependencies [36b55f89]
+- Updated dependencies [b8dd101b]
+- Updated dependencies [5b7d6ae7]
+- Updated dependencies [cd4789d7]
+- Updated dependencies [5b7d6ae7]
+- Updated dependencies [b8dd101b]
+- Updated dependencies [b8dd101b]
+- Updated dependencies [dfde6e1c]
+- Updated dependencies [5e7fedb9]
+- Updated dependencies [74f1f28f]
+- Updated dependencies [b8dd101b]
+- Updated dependencies [b8dd101b]
+- Updated dependencies [b8dd101b]
+- Updated dependencies [6c9adb00]
+- Updated dependencies [b8dd101b]
+- Updated dependencies [5078fc02]
+- Updated dependencies [74f1f28f]
+- Updated dependencies [74f1f28f]
+- Updated dependencies [b8dd101b]
+- Updated dependencies [5e7fedb9]
+  - @siafoundation/renterd-types@0.13.0
+  - @siafoundation/units@3.2.1
+
 ## 4.12.0
 
 ### Minor Changes
