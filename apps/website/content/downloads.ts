@@ -93,7 +93,7 @@ export function getDownloadLinksDesktop(
   )
   if (rpmArm) {
     final.push({
-      title: 'RPM AMD64',
+      title: 'RPM ARM64',
       link: rpmArm.browser_download_url,
       tags: getTags(rpmArm),
     })
