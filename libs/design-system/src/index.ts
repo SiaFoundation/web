@@ -77,6 +77,7 @@ export * from './components/PaginatorUnknownTotal'
 export * from './components/PaginatorMarker'
 export * from './components/ListWithSeparators'
 export * from './components/ClientSideOnly'
+export * from './components/ReactHookFormField'
 
 // app
 export * from './app/AppPublicLayout'
