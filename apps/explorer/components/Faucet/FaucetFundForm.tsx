@@ -1,94 +1,109 @@
 import {
-  FormFieldFormik,
-  FormSubmitButtonFormik,
   Paragraph,
+  ReactHookFormField,
+  ReactHookFormSubmitButton,
   triggerSuccessToast,
+  triggerErrorToast,
 } from '@siafoundation/design-system'
 import { toHastings } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
 import { networkName } from '../../config'
 import { useFaucetFund } from '../../hooks/useFaucetFund'
+import { useForm } from 'react-hook-form'
 
-const initialValues = {
-  address: '',
-  amount: undefined as BigNumber | undefined,
+type FaucetFundFormFields = {
+  address: string
+  siacoin: BigNumber
 }
 
-const validationSchema = Yup.object().shape({
-  address: Yup.string().required('Required'),
-  amount: Yup.string()
-    .required('Required')
-    .test(
-      'greater than zero',
-      'Must be greater than 0 SC',
-      (val) => !new BigNumber(val || 0).isZero()
-    )
-    .test('less than 1000', 'Must be 50,000 SC or less', (val) =>
-      new BigNumber(val || 0).lte(50_000)
-    ),
-})
+const faucetFundFormValidation = {
+  address: {
+    required: { value: true, message: 'An address is required' },
+  },
+  siacoin: {
+    required: { value: true, message: 'An amount is required' },
+    min: { value: 1, message: 'Amount must be at least 1' },
+    max: { value: 50000, message: 'Amount cannot exceed 50,000' },
+  },
+}
 
-type Props = {
+type FaucetFundFormProps = {
   onDone: (id: string) => void
 }
 
-export function FaucetFundForm({ onDone }: Props) {
+export function FaucetFundForm({ onDone }: FaucetFundFormProps) {
   const fund = useFaucetFund()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    watch,
+    setValue,
+  } = useForm()
+  const onSubmit = async (data: FaucetFundFormFields) => {
+    const { address, siacoin } = data
 
-  const formik = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit: async (values, actions) => {
-      const response = await fund.post({
-        payload: {
-          unlockHash: values.address,
-          amount: toHastings(values.amount || 0).toString(),
-        },
+    const response = await fund.post({
+      payload: {
+        unlockHash: address,
+        amount: toHastings(siacoin || 0).toString(),
+      },
+    })
+
+    if (response.error) {
+      triggerErrorToast({
+        title:
+          response.status === 429
+            ? 'You have reached your maximum requests for now. Try again later.'
+            : 'Fund request failed. Check your connection or try again later.',
       })
-      if (response.error) {
-        actions.setStatus({ error: response.error })
-      } else {
-        triggerSuccessToast({ title: 'Address has been funded' })
-        if (response.data) {
-          onDone(response.data.id)
-        }
-        actions.resetForm()
-      }
-    },
-  })
+    } else {
+      triggerSuccessToast({ title: 'Address has been funded.' })
+      if (response.data) onDone(response.data.id)
+      setValue('address', '')
+      setValue('siacoin', undefined)
+    }
+  }
 
   return (
     <div className="flex flex-col gap-4">
       <Paragraph size="14">
         Fund a {networkName} wallet address with Siacoin.
       </Paragraph>
-      <form onSubmit={formik.handleSubmit}>
-        <div className="flex flex-col gap-4">
-          <FormFieldFormik
-            formik={formik}
-            title="Address"
-            name="address"
-            placeholder="020d48a57bc0..."
-            autoComplete="off"
-            type="text"
-            variants={{
-              size: 'medium',
-            }}
-          />
-          <FormFieldFormik
-            formik={formik}
-            title="Amount"
-            name="amount"
-            placeholder="100"
-            type="siacoin"
-            showFiat={false}
-          />
-          <FormSubmitButtonFormik formik={formik} size="medium">
-            Fund wallet
-          </FormSubmitButtonFormik>
-        </div>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        <ReactHookFormField
+          name="address"
+          title="Address"
+          type="text"
+          placeholder="020d48a57bc0..."
+          variants={{
+            size: 'medium',
+          }}
+          registerFunc={register('address', faucetFundFormValidation.address)}
+          errors={errors}
+          isSubmitting={isSubmitting}
+          watch={watch}
+          setValue={setValue}
+        />
+        <ReactHookFormField
+          name="siacoin"
+          title="Amount"
+          type="siacoin"
+          placeholder="100"
+          showFiat={false}
+          registerFunc={register('siacoin', faucetFundFormValidation.siacoin)}
+          errors={errors}
+          isSubmitting={isSubmitting}
+          watch={watch}
+          setValue={setValue}
+        />
+        <ReactHookFormSubmitButton
+          isSubmitting={isSubmitting}
+          errors={errors}
+          size="medium"
+        >
+          Fund wallet
+        </ReactHookFormSubmitButton>
       </form>
     </div>
   )
