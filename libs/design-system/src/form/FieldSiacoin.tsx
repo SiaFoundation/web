@@ -30,6 +30,7 @@ export function FieldSiacoin<
     units,
     decimalsLimitSc = 6,
     decimalsLimitFiat = 6,
+    showFiat,
   } = field
   const { setValue, onBlur, value, error } = useRegisterForm({
     name,
@@ -55,6 +56,7 @@ export function FieldSiacoin<
       size={size}
       sc={value}
       units={units}
+      showFiat={showFiat}
       decimalsLimitSc={decimalsLimitSc}
       decimalsLimitFiat={decimalsLimitFiat}
       readOnly={field.readOnly}
