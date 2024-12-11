@@ -73,6 +73,7 @@ export type ConfigField<
   decimalsLimitSc?: number
   decimalsLimitFiat?: number
   tipsDecimalsLimitSc?: number
+  showFiat?: boolean
 
   options?: { label: string; value: string }[]
 
