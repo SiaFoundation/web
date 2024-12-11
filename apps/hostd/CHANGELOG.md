@@ -1,5 +1,11 @@
 # hostd
 
+## 0.53.0
+
+### Minor Changes
+
+- c909ad28: Multi-select now supports single select, toggle select, and range selection interactions, with click, ctrl-click, and shift-click.
+
 ## 0.52.0
 
 ### Minor Changes

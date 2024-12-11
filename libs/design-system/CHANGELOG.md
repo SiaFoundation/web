@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.13.0
+
+### Minor Changes
+
+- c909ad28: Renamed selectionMap to selection in the useMultiSelect hook API.
+- c909ad28: Table now prevents default on any mouse down with shift held. This ensures the user does not highlight text while shift selecting a range of rows.
+
 ## 4.12.0
 
 ### Minor Changes
