@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { navigateToContracts } from '../fixtures/navigate'
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
-import { getContractRowsAll } from '../fixtures/contracts'
+import { getContractRows, getContractRowsAll } from '../fixtures/contracts'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page, {
@@ -26,4 +26,12 @@ test('contracts bulk integrity check', async ({ page }) => {
   await expect(
     page.getByText('Integrity checks started for 2 contracts')
   ).toBeVisible()
+})
+
+test('new contracts do not show a renewed from or to contract', async ({
+  page,
+}) => {
+  await navigateToContracts(page)
+  await expect(getContractRows(page).getByTestId('renewedFrom')).toBeHidden()
+  await expect(getContractRows(page).getByTestId('renewedTo')).toBeHidden()
 })

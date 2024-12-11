@@ -4,6 +4,7 @@ import { navigateToContracts } from '../fixtures/navigate'
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
 import {
   getContractRowByIndex,
+  getContractRows,
   getContractRowsAll,
   getContractsSummaryRow,
 } from '../fixtures/contracts'
@@ -144,4 +145,9 @@ test('contracts bulk blocklist', async ({ page }) => {
   await expect(dialog.getByText('The blocklist is empty')).toBeVisible()
   await dialog.getByLabel('view allowlist').click()
   await expect(dialog.getByText('The allowlist is empty')).toBeVisible()
+})
+
+test('new contracts do not show a renewed from', async ({ page }) => {
+  await navigateToContracts({ page })
+  await expect(getContractRows(page).getByTestId('renewedFrom')).toBeHidden()
 })
