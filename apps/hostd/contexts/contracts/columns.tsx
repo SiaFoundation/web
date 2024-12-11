@@ -79,6 +79,7 @@ export const columns: ContractsTableColumn[] = (
                     <ArrowUpLeft16 className="scale-75" />
                   </Text>
                   <ValueCopyable
+                    testId="renewedFrom"
                     color="subtle"
                     size="10"
                     type="contract"
@@ -95,6 +96,7 @@ export const columns: ContractsTableColumn[] = (
                     <ArrowDownRight16 className="scale-75" />
                   </Text>
                   <ValueCopyable
+                    testId="renewedTo"
                     color="subtle"
                     size="10"
                     value={stripPrefix(renewedTo)}

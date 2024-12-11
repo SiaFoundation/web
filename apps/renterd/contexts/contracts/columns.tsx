@@ -77,6 +77,7 @@ export const columns: ContractsTableColumn[] = [
                   <ArrowUpLeft16 className="scale-75" />
                 </Text>
                 <ValueCopyable
+                  testId="renewedFrom"
                   color="subtle"
                   size="10"
                   type="contract"

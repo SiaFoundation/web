@@ -35,7 +35,7 @@ export function useDataset() {
       response.data?.map((c) => {
         const isRenewed =
           c.renewedFrom !==
-          'fcid:0000000000000000000000000000000000000000000000000000000000000000'
+          '0000000000000000000000000000000000000000000000000000000000000000'
         const startTime = blockHeightToTime(currentHeight, c.startHeight)
         const endHeight = c.windowStart
         const endTime = blockHeightToTime(currentHeight, endHeight)
