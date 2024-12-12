@@ -11,9 +11,9 @@ import {
   valuePerTBPerMonthToPerBytePerBlock,
   valuePerMonthToPerPeriod,
   valuePerMillionToPerOne,
-  daysInNanoseconds,
-  minutesInNanoseconds,
   valuePerTBToPerByte,
+  minutesInMilliseconds,
+  daysInMilliseconds,
 } from '@siafoundation/units'
 import {
   getAdvancedDefaultsAutopilot,
@@ -102,10 +102,10 @@ export function transformUpGouging(
     maxContractPrice: toHastings(v.maxContractPrice).toString(),
     hostBlockHeightLeeway: Math.round(v.hostBlockHeightLeeway.toNumber() || 0),
     minPriceTableValidity: Math.round(
-      minutesInNanoseconds(v.minPriceTableValidityMinutes.toNumber() || 0)
+      minutesInMilliseconds(v.minPriceTableValidityMinutes.toNumber() || 0)
     ),
     minAccountExpiry: Math.round(
-      daysInNanoseconds(v.minAccountExpiryDays.toNumber())
+      daysInMilliseconds(v.minAccountExpiryDays.toNumber())
     ),
     minMaxEphemeralAccountBalance: toHastings(
       v.minMaxEphemeralAccountBalance

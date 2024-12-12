@@ -30,16 +30,16 @@ export function nowInMilliseconds() {
   return new Date().getTime()
 }
 
-export function nanosecondsInMinutes(ns: number) {
-  return ns / 1000 / 1000 / 1000 / 60
+export function millisecondsInMinutes(ms: number) {
+  return ms / 1000 / 60
 }
 
 export function millisecondsInHours(ms: number) {
-  return ms / 1000 / 1000 / 60 / 60
+  return ms / 1000 / 60 / 60
 }
 
-export function millisecondsInMinutes(ms: number) {
-  return ms / 1000 / 60
+export function millisecondsInDays(ms: number) {
+  return ms / 1000 / 60 / 60 / 24
 }
 
 export function microsecondsInMinutes(us: number) {
