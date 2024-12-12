@@ -156,7 +156,7 @@ func main() {
 	defer syncerListener.Close()
 
 	_, port, err := net.SplitHostPort(syncerListener.Addr().String())
-	s := syncer.New(syncerListener, cm, testutil.NewMemPeerStore(), gateway.Header{
+	s := syncer.New(syncerListener, cm, testutil.NewEphemeralPeerStore(), gateway.Header{
 		GenesisID:  genesis.ID(),
 		UniqueID:   gateway.GenerateUniqueID(),
 		NetAddress: "127.0.0.1:" + port,
