@@ -85,68 +85,78 @@ export function useDownloads() {
     download.controller.abort()
   }, [])
 
-  const downloadFiles = async (files: FullPath[]) => {
-    files.forEach(async (path) => {
-      let isDone = false
-      const bucketName = getBucketFromPath(path)
-      const key = getKeyFromPath(path)
-      const bucket = buckets.data?.find((b) => b.name === bucketName)
-      if (!bucket) {
-        triggerErrorToast({ title: 'Bucket not found', body: bucketName })
-        return
-      }
-      const name = getFilename(path)
-
-      if (downloadsMap[path]) {
-        triggerErrorToast({ title: 'Already downloading file', body: path })
-        return
-      }
-
-      const controller = new AbortController()
-      const onDownloadProgress = throttle((e) => {
-        if (isDone) {
+  const downloadFiles = useCallback(
+    async (files: FullPath[]) => {
+      files.forEach(async (path) => {
+        let isDone = false
+        const bucketName = getBucketFromPath(path)
+        const key = getKeyFromPath(path)
+        const bucket = buckets.data?.find((b) => b.name === bucketName)
+        if (!bucket) {
+          triggerErrorToast({ title: 'Bucket not found', body: bucketName })
           return
         }
-        updateDownloadProgress({
-          path,
-          loaded: e.loaded,
-          size: e.total,
-        })
-      }, 2000)
-      initDownloadProgress({
-        path,
-        key,
-        name,
-        bucket,
-        loaded: 0,
-        size: 1,
-        controller,
-      })
-      const response = await download.get(name, {
-        params: bucketAndKeyParamsFromPath(path),
-        config: {
-          axios: {
-            onDownloadProgress,
-            signal: controller.signal,
-          },
-        },
-      })
-      isDone = true
-      if (response.error) {
-        if (response.error === 'canceled') {
-          triggerToast({ title: 'File download canceled' })
-        } else {
-          triggerErrorToast({
-            title: 'Error downloading file',
-            body: response.error,
-          })
+        const name = getFilename(path)
+
+        if (downloadsMap[path]) {
+          triggerErrorToast({ title: 'Already downloading file', body: path })
+          return
         }
-        removeDownload(path)
-      } else {
-        removeDownload(path)
-      }
-    })
-  }
+
+        const controller = new AbortController()
+        const onDownloadProgress = throttle((e) => {
+          if (isDone) {
+            return
+          }
+          updateDownloadProgress({
+            path,
+            loaded: e.loaded,
+            size: e.total,
+          })
+        }, 2000)
+        initDownloadProgress({
+          path,
+          key,
+          name,
+          bucket,
+          loaded: 0,
+          size: 1,
+          controller,
+        })
+        const response = await download.get(name, {
+          params: bucketAndKeyParamsFromPath(path),
+          config: {
+            axios: {
+              onDownloadProgress,
+              signal: controller.signal,
+            },
+          },
+        })
+        isDone = true
+        if (response.error) {
+          if (response.error === 'canceled') {
+            triggerToast({ title: 'File download canceled' })
+          } else {
+            triggerErrorToast({
+              title: 'Error downloading file',
+              body: response.error,
+            })
+          }
+          removeDownload(path)
+        } else {
+          removeDownload(path)
+        }
+      })
+    },
+    [
+      buckets.data,
+      download,
+      downloadsMap,
+      initDownloadProgress,
+      removeDownload,
+      updateDownloadProgress,
+    ]
+  )
 
   const downloadsList = useMemo(
     () => Object.entries(downloadsMap).map((d) => d[1]),
