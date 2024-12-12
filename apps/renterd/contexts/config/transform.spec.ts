@@ -270,9 +270,9 @@ describe('tansforms', () => {
           maxRPCPrice: '99970619000000000000000000',
           maxStoragePrice: '210531181019',
           maxUploadPrice: '1000232323000000',
-          minAccountExpiry: 86400000000000,
+          minAccountExpiry: 86400000,
           minMaxEphemeralAccountBalance: '1000000000000000000000000',
-          minPriceTableValidity: 300000000000,
+          minPriceTableValidity: 300000,
         })
       })
     })
@@ -503,9 +503,9 @@ function buildAllResponses() {
       maxRPCPrice: '99970619000000000000000000',
       maxStoragePrice: '210531181019',
       maxUploadPrice: '1000232323000000',
-      minAccountExpiry: 86400000000000,
+      minAccountExpiry: 86400000,
       minMaxEphemeralAccountBalance: '1000000000000000000000000',
-      minPriceTableValidity: 300000000000,
+      minPriceTableValidity: 300000,
     } as SettingsGouging,
     pinned: {
       currency: 'usd' as CurrencyId,

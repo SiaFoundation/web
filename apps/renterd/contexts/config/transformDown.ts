@@ -8,8 +8,8 @@ import {
 import {
   blocksToWeeks,
   bytesToTB,
-  nanosecondsInDays,
-  nanosecondsInMinutes,
+  millisecondsInDays,
+  millisecondsInMinutes,
   toSiacoins,
   valuePerBytePerBlockToPerTBPerMonth,
   valuePerByteToPerTB,
@@ -106,10 +106,10 @@ export function transformDownGouging({
     ),
     hostBlockHeightLeeway: new BigNumber(gouging.hostBlockHeightLeeway),
     minPriceTableValidityMinutes: new BigNumber(
-      nanosecondsInMinutes(gouging.minPriceTableValidity)
+      millisecondsInMinutes(gouging.minPriceTableValidity)
     ),
     minAccountExpiryDays: new BigNumber(
-      nanosecondsInDays(gouging.minAccountExpiry)
+      millisecondsInDays(gouging.minAccountExpiry)
     ),
     minMaxEphemeralAccountBalance: toSiacoins(
       gouging.minMaxEphemeralAccountBalance,
