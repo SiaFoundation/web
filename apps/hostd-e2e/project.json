@@ -9,9 +9,9 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          // "cd internal/cluster && go get -u go.sia.tech/hostd@master",
-          // "cd internal/cluster && go get -u go.sia.tech/renterd@dev",
-          // "cd internal/cluster && go get -u go.sia.tech/walletd@master",
+          "cd internal/cluster && GOPRIVATE=go.sia.tech go get -u go.sia.tech/hostd@master",
+          "cd internal/cluster && GOPRIVATE=go.sia.tech go get -u go.sia.tech/renterd@dev",
+          "cd internal/cluster && GOPRIVATE=go.sia.tech go get -u go.sia.tech/walletd@master",
           "cd internal/cluster && go mod tidy",
           "cd internal/cluster && go build -o bin/clusterd ./cmd/clusterd || echo 'BUILD FAILED'",
           "git checkout internal/cluster/go.mod internal/cluster/go.sum",

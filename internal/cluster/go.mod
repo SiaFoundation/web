@@ -5,15 +5,15 @@ go 1.23.1
 toolchain go1.23.2
 
 require (
-	go.sia.tech/cluster v0.1.3-0.20241204210241-d118340b81ac
-	go.sia.tech/core v0.6.2
-	go.sia.tech/coreutils v0.7.0
+	go.sia.tech/cluster v0.1.3-0.20241212220513-8d4e2ad6883d
+	go.sia.tech/core v0.7.4-0.20241212155227-c36fa2aec558
+	go.sia.tech/coreutils v0.7.1-0.20241212095636-85dd0252d9ad
 	go.uber.org/zap v1.27.0
 )
 
 require (
 	github.com/aws/aws-sdk-go v1.55.5 // indirect
-	github.com/cloudflare/cloudflare-go v0.110.0 // indirect
+	github.com/cloudflare/cloudflare-go v0.111.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.7 // indirect
 	github.com/goccy/go-json v0.10.3 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
@@ -30,16 +30,16 @@ require (
 	github.com/shopspring/decimal v1.4.0 // indirect
 	go.etcd.io/bbolt v1.3.11 // indirect
 	go.sia.tech/gofakes3 v0.0.5 // indirect
-	go.sia.tech/hostd v1.1.3-0.20241126153600-d590d9259987 // indirect
+	go.sia.tech/hostd v1.1.3-0.20241212215223-9e3440475bed // indirect
 	go.sia.tech/jape v0.12.1 // indirect
 	go.sia.tech/mux v1.3.0 // indirect
-	go.sia.tech/renterd v1.1.0-beta.5.0.20241203123141-50c650a896c2 // indirect
-	go.sia.tech/walletd v0.8.1-0.20241120185708-2f26e9b843f1 // indirect
+	go.sia.tech/renterd v1.1.1-0.20241212160145-9b05f245be23 // indirect
+	go.sia.tech/walletd v0.8.1-0.20241210081245-ca3d83da2781 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	golang.org/x/crypto v0.29.0 // indirect
+	golang.org/x/crypto v0.31.0 // indirect
 	golang.org/x/net v0.31.0 // indirect
-	golang.org/x/sys v0.27.0 // indirect
-	golang.org/x/text v0.20.0 // indirect
+	golang.org/x/sys v0.28.0 // indirect
+	golang.org/x/text v0.21.0 // indirect
 	golang.org/x/time v0.8.0 // indirect
 	golang.org/x/tools v0.23.0 // indirect
 	lukechampine.com/frand v1.5.1 // indirect
