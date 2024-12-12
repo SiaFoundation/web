@@ -464,6 +464,7 @@ describe('tansforms', () => {
 function buildAllResponses() {
   return {
     autopilotState: {
+      enabled: true,
       migrating: true,
       migratingLastStart: new Date().toISOString(),
       scanning: true,

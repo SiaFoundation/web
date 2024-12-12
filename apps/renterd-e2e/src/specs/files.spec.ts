@@ -111,6 +111,29 @@ test('can upload, rename, and delete files', async ({ page }) => {
   await deleteBucket(page, bucketName)
 })
 
+test('can upload and download a file', async ({ page }) => {
+  const bucketName = 'files-test'
+  const fileName = 'sample.txt'
+  const filePath = `${bucketName}/${fileName}`
+
+  // Create bucket.
+  await navigateToBuckets({ page })
+  await createBucket(page, bucketName)
+  await openBucket(page, bucketName)
+
+  // Upload.
+  await dragAndDropFileFromSystem(page, fileName)
+  await expect(page.getByText('100%')).toBeVisible()
+  await fileInList(page, filePath)
+
+  // Download.
+  await openFileContextMenu(page, filePath)
+  await page.getByRole('menuitem', { name: 'Download file' }).click()
+  await expect(
+    page.getByRole('button', { name: 'Active downloads' })
+  ).toBeVisible()
+})
+
 test('can rename and delete a directory with contents', async ({ page }) => {
   test.setTimeout(120_000)
   const bucketName = 'files-test'
