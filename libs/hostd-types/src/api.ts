@@ -31,7 +31,6 @@ export const volumesIdRoute = '/volumes/:id'
 export const volumesIdResizeRoute = '/volumes/:id/resize'
 export const volumesIdCancelRoute = '/volumes/:id/cancel'
 export const systemDirRoute = '/system/dir'
-export const logEntriesRoute = '/log/entries'
 export const alertsRoute = '/alerts'
 export const alertsDismissRoute = '/alerts/dismiss'
 
@@ -522,33 +521,9 @@ export type SystemDirectoryResponse = {
   freeBytes: number
   directories: string[]
 }
-
 export type SystemDirectoryCreateParams = void
 export type SystemDirectoryCreatePayload = { path: string }
 export type SystemDirectoryCreateResponse = void
-
-// logs
-
-type LogEntry = {
-  timestamp: string
-  level: string
-  name: string
-  caller: string
-  message: string
-  fields: Record<string, unknown>
-}
-
-export type LogsSearchParams = void
-export type LogsSearchPayload = {
-  names?: string[]
-  callers?: string[]
-  levels?: string[]
-  before?: string
-  after?: string
-  limit?: number
-  offset?: number
-}
-export type LogsSearchResponse = { count: number; entries: LogEntry[] }
 
 // alerts
 
