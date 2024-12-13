@@ -56,14 +56,14 @@ import {
   HostByPubkeyParams,
   HostByPubkeyPayload,
   HostByPubkeyResponse,
-  metricsRoute,
-  MetricsParams,
-  MetricsPayload,
-  MetricsResponse,
-  metricsByIDRoute,
-  MetricsByIDParams,
-  MetricsByIDPayload,
-  MetricsByIDResponse,
+  blockMetricsRoute,
+  BlockMetricsParams,
+  BlockMetricsPayload,
+  BlockMetricsResponse,
+  blockMetricsByIDRoute,
+  BlockMetricsByIDParams,
+  BlockMetricsByIDPayload,
+  BlockMetricsByIDResponse,
   OutputSiacoinParams,
   OutputSiacoinPayload,
   OutputSiacoinResponse,
@@ -253,16 +253,16 @@ export function Explored({
       ContractRevisionsResponse
     >(axios, 'get', contractRevisionsRoute),
     // Metrics
-    metrics: buildRequestHandler<
-      MetricsParams,
-      MetricsPayload,
-      MetricsResponse
-    >(axios, 'get', metricsRoute),
-    metricsByID: buildRequestHandler<
-      MetricsByIDParams,
-      MetricsByIDPayload,
-      MetricsByIDResponse
-    >(axios, 'get', metricsByIDRoute),
+    blockMetrics: buildRequestHandler<
+      BlockMetricsParams,
+      BlockMetricsPayload,
+      BlockMetricsResponse
+    >(axios, 'get', blockMetricsRoute),
+    blockMetricsByID: buildRequestHandler<
+      BlockMetricsByIDParams,
+      BlockMetricsByIDPayload,
+      BlockMetricsByIDResponse
+    >(axios, 'get', blockMetricsByIDRoute),
     // Search
     searchResultType: buildRequestHandler<
       SearchResultTypeParams,
