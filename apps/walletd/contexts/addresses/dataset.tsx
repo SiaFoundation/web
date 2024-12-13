@@ -1,7 +1,4 @@
-import {
-  useDatasetEmptyState,
-  ClientFilterItem,
-} from '@siafoundation/design-system'
+import { useDatasetState, ClientFilterItem } from '@siafoundation/design-system'
 import {
   WalletAddressMetadata,
   WalletAddressesResponse,
@@ -10,6 +7,7 @@ import { useWalletAddresses } from '@siafoundation/walletd-react'
 import { useMemo } from 'react'
 import { AddressData } from './types'
 import { OpenDialog, useDialog } from '../dialog'
+import { Maybe } from '@siafoundation/types'
 
 export function transformAddressesResponse(
   response: WalletAddressesResponse,
@@ -47,19 +45,19 @@ export function useDataset({
   filters: ClientFilterItem<AddressData>[]
 }) {
   const { openDialog } = useDialog()
-  const dataset = useMemo<AddressData[] | null>(() => {
+  const dataset = useMemo<Maybe<AddressData[]>>(() => {
     if (!response.data) {
-      return null
+      return undefined
     }
     return transformAddressesResponse(response.data, walletId, openDialog)
   }, [response.data, openDialog, walletId])
 
-  const dataState = useDatasetEmptyState(
-    dataset,
-    response.isValidating,
-    response.error,
-    filters
-  )
+  const datasetState = useDatasetState({
+    datasetPage: dataset,
+    isValidating: response.isValidating,
+    error: response.error,
+    filters,
+  })
 
   const lastIndex = (dataset || []).reduce(
     (highest, { metadata }) =>
@@ -69,7 +67,7 @@ export function useDataset({
 
   return {
     dataset,
-    dataState,
+    datasetState,
     error: response.error,
     lastIndex,
     filters,

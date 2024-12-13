@@ -8,6 +8,7 @@ import { blockHeightToTime } from '@siafoundation/units'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { usePrunableContractSizes } from './usePrunableContractSizes'
 import { Maybe } from '@siafoundation/types'
+import { maybeFromNullishArrayResponse } from '@siafoundation/react-core'
 
 export function useDataset() {
   const response = useContractsData({
@@ -28,11 +29,12 @@ export function useDataset() {
   const datasetWithoutPrunable = useMemo<
     Maybe<ContractDataWithoutPrunable[]>
   >(() => {
-    if (!response.data) {
+    const data = maybeFromNullishArrayResponse(response.data)
+    if (!data) {
       return undefined
     }
     const datums =
-      response.data?.map((c) => {
+      data.map((c) => {
         const isRenewed =
           c.renewedFrom !==
           '0000000000000000000000000000000000000000000000000000000000000000'
@@ -69,7 +71,7 @@ export function useDataset() {
         return datum
       }) || []
     return datums
-  }, [response.data, geoHosts, currentHeight])
+  }, [response, geoHosts, currentHeight])
 
   const {
     prunableSizes,

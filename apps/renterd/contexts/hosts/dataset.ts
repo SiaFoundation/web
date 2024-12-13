@@ -11,6 +11,7 @@ import { ContractData } from '../contracts/types'
 import { SiaCentralHost } from '@siafoundation/sia-central-types'
 import { Maybe } from '@siafoundation/types'
 import { objectEntries } from '@siafoundation/design-system'
+import { maybeFromNullishArrayResponse } from '@siafoundation/react-core'
 
 export function useDataset({
   response,
@@ -28,12 +29,13 @@ export function useDataset({
   geoHosts: SiaCentralHost[]
 }) {
   return useMemo<Maybe<HostData[]>>(() => {
-    const allow = allowlist.data
-    const block = blocklist.data
-    if (!response.data || !allow || !block) {
+    const data = maybeFromNullishArrayResponse(response.data)
+    const allow = maybeFromNullishArrayResponse(allowlist.data)
+    const block = maybeFromNullishArrayResponse(blocklist.data)
+    if (!data || !allow || !block) {
       return undefined
     }
-    return response.data.map((host) => {
+    return data.map((host) => {
       const sch = geoHosts.find((gh) => gh.public_key === host.publicKey)
       return {
         ...getHostFields(host, allContracts),
@@ -52,10 +54,10 @@ export function useDataset({
       }
     })
   }, [
-    response.data,
+    response,
     allContracts,
-    allowlist.data,
-    blocklist.data,
+    allowlist,
+    blocklist,
     isAllowlistActive,
     geoHosts,
   ])

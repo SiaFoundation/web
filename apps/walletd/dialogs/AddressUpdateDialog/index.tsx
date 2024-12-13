@@ -56,7 +56,7 @@ export function AddressUpdateDialog({
 }: Props) {
   const { walletId, address: addr } = params || {}
   const { openDialog } = useDialog()
-  const { dataset, dataState } = useWalletAddresses({ id: walletId })
+  const { dataset, datasetState } = useWalletAddresses({ id: walletId })
   const address = dataset?.find((d) => d.id === addr)
   const addressAdd = useWalletAddressAdd()
   const defaultValues = getDefaultValues({
@@ -74,7 +74,7 @@ export function AddressUpdateDialog({
     // Resets form with latest default values after elements change and are
     // all thruthy
     // This is used because address data is async and can be intially undefined
-    initKey: [params, dataState === undefined],
+    initKey: [params, datasetState === 'loaded'],
   })
 
   const fields = getFields()

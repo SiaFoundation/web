@@ -12,6 +12,7 @@ import {
 } from '../../lib/paths'
 import { useFilesManager } from '.'
 import { useEffect } from 'react'
+import { Maybe } from '@siafoundation/types'
 
 type Props = {
   id: string
@@ -34,7 +35,7 @@ export function useDataset({ id, objects }: Props) {
     setActiveDirectory,
   } = useFilesManager()
   const { dataset: allContracts } = useContracts()
-  const response = useSWR<ObjectData[] | undefined>(
+  const response = useSWR<Maybe<ObjectData[]>>(
     objects.isValidating || buckets.isValidating
       ? undefined
       : [id, activeBucketName, activeDirectoryPath],

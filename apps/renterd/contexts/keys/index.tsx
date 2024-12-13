@@ -1,11 +1,11 @@
 import {
   useTableState,
-  useDatasetEmptyState,
+  useDatasetState,
   useClientFilters,
   useClientFilteredDataset,
   useMultiSelect,
+  usePaginationOffset,
 } from '@siafoundation/design-system'
-import { useRouter } from 'next/router'
 import { createContext, useContext, useMemo } from 'react'
 import {
   CellContext,
@@ -17,13 +17,12 @@ import {
 import { columns } from './columns'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { useSettingsS3 } from '@siafoundation/renterd-react'
+import { Maybe } from '@siafoundation/types'
 
 const defaultLimit = 50
 
 function useKeysMain() {
-  const router = useRouter()
-  const limit = Number(router.query.limit || defaultLimit)
-  const offset = Number(router.query.offset || 0)
+  const { limit, offset } = usePaginationOffset(defaultLimit)
   const response = useSettingsS3({
     config: {
       swr: {
@@ -32,20 +31,19 @@ function useKeysMain() {
     },
   })
 
-  const dataset = useMemo<KeyData[] | undefined>(() => {
+  const dataset = useMemo<Maybe<KeyData[]>>(() => {
     if (!response.data) {
       return undefined
     }
-    const data: KeyData[] =
-      Object.entries(response.data?.authentication.v4Keypairs || {}).map(
-        ([key, secret]) => {
-          return {
-            id: key,
-            key,
-            secret,
-          }
-        }
-      ) || []
+    const data: KeyData[] = Object.entries(
+      response.data?.authentication.v4Keypairs || {}
+    ).map(([key, secret]) => {
+      return {
+        id: key,
+        key,
+        secret,
+      }
+    })
     return data
   }, [response.data])
 
@@ -72,19 +70,15 @@ function useKeysMain() {
     defaultSortField,
   })
 
-  const datasetFiltered = useClientFilteredDataset({
-    dataset,
-    filters,
-    sortField,
-    sortDirection,
-  })
-
-  const _datasetPage = useMemo<KeyData[] | undefined>(() => {
-    if (!datasetFiltered) {
-      return undefined
-    }
-    return datasetFiltered.slice(offset, offset + limit)
-  }, [datasetFiltered, offset, limit])
+  const { datasetFiltered, datasetPage: _datasetPage } =
+    useClientFilteredDataset({
+      dataset,
+      filters,
+      sortField,
+      sortDirection,
+      offset,
+      limit,
+    })
 
   const multiSelect = useMultiSelect(_datasetPage)
 
@@ -110,12 +104,13 @@ function useKeysMain() {
     [enabledColumns]
   )
 
-  const dataState = useDatasetEmptyState(
+  const datasetState = useDatasetState({
     datasetPage,
-    response.isValidating,
-    response.error,
-    filters
-  )
+    isValidating: response.isValidating,
+    error: response.error,
+    offset,
+    filters,
+  })
 
   const cellContext = useMemo(
     () =>
@@ -126,14 +121,14 @@ function useKeysMain() {
   )
 
   return {
-    dataState,
+    datasetState,
     limit,
     offset,
     isLoading: response.isLoading,
     error: response.error,
-    pageCount: datasetPage?.length || 0,
-    datasetCount: dataset?.length || 0,
-    datasetFilteredCount: datasetFiltered?.length || 0,
+    datasetTotal: dataset?.length || 0,
+    datasetFilteredTotal: datasetFiltered?.length || 0,
+    datasetPageTotal: datasetPage?.length || 0,
     columns: filteredTableColumns,
     multiSelect,
     cellContext,

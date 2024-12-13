@@ -1,9 +1,8 @@
 import {
   useTableState,
-  useDatasetEmptyState,
+  useDatasetState,
   useServerFilters,
 } from '@siafoundation/design-system'
-import { useSearchParams } from '@siafoundation/next'
 import {
   useMultipartUploadAbort,
   useMultipartUploadListUploads,
@@ -15,30 +14,38 @@ import { join, getFilename } from '../../lib/paths'
 import { useFilesManager } from '../filesManager'
 import { ObjectUploadData } from '../filesManager/types'
 import { MultipartUploadListUploadsPayload } from '@siafoundation/renterd-types'
+import { maybeFromNullishArrayResponse } from '@siafoundation/react-core'
+import { Maybe, Nullable } from '@siafoundation/types'
+import { useSearchParams } from '@siafoundation/next'
 
 const defaultLimit = 50
 
 function useUploadsMain() {
   const { uploadsMap, activeBucket } = useFilesManager()
-  const params = useSearchParams()
-  const limit = Number(params.get('limit') || defaultLimit)
-  const marker = params.get('marker')
+  const searchParams = useSearchParams()
+  const limit = Number(searchParams.get('limit') || defaultLimit)
+  const marker = searchParams.get('marker') || null
+  const markers = useMarkersFromParam(marker)
 
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
     useServerFilters()
 
   const apiBusUploadAbort = useMultipartUploadAbort()
 
-  const payload = useMemo(() => {
+  const payload = useMemo<Maybe<MultipartUploadListUploadsPayload>>(() => {
+    if (!activeBucket?.name) {
+      return undefined
+    }
     return {
       bucket: activeBucket?.name,
-      uploadIDMarker: marker,
+      uploadIDMarker: markers?.uploadIDMarker || undefined,
+      keyMarker: markers?.keyMarker || undefined,
       limit,
     }
-  }, [activeBucket, marker, limit])
+  }, [activeBucket, limit, markers])
 
   const response = useMultipartUploadListUploads({
-    disabled: !activeBucket,
+    disabled: !payload,
     payload: payload as MultipartUploadListUploadsPayload,
     config: {
       swr: {
@@ -69,11 +76,12 @@ function useUploadsMain() {
     )
   }, [response.data, apiBusUploadAbort, activeBucket, uploadsMap])
 
-  const dataset: ObjectUploadData[] = useMemo(() => {
-    if (!response.data?.uploads || !activeBucket?.name) {
-      return []
+  const datasetPage = useMemo<Maybe<ObjectUploadData[]>>(() => {
+    const uploads = maybeFromNullishArrayResponse(response.data?.uploads)
+    if (!uploads || !activeBucket?.name) {
+      return undefined
     }
-    return response.data.uploads.map((upload) => {
+    return uploads.map((upload) => {
       const id = upload.uploadID
       const key = upload.key
       const name = getFilename(key)
@@ -106,7 +114,7 @@ function useUploadsMain() {
         },
       }
     })
-  }, [uploadsMap, activeBucket, response.data, apiBusUploadAbort])
+  }, [uploadsMap, activeBucket, response, apiBusUploadAbort])
 
   const {
     configurableColumns,
@@ -136,24 +144,31 @@ function useUploadsMain() {
     [enabledColumns]
   )
 
-  const dataState = useDatasetEmptyState(
-    dataset,
-    response.isValidating,
-    response.error,
-    filters
-  )
+  const datasetState = useDatasetState({
+    datasetPage,
+    isValidating: response.isValidating,
+    error: response.error,
+    marker,
+    filters,
+  })
+
+  const nextMarker = useBuildMarkerParam({
+    uploadIDMarker: response.data?.nextUploadIDMarker || '',
+    keyMarker: response.data?.nextMarker || '',
+  })
 
   return {
     abortAll,
-    dataState,
+    datasetState,
     limit,
-    nextMarker: response.data?.nextUploadIDMarker,
+    marker,
+    nextMarker,
     hasMore: !!response.data?.hasMore,
     isLoading: response.isLoading,
     error: response.error,
-    pageCount: dataset?.length || 0,
+    datasetPageTotal: datasetPage?.length || 0,
     columns: filteredTableColumns,
-    datasetPage: dataset,
+    datasetPage,
     configurableColumns,
     enabledColumns,
     sortableColumns,
@@ -188,4 +203,32 @@ export function UploadsProvider({ children }: Props) {
   return (
     <UploadsContext.Provider value={state}>{children}</UploadsContext.Provider>
   )
+}
+
+function useMarkersFromParam(marker: Nullable<string>) {
+  return useMemo<Maybe<{ uploadIDMarker: string; keyMarker: string }>>(() => {
+    if (marker) {
+      const [uploadIDMarker, keyMarker] = marker.split('<keyMarker>')
+      if (uploadIDMarker && keyMarker) {
+        return { keyMarker, uploadIDMarker }
+      }
+      return undefined
+    }
+    return undefined
+  }, [marker])
+}
+
+function useBuildMarkerParam({
+  uploadIDMarker,
+  keyMarker,
+}: {
+  uploadIDMarker: string
+  keyMarker: string
+}): Nullable<string> {
+  return useMemo(() => {
+    if (!uploadIDMarker || !keyMarker) {
+      return null
+    }
+    return `${uploadIDMarker}<keyMarker>${keyMarker}`
+  }, [uploadIDMarker, keyMarker])
 }

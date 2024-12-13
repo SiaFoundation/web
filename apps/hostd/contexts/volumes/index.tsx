@@ -1,17 +1,25 @@
 import {
   useTableState,
-  useDatasetEmptyState,
+  useDatasetState,
+  useClientFilteredDataset,
+  useClientFilters,
+  usePaginationOffset,
 } from '@siafoundation/design-system'
 import { VolumeMeta } from '@siafoundation/hostd-types'
 import { useVolumes as useVolumesData } from '@siafoundation/hostd-react'
 import { createContext, useContext, useMemo } from 'react'
-import { columnsDefaultVisible, TableColumnId } from './types'
+import { columnsDefaultVisible, TableColumnId, VolumeData } from './types'
 import { columns } from './columns'
 import { useDataset } from './dataset'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { secondsInMilliseconds } from '@siafoundation/units'
 
+const defaultLimit = 50
+
 function useVolumesMain() {
+  const { limit, offset } = usePaginationOffset(defaultLimit)
+  const { filters } = useClientFilters<VolumeData>()
+
   const {
     configurableColumns,
     enabledColumns,
@@ -44,6 +52,15 @@ function useVolumesMain() {
     response,
   })
 
+  const { datasetFiltered, datasetPage } = useClientFilteredDataset({
+    dataset,
+    filters,
+    sortField,
+    sortDirection,
+    offset,
+    limit,
+  })
+
   const filteredTableColumns = useMemo(
     () => columns.filter((column) => enabledColumns.includes(column.id)),
     [enabledColumns]
@@ -51,14 +68,23 @@ function useVolumesMain() {
 
   const isValidating = response.isValidating
   const error = response.error
-  const dataState = useDatasetEmptyState(dataset, isValidating, error, [])
+  const datasetState = useDatasetState({
+    datasetPage,
+    isValidating,
+    error,
+  })
 
   return {
-    dataState,
-    totalCount: dataset?.length || 0,
+    datasetState,
+    datasetTotal: dataset?.length || 0,
+    datasetFilteredTotal: datasetFiltered?.length || 0,
+    datasetPageTotal: datasetPage?.length || 0,
     isLoading: response.isValidating,
     columns: filteredTableColumns,
     dataset,
+    datasetPage,
+    offset,
+    limit,
     configurableColumns,
     enabledColumns,
     toggleColumnVisibility,

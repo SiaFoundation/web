@@ -16,10 +16,10 @@ export function TransfersBar() {
   const { isUnlockedAndAuthedRoute } = useAppSettings()
   const { downloadsList, downloadCancel, isViewingUploads, navigateToUploads } =
     useFilesManager()
-  const { pageCount: uploadsPageCount } = useUploads()
+  const { datasetPageTotal: uploadsPageTotal } = useUploads()
   const [maximized, setMaximized] = useState<boolean>(true)
 
-  const isActiveUploads = !!uploadsPageCount
+  const isActiveUploads = !!uploadsPageTotal
   const downloadCount = downloadsList.length
   const isActiveDownloads = !!downloadCount
 

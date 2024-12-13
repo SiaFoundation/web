@@ -6,11 +6,11 @@ import { useTransactions } from '../contexts/transactions'
 export function RenterdTransactionDetailsDialog() {
   const { id, dialog, onOpenChange } = useDialog()
 
-  // TODO: add transaction endpoint
-  const { dataset } = useTransactions()
+  // TODO: fetch transaction so that not dependent on datasetPage.
+  const { datasetPage } = useTransactions()
   const transaction = useMemo(() => {
-    return dataset?.find((t) => t.id === id)
-  }, [dataset, id])
+    return datasetPage?.find((t) => t.id === id)
+  }, [datasetPage, id])
 
   return (
     <TransactionDetailsDialog

@@ -7,10 +7,10 @@ import { useFilesFlat } from '../../../contexts/filesFlat'
 export function FilesStatsMenuCount() {
   const { isViewingABucket, uploadsList, activeExplorerMode } =
     useFilesManager()
-  const { pageCount: directoryPageCount } = useFilesDirectory()
-  const { pageCount: flatPageCount } = useFilesFlat()
-  const pageCount =
-    activeExplorerMode === 'flat' ? flatPageCount : directoryPageCount
+  const { datasetPageTotal: directoryPageTotal } = useFilesDirectory()
+  const { datasetPageTotal: flatPageTotal } = useFilesFlat()
+  const datasetPageTotal =
+    activeExplorerMode === 'flat' ? flatPageTotal : directoryPageTotal
 
   const stats = useObjectStats({
     config: {
@@ -35,7 +35,7 @@ export function FilesStatsMenuCount() {
           content="Number of files in page of current directory"
         >
           <Text size="12" font="mono">
-            {pageCount.toLocaleString()}
+            {datasetPageTotal.toLocaleString()}
           </Text>
         </Tooltip>
         <Tooltip side="bottom" content="Number of files across all buckets">

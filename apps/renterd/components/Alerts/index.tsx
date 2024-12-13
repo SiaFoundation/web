@@ -13,19 +13,19 @@ export function Alerts() {
     sortableColumns,
     toggleSort,
     limit,
-    dataState,
+    datasetState,
   } = useAlerts()
 
   return (
     <div className="p-6 min-w-fit">
       <Table
-        isLoading={dataState === 'loading'}
+        isLoading={datasetState === 'loading'}
         emptyState={
-          dataState === 'noneMatchingFilters' ? (
+          datasetState === 'noneMatchingFilters' ? (
             <StateNoneMatching />
-          ) : dataState === 'noneYet' ? (
+          ) : datasetState === 'noneYet' ? (
             <StateNoneYet />
-          ) : dataState === 'error' ? (
+          ) : datasetState === 'error' ? (
             <StateError />
           ) : null
         }

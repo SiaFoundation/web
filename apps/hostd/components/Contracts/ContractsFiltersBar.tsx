@@ -3,7 +3,7 @@ import { useContracts } from '../../contexts/contracts'
 import { ContractsFilterMenu } from './ContractsFilterMenu'
 
 export function ContractsFiltersBar() {
-  const { offset, limit, totalCount, pageCount, dataState } = useContracts()
+  const { offset, limit, datasetFilteredTotal, datasetState } = useContracts()
 
   return (
     <div className="flex gap-2 justify-between w-full">
@@ -11,9 +11,8 @@ export function ContractsFiltersBar() {
       <PaginatorKnownTotal
         offset={offset}
         limit={limit}
-        isLoading={dataState === 'loading'}
-        datasetTotal={totalCount}
-        pageTotal={pageCount}
+        isLoading={datasetState === 'loading'}
+        total={datasetFilteredTotal}
       />
     </div>
   )

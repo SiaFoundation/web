@@ -1,11 +1,11 @@
 import { useObjects } from '@siafoundation/renterd-react'
 import { useDataset as useDatasetGeneric } from '../filesManager/dataset'
 import { bucketAndKeyParamsFromPath } from '../../lib/paths'
-import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { useFilesManager } from '../filesManager'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { ObjectsParams } from '@siafoundation/renterd-types'
+import { usePaginationMarker } from '@siafoundation/design-system'
 
 const defaultLimit = 50
 
@@ -17,10 +17,7 @@ export function useDataset() {
     sortDirection,
     sortField,
   } = useFilesManager()
-  const router = useRouter()
-  const limit = Number(router.query.limit || defaultLimit)
-  const marker = router.query.marker as string
-
+  const { limit, marker } = usePaginationMarker(defaultLimit)
   const pathParams = bucketAndKeyParamsFromPath(activeDirectoryPath)
 
   const params = useMemo(() => {
@@ -77,6 +74,7 @@ export function useDataset() {
   return {
     limit,
     marker,
+    nextMarker: response.data?.nextMarker || null,
     isMore: !!response.data?.hasMore,
     response,
     dataset: d.data,

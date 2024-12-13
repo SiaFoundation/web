@@ -5,11 +5,12 @@ import { useTransactions } from '../contexts/transactions'
 
 export function HostdTransactionDetailsDialog() {
   const { id, dialog, onOpenChange } = useDialog()
-  const { dataset } = useTransactions()
+  // TODO: fetch transaction so that not dependent on datasetPage.
+  const { datasetPage } = useTransactions()
 
   const transaction = useMemo(() => {
-    return dataset?.find((t) => t.id === id)
-  }, [dataset, id])
+    return datasetPage?.find((t) => t.id === id)
+  }, [datasetPage, id])
 
   return (
     <TransactionDetailsDialog

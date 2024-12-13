@@ -6,13 +6,13 @@ import { columns } from '../../contexts/filesFlat/columns'
 
 export function FilesExplorer() {
   const { sortableColumns, toggleSort } = useFilesManager()
-  const { datasetPage, dataState, cellContext, sortField, sortDirection } =
+  const { datasetPage, datasetState, cellContext, sortField, sortDirection } =
     useFilesFlat()
   return (
     <div className="relative">
       <Table
         testId="filesTable"
-        isLoading={dataState === 'loading'}
+        isLoading={datasetState === 'loading'}
         emptyState={<EmptyState />}
         pageSize={10}
         data={datasetPage}

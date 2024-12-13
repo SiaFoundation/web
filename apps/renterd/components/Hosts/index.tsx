@@ -11,7 +11,7 @@ export function Hosts() {
     activeHost,
     columns,
     limit,
-    dataState,
+    datasetState,
     tableContext,
     viewMode,
   } = useHosts()
@@ -56,7 +56,7 @@ export function Hosts() {
               focusColor={
                 activeHost ? getHostStatus(activeHost).colorName : undefined
               }
-              isLoading={dataState === 'loading'}
+              isLoading={datasetState === 'loading'}
               emptyState={<StateEmpty />}
               context={tableContext}
               pageSize={limit}

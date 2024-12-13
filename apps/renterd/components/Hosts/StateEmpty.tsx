@@ -1,4 +1,9 @@
-import { Code, LinkButton, Text } from '@siafoundation/design-system'
+import {
+  Code,
+  LinkButton,
+  StateNoneOnPage,
+  Text,
+} from '@siafoundation/design-system'
 import {
   Filter32,
   HardDriveIcon,
@@ -8,9 +13,13 @@ import { routes } from '../../config/routes'
 import { useHosts } from '../../contexts/hosts'
 
 export function StateEmpty() {
-  const { dataState } = useHosts()
+  const { datasetState } = useHosts()
 
-  if (dataState === 'error') {
+  if (datasetState === 'noneOnPage') {
+    return <StateNoneOnPage />
+  }
+
+  if (datasetState === 'error') {
     return (
       <div className="flex flex-col gap-10 justify-center items-center h-[400px]">
         <Text>
@@ -23,7 +32,7 @@ export function StateEmpty() {
     )
   }
 
-  if (dataState === 'noneMatchingFilters') {
+  if (datasetState === 'noneMatchingFilters') {
     return (
       <div className="flex flex-col gap-10 justify-center items-center h-[400px]">
         <Text>
@@ -35,7 +44,7 @@ export function StateEmpty() {
       </div>
     )
   }
-  if (dataState === 'noneYet') {
+  if (datasetState === 'noneYet') {
     return (
       <div className="flex flex-col gap-10 justify-center items-center h-[400px]">
         <Text>

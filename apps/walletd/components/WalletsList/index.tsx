@@ -1,4 +1,4 @@
-import { Table } from '@siafoundation/design-system'
+import { EmptyState, Table } from '@siafoundation/design-system'
 import { useWallets } from '../../contexts/wallets'
 import { StateNoneYet } from './StateNoneYet'
 import { StateNoneMatching } from './StateNoneMatching'
@@ -6,8 +6,8 @@ import { StateError } from './StateError'
 
 export function WalletsList() {
   const {
-    dataset,
-    dataState,
+    datasetPage,
+    datasetState,
     context,
     columns,
     sortableColumns,
@@ -18,20 +18,20 @@ export function WalletsList() {
 
   return (
     <div className="px-6 py-7 min-w-fit">
-      {dataState === 'noneYet' && <StateNoneYet />}
-      {dataState !== 'noneYet' && (
+      {datasetState === 'noneYet' && <StateNoneYet />}
+      {datasetState !== 'noneYet' && (
         <Table
           testId="walletsTable"
-          isLoading={dataState === 'loading'}
+          isLoading={datasetState === 'loading'}
           emptyState={
-            dataState === 'noneMatchingFilters' ? (
-              <StateNoneMatching />
-            ) : dataState === 'error' ? (
-              <StateError />
-            ) : null
+            <EmptyState
+              datasetState={datasetState}
+              noneMatching={<StateNoneMatching />}
+              error={<StateError />}
+            />
           }
           pageSize={6}
-          data={dataset}
+          data={datasetPage}
           context={context}
           columns={columns}
           sortableColumns={sortableColumns}

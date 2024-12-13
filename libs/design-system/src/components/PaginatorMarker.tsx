@@ -7,7 +7,8 @@ import { usePagesRouter } from '@siafoundation/next'
 import { LoadingDots } from './LoadingDots'
 
 type Props = {
-  marker?: string
+  marker?: string | null
+  nextMarker: string | null
   isMore: boolean
   limit: number
   pageTotal: number
@@ -16,19 +17,23 @@ type Props = {
 
 export function PaginatorMarker({
   marker,
+  nextMarker,
   isMore,
   pageTotal,
   isLoading,
 }: Props) {
   const router = usePagesRouter()
+  // If no marker is provided, we do not know if we are on the first or any other page
+  // so leave the control enabled. If the marker is null, we are on the first page.
+  const previousDisabled = marker === undefined ? false : marker === null
   return (
     <ControlGroup>
       <Button
+        disabled={previousDisabled}
         icon="contrast"
         size="small"
         variant="gray"
         className="rounded-r-none"
-        disabled={!marker}
         onClick={() =>
           router.push({
             query: {
@@ -48,7 +53,7 @@ export function PaginatorMarker({
         </Button>
       ) : pageTotal ? (
         <Button className="rounded-none px-3" state="waiting">
-          {pageTotal}
+          {pageTotal} on page
         </Button>
       ) : (
         <Button className="rounded-none px-3" state="waiting" color="subtle">
@@ -65,7 +70,7 @@ export function PaginatorMarker({
           router.push({
             query: {
               ...router.query,
-              marker,
+              marker: nextMarker,
             },
           })
         }

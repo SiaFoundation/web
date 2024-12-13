@@ -11,8 +11,8 @@ export function AlertsFilterMenu() {
     offset,
     limit,
     totals,
-    pageCount,
-    dataState,
+    datasetPageTotal,
+    datasetState,
     datasetPage,
     dismissMany,
   } = useAlerts()
@@ -53,9 +53,9 @@ export function AlertsFilterMenu() {
         </Button>
       </div>
       <div className="flex-1" />
-      {!dataState && !!pageCount && (
+      {datasetState === 'loaded' && !!datasetPageTotal && (
         <Button
-          tip={severityFilter ? `dismiss ${pageCount}` : 'dismiss all'}
+          tip={severityFilter ? `dismiss ${datasetPageTotal}` : 'dismiss all'}
           onClick={() => {
             if (!datasetPage) {
               return
@@ -64,15 +64,14 @@ export function AlertsFilterMenu() {
           }}
         >
           <Checkmark16 />
-          Dismiss ({pageCount})
+          Dismiss ({datasetPageTotal})
         </Button>
       )}
       <PaginatorKnownTotal
         offset={offset}
         limit={limit}
-        isLoading={dataState === 'loading'}
-        datasetTotal={totals.all}
-        pageTotal={pageCount}
+        isLoading={datasetState === 'loading'}
+        total={totals.all}
       />
     </div>
   )

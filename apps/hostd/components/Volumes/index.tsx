@@ -1,9 +1,9 @@
-import { Table } from '@siafoundation/design-system'
+import { EmptyState, Table } from '@siafoundation/design-system'
 import { useVolumes } from '../../contexts/volumes'
 import { StateNoneYet } from './StateNoneYet'
 
 export function Volumes() {
-  const { dataset, isLoading, columns } = useVolumes()
+  const { dataset, datasetState, isLoading, columns } = useVolumes()
   return (
     <div className="p-6 min-w-fit">
       <Table
@@ -12,7 +12,9 @@ export function Volumes() {
         pageSize={20}
         data={dataset}
         columns={columns}
-        emptyState={<StateNoneYet />}
+        emptyState={
+          <EmptyState datasetState={datasetState} noneYet={<StateNoneYet />} />
+        }
       />
     </div>
   )
