@@ -65,7 +65,7 @@ export type Event = {
   data: string
 }
 
-export type Metrics = {
+export type BlockMetrics = {
   index: ChainIndex
   difficulty: string
   totalHosts: number

@@ -3,6 +3,7 @@ import {
   AddressBalance,
   Block,
   BlockID,
+  BlockMetrics,
   ChainIndex,
   ConsensusNetwork,
   ConsensusState,
@@ -15,7 +16,6 @@ import {
   ExplorerTransaction,
   FileContractID,
   Hash256,
-  Metrics,
   Peer,
   PublicKey,
   SearchResultType,
@@ -205,16 +205,16 @@ export type ContractRevisionsResponse = ExplorerFileContract[]
 // Metrics
 
 // Returns the most recent metrics about Sia.
-export const metricsRoute = '/metrics/block'
-export type MetricsParams = void
-export type MetricsPayload = void
-export type MetricsResponse = Metrics
+export const blockMetricsRoute = '/metrics/block'
+export type BlockMetricsParams = void
+export type BlockMetricsPayload = void
+export type BlockMetricsResponse = BlockMetrics
 
 // Returns various metrics about Sia at the time of the given block ID.
-export const metricsByIDRoute = '/metrics/block/:id'
-export type MetricsByIDParams = { id: BlockID }
-export type MetricsByIDPayload = void
-export type MetricsByIDResponse = Metrics
+export const blockMetricsByIDRoute = '/metrics/block/:id'
+export type BlockMetricsByIDParams = { id: BlockID }
+export type BlockMetricsByIDPayload = void
+export type BlockMetricsByIDResponse = BlockMetrics
 
 // Search
 

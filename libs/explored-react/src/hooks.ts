@@ -8,6 +8,12 @@ import {
   AddressSiafundUTXOsParams,
   AddressSiafundUTXOsResponse,
   addressSiafundUTXOsRoute,
+  BlockMetricsByIDParams,
+  BlockMetricsByIDResponse,
+  blockMetricsByIDRoute,
+  BlockMetricsParams,
+  BlockMetricsResponse,
+  blockMetricsRoute,
   ConsensusNetworkParams,
   ConsensusNetworkResponse,
   consensusNetworkRoute,
@@ -33,12 +39,6 @@ import {
   HostByPubkeyParams,
   HostByPubkeyResponse,
   hostByPubkeyRoute,
-  MetricsByIDParams,
-  MetricsByIDResponse,
-  metricsByIDRoute,
-  MetricsParams,
-  MetricsResponse,
-  metricsRoute,
   OutputSiacoinParams,
   OutputSiacoinResponse,
   outputSiacoinRoute,
@@ -327,19 +327,21 @@ export function useContractRevisions(
 
 // Metrics
 
-export function useMetrics(args: HookArgsSwr<MetricsParams, MetricsResponse>) {
-  return useGetSwr({
-    ...args,
-    route: metricsRoute,
-  })
-}
-
-export function useMetricsByID(
-  args: HookArgsSwr<MetricsByIDParams, MetricsByIDResponse>
+export function useBlockMetrics(
+  args: HookArgsSwr<BlockMetricsParams, BlockMetricsResponse>
 ) {
   return useGetSwr({
     ...args,
-    route: metricsByIDRoute,
+    route: blockMetricsRoute,
+  })
+}
+
+export function useBlockMetricsByID(
+  args: HookArgsSwr<BlockMetricsByIDParams, BlockMetricsByIDResponse>
+) {
+  return useGetSwr({
+    ...args,
+    route: blockMetricsByIDRoute,
   })
 }
 
