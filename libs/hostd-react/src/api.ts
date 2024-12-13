@@ -28,9 +28,6 @@ import {
   SettingsPinnedUpdateParams,
   SettingsPinnedUpdatePayload,
   SettingsPinnedUpdateResponse,
-  LogsSearchParams,
-  LogsSearchPayload,
-  LogsSearchResponse,
   MetricsParams,
   MetricsPeriodParams,
   MetricsPeriodResponse,
@@ -90,7 +87,6 @@ import {
   alertsRoute,
   contractsIdIntegrityRoute,
   contractsRoute,
-  logEntriesRoute,
   metricsIntervalRoute,
   metricsRoute,
   settingsAnnounceRoute,
@@ -498,18 +494,6 @@ export function useSystemDirectoryCreate(
   >
 ) {
   return usePutFunc({ ...args, route: systemDirRoute })
-}
-
-// logs
-
-export function useLogsSearch(
-  args: HookArgsWithPayloadSwr<
-    LogsSearchParams,
-    LogsSearchPayload,
-    LogsSearchResponse
-  >
-) {
-  return usePostSwr({ ...args, route: logEntriesRoute })
 }
 
 // alerts

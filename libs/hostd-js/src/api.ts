@@ -20,9 +20,6 @@ import {
   IndexTipParams,
   IndexTipPayload,
   IndexTipResponse,
-  LogsSearchParams,
-  LogsSearchPayload,
-  LogsSearchResponse,
   MetricsParams,
   MetricsPayload,
   MetricsPeriodParams,
@@ -99,7 +96,6 @@ import {
   contractsIdIntegrityRoute,
   contractsRoute,
   indexTipRoute,
-  logEntriesRoute,
   metricsIntervalRoute,
   metricsRoute,
   settingsAnnounceRoute,
@@ -264,11 +260,6 @@ export function Hostd({ api, password }: { api: string; password?: string }) {
       SystemDirectoryCreatePayload,
       SystemDirectoryCreateResponse
     >(axios, 'put', systemDirRoute),
-    logsSearch: buildRequestHandler<
-      LogsSearchParams,
-      LogsSearchPayload,
-      LogsSearchResponse
-    >(axios, 'post', logEntriesRoute),
     alerts: buildRequestHandler<AlertsParams, AlertsPayload, AlertsResponse>(
       axios,
       'get',
