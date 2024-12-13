@@ -1,6 +1,5 @@
-import { Button, Text, Separator } from '@siafoundation/design-system'
+import { Button } from '@siafoundation/design-system'
 import { Add20 } from '@siafoundation/react-icons'
-import { humanBytes } from '@siafoundation/units'
 import {
   HostdAuthedLayout,
   HostdAuthedPageLayoutProps,
@@ -8,18 +7,12 @@ import {
 import { useDialog } from '../../contexts/dialog'
 import { HostdSidenav } from '../HostdSidenav'
 import { routes } from '../../config/routes'
-import { useVolumes } from '../../contexts/volumes'
 import { VolumesViewDropdownMenu } from './VolumesViewDropdownMenu'
+import { VolumesFiltersBar } from './VolumesFiltersBar'
 
 export const Layout = HostdAuthedLayout
 export function useLayoutProps(): HostdAuthedPageLayoutProps {
   const { openDialog } = useDialog()
-
-  const { dataset } = useVolumes()
-
-  const total = dataset?.reduce((acc, i) => acc + i.totalBytes, 0)
-  const used = dataset?.reduce((acc, i) => acc + i.usedBytes, 0)
-  const free = total - used
   return {
     title: 'Volumes',
     routes,
@@ -34,20 +27,6 @@ export function useLayoutProps(): HostdAuthedPageLayoutProps {
         <VolumesViewDropdownMenu />
       </>
     ),
-    stats: (
-      <div className="flex gap-4">
-        <Text size="12" font="mono" weight="medium">{`${humanBytes(
-          used
-        )} used`}</Text>
-        <Separator variant="vertical" />
-        <Text size="12" font="mono" weight="medium">{`${humanBytes(
-          free
-        )} free`}</Text>
-        <Separator variant="vertical" />
-        <Text size="12" font="mono" weight="medium">{`${humanBytes(
-          total
-        )} total`}</Text>
-      </div>
-    ),
+    stats: <VolumesFiltersBar />,
   }
 }

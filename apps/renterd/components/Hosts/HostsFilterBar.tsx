@@ -3,7 +3,7 @@ import { useHosts } from '../../contexts/hosts'
 import { HostsFilterMenu } from './HostsFilterMenu'
 
 export function HostsFilterBar() {
-  const { offset, limit, pageCount, dataState } = useHosts()
+  const { offset, limit, datasetPageTotal, datasetState } = useHosts()
   return (
     <div className="flex gap-2 w-full">
       <HostsFilterMenu />
@@ -11,8 +11,8 @@ export function HostsFilterBar() {
       <PaginatorUnknownTotal
         offset={offset}
         limit={limit}
-        pageTotal={pageCount}
-        isLoading={dataState === 'loading'}
+        pageTotal={datasetPageTotal}
+        isLoading={datasetState === 'loading'}
       />
     </div>
   )

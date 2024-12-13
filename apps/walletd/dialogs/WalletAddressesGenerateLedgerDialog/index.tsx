@@ -121,7 +121,7 @@ export function WalletAddressesGenerateLedgerDialog({
   const {
     dataset: existingAddresses,
     lastIndex,
-    datasetCount,
+    datasetTotal,
   } = useWalletAddresses({ id: walletId })
   const syncStatus = useSyncStatus()
   const { dataset } = useWallets()
@@ -364,7 +364,7 @@ export function WalletAddressesGenerateLedgerDialog({
     >
       <div className="flex flex-col gap-4">
         <Text>
-          Wallet currently has {pluralize(datasetCount, 'address', 'addresses')}{' '}
+          Wallet currently has {pluralize(datasetTotal, 'address', 'addresses')}{' '}
           with a highest index of {lastIndex}. Select a start index and the
           number of sequential addresses you would like to generate.
         </Text>

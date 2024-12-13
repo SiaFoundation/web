@@ -8,7 +8,7 @@ import { useTransactions } from '../../contexts/transactions'
 export function WalletFilterBar() {
   const { isSynced, syncPercent, isWalletSynced, walletScanPercent } =
     useSyncStatus()
-  const { offset, limit, pageCount, dataState } = useTransactions()
+  const { offset, limit, datasetPageTotal, datasetState } = useTransactions()
   return (
     <div className="flex gap-2 w-full">
       <WalletSyncWarning
@@ -21,8 +21,8 @@ export function WalletFilterBar() {
       <PaginatorUnknownTotal
         offset={offset}
         limit={limit}
-        pageTotal={pageCount}
-        isLoading={dataState === 'loading'}
+        pageTotal={datasetPageTotal}
+        isLoading={datasetState === 'loading'}
       />
     </div>
   )

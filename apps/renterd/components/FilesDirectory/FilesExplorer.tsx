@@ -17,8 +17,8 @@ export function FilesExplorer() {
   } = useFilesManager()
   const {
     datasetPage,
-    pageCount,
-    dataState,
+    datasetPageTotal,
+    datasetState,
     cellContext,
     onDragEnd,
     onDragOver,
@@ -33,12 +33,12 @@ export function FilesExplorer() {
       <Dropzone
         testId="filesDropzone"
         onDrop={uploadFiles}
-        noClick={!canUpload || pageCount > 0}
+        noClick={!canUpload || datasetPageTotal > 0}
         noDrag={!canUpload}
       >
         <Table
           testId={isViewingBuckets ? 'bucketsTable' : 'filesTable'}
-          isLoading={dataState === 'loading'}
+          isLoading={datasetState === 'loading'}
           emptyState={<EmptyState />}
           pageSize={10}
           data={datasetPage}

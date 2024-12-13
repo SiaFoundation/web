@@ -1,7 +1,8 @@
 import {
   useTableState,
-  useDatasetEmptyState,
   useServerFilters,
+  useDatasetState,
+  usePaginationOffset,
 } from '@siafoundation/design-system'
 import {
   useWalletEvents,
@@ -27,14 +28,14 @@ import { useRouter } from 'next/router'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
+import { Maybe } from '@siafoundation/types'
 
 const defaultLimit = 100
 
 export function useEventsMain() {
   const router = useRouter()
   const id = router.query.id as string
-  const limit = Number(router.query.limit || defaultLimit)
-  const offset = Number(router.query.offset || 0)
+  const { limit, offset } = usePaginationOffset(defaultLimit)
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
     useServerFilters()
   const responseTxPool = useWalletEventsUnconfirmed({
@@ -63,9 +64,9 @@ export function useEventsMain() {
   })
 
   const syncStatus = useSyncStatus()
-  const dataset = useMemo<EventData[] | null>(() => {
+  const datasetPage = useMemo<Maybe<EventData[]>>(() => {
     if (!responseEvents.data || !responseTxPool.data) {
-      return null
+      return undefined
     }
     const dataTxPool: EventData[] = responseTxPool.data.map((e) => {
       const amountSc = calculateScValue(e)
@@ -106,8 +107,17 @@ export function useEventsMain() {
       }
       return res
     })
-    return [...dataTxPool.reverse(), ...dataEvents]
-  }, [responseEvents.data, responseTxPool.data, syncStatus.nodeBlockHeight])
+    if (offset === 0) {
+      return [...dataTxPool.reverse(), ...dataEvents]
+    } else {
+      return [...dataEvents]
+    }
+  }, [
+    responseEvents.data,
+    responseTxPool.data,
+    syncStatus.nodeBlockHeight,
+    offset,
+  ])
 
   const {
     configurableColumns,
@@ -141,7 +151,13 @@ export function useEventsMain() {
     responseEvents.isValidating || responseTxPool.isValidating
   const error = responseEvents.error || responseTxPool.error
 
-  const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
+  const datasetState = useDatasetState({
+    datasetPage,
+    isValidating,
+    error,
+    filters,
+    offset,
+  })
 
   const siascanUrl = useSiascanUrl()
   const cellContext = useMemo<CellContext>(
@@ -152,11 +168,11 @@ export function useEventsMain() {
   )
 
   return {
-    dataState,
+    datasetState,
     error: responseEvents.error,
-    pageCount: dataset?.length || 0,
+    datasetPageTotal: datasetPage?.length || 0,
     columns: filteredTableColumns,
-    dataset,
+    datasetPage,
     cellContext,
     configurableColumns,
     enabledColumns,

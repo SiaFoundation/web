@@ -1,10 +1,11 @@
-import { Text } from '@siafoundation/design-system'
+import { PaginatorKnownTotal, Text } from '@siafoundation/design-system'
 import { Unlocked16 } from '@siafoundation/react-icons'
 import { useWallets } from '../../contexts/wallets'
 import { pluralize } from '@siafoundation/units'
 
 export function WalletsFiltersBar() {
-  const { datasetCount, unlockedCount } = useWallets()
+  const { datasetTotal, unlockedCount, offset, limit, datasetState } =
+    useWallets()
 
   return (
     <div className="flex gap-2 w-full">
@@ -20,8 +21,14 @@ export function WalletsFiltersBar() {
       )}
       <div className="flex-1" />
       <Text size="12" font="mono">
-        {pluralize(datasetCount, 'wallet')}
+        {pluralize(datasetTotal, 'wallet')}
       </Text>
+      <PaginatorKnownTotal
+        offset={offset}
+        limit={limit}
+        total={datasetTotal}
+        isLoading={datasetState === 'loading'}
+      />
     </div>
   )
 }

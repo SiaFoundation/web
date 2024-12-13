@@ -20,16 +20,16 @@ export function useWalletAddresses({ id }: { id: string }) {
     },
   })
 
-  const { dataset, dataState, lastIndex } = useDataset({
+  const { dataset, datasetState, lastIndex } = useDataset({
     walletId: id,
     response,
     filters,
   })
 
   return {
-    dataState,
+    datasetState,
     error: response.error,
-    datasetCount: dataset?.length || 0,
+    datasetTotal: dataset?.length || 0,
     dataset: dataset,
     lastIndex,
   }

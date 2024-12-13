@@ -1,9 +1,9 @@
 import {
   useTableState,
-  useDatasetEmptyState,
+  useDatasetState,
   useServerFilters,
+  usePaginationOffset,
 } from '@siafoundation/design-system'
-import { useRouter } from 'next/router'
 import { createContext, useContext, useMemo } from 'react'
 import {
   AlertData,
@@ -23,13 +23,12 @@ import {
   useAlertsDismiss,
 } from '@siafoundation/renterd-react'
 import { useCallback } from 'react'
+import { Maybe } from '@siafoundation/types'
 
 const defaultLimit = 50
 
 function useAlertsMain() {
-  const router = useRouter()
-  const limit = Number(router.query.limit || defaultLimit)
-  const offset = Number(router.query.offset || 0)
+  const { limit, offset } = usePaginationOffset(defaultLimit)
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
     useServerFilters()
 
@@ -106,7 +105,7 @@ function useAlertsMain() {
     [dismiss]
   )
 
-  const datasetPage = useMemo<AlertData[] | undefined>(() => {
+  const datasetPage = useMemo<Maybe<AlertData[]>>(() => {
     if (!response.data) {
       return undefined
     }
@@ -150,12 +149,13 @@ function useAlertsMain() {
     [enabledColumns]
   )
 
-  const dataState = useDatasetEmptyState(
+  const datasetState = useDatasetState({
     datasetPage,
-    response.isValidating,
-    response.error,
-    filters
-  )
+    isValidating: response.isValidating,
+    error: response.error,
+    filters,
+    offset,
+  })
 
   const totals = useMemo(
     () => ({
@@ -171,12 +171,12 @@ function useAlertsMain() {
   )
 
   return {
-    dataState,
+    datasetState,
     limit,
     offset,
     isLoading: response.isLoading,
     error: response.error,
-    pageCount: datasetPage?.length || 0,
+    datasetPageTotal: datasetPage?.length || 0,
     totals,
     columns: filteredTableColumns,
     datasetPage,

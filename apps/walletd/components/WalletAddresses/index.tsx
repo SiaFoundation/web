@@ -1,4 +1,4 @@
-import { Table } from '@siafoundation/design-system'
+import { EmptyState, Table } from '@siafoundation/design-system'
 import { useAddresses } from '../../contexts/addresses'
 import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
@@ -6,8 +6,8 @@ import { StateError } from './StateError'
 
 export function WalletAddresses() {
   const {
-    dataset,
-    dataState,
+    datasetPage,
+    datasetState,
     columns,
     cellContext,
     sortableColumns,
@@ -19,18 +19,17 @@ export function WalletAddresses() {
   return (
     <div className="px-6 py-7 min-w-fit">
       <Table
-        isLoading={dataState === 'loading'}
+        isLoading={datasetState === 'loading'}
         emptyState={
-          dataState === 'noneMatchingFilters' ? (
-            <StateNoneMatching />
-          ) : dataState === 'noneYet' ? (
-            <StateNoneYet />
-          ) : dataState === 'error' ? (
-            <StateError />
-          ) : null
+          <EmptyState
+            datasetState={datasetState}
+            noneMatching={<StateNoneMatching />}
+            noneYet={<StateNoneYet />}
+            error={<StateError />}
+          />
         }
         pageSize={6}
-        data={dataset}
+        data={datasetPage}
         context={cellContext}
         columns={columns}
         sortableColumns={sortableColumns}

@@ -8,7 +8,8 @@ import {
   RenterdAuthedPageLayoutProps,
 } from '../RenterdAuthedLayout'
 import { FilesActionsMenu } from '../FilesDirectory/FilesActionsMenu'
-import { FilesStatsMenu } from '../FilesDirectory/FilesStatsMenu'
+import { FilesDirectoryStatsMenu } from '../FilesDirectory/FilesDirectoryStatsMenu'
+import { FilesFlatStatsMenu } from '../FilesFlat/FilesFlatStatsMenu'
 import { FilesDirectoryBulkMenu } from '../FilesDirectory/FilesDirectoryBulkMenu'
 import { useFilesManager } from '../../contexts/filesManager'
 import { FilesFlatBulkMenu } from '../FilesFlat/FilesFlatBulkMenu'
@@ -29,7 +30,7 @@ export function useLayoutProps(): RenterdAuthedPageLayoutProps {
       sidenav: <RenterdSidenav />,
       openSettings: () => openDialog('settings'),
       nav: <FilesDirectoryBreadcrumbMenu />,
-      stats: <FilesStatsMenu />,
+      stats: <FilesDirectoryStatsMenu />,
       actions: <FilesActionsMenu />,
       dockedControls: <FilesDirectoryBulkMenu />,
     }
@@ -42,7 +43,7 @@ export function useLayoutProps(): RenterdAuthedPageLayoutProps {
     sidenav: <RenterdSidenav />,
     openSettings: () => openDialog('settings'),
     nav: <FilesFlatBreadcrumbMenu />,
-    stats: <FilesStatsMenu />,
+    stats: <FilesFlatStatsMenu />,
     actions: <FilesActionsMenu />,
     dockedControls: <FilesFlatBulkMenu />,
   }

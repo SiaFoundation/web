@@ -1,5 +1,5 @@
 import {
-  useDatasetEmptyState,
+  useDatasetState,
   useServerFilters,
   useTableState,
 } from '@siafoundation/design-system'
@@ -28,6 +28,7 @@ import {
   defaultSortField,
   sortOptions,
 } from './types'
+import { Maybe } from '@siafoundation/types'
 
 const defaultPageSize = 50
 
@@ -58,7 +59,7 @@ function useTransactionsMain() {
     useServerFilters()
 
   const syncStatus = useSyncStatus()
-  const dataset = useMemo<EventData[] | null>(() => {
+  const datasetPage = useMemo<Maybe<EventData[]>>(() => {
     if (!events.data || !pending.data) {
       return null
     }
@@ -97,8 +98,12 @@ function useTransactionsMain() {
       }
       return res
     })
-    return [...dataPending.reverse(), ...dataEvents]
-  }, [events.data, pending.data, syncStatus.nodeBlockHeight])
+    if (offset === 0) {
+      return [...dataPending.reverse(), ...dataEvents]
+    } else {
+      return [...dataEvents]
+    }
+  }, [events.data, pending.data, syncStatus.nodeBlockHeight, offset])
 
   const {
     configurableColumns,
@@ -127,11 +132,6 @@ function useTransactionsMain() {
       ),
     [enabledColumns]
   )
-
-  const isValidating = events.isValidating || pending.isValidating
-  const error = events.error || pending.error
-
-  const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
 
   const siascanUrl = useSiascanUrl()
   const cellContext = useMemo<CellContext>(
@@ -168,15 +168,25 @@ function useTransactionsMain() {
     [metrics.data]
   )
 
+  const isValidating = events.isValidating || pending.isValidating
+  const error = events.error || pending.error
+  const datasetState = useDatasetState({
+    datasetPage,
+    isValidating,
+    error,
+    filters,
+    offset,
+  })
+
   return {
     balances,
     metrics,
-    dataset,
+    datasetPage,
     error,
-    dataState,
+    datasetState,
     offset,
     limit,
-    pageCount: dataset?.length || 0,
+    datasetPageTotal: datasetPage?.length || 0,
     defaultPageSize,
     cellContext,
     configurableColumns,

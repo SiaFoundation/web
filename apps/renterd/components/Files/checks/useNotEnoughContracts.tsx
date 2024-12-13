@@ -3,16 +3,16 @@ import { useContracts } from '../../../contexts/contracts'
 
 export function useNotEnoughContracts() {
   const settingsUpload = useSettingsUpload()
-  const { datasetCount, isLoading: isContractsLoading } = useContracts()
+  const { datasetTotal, isLoading: isContractsLoading } = useContracts()
 
   const active =
     settingsUpload.data &&
     !isContractsLoading &&
-    datasetCount < settingsUpload.data.redundancy.totalShards
+    datasetTotal < settingsUpload.data.redundancy.totalShards
 
   return {
     active,
-    count: datasetCount,
+    count: datasetTotal,
     required: settingsUpload.data?.redundancy.totalShards || 0,
   }
 }

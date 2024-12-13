@@ -1,7 +1,4 @@
-import {
-  useDatasetEmptyState,
-  useMultiSelect,
-} from '@siafoundation/design-system'
+import { useDatasetState, useMultiSelect } from '@siafoundation/design-system'
 import {
   createContext,
   MouseEvent,
@@ -23,22 +20,15 @@ function useFilesFlatMain() {
     enabledColumns,
     isViewingBuckets,
   } = useFilesManager()
-  const { limit, response, isMore, refresh, dataset } = useDataset({
-    sortField,
-    sortDirection,
-  })
-  const nextMarker = response.data?.nextMarker
+  const { limit, marker, nextMarker, response, isMore, refresh, dataset } =
+    useDataset({
+      sortField,
+      sortDirection,
+    })
 
   const _datasetPage = useMemo(() => {
     return dataset
   }, [dataset])
-
-  const dataState = useDatasetEmptyState(
-    dataset,
-    response.isValidating,
-    response.error,
-    filters
-  )
 
   const filteredTableColumns = useMemo(
     () =>
@@ -72,6 +62,14 @@ function useFilesFlatMain() {
     })
   }, [_datasetPage, multiSelect])
 
+  const datasetState = useDatasetState({
+    datasetPage,
+    isValidating: response.isValidating,
+    error: response.error,
+    marker,
+    filters,
+  })
+
   const cellContext = useMemo(
     () =>
       ({
@@ -82,16 +80,17 @@ function useFilesFlatMain() {
   )
 
   return {
-    dataState,
+    datasetState,
     multiSelect,
     cellContext,
     refresh,
     limit,
     datasetPage,
     columns: filteredTableColumns,
+    marker,
     nextMarker,
     isMore,
-    pageCount: dataset?.length || 0,
+    datasetPageTotal: dataset?.length || 0,
     sortField,
     filters,
     sortDirection,

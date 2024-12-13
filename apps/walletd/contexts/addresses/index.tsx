@@ -2,6 +2,7 @@ import {
   useTableState,
   useClientFilters,
   useClientFilteredDataset,
+  usePaginationOffset,
 } from '@siafoundation/design-system'
 import { useWalletAddresses } from '@siafoundation/walletd-react'
 import { createContext, useContext, useMemo } from 'react'
@@ -18,9 +19,12 @@ import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { useDataset } from './dataset'
 
+const defaultLimit = 50
+
 export function useAddressesMain() {
   const router = useRouter()
   const walletId = router.query.id as string
+  const { limit, offset } = usePaginationOffset(defaultLimit)
 
   const response = useWalletAddresses({
     disabled: !walletId,
@@ -37,7 +41,7 @@ export function useAddressesMain() {
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
     useClientFilters<AddressData>()
 
-  const { dataset, dataState, lastIndex } = useDataset({
+  const { dataset, datasetState, lastIndex } = useDataset({
     walletId,
     response,
     filters,
@@ -63,11 +67,13 @@ export function useAddressesMain() {
     defaultSortField,
   })
 
-  const datasetFiltered = useClientFilteredDataset({
+  const { datasetFiltered, datasetPage } = useClientFilteredDataset({
     dataset,
     filters,
     sortField,
     sortDirection,
+    limit,
+    offset,
   })
 
   const filteredTableColumns = useMemo(
@@ -87,11 +93,16 @@ export function useAddressesMain() {
   )
 
   return {
-    dataState,
+    datasetState,
     error: response.error,
-    datasetCount: datasetFiltered?.length || 0,
+    datasetTotal: dataset?.length || 0,
+    datasetFilteredTotal: datasetFiltered?.length || 0,
+    datasetPageTotal: datasetPage?.length || 0,
     columns: filteredTableColumns,
-    dataset: datasetFiltered,
+    dataset,
+    datasetPage,
+    offset,
+    limit,
     cellContext,
     lastIndex,
     configurableColumns,

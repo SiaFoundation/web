@@ -2,19 +2,24 @@ import { StateError } from './StateError'
 import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
 import { useFilesFlat } from '../../../contexts/filesFlat'
+import { StateNoneOnPage } from '@siafoundation/design-system'
 
 export function EmptyState() {
-  const { dataState } = useFilesFlat()
+  const { datasetState } = useFilesFlat()
 
-  if (dataState === 'noneMatchingFilters') {
+  if (datasetState === 'noneOnPage') {
+    return <StateNoneOnPage />
+  }
+
+  if (datasetState === 'noneMatchingFilters') {
     return <StateNoneMatching />
   }
 
-  if (dataState === 'error') {
+  if (datasetState === 'error') {
     return <StateError />
   }
 
-  if (dataState === 'noneYet') {
+  if (datasetState === 'noneYet') {
     return <StateNoneYet />
   }
 

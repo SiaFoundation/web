@@ -2,18 +2,28 @@ import { Button, PaginatorMarker } from '@siafoundation/design-system'
 import { useUploads } from '../../../contexts/uploads'
 
 export function UploadsStatsMenu() {
-  const { abortAll, limit, pageCount, dataState, nextMarker, hasMore } =
-    useUploads()
+  const {
+    abortAll,
+    limit,
+    datasetPageTotal,
+    datasetState,
+    marker,
+    nextMarker,
+    hasMore,
+  } = useUploads()
   return (
     <div className="flex gap-3 w-full">
       <div className="flex-1" />
-      {pageCount > 0 && <Button onClick={abortAll}>Abort ({pageCount})</Button>}
+      {datasetPageTotal > 0 && (
+        <Button onClick={abortAll}>Abort ({datasetPageTotal})</Button>
+      )}
       <PaginatorMarker
-        marker={nextMarker}
+        marker={marker}
+        nextMarker={nextMarker}
         isMore={hasMore}
         limit={limit}
-        pageTotal={pageCount}
-        isLoading={dataState === 'loading'}
+        pageTotal={datasetPageTotal}
+        isLoading={datasetState === 'loading'}
       />
     </div>
   )

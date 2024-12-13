@@ -8,14 +8,14 @@ export function UploadsTable() {
     sortableColumns,
     toggleSort,
     datasetPage,
-    dataState,
+    datasetState,
     sortField,
     sortDirection,
   } = useUploads()
   return (
     <div className="relative">
       <Table
-        isLoading={dataState === 'loading'}
+        isLoading={datasetState === 'loading'}
         emptyState={<EmptyState />}
         pageSize={10}
         data={datasetPage}

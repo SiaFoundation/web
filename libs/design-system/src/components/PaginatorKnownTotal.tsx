@@ -15,14 +15,13 @@ type Props = {
   offset: number
   limit: number
   isLoading: boolean
-  datasetTotal: number
-  pageTotal: number
+  total: number
 }
 
 export function PaginatorKnownTotal({
   offset,
   limit,
-  datasetTotal,
+  total,
   isLoading,
 }: Props) {
   const router = usePagesRouter()
@@ -65,9 +64,9 @@ export function PaginatorKnownTotal({
         <CaretLeft16 />
       </Button>
       <Button state="waiting" className="rounded-none px-3">
-        {datasetTotal > 0 ? (
-          `${offset + 1} - ${Math.min(offset + limit, datasetTotal)} of ${
-            datasetTotal ? datasetTotal.toLocaleString() : ''
+        {total > 0 ? (
+          `${offset + 1} - ${Math.min(offset + limit, total)} of ${
+            total ? total.toLocaleString() : ''
           }`
         ) : isLoading ? (
           <LoadingDots className="px-2" />
@@ -77,7 +76,7 @@ export function PaginatorKnownTotal({
       </Button>
       <Button
         icon="contrast"
-        disabled={offset + limit >= datasetTotal}
+        disabled={offset + limit >= total}
         size="small"
         variant="gray"
         className="rounded-none"
@@ -85,7 +84,7 @@ export function PaginatorKnownTotal({
           router.push({
             query: {
               ...router.query,
-              offset: Math.min(offset + limit, datasetTotal),
+              offset: Math.min(offset + limit, total),
             },
           })
         }
@@ -94,7 +93,7 @@ export function PaginatorKnownTotal({
       </Button>
       <Button
         icon="contrast"
-        disabled={offset + limit >= datasetTotal}
+        disabled={offset + limit >= total}
         size="small"
         variant="gray"
         className="rounded-l-none"
@@ -102,7 +101,7 @@ export function PaginatorKnownTotal({
           router.push({
             query: {
               ...router.query,
-              offset: Math.floor(datasetTotal / limit) * limit,
+              offset: Math.floor(total / limit) * limit,
             },
           })
         }

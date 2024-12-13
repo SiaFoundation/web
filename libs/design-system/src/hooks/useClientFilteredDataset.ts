@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js'
 import { useMemo } from 'react'
 import { ClientFilterItem } from './useClientFilters'
+import { Maybe } from '@siafoundation/types'
 
 type DatumValue =
   | BigNumber
@@ -12,16 +13,18 @@ type DatumValue =
   | object
 
 type Props<Datum extends Record<string, DatumValue>> = {
-  dataset: Datum[] | undefined
+  dataset: Maybe<Datum[]>
   filters: ClientFilterItem<Datum>[]
   sortField: string
   sortDirection: 'asc' | 'desc'
+  limit: number
+  offset: number
 }
 
 export function useClientFilteredDataset<
   Datum extends Record<string, DatumValue>
->({ dataset, filters, sortField, sortDirection }: Props<Datum>) {
-  return useMemo<Datum[] | undefined>(() => {
+>({ dataset, filters, sortField, sortDirection, limit, offset }: Props<Datum>) {
+  const datasetFiltered = useMemo<Maybe<Datum[]>>(() => {
     if (!dataset) {
       return undefined
     }
@@ -64,4 +67,16 @@ export function useClientFilteredDataset<
     })
     return [...data]
   }, [dataset, filters, sortField, sortDirection])
+
+  const datasetPage = useMemo(() => {
+    if (!datasetFiltered) {
+      return undefined
+    }
+    return datasetFiltered.slice(offset, offset + limit)
+  }, [datasetFiltered, offset, limit])
+
+  return {
+    datasetFiltered,
+    datasetPage,
+  }
 }

@@ -1,13 +1,13 @@
 import {
   useTableState,
   getContractsTimeRangeBlockHeight,
-  useDatasetEmptyState,
+  useDatasetState,
   useClientFilters,
   useClientFilteredDataset,
   useMultiSelect,
+  usePaginationOffset,
 } from '@siafoundation/design-system'
 import { Maybe } from '@siafoundation/types'
-import { useRouter } from 'next/router'
 import { useContracts as useContractsData } from '@siafoundation/renterd-react'
 import { createContext, useContext, useMemo, useState } from 'react'
 import {
@@ -33,9 +33,7 @@ const defaultLimit = 50
 function useContractsMain() {
   const [viewMode, setViewMode] = useState<ViewMode>('list')
   const [graphMode, setGraphMode] = useState<GraphMode>('spending')
-  const router = useRouter()
-  const limit = Number(router.query.limit || defaultLimit)
-  const offset = Number(router.query.offset || 0)
+  const { limit, offset } = usePaginationOffset(defaultLimit)
   const response = useContractsData({
     config: {
       swr: {
@@ -81,19 +79,15 @@ function useContractsMain() {
     defaultSortField,
   })
 
-  const datasetFiltered = useClientFilteredDataset({
-    dataset,
-    filters,
-    sortField,
-    sortDirection,
-  })
-
-  const _datasetPage = useMemo<Maybe<ContractData[]>>(() => {
-    if (!datasetFiltered) {
-      return undefined
-    }
-    return datasetFiltered.slice(offset, offset + limit)
-  }, [datasetFiltered, offset, limit])
+  const { datasetFiltered, datasetPage: _datasetPage } =
+    useClientFilteredDataset({
+      dataset,
+      filters,
+      sortField,
+      sortDirection,
+      offset,
+      limit,
+    })
 
   const { range: contractsTimeRange } = useMemo(
     () => getContractsTimeRangeBlockHeight(currentHeight, _datasetPage || []),
@@ -106,13 +100,6 @@ function useContractsMain() {
         (column) => column.fixed || enabledColumns.includes(column.id)
       ),
     [enabledColumns]
-  )
-
-  const dataState = useDatasetEmptyState(
-    datasetFiltered,
-    response.isValidating,
-    response.error,
-    filters
   )
 
   const siascanUrl = useSiascanUrl()
@@ -134,6 +121,14 @@ function useContractsMain() {
       }
     })
   }, [_datasetPage, multiSelect])
+
+  const datasetState = useDatasetState({
+    datasetPage,
+    isValidating: response.isValidating,
+    error: response.error,
+    offset,
+    filters,
+  })
 
   const cellContext = useMemo(() => {
     const context: ContractTableContext = {
@@ -177,14 +172,14 @@ function useContractsMain() {
     })
 
   return {
-    dataState,
+    datasetState,
     limit,
     offset,
     isLoading: response.isLoading,
     error: response.error,
-    pageCount: datasetPage?.length || 0,
-    datasetCount: dataset?.length || 0,
-    datasetFilteredCount: datasetFiltered?.length || 0,
+    datasetTotal: dataset?.length || 0,
+    datasetFilteredTotal: datasetFiltered?.length || 0,
+    datasetPageTotal: datasetPage?.length || 0,
     columns: filteredTableColumns,
     dataset,
     cellContext,

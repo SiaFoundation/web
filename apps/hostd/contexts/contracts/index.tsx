@@ -1,12 +1,12 @@
 import {
   useTableState,
-  useDatasetEmptyState,
+  useDatasetState,
   useServerFilters,
   getContractsTimeRangeBlockHeight,
   useMultiSelect,
+  usePaginationOffset,
 } from '@siafoundation/design-system'
 import { Maybe } from '@siafoundation/types'
-import { useRouter } from 'next/router'
 import { ContractStatus } from '@siafoundation/hostd-types'
 import { useContracts as useContractsData } from '@siafoundation/hostd-react'
 import { createContext, useContext, useMemo } from 'react'
@@ -27,9 +27,7 @@ import { defaultDatasetRefreshInterval } from '../../config/swr'
 const defaultLimit = 50
 
 function useContractsMain() {
-  const router = useRouter()
-  const limit = Number(router.query.limit || defaultLimit)
-  const offset = Number(router.query.offset || 0)
+  const { limit, offset } = usePaginationOffset(defaultLimit)
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
     useServerFilters()
 
@@ -82,15 +80,6 @@ function useContractsMain() {
     [enabledColumns]
   )
 
-  const isValidating = response.isValidating
-  const error = response.error
-  const dataState = useDatasetEmptyState(
-    _datasetPage,
-    isValidating,
-    error,
-    filters
-  )
-
   const { estimatedBlockHeight, isSynced, nodeBlockHeight } = useSyncStatus()
   const currentHeight = isSynced ? nodeBlockHeight : estimatedBlockHeight
 
@@ -115,6 +104,16 @@ function useContractsMain() {
     })
   }, [_datasetPage, multiSelect])
 
+  const isValidating = response.isValidating
+  const error = response.error
+  const datasetState = useDatasetState({
+    datasetPage,
+    isValidating,
+    error,
+    filters,
+    offset,
+  })
+
   const siascanUrl = useSiascanUrl()
 
   const cellContext = useMemo(
@@ -128,12 +127,12 @@ function useContractsMain() {
   )
 
   return {
-    dataState,
+    datasetState,
     offset,
     limit,
     cellContext,
-    pageCount: datasetPage?.length || 0,
-    totalCount: response.data?.count,
+    datasetPageTotal: datasetPage?.length || 0,
+    datasetFilteredTotal: response.data?.count,
     columns: filteredTableColumns,
     datasetPage,
     configurableColumns,

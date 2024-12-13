@@ -4,9 +4,10 @@ import { FilesStatsMenuShared } from '../../Files/FilesStatsMenuShared'
 import { FilesFilterDirectoryMenu } from '../../Files/FilesFilterDirectoryMenu'
 import { useFilesManager } from '../../../contexts/filesManager'
 
-export function FilesStatsMenu() {
+export function FilesDirectoryStatsMenu() {
   const { isViewingABucket, isViewingBuckets } = useFilesManager()
-  const { limit, marker, isMore, pageCount, dataState } = useFilesDirectory()
+  const { limit, marker, nextMarker, isMore, datasetPageTotal, datasetState } =
+    useFilesDirectory()
   return (
     <div className="flex gap-3 w-full">
       {isViewingBuckets ? (
@@ -19,9 +20,10 @@ export function FilesStatsMenu() {
         <PaginatorMarker
           isMore={isMore}
           marker={marker}
+          nextMarker={nextMarker}
           limit={limit}
-          pageTotal={pageCount}
-          isLoading={dataState === 'loading'}
+          pageTotal={datasetPageTotal}
+          isLoading={datasetState === 'loading'}
         />
       )}
     </div>

@@ -1,7 +1,4 @@
-import {
-  useDatasetEmptyState,
-  useMultiSelect,
-} from '@siafoundation/design-system'
+import { useDatasetState, useMultiSelect } from '@siafoundation/design-system'
 import {
   createContext,
   MouseEvent,
@@ -25,7 +22,8 @@ function useFilesDirectoryMain() {
     isViewingBuckets,
   } = useFilesManager()
 
-  const { limit, marker, isMore, response, refresh, dataset } = useDataset()
+  const { limit, marker, nextMarker, isMore, response, refresh, dataset } =
+    useDataset()
 
   const multiSelect = useMultiSelect(dataset)
 
@@ -125,12 +123,13 @@ function useFilesDirectoryMain() {
     })
   }, [datasetPageWithOnClick, draggingObjects])
 
-  const dataState = useDatasetEmptyState(
-    dataset,
-    response.isValidating,
-    response.error,
-    filters
-  )
+  const datasetState = useDatasetState({
+    datasetPage,
+    isValidating: response.isValidating,
+    error: response.error,
+    marker,
+    filters,
+  })
 
   const filteredTableColumns = useMemo(
     () =>
@@ -150,16 +149,17 @@ function useFilesDirectoryMain() {
   )
 
   return {
-    dataState,
+    datasetState,
     columns: filteredTableColumns,
     multiSelect,
     cellContext,
     refresh,
     limit,
     marker,
+    nextMarker,
     isMore,
     datasetPage,
-    pageCount: dataset?.length || 0,
+    datasetPageTotal: dataset?.length || 0,
     onDragStart,
     onDragEnd,
     onDragMove,

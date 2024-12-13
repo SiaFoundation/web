@@ -1,4 +1,4 @@
-import { ScrollArea, Table } from '@siafoundation/design-system'
+import { EmptyState, ScrollArea, Table } from '@siafoundation/design-system'
 import { useContracts } from '../../contexts/contracts'
 import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
@@ -15,7 +15,7 @@ export function Contracts() {
     sortableColumns,
     toggleSort,
     limit,
-    dataState,
+    datasetState,
     cellContext,
     error,
     viewMode,
@@ -64,15 +64,14 @@ export function Contracts() {
             <Table
               testId="contractsTable"
               context={cellContext}
-              isLoading={dataState === 'loading'}
+              isLoading={datasetState === 'loading'}
               emptyState={
-                dataState === 'noneMatchingFilters' ? (
-                  <StateNoneMatching />
-                ) : dataState === 'noneYet' ? (
-                  <StateNoneYet />
-                ) : dataState === 'error' ? (
-                  <StateError error={error} />
-                ) : null
+                <EmptyState
+                  datasetState={datasetState}
+                  noneMatching={<StateNoneMatching />}
+                  noneYet={<StateNoneYet />}
+                  error={<StateError error={error} />}
+                />
               }
               sortableColumns={sortableColumns}
               pageSize={limit}

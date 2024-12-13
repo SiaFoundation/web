@@ -1,4 +1,9 @@
-import { Code, LinkButton, Text } from '@siafoundation/design-system'
+import {
+  Code,
+  LinkButton,
+  StateNoneOnPage,
+  Text,
+} from '@siafoundation/design-system'
 import { CloudUpload32 } from '@siafoundation/react-icons'
 import { routes } from '../../../config/routes'
 import { useFilesDirectory } from '../../../contexts/filesDirectory'
@@ -12,23 +17,27 @@ import { StateNoneYetBuckets } from './StateNoneYetBuckets'
 
 export function EmptyState() {
   const { isViewingRootOfABucket, isViewingBuckets } = useFilesManager()
-  const { dataState } = useFilesDirectory()
+  const { datasetState } = useFilesDirectory()
 
   const autopilotNotEnabled = useAutopilotNotEnabled()
   const notEnoughContracts = useNotEnoughContracts()
 
-  if (dataState === 'noneMatchingFilters') {
+  if (datasetState === 'noneOnPage') {
+    return <StateNoneOnPage />
+  }
+
+  if (datasetState === 'noneMatchingFilters') {
     return <StateNoneMatching />
   }
 
-  if (dataState === 'error') {
+  if (datasetState === 'error') {
     return <StateError />
   }
 
   // Only show on root directory and when there are no files.
   if (
     isViewingRootOfABucket &&
-    dataState === 'noneYet' &&
+    datasetState === 'noneYet' &&
     autopilotNotEnabled.active
   ) {
     return (
@@ -54,7 +63,7 @@ export function EmptyState() {
   // Only show on root directory and when there are no files.
   if (
     isViewingRootOfABucket &&
-    dataState === 'noneYet' &&
+    datasetState === 'noneYet' &&
     notEnoughContracts.active
   ) {
     return (
@@ -76,7 +85,7 @@ export function EmptyState() {
     )
   }
 
-  if (dataState === 'noneYet') {
+  if (datasetState === 'noneYet') {
     if (isViewingBuckets) {
       return <StateNoneYetBuckets />
     }

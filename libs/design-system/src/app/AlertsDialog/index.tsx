@@ -6,7 +6,7 @@ import { Heading } from '../../core/Heading'
 import { Checkmark16 } from '@siafoundation/react-icons'
 import { Skeleton } from '../../core/Skeleton'
 import { Text } from '../../core/Text'
-import { useDatasetEmptyState } from '../../hooks/useDatasetEmptyState'
+import { useDatasetState } from '../../hooks/useDatasetState'
 import { humanDate } from '@siafoundation/units'
 import { cx } from 'class-variance-authority'
 import { times } from '@technically/lodash'
@@ -36,8 +36,6 @@ type Props = {
   >
 }
 
-const stubFilters: unknown[] = []
-
 export function AlertsDialog({
   open,
   onOpenChange,
@@ -47,12 +45,11 @@ export function AlertsDialog({
   dataFieldOrder,
   dataFields,
 }: Props) {
-  const loadingState = useDatasetEmptyState(
-    alerts.data,
-    alerts.isValidating,
-    alerts.error,
-    stubFilters
-  )
+  const loadingState = useDatasetState({
+    datasetPage: alerts.data,
+    isValidating: alerts.isValidating,
+    error: alerts.error,
+  })
 
   const [filter, setFilter] = useState<AlertSeverity>()
   const dataset = useMemo(

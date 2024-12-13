@@ -1,8 +1,9 @@
 import {
   useTableState,
-  useDatasetEmptyState,
+  useDatasetState,
   useClientFilters,
   useClientFilteredDataset,
+  usePaginationOffset,
 } from '@siafoundation/design-system'
 import { WalletMetadata } from '@siafoundation/walletd-types'
 import { useWallets as useWalletsData } from '@siafoundation/walletd-react'
@@ -20,6 +21,9 @@ import { useWalletSeedCache } from './useWalletSeedCache'
 import { useDialog } from '../dialog'
 import { useAppSettings } from '@siafoundation/react-core'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { Maybe } from '@siafoundation/types'
+
+const defaultLimit = 50
 
 function useWalletsMain() {
   const response = useWalletsData({
@@ -30,6 +34,7 @@ function useWalletsMain() {
     },
   })
   const router = useRouter()
+  const { limit, offset } = usePaginationOffset(defaultLimit)
   const { openDialog } = useDialog()
   const { setOnLockCallback } = useAppSettings()
   const {
@@ -51,9 +56,9 @@ function useWalletsMain() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const dataset = useMemo<WalletData[] | null>(() => {
+  const dataset = useMemo<Maybe<WalletData[]>>(() => {
     if (!response.data) {
-      return null
+      return undefined
     }
     const data: WalletData[] = response.data.map((wallet) => {
       const { id, name, description, dateCreated, lastUpdated, metadata } =
@@ -126,11 +131,13 @@ function useWalletsMain() {
     defaultSortField,
   })
 
-  const datasetFiltered = useClientFilteredDataset({
+  const { datasetFiltered, datasetPage } = useClientFilteredDataset({
     dataset,
     filters,
     sortField,
     sortDirection,
+    offset,
+    limit,
   })
 
   const filteredTableColumns = useMemo(
@@ -141,12 +148,12 @@ function useWalletsMain() {
     [enabledColumns]
   )
 
-  const dataState = useDatasetEmptyState(
-    dataset,
-    response.isValidating,
-    response.error,
-    filters
-  )
+  const datasetState = useDatasetState({
+    datasetPage: datasetFiltered,
+    isValidating: response.isValidating,
+    error: response.error,
+    filters,
+  })
 
   const context = useMemo(
     () => ({
@@ -157,14 +164,19 @@ function useWalletsMain() {
   )
 
   return {
-    dataState,
+    datasetState,
     error: response.error,
-    datasetCount: datasetFiltered?.length || 0,
+    datasetTotal: dataset?.length || 0,
+    datasetFilteredTotal: datasetFiltered?.length || 0,
+    datasetPageTotal: datasetFiltered?.length || 0,
     unlockedCount: cachedMnemonicCount,
     columns: filteredTableColumns,
-    dataset: datasetFiltered,
+    datasetPage,
+    dataset,
     context,
     wallet,
+    limit,
+    offset,
     configurableColumns,
     enabledColumns,
     sortableColumns,

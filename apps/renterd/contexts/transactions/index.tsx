@@ -1,7 +1,4 @@
-import {
-  useDatasetEmptyState,
-  useTableState,
-} from '@siafoundation/design-system'
+import { useDatasetState, useTableState } from '@siafoundation/design-system'
 import {
   useMetricsWallet,
   useWalletEvents,
@@ -28,6 +25,7 @@ import {
   sortOptions,
 } from './types'
 import BigNumber from 'bignumber.js'
+import { Maybe } from '@siafoundation/types'
 
 const defaultPageSize = 50
 const filters = [] as string[]
@@ -56,7 +54,7 @@ function useTransactionsMain() {
   })
 
   const syncStatus = useSyncStatus()
-  const dataset = useMemo<EventData[] | undefined>(() => {
+  const datasetPage = useMemo<Maybe<EventData[]>>(() => {
     if (!events.data || !pending.data) {
       return undefined
     }
@@ -95,8 +93,12 @@ function useTransactionsMain() {
       }
       return res
     })
-    return [...dataPending.reverse(), ...dataEvents]
-  }, [events.data, pending.data, syncStatus.nodeBlockHeight])
+    if (offset === 0) {
+      return [...dataPending.reverse(), ...dataEvents]
+    } else {
+      return [...dataEvents]
+    }
+  }, [events.data, pending.data, syncStatus.nodeBlockHeight, offset])
 
   const {
     configurableColumns,
@@ -129,7 +131,13 @@ function useTransactionsMain() {
   const isValidating = events.isValidating || pending.isValidating
   const error = events.error || pending.error
 
-  const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
+  const datasetState = useDatasetState({
+    datasetPage,
+    isValidating,
+    error,
+    offset,
+    filters,
+  })
 
   const siascanUrl = useSiascanUrl()
   const cellContext = useMemo<CellContext>(
@@ -177,12 +185,12 @@ function useTransactionsMain() {
   return {
     balances,
     metrics,
-    dataset,
+    datasetPage,
     error,
-    dataState,
+    datasetState,
     offset,
     limit,
-    pageCount: dataset?.length || 0,
+    datasetPageTotal: datasetPage?.length || 0,
     defaultPageSize,
     cellContext,
     configurableColumns,

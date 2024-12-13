@@ -1,4 +1,8 @@
-import { BalanceEvolution, Table } from '@siafoundation/design-system'
+import {
+  BalanceEvolution,
+  EmptyState,
+  Table,
+} from '@siafoundation/design-system'
 import { useTransactions } from '../../contexts/transactions'
 import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
@@ -8,8 +12,8 @@ export function Wallet() {
   const {
     balances,
     metrics,
-    dataset,
-    dataState,
+    datasetPage,
+    datasetState,
     columns,
     cellContext,
     sortableColumns,
@@ -29,18 +33,17 @@ export function Wallet() {
       ) : null}
       <Table
         testId="eventsTable"
-        isLoading={dataState === 'loading'}
+        isLoading={datasetState === 'loading'}
         emptyState={
-          dataState === 'noneMatchingFilters' ? (
-            <StateNoneMatching />
-          ) : dataState === 'noneYet' ? (
-            <StateNoneYet />
-          ) : dataState === 'error' ? (
-            <StateError />
-          ) : null
+          <EmptyState
+            datasetState={datasetState}
+            noneMatching={<StateNoneMatching />}
+            noneYet={<StateNoneYet />}
+            error={<StateError />}
+          />
         }
         pageSize={defaultPageSize}
-        data={dataset}
+        data={datasetPage}
         context={cellContext}
         columns={columns}
         sortableColumns={sortableColumns}

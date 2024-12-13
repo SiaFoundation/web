@@ -1,8 +1,9 @@
 import {
   triggerToast,
   truncate,
-  useDatasetEmptyState,
+  useDatasetState,
   useMultiSelect,
+  usePaginationOffset,
   useServerFilters,
   useTableState,
 } from '@siafoundation/design-system'
@@ -18,7 +19,6 @@ import {
   HostsUsabilityMode,
 } from '@siafoundation/renterd-types'
 import { useSiaCentralHosts } from '@siafoundation/sia-central-react'
-import { useRouter } from 'next/router'
 import {
   createContext,
   useCallback,
@@ -45,10 +45,8 @@ import {
 const defaultLimit = 50
 
 function useHostsMain() {
-  const router = useRouter()
   const [viewMode, setViewMode] = useState<ViewMode>('list')
-  const limit = Number(router.query.limit || defaultLimit)
-  const offset = Number(router.query.offset || 0)
+  const { limit, offset } = usePaginationOffset(defaultLimit)
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
     useServerFilters()
 
@@ -164,10 +162,6 @@ function useHostsMain() {
     [enabledColumns]
   )
 
-  const isValidating = response.isValidating
-  const error = response.error
-  const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
-
   const hostsWithLocation = useMemo(
     () => dataset?.filter((h) => h.location) as HostDataWithLocation[],
     [dataset]
@@ -239,6 +233,16 @@ function useHostsMain() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeHost])
 
+  const isValidating = response.isValidating
+  const error = response.error
+  const datasetState = useDatasetState({
+    datasetPage,
+    isValidating,
+    error,
+    offset,
+    filters,
+  })
+
   return {
     setCmd,
     viewMode,
@@ -247,10 +251,10 @@ function useHostsMain() {
     setViewMode,
     hostsWithLocation,
     error,
-    dataState,
+    datasetState,
     offset,
     limit,
-    pageCount: datasetPage?.length || 0,
+    datasetPageTotal: datasetPage?.length || 0,
     columns: filteredTableColumns,
     datasetPage,
     tableContext,

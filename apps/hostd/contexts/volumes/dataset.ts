@@ -4,15 +4,16 @@ import { useVolumes } from '@siafoundation/hostd-react'
 import { VolumeData } from './types'
 import BigNumber from 'bignumber.js'
 import { MiBToBytes } from '@siafoundation/units'
+import { Maybe } from '@siafoundation/types'
 
 export function useDataset({
   response,
 }: {
   response: ReturnType<typeof useVolumes>
 }) {
-  return useMemo<VolumeData[] | null>(() => {
+  return useMemo<Maybe<VolumeData[]>>(() => {
     if (!response.data) {
-      return null
+      return undefined
     }
     return (
       response.data?.map((contract) => {
