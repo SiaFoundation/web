@@ -10,7 +10,6 @@ import { CellContext, ObjectData } from '../filesManager/types'
 import { useDataset } from './dataset'
 import { useMove } from './move'
 import { useFilesManager } from '../filesManager'
-import { columns } from './columns'
 
 function useFilesDirectoryMain() {
   const {
@@ -18,7 +17,7 @@ function useFilesDirectoryMain() {
     activeBucket,
     setActiveDirectory,
     filters,
-    enabledColumns,
+    visibleColumns,
     isViewingBuckets,
   } = useFilesManager()
 
@@ -131,14 +130,6 @@ function useFilesDirectoryMain() {
     filters,
   })
 
-  const filteredTableColumns = useMemo(
-    () =>
-      columns.filter(
-        (column) => column.fixed || enabledColumns.includes(column.id)
-      ),
-    [enabledColumns]
-  )
-
   const cellContext = useMemo(
     () =>
       ({
@@ -150,7 +141,7 @@ function useFilesDirectoryMain() {
 
   return {
     datasetState,
-    columns: filteredTableColumns,
+    visibleColumns,
     multiSelect,
     cellContext,
     refresh,

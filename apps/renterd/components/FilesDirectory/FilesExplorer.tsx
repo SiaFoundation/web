@@ -3,7 +3,6 @@ import { useFilesDirectory } from '../../contexts/filesDirectory'
 import { EmptyState } from './EmptyState'
 import { useCanUpload } from '../Files/useCanUpload'
 import { useFilesManager } from '../../contexts/filesManager'
-import { columns } from '../../contexts/filesDirectory/columns'
 import { pluralize } from '@siafoundation/units'
 
 export function FilesExplorer() {
@@ -14,6 +13,7 @@ export function FilesExplorer() {
     sortableColumns,
     toggleSort,
     isViewingBuckets,
+    visibleColumns,
   } = useFilesManager()
   const {
     datasetPage,
@@ -43,7 +43,7 @@ export function FilesExplorer() {
           pageSize={10}
           data={datasetPage}
           context={cellContext}
-          columns={columns}
+          columns={visibleColumns}
           sortableColumns={sortableColumns}
           sortField={sortField}
           sortDirection={sortDirection}

@@ -30,7 +30,7 @@ export function ContractsViewDropdownMenu() {
     setSortField,
     sortDirection,
     setSortDirection,
-    enabledColumns,
+    visibleColumnIds,
   } = useContracts()
 
   const generalColumns = configurableColumns
@@ -128,42 +128,42 @@ export function ContractsViewDropdownMenu() {
       <MenuSectionLabelToggleAll
         label="General"
         columns={generalColumns.map((c) => c.value)}
-        enabled={enabledColumns}
+        enabled={visibleColumnIds}
         setColumnsVisible={setColumnsVisible}
         setColumnsHidden={setColumnsHidden}
       />
       <BaseMenuItem>
         <PoolCombo
           options={generalColumns}
-          values={enabledColumns}
+          values={visibleColumnIds}
           onChange={(value) => toggleColumnVisibility(value)}
         />
       </BaseMenuItem>
       <MenuSectionLabelToggleAll
         label="Time"
         columns={timeColumns.map((c) => c.value)}
-        enabled={enabledColumns}
+        enabled={visibleColumnIds}
         setColumnsVisible={setColumnsVisible}
         setColumnsHidden={setColumnsHidden}
       />
       <BaseMenuItem>
         <PoolCombo
           options={timeColumns}
-          values={enabledColumns}
+          values={visibleColumnIds}
           onChange={(value) => toggleColumnVisibility(value)}
         />
       </BaseMenuItem>
       <MenuSectionLabelToggleAll
         label="Usage"
         columns={financialColumns.map((c) => c.value)}
-        enabled={enabledColumns}
+        enabled={visibleColumnIds}
         setColumnsVisible={setColumnsVisible}
         setColumnsHidden={setColumnsHidden}
       />
       <BaseMenuItem>
         <PoolCombo
           options={financialColumns}
-          values={enabledColumns}
+          values={visibleColumnIds}
           onChange={(value) => toggleColumnVisibility(value)}
         />
       </BaseMenuItem>

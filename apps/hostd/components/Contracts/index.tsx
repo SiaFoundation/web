@@ -6,7 +6,7 @@ import { StateError } from './StateError'
 
 export function Contracts() {
   const {
-    columns,
+    visibleColumns,
     datasetPage,
     sortField,
     sortDirection,
@@ -33,7 +33,7 @@ export function Contracts() {
         }
         pageSize={limit}
         data={datasetPage}
-        columns={columns}
+        columns={visibleColumns}
         sortableColumns={sortableColumns}
         sortDirection={sortDirection}
         sortField={sortField}

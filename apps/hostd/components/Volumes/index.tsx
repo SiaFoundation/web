@@ -3,7 +3,7 @@ import { useVolumes } from '../../contexts/volumes'
 import { StateNoneYet } from './StateNoneYet'
 
 export function Volumes() {
-  const { dataset, datasetState, isLoading, columns } = useVolumes()
+  const { dataset, datasetState, isLoading, visibleColumns } = useVolumes()
   return (
     <div className="p-6 min-w-fit">
       <Table
@@ -11,7 +11,7 @@ export function Volumes() {
         isLoading={isLoading}
         pageSize={20}
         data={dataset}
-        columns={columns}
+        columns={visibleColumns}
         emptyState={
           <EmptyState datasetState={datasetState} noneYet={<StateNoneYet />} />
         }

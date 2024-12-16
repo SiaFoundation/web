@@ -5,7 +5,7 @@ import { useCallback, useMemo } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 import { useSorting } from './useSorting'
 
-type Column<ColumnId> = {
+type TableColumn<ColumnId extends string = string> = {
   id: ColumnId
   label: string
   sortable?: boolean
@@ -13,96 +13,80 @@ type Column<ColumnId> = {
   category?: string
 }
 
-const defaultDisabledCategories: string[] = []
-
-type Params<ColumnId extends string, SortField extends string> = {
-  columns: Column<ColumnId>[]
-  columnsDefaultVisible: ColumnId[]
+type Params<Col extends TableColumn, SortField extends string> = {
+  columns: Col[]
+  columnsDefaultVisible: Col['id'][]
   defaultSortField?: SortField
   sortOptions?: { id: SortField }[]
-  disabledCategories?: string[]
 }
 
 export function useTableState<
-  ColumnId extends string,
+  Column extends TableColumn,
   SortField extends string
->(scope: string, params: Params<ColumnId, SortField>) {
-  const {
-    columns,
-    columnsDefaultVisible,
-    defaultSortField,
-    sortOptions,
-    disabledCategories,
-  } = {
-    disabledCategories: defaultDisabledCategories,
+>(scope: string, params: Params<Column, SortField>) {
+  const { columns, columnsDefaultVisible, defaultSortField, sortOptions } = {
     ...params,
   }
 
-  const [_enabledColumns, setEnabledColumns] = useLocalStorageState<string[]>(
-    `${scope}/enabledColumns`,
-    {
-      defaultValue: columnsDefaultVisible,
-    }
-  )
+  const [_enabledColumnIds, setEnabledColumnIds] = useLocalStorageState<
+    string[]
+  >(`${scope}/enabledColumns`, {
+    defaultValue: columnsDefaultVisible,
+  })
 
   const toggleColumnVisibility = useCallback(
     (column: string) => {
-      setEnabledColumns((enabled) => {
+      setEnabledColumnIds((enabled) => {
         if (enabled.includes(column)) {
           return enabled.filter((c) => c !== column)
         }
         return enabled.concat(column)
       })
     },
-    [setEnabledColumns]
+    [setEnabledColumnIds]
   )
 
   const setColumnsVisible = useCallback(
     (columns: string[]) => {
-      setEnabledColumns((enabled) => {
+      setEnabledColumnIds((enabled) => {
         return uniq([...enabled, ...columns])
       })
     },
-    [setEnabledColumns]
+    [setEnabledColumnIds]
   )
 
   const setColumnsHidden = useCallback(
     (columns: string[]) => {
-      setEnabledColumns((enabled) => {
+      setEnabledColumnIds((enabled) => {
         return difference(enabled, columns)
       })
     },
-    [setEnabledColumns]
+    [setEnabledColumnIds]
   )
 
   const resetDefaultColumnVisibility = useCallback(() => {
-    setEnabledColumns(columnsDefaultVisible)
-  }, [setEnabledColumns, columnsDefaultVisible])
+    setEnabledColumnIds(columnsDefaultVisible)
+  }, [setEnabledColumnIds, columnsDefaultVisible])
 
   const configurableColumns = useMemo(
     () =>
       columns.filter((column) => {
-        const columnExplicitlyDisabled = disabledCategories?.includes(
-          column.category || ''
-        )
-        return !column.fixed && !columnExplicitlyDisabled
+        return !column.fixed
       }),
-    [columns, disabledCategories]
+    [columns]
   )
 
-  const enabledColumns = useMemo(
+  const visibleColumns = useMemo(
     () =>
-      columns
-        .filter((column) => {
-          const columnIsLogicallyEnabled =
-            column.fixed || _enabledColumns.includes(column.id)
-          const columnExplicitlyDisabled = disabledCategories?.includes(
-            column.category || ''
-          )
-          return columnIsLogicallyEnabled && !columnExplicitlyDisabled
-        })
-        .map((column) => column.id),
-    [columns, _enabledColumns, disabledCategories]
+      columns.filter(
+        (column) => column.fixed || _enabledColumnIds.includes(column.id)
+      ),
+    [_enabledColumnIds, columns]
+  )
+
+  const visibleColumnIds = useMemo(
+    () => visibleColumns.map((column) => column.id),
+    [visibleColumns]
   )
 
   const {
@@ -114,7 +98,7 @@ export function useTableState<
   } = useSorting(scope, {
     defaultSortField,
     sortOptions,
-    enabledColumns,
+    visibleColumnIds,
   })
 
   const sortableColumns = useMemo(() => {
@@ -122,12 +106,16 @@ export function useTableState<
       return []
     }
     const sortFieldIds = sortOptions.map((o) => o.id)
-    return intersection(sortFieldIds, enabledColumns as string[]) as SortField[]
-  }, [sortOptions, enabledColumns])
+    return intersection(
+      sortFieldIds,
+      visibleColumnIds as string[]
+    ) as SortField[]
+  }, [sortOptions, visibleColumnIds])
 
   return {
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
+    visibleColumns,
     toggleColumnVisibility,
     toggleSort,
     setSortDirection,

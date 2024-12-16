@@ -14,7 +14,7 @@ export function Wallet() {
     metrics,
     datasetPage,
     datasetState,
-    columns,
+    visibleColumns,
     cellContext,
     sortableColumns,
     sortDirection,
@@ -45,7 +45,7 @@ export function Wallet() {
         pageSize={defaultPageSize}
         data={datasetPage}
         context={cellContext}
-        columns={columns}
+        columns={visibleColumns}
         sortableColumns={sortableColumns}
         sortDirection={sortDirection}
         sortField={sortField}

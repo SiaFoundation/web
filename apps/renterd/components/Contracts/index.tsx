@@ -8,7 +8,7 @@ import { ContractMetrics } from './ContractMetrics'
 
 export function Contracts() {
   const {
-    columns,
+    visibleColumns,
     datasetPage,
     sortField,
     sortDirection,
@@ -76,7 +76,7 @@ export function Contracts() {
               sortableColumns={sortableColumns}
               pageSize={limit}
               data={datasetPage}
-              columns={columns}
+              columns={visibleColumns}
               sortDirection={sortDirection}
               sortField={sortField}
               toggleSort={toggleSort}

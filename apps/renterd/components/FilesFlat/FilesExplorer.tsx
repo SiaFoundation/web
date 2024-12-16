@@ -2,10 +2,9 @@ import { Table } from '@siafoundation/design-system'
 import { EmptyState } from './EmptyState'
 import { useFilesFlat } from '../../contexts/filesFlat'
 import { useFilesManager } from '../../contexts/filesManager'
-import { columns } from '../../contexts/filesFlat/columns'
 
 export function FilesExplorer() {
-  const { sortableColumns, toggleSort } = useFilesManager()
+  const { sortableColumns, visibleColumns, toggleSort } = useFilesManager()
   const { datasetPage, datasetState, cellContext, sortField, sortDirection } =
     useFilesFlat()
   return (
@@ -17,7 +16,7 @@ export function FilesExplorer() {
         pageSize={10}
         data={datasetPage}
         context={cellContext}
-        columns={columns}
+        columns={visibleColumns}
         sortableColumns={sortableColumns}
         sortField={sortField}
         sortDirection={sortDirection}

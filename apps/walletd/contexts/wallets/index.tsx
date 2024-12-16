@@ -113,7 +113,8 @@ function useWalletsMain() {
 
   const {
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
+    visibleColumns,
     sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,
@@ -140,14 +141,6 @@ function useWalletsMain() {
     limit,
   })
 
-  const filteredTableColumns = useMemo(
-    () =>
-      columns.filter(
-        (column) => column.fixed || enabledColumns.includes(column.id)
-      ),
-    [enabledColumns]
-  )
-
   const datasetState = useDatasetState({
     datasetPage: datasetFiltered,
     isValidating: response.isValidating,
@@ -170,7 +163,7 @@ function useWalletsMain() {
     datasetFilteredTotal: datasetFiltered?.length || 0,
     datasetPageTotal: datasetFiltered?.length || 0,
     unlockedCount: cachedMnemonicCount,
-    columns: filteredTableColumns,
+    visibleColumns,
     datasetPage,
     dataset,
     context,
@@ -178,7 +171,7 @@ function useWalletsMain() {
     limit,
     offset,
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
     sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,

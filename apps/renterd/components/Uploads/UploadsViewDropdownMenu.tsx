@@ -14,7 +14,7 @@ export function UploadsViewDropdownMenu() {
     configurableColumns,
     toggleColumnVisibility,
     resetDefaultColumnVisibility,
-    enabledColumns,
+    visibleColumnIds,
   } = useUploads()
   return (
     <Popover
@@ -49,7 +49,7 @@ export function UploadsViewDropdownMenu() {
             label: column.label,
             value: column.id,
           }))}
-          values={enabledColumns}
+          values={visibleColumnIds}
           onChange={(value) => toggleColumnVisibility(value)}
         />
       </BaseMenuItem>

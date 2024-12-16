@@ -9,7 +9,7 @@ export function Hosts() {
   const {
     datasetPage,
     activeHost,
-    columns,
+    visibleColumns,
     limit,
     datasetState,
     tableContext,
@@ -61,7 +61,7 @@ export function Hosts() {
               context={tableContext}
               pageSize={limit}
               data={datasetPage}
-              columns={columns}
+              columns={visibleColumns}
               rowSize="default"
             />
           </div>

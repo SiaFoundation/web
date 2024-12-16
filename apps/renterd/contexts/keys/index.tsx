@@ -52,7 +52,8 @@ function useKeysMain() {
 
   const {
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
+    visibleColumns,
     sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,
@@ -96,14 +97,6 @@ function useKeysMain() {
     })
   }, [_datasetPage, multiSelect])
 
-  const filteredTableColumns = useMemo(
-    () =>
-      columns.filter(
-        (column) => column.fixed || enabledColumns.includes(column.id)
-      ),
-    [enabledColumns]
-  )
-
   const datasetState = useDatasetState({
     datasetPage,
     isValidating: response.isValidating,
@@ -129,13 +122,13 @@ function useKeysMain() {
     datasetTotal: dataset?.length || 0,
     datasetFilteredTotal: datasetFiltered?.length || 0,
     datasetPageTotal: datasetPage?.length || 0,
-    columns: filteredTableColumns,
+    visibleColumns,
     multiSelect,
     cellContext,
     dataset,
     datasetPage,
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
     sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,

@@ -21,7 +21,7 @@ export function VolumesViewDropdownMenu() {
     resetDefaultColumnVisibility,
     setColumnsVisible,
     setColumnsHidden,
-    enabledColumns,
+    visibleColumnIds,
   } = useVolumes()
 
   const generalColumns = configurableColumns
@@ -68,28 +68,28 @@ export function VolumesViewDropdownMenu() {
       <MenuSectionLabelToggleAll
         label="General"
         columns={generalColumns.map((c) => c.value)}
-        enabled={enabledColumns}
+        enabled={visibleColumnIds}
         setColumnsVisible={setColumnsVisible}
         setColumnsHidden={setColumnsHidden}
       />
       <BaseMenuItem>
         <PoolCombo
           options={generalColumns}
-          values={enabledColumns}
+          values={visibleColumnIds}
           onChange={(value) => toggleColumnVisibility(value)}
         />
       </BaseMenuItem>
       <MenuSectionLabelToggleAll
         label="Operations"
         columns={opsColumns.map((c) => c.value)}
-        enabled={enabledColumns}
+        enabled={visibleColumnIds}
         setColumnsVisible={setColumnsVisible}
         setColumnsHidden={setColumnsHidden}
       />
       <BaseMenuItem>
         <PoolCombo
           options={opsColumns}
-          values={enabledColumns}
+          values={visibleColumnIds}
           onChange={(value) => toggleColumnVisibility(value)}
         />
       </BaseMenuItem>

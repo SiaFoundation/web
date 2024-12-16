@@ -21,7 +21,7 @@ export function HostsViewDropdownMenu() {
     setColumnsVisible,
     setColumnsHidden,
     resetDefaultColumnVisibility,
-    enabledColumns,
+    visibleColumnIds,
   } = useHosts()
 
   const generalColumns = configurableColumns
@@ -80,14 +80,14 @@ export function HostsViewDropdownMenu() {
       <MenuSectionLabelToggleAll
         label="General"
         columns={generalColumns.map((c) => c.value)}
-        enabled={enabledColumns}
+        enabled={visibleColumnIds}
         setColumnsVisible={setColumnsVisible}
         setColumnsHidden={setColumnsHidden}
       />
       <BaseMenuItem>
         <PoolCombo
           options={generalColumns}
-          values={enabledColumns}
+          values={visibleColumnIds}
           onChange={(value) => toggleColumnVisibility(value)}
         />
       </BaseMenuItem>
@@ -96,14 +96,14 @@ export function HostsViewDropdownMenu() {
           <MenuSectionLabelToggleAll
             label="Autopilot"
             columns={autopilotColumns.map((c) => c.value)}
-            enabled={enabledColumns}
+            enabled={visibleColumnIds}
             setColumnsVisible={setColumnsVisible}
             setColumnsHidden={setColumnsHidden}
           />
           <BaseMenuItem>
             <PoolCombo
               options={autopilotColumns}
-              values={enabledColumns}
+              values={visibleColumnIds}
               onChange={(value) => toggleColumnVisibility(value)}
             />
           </BaseMenuItem>
@@ -114,14 +114,14 @@ export function HostsViewDropdownMenu() {
           <MenuSectionLabelToggleAll
             label="Price table (RHPv3)"
             columns={priceTableColumns.map((c) => c.value)}
-            enabled={enabledColumns}
+            enabled={visibleColumnIds}
             setColumnsVisible={setColumnsVisible}
             setColumnsHidden={setColumnsHidden}
           />
           <BaseMenuItem>
             <PoolCombo
               options={priceTableColumns}
-              values={enabledColumns}
+              values={visibleColumnIds}
               onChange={(value) => toggleColumnVisibility(value)}
             />
           </BaseMenuItem>
@@ -132,14 +132,14 @@ export function HostsViewDropdownMenu() {
           <MenuSectionLabelToggleAll
             label="Host settings (RHPv2)"
             columns={settingsColumns.map((c) => c.value)}
-            enabled={enabledColumns}
+            enabled={visibleColumnIds}
             setColumnsVisible={setColumnsVisible}
             setColumnsHidden={setColumnsHidden}
           />
           <BaseMenuItem>
             <PoolCombo
               options={settingsColumns}
-              values={enabledColumns}
+              values={visibleColumnIds}
               onChange={(value) => toggleColumnVisibility(value)}
             />
           </BaseMenuItem>

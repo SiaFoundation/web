@@ -23,7 +23,7 @@ export function FilesViewDropdownMenu() {
     setSortField,
     sortDirection,
     setSortDirection,
-    enabledColumns,
+    visibleColumnIds,
   } = useFilesManager()
   return (
     <Popover
@@ -103,7 +103,7 @@ export function FilesViewDropdownMenu() {
             label: column.label,
             value: column.id,
           }))}
-          values={enabledColumns}
+          values={visibleColumnIds}
           onChange={(value) => toggleColumnVisibility(value)}
         />
       </BaseMenuItem>

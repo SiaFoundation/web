@@ -8,7 +8,7 @@ export function Wallet() {
   const {
     datasetPage,
     datasetState,
-    columns,
+    visibleColumns,
     cellContext,
     sortableColumns,
     sortDirection,
@@ -32,7 +32,7 @@ export function Wallet() {
         pageSize={6}
         data={datasetPage}
         context={cellContext}
-        columns={columns}
+        columns={visibleColumns}
         sortableColumns={sortableColumns}
         sortDirection={sortDirection}
         sortField={sortField}

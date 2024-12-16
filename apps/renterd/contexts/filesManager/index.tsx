@@ -27,7 +27,8 @@ import useLocalStorageState from 'use-local-storage-state'
 function useFilesManagerMain() {
   const {
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
+    visibleColumns,
     sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,
@@ -229,7 +230,8 @@ function useFilesManagerMain() {
     downloadsList,
     downloadCancel,
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
+    visibleColumns,
     sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,

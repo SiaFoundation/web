@@ -21,7 +21,7 @@ export function EventsViewDropdownMenu() {
     resetDefaultColumnVisibility,
     setColumnsVisible,
     setColumnsHidden,
-    enabledColumns,
+    visibleColumnIds,
   } = useEvents()
 
   const generalColumns = configurableColumns
@@ -67,14 +67,14 @@ export function EventsViewDropdownMenu() {
       <MenuSectionLabelToggleAll
         label="General"
         columns={generalColumns.map((c) => c.value)}
-        enabled={enabledColumns}
+        enabled={visibleColumnIds}
         setColumnsVisible={setColumnsVisible}
         setColumnsHidden={setColumnsHidden}
       />
       <BaseMenuItem>
         <PoolCombo
           options={generalColumns}
-          values={enabledColumns}
+          values={visibleColumnIds}
           onChange={(value) => toggleColumnVisibility(value)}
         />
       </BaseMenuItem>

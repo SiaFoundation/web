@@ -37,7 +37,6 @@ import { useDataset } from './dataset'
 import {
   HostContext,
   HostDataWithLocation,
-  TableColumnId,
   ViewMode,
   columnsDefaultVisible,
 } from './types'
@@ -142,7 +141,8 @@ function useHostsMain() {
 
   const {
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
+    visibleColumns,
     toggleColumnVisibility,
     setColumnsVisible,
     setColumnsHidden,
@@ -152,15 +152,10 @@ function useHostsMain() {
     sortField,
     sortDirection,
     resetDefaultColumnVisibility,
-  } = useTableState<TableColumnId, never>('renterd/v0/hosts', {
+  } = useTableState('renterd/v0/hosts', {
     columns,
     columnsDefaultVisible,
   })
-
-  const filteredTableColumns = useMemo(
-    () => columns.filter((column) => enabledColumns.includes(column.id)),
-    [enabledColumns]
-  )
 
   const hostsWithLocation = useMemo(
     () => dataset?.filter((h) => h.location) as HostDataWithLocation[],
@@ -255,11 +250,11 @@ function useHostsMain() {
     offset,
     limit,
     datasetPageTotal: datasetPage?.length || 0,
-    columns: filteredTableColumns,
+    visibleColumns,
     datasetPage,
     tableContext,
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
     toggleColumnVisibility,
     setColumnsVisible,
     setColumnsHidden,

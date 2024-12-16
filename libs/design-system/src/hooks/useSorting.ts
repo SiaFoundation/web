@@ -5,7 +5,7 @@ import { useCallback, useMemo } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 
 type Params<ColumnId extends string, SortField extends string> = {
-  enabledColumns: ColumnId[]
+  visibleColumnIds: ColumnId[]
   defaultSortField?: SortField
   sortOptions?: { id: SortField }[]
 }
@@ -14,7 +14,7 @@ export function useSorting<ColumnId extends string, SortField extends string>(
   scope: string,
   params: Params<ColumnId, SortField>
 ) {
-  const { defaultSortField, sortOptions, enabledColumns } = params
+  const { defaultSortField, sortOptions, visibleColumnIds } = params
 
   const [sortField, setSortField] = useLocalStorageState<SortField>(
     `${scope}/sortField`,
@@ -46,8 +46,11 @@ export function useSorting<ColumnId extends string, SortField extends string>(
       return []
     }
     const sortFieldIds = sortOptions.map((o) => o.id)
-    return intersection(sortFieldIds, enabledColumns as string[]) as SortField[]
-  }, [sortOptions, enabledColumns])
+    return intersection(
+      sortFieldIds,
+      visibleColumnIds as string[]
+    ) as SortField[]
+  }, [sortOptions, visibleColumnIds])
 
   return {
     toggleSort,

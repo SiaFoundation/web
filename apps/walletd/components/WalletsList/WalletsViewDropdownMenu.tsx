@@ -30,7 +30,7 @@ export function WalletsViewDropdownMenu() {
     setSortField,
     sortDirection,
     setSortDirection,
-    enabledColumns,
+    visibleColumnIds,
   } = useWallets()
 
   const generalColumns = configurableColumns
@@ -121,14 +121,14 @@ export function WalletsViewDropdownMenu() {
       <MenuSectionLabelToggleAll
         label="General"
         columns={generalColumns.map((c) => c.value)}
-        enabled={enabledColumns}
+        enabled={visibleColumnIds}
         setColumnsVisible={setColumnsVisible}
         setColumnsHidden={setColumnsHidden}
       />
       <BaseMenuItem>
         <PoolCombo
           options={generalColumns}
-          values={enabledColumns}
+          values={visibleColumnIds}
           onChange={(value) => toggleColumnVisibility(value)}
         />
       </BaseMenuItem>
