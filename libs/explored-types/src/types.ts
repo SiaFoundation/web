@@ -107,7 +107,19 @@ export type TxpoolTransactions = {
   v2transactions: V2Transaction[]
 }
 
-// Novel Explored Types - There are three main differences that inform what's below:
+export type HostMetrics = {
+  // Number of hosts that were up as of last scan.
+  activeHosts: number
+  // Total storage of all active hosts, in bytes.
+  totalStorage: number
+  // Remaining storage of all active hosts, in bytes.
+  remainingStorage: number
+
+  settings: HostSettings
+  priceTable: HostPriceTable
+}
+
+// Novel Explored Types
 
 /**
  * HostAnnouncement represents a signed announcement of a host's network address.

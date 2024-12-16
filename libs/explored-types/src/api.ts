@@ -16,6 +16,7 @@ import {
   ExplorerTransaction,
   FileContractID,
   Hash256,
+  HostMetrics,
   Peer,
   PublicKey,
   SearchResultType,
@@ -215,6 +216,11 @@ export const blockMetricsByIDRoute = '/metrics/block/:id'
 export type BlockMetricsByIDParams = { id: BlockID }
 export type BlockMetricsByIDPayload = void
 export type BlockMetricsByIDResponse = BlockMetrics
+
+export const hostMetricsRoute = '/metrics/host'
+export type HostMetricsParams = void
+export type HostMetricsPayload = void
+export type HostMetricsResponse = HostMetrics
 
 // Search
 
