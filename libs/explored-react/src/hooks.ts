@@ -39,6 +39,9 @@ import {
   HostByPubkeyParams,
   HostByPubkeyResponse,
   hostByPubkeyRoute,
+  HostMetricsParams,
+  HostMetricsResponse,
+  hostMetricsRoute,
   OutputSiacoinParams,
   OutputSiacoinResponse,
   outputSiacoinRoute,
@@ -342,6 +345,15 @@ export function useBlockMetricsByID(
   return useGetSwr({
     ...args,
     route: blockMetricsByIDRoute,
+  })
+}
+
+export function useHostMetrics(
+  args: HookArgsSwr<HostMetricsParams, HostMetricsResponse>
+) {
+  return useGetSwr({
+    ...args,
+    route: hostMetricsRoute,
   })
 }
 

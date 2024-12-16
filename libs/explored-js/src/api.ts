@@ -52,6 +52,10 @@ import {
   ContractByPubkeyParams,
   ContractByPubkeyPayload,
   ContractByPubkeyResponse,
+  hostMetricsRoute,
+  HostMetricsParams,
+  HostMetricsPayload,
+  HostMetricsResponse,
   hostByPubkeyRoute,
   HostByPubkeyParams,
   HostByPubkeyPayload,
@@ -263,6 +267,11 @@ export function Explored({
       BlockMetricsByIDPayload,
       BlockMetricsByIDResponse
     >(axios, 'get', blockMetricsByIDRoute),
+    hostMetrics: buildRequestHandler<
+      HostMetricsParams,
+      HostMetricsPayload,
+      HostMetricsResponse
+    >(axios, 'get', hostMetricsRoute),
     // Search
     searchResultType: buildRequestHandler<
       SearchResultTypeParams,
