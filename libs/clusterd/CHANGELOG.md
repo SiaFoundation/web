@@ -1,5 +1,12 @@
 # @siafoundation/clusterd
 
+## 0.1.1
+
+### Patch Changes
+
+- Updated dependencies [b04c20e4]
+  - @siafoundation/units@3.3.0
+
 ## 0.1.0
 
 ### Minor Changes

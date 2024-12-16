@@ -1,5 +1,11 @@
 # @siafoundation/units
 
+## 3.3.0
+
+### Minor Changes
+
+- b04c20e4: Add and remove time methods.
+
 ## 3.2.1
 
 ### Patch Changes

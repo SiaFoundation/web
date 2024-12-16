@@ -1,5 +1,12 @@
 # @siafoundation/hostd-react
 
+## 4.4.3
+
+### Patch Changes
+
+- Updated dependencies [b04c20e4]
+  - @siafoundation/units@3.3.0
+
 ## 4.4.2
 
 ### Patch Changes

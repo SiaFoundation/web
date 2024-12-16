@@ -1,5 +1,12 @@
 # @siafoundation/explored-types
 
+## 0.10.0
+
+### Minor Changes
+
+- 292e6e23: Rename block metrics APIs.
+- 7a93acf1: Add hostMetrics API.
+
 ## 0.9.0
 
 ### Minor Changes
