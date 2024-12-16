@@ -5,6 +5,7 @@ import { HostsAddAllowlist } from './HostsAddAllowlist'
 import { HostsRemoveBlocklist } from './HostsRemoveBlocklist'
 import { HostsRemoveAllowlist } from './HostsRemoveAllowlist'
 import { useHosts } from '../../../contexts/hosts'
+import { HostsRescan } from './HostsRescan'
 
 export function HostsBulkMenu() {
   const { multiSelect } = useHosts()
@@ -19,6 +20,7 @@ export function HostsBulkMenu() {
         <HostsRemoveAllowlist />
         <HostsRemoveBlocklist />
       </div>
+      <HostsRescan />
       <HostsResetLostSectorCount />
     </MultiSelectionMenu>
   )

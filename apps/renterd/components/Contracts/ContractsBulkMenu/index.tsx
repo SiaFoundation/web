@@ -5,6 +5,7 @@ import { ContractsAddBlocklist } from './ContractsAddBlocklist'
 import { ContractsAddAllowlist } from './ContractsAddAllowlist'
 import { ContractsRemoveBlocklist } from './ContractsRemoveBlocklist'
 import { ContractsRemoveAllowlist } from './ContractsRemoveAllowlist'
+import { ContractsRescanHosts } from './ContractsRescanHosts'
 
 export function ContractsBulkMenu() {
   const { multiSelect } = useContracts()
@@ -19,6 +20,7 @@ export function ContractsBulkMenu() {
         <ContractsRemoveAllowlist />
         <ContractsRemoveBlocklist />
       </div>
+      <ContractsRescanHosts />
       <ContractsBulkDelete />
     </MultiSelectionMenu>
   )

@@ -77,6 +77,18 @@ test('hosts bulk allowlist', async ({ page }) => {
   ).toHaveCount(3)
 })
 
+test('hosts bulk rescan', async ({ page }) => {
+  await navigateToHosts({ page })
+  const rows = await getHostRowsAll(page)
+  rows.at(0).click()
+  rows.at(-1).click({ modifiers: ['Shift'], position: { x: 5, y: 5 } })
+
+  // Rescan selected hosts.
+  const menu = page.getByLabel('host multi-select menu')
+  await menu.getByLabel('rescan selected hosts').click()
+  await expect(page.getByText('rescanning 3 hosts')).toBeVisible()
+})
+
 test('hosts bulk blocklist', async ({ page }) => {
   await navigateToHosts({ page })
   const rows = await getHostRowsAll(page)

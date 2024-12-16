@@ -79,6 +79,18 @@ test('contracts bulk delete', async ({ page }) => {
   await expect(page.getByText('3 contracts deleted')).toBeVisible()
 })
 
+test('contracts bulk rescan', async ({ page }) => {
+  await navigateToContracts({ page })
+  const rows = await getContractRowsAll(page)
+  rows.at(0).click()
+  rows.at(-1).click({ modifiers: ['Shift'] })
+
+  // Rescan selected hosts.
+  const menu = page.getByLabel('contract multi-select menu')
+  await menu.getByLabel('rescan selected hosts').click()
+  await expect(page.getByText('rescanning 3 hosts')).toBeVisible()
+})
+
 test('contracts bulk allowlist', async ({ page }) => {
   await navigateToContracts({ page })
   const rows = await getContractRowsAll(page)
