@@ -14,9 +14,7 @@ import {
   columnsDefaultVisible,
   ContractData,
   defaultSortField,
-  SortField,
   sortOptions,
-  TableColumnId,
 } from './types'
 import { columns } from './columns'
 import { useDataset } from './dataset'
@@ -33,7 +31,8 @@ function useContractsMain() {
 
   const {
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
+    visibleColumns,
     sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,
@@ -44,7 +43,7 @@ function useContractsMain() {
     sortField,
     sortDirection,
     resetDefaultColumnVisibility,
-  } = useTableState<TableColumnId, SortField>('hostd/v0/contracts', {
+  } = useTableState('hostd/v0/contracts', {
     columns,
     columnsDefaultVisible,
     sortOptions,
@@ -74,11 +73,6 @@ function useContractsMain() {
   const _datasetPage = useDataset({
     response,
   })
-
-  const filteredTableColumns = useMemo(
-    () => columns.filter((column) => enabledColumns.includes(column.id)),
-    [enabledColumns]
-  )
 
   const { estimatedBlockHeight, isSynced, nodeBlockHeight } = useSyncStatus()
   const currentHeight = isSynced ? nodeBlockHeight : estimatedBlockHeight
@@ -133,10 +127,10 @@ function useContractsMain() {
     cellContext,
     datasetPageTotal: datasetPage?.length || 0,
     datasetFilteredTotal: response.data?.count,
-    columns: filteredTableColumns,
+    visibleColumns,
     datasetPage,
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
     sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,

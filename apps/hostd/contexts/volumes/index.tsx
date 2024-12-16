@@ -7,8 +7,8 @@ import {
 } from '@siafoundation/design-system'
 import { VolumeMeta } from '@siafoundation/hostd-types'
 import { useVolumes as useVolumesData } from '@siafoundation/hostd-react'
-import { createContext, useContext, useMemo } from 'react'
-import { columnsDefaultVisible, TableColumnId, VolumeData } from './types'
+import { createContext, useContext } from 'react'
+import { columnsDefaultVisible, VolumeData } from './types'
 import { columns } from './columns'
 import { useDataset } from './dataset'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
@@ -22,7 +22,8 @@ function useVolumesMain() {
 
   const {
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
+    visibleColumns,
     toggleColumnVisibility,
     setColumnsVisible,
     setColumnsHidden,
@@ -32,7 +33,7 @@ function useVolumesMain() {
     sortField,
     sortDirection,
     resetDefaultColumnVisibility,
-  } = useTableState<TableColumnId, never>('hostd/v0/volumes', {
+  } = useTableState('hostd/v0/volumes', {
     columns,
     columnsDefaultVisible,
   })
@@ -61,11 +62,6 @@ function useVolumesMain() {
     limit,
   })
 
-  const filteredTableColumns = useMemo(
-    () => columns.filter((column) => enabledColumns.includes(column.id)),
-    [enabledColumns]
-  )
-
   const isValidating = response.isValidating
   const error = response.error
   const datasetState = useDatasetState({
@@ -80,13 +76,13 @@ function useVolumesMain() {
     datasetFilteredTotal: datasetFiltered?.length || 0,
     datasetPageTotal: datasetPage?.length || 0,
     isLoading: response.isValidating,
-    columns: filteredTableColumns,
+    visibleColumns,
     dataset,
     datasetPage,
     offset,
     limit,
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
     toggleColumnVisibility,
     setColumnsVisible,
     setColumnsHidden,

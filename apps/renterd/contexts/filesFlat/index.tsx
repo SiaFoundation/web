@@ -8,7 +8,6 @@ import {
 } from 'react'
 import { useDataset } from './dataset'
 import { useFilesManager } from '../filesManager'
-import { columns } from './columns'
 import { CellContext } from '../filesManager/types'
 
 function useFilesFlatMain() {
@@ -17,7 +16,7 @@ function useFilesFlatMain() {
     sortDirection,
     sortField,
     filters,
-    enabledColumns,
+    visibleColumns,
     isViewingBuckets,
   } = useFilesManager()
   const { limit, marker, nextMarker, response, isMore, refresh, dataset } =
@@ -29,14 +28,6 @@ function useFilesFlatMain() {
   const _datasetPage = useMemo(() => {
     return dataset
   }, [dataset])
-
-  const filteredTableColumns = useMemo(
-    () =>
-      columns.filter(
-        (column) => column.fixed || enabledColumns.includes(column.id)
-      ),
-    [enabledColumns]
-  )
 
   const multiSelect = useMultiSelect(dataset)
 
@@ -86,7 +77,7 @@ function useFilesFlatMain() {
     refresh,
     limit,
     datasetPage,
-    columns: filteredTableColumns,
+    visibleColumns,
     marker,
     nextMarker,
     isMore,

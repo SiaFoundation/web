@@ -61,7 +61,8 @@ function useContractsMain() {
 
   const {
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
+    visibleColumns,
     sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,
@@ -92,14 +93,6 @@ function useContractsMain() {
   const { range: contractsTimeRange } = useMemo(
     () => getContractsTimeRangeBlockHeight(currentHeight, _datasetPage || []),
     [currentHeight, _datasetPage]
-  )
-
-  const filteredTableColumns = useMemo(
-    () =>
-      columns.filter(
-        (column) => column.fixed || enabledColumns.includes(column.id)
-      ),
-    [enabledColumns]
   )
 
   const siascanUrl = useSiascanUrl()
@@ -180,12 +173,12 @@ function useContractsMain() {
     datasetTotal: dataset?.length || 0,
     datasetFilteredTotal: datasetFiltered?.length || 0,
     datasetPageTotal: datasetPage?.length || 0,
-    columns: filteredTableColumns,
+    visibleColumns,
     dataset,
     cellContext,
     datasetPage,
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
     sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,

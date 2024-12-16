@@ -6,7 +6,7 @@ import { useAlerts } from '../../contexts/alerts'
 
 export function Alerts() {
   const {
-    columns,
+    visibleColumns,
     datasetPage,
     sortField,
     sortDirection,
@@ -32,7 +32,7 @@ export function Alerts() {
         sortableColumns={sortableColumns}
         pageSize={limit}
         data={datasetPage}
-        columns={columns}
+        columns={visibleColumns}
         sortDirection={sortDirection}
         sortField={sortField}
         toggleSort={toggleSort}

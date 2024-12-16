@@ -6,7 +6,7 @@ import { useKeys } from '../../contexts/keys'
 
 export function Keys() {
   const {
-    columns,
+    visibleColumns,
     datasetPage,
     sortField,
     sortDirection,
@@ -34,7 +34,7 @@ export function Keys() {
         pageSize={limit}
         data={datasetPage}
         context={cellContext}
-        columns={columns}
+        columns={visibleColumns}
         sortDirection={sortDirection}
         sortField={sortField}
         toggleSort={toggleSort}

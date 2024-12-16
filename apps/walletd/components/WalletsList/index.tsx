@@ -9,7 +9,7 @@ export function WalletsList() {
     datasetPage,
     datasetState,
     context,
-    columns,
+    visibleColumns,
     sortableColumns,
     sortDirection,
     sortField,
@@ -33,7 +33,7 @@ export function WalletsList() {
           pageSize={6}
           data={datasetPage}
           context={context}
-          columns={columns}
+          columns={visibleColumns}
           sortableColumns={sortableColumns}
           sortDirection={sortDirection}
           sortField={sortField}

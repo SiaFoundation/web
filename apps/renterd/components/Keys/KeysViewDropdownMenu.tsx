@@ -30,7 +30,7 @@ export function KeysViewDropdownMenu() {
     setSortField,
     sortDirection,
     setSortDirection,
-    enabledColumns,
+    visibleColumnIds,
   } = useKeys()
 
   const generalColumns = configurableColumns
@@ -116,14 +116,14 @@ export function KeysViewDropdownMenu() {
       <MenuSectionLabelToggleAll
         label="General"
         columns={generalColumns.map((c) => c.value)}
-        enabled={enabledColumns}
+        enabled={visibleColumnIds}
         setColumnsVisible={setColumnsVisible}
         setColumnsHidden={setColumnsHidden}
       />
       <BaseMenuItem>
         <PoolCombo
           options={generalColumns}
-          values={enabledColumns}
+          values={visibleColumnIds}
           onChange={(value) => toggleColumnVisibility(value)}
         />
       </BaseMenuItem>

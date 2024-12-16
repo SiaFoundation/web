@@ -21,7 +21,7 @@ export function AlertsViewDropdownMenu() {
     resetDefaultColumnVisibility,
     setColumnsVisible,
     setColumnsHidden,
-    enabledColumns,
+    visibleColumnIds,
   } = useAlerts()
 
   const generalColumns = configurableColumns
@@ -62,14 +62,14 @@ export function AlertsViewDropdownMenu() {
       <MenuSectionLabelToggleAll
         label="General"
         columns={generalColumns.map((c) => c.value)}
-        enabled={enabledColumns}
+        enabled={visibleColumnIds}
         setColumnsVisible={setColumnsVisible}
         setColumnsHidden={setColumnsHidden}
       />
       <BaseMenuItem>
         <PoolCombo
           options={generalColumns}
-          values={enabledColumns}
+          values={visibleColumnIds}
           onChange={(value) => toggleColumnVisibility(value)}
         />
       </BaseMenuItem>

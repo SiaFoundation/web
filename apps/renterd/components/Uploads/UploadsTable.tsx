@@ -1,10 +1,10 @@
 import { Table } from '@siafoundation/design-system'
 import { EmptyState } from './EmptyState'
-import { columns } from '../../contexts/uploads/columns'
 import { useUploads } from '../../contexts/uploads'
 
 export function UploadsTable() {
   const {
+    visibleColumns,
     sortableColumns,
     toggleSort,
     datasetPage,
@@ -19,7 +19,7 @@ export function UploadsTable() {
         emptyState={<EmptyState />}
         pageSize={10}
         data={datasetPage}
-        columns={columns}
+        columns={visibleColumns}
         sortableColumns={sortableColumns}
         sortField={sortField}
         sortDirection={sortDirection}

@@ -107,7 +107,8 @@ function useTransactionsMain() {
 
   const {
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
+    visibleColumns,
     sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,
@@ -124,14 +125,6 @@ function useTransactionsMain() {
     sortOptions,
     defaultSortField,
   })
-
-  const filteredTableColumns = useMemo(
-    () =>
-      columns.filter(
-        (column) => column.fixed || enabledColumns.includes(column.id)
-      ),
-    [enabledColumns]
-  )
 
   const siascanUrl = useSiascanUrl()
   const cellContext = useMemo<CellContext>(
@@ -190,7 +183,7 @@ function useTransactionsMain() {
     defaultPageSize,
     cellContext,
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
     sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,
@@ -206,8 +199,7 @@ function useTransactionsMain() {
     removeFilter,
     removeLastFilter,
     resetFilters,
-    filteredTableColumns,
-    columns,
+    visibleColumns,
   }
 }
 

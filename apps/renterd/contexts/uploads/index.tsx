@@ -118,7 +118,8 @@ function useUploadsMain() {
 
   const {
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
+    visibleColumns,
     sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,
@@ -135,14 +136,6 @@ function useUploadsMain() {
     sortOptions,
     defaultSortField,
   })
-
-  const filteredTableColumns = useMemo(
-    () =>
-      columns.filter(
-        (column) => column.fixed || enabledColumns.includes(column.id)
-      ),
-    [enabledColumns]
-  )
 
   const datasetState = useDatasetState({
     datasetPage,
@@ -167,10 +160,10 @@ function useUploadsMain() {
     isLoading: response.isLoading,
     error: response.error,
     datasetPageTotal: datasetPage?.length || 0,
-    columns: filteredTableColumns,
+    visibleColumns,
     datasetPage,
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
     sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,

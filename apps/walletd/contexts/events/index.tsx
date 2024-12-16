@@ -121,7 +121,8 @@ export function useEventsMain() {
 
   const {
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
+    visibleColumns,
     sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,
@@ -138,14 +139,6 @@ export function useEventsMain() {
     sortOptions,
     defaultSortField,
   })
-
-  const filteredTableColumns = useMemo(
-    () =>
-      columns.filter(
-        (column) => column.fixed || enabledColumns.includes(column.id)
-      ),
-    [enabledColumns]
-  )
 
   const isValidating =
     responseEvents.isValidating || responseTxPool.isValidating
@@ -171,11 +164,11 @@ export function useEventsMain() {
     datasetState,
     error: responseEvents.error,
     datasetPageTotal: datasetPage?.length || 0,
-    columns: filteredTableColumns,
+    visibleColumns,
     datasetPage,
     cellContext,
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
     sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,

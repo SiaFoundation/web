@@ -123,7 +123,8 @@ function useAlertsMain() {
 
   const {
     configurableColumns,
-    enabledColumns,
+    visibleColumns,
+    visibleColumnIds,
     sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,
@@ -140,14 +141,6 @@ function useAlertsMain() {
     sortOptions,
     defaultSortField,
   })
-
-  const filteredTableColumns = useMemo(
-    () =>
-      columns.filter(
-        (column) => column.fixed || enabledColumns.includes(column.id)
-      ),
-    [enabledColumns]
-  )
 
   const datasetState = useDatasetState({
     datasetPage,
@@ -178,10 +171,10 @@ function useAlertsMain() {
     error: response.error,
     datasetPageTotal: datasetPage?.length || 0,
     totals,
-    columns: filteredTableColumns,
     datasetPage,
     configurableColumns,
-    enabledColumns,
+    visibleColumns,
+    visibleColumnIds,
     sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,

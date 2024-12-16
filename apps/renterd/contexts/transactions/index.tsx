@@ -102,7 +102,8 @@ function useTransactionsMain() {
 
   const {
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
+    visibleColumns,
     sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,
@@ -119,14 +120,6 @@ function useTransactionsMain() {
     sortOptions,
     defaultSortField,
   })
-
-  const filteredTableColumns = useMemo(
-    () =>
-      columns.filter(
-        (column) => column.fixed || enabledColumns.includes(column.id)
-      ),
-    [enabledColumns]
-  )
 
   const isValidating = events.isValidating || pending.isValidating
   const error = events.error || pending.error
@@ -194,7 +187,7 @@ function useTransactionsMain() {
     defaultPageSize,
     cellContext,
     configurableColumns,
-    enabledColumns,
+    visibleColumnIds,
     sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,
@@ -206,8 +199,7 @@ function useTransactionsMain() {
     sortDirection,
     resetDefaultColumnVisibility,
     filters,
-    filteredTableColumns,
-    columns,
+    visibleColumns,
   }
 }
 
