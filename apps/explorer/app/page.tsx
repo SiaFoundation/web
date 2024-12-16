@@ -6,6 +6,7 @@ import { humanBytes } from '@siafoundation/units'
 import { getLatestBlocks } from '../lib/blocks'
 import { siaCentral } from '../config/siaCentral'
 import { to } from '@siafoundation/request'
+import { explored } from '../config/explored'
 
 export function generateMetadata(): Metadata {
   const title = 'siascan'
@@ -24,11 +25,11 @@ export const revalidate = 0
 
 export default async function HomePage() {
   const [
-    [metrics, metricsError],
     [exchangeRates, exchangeRatesError],
     [hosts, hostsError],
+    [hostMetrics, hostMetricsError],
+    [blockMetrics, blockMetricsError],
   ] = await Promise.all([
-    to(siaCentral.hostsNetworkMetrics()),
     to(
       siaCentral.exchangeRates({
         params: { currencies: 'sc' },
@@ -41,14 +42,21 @@ export default async function HomePage() {
         },
       })
     ),
+    to(explored.hostMetrics()),
+    to(explored.blockMetrics()),
   ])
 
   const [latestBlocks, latestBlocksError] = await getLatestBlocks()
   const latestHeight = latestBlocks ? latestBlocks[0].height : 0
 
-  if (metricsError || latestBlocksError || exchangeRatesError || hostsError) {
+  if (
+    latestBlocksError ||
+    exchangeRatesError ||
+    hostsError ||
+    hostMetricsError ||
+    blockMetricsError
+  ) {
     console.log(new Date().toISOString(), {
-      metricsError,
       latestBlocksError,
       exchangeRatesError,
       hostsError,
@@ -56,7 +64,6 @@ export default async function HomePage() {
   }
 
   console.log(new Date().toISOString(), {
-    metrics: humanBytes(Buffer.byteLength(JSON.stringify(metrics || ''))),
     latestBlocks: humanBytes(
       Buffer.byteLength(JSON.stringify(latestBlocks || ''))
     ),
@@ -64,15 +71,22 @@ export default async function HomePage() {
       Buffer.byteLength(JSON.stringify(exchangeRates || ''))
     ),
     hosts: humanBytes(Buffer.byteLength(JSON.stringify(hosts || ''))),
+    hostMetrics: humanBytes(
+      Buffer.byteLength(JSON.stringify(hostMetrics || ''))
+    ),
+    blockMetrics: humanBytes(
+      Buffer.byteLength(JSON.stringify(blockMetrics || ''))
+    ),
   })
 
   return (
     <Home
-      metrics={metrics}
+      metrics={hostMetrics}
       blockHeight={latestHeight}
       blocks={latestBlocks || []}
       hosts={hosts?.hosts || []}
       rates={exchangeRates?.rates}
+      totalHosts={blockMetrics?.totalHosts}
     />
   )
 }
