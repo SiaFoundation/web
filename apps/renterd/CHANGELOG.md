@@ -1,5 +1,16 @@
 # renterd
 
+## 0.70.0
+
+### Minor Changes
+
+- b04c20e4: The min account expiry and min price table validity configuration settings are now stored in milliseconds.
+
+### Patch Changes
+
+- 8c47e175: Contracts that have not been renewed from another contract no longer show the empty contract ID in the contract ID table cell.
+- 95f51d34: Fixed an issue where the first attempt to download a file would show a bucket not found error.
+
 ## 0.69.0
 
 ### Minor Changes

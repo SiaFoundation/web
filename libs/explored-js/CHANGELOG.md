@@ -1,5 +1,18 @@
 # @siafoundation/explored-js
 
+## 0.5.0
+
+### Minor Changes
+
+- 292e6e23: Rename block metrics APIs.
+- 7a93acf1: Add hostMetrics API.
+
+### Patch Changes
+
+- Updated dependencies [292e6e23]
+- Updated dependencies [7a93acf1]
+  - @siafoundation/explored-types@0.10.0
+
 ## 0.4.0
 
 ### Minor Changes

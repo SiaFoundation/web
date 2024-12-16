@@ -1,5 +1,12 @@
 # explorer
 
+## 0.23.0
+
+### Minor Changes
+
+- cb550800: Refactor explorer faucet from formik to react-hook-form.
+- c78b0e9a: Use explored for host metrics.
+
 ## 0.22.0
 
 ### Minor Changes

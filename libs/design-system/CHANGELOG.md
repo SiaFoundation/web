@@ -1,5 +1,16 @@
 # Changelog
 
+## 4.14.0
+
+### Minor Changes
+
+- 71f03ca2: Add showFiat configurationField for FieldSiacoin.
+
+### Patch Changes
+
+- Updated dependencies [b04c20e4]
+  - @siafoundation/units@3.3.0
+
 ## 4.13.0
 
 ### Minor Changes
