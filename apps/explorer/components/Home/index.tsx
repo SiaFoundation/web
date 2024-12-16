@@ -13,7 +13,6 @@ import { reverse, sortBy } from '@technically/lodash'
 import {
   SiaCentralExchangeRates,
   SiaCentralHost,
-  SiaCentralHostsNetworkMetricsResponse,
 } from '@siafoundation/sia-central-types'
 import { hashToAvatar } from '../../lib/avatar'
 import {
@@ -26,7 +25,7 @@ import {
 import { HostListItem } from './HostListItem'
 import { useExchangeRate } from '../../hooks/useExchangeRate'
 import { SiaCentralHostScanned } from '../Host/types'
-import { ExplorerBlock } from '@siafoundation/explored-types'
+import { ExplorerBlock, HostMetrics } from '@siafoundation/explored-types'
 
 export function Home({
   metrics,
@@ -34,12 +33,14 @@ export function Home({
   blocks,
   hosts,
   rates,
+  totalHosts,
 }: {
-  metrics?: SiaCentralHostsNetworkMetricsResponse
+  metrics?: HostMetrics
   blockHeight: number
   blocks: ExplorerBlock[]
   hosts: SiaCentralHost[]
   rates?: SiaCentralExchangeRates
+  totalHosts?: number
 }) {
   const exchange = useExchangeRate(rates)
   const values = useMemo(() => {
@@ -67,8 +68,7 @@ export function Home({
             <div className="flex flex-col gap-1 items-baseline">
               <Tooltip
                 content={`${humanBytes(
-                  metrics?.totals.total_storage -
-                    metrics?.totals.remaining_storage
+                  metrics?.totalStorage - metrics?.remainingStorage
                 )} used storage`}
               >
                 <Text
@@ -77,18 +77,15 @@ export function Home({
                   color="contrast"
                 >
                   {humanBytes(
-                    metrics?.totals.total_storage -
-                      metrics?.totals.remaining_storage
+                    metrics?.totalStorage - metrics?.remainingStorage
                   )}
                 </Text>
               </Tooltip>
               <Tooltip
-                content={`${humanBytes(
-                  metrics?.totals.total_storage
-                )} total storage`}
+                content={`${humanBytes(metrics?.totalStorage)} total storage`}
               >
                 <Text scaleSize="20" color="subtle">
-                  {humanBytes(metrics?.totals.total_storage)}
+                  {humanBytes(metrics?.totalStorage)}
                 </Text>
               </Tooltip>
             </div>
@@ -104,12 +101,12 @@ export function Home({
                   weight="semibold"
                   color="contrast"
                 >
-                  {humanNumber(metrics?.totals.active_hosts)}
+                  {humanNumber(metrics?.activeHosts)}
                 </Text>
               </Tooltip>
               <Tooltip content="Total hosts">
                 <Text scaleSize="20" color="subtle">
-                  {humanNumber(metrics?.totals.total_hosts)}
+                  {humanNumber(totalHosts)}
                 </Text>
               </Tooltip>
             </div>
@@ -126,13 +123,13 @@ export function Home({
                   color="contrast"
                 >
                   {getStorageCost({
-                    price: metrics?.average.settings.storage_price,
+                    price: metrics?.settings.storageprice,
                     exchange,
                   })}
                 </Text>
                 <Text color="subtle">
                   {getStorageCost({
-                    price: metrics?.average.settings.storage_price,
+                    price: metrics?.settings.storageprice,
                   })}
                 </Text>
               </div>
@@ -150,13 +147,13 @@ export function Home({
                   color="contrast"
                 >
                   {getDownloadCost({
-                    price: metrics?.average.settings.download_price,
+                    price: metrics?.priceTable.downloadbandwidthcost,
                     exchange,
                   })}
                 </Text>
                 <Text color="subtle">
                   {getDownloadCost({
-                    price: metrics?.average.settings.download_price,
+                    price: metrics?.priceTable.downloadbandwidthcost,
                   })}
                 </Text>
               </div>
@@ -174,13 +171,13 @@ export function Home({
                   color="contrast"
                 >
                   {getUploadCost({
-                    price: metrics?.average.settings.upload_price,
+                    price: metrics?.priceTable.uploadbandwidthcost,
                     exchange,
                   })}
                 </Text>
                 <Text color="subtle">
                   {getUploadCost({
-                    price: metrics?.average.settings.upload_price,
+                    price: metrics?.priceTable.uploadbandwidthcost,
                   })}
                 </Text>
               </div>
@@ -190,7 +187,7 @@ export function Home({
       )
     }
     return list
-  }, [metrics, blockHeight, exchange])
+  }, [metrics, blockHeight, exchange, totalHosts])
 
   return (
     <ContentLayout
