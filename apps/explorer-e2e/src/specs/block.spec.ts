@@ -28,10 +28,22 @@ test('block can be directly navigated to by height', async ({ page }) => {
   await expect(page.getByText(TEST_BLOCK_1.display.title).nth(0)).toBeVisible()
 })
 
-test('block can be directly navigated to by id', async ({ page }) => {
+test('block can navigate to previous block', async ({ page }) => {
   await explorerApp.goTo('/block/' + TEST_BLOCK_1.id)
+  await page.getByTestId('explorer-block-prevBlock').click()
 
-  await expect(page.getByText(TEST_BLOCK_1.display.title).nth(0)).toBeVisible()
+  await expect(
+    page.getByText((Number(TEST_BLOCK_1.height) - 1).toLocaleString())
+  ).toBeVisible()
+})
+
+test('block can navigate to nextblock', async ({ page }) => {
+  await explorerApp.goTo('/block/' + TEST_BLOCK_1.id)
+  await page.getByTestId('explorer-block-nextBlock').click()
+
+  await expect(
+    page.getByText((Number(TEST_BLOCK_1.height) + 1).toLocaleString())
+  ).toBeVisible()
 })
 
 test('block can click through to a transaction', async ({ page }) => {

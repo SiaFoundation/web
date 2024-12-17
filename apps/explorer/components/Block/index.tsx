@@ -3,6 +3,7 @@ import {
   Tooltip,
   EntityList,
   stripPrefix,
+  LinkButton,
 } from '@siafoundation/design-system'
 import { humanNumber } from '@siafoundation/units'
 import { ExplorerDatum, DatumProps } from '../ExplorerDatum'
@@ -11,13 +12,15 @@ import { routes } from '../../config/routes'
 import { EntityHeading } from '../EntityHeading'
 import { ContentLayout } from '../ContentLayout'
 import { ExplorerBlock } from '@siafoundation/explored-types'
+import { ArrowLeft16, ArrowRight16 } from '@siafoundation/react-icons'
 
 type Props = {
   block: ExplorerBlock
   blockID: string
+  currentHeight: number
 }
 
-export function Block({ block, blockID }: Props) {
+export function Block({ block, blockID, currentHeight }: Props) {
   const blockDatums: DatumProps[] = useMemo(() => {
     // Grab the miner payout address
     const minerPayoutAddress = block.minerPayouts.find(
@@ -40,6 +43,9 @@ export function Block({ block, blockID }: Props) {
     ]
   }, [block, blockID])
 
+  const previousBlockExists = block.height > 1
+  const nextBlockExists = block.height < currentHeight
+
   return (
     <ContentLayout
       panel={
@@ -52,6 +58,32 @@ export function Block({ block, blockID }: Props) {
               href={routes.block.view.replace(':id', String(block.height))}
             />
             <div className="flex gap-2 items-center">
+              <Tooltip content="previous block" delayDuration={800}>
+                <LinkButton
+                  variant={previousBlockExists ? 'gray' : 'inactive'}
+                  href={routes.block.view.replace(
+                    ':id',
+                    String(block.height - 1)
+                  )}
+                  disabled={!previousBlockExists}
+                  data-testid="explorer-block-prevBlock"
+                >
+                  <ArrowLeft16 />
+                </LinkButton>
+              </Tooltip>
+              <Tooltip content="next block" delayDuration={800}>
+                <LinkButton
+                  variant={nextBlockExists ? 'gray' : 'inactive'}
+                  href={routes.block.view.replace(
+                    ':id',
+                    String(block.height + 1)
+                  )}
+                  disabled={!nextBlockExists}
+                  data-testid="explorer-block-nextBlock"
+                >
+                  <ArrowRight16 />
+                </LinkButton>
+              </Tooltip>
               <Tooltip
                 content={`${humanNumber(
                   block.transactions?.length || 0
