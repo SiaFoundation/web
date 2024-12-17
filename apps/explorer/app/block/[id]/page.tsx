@@ -37,31 +37,33 @@ export default async function Page({ params }) {
 
   // Check if the incoming id is referencing height.
   if (!isNaN(Number(params?.id))) {
-    // If it is, we need the block ID.
-
-    // Grab the tip at this height.
-    const [tipInfo, tipInfoError] = await to(
+    // If it is, we need the block ID at that height.
+    const [tipAtHeightInfo, tipAtHeightInfoError] = await to(
       explored.consensusTipByHeight({ params: { height: params?.id } })
     )
+    if (tipAtHeightInfoError) throw tipAtHeightInfoError
+    if (!tipAtHeightInfo) throw notFound()
 
-    if (tipInfoError) throw tipInfoError
-    if (!tipInfo) throw notFound()
-
-    id = tipInfo.id
+    id = tipAtHeightInfo.id
   } else {
-    // If it is not the height, it is referencing the ID. No call necessary.
+    // If it is not the height, assume we're referencing ID. No call necessary.
     id = params?.id
   }
 
-  // Get the block using the id from the previous request.
-  const [block, blockError] = await to(explored.blockByID({ params: { id } }))
+  // Get the block using the id from the previous sequence. Also grab the
+  // currentTip for next block navigation handling.
+  const [[block, blockError], [currentTipInfo, currentTipInfoError]] =
+    await Promise.all([
+      to(explored.blockByID({ params: { id } })),
+      to(explored.consensusTip()),
+    ])
 
-  if (blockError) {
-    throw blockError
-  }
-  if (!block) {
-    return notFound()
-  }
+  if (blockError) throw blockError
+  if (currentTipInfoError) throw currentTipInfoError
+  if (!block) return notFound()
+  if (!currentTipInfo) throw notFound()
 
-  return <Block block={block} blockID={id} />
+  return (
+    <Block block={block} blockID={id} currentHeight={currentTipInfo.height} />
+  )
 }
