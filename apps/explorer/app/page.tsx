@@ -2,7 +2,6 @@ import { Metadata } from 'next'
 import { appLink, network } from '../config'
 import { Home } from '../components/Home'
 import { buildMetadata } from '../lib/utils'
-import { humanBytes } from '@siafoundation/units'
 import { getLatestBlocks } from '../lib/blocks'
 import { siaCentral } from '../config/siaCentral'
 import { to } from '@siafoundation/request'
@@ -60,24 +59,10 @@ export default async function HomePage() {
       latestBlocksError,
       exchangeRatesError,
       hostsError,
+      hostMetricsError,
+      blockMetrics,
     })
   }
-
-  console.log(new Date().toISOString(), {
-    latestBlocks: humanBytes(
-      Buffer.byteLength(JSON.stringify(latestBlocks || ''))
-    ),
-    exchangeRates: humanBytes(
-      Buffer.byteLength(JSON.stringify(exchangeRates || ''))
-    ),
-    hosts: humanBytes(Buffer.byteLength(JSON.stringify(hosts || ''))),
-    hostMetrics: humanBytes(
-      Buffer.byteLength(JSON.stringify(hostMetrics || ''))
-    ),
-    blockMetrics: humanBytes(
-      Buffer.byteLength(JSON.stringify(blockMetrics || ''))
-    ),
-  })
 
   return (
     <Home
