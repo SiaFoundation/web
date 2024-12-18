@@ -43,7 +43,7 @@ jobs:
       # Ensure we are in publish mode by deleting any existing changesets.
       # The next publish step will only run properly if no changesets are detected.
       - name: Remove any new changesets since last versions
-        run: rm -rf .changeset
+        run: rm -rf .changeset/*
       # Check for and publish any new versions to NPM.
       - name: Publish to NPM and create GitHub releases
         id: changesets_release
