@@ -28,7 +28,7 @@ test('basic field change and save behaviour', async ({ page }) => {
 
   // Test that values can be updated.
   await setSwitchByLabel(page, 'acceptingContracts', true)
-  await fillTextInputByName(page, 'netAddress', 'foobar.com:7777')
+  await fillTextInputByName(page, 'netAddress', 'foobar1.com')
   await fillTextInputByName(page, 'maxContractDuration', '7')
   await fillSelectInputByName(page, 'pinnedCurrency', 'AUD')
   await fillTextInputByName(page, 'pinnedThreshold', '7')
@@ -48,7 +48,7 @@ test('basic field change and save behaviour', async ({ page }) => {
   // await expect(
   //   page.getByText('Address has changed, make sure to re-announce the host.')
   // ).toBeVisible()
-  await expectTextInputByName(page, 'netAddress', 'foobar.com:7777')
+  await expectTextInputByName(page, 'netAddress', 'foobar1.com')
   await expectTextInputByName(page, 'maxContractDuration', '7')
   await fillSelectInputByName(page, 'pinnedCurrency', 'USD')
   await expectTextInputByName(page, 'pinnedThreshold', '7')

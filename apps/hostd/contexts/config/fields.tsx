@@ -10,6 +10,7 @@ import {
 } from './types'
 import { calculateMaxCollateral } from './transform'
 import { currencyOptions } from '@siafoundation/react-core'
+import { Maybe } from '@siafoundation/types'
 
 type Categories = 'host' | 'pricing' | 'DNS' | 'bandwidth' | 'RHP3'
 
@@ -46,9 +47,16 @@ export function getFields({
       category: 'host',
       title: 'Address',
       description: <>The network address of the host.</>,
-      placeholder: 'my.host.com:9982',
+      placeholder: 'my.host.com',
       validation: {
         required: 'required',
+        validate: {
+          noProtocol: (value: Maybe<string>) =>
+            !/^https?:\/\//.test(value || '') ||
+            'must not start with http:// or https://',
+          noPort: (value: Maybe<string>) =>
+            !/:\d+$/.test(value || '') || 'must not include port',
+        },
       },
     },
     maxContractDuration: {
