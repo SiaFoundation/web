@@ -1,9 +1,7 @@
-name: Update Release PR or Release Versions and Publish
+name: Release Versions and Publish NPM
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 # This is for .npmrc. Nx automatically creates an .npmrc before changesets runs
 # and creates one itself, so we need to explicitly have one.
@@ -40,25 +38,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           CCRI_TOKEN: ${{ secrets.CCRI_TOKEN }}
-      # If there are changesets, then we are in PR prep mode and will
-      # update the release pull request. Note that if there are no changesets
-      # this step will be skipped because no publish script is specified.
-      - name: Update release pull request
-        id: changesets
-        uses: changesets/action@v1
-        with:
-          commit: 'chore: release packages'
-          version: npm run version
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Replace src code with dists for publishing
-        if: steps.changesets.outputs.hasChangesets == 'false'
         run: ./scripts/replace-src-with-dists-for-publishing.sh
       # If no changesets were detected in the PR prep step then we are in
       # release/publish mode. Check for and publish any new versions to NPM.
       - name: Publish to NPM and create GitHub releases
         id: changesets_release
-        if: steps.changesets.outputs.hasChangesets == 'false'
         uses: changesets/action@v1
         with:
           publish: npm run release
@@ -113,75 +98,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           CCRI_TOKEN: ${{ secrets.CCRI_TOKEN }}
-  # This job should always pass because the workflow is running run against code that
-  # was already linted and tested in PR.
-  # This runs in parallel to the build and release process as an extra check but does
-  # not actually block the release if job fails.
-  test-js:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout all commits
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Setup
-        uses: ./.github/actions/setup-all
-        with:
-          node_version: 20.10.0
-          go_version: 1.23.0
-      - name: Lint TypeScript
-        shell: bash
-        run: npx nx run-many --target=lint --all --parallel=5
-      # The SDK is referenced via dist in the tsconfig.base.json
-      # because the next executor does not actually support
-      # buildLibsFromSource=false
-      # With this configuration NX does not build the SDK as expected
-      # when it is an app dependency
-      - name: Force build SDK
-        shell: bash
-        run: npx nx run sdk:build
-      - name: Test TypeScript
-        shell: bash
-        run: npx nx run-many --target=test --all --parallel=5
-  # This job should always pass because the workflow is running run against code that
-  # was already linted and tested in PR.
-  # This runs in parallel to the build and release process as an extra check but does
-  # not actually block the release if job fails.
-  e2e:
-    uses: ./.github/workflows/e2e.yml
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-  # This job should always pass because the workflow is running run against code that
-  # was already linted and tested in PR.
-  # This runs in parallel to the build and release process as an extra check but does
-  # not actually block the release if job fails.
-  test-go:
-    # Run matrix since Go modules are used across all platforms
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        module: [./renterd, ./hostd, ./walletd]
-    steps:
-      - name: Checkout all commits
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup Git
-        uses: ./.github/actions/setup-git
-      # Only Go setup is necessary for running Go tests
-      - name: Setup Go
-        uses: ./.github/actions/setup-go
-        with:
-          go_version: 1.23.0
-      - name: Lint Go
-        uses: golangci/golangci-lint-action@v4
-        with:
-          working-directory: ${{ matrix.module }}
-          skip-cache: true
-      - name: Test Go
-        uses: n8maninger/action-golang-test@v2
-        with:
-          args: '-race'
-          working-directory: ${{ matrix.module }}
