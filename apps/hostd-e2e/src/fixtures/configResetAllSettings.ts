@@ -18,7 +18,7 @@ export const configResetAllSettings = step(
 
     // host
     await setSwitchByLabel(page, 'acceptingContracts', false)
-    await fillTextInputByName(page, 'netAddress', 'foobar.com:9880')
+    await fillTextInputByName(page, 'netAddress', 'foobar.com')
     await fillTextInputByName(page, 'maxContractDuration', '6')
 
     // pricing
