@@ -1,4 +1,4 @@
-name: Release Versions and Publish NPM
+name: Release Versions and Publish
 
 on:
   workflow_dispatch:
@@ -40,8 +40,11 @@ jobs:
           CCRI_TOKEN: ${{ secrets.CCRI_TOKEN }}
       - name: Replace src code with dists for publishing
         run: ./scripts/replace-src-with-dists-for-publishing.sh
-      # If no changesets were detected in the PR prep step then we are in
-      # release/publish mode. Check for and publish any new versions to NPM.
+      # Ensure we are in publish mode by deleting any existing changesets.
+      # The next publish step will only run properly if no changesets are detected.
+      - name: Remove any new changesets since last versions
+        run: rm -rf .changeset
+      # Check for and publish any new versions to NPM.
       - name: Publish to NPM and create GitHub releases
         id: changesets_release
         uses: changesets/action@v1
@@ -51,7 +54,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Release Go modules
-        # if a release was published, release the Go modules
+        # If a release was published, release the Go modules
         if: steps.changesets_release.outputs.published == 'true'
         uses: peter-evans/repository-dispatch@v3
         with:

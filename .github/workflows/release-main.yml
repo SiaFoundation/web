@@ -66,7 +66,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Release Go modules
-        # if a release was published, release the Go modules
+        # If a release was published, release the Go modules
         if: steps.changesets_release.outputs.published == 'true'
         uses: peter-evans/repository-dispatch@v3
         with:
