@@ -417,7 +417,7 @@ export type ObjectsResponse = {
 
 export type ObjectParams = { key: string; bucket: string }
 export type ObjectPayload = void
-export type ObjectResponse = { object: Obj }
+export type ObjectResponse = Obj
 
 export type ObjectAddParams = { key: string; bucket: string }
 export type ObjectAddPayload = {

@@ -28,10 +28,7 @@ export function CopyMetadataMenuItem({ path }: Props) {
       disabled={!obj.data}
       onSelect={() => {
         if (obj.data) {
-          copyToClipboard(
-            JSON.stringify(obj.data.object, null, 2),
-            'object metadata'
-          )
+          copyToClipboard(JSON.stringify(obj.data, null, 2), 'object metadata')
         }
       }}
     >

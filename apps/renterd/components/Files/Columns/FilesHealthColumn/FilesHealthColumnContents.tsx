@@ -47,7 +47,7 @@ export function FilesHealthColumnContents({
     )
   }
 
-  if (!obj.data?.object) {
+  if (!obj.data) {
     return (
       <Layout displayHealth={displayHealth} label={label}>
         <Text size="12">Error fetching slab metadata.</Text>
@@ -56,7 +56,7 @@ export function FilesHealthColumnContents({
   }
 
   const slabs = sortBy(
-    obj.data.object.slabs?.map((s) => ({
+    obj.data.slabs?.map((s) => ({
       ...s.slab,
       // id is for use as a unique React key.
       // slab key is not necessarily unique. e.g. an object uploaded with tiny
