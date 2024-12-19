@@ -27,6 +27,16 @@ function useFilesDirectoryMain() {
 
   const { limit, marker, isMore, response, refresh, dataset } = useDataset()
 
+  const multiSelect = useMultiSelect(dataset)
+
+  // If the active bucket changes, clear the multi-select.
+  useEffect(() => {
+    if (activeBucket) {
+      multiSelect.deselectAll()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeBucket])
+
   // Add parent directory to the dataset.
   const _datasetPage = useMemo(() => {
     if (!dataset) {
@@ -54,16 +64,6 @@ function useFilesDirectoryMain() {
     // when new data fetching is complete.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataset])
-
-  const multiSelect = useMultiSelect(_datasetPage)
-
-  // If the active bucket changes, clear the multi-select.
-  useEffect(() => {
-    if (activeBucket) {
-      multiSelect.deselectAll()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeBucket])
 
   const {
     onDragEnd,

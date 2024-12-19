@@ -36,6 +36,7 @@ export const columns: FilesTableColumn[] = [
       return (
         <ControlGroup className="flex h-4">
           <Checkbox
+            aria-label="select all files"
             onClick={multiSelect.onSelectPage}
             checked={multiSelect.isPageAllSelected}
           />
