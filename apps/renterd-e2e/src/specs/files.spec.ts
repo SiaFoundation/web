@@ -338,3 +338,24 @@ test('bulk delete using the all files explorer mode', async ({ page }) => {
     },
   })
 })
+
+test('bulk selecting the entire page ignores the .. parent directory nav row', async ({
+  page,
+}) => {
+  const bucketName = 'bucket1'
+  await navigateToBuckets({ page })
+  await createBucket(page, bucketName)
+  await createFilesMap(page, bucketName, {
+    'file1.txt': null,
+    'file2.txt': null,
+    'file3.txt': null,
+    'file4.txt': null,
+    'file5.txt': null,
+  })
+  await navigateToBuckets({ page })
+  await openBucket(page, bucketName)
+
+  await page.getByRole('checkbox', { name: 'select all files' }).check()
+  const menu = page.getByLabel('file multi-select menu')
+  await expect(menu.getByText('5 files selected')).toBeVisible()
+})
