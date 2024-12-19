@@ -1,5 +1,16 @@
 # renterd
 
+## 0.71.0
+
+### Minor Changes
+
+- 5b09ae3a: The host and contracts multi-select menus both now include an option to rescan the selected hosts.
+
+### Patch Changes
+
+- 31f3e4dc: Fixed an issue where selecting the entire page of files would select the parent navigation row.
+- c7ac7678: Fixed an issue with the copy file metadata action in the file context menu.
+
 ## 0.70.0
 
 ### Minor Changes

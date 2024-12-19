@@ -1,5 +1,13 @@
 # explorer
 
+## 0.24.0
+
+### Minor Changes
+
+- cbcc6e60: Add host and block metrics error logging to home page.
+- cbcc6e60: Remove bytes logging from home page.
+- 61b3dd89: Added previous and next block navigation to blocks page.
+
 ## 0.23.0
 
 ### Minor Changes

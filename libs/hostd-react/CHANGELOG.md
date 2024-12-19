@@ -1,5 +1,16 @@
 # @siafoundation/hostd-react
 
+## 4.5.0
+
+### Minor Changes
+
+- 2fe6eb79: Remove logs search API.
+
+### Patch Changes
+
+- Updated dependencies [2fe6eb79]
+  - @siafoundation/hostd-types@0.5.0
+
 ## 4.4.3
 
 ### Patch Changes
