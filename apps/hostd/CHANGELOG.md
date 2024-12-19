@@ -1,5 +1,11 @@
 # hostd
 
+## 0.54.0
+
+### Minor Changes
+
+- a9cfe409: The address configuration setting now expects only the hostname without a port. Closes https://github.com/SiaFoundation/hostd/issues/536
+
 ## 0.53.1
 
 ### Patch Changes

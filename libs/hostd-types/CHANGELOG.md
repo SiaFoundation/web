@@ -1,5 +1,11 @@
 # @siafoundation/hostd-types
 
+## 0.5.0
+
+### Minor Changes
+
+- 2fe6eb79: Remove logs search API.
+
 ## 0.4.1
 
 ### Patch Changes

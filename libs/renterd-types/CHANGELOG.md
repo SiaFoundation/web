@@ -1,5 +1,11 @@
 # @siafoundation/renterd-types
 
+## 0.14.0
+
+### Minor Changes
+
+- c7ac7678: The object response has been updated in v2.
+
 ## 0.13.0
 
 ### Minor Changes

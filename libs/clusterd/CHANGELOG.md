@@ -1,5 +1,13 @@
 # @siafoundation/clusterd
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [2fe6eb79]
+  - @siafoundation/hostd-js@0.4.0
+  - @siafoundation/renterd-js@0.12.1
+
 ## 0.1.1
 
 ### Patch Changes
