@@ -5,6 +5,7 @@ import { ControlGroup } from '../core/ControlGroup'
 import { CaretRight16, PageFirst16 } from '@siafoundation/react-icons'
 import { usePagesRouter } from '@siafoundation/next'
 import { LoadingDots } from './LoadingDots'
+import { pluralize } from '@siafoundation/units'
 
 type Props = {
   marker?: string | null
@@ -29,6 +30,7 @@ export function PaginatorMarker({
   return (
     <ControlGroup>
       <Button
+        aria-label="go to first page"
         disabled={previousDisabled}
         icon="contrast"
         size="small"
@@ -52,8 +54,12 @@ export function PaginatorMarker({
           <LoadingDots className="px-2" />
         </Button>
       ) : pageTotal ? (
-        <Button className="rounded-none px-3" state="waiting">
-          {pageTotal} on page
+        <Button
+          className="rounded-none px-3"
+          state="waiting"
+          tip={`${pluralize(pageTotal, 'item')} on current page`}
+        >
+          {pageTotal}
         </Button>
       ) : (
         <Button className="rounded-none px-3" state="waiting" color="subtle">
@@ -61,6 +67,7 @@ export function PaginatorMarker({
         </Button>
       )}
       <Button
+        aria-label="go to next page"
         icon="contrast"
         disabled={!isMore}
         size="small"

@@ -28,6 +28,7 @@ export function PaginatorKnownTotal({
   return (
     <ControlGroup>
       <Button
+        aria-label="go to first page"
         icon="contrast"
         disabled={offset <= 0}
         size="small"
@@ -47,6 +48,7 @@ export function PaginatorKnownTotal({
         </div>
       </Button>
       <Button
+        aria-label="go to previous page"
         icon="contrast"
         disabled={offset <= 0}
         size="small"
@@ -75,6 +77,7 @@ export function PaginatorKnownTotal({
         )}
       </Button>
       <Button
+        aria-label="go to next page"
         icon="contrast"
         disabled={offset + limit >= total}
         size="small"
@@ -92,6 +95,7 @@ export function PaginatorKnownTotal({
         <CaretRight16 />
       </Button>
       <Button
+        aria-label="go to last page"
         icon="contrast"
         disabled={offset + limit >= total}
         size="small"

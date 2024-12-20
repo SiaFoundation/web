@@ -7,6 +7,7 @@ import useLocalStorageState from 'use-local-storage-state'
 type Params<ColumnId extends string, SortField extends string> = {
   visibleColumnIds: ColumnId[]
   defaultSortField?: SortField
+  defaultSortDirection?: 'desc' | 'asc'
   sortOptions?: { id: SortField }[]
 }
 
@@ -14,7 +15,12 @@ export function useSorting<ColumnId extends string, SortField extends string>(
   scope: string,
   params: Params<ColumnId, SortField>
 ) {
-  const { defaultSortField, sortOptions, visibleColumnIds } = params
+  const {
+    defaultSortField,
+    defaultSortDirection,
+    sortOptions,
+    visibleColumnIds,
+  } = params
 
   const [sortField, setSortField] = useLocalStorageState<SortField>(
     `${scope}/sortField`,
@@ -26,7 +32,7 @@ export function useSorting<ColumnId extends string, SortField extends string>(
   const [sortDirection, setSortDirection] = useLocalStorageState<
     'desc' | 'asc'
   >(`${scope}/sortDirection`, {
-    defaultValue: 'desc',
+    defaultValue: defaultSortDirection || 'desc',
   })
 
   const toggleSort = useCallback(

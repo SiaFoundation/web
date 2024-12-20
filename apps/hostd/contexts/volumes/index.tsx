@@ -36,6 +36,8 @@ function useVolumesMain() {
   } = useTableState('hostd/v0/volumes', {
     columns,
     columnsDefaultVisible,
+    defaultSortField: 'id',
+    defaultSortDirection: 'asc',
   })
 
   const response = useVolumesData({
@@ -68,6 +70,7 @@ function useVolumesMain() {
     datasetPage,
     isValidating,
     error,
+    offset,
   })
 
   return {

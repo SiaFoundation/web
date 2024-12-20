@@ -2,6 +2,7 @@ import {
   useTableState,
   useDatasetState,
   useServerFilters,
+  usePaginationMarker,
 } from '@siafoundation/design-system'
 import {
   useMultipartUploadAbort,
@@ -16,15 +17,12 @@ import { ObjectUploadData } from '../filesManager/types'
 import { MultipartUploadListUploadsPayload } from '@siafoundation/renterd-types'
 import { maybeFromNullishArrayResponse } from '@siafoundation/react-core'
 import { Maybe, Nullable } from '@siafoundation/types'
-import { useSearchParams } from '@siafoundation/next'
 
 const defaultLimit = 50
 
 function useUploadsMain() {
   const { uploadsMap, activeBucket } = useFilesManager()
-  const searchParams = useSearchParams()
-  const limit = Number(searchParams.get('limit') || defaultLimit)
-  const marker = searchParams.get('marker') || null
+  const { limit, marker } = usePaginationMarker(defaultLimit)
   const markers = useMarkersFromParam(marker)
 
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =

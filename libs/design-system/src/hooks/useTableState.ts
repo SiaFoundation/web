@@ -17,6 +17,7 @@ type Params<Col extends TableColumn, SortField extends string> = {
   columns: Col[]
   columnsDefaultVisible: Col['id'][]
   defaultSortField?: SortField
+  defaultSortDirection?: 'desc' | 'asc'
   sortOptions?: { id: SortField }[]
 }
 
@@ -24,7 +25,13 @@ export function useTableState<
   Column extends TableColumn,
   SortField extends string
 >(scope: string, params: Params<Column, SortField>) {
-  const { columns, columnsDefaultVisible, defaultSortField, sortOptions } = {
+  const {
+    columns,
+    columnsDefaultVisible,
+    defaultSortField,
+    defaultSortDirection,
+    sortOptions,
+  } = {
     ...params,
   }
 
@@ -97,6 +104,7 @@ export function useTableState<
     toggleSort,
   } = useSorting(scope, {
     defaultSortField,
+    defaultSortDirection,
     sortOptions,
     visibleColumnIds,
   })

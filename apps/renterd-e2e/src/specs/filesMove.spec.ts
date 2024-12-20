@@ -28,16 +28,16 @@ test('move two files by selecting and dragging from one directory out to another
   await navigateToBuckets({ page })
   await createBucket(page, bucketName)
   await createFilesMap(page, bucketName, {
-    'file1.txt': null,
+    'file1.txt': 10,
     dir1: {
-      'file2.txt': null,
+      'file2.txt': 10,
     },
     dir2: {
-      'file3.txt': null,
-      'file4.txt': null,
+      'file3.txt': 10,
+      'file4.txt': 10,
       dir3: {
-        'file5.txt': null,
-        'file6.txt': null,
+        'file5.txt': 10,
+        'file6.txt': 10,
       },
     },
   })
@@ -88,15 +88,15 @@ test('move a file via drag and drop while leaving a separate set of selected fil
   await navigateToBuckets({ page })
   await createBucket(page, bucketName)
   await createFilesMap(page, bucketName, {
-    'file0.txt': null,
-    'file1.txt': null,
+    'file0.txt': 10,
+    'file1.txt': 10,
     dir1: {
-      'file2.txt': null,
+      'file2.txt': 10,
     },
     dir2: {
-      'file3.txt': null,
-      'file4.txt': null,
-      'file5.txt': null,
+      'file3.txt': 10,
+      'file4.txt': 10,
+      'file5.txt': 10,
     },
   })
   await navigateToBuckets({ page })
@@ -143,16 +143,16 @@ test('move files by selecting and using the docked menu bulk action', async ({
   await navigateToBuckets({ page })
   await createBucket(page, bucketName)
   await createFilesMap(page, bucketName, {
-    'file1.txt': null,
+    'file1.txt': 10,
     dir1: {
-      'file2.txt': null,
+      'file2.txt': 10,
     },
     dir2: {
-      'file3.txt': null,
-      'file4.txt': null,
+      'file3.txt': 10,
+      'file4.txt': 10,
       dir3: {
-        'file5.txt': null,
-        'file6.txt': null,
+        'file5.txt': 10,
+        'file6.txt': 10,
       },
     },
   })
