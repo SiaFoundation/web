@@ -15,6 +15,7 @@ export function UploadsTable() {
   return (
     <div className="relative">
       <Table
+        testId="uploadsTable"
         isLoading={datasetState === 'loading'}
         emptyState={<EmptyState />}
         pageSize={10}

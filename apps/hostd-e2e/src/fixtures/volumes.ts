@@ -1,6 +1,11 @@
 import { Page, expect } from '@playwright/test'
 import { navigateToVolumes } from './navigate'
-import { fillTextInputByName, step } from '@siafoundation/e2e'
+import {
+  clearToasts,
+  fillTextInputByName,
+  maybeExpectAndReturn,
+  step,
+} from '@siafoundation/e2e'
 
 export const createVolume = step(
   'create volume',
@@ -20,9 +25,10 @@ export const createVolume = step(
     await page.locator('input[name=size]').press('Enter')
     await expect(page.getByRole('dialog')).toBeHidden()
     const row = page.getByRole('row', { name: fullPath })
-    await expect(page.getByText('Volume created')).toBeVisible()
+    await expect(page.getByText('New volume created')).toBeVisible()
     await expect(row.getByText('ready')).toBeVisible()
     await expect(page.getByRole('cell', { name: fullPath })).toBeVisible()
+    await clearToasts({ page })
   }
 )
 
@@ -47,7 +53,7 @@ export const deleteVolumeIfExists = step(
   'delete volume if exists',
   async (page: Page, name: string, path: string) => {
     const doesVolumeExist = await page
-      .getByRole('table')
+      .getByTestId('volumesTable')
       .getByText(path + '/' + name)
       .isVisible()
     if (doesVolumeExist) {
@@ -67,16 +73,47 @@ export const openVolumeContextMenu = step(
   }
 )
 
+export function getVolumeRows(page: Page) {
+  return page.getByTestId('volumesTable').locator('tbody').getByRole('row')
+}
+
 export const volumeInList = step(
   'volume in list',
   async (page: Page, name: string) => {
-    await expect(page.getByRole('table').getByText(name)).toBeVisible()
+    await expect(page.getByTestId('volumesTable').getByText(name)).toBeVisible()
   }
 )
 
 export const volumeNotInList = step(
   'volume not in list',
   async (page: Page, name: string) => {
-    await expect(page.getByRole('table').getByText(name)).toBeHidden()
+    await expect(page.getByTestId('volumesTable').getByText(name)).toBeHidden()
+  }
+)
+
+export const getVolumeRowByIndex = step(
+  'get volume row by index',
+  async (page: Page, index: number, shouldExpect?: boolean) => {
+    return maybeExpectAndReturn(
+      page
+        .getByTestId('volumesTable')
+        .locator('tbody')
+        .getByRole('row')
+        .nth(index),
+      shouldExpect
+    )
+  }
+)
+
+export const expectVolumeRowByIndex = step(
+  'expect volume row by index',
+  async (page: Page, index: number) => {
+    return expect(
+      page
+        .getByTestId('volumesTable')
+        .locator('tbody')
+        .getByRole('row')
+        .nth(index)
+    ).toBeVisible()
   }
 )

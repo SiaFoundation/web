@@ -1,5 +1,4 @@
 import { Page, expect } from '@playwright/test'
-import { readFileSync } from 'fs'
 import {
   fillTextInputByName,
   maybeExpectAndReturn,
@@ -7,7 +6,6 @@ import {
 } from '@siafoundation/e2e'
 import { navigateToBuckets } from './navigate'
 import { openBucket } from './buckets'
-import { join } from 'path'
 
 export const deleteFile = step(
   'delete file',
@@ -185,14 +183,56 @@ export const getFileRowById = step(
   }
 )
 
+export const expectFileRowById = step(
+  'expect file row by ID',
+  async (page: Page, id: string) => {
+    return expect(page.getByTestId('filesTable').getByTestId(id)).toBeVisible()
+  }
+)
+
+export const changeExplorerMode = step(
+  'change explorer mode',
+  async (page: Page, mode: 'directory' | 'all files' | 'uploads') => {
+    const changeMode = page.getByRole('button', {
+      name: 'change explorer mode',
+    })
+    const modeButton = page
+      .getByRole('menu')
+      .getByRole('menuitem', { name: mode })
+    await expect(changeMode).toBeVisible()
+    await changeMode.click()
+    await expect(modeButton).toBeVisible()
+    await modeButton.click()
+
+    if (mode === 'uploads') {
+      await expect(page.getByTestId('uploadsTable')).toBeVisible()
+    }
+    if (mode === 'all files') {
+      await expect(page.getByTestId('filesTable')).toBeVisible()
+      await expect(
+        page.getByTestId('navbar').getByText('All files')
+      ).toBeVisible()
+    }
+    if (mode === 'directory') {
+      await expect(page.getByTestId('filesTable')).toBeVisible()
+      await expect(
+        page.getByTestId('navbar').getByText('All files')
+      ).toBeHidden()
+    }
+  }
+)
+
+function generateDummyFile(sizeInBytes: number): Buffer {
+  return Buffer.alloc(sizeInBytes, 'a')
+}
+
 async function simulateDragAndDropFile(
   page: Page,
   selector: string,
-  filePath: string,
   fileName: string,
-  fileType = ''
+  sizeInBytes: number
 ) {
-  const buffer = readFileSync(filePath).toString('base64')
+  const buffer = generateDummyFile(sizeInBytes).toString('base64')
 
   const dataTransfer = await page.evaluateHandle(
     async ({ bufferData, localFileName, localFileType }) => {
@@ -209,7 +249,7 @@ async function simulateDragAndDropFile(
     {
       bufferData: `data:application/octet-stream;base64,${buffer}`,
       localFileName: fileName,
-      localFileType: fileType,
+      localFileType: '',
     }
   )
 
@@ -218,18 +258,18 @@ async function simulateDragAndDropFile(
 
 export const dragAndDropFileFromSystem = step(
   'drag and drop file from system',
-  async (page: Page, localFilePath: string, systemFile?: string) => {
+  async (page: Page, localFilePath: string, sizeInBytes = 10) => {
     await simulateDragAndDropFile(
       page,
       `[data-testid=filesDropzone]`,
-      join(__dirname, 'sample-files', systemFile || 'sample.txt'),
-      '/' + localFilePath
+      '/' + localFilePath,
+      sizeInBytes
     )
   }
 )
 
-export interface FileMap {
-  [key: string]: string | FileMap
+export type FileMap = {
+  [key: string]: number | FileMap
 }
 
 // Iterate through the file map and create files/directories.
@@ -246,7 +286,8 @@ export const createFilesMap = step(
           await fileInList(page, path + '/')
           await create(map[name] as FileMap, stack.concat(name))
         } else {
-          await dragAndDropFileFromSystem(page, name)
+          const size = (map[name] as number) || 10
+          await dragAndDropFileFromSystem(page, name, size)
           await fileInList(page, path)
         }
       }
@@ -257,7 +298,7 @@ export const createFilesMap = step(
   }
 )
 
-interface FileExpectMap {
+type FileExpectMap = {
   [key: string]: 'visible' | 'hidden' | FileExpectMap
 }
 
@@ -265,7 +306,7 @@ interface FileExpectMap {
 export const expectFilesMap = step(
   'expect files map',
   async (page: Page, bucketName: string, map: FileExpectMap) => {
-    const check = async (map: FileMap, stack: string[]) => {
+    const check = async (map: FileExpectMap, stack: string[]) => {
       for (const name in map) {
         await openDirectoryFromAnywhere(page, stack.join('/'))
         const currentDirPath = stack.join('/')
@@ -279,7 +320,7 @@ export const expectFilesMap = step(
           }
         } else {
           await fileInList(page, path + '/')
-          await check(map[name] as FileMap, stack.concat(name))
+          await check(map[name], stack.concat(name))
         }
       }
     }

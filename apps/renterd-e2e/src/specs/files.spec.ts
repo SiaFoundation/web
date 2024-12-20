@@ -229,10 +229,10 @@ test('shows a new intermediate directory when uploading nested files', async ({
   await filterInput.clear()
   await openDirectory(page, dirPath)
   const fileRow = await getFileRowById(page, filePath)
-  await expect(fileRow.getByText('11 B')).toBeVisible()
+  await expect(fileRow.getByText('10 B')).toBeVisible()
   await navigateToParentDirectory(page)
   // The intermediate directory eventually updates to show the correct size.
-  await expect(dirRow.getByText('11 B')).toBeVisible()
+  await expect(dirRow.getByText('10 B')).toBeVisible()
 
   // Clean up the container directory.
   await navigateToParentDirectory(page)
@@ -251,13 +251,13 @@ test('bulk delete across nested directories', async ({ page }) => {
   await createBucket(page, bucketName)
   await createFilesMap(page, bucketName, {
     dir1: {
-      'file1.txt': null,
-      'file2.txt': null,
+      'file1.txt': 10,
+      'file2.txt': 10,
     },
     dir2: {
-      'file3.txt': null,
-      'file4.txt': null,
-      'file5.txt': null,
+      'file3.txt': 10,
+      'file4.txt': 10,
+      'file5.txt': 10,
     },
   })
   await navigateToBuckets({ page })
@@ -296,13 +296,13 @@ test('bulk delete using the all files explorer mode', async ({ page }) => {
   await createBucket(page, bucketName)
   await createFilesMap(page, bucketName, {
     dir1: {
-      'file1.txt': null,
-      'file2.txt': null,
+      'file1.txt': 10,
+      'file2.txt': 10,
     },
     dir2: {
-      'file3.txt': null,
-      'file4.txt': null,
-      'file5.txt': null,
+      'file3.txt': 10,
+      'file4.txt': 10,
+      'file5.txt': 10,
     },
   })
   await navigateToBuckets({ page })
@@ -346,11 +346,11 @@ test('bulk selecting the entire page ignores the .. parent directory nav row', a
   await navigateToBuckets({ page })
   await createBucket(page, bucketName)
   await createFilesMap(page, bucketName, {
-    'file1.txt': null,
-    'file2.txt': null,
-    'file3.txt': null,
-    'file4.txt': null,
-    'file5.txt': null,
+    'file1.txt': 10,
+    'file2.txt': 10,
+    'file3.txt': 10,
+    'file4.txt': 10,
+    'file5.txt': 10,
   })
   await navigateToBuckets({ page })
   await openBucket(page, bucketName)

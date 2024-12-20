@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test'
+import { expect, Page } from '@playwright/test'
 import { maybeExpectAndReturn, step } from '@siafoundation/e2e'
 
 export const getContractRowById = step(
@@ -30,6 +30,19 @@ export const getContractRowByIndex = step(
         .nth(index),
       shouldExpect
     )
+  }
+)
+
+export const expectContractRowByIndex = step(
+  'expect contract row by index',
+  async (page: Page, index: number) => {
+    return expect(
+      page
+        .getByTestId('contractsTable')
+        .locator('tbody')
+        .getByRole('row')
+        .nth(index)
+    ).toBeVisible()
   }
 )
 
