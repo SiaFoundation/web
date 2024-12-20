@@ -49,8 +49,8 @@ export const columns: ContractsTableColumn[] = [
         checked={multiSelect.isPageAllSelected}
       />
     ),
-    render: ({ data: { id, hostIp, hostKey } }) => (
-      <ContractContextMenu id={id} hostAddress={hostIp} hostKey={hostKey} />
+    render: ({ data: { id, hostKey } }) => (
+      <ContractContextMenu id={id} hostKey={hostKey} />
     ),
   },
   {
@@ -129,21 +129,6 @@ export const columns: ContractsTableColumn[] = [
             {label}
           </Badge>
         </Tooltip>
-      )
-    },
-  },
-  {
-    id: 'hostIp',
-    label: 'host address',
-    category: 'general',
-    render: ({ data: { hostIp }, context: { siascanUrl } }) => {
-      return (
-        <ValueCopyable
-          size="12"
-          value={hostIp}
-          type="hostIp"
-          siascanUrl={siascanUrl}
-        />
       )
     },
   },

@@ -125,40 +125,6 @@ test('contracts bulk allowlist', async ({ page }) => {
   await expect(dialog.getByText('The allowlist is empty')).toBeVisible()
 })
 
-test('contracts bulk blocklist', async ({ page }) => {
-  await navigateToContracts({ page })
-  const rows = await getContractRowsAll(page)
-  rows.at(0).click()
-  rows.at(-1).click({ modifiers: ['Shift'] })
-
-  const menu = page.getByLabel('contract multi-select menu')
-  const dialog = page.getByRole('dialog')
-
-  // Add selected contract hosts to the allowlist.
-  await menu.getByLabel('add host addresses to blocklist').click()
-  await dialog.getByRole('button', { name: 'Add to blocklist' }).click()
-
-  await openManageListsDialog(page)
-  await expect(
-    dialog.getByTestId('blocklistAddresses').getByTestId('item')
-  ).toHaveCount(3)
-  await dialog.getByLabel('view allowlist').click()
-  await expect(dialog.getByText('The allowlist is empty')).toBeVisible()
-  await dialog.getByLabel('close').click()
-
-  rows.at(0).click()
-  rows.at(-1).click({ modifiers: ['Shift'] })
-
-  // Remove selected contract hosts from the blocklist.
-  await menu.getByLabel('remove host addresses from blocklist').click()
-  await dialog.getByRole('button', { name: 'Remove from blocklist' }).click()
-
-  await openManageListsDialog(page)
-  await expect(dialog.getByText('The blocklist is empty')).toBeVisible()
-  await dialog.getByLabel('view allowlist').click()
-  await expect(dialog.getByText('The allowlist is empty')).toBeVisible()
-})
-
 test('new contracts do not show a renewed from', async ({ page }) => {
   await navigateToContracts({ page })
   await expect(getContractRows(page).getByTestId('renewedFrom')).toBeHidden()

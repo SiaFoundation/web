@@ -9,7 +9,6 @@ import { CmdKDialog } from '../components/CmdKDialog'
 import { FilesCreateDirectoryDialog } from '../dialogs/FilesCreateDirectoryDialog'
 import { HostsAllowBlockDialog } from '../components/Hosts/HostsAllowBlockDialog'
 import { HostsFilterAddressDialog } from '../components/Hosts/HostsFilterAddressDialog'
-import { ContractsFilterAddressDialog } from '../components/Contracts/ContractsFilterAddressDialog'
 import { ContractsFilterPublicKeyDialog } from '../components/Contracts/ContractsFilterPublicKeyDialog'
 import { FilesSearchBucketDialog } from '../dialogs/FilesSearchBucketDialog'
 import { useSyncerConnect, useWallet } from '@siafoundation/renterd-react'
@@ -194,10 +193,6 @@ export function Dialogs() {
       />
       <HostsFilterPublicKeyDialog
         open={dialog === 'hostsFilterPublicKey'}
-        onOpenChange={onOpenChange}
-      />
-      <ContractsFilterAddressDialog
-        open={dialog === 'contractsFilterAddress'}
         onOpenChange={onOpenChange}
       />
       <ContractsFilterPublicKeyDialog

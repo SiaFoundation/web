@@ -15,6 +15,7 @@ import {
   Delete16,
 } from '@siafoundation/react-icons'
 import {
+  useHost,
   useHostsAllowlist,
   useHostsBlocklist,
 } from '@siafoundation/renterd-react'
@@ -24,14 +25,12 @@ import { useContracts } from '../../contexts/contracts'
 import { useHosts } from '../../contexts/hosts'
 import { useAllowlistUpdate } from '../../hooks/useAllowlistUpdate'
 import { useBlocklistUpdate } from '../../hooks/useBlocklistUpdate'
-import { addressContainsFilter } from './ContractsFilterAddressDialog'
 import { publicKeyContainsFilter } from './ContractsFilterPublicKeyDialog'
 import { useContractConfirmDelete } from './useContractConfirmDelete'
 
 type Props = {
   id: string
   trigger?: React.ReactNode
-  hostAddress: string
   hostKey: string
   contentProps?: React.ComponentProps<typeof DropdownMenu>['contentProps']
   buttonProps?: React.ComponentProps<typeof Button>
@@ -40,7 +39,6 @@ type Props = {
 export function ContractContextMenu({
   id,
   trigger,
-  hostAddress,
   hostKey,
   contentProps,
   buttonProps,
@@ -67,22 +65,16 @@ export function ContractContextMenu({
         },
       }}
     >
-      <ContractContextMenuContent
-        id={id}
-        hostAddress={hostAddress}
-        hostKey={hostKey}
-      />
+      <ContractContextMenuContent id={id} hostKey={hostKey} />
     </DropdownMenu>
   )
 }
 
 export function ContractContextMenuContent({
   id,
-  hostAddress,
   hostKey,
 }: {
   id: string
-  hostAddress?: string
   hostKey?: string
 }) {
   const router = useRouter()
@@ -95,6 +87,13 @@ export function ContractContextMenuContent({
   const blocklistUpdate = useBlocklistUpdate()
   const allowlistUpdate = useAllowlistUpdate()
   const contractConfirmDelete = useContractConfirmDelete()
+  const host = useHost({
+    disabled: !hostKey,
+    params: {
+      hostkey: hostKey || '',
+    },
+  })
+  const hostAddress = host.data?.netAddress
   return (
     <>
       <div className="px-1.5 py-1">
@@ -119,22 +118,6 @@ export function ContractContextMenuContent({
           <Filter16 />
         </DropdownMenuLeftSlot>
         Filter hosts by host address
-      </DropdownMenuItem>
-      <DropdownMenuItem
-        disabled={!hostAddress}
-        onSelect={() => {
-          if (!hostAddress) {
-            return
-          }
-          resetContractsFilters()
-          setContractsFilter(addressContainsFilter(hostAddress))
-          router.push(routes.contracts.index)
-        }}
-      >
-        <DropdownMenuLeftSlot>
-          <Filter16 />
-        </DropdownMenuLeftSlot>
-        Filter contracts by host address
       </DropdownMenuItem>
       <DropdownMenuItem
         disabled={!hostKey}
