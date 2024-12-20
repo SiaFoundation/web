@@ -1,5 +1,21 @@
 # renterd
 
+## 0.72.0
+
+### Minor Changes
+
+- a5a5d09a: The contracts explorer no longer supports filtering by host IP.
+- a5a5d09a: The blocklist dialog no longer shows how many active contacts match a suggestion.
+- a5a5d09a: The contracts explorer no longer includes a column for host IP.
+- b7e5ea12: Data tables now show an empty state when viewing a page greater than the first page with no data.
+- a5a5d09a: The contracts multi-select menu no longer supports bulk blocklist actions.
+
+### Patch Changes
+
+- b7e5ea12: Fixed a bug where the transaction list would show pending transactions when viewing pages other than the first page.
+- b7e5ea12: Fixed a bug where pagination did now work on the file uploads list.
+- b7e5ea12: Fixed a bug where pagination did not work on the file explorer.
+
 ## 0.71.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @siafoundation/react-core
 
+## 1.6.0
+
+### Minor Changes
+
+- b7e5ea12: Added maybeFromNullishArrayResponse for casting null empty array responses to [].
+
 ## 1.5.0
 
 ### Minor Changes

@@ -1,5 +1,13 @@
 # @siafoundation/renterd-types
 
+## 0.14.1
+
+### Patch Changes
+
+- b7e5ea12: Host and contract responses are now Nullable rather than Maybe, since empty responses return null.
+- Updated dependencies [b7e5ea12]
+  - @siafoundation/react-core@1.6.0
+
 ## 0.14.0
 
 ### Minor Changes

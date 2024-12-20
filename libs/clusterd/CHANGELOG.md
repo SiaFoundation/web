@@ -1,5 +1,11 @@
 # @siafoundation/clusterd
 
+## 0.1.3
+
+### Patch Changes
+
+- @siafoundation/renterd-js@0.12.2
+
 ## 0.1.2
 
 ### Patch Changes

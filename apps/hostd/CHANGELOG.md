@@ -1,5 +1,15 @@
 # hostd
 
+## 0.55.0
+
+### Minor Changes
+
+- b7e5ea12: Data tables now show an empty state when viewing a page greater than the first page with no data.
+
+### Patch Changes
+
+- b7e5ea12: Fixed a bug where the transaction list would show pending transactions when viewing pages other than the first page.
+
 ## 0.54.0
 
 ### Minor Changes
