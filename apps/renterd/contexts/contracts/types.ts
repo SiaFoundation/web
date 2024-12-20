@@ -21,7 +21,6 @@ export type ContractTableContext = {
 
 export type ContractData = {
   id: string
-  hostIp: string
   hostKey: string
   state: ContractState
   location?: [number, number]
@@ -67,7 +66,6 @@ export type TableColumnId =
   | 'actions'
   | 'contractId'
   | 'usability'
-  | 'hostIp'
   | 'hostKey'
   | 'state'
   | 'timeline'
@@ -84,7 +82,6 @@ export type TableColumnId =
 export const columnsDefaultVisible: TableColumnId[] = [
   'contractId',
   'usability',
-  'hostIp',
   'hostKey',
   'state',
   'timeline',
@@ -99,7 +96,6 @@ export const columnsDefaultVisible: TableColumnId[] = [
 
 export type SortField =
   | 'contractId'
-  | 'hostIp'
   | 'hostKey'
   | 'state'
   | 'timeline'
@@ -123,11 +119,6 @@ export const sortOptions: {
   {
     id: 'contractId',
     label: 'contract ID',
-    category: 'general',
-  },
-  {
-    id: 'hostIp',
-    label: 'host address',
     category: 'general',
   },
   {

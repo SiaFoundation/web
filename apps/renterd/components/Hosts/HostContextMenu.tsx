@@ -28,7 +28,6 @@ import { useContracts } from '../../contexts/contracts'
 import { useHosts } from '../../contexts/hosts'
 import { useAllowlistUpdate } from '../../hooks/useAllowlistUpdate'
 import { useBlocklistUpdate } from '../../hooks/useBlocklistUpdate'
-import { addressContainsFilter } from '../Contracts/ContractsFilterAddressDialog'
 import { publicKeyContainsFilter } from '../Contracts/ContractsFilterPublicKeyDialog'
 import { filterPublicKeyEquals } from './HostsFilterPublicKeyDialog'
 import { secondsInMilliseconds } from '@siafoundation/units'
@@ -132,22 +131,6 @@ export function HostContextMenuContent({
           <Filter16 />
         </DropdownMenuLeftSlot>
         Filter hosts by public key
-      </DropdownMenuItem>
-      <DropdownMenuItem
-        disabled={!address}
-        onSelect={() => {
-          if (!address) {
-            return
-          }
-          resetContractsFilters()
-          setContractsFilter(addressContainsFilter(address))
-          router.push(routes.contracts.index)
-        }}
-      >
-        <DropdownMenuLeftSlot>
-          <Filter16 />
-        </DropdownMenuLeftSlot>
-        Filter contracts by host address
       </DropdownMenuItem>
       <DropdownMenuItem
         onSelect={() => {

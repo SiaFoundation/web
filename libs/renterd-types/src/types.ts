@@ -145,7 +145,6 @@ export type ContractUsability = 'good' | 'bad'
 export type Contract = {
   id: string
   usability: ContractUsability
-  hostIP: string
   hostKey: string
   proofHeight: number
   revisionHeight: number

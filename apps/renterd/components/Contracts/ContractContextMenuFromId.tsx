@@ -44,11 +44,5 @@ function ContractContextMenuFromIdContent({ id }: Props) {
     params: { id },
   })
 
-  return (
-    <ContractContextMenuContent
-      id={id}
-      hostAddress={contract.data?.hostIP}
-      hostKey={contract.data?.hostKey}
-    />
-  )
+  return <ContractContextMenuContent id={id} hostKey={contract.data?.hostKey} />
 }

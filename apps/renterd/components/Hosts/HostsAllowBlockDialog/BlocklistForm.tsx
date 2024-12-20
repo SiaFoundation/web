@@ -5,13 +5,11 @@ import {
   ScrollArea,
   Text,
   Separator,
-  Tooltip,
   FormTextFieldFormik,
   FieldGroupFormik,
 } from '@siafoundation/design-system'
 import { ListChecked32, Filter32 } from '@siafoundation/react-icons'
 import { useHostsBlocklist } from '@siafoundation/renterd-react'
-import { useContracts } from '../../../contexts/contracts'
 import { useFormik } from 'formik'
 import { useEffect, useMemo } from 'react'
 import * as Yup from 'yup'
@@ -69,16 +67,14 @@ export function BlocklistForm() {
     [blockListResponse.data, formik.values.address]
   )
 
-  const { dataset } = useContracts()
   const suggestionsNotOnList = useMemo(
     () =>
       suggestions
         .filter((s) => !blockListResponse.data?.find((a) => a === s))
         .map((s) => ({
           address: s,
-          contractCount: dataset?.filter((d) => d.hostIp === s).length,
         })),
-    [blockListResponse.data, dataset]
+    [blockListResponse.data]
   )
 
   return (
@@ -122,7 +118,7 @@ export function BlocklistForm() {
                   <Text size="12" color="subtle">
                     Suggestions:
                   </Text>
-                  {suggestionsNotOnList.map(({ address, contractCount }, i) => {
+                  {suggestionsNotOnList.map(({ address }, i) => {
                     return (
                       <Text
                         key={address}
@@ -132,16 +128,6 @@ export function BlocklistForm() {
                         onClick={() => formik.setFieldValue('address', address)}
                       >
                         {address}
-                        {!!contractCount && (
-                          <>
-                            {' '}
-                            <Tooltip
-                              content={`${contractCount} active contracts`}
-                            >
-                              <Text color="red">({contractCount})</Text>
-                            </Tooltip>
-                          </>
-                        )}
                         {i !== suggestionsNotOnList.length - 1 && (
                           <Text>,</Text>
                         )}
