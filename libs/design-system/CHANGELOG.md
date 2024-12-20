@@ -1,5 +1,21 @@
 # Changelog
 
+## 4.15.0
+
+### Minor Changes
+
+- 2f3f9ab0: useTableState now handles column filtering.
+- b7e5ea12: Refactored useDatasetState to include a noneOnPage state, a renamed loaded state, and a more explicit API.
+- b7e5ea12: PaginationMarker now takes an explicit nextMarker and also an optional marker. If the current marker is not passed at all, previous page navigation is always enabled.
+- 2f3f9ab0: Renamed enabledColumns to visibleColumns and removed disabled categories from useTableState.
+- b7e5ea12: Added EmptyState component for handling all dataset empty states with custom or default components.
+- e983c15f: useTableState now supports a defaultSortDirection.
+
+### Patch Changes
+
+- Updated dependencies [b7e5ea12]
+  - @siafoundation/react-core@1.6.0
+
 ## 4.14.0
 
 ### Minor Changes
