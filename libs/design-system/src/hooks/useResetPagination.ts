@@ -3,14 +3,6 @@
 import { useAppRouter, usePathname, useSearchParams } from '@siafoundation/next'
 import { useCallback } from 'react'
 
-export type ServerFilterItem = {
-  id: string
-  label: string
-  value?: string
-  values?: string[]
-  bool?: boolean
-}
-
 export function useResetPagination() {
   const router = useAppRouter()
   const pathname = usePathname()

@@ -7,9 +7,12 @@ import { useUploads } from '../contexts/uploads'
 export function TransfersBar() {
   const { isUnlockedAndAuthedRoute } = useAppSettings()
   const { isViewingUploads, navigateToUploads } = useFilesManager()
-  const { datasetPageTotal: uploadsPageTotal } = useUploads()
 
-  const isActiveUploads = !!uploadsPageTotal
+  const {
+    localUploads: { datasetTotal: uploadsTotal },
+  } = useUploads()
+
+  const isActiveUploads = !!uploadsTotal
 
   if (!isUnlockedAndAuthedRoute) {
     return <AppDockedControl />
@@ -32,7 +35,7 @@ export function TransfersBar() {
           className="flex gap-1"
         >
           <Upload16 className="opacity-50 scale-75 relative top-px" />
-          Active uploads
+          Active uploads ({uploadsTotal.toLocaleString()})
         </Button>
       </div>
     </AppDockedControl>

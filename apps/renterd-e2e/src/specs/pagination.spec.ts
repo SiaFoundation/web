@@ -88,7 +88,7 @@ test('paginating files works as expected in both directory and all files mode', 
   await expect(next).toBeDisabled()
 })
 
-test('paginating uploads works as expected', async ({ page }) => {
+test('paginating all uploads works as expected', async ({ page }) => {
   const bucketName = 'bucket1'
   // We use a mock for the multipart uploads API because it is otherwise hard to
   // catch a stable list of uploads before they complete and the list clears out.
@@ -96,9 +96,9 @@ test('paginating uploads works as expected', async ({ page }) => {
   await navigateToBuckets({ page })
   await createBucket(page, bucketName)
   await openBucket(page, bucketName)
-  const navToUploads = page.getByRole('button', { name: 'Active uploads' })
-  await expect(navToUploads).toBeVisible()
-  await navToUploads.click()
+  await changeExplorerMode(page, 'uploads')
+  await expect(page.getByRole('button', { name: 'All uploads' })).toBeVisible()
+  await page.getByRole('button', { name: 'All uploads' }).click()
   await expect(page.getByTestId('uploadsTable')).toBeVisible()
   const first = page.getByRole('button', { name: 'go to first page' })
   const next = page.getByRole('button', { name: 'go to next page' })

@@ -11,10 +11,12 @@ import { useUploads } from '../../contexts/uploads'
 
 export function UploadsViewDropdownMenu() {
   const {
-    configurableColumns,
-    toggleColumnVisibility,
-    resetDefaultColumnVisibility,
-    visibleColumnIds,
+    activeTableState: {
+      configurableColumns,
+      toggleColumnVisibility,
+      resetDefaultColumnVisibility,
+      visibleColumnIds,
+    },
   } = useUploads()
   return (
     <Popover

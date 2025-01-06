@@ -76,10 +76,12 @@ export const columns: UploadsTableColumn[] = [
     id: 'createdAt',
     label: 'started at',
     category: 'general',
-    render: function SizeColumn({ data: { createdAt } }) {
+    render: function CreatedAtColumn({ data: { createdAt } }) {
       return (
         <Text size="12" color="subtle">
-          {formatRelative(new Date(createdAt).getTime(), new Date())}
+          {createdAt
+            ? formatRelative(new Date(createdAt).getTime(), new Date())
+            : '-'}
         </Text>
       )
     },

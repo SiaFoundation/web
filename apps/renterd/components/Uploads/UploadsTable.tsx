@@ -1,23 +1,32 @@
-import { Table } from '@siafoundation/design-system'
-import { EmptyState } from './EmptyState'
+import { EmptyState, Table } from '@siafoundation/design-system'
 import { useUploads } from '../../contexts/uploads'
+import { StateNoneYet } from './StateNoneYet'
+import { StateError } from './StateError'
 
 export function UploadsTable() {
   const {
-    visibleColumns,
-    sortableColumns,
-    toggleSort,
-    datasetPage,
-    datasetState,
-    sortField,
-    sortDirection,
+    activeData: { datasetPage },
+    activeTableState: {
+      visibleColumns,
+      sortableColumns,
+      toggleSort,
+      sortField,
+      sortDirection,
+    },
+    activeDatasetState,
   } = useUploads()
   return (
     <div className="relative">
       <Table
         testId="uploadsTable"
-        isLoading={datasetState === 'loading'}
-        emptyState={<EmptyState />}
+        isLoading={activeDatasetState === 'loading'}
+        emptyState={
+          <EmptyState
+            datasetState={activeDatasetState}
+            noneYet={<StateNoneYet />}
+            error={<StateError />}
+          />
+        }
         pageSize={10}
         data={datasetPage}
         columns={visibleColumns}
