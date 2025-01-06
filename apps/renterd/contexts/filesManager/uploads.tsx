@@ -349,5 +349,5 @@ export function useUploads({ activeDirectoryPath }: Props) {
 }
 
 export function getUploadId(path: FullPath) {
-  return `u/${path}`
+  return path
 }

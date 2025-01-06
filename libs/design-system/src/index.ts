@@ -174,6 +174,7 @@ export * from './hooks/useSiacoinFiat'
 export * from './hooks/useOS'
 export * from './hooks/usePaginationOffset'
 export * from './hooks/usePaginationMarker'
+export * from './hooks/useResetPagination'
 
 // multi
 export * from './multi/useMultiSelect'
