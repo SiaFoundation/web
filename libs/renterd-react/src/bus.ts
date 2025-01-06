@@ -1,5 +1,4 @@
 import useSWR from 'swr'
-import { debounce } from '@technically/lodash'
 import {
   useDeleteFunc,
   useGetSwr,
@@ -10,6 +9,7 @@ import {
   HookArgsCallback,
   HookArgsWithPayloadSwr,
   delay,
+  throttle,
 } from '@siafoundation/react-core'
 import {
   getMainnetBlockHeight,
@@ -558,8 +558,6 @@ export function useHostResetLostSectorCount(
   })
 }
 
-const debouncedListRevalidate = debounce((func: () => void) => func(), 5_000)
-
 export function useHostScan(
   args?: HookArgsCallback<HostScanParams, HostScanPayload, HostScanResponse>
 ) {
@@ -594,12 +592,8 @@ export function useHostScan(
           }),
         false
       )
-      debouncedListRevalidate(() => {
-        mutate(
-          (key) => key.startsWith(busHostsRoute),
-          (d) => d,
-          true
-        )
+      throttle(busHostsRoute, 5_000, () => {
+        mutate((key) => key.startsWith(busHostsRoute))
       })
     }
   )
@@ -935,8 +929,10 @@ export function useMultipartUploadCreate(
   return usePostFunc(
     { ...args, route: busMultipartCreateRoute },
     async (mutate) => {
-      mutate((key) => {
-        return key.startsWith(busMultipartRoute)
+      throttle(busMultipartRoute, 3_000, () => {
+        mutate((key) => {
+          return key.startsWith(busMultipartRoute)
+        })
       })
     }
   )
@@ -951,9 +947,11 @@ export function useMultipartUploadComplete(
 ) {
   return usePostFunc(
     { ...args, route: busMultipartCompleteRoute },
-    async (mutate) => {
-      mutate((key) => {
-        return key.startsWith(busMultipartRoute)
+    async (mutate, args, response) => {
+      throttle(busMultipartRoute, 3_000, () => {
+        mutate((key) => {
+          return key.startsWith(busMultipartRoute)
+        })
       })
     }
   )
@@ -969,9 +967,16 @@ export function useMultipartUploadAbort(
   return usePostFunc(
     { ...args, route: busMultipartAbortRoute },
     async (mutate) => {
-      mutate((key) => {
-        return key.startsWith(busMultipartRoute)
-      })
+      throttle(
+        busMultipartRoute,
+        200,
+        () => {
+          mutate((key) => {
+            return key.startsWith(busMultipartRoute)
+          })
+        },
+        'trailing'
+      )
     }
   )
 }

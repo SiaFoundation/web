@@ -136,19 +136,21 @@ export class MultipartUpload {
         this.#activeConnections[id].abort()
       })
 
-    try {
-      await this.#api.busUploadAbort.post({
-        payload: {
-          bucket: this.#bucket,
-          key: this.#key,
-          uploadID: this.#uploadId,
-        } as MultipartUploadAbortPayload,
-      })
-    } catch (e) {
-      triggerErrorToast({
-        title: 'Error aborting upload',
-        body: (e as Error).message,
-      })
+    if (this.#uploadId) {
+      try {
+        await this.#api.busUploadAbort.post({
+          payload: {
+            bucket: this.#bucket,
+            key: this.#key,
+            uploadID: this.#uploadId,
+          } as MultipartUploadAbortPayload,
+        })
+      } catch (e) {
+        triggerErrorToast({
+          title: 'Error aborting upload',
+          body: (e as Error).message,
+        })
+      }
     }
     this.#resolve?.()
   }
