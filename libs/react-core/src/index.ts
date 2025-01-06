@@ -14,6 +14,8 @@ export * from './useTryUntil'
 export * from './userPrefersReducedMotion'
 export * from './mutate'
 export * from './arrayResponse'
+export * from './throttle'
+export * from './useThrottledStateMap'
 
 export * from './workflows'
 export * from './coreProvider'

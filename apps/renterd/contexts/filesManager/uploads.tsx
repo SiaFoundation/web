@@ -1,5 +1,9 @@
 import { triggerErrorToast } from '@siafoundation/design-system'
-import { useMutate } from '@siafoundation/react-core'
+import {
+  throttle,
+  useMutate,
+  useThrottledStateMap,
+} from '@siafoundation/react-core'
 import {
   useBuckets,
   useMultipartUploadAbort,
@@ -10,8 +14,7 @@ import {
 } from '@siafoundation/renterd-react'
 import { Bucket, busObjectsRoute } from '@siafoundation/renterd-types'
 import { MiBToBytes, minutesInMilliseconds } from '@siafoundation/units'
-import { throttle } from '@technically/lodash'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { MultipartUpload } from '../../lib/multipartUpload'
 import {
   FullPath,
@@ -26,6 +29,7 @@ const maxConcurrentUploads = 5
 const maxConcurrentPartsPerUpload = 5
 const getMultipartUploadPartSize = (minShards: number) =>
   MiBToBytes(4).times(minShards)
+const checkAndStartUploadsInterval = 500
 
 type Props = {
   activeDirectoryPath: string
@@ -38,7 +42,8 @@ export function useUploads({ activeDirectoryPath }: Props) {
   const busUploadComplete = useMultipartUploadComplete()
   const busUploadCreate = useMultipartUploadCreate()
   const busUploadAbort = useMultipartUploadAbort()
-  const [uploadsMap, setUploadsMap] = useState<UploadsMap>({})
+  const [uploadsMapRef, setUploadsMapRef, uploadsMap] =
+    useThrottledStateMap<UploadsMap>({})
   const uploadSettings = useSettingsUpload({
     config: {
       swr: {
@@ -46,59 +51,66 @@ export function useUploads({ activeDirectoryPath }: Props) {
       },
     },
   })
+  const uploadsList: ObjectUploadData[] = useMemo(
+    () => Object.values(uploadsMap),
+    [uploadsMap]
+  )
+
+  const hasUploads = uploadsList.length > 0
 
   const updateStatusToUploading = useCallback(
-    ({ id }: { id: string }) => {
-      setUploadsMap((map) => ({
-        ...map,
-        [id]: {
-          ...map[id],
+    ({ id, multipartId }: { id: string; multipartId: string }) => {
+      setUploadsMapRef((current) => {
+        current[id] = {
+          ...current[id],
+          multipartId,
           uploadStatus: 'uploading',
           loaded: 0,
-        },
-      }))
+        }
+        return current
+      })
     },
-    [setUploadsMap]
+    [setUploadsMapRef]
   )
 
   const updateUploadProgress = useCallback(
     (obj: { id: string; loaded: number; size: number }) => {
-      setUploadsMap((map) => {
-        if (!map[obj.id]) {
-          return map
+      setUploadsMapRef((current) => {
+        const upload = current[obj.id]
+        if (!upload || upload.loaded === obj.loaded) {
+          return current
         }
-        return {
-          ...map,
-          [obj.id]: {
-            ...map[obj.id],
-            loaded: obj.loaded,
-            uploadStatus: obj.loaded === obj.size ? 'processing' : 'uploading',
-            size: obj.size,
-          },
+
+        current[obj.id] = {
+          ...upload,
+          loaded: obj.loaded,
+          uploadStatus: obj.loaded === obj.size ? 'processing' : 'uploading',
+          size: obj.size,
         }
+        return current
       })
     },
-    [setUploadsMap]
+    [setUploadsMapRef]
   )
 
   const removeUpload = useCallback(
     (id: string) => {
-      setUploadsMap((uploads) => {
-        delete uploads[id]
-        return {
-          ...uploads,
-        }
+      setUploadsMapRef((current) => {
+        delete current[id]
+        return current
       })
     },
-    [setUploadsMap]
+    [setUploadsMapRef]
   )
 
-  const createMultipartUpload = useCallback(
+  const initMultipartUpload = useCallback(
     async ({
+      id,
       path,
       bucket,
       uploadFile,
     }: {
+      id: string
       path: FullPath
       bucket: Bucket
       uploadFile: File
@@ -115,129 +127,129 @@ export function useUploads({ activeDirectoryPath }: Props) {
         maxConcurrentParts: maxConcurrentPartsPerUpload,
       })
 
-      const uploadId = await multipartUpload.create()
-      if (!uploadId) {
+      multipartUpload.setOnError((error) => {
+        triggerErrorToast({
+          title: 'Error uploading file',
+          body: error.message,
+        })
+        ref.current.removeUpload(id)
+      })
+      multipartUpload.setOnProgress((progress) => {
+        ref.current.updateUploadProgress({
+          id,
+          loaded: progress.sent,
+          size: progress.total,
+        })
+      })
+      multipartUpload.setOnComplete(async () => {
+        throttle(busObjectsRoute, 5000, () =>
+          mutate((key) => key.startsWith(busObjectsRoute))
+        )
+        ref.current.removeUpload(id)
+      })
+      return multipartUpload
+    },
+    [uploadSettings.data, mutate]
+  )
+
+  const addUploadToQueue = useCallback(
+    async ({
+      id,
+      path,
+      bucket,
+      name,
+      uploadFile,
+    }: {
+      id: string
+      path: FullPath
+      bucket: Bucket
+      name: string
+      uploadFile: File
+    }) => {
+      const multipartUpload = await initMultipartUpload({
+        id,
+        path,
+        bucket,
+        uploadFile,
+      })
+      if (!multipartUpload) {
+        return
+      }
+      const key = getKeyFromPath(path)
+      const uploadItem: ObjectUploadData = {
+        id,
+        path,
+        key,
+        bucket,
+        name,
+        size: uploadFile.size,
+        loaded: 0,
+        isUploading: true,
+        multipartId: undefined,
+        multipartUpload,
+        uploadStatus: 'queued',
+        uploadFile: uploadFile,
+        createdAt: new Date().toISOString(),
+        uploadAbort: async () => {
+          ref.current.removeUpload(id)
+          multipartUpload.abort()
+        },
+        type: 'file',
+      }
+      setUploadsMapRef((current) => {
+        current[id] = uploadItem
+        return current
+      })
+    },
+    [initMultipartUpload, setUploadsMapRef]
+  )
+
+  const startMultipartUpload = useCallback(
+    async ({ id, upload }: { id: string; upload: MultipartUpload }) => {
+      const multipartId = await upload.create()
+      if (!multipartId) {
         triggerErrorToast({
           title: 'Error creating upload',
           body: 'Failed to create upload',
         })
         return
       }
-      multipartUpload.setOnError((error) => {
-        triggerErrorToast({
-          title: 'Error uploading file',
-          body: error.message,
-        })
-        ref.current.removeUpload(uploadId)
-      })
-      multipartUpload.setOnProgress(
-        throttle((progress) => {
-          ref.current.updateUploadProgress({
-            id: uploadId,
-            loaded: progress.sent,
-            size: progress.total,
-          })
-        }, 1000)
-      )
-      multipartUpload.setOnComplete(async () => {
-        await ref.current.mutate((key) => key.startsWith(busObjectsRoute))
-        ref.current.removeUpload(uploadId)
-        setTimeout(() => {
-          ref.current.checkAndStartUploads()
-        }, 100)
-      })
-      return {
-        uploadId,
-        multipartUpload,
-      }
-    },
-    [uploadSettings.data]
-  )
-
-  const addUploadToQueue = useCallback(
-    async ({
-      path,
-      bucket,
-      name,
-      uploadFile,
-    }: {
-      path: FullPath
-      bucket: Bucket
-      name: string
-      uploadFile: File
-    }) => {
-      const upload = await createMultipartUpload({
-        path,
-        bucket,
-        uploadFile,
-      })
-      if (!upload) {
-        return
-      }
-      const { uploadId, multipartUpload } = upload
-      setUploadsMap((map) => {
-        const key = getKeyFromPath(path)
-        const uploadItem: ObjectUploadData = {
-          id: uploadId,
-          path,
-          key,
-          bucket,
-          name,
-          size: uploadFile.size,
-          loaded: 0,
-          isUploading: true,
-          upload: multipartUpload,
-          uploadStatus: 'queued',
-          uploadFile: uploadFile,
-          createdAt: new Date().toISOString(),
-          uploadAbort: async () => {
-            await multipartUpload.abort()
-            ref.current.removeUpload(uploadId)
-          },
-          type: 'file',
-        }
-        return {
-          ...map,
-          [uploadId]: uploadItem,
-        }
-      })
-    },
-    [setUploadsMap, createMultipartUpload]
-  )
-
-  const startMultipartUpload = useCallback(
-    async ({ id, upload }: { id: string; upload: MultipartUpload }) => {
       updateStatusToUploading({
         id,
+        multipartId,
       })
-      upload.start()
+      await upload.start()
     },
     [updateStatusToUploading]
   )
 
-  const checkAndStartUploads = useCallback(() => {
-    const uploads = Object.values(uploadsMap)
-    const activeUploads = uploads.filter(
-      (upload) => upload.uploadStatus === 'uploading'
-    ).length
-    const queuedUploads = uploads.filter(
-      (upload) => upload.uploadStatus === 'queued'
-    )
+  const checkAndStartUploads = useCallback(
+    () =>
+      throttle('checkAndStartUploads', checkAndStartUploadsInterval, () => {
+        const uploadsListRef = Object.values(uploadsMapRef)
+        const activeUploads = uploadsListRef.filter(
+          (upload) => upload.uploadStatus === 'uploading'
+        )
+        const queuedUploads = uploadsListRef.filter(
+          (upload) => upload.uploadStatus === 'queued'
+        )
 
-    const availableSlots = maxConcurrentUploads - activeUploads
-
-    // Start uploads if there are available slots and queued uploads.
-    queuedUploads.slice(0, availableSlots).forEach((upload) => {
-      if (!upload.upload) {
-        return
-      }
-      startMultipartUpload({
-        id: upload.id,
-        upload: upload.upload,
-      })
-    })
-    return uploadsMap
-  }, [uploadsMap, startMultipartUpload])
+        const availableSlots = Math.max(
+          maxConcurrentUploads - activeUploads.length,
+          0
+        )
+        queuedUploads.slice(0, availableSlots).forEach((upload) => {
+          if (!upload.multipartUpload) {
+            return
+          }
+          startMultipartUpload({
+            id: upload.id,
+            upload: upload.multipartUpload,
+          })
+        })
+      }),
+    [uploadsMapRef, startMultipartUpload]
+  )
 
   const uploadFiles = useCallback(
     (files: File[]) => {
@@ -249,6 +261,7 @@ export function useUploads({ activeDirectoryPath }: Props) {
         // Try `path` otherwise fallback to flat file structure.
         const relativeUserFilePath = (file['path'] as string) || file.name
         const path = join(activeDirectoryPath, relativeUserFilePath)
+        const id = getUploadId(path)
         const name = file.name
         const bucketName = getBucketFromPath(path)
         const bucket = buckets.data?.find((b) => b.name === bucketName)
@@ -259,35 +272,33 @@ export function useUploads({ activeDirectoryPath }: Props) {
           })
           return
         }
-        if (uploadsMap[path]) {
+        if (uploadsMapRef[id]) {
           triggerErrorToast({
             title: `Already uploading file, aborting previous upload.`,
             body: path,
           })
-          uploadsMap[path].uploadAbort?.()
+          uploadsMapRef[id].uploadAbort?.()
         }
         addUploadToQueue({
+          id,
           path,
           name,
           bucket,
           uploadFile: file,
         })
       })
-      setTimeout(() => {
-        ref.current.checkAndStartUploads()
-      }, 1_000)
     },
-    [activeDirectoryPath, addUploadToQueue, buckets.data, uploadsMap]
+    [activeDirectoryPath, addUploadToQueue, buckets.data, uploadsMapRef]
   )
 
   // Use a ref for functions that will be used in closures/asynchronous callbacks
   // to ensure the latest version of the function is used.
   const ref = useRef({
     checkAndStartUploads,
-    workerUploadPart: workerUploadPart,
-    busUploadComplete: busUploadComplete,
-    busUploadCreate: busUploadCreate,
-    busUploadAbort: busUploadAbort,
+    workerUploadPart,
+    busUploadComplete,
+    busUploadCreate,
+    busUploadAbort,
     removeUpload,
     updateUploadProgress,
     updateStatusToUploading,
@@ -319,25 +330,24 @@ export function useUploads({ activeDirectoryPath }: Props) {
   ])
 
   useEffect(() => {
-    const i = setInterval(() => {
-      ref.current.checkAndStartUploads()
-    }, 3_000)
-    return () => {
-      clearInterval(i)
+    if (hasUploads) {
+      const id = setInterval(() => {
+        ref.current.checkAndStartUploads()
+      }, checkAndStartUploadsInterval)
+      return () => clearInterval(id)
     }
-  }, [])
-
-  const uploadsList: ObjectUploadData[] = useMemo(
-    () => Object.entries(uploadsMap).map((u) => u[1] as ObjectUploadData),
-    [uploadsMap]
-  )
+  }, [hasUploads])
 
   // Abort local uploads when the browser tab is closed.
-  useWarnActiveUploadsOnClose({ uploadsMap })
+  useWarnActiveUploadsOnClose({ uploadsList })
 
   return {
     uploadFiles,
     uploadsMap,
     uploadsList,
   }
+}
+
+export function getUploadId(path: FullPath) {
+  return `u/${path}`
 }

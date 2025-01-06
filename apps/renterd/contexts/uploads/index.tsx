@@ -17,6 +17,7 @@ import { ObjectUploadData } from '../filesManager/types'
 import { MultipartUploadListUploadsPayload } from '@siafoundation/renterd-types'
 import { maybeFromNullishArrayResponse } from '@siafoundation/react-core'
 import { Maybe, Nullable } from '@siafoundation/types'
+import { getUploadId } from '../filesManager/uploads'
 
 const defaultLimit = 50
 
@@ -84,7 +85,7 @@ function useUploadsMain() {
       const key = upload.key
       const name = getFilename(key)
       const fullPath = join(activeBucket.name, upload.key)
-      const localUpload = uploadsMap[id]
+      const localUpload = uploadsMap[getUploadId(fullPath)]
       if (localUpload) {
         return localUpload
       }

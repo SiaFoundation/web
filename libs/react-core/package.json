@@ -5,7 +5,8 @@
   "license": "MIT",
   "peerDependencies": {
     "react": "^18.2.0",
-    "@siafoundation/types": "0.7.0"
+    "@siafoundation/types": "0.7.0",
+    "@technically/lodash": "^4.17.0"
   },
   "dependencies": {
     "@siafoundation/next": "^0.1.3",

@@ -85,7 +85,8 @@ export type ExplorerMode = 'directory' | 'flat'
 export type UploadStatus = 'queued' | 'uploading' | 'processing'
 
 export type ObjectUploadData = ObjectData & {
-  upload?: MultipartUpload
+  multipartId?: string
+  multipartUpload?: MultipartUpload
   uploadStatus: UploadStatus
   uploadAbort?: () => Promise<void>
   uploadFile?: File

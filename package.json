@@ -120,7 +120,6 @@
     "use-debounce": "^9.0.3",
     "use-local-storage-state": "^18.3.3",
     "usehooks-ts": "^2.9.1",
-    "uuid": "^9.0.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {

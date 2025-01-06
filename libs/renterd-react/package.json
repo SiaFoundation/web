@@ -4,7 +4,6 @@
   "version": "4.13.3",
   "license": "MIT",
   "dependencies": {
-    "@technically/lodash": "^4.17.0",
     "@siafoundation/react-core": "^1.6.0",
     "swr": "^2.1.1",
     "@siafoundation/renterd-types": "0.14.1",
