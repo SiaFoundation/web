@@ -4,10 +4,10 @@ import { EmptyState } from './EmptyState'
 import { useCanUpload } from '../Files/useCanUpload'
 import { useFilesManager } from '../../contexts/filesManager'
 import { pluralize } from '@siafoundation/units'
+import { useUploadsManager } from '../../contexts/uploadsManager'
 
 export function FilesExplorer() {
   const {
-    uploadFiles,
     sortField,
     sortDirection,
     sortableColumns,
@@ -15,6 +15,7 @@ export function FilesExplorer() {
     isViewingBuckets,
     visibleColumns,
   } = useFilesManager()
+  const { uploadFiles } = useUploadsManager()
   const {
     datasetPage,
     datasetPageTotal,

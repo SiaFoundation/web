@@ -10,12 +10,14 @@ import { useFilesManager } from '../../contexts/filesManager'
 import { FilesViewDropdownMenu } from '../Files/FilesViewDropdownMenu'
 import { useDialog } from '../../contexts/dialog'
 import { useCanUpload } from '../Files/useCanUpload'
+import { useUploadsManager } from '../../contexts/uploadsManager'
 // esm compat
 const { useDropzone } = reactDropzone
 
 export function FilesActionsMenu() {
   const { openDialog } = useDialog()
-  const { uploadFiles, isViewingBuckets } = useFilesManager()
+  const { isViewingBuckets } = useFilesManager()
+  const { uploadFiles } = useUploadsManager()
 
   const canUpload = useCanUpload()
 

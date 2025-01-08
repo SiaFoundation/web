@@ -3,10 +3,11 @@ import { useObjectStats } from '@siafoundation/renterd-react'
 import { useFilesManager } from '../../../contexts/filesManager'
 import { useFilesDirectory } from '../../../contexts/filesDirectory'
 import { useFilesFlat } from '../../../contexts/filesFlat'
+import { useUploadsManager } from '../../../contexts/uploadsManager'
 
 export function FilesStatsMenuCount() {
-  const { isViewingABucket, uploadsList, activeExplorerMode } =
-    useFilesManager()
+  const { isViewingABucket, activeExplorerMode } = useFilesManager()
+  const { uploadsList } = useUploadsManager()
   const { datasetPageTotal: directoryPageTotal } = useFilesDirectory()
   const { datasetPageTotal: flatPageTotal } = useFilesFlat()
   const datasetPageTotal =

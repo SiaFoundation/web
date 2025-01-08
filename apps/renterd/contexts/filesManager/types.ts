@@ -1,7 +1,6 @@
 import { Bucket } from '@siafoundation/renterd-types'
 import { FullPath } from '../../lib/paths'
 import { MultiSelect, TableColumn } from '@siafoundation/design-system'
-import { MultipartUpload } from '../../lib/multipartUpload'
 import { MouseEvent } from 'react'
 
 export type ObjectType = 'bucket' | 'directory' | 'file'
@@ -81,17 +80,3 @@ export const sortOptions: { id: SortField; label: string; category: string }[] =
   ]
 
 export type ExplorerMode = 'directory' | 'flat'
-
-export type UploadStatus = 'queued' | 'uploading' | 'processing'
-
-export type ObjectUploadData = ObjectData & {
-  multipartId?: string
-  multipartUpload?: MultipartUpload
-  uploadStatus: UploadStatus
-  uploadAbort?: () => Promise<void>
-  uploadFile?: File
-  remote?: boolean
-  createdAt: string
-}
-
-export type UploadsMap = Record<string, ObjectUploadData>

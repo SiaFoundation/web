@@ -12,16 +12,17 @@ import { columnsDefaultVisible, defaultSortField, sortOptions } from './types'
 import { columns } from './columns'
 import { join, getFilename } from '../../lib/paths'
 import { useFilesManager } from '../filesManager'
-import { ObjectUploadData } from '../filesManager/types'
+import { ObjectUploadData } from '../uploadsManager/types'
 import { MultipartUploadListUploadsPayload } from '@siafoundation/renterd-types'
 import { maybeFromNullishArrayResponse } from '@siafoundation/react-core'
 import { Maybe, Nullable } from '@siafoundation/types'
-import { getUploadId } from '../filesManager/uploads'
+import { getUploadId, useUploadsManager } from '../uploadsManager'
 
 const defaultLimit = 50
 
 export function useRemoteUploads() {
-  const { uploadsMap, activeBucket } = useFilesManager()
+  const { activeBucket } = useFilesManager()
+  const { uploadsMap } = useUploadsManager()
   const { limit, marker } = usePaginationMarker(defaultLimit)
   const markers = useMarkersFromParam(marker)
 

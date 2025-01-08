@@ -1,3 +1,5 @@
+'use client'
+
 import { triggerErrorToast } from '@siafoundation/design-system'
 import {
   throttle,
@@ -14,7 +16,14 @@ import {
 } from '@siafoundation/renterd-react'
 import { Bucket, busObjectsRoute } from '@siafoundation/renterd-types'
 import { MiBToBytes, minutesInMilliseconds } from '@siafoundation/units'
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react'
 import { MultipartUpload } from '../../lib/multipartUpload'
 import {
   FullPath,
@@ -24,6 +33,7 @@ import {
 } from '../../lib/paths'
 import { ObjectUploadData, UploadsMap } from './types'
 import { useWarnActiveUploadsOnClose } from './useWarnActiveUploadsOnClose'
+import { useFilesManager } from '../filesManager'
 
 const maxConcurrentUploads = 5
 const maxConcurrentPartsPerUpload = 5
@@ -31,11 +41,8 @@ const getMultipartUploadPartSize = (minShards: number) =>
   MiBToBytes(4).times(minShards)
 const checkAndStartUploadsInterval = 500
 
-type Props = {
-  activeDirectoryPath: string
-}
-
-export function useUploads({ activeDirectoryPath }: Props) {
+function useUploadsManagerMain() {
+  const { activeDirectoryPath } = useFilesManager()
   const buckets = useBuckets()
   const mutate = useMutate()
   const workerUploadPart = useMultipartUploadPart()
@@ -346,6 +353,24 @@ export function useUploads({ activeDirectoryPath }: Props) {
     uploadsMap,
     uploadsList,
   }
+}
+
+export type UploadsManagerState = ReturnType<typeof useUploadsManagerMain>
+
+const UploadsManagerContext = createContext({} as UploadsManagerState)
+export const useUploadsManager = () => useContext(UploadsManagerContext)
+
+type Props = {
+  children: React.ReactNode
+}
+
+export function UploadsManagerProvider({ children }: Props) {
+  const state = useUploadsManagerMain()
+  return (
+    <UploadsManagerContext.Provider value={state}>
+      {children}
+    </UploadsManagerContext.Provider>
+  )
 }
 
 export function getUploadId(path: FullPath) {

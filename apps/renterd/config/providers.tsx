@@ -11,6 +11,7 @@ import { FilesManagerProvider } from '../contexts/filesManager'
 import { FilesDirectoryProvider } from '../contexts/filesDirectory'
 import { UploadsProvider } from '../contexts/uploads'
 import { AlertsProvider } from '../contexts/alerts'
+import { UploadsManagerProvider } from '../contexts/uploadsManager'
 
 type Props = {
   children: React.ReactNode
@@ -25,20 +26,22 @@ export function Providers({ children }: Props) {
             <ContractsProvider>
               <HostsProvider>
                 <FilesManagerProvider>
-                  <UploadsProvider>
-                    <FilesDirectoryProvider>
-                      <FilesFlatProvider>
-                        <KeysProvider>
-                          <AlertsProvider>
-                            {/* this is here so that dialogs can use all the other providers,
+                  <UploadsManagerProvider>
+                    <UploadsProvider>
+                      <FilesDirectoryProvider>
+                        <FilesFlatProvider>
+                          <KeysProvider>
+                            <AlertsProvider>
+                              {/* this is here so that dialogs can use all the other providers,
                   and the other providers can trigger dialogs */}
-                            <Dialogs />
-                            {children}
-                          </AlertsProvider>
-                        </KeysProvider>
-                      </FilesFlatProvider>
-                    </FilesDirectoryProvider>
-                  </UploadsProvider>
+                              <Dialogs />
+                              {children}
+                            </AlertsProvider>
+                          </KeysProvider>
+                        </FilesFlatProvider>
+                      </FilesDirectoryProvider>
+                    </UploadsProvider>
+                  </UploadsManagerProvider>
                 </FilesManagerProvider>
               </HostsProvider>
             </ContractsProvider>
