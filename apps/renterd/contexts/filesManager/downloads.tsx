@@ -11,6 +11,7 @@ import {
   getKeyFromPath,
 } from '../../lib/paths'
 import { ObjectData } from './types'
+import { workerObjectKeyRoute } from '@siafoundation/renterd-types'
 
 type DownloadProgress = ObjectData & {
   controller: AbortController
@@ -167,7 +168,10 @@ export function useDownloads() {
   const getFileUrl = useCallback(
     (path: FullPath, authenticated: boolean) => {
       const { bucket, key } = bucketAndKeyParamsFromPath(path)
-      const workerPath = `/worker/objects/${key}?bucket=${bucket}`
+      const workerPath = `${workerObjectKeyRoute.replace(
+        ':key',
+        key
+      )}?bucket=${bucket}`
       // Parse settings.api if its set otherwise URL
       const origin = settings.api || location.origin
       const scheme = origin.startsWith('https') ? 'https' : 'http'
