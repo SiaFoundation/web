@@ -13,6 +13,7 @@ import {
 import { useFilesManager } from '.'
 import { useEffect } from 'react'
 import { Maybe } from '@siafoundation/types'
+import { useUploadsManager } from '../uploadsManager'
 
 type Props = {
   id: string
@@ -27,13 +28,13 @@ export function useDataset({ id, objects }: Props) {
     activeBucket,
     activeBucketName,
     fileNamePrefixFilter,
-    uploadsList,
     sortDirection,
     sortField,
     activeDirectoryPath,
     buckets,
     setActiveDirectory,
   } = useFilesManager()
+  const { uploadsList } = useUploadsManager()
   const { dataset: allContracts } = useContracts()
   const response = useSWR<Maybe<ObjectData[]>>(
     objects.isValidating || buckets.isValidating

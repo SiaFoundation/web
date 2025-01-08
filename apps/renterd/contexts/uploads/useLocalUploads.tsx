@@ -6,14 +6,14 @@ import {
 import { useMemo } from 'react'
 import { columnsDefaultVisible, defaultSortField, sortOptions } from './types'
 import { columns } from './columns'
-import { useFilesManager } from '../filesManager'
-import { ObjectUploadData } from '../filesManager/types'
+import { ObjectUploadData } from '../uploadsManager/types'
 import { Maybe } from '@siafoundation/types'
+import { useUploadsManager } from '../uploadsManager'
 
 const defaultLimit = 50
 
 export function useLocalUploads() {
-  const { uploadsList } = useFilesManager()
+  const { uploadsList } = useUploadsManager()
   const { limit, offset } = usePaginationOffset(defaultLimit)
 
   const datasetPage = useMemo<Maybe<ObjectUploadData[]>>(() => {

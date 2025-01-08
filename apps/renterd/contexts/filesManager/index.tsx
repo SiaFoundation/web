@@ -18,7 +18,6 @@ import {
   getKeyFromPath,
   pathSegmentsToPath,
 } from '../../lib/paths'
-import { useUploads } from './uploads'
 import { useBuckets } from '@siafoundation/renterd-react'
 import { routes } from '../../config/routes'
 import useLocalStorageState from 'use-local-storage-state'
@@ -92,10 +91,6 @@ function useFilesManagerMain() {
     },
     [router, activeDirectory]
   )
-
-  const { uploadFiles, uploadsMap, uploadsList } = useUploads({
-    activeDirectoryPath,
-  })
 
   const isViewingBuckets = activeDirectory.length === 0
   const isViewingRootOfABucket = activeDirectory.length === 1
@@ -220,9 +215,6 @@ function useFilesManagerMain() {
     setActiveDirectoryAndFileNamePrefix,
     activeDirectoryPath,
     navigateToModeSpecificFiltering,
-    uploadFiles,
-    uploadsMap,
-    uploadsList,
     configurableColumns,
     visibleColumnIds,
     visibleColumns,
