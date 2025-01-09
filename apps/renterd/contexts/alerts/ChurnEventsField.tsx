@@ -12,6 +12,8 @@ import { useMemo } from 'react'
 import { Add16, Subtract16 } from '@siafoundation/react-icons'
 import { cx } from 'class-variance-authority'
 import { AlertChurnEvent } from '@siafoundation/renterd-types'
+import { useContracts } from '../contracts'
+import BigNumber from 'bignumber.js'
 
 type Change = {
   contractId: string
@@ -26,6 +28,7 @@ export function ChurnEventsField({
 }: {
   data: Record<string, AlertChurnEvent[]>
 }) {
+  const { contractSizeTotal } = useContracts()
   const churnEvents = useMemo(() => {
     return objectEntries(data)
       .map(([contractId, events]) => {
@@ -45,11 +48,6 @@ export function ChurnEventsField({
       })
   }, [data])
 
-  // calculate churn %: contracts bad size / total size
-  const totalSize = useMemo(
-    () => churnEvents.reduce((acc, { events }) => acc + events[0].size, 0),
-    [churnEvents]
-  )
   const bads = useMemo(
     () => churnEvents.filter(({ events }) => events[0].to === 'bad'),
     [churnEvents]
@@ -59,12 +57,18 @@ export function ChurnEventsField({
     [churnEvents]
   )
   const badSize = useMemo(
-    () => bads.reduce((acc, { events }) => acc + events[0].size, 0),
+    () =>
+      bads.reduce(
+        (acc, { events }) => acc.plus(events[0].size),
+        new BigNumber(0)
+      ),
     [bads]
   )
+  // Calculate churn %: contracts bad size / total size.
   const churn = useMemo(
-    () => (totalSize > 0 ? (badSize / totalSize) * 100 : 0),
-    [badSize, totalSize]
+    () =>
+      contractSizeTotal?.gt(0) ? badSize.div(contractSizeTotal).times(100) : 0,
+    [badSize, contractSizeTotal]
   )
 
   return (
@@ -76,7 +80,7 @@ export function ChurnEventsField({
         <div className="flex-1" />
         <Tooltip
           content={`${humanBytes(badSize)} of ${humanBytes(
-            totalSize
+            contractSizeTotal
           )} contract size removed`}
         >
           <div className="flex gap-1 items-center">
@@ -84,7 +88,7 @@ export function ChurnEventsField({
               churn: {churn.toFixed(2)}%
             </Text>
             <Text size="12" color="subtle" ellipsis>
-              ({humanBytes(badSize)} / {humanBytes(totalSize)})
+              ({humanBytes(badSize)} / {humanBytes(contractSizeTotal)})
             </Text>
           </div>
         </Tooltip>

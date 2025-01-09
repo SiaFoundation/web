@@ -1,9 +1,15 @@
 import { Page, test, expect } from '@playwright/test'
 import { navigateToAlerts } from '../fixtures/navigate'
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
-import { AlertsResponse, busAlertsRoute } from '@siafoundation/renterd-types'
+import {
+  AlertsResponse,
+  busAlertsRoute,
+  busContractsRoute,
+  ContractsResponse,
+} from '@siafoundation/renterd-types'
 
 test.beforeEach(async ({ page }) => {
+  await mockApiBusContracts(page)
   await mockApiBusAlerts(page)
   await beforeTest(page)
 })
@@ -17,7 +23,7 @@ test('alert data', async ({ page }) => {
 
   // Churn alert
   const churnData = page.getByTestId('churn')
-  await expect(churnData.getByText('churn: 99.90%')).toBeVisible()
+  await expect(churnData.getByText('churn: 37.54%')).toBeVisible()
   const churnDataContractB6 = churnData.getByTestId(
     'b6f32dc39998bd85d730d39666360225af12fbad3bc18de4df50ce09073c9393'
   )
@@ -35,6 +41,141 @@ test('alert data', async ({ page }) => {
   const objectsData = page.getByTestId('objects')
   await expect(objectsData.getByText('bucket1/nest2/file3.png')).toBeVisible()
 })
+
+async function mockApiBusContracts(page: Page) {
+  const json: ContractsResponse = [
+    {
+      id: 'b6f32dc39998bd85d730d39666360225af12fbad3bc18de4df50ce09073c9393',
+      hostKey: 'hk',
+      usability: 'bad',
+      proofHeight: 100,
+      revisionHeight: 100,
+      revisionNumber: 1,
+      startHeight: 100,
+      windowStart: 200,
+      windowEnd: 300,
+      renewedFrom: '',
+      spending: {
+        deletions: '0',
+        fundAccount: '0',
+        sectorRoots: '0',
+        uploads: '0',
+      },
+      initialRenterFunds: '2000',
+      size: 30000000,
+      state: 'active',
+    },
+    {
+      id: '26cd68ac42d4056f1494aef012bf9da4f753ba15e2831722eebf30a78243d534',
+      hostKey: 'hk',
+      usability: 'good',
+      proofHeight: 100,
+      revisionHeight: 100,
+      revisionNumber: 1,
+      startHeight: 100,
+      windowStart: 200,
+      windowEnd: 300,
+      renewedFrom: '',
+      spending: {
+        deletions: '0',
+        fundAccount: '0',
+        sectorRoots: '0',
+        uploads: '0',
+      },
+      initialRenterFunds: '2000',
+      size: 30000,
+      state: 'active',
+    },
+    {
+      id: '437b0c09f6167790fefc21000c4a4a81de109729151414526562721ee7802ac6',
+      hostKey: 'hk',
+      usability: 'bad',
+      proofHeight: 100,
+      revisionHeight: 100,
+      revisionNumber: 1,
+      startHeight: 100,
+      windowStart: 200,
+      windowEnd: 300,
+      renewedFrom: '',
+      spending: {
+        deletions: '0',
+        fundAccount: '0',
+        sectorRoots: '0',
+        uploads: '0',
+      },
+      initialRenterFunds: '2000',
+      size: 4000,
+      state: 'active',
+    },
+    {
+      id: '89dfc5594909fd468729b59096b26c886b25106e5479ceb1a28276420cb32fd3',
+      hostKey: 'hk',
+      usability: 'bad',
+      proofHeight: 100,
+      revisionHeight: 100,
+      revisionNumber: 1,
+      startHeight: 100,
+      windowStart: 200,
+      windowEnd: 300,
+      renewedFrom: '',
+      spending: {
+        deletions: '0',
+        fundAccount: '0',
+        sectorRoots: '0',
+        uploads: '0',
+      },
+      initialRenterFunds: '2000',
+      size: 10000,
+      state: 'active',
+    },
+    {
+      id: 'f0bbb8b6a1a6219beb510f0c4008bba9ed5687b5e617d10efce206022248ed59',
+      hostKey: 'hk',
+      usability: 'bad',
+      proofHeight: 100,
+      revisionHeight: 100,
+      revisionNumber: 1,
+      startHeight: 100,
+      windowStart: 200,
+      windowEnd: 300,
+      renewedFrom: '',
+      spending: {
+        deletions: '0',
+        fundAccount: '0',
+        sectorRoots: '0',
+        uploads: '0',
+      },
+      initialRenterFunds: '2000',
+      size: 50000,
+      state: 'active',
+    },
+    {
+      id: 'c7f32dc39998bd85d730d39666360225af12fbad3bc18de4df50ce09073c9666',
+      hostKey: 'hk',
+      usability: 'good',
+      proofHeight: 100,
+      revisionHeight: 100,
+      revisionNumber: 1,
+      startHeight: 100,
+      windowStart: 200,
+      windowEnd: 300,
+      renewedFrom: '',
+      spending: {
+        deletions: '0',
+        fundAccount: '0',
+        sectorRoots: '0',
+        uploads: '0',
+      },
+      initialRenterFunds: '2000',
+      size: 50000000,
+      state: 'active',
+    },
+  ]
+  await page.route(`**/api${busContractsRoute}*`, async (route) => {
+    await route.fulfill({ json })
+  })
+  return json
+}
 
 async function mockApiBusAlerts(page: Page) {
   const json: AlertsResponse = {
