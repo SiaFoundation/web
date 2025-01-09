@@ -27,6 +27,7 @@ import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { useDataset } from './dataset'
 import { useFilteredStats } from './useFilteredStats'
 import { daysInMilliseconds } from '@siafoundation/units'
+import BigNumber from 'bignumber.js'
 
 const defaultLimit = 50
 
@@ -164,6 +165,13 @@ function useContractsMain() {
       disabled: !selectedContract,
     })
 
+  const contractSizeTotal = useMemo(
+    () =>
+      dataset?.reduce((acc, { size }) => acc.plus(size), new BigNumber(0)) ??
+      new BigNumber(0),
+    [dataset]
+  )
+
   return {
     datasetState,
     limit,
@@ -206,6 +214,7 @@ function useContractsMain() {
     fetchPrunableSize,
     fetchPrunableSizeAll,
     multiSelect,
+    contractSizeTotal,
   }
 }
 
