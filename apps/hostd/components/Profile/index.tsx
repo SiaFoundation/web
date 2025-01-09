@@ -112,6 +112,7 @@ export function Profile() {
             maxLength={24}
             value={wallet.data?.address}
             type="address"
+            siascanUrl={siascanUrl}
           />
         </div>
       </div>

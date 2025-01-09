@@ -47,7 +47,6 @@ export function getEntityDisplayLength(type?: EntityType): number {
 
 export function doesEntityHaveSiascanUrl(type?: EntityType) {
   const includeList: EntityType[] = [
-    'hostIp',
     'hostPublicKey',
     'contract',
     'address',
