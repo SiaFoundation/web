@@ -7,6 +7,7 @@ import {
   Separator,
   TableColumn,
   Text,
+  ExpandableText,
 } from '@siafoundation/design-system'
 import { AlertData, TableColumnId } from './types'
 import { dataFields } from './data'
@@ -69,9 +70,11 @@ export const columns: AlertsTableColumn[] = [
             </Text>
           ) : null}
           {data['error'] ? (
-            <Text size="12" color="subtle">
-              {data['error'] as string}
-            </Text>
+            <ExpandableText
+              text={data['error'] as string}
+              size="12"
+              color="subtle"
+            />
           ) : null}
         </div>
       )
