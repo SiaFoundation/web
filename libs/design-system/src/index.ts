@@ -45,6 +45,7 @@ export * from './core/Switch'
 export * from './core/HoverCard'
 export * from './core/SelectCard'
 export * from './core/NavMenu'
+export * from './core/ExpandableText'
 
 // components
 export * from './components/UserDropdownMenu'

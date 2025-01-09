@@ -18,10 +18,10 @@ test.afterEach(async () => {
   await afterTest()
 })
 
-test('alert data', async ({ page }) => {
+test('churn alert and slab migration alert', async ({ page }) => {
   await navigateToAlerts({ page })
 
-  // Churn alert
+  // Churn alert.
   const churnData = page.getByTestId('churn')
   await expect(churnData.getByText('churn: 37.54%')).toBeVisible()
   const churnDataContractB6 = churnData.getByTestId(
@@ -37,7 +37,7 @@ test('alert data', async ({ page }) => {
   await expect(churnDataContractB6.getByText('30.00 KB')).toBeVisible()
   await expect(churnDataContractB6.getByText('30 B')).toBeVisible()
 
-  // Slab migration failed alert
+  // Slab migration failed alert.
   const objectsData = page.getByTestId('objects')
   await expect(objectsData.getByText('bucket1/nest2/file3.png')).toBeVisible()
 })
