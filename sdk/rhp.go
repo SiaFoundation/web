@@ -4,7 +4,7 @@ import (
 	"encoding/hex"
 	"syscall/js"
 
-	"go.sia.tech/core/rhp/v4"
+	proto4 "go.sia.tech/core/rhp/v4"
 )
 
 func generateAccount(this js.Value, args []js.Value) result {
@@ -12,7 +12,7 @@ func generateAccount(this js.Value, args []js.Value) result {
 		return resultErr(err)
 	}
 
-	pk, a := rhp.GenerateAccount()
+	pk, a := proto4.GenerateAccount()
 
 	privateKey := hex.EncodeToString(pk)
 	account := hex.EncodeToString(a[:])
@@ -29,15 +29,15 @@ func encodeSettingsRequest(this js.Value, args []js.Value) result {
 	if err := checkArgs(args); err != nil {
 		return resultErr(err)
 	}
-	var r rhp.RPCSettingsRequest
-	return encodeRPCRequest(js.Undefined(), &r)
+	var r proto4.RPCSettingsRequest
+	return encodeRPCRequest(proto4.RPCSettingsID, js.Undefined(), &r)
 }
 
 func decodeSettingsRequest(this js.Value, args []js.Value) result {
 	if err := checkArgs(args, js.TypeObject); err != nil {
 		return resultErr(err)
 	}
-	var r rhp.RPCSettingsRequest
+	var r proto4.RPCSettingsRequest
 	return decodeRPCRequest(args[0], &r)
 }
 
@@ -45,7 +45,7 @@ func encodeSettingsResponse(this js.Value, args []js.Value) result {
 	if err := checkArgs(args, js.TypeObject); err != nil {
 		return resultErr(err)
 	}
-	var r rhp.RPCSettingsResponse
+	var r proto4.RPCSettingsResponse
 	return encodeRPCResponse(args[0], &r)
 }
 
@@ -53,7 +53,7 @@ func decodeSettingsResponse(this js.Value, args []js.Value) result {
 	if err := checkArgs(args, js.TypeObject); err != nil {
 		return resultErr(err)
 	}
-	var r rhp.RPCSettingsResponse
+	var r proto4.RPCSettingsResponse
 	return decodeRPCResponse(args[0], &r)
 }
 
@@ -64,15 +64,15 @@ func encodeReadSectorRequest(this js.Value, args []js.Value) result {
 		return resultErr(err)
 	}
 
-	var r rhp.RPCReadSectorRequest
-	return encodeRPCRequest(args[0], &r)
+	var r proto4.RPCReadSectorRequest
+	return encodeRPCRequest(proto4.RPCReadSectorID, args[0], &r)
 }
 
 func decodeReadSectorRequest(this js.Value, args []js.Value) result {
 	if err := checkArgs(args, js.TypeObject); err != nil {
 		return resultErr(err)
 	}
-	var r rhp.RPCReadSectorRequest
+	var r proto4.RPCReadSectorRequest
 	return decodeRPCRequest(args[0], &r)
 }
 
@@ -80,7 +80,7 @@ func encodeReadSectorResponse(this js.Value, args []js.Value) result {
 	if err := checkArgs(args, js.TypeObject); err != nil {
 		return resultErr(err)
 	}
-	var r rhp.RPCReadSectorResponse
+	var r proto4.RPCReadSectorResponse
 	return encodeRPCResponse(args[0], &r)
 }
 
@@ -88,7 +88,7 @@ func decodeReadSectorResponse(this js.Value, args []js.Value) result {
 	if err := checkArgs(args, js.TypeObject); err != nil {
 		return resultErr(err)
 	}
-	var r rhp.RPCReadSectorResponse
+	var r proto4.RPCReadSectorResponse
 	return decodeRPCResponse(args[0], &r)
 }
 
@@ -98,15 +98,15 @@ func encodeWriteSectorRequest(this js.Value, args []js.Value) result {
 	if err := checkArgs(args, js.TypeObject); err != nil {
 		return resultErr(err)
 	}
-	var r rhp.RPCWriteSectorRequest
-	return encodeRPCRequest(args[0], &r)
+	var r proto4.RPCWriteSectorRequest
+	return encodeRPCRequest(proto4.RPCWriteSectorID, args[0], &r)
 }
 
 func decodeWriteSectorRequest(this js.Value, args []js.Value) result {
 	if err := checkArgs(args, js.TypeObject); err != nil {
 		return resultErr(err)
 	}
-	var r rhp.RPCWriteSectorRequest
+	var r proto4.RPCWriteSectorRequest
 	return decodeRPCRequest(args[0], &r)
 }
 
@@ -115,7 +115,7 @@ func encodeWriteSectorResponse(this js.Value, args []js.Value) result {
 		return resultErr(err)
 	}
 
-	var r rhp.RPCWriteSectorResponse
+	var r proto4.RPCWriteSectorResponse
 	return encodeRPCResponse(args[0], &r)
 }
 
@@ -123,6 +123,6 @@ func decodeWriteSectorResponse(this js.Value, args []js.Value) result {
 	if err := checkArgs(args, js.TypeObject); err != nil {
 		return resultErr(err)
 	}
-	var r rhp.RPCWriteSectorResponse
+	var r proto4.RPCWriteSectorResponse
 	return decodeRPCResponse(args[0], &r)
 }
