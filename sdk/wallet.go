@@ -13,6 +13,7 @@ import (
 	"go.sia.tech/coreutils/wallet"
 )
 
+// encodeToBytes encodes a value to bytes.
 func encodeToBytes(v types.EncoderTo) []byte {
 	var buf bytes.Buffer
 	e := types.NewEncoder(&buf)
@@ -21,7 +22,7 @@ func encodeToBytes(v types.EncoderTo) []byte {
 	return buf.Bytes()
 }
 
-// GenerateSeedPhrase returns a new seed phrase.
+// generateSeedPhrase returns a new seed phrase.
 func generateSeedPhrase(this js.Value, args []js.Value) result {
 	if err := checkArgs(args); err != nil {
 		return resultErr(err)
@@ -32,7 +33,7 @@ func generateSeedPhrase(this js.Value, args []js.Value) result {
 	})
 }
 
-// GenerateKeyPair returns a new ed25519 key pair.
+// generateKeyPair returns a new ed25519 key pair.
 func generateKeyPair(this js.Value, args []js.Value) result {
 	if err := checkArgs(args); err != nil {
 		return resultErr(err)
@@ -45,7 +46,7 @@ func generateKeyPair(this js.Value, args []js.Value) result {
 	})
 }
 
-// KeyPairFromSeedPhrase returns the key pair corresponding to the given seed phrase and index.
+// keyPairFromSeedPhrase returns the key pair corresponding to the given seed phrase and index.
 func keyPairFromSeedPhrase(this js.Value, args []js.Value) result {
 	if err := checkArgs(args, js.TypeString, js.TypeNumber); err != nil {
 		return resultErr(err)
@@ -62,7 +63,7 @@ func keyPairFromSeedPhrase(this js.Value, args []js.Value) result {
 	})
 }
 
-// StandardUnlockConditions returns the unlock conditions for a standard v1 unlockhash.
+// standardUnlockConditions returns the unlock conditions for a standard v1 unlockhash.
 func standardUnlockConditions(this js.Value, args []js.Value) result {
 	if err := checkArgs(args, js.TypeString); err != nil {
 		return resultErr(err)
@@ -82,7 +83,7 @@ func standardUnlockConditions(this js.Value, args []js.Value) result {
 	})
 }
 
-// StandardUnlockHash returns the v1 unlockhash corresponding to the given public key.
+// standardUnlockHash returns the v1 unlockhash corresponding to the given public key.
 func standardUnlockHash(this js.Value, args []js.Value) result {
 	if err := checkArgs(args, js.TypeString); err != nil {
 		return resultErr(err)
@@ -97,7 +98,7 @@ func standardUnlockHash(this js.Value, args []js.Value) result {
 	})
 }
 
-// AddressFromUnlockConditions returns the address corresponding to the given unlock conditions.
+// addressFromUnlockConditions returns the address corresponding to the given unlock conditions.
 func addressFromUnlockConditions(this js.Value, args []js.Value) result {
 	if err := checkArgs(args, js.TypeObject); err != nil {
 		return resultErr(err)
@@ -113,7 +114,7 @@ func addressFromUnlockConditions(this js.Value, args []js.Value) result {
 	})
 }
 
-// AddressFromSpendPolicy returns the address of a spend policy.
+// addressFromSpendPolicy returns the address of a spend policy.
 func addressFromSpendPolicy(this js.Value, args []js.Value) result {
 	if err := checkArgs(args, js.TypeString); err != nil {
 		return resultErr(err)
@@ -129,7 +130,7 @@ func addressFromSpendPolicy(this js.Value, args []js.Value) result {
 	})
 }
 
-// EncodeTransaction returns the binary encoding of a transaction.
+// encodeTransaction returns the binary encoding of a transaction.
 func encodeTransaction(this js.Value, args []js.Value) result {
 	if err := checkArgs(args, js.TypeObject); err != nil {
 		return resultErr(err)
@@ -146,7 +147,7 @@ func encodeTransaction(this js.Value, args []js.Value) result {
 	})
 }
 
-// SignTransaction returns the signature of a transaction.
+// signTransactionV1 returns the signature of a transaction.
 func signTransactionV1(this js.Value, args []js.Value) result {
 	if err := checkArgs(args, js.TypeObject, js.TypeObject, js.TypeObject, js.TypeNumber, js.TypeString); err != nil {
 		return resultErr(err)
@@ -201,6 +202,74 @@ func transactionID(this js.Value, args []js.Value) result {
 	}
 
 	var txn types.Transaction
+	if err := unmarshalStruct(args[0], &txn); err != nil {
+		return resultErrStr(fmt.Sprintf("error decoding transaction: %s", err))
+	}
+
+	return result(map[string]any{
+		"id": txn.ID().String(),
+	})
+}
+
+// v2TransactionInputSigHash returns the input sighash of a v2 transaction.
+func v2TransactionInputSigHash(_ js.Value, args []js.Value) result {
+	if err := checkArgs(args, js.TypeObject, js.TypeObject, js.TypeObject, js.TypeNumber, js.TypeString); err != nil {
+		return resultErr(err)
+	}
+
+	var cs consensus.State
+	if err := unmarshalStruct(args[0], &cs); err != nil {
+		return resultErrStr(fmt.Sprintf("error decoding consensus state: %s", err))
+	}
+
+	var cn consensus.Network
+	if err := unmarshalStruct(args[1], &cn); err != nil {
+		return resultErrStr(fmt.Sprintf("error decoding consensus network: %s", err))
+	}
+
+	var txn types.V2Transaction
+	if err := unmarshalStruct(args[2], &txn); err != nil {
+		return resultErrStr(fmt.Sprintf("error decoding transaction: %s", err))
+	}
+	cs.Network = &cn
+
+	return result(map[string]any{
+		"sighash": cs.InputSigHash(txn).String(),
+	})
+}
+
+// signHash returns the signature for a sig hash.
+func signHash(_ js.Value, args []js.Value) result {
+	if err := checkArgs(args, js.TypeString, js.TypeString); err != nil {
+		return resultErr(err)
+	}
+
+	buf, err := hex.DecodeString(args[0].String())
+	if err != nil {
+		return resultErrStr(fmt.Sprintf("error decoding private key: %s", err))
+	} else if len(buf) != ed25519.PrivateKeySize {
+		return resultErrStr(fmt.Sprintf("invalid private key length: %d", len(buf)))
+	}
+	privateKey := types.PrivateKey(buf)
+
+	var sigHash types.Hash256
+	if err := sigHash.UnmarshalText([]byte(args[1].String())); err != nil {
+		return resultErrStr(fmt.Sprintf("error decoding sig hash: %s", err))
+	}
+
+	sig := privateKey.SignHash(sigHash)
+	return result(map[string]any{
+		"signature": sig.String(),
+	})
+}
+
+// v2TransactionID returns the ID of a transaction.
+func v2TransactionID(_ js.Value, args []js.Value) result {
+	if err := checkArgs(args, js.TypeObject); err != nil {
+		return resultErr(err)
+	}
+
+	var txn types.V2Transaction
 	if err := unmarshalStruct(args[0], &txn); err != nil {
 		return resultErrStr(fmt.Sprintf("error decoding transaction: %s", err))
 	}

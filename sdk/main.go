@@ -35,6 +35,8 @@ func main() {
 			"encodeTransaction":           jsFunc(encodeTransaction),
 			"transactionId":               jsFunc(transactionID),
 			"signTransactionV1":           jsFunc(signTransactionV1),
+			"v2TransactionInputSigHash":   jsFunc(v2TransactionInputSigHash),
+			"signHash":                    jsFunc(signHash),
 		},
 	})
 	c := make(chan bool, 1)
