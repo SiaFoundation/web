@@ -57,8 +57,7 @@ export function AlertsDialog({
       alerts.data?.filter((a) => (filter ? a.severity === filter : true)) || [],
     [alerts.data, filter]
   )
-
-  // Sort keys by dataFieldOrder, then alphabetically
+  // Sort keys by dataFieldOrder, then alphabetically.
   const getOrderedKeys = useCallback(
     (obj: Record<string, unknown>) => {
       const orderedKeys = Object.keys(obj).sort((a, b) => {
@@ -164,7 +163,7 @@ export function AlertsDialog({
           </div>
         )}
         {loadingState === 'loading' && <EntityListSkeleton />}
-        {!loadingState && (
+        {loadingState === 'loaded' && (
           <div className="flex flex-col">
             {dataset.length ? (
               dataset.map((a) => (
