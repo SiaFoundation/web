@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { navigateToVolumes } from '../fixtures/navigate'
+import { navigateToVolumes, openAlertsDialog } from '../fixtures/navigate'
 import {
   createVolume,
   deleteVolume,
@@ -31,6 +31,9 @@ test('can create and delete a volume', async ({ page }) => {
   const name = 'my-new-volume'
   await navigateToVolumes({ page })
   await createVolume(page, name, dirPath)
+  const dialog = await openAlertsDialog(page)
+  await expect(dialog.getByText('Volume initialized')).toBeVisible()
+  await dialog.getByLabel('close').click()
   await deleteVolume(page, name, dirPath)
 })
 
