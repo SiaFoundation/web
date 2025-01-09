@@ -44,9 +44,9 @@ test('address can navigate through to a transaction', async ({ page }) => {
 
   await page
     .locator(
-      'a[data-testid="entity-link"][href*="23e427949a6360014602cff7cfa9aa0c3b87765b94c6b37accfb661d3365336a"]'
+      'a[data-testid="entity-link"][href*="c0b92135ca061b5e1c540606db33708d330d97ee3cdbebe5494f69ec026f7f7f"]'
     )
     .click()
 
-  await expect(page.getByText('Transaction 23e427949a63600...')).toBeVisible()
+  await expect(page.getByText('Transaction c0b92135ca061b5...')).toBeVisible()
 })
