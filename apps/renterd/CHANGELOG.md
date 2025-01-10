@@ -1,5 +1,16 @@
 # renterd
 
+## 0.73.0
+
+### Minor Changes
+
+- 7f6c64a9: Alerts with large errors are now collapsed by default and have a control to expand and collapse the full contents.
+
+### Patch Changes
+
+- 56630e16: The copyable file download URLs in the file context menu have been updated to match the new API.
+- e1a49ed0: Fixed an issue with the contract churn alert's overall churn percentage.
+
 ## 0.72.0
 
 ### Minor Changes
