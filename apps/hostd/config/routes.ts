@@ -26,6 +26,9 @@ export const routes = {
     peers: '/node/peers',
   },
   login: '/login',
-}
+  alerts: {
+    index: '/alerts',
+  },
+} as const
 
 export const connectivityRoute = hostStateRoute

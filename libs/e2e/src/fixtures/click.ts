@@ -26,6 +26,45 @@ export const clickAndWait = step(
   }
 )
 
+export const continueToClickUntil = step(
+  'continue to click until',
+  async (clickLocator: Locator, waitForLocator: Locator, timeout = 5000) => {
+    const startTime = Date.now()
+    let clickCount = 0
+    while (Date.now() - startTime < timeout) {
+      // Check if the target locator is already visible.
+      const isTargetVisible = await waitForLocator
+        .isVisible({ timeout: 100 })
+        .catch(() => false)
+      if (isTargetVisible) {
+        console.log('Target is visible, breaking...')
+        break
+      }
+
+      // Check if the click locator still exists.
+      const isClickable = await clickLocator
+        .isVisible({ timeout: 100 })
+        .catch(() => false)
+      if (!isClickable) {
+        console.log('Click locator is not visible, breaking...')
+        continue
+      }
+
+      clickCount++
+      try {
+        console.log(`Attempting a click (${clickCount})...`)
+        await clickLocator.click({ timeout: 100 })
+      } catch (e) {
+        console.log('Click failed, breaking...')
+        break
+      }
+
+      // Small delay to prevent too rapid clicking.
+      await new Promise((resolve) => setTimeout(resolve, 500))
+    }
+  }
+)
+
 export const clickIf = step(
   'click if',
   async (locator: Locator, clickIf: 'isVisible' | 'isDisabled') => {

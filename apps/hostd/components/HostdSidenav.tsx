@@ -9,10 +9,8 @@ import {
 import { useAlerts } from '@siafoundation/hostd-react'
 import { cx } from 'class-variance-authority'
 import { routes } from '../config/routes'
-import { useDialog } from '../contexts/dialog'
 
 export function HostdSidenav() {
-  const { openDialog } = useDialog()
   const alerts = useAlerts()
 
   const onlyInfoAlerts = !alerts.data?.find((a) => a.severity !== 'info')
@@ -56,7 +54,7 @@ export function HostdSidenav() {
             {alertCount.toLocaleString()}
           </Text>
         )}
-        <SidenavItem title="Alerts" onClick={() => openDialog('alerts')}>
+        <SidenavItem title="Alerts" route={routes.alerts.index}>
           <BellIcon />
         </SidenavItem>
       </div>

@@ -45,12 +45,10 @@ export const navigateToContracts = step(
   }
 )
 
-export const openAlertsDialog = step(
-  'open alerts dialog',
+export const navigateToAlerts = step(
+  'navigate to alerts',
   async (page: Page) => {
     await page.getByTestId('sidenav').getByLabel('Alerts').click()
-    const dialog = page.getByRole('dialog')
-    await expect(dialog.getByText('Alerts')).toBeVisible()
-    return dialog
+    await expect(page.getByTestId('navbar').getByText('Alerts')).toBeVisible()
   }
 )

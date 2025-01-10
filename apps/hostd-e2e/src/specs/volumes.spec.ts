@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { navigateToVolumes, openAlertsDialog } from '../fixtures/navigate'
+import { navigateToVolumes, navigateToAlerts } from '../fixtures/navigate'
 import {
   createVolume,
   deleteVolume,
@@ -13,6 +13,7 @@ import fs from 'fs'
 import os from 'os'
 import { fillTextInputByName } from '@siafoundation/e2e'
 import path from 'path'
+import { getAlertRows } from '../fixtures/alerts'
 
 let dirPath = '/'
 
@@ -24,16 +25,20 @@ test.beforeEach(async ({ page }) => {
 
 test.afterEach(async () => {
   await afterTest()
-  fs.rmSync(dirPath, { recursive: true })
+  try {
+    fs.rmSync(dirPath, { recursive: true })
+  } catch (e) {
+    console.error(e)
+  }
 })
 
 test('can create and delete a volume', async ({ page }) => {
   const name = 'my-new-volume'
   await navigateToVolumes({ page })
   await createVolume(page, name, dirPath)
-  const dialog = await openAlertsDialog(page)
-  await expect(dialog.getByText('Volume initialized')).toBeVisible()
-  await dialog.getByLabel('close').click()
+  await navigateToAlerts(page)
+  await expect(getAlertRows(page).getByText('Volume initialized')).toBeVisible()
+  await navigateToVolumes({ page })
   await deleteVolume(page, name, dirPath)
 })
 
