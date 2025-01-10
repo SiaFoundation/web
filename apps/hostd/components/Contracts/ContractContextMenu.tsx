@@ -14,8 +14,8 @@ import {
 import { CaretDown16, DataCheck16 } from '@siafoundation/react-icons'
 import { ContractStatus } from '@siafoundation/hostd-types'
 import { useContractsIntegrityCheck } from '@siafoundation/hostd-react'
-import { useDialog } from '../../contexts/dialog'
 import { useCallback } from 'react'
+import { routes } from '../../config/routes'
 
 type Props = {
   id: string
@@ -31,7 +31,6 @@ export function ContractContextMenu({
   buttonProps,
 }: Props) {
   const integrityCheck = useContractsIntegrityCheck()
-  const { openDialog } = useDialog()
   const runIntegrityCheck = useCallback(async () => {
     const response = await integrityCheck.put({
       params: {
@@ -50,8 +49,7 @@ export function ContractContextMenu({
           <>
             Depending on contract data size this operation can take a while.
             Check <Code>hostd</Code>{' '}
-            <Link onClick={() => openDialog('alerts')}>alerts</Link> for status
-            updates.
+            <Link href={routes.alerts.index}>alerts</Link> for status updates.
           </>
         ),
         options: {
@@ -59,7 +57,7 @@ export function ContractContextMenu({
         },
       })
     }
-  }, [id, integrityCheck, openDialog])
+  }, [id, integrityCheck])
 
   const dataIntegrityCheckAvailable = ['active', 'pending'].includes(status)
   return (

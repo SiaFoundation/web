@@ -1,8 +1,8 @@
 import {
   useTableState,
   useDatasetState,
-  useServerFilters,
   usePaginationOffset,
+  useClientFilters,
 } from '@siafoundation/design-system'
 import { createContext, useContext, useMemo } from 'react'
 import {
@@ -17,52 +17,20 @@ import {
   triggerErrorToast,
   triggerSuccessToast,
 } from '@siafoundation/design-system'
-import { AlertSeverity, AlertsParams } from '@siafoundation/renterd-types'
 import {
   useAlerts as useAlertsData,
   useAlertsDismiss,
-} from '@siafoundation/renterd-react'
+} from '@siafoundation/hostd-react'
 import { useCallback } from 'react'
 import { Maybe } from '@siafoundation/types'
+import { AlertSeverity } from '@siafoundation/hostd-types'
 
 const defaultLimit = 50
 
 function useAlertsMain() {
   const { limit, offset } = usePaginationOffset(defaultLimit)
-  const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
-    useServerFilters()
-
-  const setSeverityFilter = useCallback(
-    (severity?: AlertSeverity) => {
-      if (!severity) {
-        removeFilter('severity')
-      } else {
-        setFilter({
-          id: 'severity',
-          value: severity,
-          label: severity,
-        })
-      }
-    },
-    [setFilter, removeFilter]
-  )
-
-  const severityFilter = filters.find((f) => f.id === 'severity')
-    ?.value as AlertSeverity
-
-  const params = useMemo(() => {
-    const params: AlertsParams = {
-      limit,
-      offset,
-    }
-    if (severityFilter) {
-      params.severity = severityFilter
-    }
-    return params
-  }, [limit, offset, severityFilter])
 
   const response = useAlertsData({
-    params,
     config: {
       swr: {
         refreshInterval: defaultDatasetRefreshInterval,
@@ -105,12 +73,12 @@ function useAlertsMain() {
     [dismiss]
   )
 
-  const datasetPage = useMemo<Maybe<AlertData[]>>(() => {
+  const dataset = useMemo<Maybe<AlertData[]>>(() => {
     if (!response.data) {
       return undefined
     }
     const data: AlertData[] =
-      response.data?.alerts?.map((a) => ({
+      response.data?.map((a) => ({
         id: a.id,
         severity: a.severity,
         message: a.message,
@@ -120,6 +88,27 @@ function useAlertsMain() {
       })) || []
     return data
   }, [response.data, dismissOne])
+
+  const clientFilters = useClientFilters<AlertData>()
+  const datasetFiltered = useMemo<Maybe<AlertData[]>>(() => {
+    if (!dataset) {
+      return undefined
+    }
+    const severityFilter = clientFilters.filters.find(
+      (f) => f.id === 'severity'
+    )
+    if (severityFilter) {
+      return dataset.filter(severityFilter.fn)
+    }
+    return dataset
+  }, [dataset, clientFilters.filters])
+
+  const datasetPage = useMemo<Maybe<AlertData[]>>(() => {
+    if (!datasetFiltered) {
+      return undefined
+    }
+    return datasetFiltered.slice(offset, offset + limit)
+  }, [datasetFiltered, offset, limit])
 
   const {
     configurableColumns,
@@ -135,7 +124,7 @@ function useAlertsMain() {
     sortField,
     sortDirection,
     resetDefaultColumnVisibility,
-  } = useTableState('renterd/v0/alerts', {
+  } = useTableState('hostd/v0/alerts', {
     columns,
     columnsDefaultVisible,
     sortOptions,
@@ -146,22 +135,28 @@ function useAlertsMain() {
     datasetPage,
     isValidating: response.isValidating,
     error: response.error,
-    filters,
+    filters: clientFilters.filters,
     offset,
   })
 
-  const totals = useMemo(
-    () => ({
-      ...response.data?.totals,
-      all: Object.entries(response.data?.totals || {}).reduce(
-        (acc, [severity, count]) => {
-          return acc + count
-        },
-        0
-      ),
-    }),
-    [response.data]
-  )
+  // Compute severity totals from complete client-side dataset.
+  const totals = useMemo(() => {
+    const totals: Record<AlertSeverity | 'all', number> = {
+      all: 0,
+      info: 0,
+      warning: 0,
+      error: 0,
+      critical: 0,
+    }
+    if (!dataset) {
+      return totals
+    }
+    for (const a of dataset) {
+      totals.all += 1
+      totals[a.severity] = (totals[a.severity] || 0) + 1
+    }
+    return totals
+  }, [dataset])
 
   return {
     datasetState,
@@ -182,18 +177,12 @@ function useAlertsMain() {
     toggleSort,
     setSortDirection,
     setSortField,
+    clientFilters,
     sortField,
-    filters,
-    setFilter,
-    removeFilter,
-    removeLastFilter,
-    resetFilters,
     sortDirection,
     resetDefaultColumnVisibility,
     dismissOne,
     dismissMany,
-    severityFilter,
-    setSeverityFilter,
   }
 }
 

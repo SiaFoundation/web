@@ -4,6 +4,7 @@ import { DialogProvider, Dialogs } from '../contexts/dialog'
 import { VolumesProvider } from '../contexts/volumes'
 import { ConfigProvider } from '../contexts/config'
 import { TransactionsProvider } from '../contexts/transactions'
+import { AlertsProvider } from '../contexts/alerts'
 
 type Props = {
   children: React.ReactNode
@@ -17,10 +18,12 @@ export function Providers({ children }: Props) {
           <VolumesProvider>
             <ContractsProvider>
               <MetricsProvider>
-                {/* this is here so that dialogs can use all the other providers,
+                <AlertsProvider>
+                  {/* this is here so that dialogs can use all the other providers,
             and the other providers can trigger dialogs */}
-                <Dialogs />
-                {children}
+                  <Dialogs />
+                  {children}
+                </AlertsProvider>
               </MetricsProvider>
             </ContractsProvider>
           </VolumesProvider>

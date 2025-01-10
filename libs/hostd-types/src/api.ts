@@ -529,35 +529,37 @@ export type SystemDirectoryCreateResponse = void
 
 export type AlertSeverity = 'info' | 'warning' | 'error' | 'critical'
 
+export type AlertData = {
+  contractID?: number
+  blockHeight?: number
+  resolution?: string
+  volume?: string
+  volumeID?: number
+
+  elapsed?: number
+  error?: string
+
+  checked?: number
+  missing?: number
+  corrupt?: number
+  total?: number
+
+  oldSectors?: number
+  currentSectors?: number
+  targetSectors?: number
+  migratedSectors?: number
+
+  migrated?: number
+  target?: number
+
+  force?: boolean
+}
+
 export type Alert = {
   id: string
   severity: AlertSeverity
   message: string
-  data: {
-    contractID?: number
-    blockHeight?: number
-    resolution?: string
-    volume?: string
-    volumeID?: number
-
-    elapsed?: number
-    error?: string
-
-    checked?: number
-    missing?: number
-    corrupt?: number
-    total?: number
-
-    oldSectors?: number
-    currentSectors?: number
-    targetSectors?: number
-    migratedSectors?: number
-
-    migrated?: number
-    target?: number
-
-    force?: boolean
-  }
+  data: AlertData
   timestamp: string
 }
 

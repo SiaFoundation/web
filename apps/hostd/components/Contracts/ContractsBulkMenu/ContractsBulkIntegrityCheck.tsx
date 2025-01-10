@@ -9,10 +9,9 @@ import { useCallback, useMemo } from 'react'
 import { pluralize } from '@siafoundation/units'
 import { useContracts } from '../../../contexts/contracts'
 import { useContractsIntegrityCheck } from '@siafoundation/hostd-react'
-import { useDialog } from '../../../contexts/dialog'
+import { routes } from '../../../config/routes'
 
 export function ContractsBulkIntegrityCheck() {
-  const { openDialog } = useDialog()
   const { multiSelect } = useContracts()
   const integrityCheck = useContractsIntegrityCheck()
 
@@ -46,8 +45,7 @@ export function ContractsBulkIntegrityCheck() {
             <>
               Depending on contract data size this operation can take a while.
               Check <Code>hostd</Code>{' '}
-              <Link onClick={() => openDialog('alerts')}>alerts</Link> for
-              status updates.
+              <Link href={routes.alerts.index}>alerts</Link> for status updates.
             </>
           ),
         }),
@@ -56,7 +54,7 @@ export function ContractsBulkIntegrityCheck() {
         },
       }
     )
-  }, [multiSelect, ids, integrityCheck, openDialog])
+  }, [multiSelect, ids, integrityCheck])
 
   return (
     <Button

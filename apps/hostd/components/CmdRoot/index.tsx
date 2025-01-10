@@ -20,6 +20,7 @@ import { useDialog } from '../../contexts/dialog'
 import { useRouter } from 'next/router'
 import { routes } from '../../config/routes'
 import { VolumesCmd } from '../Volumes/VolumesCmd'
+import { AlertsCmd } from '../Alerts/AlertsCmd'
 
 type Props = {
   panel?: boolean
@@ -99,6 +100,20 @@ export function CmdRoot({ panel }: Props) {
           afterSelect={() => {
             if (!router.pathname.startsWith(routes.contracts.index)) {
               router.push(routes.contracts.index)
+            }
+            afterSelect()
+          }}
+        />
+        <AlertsCmd
+          currentPage={page}
+          pushPage={pushPage}
+          beforeSelect={() => {
+            beforeSelect()
+            resetContractsFilters()
+          }}
+          afterSelect={() => {
+            if (!router.pathname.startsWith(routes.alerts.index)) {
+              router.push(routes.alerts.index)
             }
             afterSelect()
           }}
