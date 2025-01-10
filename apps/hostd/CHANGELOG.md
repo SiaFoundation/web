@@ -1,5 +1,16 @@
 # hostd
 
+## 0.56.0
+
+### Minor Changes
+
+- 2a9d1932: The host net address context menu no longer has a view on siascan option. Closes https://github.com/SiaFoundation/hostd/issues/554
+- 2a9d1932: The host wallet address context menu now has a view on siascan option.
+
+### Patch Changes
+
+- 7afc02c3: Fixed an issue where the list of alerts was not showing.
+
 ## 0.55.0
 
 ### Minor Changes

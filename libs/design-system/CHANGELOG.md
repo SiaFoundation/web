@@ -1,5 +1,15 @@
 # Changelog
 
+## 4.16.0
+
+### Minor Changes
+
+- 7f6c64a9: Added ExpandableText.
+
+### Patch Changes
+
+- 7afc02c3: Fixed an issue where AlertDialog was using the incorrect dataset loaded state.
+
 ## 4.15.0
 
 ### Minor Changes
