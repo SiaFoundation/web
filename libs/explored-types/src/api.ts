@@ -9,6 +9,7 @@ import {
   ConsensusState,
   Currency,
   ExplorerBlock,
+  ExplorerEvent,
   ExplorerFileContract,
   ExplorerHost,
   ExplorerSiacoinOutput,
@@ -136,7 +137,7 @@ export type AddressSiacoinUTXOsParams = {
   limit?: number
 }
 export type AddressSiacoinUTXOsPayload = void
-export type AddressSiacoinUTXOsResponse = ExplorerSiacoinOutput
+export type AddressSiacoinUTXOsResponse = ExplorerSiacoinOutput[]
 
 // Returns the specified address' unspent siafind outputs.
 export const addressSiafundUTXOsRoute = '/addresses/:address/utxos/siafund'
@@ -146,7 +147,7 @@ export type AddressSiafundUTXOsParams = {
   limit?: number
 }
 export type AddressSiafundUTXOsPayload = void
-export type AddressSiafundUTXOsResponse = SiafundElement
+export type AddressSiafundUTXOsResponse = SiafundElement[]
 
 // Returns the specified address' events.
 export const addressEventsRoute = '/addresses/:address/events'
@@ -156,7 +157,7 @@ export type AddressEventsParams = {
   limit?: number
 }
 export type AddressEventsPayload = void
-export type AddressEventsResponse = Event
+export type AddressEventsResponse = ExplorerEvent[]
 
 // Returns the specified address' balance.
 export const addressBalanceRoute = '/addresses/:address/balance'
