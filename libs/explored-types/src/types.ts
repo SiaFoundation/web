@@ -56,14 +56,48 @@ export type AddressBalance = {
   unspentSiafunds: number
 }
 
-export type Event = {
+export type EventPayout = {
+  siacoinElement: ExplorerSiacoinOutput
+}
+
+export type EventV1Transaction = {
+  transaction: ExplorerTransaction
+}
+
+export type EventV1ContractResolution = {
+  parent: ExplorerFileContract
+  siacoinElement: ExplorerSiacoinOutput
+  missed: boolean
+}
+
+type ExplorerEventBase = {
   id: Hash256
   index: ChainIndex
-  timestamp: string
+  confirmations: number
   maturityHeight: number
-  addresses: Address[]
-  data: string
+  timestamp: string
+  relevant?: Address[]
 }
+
+type ExplorerMinerPayoutEvent = ExplorerEventBase & {
+  type: 'miner'
+  data: EventPayout
+}
+
+type ExplorerV1TransactionEvent = ExplorerEventBase & {
+  type: 'v1Transaction'
+  data: EventV1Transaction
+}
+
+type ExplorerV1ContractResolutionEvent = ExplorerEventBase & {
+  type: 'v1ContractResolution'
+  data: EventV1ContractResolution
+}
+
+export type ExplorerEvent =
+  | ExplorerMinerPayoutEvent
+  | ExplorerV1TransactionEvent
+  | ExplorerV1ContractResolutionEvent
 
 export type BlockMetrics = {
   index: ChainIndex
