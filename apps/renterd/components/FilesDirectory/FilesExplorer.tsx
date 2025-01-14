@@ -7,14 +7,7 @@ import { pluralize } from '@siafoundation/units'
 import { useUploadsManager } from '../../contexts/uploadsManager'
 
 export function FilesExplorer() {
-  const {
-    sortField,
-    sortDirection,
-    sortableColumns,
-    toggleSort,
-    isViewingBuckets,
-    visibleColumns,
-  } = useFilesManager()
+  const { isViewingBuckets } = useFilesManager()
   const { uploadFiles } = useUploadsManager()
   const {
     datasetPage,
@@ -27,6 +20,7 @@ export function FilesExplorer() {
     onDragCancel,
     onDragMove,
     draggingObjects,
+    tableState,
   } = useFilesDirectory()
   const canUpload = useCanUpload()
   return (
@@ -44,11 +38,11 @@ export function FilesExplorer() {
           pageSize={10}
           data={datasetPage}
           context={cellContext}
-          columns={visibleColumns}
-          sortableColumns={sortableColumns}
-          sortField={sortField}
-          sortDirection={sortDirection}
-          toggleSort={toggleSort}
+          columns={tableState.visibleColumns}
+          sortableColumns={tableState.sortableColumns}
+          sortField={tableState.sortField}
+          sortDirection={tableState.sortDirection}
+          toggleSort={tableState.toggleSort}
           rowSize="dense"
           onDragStart={onDragStart}
           onDragOver={onDragOver}

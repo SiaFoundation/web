@@ -120,7 +120,23 @@ export function useTableState<
     ) as SortField[]
   }, [sortOptions, visibleColumnIds])
 
-  return {
+  return useMemo(() => {
+    return {
+      configurableColumns,
+      visibleColumnIds,
+      visibleColumns,
+      toggleColumnVisibility,
+      toggleSort,
+      setSortDirection,
+      setSortField,
+      sortableColumns,
+      sortField,
+      setColumnsVisible,
+      setColumnsHidden,
+      sortDirection,
+      resetDefaultColumnVisibility,
+    }
+  }, [
     configurableColumns,
     visibleColumnIds,
     visibleColumns,
@@ -130,9 +146,9 @@ export function useTableState<
     setSortField,
     sortableColumns,
     sortField,
+    sortDirection,
     setColumnsVisible,
     setColumnsHidden,
-    sortDirection,
     resetDefaultColumnVisibility,
-  }
+  ])
 }

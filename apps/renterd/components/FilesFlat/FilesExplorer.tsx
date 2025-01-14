@@ -1,12 +1,9 @@
 import { Table } from '@siafoundation/design-system'
 import { EmptyState } from './EmptyState'
 import { useFilesFlat } from '../../contexts/filesFlat'
-import { useFilesManager } from '../../contexts/filesManager'
 
 export function FilesExplorer() {
-  const { sortableColumns, visibleColumns, toggleSort } = useFilesManager()
-  const { datasetPage, datasetState, cellContext, sortField, sortDirection } =
-    useFilesFlat()
+  const { datasetPage, datasetState, cellContext, tableState } = useFilesFlat()
   return (
     <div className="relative">
       <Table
@@ -16,11 +13,11 @@ export function FilesExplorer() {
         pageSize={10}
         data={datasetPage}
         context={cellContext}
-        columns={visibleColumns}
-        sortableColumns={sortableColumns}
-        sortField={sortField}
-        sortDirection={sortDirection}
-        toggleSort={toggleSort}
+        columns={tableState.visibleColumns}
+        sortableColumns={tableState.sortableColumns}
+        sortField={tableState.sortField}
+        sortDirection={tableState.sortDirection}
+        toggleSort={tableState.toggleSort}
         rowSize="dense"
       />
     </div>

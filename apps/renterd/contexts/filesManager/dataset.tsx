@@ -21,15 +21,17 @@ type Props = {
     isValidating: boolean
     data?: ObjectMetadata[]
   }
+  tableState: {
+    sortField: keyof ObjectData
+    sortDirection: 'asc' | 'desc'
+  }
 }
 
-export function useDataset({ id, objects }: Props) {
+export function useDataset({ id, objects, tableState }: Props) {
   const {
     activeBucket,
     activeBucketName,
     fileNamePrefixFilter,
-    sortDirection,
-    sortField,
     activeDirectoryPath,
     buckets,
     setActiveDirectory,
@@ -127,9 +129,9 @@ export function useDataset({ id, objects }: Props) {
       }
       const all = sortBy(
         toPairs(dataMap).map((p) => p[1]),
-        sortField as keyof ObjectData
+        tableState.sortField as keyof ObjectData
       )
-      if (sortDirection === 'desc') {
+      if (tableState.sortDirection === 'desc') {
         all.reverse()
       }
       return all

@@ -1,15 +1,9 @@
 'use client'
 
-import { useServerFilters, useTableState } from '@siafoundation/design-system'
+import { useServerFilters } from '@siafoundation/design-system'
 import { useParams, useAppRouter, usePathname } from '@siafoundation/next'
 import { createContext, useCallback, useContext, useMemo } from 'react'
-import { columns } from '../filesDirectory/columns'
-import {
-  defaultSortField,
-  columnsDefaultVisible,
-  sortOptions,
-  ExplorerMode,
-} from './types'
+import { ExplorerMode } from './types'
 import {
   FullPath,
   FullPathSegments,
@@ -23,26 +17,6 @@ import { routes } from '../../config/routes'
 import useLocalStorageState from 'use-local-storage-state'
 
 function useFilesManagerMain() {
-  const {
-    configurableColumns,
-    visibleColumnIds,
-    visibleColumns,
-    sortableColumns,
-    toggleColumnVisibility,
-    setColumnsVisible,
-    setColumnsHidden,
-    toggleSort,
-    setSortDirection,
-    setSortField,
-    sortField,
-    sortDirection,
-    resetDefaultColumnVisibility,
-  } = useTableState('renterd/v0/objects', {
-    columns,
-    columnsDefaultVisible,
-    sortOptions,
-    defaultSortField,
-  })
   const router = useAppRouter()
   const params = useParams<{ bucket?: string; path?: FullPathSegments }>()
   const activeBucketName = params?.bucket
@@ -215,17 +189,6 @@ function useFilesManagerMain() {
     setActiveDirectoryAndFileNamePrefix,
     activeDirectoryPath,
     navigateToModeSpecificFiltering,
-    configurableColumns,
-    visibleColumnIds,
-    visibleColumns,
-    sortableColumns,
-    toggleColumnVisibility,
-    setColumnsVisible,
-    setColumnsHidden,
-    toggleSort,
-    setSortDirection,
-    setSortField,
-    sortField,
     filters,
     fileNamePrefixFilter,
     setFileNamePrefixFilter,
@@ -233,8 +196,6 @@ function useFilesManagerMain() {
     removeFilter,
     removeLastFilter,
     resetFilters,
-    sortDirection,
-    resetDefaultColumnVisibility,
     activeExplorerMode,
     setExplorerModeDirectory,
     setExplorerModeFlat,

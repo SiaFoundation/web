@@ -10,6 +10,7 @@ import { useFilesManager } from '../../contexts/filesManager'
 import { FilesViewDropdownMenu } from '../Files/FilesViewDropdownMenu'
 import { useDialog } from '../../contexts/dialog'
 import { useCanUpload } from '../Files/useCanUpload'
+import { useFilesDirectory } from '../../contexts/filesDirectory'
 import { useUploadsManager } from '../../contexts/uploadsManager'
 // esm compat
 const { useDropzone } = reactDropzone
@@ -17,6 +18,7 @@ const { useDropzone } = reactDropzone
 export function FilesActionsMenu() {
   const { openDialog } = useDialog()
   const { isViewingBuckets } = useFilesManager()
+  const { tableState } = useFilesDirectory()
   const { uploadFiles } = useUploadsManager()
 
   const canUpload = useCanUpload()
@@ -65,7 +67,7 @@ export function FilesActionsMenu() {
           </Button>
         </>
       )}
-      <FilesViewDropdownMenu />
+      <FilesViewDropdownMenu tableState={tableState} />
     </div>
   )
 }

@@ -8,23 +8,30 @@ import {
   BaseMenuItem,
   MenuSeparator,
   Option,
+  TableColumn,
 } from '@siafoundation/design-system'
 import { CaretDown16, SettingsAdjust16 } from '@siafoundation/react-icons'
 import { sortOptions, SortField } from '../../contexts/filesManager/types'
-import { useFilesManager } from '../../contexts/filesManager'
 import { groupBy } from '@technically/lodash'
 
-export function FilesViewDropdownMenu() {
-  const {
-    configurableColumns,
-    toggleColumnVisibility,
-    resetDefaultColumnVisibility,
-    sortField,
-    setSortField,
-    sortDirection,
-    setSortDirection,
-    visibleColumnIds,
-  } = useFilesManager()
+export function FilesViewDropdownMenu({
+  tableState,
+}: {
+  tableState: {
+    sortField: SortField
+    sortDirection: 'asc' | 'desc'
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    visibleColumns: TableColumn<any, any, any>[]
+    toggleColumnVisibility: (id: string) => void
+    resetDefaultColumnVisibility: () => void
+    setSortField: (field: SortField) => void
+    setSortDirection: (direction: 'asc' | 'desc') => void
+    configurableColumns: {
+      label: string
+      id: string
+    }[]
+  }
+}) {
   return (
     <Popover
       trigger={
@@ -43,9 +50,9 @@ export function FilesViewDropdownMenu() {
         <Label>Order by</Label>
         <MenuItemRightSlot>
           <Select
-            value={sortField}
+            value={tableState.sortField}
             onChange={(e) => {
-              setSortField(e.currentTarget.value as SortField)
+              tableState.setSortField(e.currentTarget.value as SortField)
             }}
           >
             {Object.entries(groupBy(sortOptions, 'category')).map(
@@ -66,12 +73,14 @@ export function FilesViewDropdownMenu() {
         <Label>Direction</Label>
         <MenuItemRightSlot>
           <Select
-            value={sortDirection}
+            value={tableState.sortDirection}
             onClick={(e) => {
               e.stopPropagation()
             }}
             onChange={(e) => {
-              setSortDirection(e.currentTarget.value as 'asc' | 'desc')
+              tableState.setSortDirection(
+                e.currentTarget.value as 'asc' | 'desc'
+              )
             }}
           >
             <Option key="desc" value="desc">
@@ -90,7 +99,7 @@ export function FilesViewDropdownMenu() {
           <Button
             onClick={(e) => {
               e.stopPropagation()
-              resetDefaultColumnVisibility()
+              tableState.resetDefaultColumnVisibility()
             }}
           >
             Reset default
@@ -99,12 +108,12 @@ export function FilesViewDropdownMenu() {
       </BaseMenuItem>
       <BaseMenuItem>
         <PoolCombo
-          options={configurableColumns.map((column) => ({
+          options={tableState.configurableColumns.map((column) => ({
             label: column.label,
             value: column.id,
           }))}
-          values={visibleColumnIds}
-          onChange={(value) => toggleColumnVisibility(value)}
+          values={tableState.visibleColumns.map((column) => column.id)}
+          onChange={(value) => tableState.toggleColumnVisibility(value)}
         />
       </BaseMenuItem>
     </Popover>

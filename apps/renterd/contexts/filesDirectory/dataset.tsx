@@ -6,17 +6,20 @@ import { useFilesManager } from '../filesManager'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { ObjectsParams } from '@siafoundation/renterd-types'
 import { usePaginationMarker } from '@siafoundation/design-system'
+import { SortField } from '../filesManager/types'
 
 const defaultLimit = 50
 
-export function useDataset() {
-  const {
-    activeBucketName,
-    activeDirectoryPath,
-    fileNamePrefixFilter,
-    sortDirection,
-    sortField,
-  } = useFilesManager()
+export function useDataset({
+  tableState,
+}: {
+  tableState: {
+    sortField: SortField
+    sortDirection: 'asc' | 'desc'
+  }
+}) {
+  const { activeBucketName, activeDirectoryPath, fileNamePrefixFilter } =
+    useFilesManager()
   const { limit, marker } = usePaginationMarker(defaultLimit)
   const pathParams = bucketAndKeyParamsFromPath(activeDirectoryPath)
 
@@ -30,8 +33,8 @@ export function useDataset() {
     const p: ObjectsParams = {
       prefix,
       bucket: pathParams.bucket,
-      sortby: sortField,
-      sortdir: sortDirection,
+      sortby: tableState.sortField,
+      sortdir: tableState.sortDirection,
       limit,
       delimiter: '/',
     }
@@ -42,8 +45,8 @@ export function useDataset() {
   }, [
     fileNamePrefixFilter,
     pathParams,
-    sortField,
-    sortDirection,
+    tableState.sortField,
+    tableState.sortDirection,
     marker,
     limit,
   ])
@@ -69,6 +72,7 @@ export function useDataset() {
   const d = useDatasetGeneric({
     id: 'filesDirectory',
     objects,
+    tableState,
   })
 
   return {

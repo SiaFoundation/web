@@ -15,6 +15,7 @@ import {
   createFilesMap,
   expectFilesMap,
   openDirectoryContextMenu,
+  changeExplorerMode,
 } from '../fixtures/files'
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
 import { clearToasts, fillTextInputByName } from '@siafoundation/e2e'
@@ -51,6 +52,25 @@ test('can create directory and delete a directory', async ({ page }) => {
   await deleteDirectory(page, dirPath1)
   await fileNotInList(page, dirPath1)
   await fileInList(page, dirPath2)
+})
+
+test('can see full file paths in the all files view mode', async ({ page }) => {
+  const bucketName = 'bucket1'
+  const dirName1 = 'dir1'
+  const dirName2 = 'dir2'
+  const dirPath1 = `${bucketName}/${dirName1}/`
+  const dirPath2 = `${bucketName}/${dirName1}/${dirName2}/`
+  const visiblePath = `${dirName1}/${dirName2}/`
+
+  await navigateToBuckets({ page })
+  await createBucket(page, bucketName)
+  await openBucket(page, bucketName)
+  await createDirectory(page, dirName1)
+  await openDirectory(page, dirPath1)
+  await createDirectory(page, dirName2)
+  await fileInList(page, dirPath2)
+  await changeExplorerMode(page, 'all files')
+  await expect(page.getByText(visiblePath)).toBeVisible()
 })
 
 test('can upload, rename, and delete files', async ({ page }) => {

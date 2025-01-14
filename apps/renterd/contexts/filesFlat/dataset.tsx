@@ -8,13 +8,15 @@ import { ObjectsParams } from '@siafoundation/renterd-types'
 import { usePaginationMarker } from '@siafoundation/design-system'
 
 type Props = {
-  sortDirection: 'asc' | 'desc'
-  sortField: SortField
+  tableState: {
+    sortDirection: 'asc' | 'desc'
+    sortField: SortField
+  }
 }
 
 const defaultLimit = 50
 
-export function useDataset({ sortDirection, sortField }: Props) {
+export function useDataset({ tableState }: Props) {
   const { activeBucketName, fileNamePrefixFilter } = useFilesManager()
   const { limit, marker } = usePaginationMarker(defaultLimit)
 
@@ -28,8 +30,8 @@ export function useDataset({ sortDirection, sortField }: Props) {
     const p: ObjectsParams = {
       prefix,
       bucket: activeBucketName,
-      sortby: sortField,
-      sortdir: sortDirection,
+      sortby: tableState.sortField,
+      sortdir: tableState.sortDirection,
       limit,
       delimiter: '',
     }
@@ -40,8 +42,8 @@ export function useDataset({ sortDirection, sortField }: Props) {
   }, [
     fileNamePrefixFilter,
     activeBucketName,
-    sortField,
-    sortDirection,
+    tableState.sortField,
+    tableState.sortDirection,
     marker,
     limit,
   ])
@@ -67,6 +69,7 @@ export function useDataset({ sortDirection, sortField }: Props) {
   const d = useDatasetGeneric({
     id: 'filesFlat',
     objects,
+    tableState,
   })
 
   return {
