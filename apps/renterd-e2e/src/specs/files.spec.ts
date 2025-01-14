@@ -111,7 +111,7 @@ test('can upload, rename, and delete files', async ({ page }) => {
   await deleteBucket(page, bucketName)
 })
 
-test('can upload and download a file', async ({ page }) => {
+test('can upload and download a file', async ({ page, context }) => {
   const bucketName = 'files-test'
   const fileName = 'sample.txt'
   const filePath = `${bucketName}/${fileName}`
@@ -127,11 +127,16 @@ test('can upload and download a file', async ({ page }) => {
   await fileInList(page, filePath)
 
   // Download.
+  const pagePromise = context.waitForEvent('page')
   await openFileContextMenu(page, filePath)
-  await page.getByRole('menuitem', { name: 'Download file' }).click()
   await expect(
-    page.getByRole('button', { name: 'Active downloads' })
+    page.getByRole('menuitem', { name: 'Download file' })
   ).toBeVisible()
+  await page.getByRole('menuitem', { name: 'Download file' }).click()
+  const newPage = await pagePromise
+  expect(newPage.url()).toContain(
+    '/api/worker/object/sample.txt?bucket=files-test'
+  )
 })
 
 test('can rename and delete a directory with contents', async ({ page }) => {

@@ -22,6 +22,7 @@ import { CopyMetadataMenuItem } from './CopyMetadataMenuItem'
 import { getFilename } from '../../../lib/paths'
 import { useDialog } from '../../../contexts/dialog'
 import { useFilesManager } from '../../../contexts/filesManager'
+import { useDownloads } from '../../../contexts/filesManager/downloads'
 
 type Props = {
   path: string
@@ -30,8 +31,8 @@ type Props = {
 }
 
 export function FileContextMenu({ trigger, path, contentProps }: Props) {
-  const { downloadFiles, getFileUrl, navigateToModeSpecificFiltering } =
-    useFilesManager()
+  const { navigateToModeSpecificFiltering } = useFilesManager()
+  const { getAuthenticatedFileUrl, getFileUrl, downloadFiles } = useDownloads()
   const deleteFile = useFileDelete()
   const { openDialog } = useDialog()
 
@@ -114,7 +115,7 @@ export function FileContextMenu({ trigger, path, contentProps }: Props) {
       </DropdownMenuItem>
       <DropdownMenuItem
         onSelect={() => {
-          copyToClipboard(getFileUrl(path, false), 'file URL')
+          copyToClipboard(getFileUrl(path), 'file URL')
         }}
       >
         <DropdownMenuLeftSlot>
@@ -125,7 +126,7 @@ export function FileContextMenu({ trigger, path, contentProps }: Props) {
       <DropdownMenuItem
         onSelect={() => {
           copyToClipboardCustom({
-            text: getFileUrl(path, true),
+            text: getAuthenticatedFileUrl(path),
             title: 'Copied authenticated file URL to clipboard',
             body: (
               <>

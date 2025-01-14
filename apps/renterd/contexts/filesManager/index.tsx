@@ -19,7 +19,6 @@ import {
   pathSegmentsToPath,
 } from '../../lib/paths'
 import { useUploads } from './uploads'
-import { useDownloads } from './downloads'
 import { useBuckets } from '@siafoundation/renterd-react'
 import { routes } from '../../config/routes'
 import useLocalStorageState from 'use-local-storage-state'
@@ -97,8 +96,6 @@ function useFilesManagerMain() {
   const { uploadFiles, uploadsMap, uploadsList } = useUploads({
     activeDirectoryPath,
   })
-  const { downloadFiles, downloadsList, getFileUrl, downloadCancel } =
-    useDownloads()
 
   const isViewingBuckets = activeDirectory.length === 0
   const isViewingRootOfABucket = activeDirectory.length === 1
@@ -226,9 +223,6 @@ function useFilesManagerMain() {
     uploadFiles,
     uploadsMap,
     uploadsList,
-    downloadFiles,
-    downloadsList,
-    downloadCancel,
     configurableColumns,
     visibleColumnIds,
     visibleColumns,
@@ -249,7 +243,6 @@ function useFilesManagerMain() {
     resetFilters,
     sortDirection,
     resetDefaultColumnVisibility,
-    getFileUrl,
     activeExplorerMode,
     setExplorerModeDirectory,
     setExplorerModeFlat,
