@@ -24,12 +24,12 @@ export function AddressSkeleton() {
         </div>
       }
     >
-      <Tabs value="transactions">
+      <Tabs value="events">
         <TabsList aria-label="Address tabs">
-          <TabsTrigger value="transactions">Transactions</TabsTrigger>
+          <TabsTrigger value="events">Events</TabsTrigger>
           <TabsTrigger value="utxos">Unspent outputs</TabsTrigger>
         </TabsList>
-        <TabsContent value="transactions">
+        <TabsContent value="events">
           <EntityList isLoading />
         </TabsContent>
         <TabsContent value="utxos">
