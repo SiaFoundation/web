@@ -248,6 +248,10 @@ import {
   busHostHostKeyScanRoute,
   Host,
   autopilotStateRoute,
+  AuthTokenParams,
+  AuthTokenPayload,
+  AuthTokenResponse,
+  authRoute,
 } from '@siafoundation/renterd-types'
 
 // state
@@ -1043,4 +1047,10 @@ export function useAutopilotConfigUpdate(
     }
     func()
   })
+}
+
+export function useAuthToken(
+  args?: HookArgsCallback<AuthTokenParams, AuthTokenPayload, AuthTokenResponse>
+) {
+  return usePostFunc({ ...args, route: authRoute })
 }

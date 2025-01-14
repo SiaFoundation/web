@@ -255,6 +255,10 @@ import {
   AutopilotConfigUpdatePayload,
   AutopilotConfigUpdateResponse,
   busAutopilotRoute,
+  AuthTokenPayload,
+  AuthTokenResponse,
+  authRoute,
+  AuthTokenParams,
 } from '@siafoundation/renterd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
@@ -597,5 +601,10 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       AutopilotConfigUpdatePayload,
       AutopilotConfigUpdateResponse
     >(axios, 'put', busAutopilotRoute),
+    authToken: buildRequestHandler<
+      AuthTokenParams,
+      AuthTokenPayload,
+      AuthTokenResponse
+    >(axios, 'post', authRoute),
   }
 }
