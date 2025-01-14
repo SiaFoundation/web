@@ -20,7 +20,7 @@ export type MicaIndicatorObject = { [key: string]: MicaIndicator }
 export async function getMicaIndicators() {
   const [indicators, indicatorsError] = await to<MicaIndicatorObject>(
     axios(
-      `https://ccri.sia.tools/mica/overview/sia?responseType=recent&key=${process.env['CCRI_TOKEN']}`
+      `https://ccri.sia.tools/mica/overview/sc?responseType=recent&key=${process.env['CCRI_TOKEN']}`
     )
   )
 
