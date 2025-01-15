@@ -12,6 +12,7 @@ import {
 } from '@siafoundation/types'
 
 type AccountToken = {
+  hostKey: PublicKey
   account: PublicKey
   validUntil: string
   signature: Signature
@@ -23,6 +24,7 @@ export type HostPrices = {
   storagePrice: Currency
   ingressPrice: Currency
   egressPrice: Currency
+  freeSectorPrice: Currency
   tipHeight: number
   validUntil: string
   signature: Signature
@@ -34,12 +36,12 @@ export type NetAddress = {
 }
 
 export type HostSettings = {
-  version: [number, number, number] // 3 bytes
-  netAddresses: NetAddress[]
+  protocolVersion: [number, number, number] // 3 bytes
+  release: string
   walletAddress: Address // 32 bytes
   acceptingContracts: boolean
   maxCollateral: Currency
-  maxDuration: number
+  maxContractDuration: number
   remainingStorage: number
   totalStorage: number
   prices: HostPrices
@@ -66,7 +68,8 @@ export type RPCReadSectorRequest = {
 
 export type RPCReadSectorResponse = {
   proof: Hash256[] // 32 bytes each - types.Hash256
-  sector: string // 4MiB sector, Go marshaling expects a base64-encoded representation of a byte array
+  // sector: string // 4MiB sector, Go marshaling expects a base64-encoded representation of a byte array
+  dataLength: number // uint64
 }
 
 export type RPCReadSector = {
@@ -77,7 +80,8 @@ export type RPCReadSector = {
 export type RPCWriteSectorRequest = {
   prices: HostPrices
   token: AccountToken
-  sector: string // 4MiB sector, Go marshaling expects a base64-encoded representation of a byte array
+  // sector: string // 4MiB sector, Go marshaling expects a base64-encoded representation of a byte array
+  dataLength: number // uint64
 }
 
 export type RPCWriteSectorResponse = {
@@ -180,7 +184,7 @@ export type WasmApi = {
       address?: string
       error?: string
     }
-    addressFromSpendPolicy: (spendPolicy: string) => {
+    addressFromSpendPolicy: (spendPolicy: Record<string, unknown>) => {
       address?: string
       error?: string
     }

@@ -26,7 +26,12 @@ func decodeRPCRequest(rpcJsData js.Value, res proto4.Object) result {
 	if err != nil {
 		return resultErr(err)
 	}
-	err = proto4.ReadRequest(bytes.NewReader(rpcData), res)
+	reader := bytes.NewReader(rpcData)
+	_, err = proto4.ReadID(reader)
+	if err != nil {
+		return resultErr(err)
+	}
+	err = proto4.ReadRequest(reader, res)
 	if err != nil {
 		return resultErr(err)
 	}

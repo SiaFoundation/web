@@ -8,7 +8,7 @@ export function getMockWalletAddressesResponse(): WalletAddressesResponse {
   return [
     {
       address:
-        'addr:f2dbf56b5b0c698d7fbf43f646c76169d84e597e8b37fada97348beeecaa812d400ac4ce7981',
+        'f2dbf56b5b0c698d7fbf43f646c76169d84e597e8b37fada97348beeecaa812d400ac4ce7981',
       description: '',
       metadata: {
         index: 0,
@@ -23,7 +23,7 @@ export function getMockWalletAddressesResponse(): WalletAddressesResponse {
     },
     {
       address:
-        'addr:90c6057cdd2463eca61f83796e83152dbba28b6cb9a74831a043833051ec9f422726bfff2ee8',
+        '90c6057cdd2463eca61f83796e83152dbba28b6cb9a74831a043833051ec9f422726bfff2ee8',
       description: '',
       metadata: {
         index: 1,
@@ -38,7 +38,7 @@ export function getMockWalletAddressesResponse(): WalletAddressesResponse {
     },
     {
       address:
-        'addr:170173c40ca0f39f9618da30af14c390c7ce70248a3662a7a5d3d5a8a31c9fbfa2071e9f6518',
+        '170173c40ca0f39f9618da30af14c390c7ce70248a3662a7a5d3d5a8a31c9fbfa2071e9f6518',
       description: '',
       metadata: {
         index: 2,
