@@ -77,7 +77,7 @@ describe('wallet', () => {
       )
       expect(error).toBeUndefined()
       expect(address).toBe(
-        'addr:69e52c7d3f57df42b9736a1b5a0e67ab2e4a1cda4b0e5c0c858929a5284d843278a7ce009198'
+        '69e52c7d3f57df42b9736a1b5a0e67ab2e4a1cda4b0e5c0c858929a5284d843278a7ce009198'
       )
     })
     it('invalid', async () => {
@@ -99,7 +99,7 @@ describe('wallet', () => {
       })
       expect(error).toBeUndefined()
       expect(address).toBe(
-        'addr:69e52c7d3f57df42b9736a1b5a0e67ab2e4a1cda4b0e5c0c858929a5284d843278a7ce009198'
+        '69e52c7d3f57df42b9736a1b5a0e67ab2e4a1cda4b0e5c0c858929a5284d843278a7ce009198'
       )
     })
     it('invalid', async () => {
@@ -109,21 +109,34 @@ describe('wallet', () => {
         signaturesRequired: 1,
         timelock: 0,
       })
-      expect(error).toEqual(
-        'decoding <algorithm>:<key> failed: wrong number of separators'
-      )
+      expect(error).toEqual('decoding <algorithm>:<key> failed: no separator')
       expect(address).toBeUndefined()
     })
   })
   describe('addressFromSpendPolicy', () => {
     it('valid', async () => {
       const sdk = await initSDKTest()
-      const spendPolicy =
-        'thresh(1, [above(100),pk(0x5e4bbc181bae781575a30fabdce472842d0373c12eafcd8013dba0cbf69e34e0)])'
+      const spendPolicy = {
+        type: 'thresh',
+        policy: {
+          n: 1,
+          of: [
+            {
+              type: 'above',
+              policy: 100,
+            },
+            {
+              type: 'pk',
+              policy:
+                'ed25519:5e4bbc181bae781575a30fabdce472842d0373c12eafcd8013dba0cbf69e34e0',
+            },
+          ],
+        },
+      }
       const { error, address } = sdk.wallet.addressFromSpendPolicy(spendPolicy)
       expect(error).toBeUndefined()
       expect(address).toEqual(
-        'addr:170bf8f730c072a881edf9be3c08d0491f23810f7344125444ebff4bd8855d98dd9159fe1cea'
+        '170bf8f730c072a881edf9be3c08d0491f23810f7344125444ebff4bd8855d98dd9159fe1cea'
       )
     })
   })
@@ -143,7 +156,7 @@ describe('wallet', () => {
       const { error, id } = sdk.wallet.transactionId(txn)
       expect(error).toBeUndefined()
       expect(id).toEqual(
-        'txid:21cedbd4948a11132d54b278a9d0a51e23dbf03a727e01fe08875b7073ae9912'
+        '21cedbd4948a11132d54b278a9d0a51e23dbf03a727e01fe08875b7073ae9912'
       )
     })
   })

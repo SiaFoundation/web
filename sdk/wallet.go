@@ -116,7 +116,7 @@ func addressFromUnlockConditions(this js.Value, args []js.Value) result {
 
 // addressFromSpendPolicy returns the address of a spend policy.
 func addressFromSpendPolicy(this js.Value, args []js.Value) result {
-	if err := checkArgs(args, js.TypeString); err != nil {
+	if err := checkArgs(args, js.TypeObject); err != nil {
 		return resultErr(err)
 	}
 
