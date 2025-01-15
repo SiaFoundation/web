@@ -2,12 +2,12 @@ import { getOGImage } from '../components/OGImage'
 import { network } from '../config'
 import { humanBytes } from '@siafoundation/units'
 import { PreviewValue } from '../components/OGImage/Preview'
-import { siaCentral } from '../config/siaCentral'
 import { to } from '@siafoundation/request'
+import { explored } from '../config/explored'
 
 export const revalidate = 0
 
-export const alt = 'Contract'
+export const alt = 'Sia Network'
 export const size = {
   width: 1200,
   height: 630,
@@ -16,31 +16,29 @@ export const size = {
 export const contentType = 'image/png'
 
 export default async function Image() {
-  const [[metrics], [latestBlock]] = await Promise.all([
-    to(siaCentral.hostsNetworkMetrics()),
-    to(siaCentral.blockLatest()),
+  const [[tip], [hostMetrics]] = await Promise.all([
+    to(explored.consensusTip()),
+    to(explored.hostMetrics()),
   ])
 
-  const lastBlockHeight = Number(latestBlock?.block?.height || 0)
-
   const values: PreviewValue[] = []
-  if (latestBlock) {
+  if (tip) {
     values.push({
       label: 'Block height',
-      value: lastBlockHeight.toLocaleString(),
+      value: tip.height.toLocaleString(),
     })
   }
 
-  if (metrics) {
+  if (hostMetrics) {
     values.push(
       {
         label: 'Active hosts',
-        value: metrics.totals.active_hosts.toLocaleString(),
+        value: hostMetrics.activeHosts.toLocaleString(),
       },
       {
         label: 'Used storage',
         value: humanBytes(
-          metrics.totals.total_storage - metrics.totals.remaining_storage
+          hostMetrics.totalStorage - hostMetrics.remainingStorage
         ),
       }
     )
