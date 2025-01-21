@@ -11,9 +11,9 @@ import { Search16 } from '@siafoundation/react-icons'
 import React, { useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
-import { useSiaCentralSearch } from '@siafoundation/sia-central-react'
 import { routes } from '../../config/routes'
-import { siaCentralApi } from '../../config'
+import { explored } from '../../config/explored'
+import { to } from '@siafoundation/request'
 
 const defaultValues = {
   query: '',
@@ -37,64 +37,69 @@ export function Search() {
     defaultValues,
   })
 
-  const search = useSiaCentralSearch({
-    api: siaCentralApi,
-  })
-
   const onSubmit = useCallback(
-    async (values) => {
-      const response = await search.get({
-        params: {
-          query: values.query.toLowerCase(),
-        },
-      })
-
-      if (!response.data) {
-        form.setError('query', { message: 'Error connecting to server.' })
-        triggerErrorToast({ title: 'Error connecting to server' })
+    async (values: { query: string }) => {
+      // Catch possible block number, avoid request, go there.
+      if (!isNaN(Number(values.query.replace(',', '')))) {
+        router.push(
+          routes.block.view.replace(':id', values.query.replace(',', ''))
+        )
+        form.reset()
         return
       }
 
-      if (response.data.blocks?.length) {
-        router.push(
-          routes.block.view.replace(
-            ':id',
-            String(response.data.blocks[0].height)
-          )
-        )
+      // Catch possible host pubkey, avoid request, go there.
+      if (values.query.slice(0, 7) === 'ed25519') {
+        router.push(routes.host.view.replace(':id', values.query))
         form.reset()
-      } else if (response.data.transactions?.length) {
-        router.push(
-          routes.transaction.view.replace(
-            ':id',
-            response.data.transactions[0].id
-          )
-        )
-        form.reset()
-      } else if (response.data.contracts?.length) {
-        router.push(
-          routes.contract.view.replace(':id', response.data.contracts[0].id)
-        )
-        form.reset()
-      } else if (response.data.unlock_hashes?.length) {
-        router.push(
-          routes.address.view.replace(
-            ':id',
-            response.data.unlock_hashes[0].address
-          )
-        )
-        form.reset()
-      } else if (response.data.hosts?.length) {
-        router.push(
-          routes.host.view.replace(':id', response.data.hosts[0].public_key)
-        )
-        form.reset()
-      } else {
-        form.setError('query', { message: 'No results match query.' })
-        triggerErrorToast({ title: 'No results match query' })
+        return
       }
+
+      const [searchType, searchTypeError] = await to(
+        explored.searchResultType({
+          params: { id: values.query.toLowerCase() },
+        })
+      )
+
+      if (!searchType || searchTypeError) {
+        form.setError('query', { message: 'Request failed. Try again later.' })
+        triggerErrorToast({ title: 'Request failed. Try again later.' })
+        return
+      }
+
+      switch (searchType) {
+        case 'address':
+          router.push(routes.address.view.replace(':id', values.query))
+          break
+        case 'block':
+          router.push(routes.block.view.replace(':id', values.query))
+          break
+        case 'contract':
+          router.push(routes.contract.view.replace(':id', values.query))
+          break
+        case 'host':
+          router.push(routes.host.view.replace(':id', values.query))
+          break
+        case 'transaction':
+          router.push(routes.transaction.view.replace(':id', values.query))
+          break
+        case 'invalid':
+          form.setError('query', {
+            message: 'Invalid request.',
+          })
+          triggerErrorToast({ title: 'Invalid request.' })
+          return
+        default:
+          form.setError('query', {
+            message: 'Not currently supported.',
+          })
+          triggerErrorToast({ title: 'Not currently supported.' })
+          return
+      }
+
+      form.reset()
     },
-    [form, router, search]
+    [form, router]
   )
 
   return (
