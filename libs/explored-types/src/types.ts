@@ -123,13 +123,14 @@ export type Peer = {
 }
 
 export type SearchResultType =
-  | 'invalid'
   | 'address'
   | 'block'
-  | 'transaction'
+  | 'contract'
+  | 'host'
+  | 'invalid'
   | 'siacoinElement'
   | 'siafundElement'
-  | 'contract'
+  | 'transaction'
 
 export type TxpoolBroadcast = {
   transactions: Transaction[]
