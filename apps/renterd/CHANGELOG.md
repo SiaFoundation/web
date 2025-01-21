@@ -1,5 +1,18 @@
 # renterd
 
+## 0.74.0
+
+### Minor Changes
+
+- 55524cb3: The application no longer lags when uploading thousands of files.
+- 2fb3ae63: The transfers bar no longer includes a download list.
+- 2fb3ae63: Files are now downloaded directly in the browser with cookie based auth.
+- e3874095: The uploads list now has two views, one for local uploads only and one for all uploads including from other devices.
+
+### Patch Changes
+
+- d8588a19: Fixed an issue where the global files view was not showing full file paths.
+
 ## 0.73.0
 
 ### Minor Changes

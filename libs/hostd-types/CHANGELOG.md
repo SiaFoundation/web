@@ -1,5 +1,11 @@
 # @siafoundation/hostd-types
 
+## 0.6.0
+
+### Minor Changes
+
+- 28dbaae4: Added named AlertData type.
+
 ## 0.5.0
 
 ### Minor Changes

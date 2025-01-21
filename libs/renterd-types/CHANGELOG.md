@@ -1,5 +1,17 @@
 # @siafoundation/renterd-types
 
+## 0.15.0
+
+### Minor Changes
+
+- 1434b2e8: Added the auth API.
+
+### Patch Changes
+
+- Updated dependencies [55524cb3]
+- Updated dependencies [55524cb3]
+  - @siafoundation/react-core@1.7.0
+
 ## 0.14.1
 
 ### Patch Changes

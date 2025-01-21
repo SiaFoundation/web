@@ -1,5 +1,13 @@
 # explorer
 
+## 0.25.0
+
+### Minor Changes
+
+- ca6a2837: Moved home page opengraph-image API to explored.
+- 529ab5e0: Replaced Sia Central with explored for the address route.
+- 03a9bee2: Replace Sia Central with explored for search.
+
 ## 0.24.0
 
 ### Minor Changes

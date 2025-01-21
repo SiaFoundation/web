@@ -1,5 +1,19 @@
 # @siafoundation/renterd-react
 
+## 4.14.0
+
+### Minor Changes
+
+- 1434b2e8: Added the auth API.
+
+### Patch Changes
+
+- Updated dependencies [1434b2e8]
+- Updated dependencies [55524cb3]
+- Updated dependencies [55524cb3]
+  - @siafoundation/renterd-types@0.15.0
+  - @siafoundation/react-core@1.7.0
+
 ## 4.13.3
 
 ### Patch Changes
