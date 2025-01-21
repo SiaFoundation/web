@@ -1,5 +1,13 @@
 # @siafoundation/explored-types
 
+## 0.11.0
+
+### Minor Changes
+
+- b53dc63a: Modifed Event type to match developing explored implementation.
+- 2207daf7: Fixed address routes to return arrays and use ExplorerEvent type.
+- 84c409e9: Added 'host' to SearchResultType.
+
 ## 0.10.0
 
 ### Minor Changes

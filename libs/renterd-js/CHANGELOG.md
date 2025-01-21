@@ -1,5 +1,16 @@
 # @siafoundation/renterd-js
 
+## 0.13.0
+
+### Minor Changes
+
+- 1434b2e8: Added the auth API.
+
+### Patch Changes
+
+- Updated dependencies [1434b2e8]
+  - @siafoundation/renterd-types@0.15.0
+
 ## 0.12.2
 
 ### Patch Changes

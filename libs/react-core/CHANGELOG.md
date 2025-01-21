@@ -1,5 +1,12 @@
 # @siafoundation/react-core
 
+## 1.7.0
+
+### Minor Changes
+
+- 55524cb3: Added useThrottledStateMap.
+- 55524cb3: Added `throttle`, often useful for mutation callbacks.
+
 ## 1.6.0
 
 ### Minor Changes

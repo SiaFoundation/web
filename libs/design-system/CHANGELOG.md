@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.17.0
+
+### Minor Changes
+
+- 28dbaae4: Removed AlertsDialog.
+
+### Patch Changes
+
+- Updated dependencies [55524cb3]
+- Updated dependencies [55524cb3]
+  - @siafoundation/react-core@1.7.0
+
 ## 4.16.0
 
 ### Minor Changes

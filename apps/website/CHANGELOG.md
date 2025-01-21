@@ -1,5 +1,11 @@
 # website
 
+## 0.56.1
+
+### Patch Changes
+
+- 08e5de3d: Updated the mica indicators ticker.
+
 ## 0.56.0
 
 ### Minor Changes

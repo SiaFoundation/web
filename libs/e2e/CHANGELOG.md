@@ -1,5 +1,17 @@
 # @siafoundation/e2e
 
+## 0.4.0
+
+### Minor Changes
+
+- 28dbaae4: Added continueToClickUntil.
+
+### Patch Changes
+
+- Updated dependencies [55524cb3]
+- Updated dependencies [55524cb3]
+  - @siafoundation/react-core@1.7.0
+
 ## 0.3.1
 
 ### Patch Changes

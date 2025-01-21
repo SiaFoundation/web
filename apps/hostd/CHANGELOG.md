@@ -1,5 +1,12 @@
 # hostd
 
+## 0.57.0
+
+### Minor Changes
+
+- 28dbaae4: Alerts can now be accessed via the cmd+k menu.
+- 28dbaae4: The hostd alerts feature is now a full page and matches the user experience of renterd alerts.
+
 ## 0.56.0
 
 ### Minor Changes
