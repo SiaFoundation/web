@@ -36,6 +36,9 @@ import {
   ContractsByIDsPayload,
   ContractsByIDsResponse,
   contractsByIDsRoute,
+  ExchangeRateParams,
+  ExchangeRateResponse,
+  exchangeRateRoute,
   HostByPubkeyParams,
   HostByPubkeyResponse,
   hostByPubkeyRoute,
@@ -375,5 +378,15 @@ export function useHostByPubkey(
   return useGetSwr({
     ...args,
     route: hostByPubkeyRoute,
+  })
+}
+
+// Exchange
+export function useExchangeRate(
+  args: HookArgsSwr<ExchangeRateParams, ExchangeRateResponse>
+) {
+  return useGetSwr({
+    ...args,
+    route: exchangeRateRoute,
   })
 }
