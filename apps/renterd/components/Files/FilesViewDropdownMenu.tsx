@@ -35,7 +35,12 @@ export function FilesViewDropdownMenu({
   return (
     <Popover
       trigger={
-        <Button size="small" tip="Configure view" tipAlign="end">
+        <Button
+          size="small"
+          aria-label="configure view"
+          tip="Configure view"
+          tipAlign="end"
+        >
           <SettingsAdjust16 />
           View
           <CaretDown16 />
@@ -47,9 +52,11 @@ export function FilesViewDropdownMenu({
       }}
     >
       <BaseMenuItem>
-        <Label>Order by</Label>
+        <Label htmlFor="sortField">Order by</Label>
         <MenuItemRightSlot>
           <Select
+            id="sortField"
+            name="sortField"
             value={tableState.sortField}
             onChange={(e) => {
               tableState.setSortField(e.currentTarget.value as SortField)
@@ -70,9 +77,11 @@ export function FilesViewDropdownMenu({
         </MenuItemRightSlot>
       </BaseMenuItem>
       <BaseMenuItem>
-        <Label>Direction</Label>
+        <Label htmlFor="sortDirection">Direction</Label>
         <MenuItemRightSlot>
           <Select
+            id="sortDirection"
+            name="sortDirection"
             value={tableState.sortDirection}
             onClick={(e) => {
               e.stopPropagation()

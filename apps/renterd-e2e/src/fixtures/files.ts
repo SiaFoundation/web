@@ -183,6 +183,21 @@ export const getFileRowById = step(
   }
 )
 
+export function getFileRowByIndex(
+  page: Page,
+  index: number,
+  mode: 'directory' | 'all files'
+) {
+  return (
+    page
+      .getByTestId('filesTable')
+      .locator('tbody')
+      .locator('tr')
+      // In directory mode, skip the parent directory row.
+      .nth(mode === 'directory' ? index + 1 : index)
+  )
+}
+
 export const expectFileRowById = step(
   'expect file row by ID',
   async (page: Page, id: string) => {

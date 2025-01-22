@@ -1,8 +1,4 @@
-import {
-  useDatasetState,
-  useMultiSelect,
-  useTableState,
-} from '@siafoundation/design-system'
+import { useDatasetState, useMultiSelect } from '@siafoundation/design-system'
 import {
   createContext,
   MouseEvent,
@@ -10,25 +6,15 @@ import {
   useEffect,
   useMemo,
 } from 'react'
-import {
-  CellContext,
-  columnsDefaultVisible,
-  defaultSortField,
-  sortOptions,
-  ObjectData,
-} from '../filesManager/types'
+import { CellContext, ObjectData } from '../filesManager/types'
 import { useDataset } from './dataset'
 import { useMove } from './move'
 import { useFilesManager } from '../filesManager'
 import { columns } from './columns'
+import { useFilesTableState } from '../filesManager/useFilesTableState'
 
 function useFilesDirectoryMain() {
-  const tableState = useTableState('renterd/v0/filesDirectory', {
-    columns,
-    columnsDefaultVisible,
-    sortOptions,
-    defaultSortField,
-  })
+  const tableState = useFilesTableState(columns)
   const {
     activeDirectory,
     activeBucket,

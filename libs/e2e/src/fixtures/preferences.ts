@@ -42,3 +42,21 @@ export const toggleColumnVisibility = step(
     await page.getByLabel('configure view').click()
   }
 )
+
+export const setSortField = step(
+  'set sort field',
+  async (page: Page, field: string) => {
+    await page.getByLabel('configure view').click()
+    await fillSelectInputByName(page, 'sortField', field)
+    await page.getByLabel('configure view').click()
+  }
+)
+
+export const setSortDirection = step(
+  'set sort direction',
+  async (page: Page, direction: 'asc' | 'desc') => {
+    await page.getByLabel('configure view').click()
+    await fillSelectInputByName(page, 'sortDirection', direction)
+    await page.getByLabel('configure view').click()
+  }
+)
