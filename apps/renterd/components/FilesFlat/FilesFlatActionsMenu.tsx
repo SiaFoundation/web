@@ -4,7 +4,7 @@ import { useDialog } from '../../contexts/dialog'
 import { FilesViewDropdownMenu } from '../Files/FilesViewDropdownMenu'
 import { useFilesFlat } from '../../contexts/filesFlat'
 
-export function FilesActionsMenu() {
+export function FilesFlatActionsMenu() {
   const { openDialog } = useDialog()
   const { tableState } = useFilesFlat()
   return (

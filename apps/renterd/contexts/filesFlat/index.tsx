@@ -1,8 +1,4 @@
-import {
-  useDatasetState,
-  useMultiSelect,
-  useTableState,
-} from '@siafoundation/design-system'
+import { useDatasetState, useMultiSelect } from '@siafoundation/design-system'
 import {
   createContext,
   MouseEvent,
@@ -12,21 +8,12 @@ import {
 } from 'react'
 import { useDataset } from './dataset'
 import { useFilesManager } from '../filesManager'
-import {
-  CellContext,
-  columnsDefaultVisible,
-  defaultSortField,
-  sortOptions,
-} from '../filesManager/types'
+import { CellContext } from '../filesManager/types'
 import { columns } from './columns'
+import { useFilesTableState } from '../filesManager/useFilesTableState'
 
 function useFilesFlatMain() {
-  const tableState = useTableState('renterd/v0/filesFlat', {
-    columns,
-    columnsDefaultVisible,
-    sortOptions,
-    defaultSortField,
-  })
+  const tableState = useFilesTableState(columns)
   const { activeBucket, filters, isViewingBuckets } = useFilesManager()
   const { limit, marker, nextMarker, response, isMore, refresh, dataset } =
     useDataset({

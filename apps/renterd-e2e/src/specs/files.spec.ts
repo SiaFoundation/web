@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, Page } from '@playwright/test'
 import { navigateToBuckets } from '../fixtures/navigate'
 import { createBucket, deleteBucket, openBucket } from '../fixtures/buckets'
 import {
@@ -16,9 +16,15 @@ import {
   expectFilesMap,
   openDirectoryContextMenu,
   changeExplorerMode,
+  getFileRowByIndex,
 } from '../fixtures/files'
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
-import { clearToasts, fillTextInputByName } from '@siafoundation/e2e'
+import {
+  clearToasts,
+  fillTextInputByName,
+  setSortDirection,
+  setSortField,
+} from '@siafoundation/e2e'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page, {
@@ -71,6 +77,76 @@ test('can see full file paths in the all files view mode', async ({ page }) => {
   await fileInList(page, dirPath2)
   await changeExplorerMode(page, 'all files')
   await expect(page.getByText(visiblePath)).toBeVisible()
+})
+
+test('can sort files in both modes', async ({ page }) => {
+  const bucketName = 'bucket1'
+  const fileA = 'a.txt'
+  const fileB = 'b.txt'
+  const filePathA = `${bucketName}/${fileA}`
+  const filePathB = `${bucketName}/${fileB}`
+
+  await navigateToBuckets({ page })
+  await createBucket(page, bucketName)
+  await openBucket(page, bucketName)
+
+  await createFilesMap(page, bucketName, {
+    [fileA]: 10,
+    [fileB]: 20,
+  })
+
+  let mode: 'directory' | 'all files' = 'directory'
+
+  await setSortField(page, 'name')
+  await setSortDirection(page, 'asc')
+
+  function getRow(
+    page: Page,
+    index: number,
+    mode: 'directory' | 'all files',
+    path: string
+  ) {
+    return getFileRowByIndex(page, index, mode).and(page.getByTestId(path))
+  }
+
+  await expect(getRow(page, 0, mode, filePathA)).toBeVisible()
+  await expect(getRow(page, 1, mode, filePathB)).toBeVisible()
+
+  await setSortDirection(page, 'desc')
+
+  await expect(getRow(page, 0, mode, filePathB)).toBeVisible()
+  await expect(getRow(page, 1, mode, filePathA)).toBeVisible()
+
+  await setSortField(page, 'size')
+
+  await expect(getRow(page, 0, mode, filePathB)).toBeVisible()
+  await expect(getRow(page, 1, mode, filePathA)).toBeVisible()
+
+  await setSortDirection(page, 'asc')
+
+  await expect(getRow(page, 0, mode, filePathA)).toBeVisible()
+  await expect(getRow(page, 1, mode, filePathB)).toBeVisible()
+
+  mode = 'all files'
+  await changeExplorerMode(page, mode)
+
+  await expect(getRow(page, 0, mode, filePathA)).toBeVisible()
+  await expect(getRow(page, 1, mode, filePathB)).toBeVisible()
+
+  await setSortDirection(page, 'desc')
+
+  await expect(getRow(page, 0, mode, filePathB)).toBeVisible()
+  await expect(getRow(page, 1, mode, filePathA)).toBeVisible()
+
+  await setSortField(page, 'name')
+
+  await expect(getRow(page, 0, mode, filePathB)).toBeVisible()
+  await expect(getRow(page, 1, mode, filePathA)).toBeVisible()
+
+  await setSortDirection(page, 'asc')
+
+  await expect(getRow(page, 0, mode, filePathA)).toBeVisible()
+  await expect(getRow(page, 1, mode, filePathB)).toBeVisible()
 })
 
 test('can upload, rename, and delete files', async ({ page }) => {
