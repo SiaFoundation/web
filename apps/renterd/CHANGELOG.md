@@ -1,5 +1,15 @@
 # renterd
 
+## 0.75.0
+
+### Minor Changes
+
+- 57ac6255: The total number of files no longer includes uploads in progress.
+
+### Patch Changes
+
+- b3dfd43a: Fixed an issue where sorting was not applied when in "all files" mode.
+
 ## 0.74.0
 
 ### Minor Changes
