@@ -18,8 +18,6 @@ export function getMockSiaCentralExchangeRatesResponse(): SiaCentralExchangeRate
         jpy: '1.600530478116',
         ltc: '0.000116295710314',
         rub: '0.978819669836',
-        scp: '0.0623627615062762',
-        sf: '0.000000745235',
         usd: '0.010571307522',
       },
     },

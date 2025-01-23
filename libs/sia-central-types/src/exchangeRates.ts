@@ -11,8 +11,6 @@ export type SiaCentralExchangeRates = {
     jpy: string
     ltc: string
     rub: string
-    scp: string
-    sf: string
     usd: string
   }
 }
