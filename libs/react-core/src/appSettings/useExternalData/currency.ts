@@ -6,7 +6,6 @@ export type CurrencyId =
   | 'jpy'
   | 'aud'
   | 'cny'
-  | 'rub'
   | 'btc'
   | 'eth'
 
@@ -52,12 +51,6 @@ export const currencyOptions: CurrencyOption[] = [
     id: 'aud',
     label: 'AUD',
     prefix: '$',
-    fixed: 2,
-  },
-  {
-    id: 'rub',
-    label: 'RUB',
-    prefix: '₽',
     fixed: 2,
   },
   {
