@@ -1,5 +1,11 @@
 # @siafoundation/e2e
 
+## 0.5.0
+
+### Minor Changes
+
+- b3dfd43a: Added setSortField and setSortDirection.
+
 ## 0.4.0
 
 ### Minor Changes
