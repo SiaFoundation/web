@@ -59,24 +59,32 @@ export const columnsDefaultVisible: TableColumnId[] = [
 export type SortField = 'name' | 'health' | 'size'
 
 export const defaultSortField: SortField = 'name'
+export const defaultSortDirection = 'asc'
 
-export const sortOptions: { id: SortField; label: string; category: string }[] =
-  [
-    {
-      id: 'name',
-      label: 'name',
-      category: 'general',
-    },
-    {
-      id: 'health',
-      label: 'health',
-      category: 'general',
-    },
-    {
-      id: 'size',
-      label: 'size',
-      category: 'general',
-    },
-  ]
+export const sortOptions: {
+  id: SortField
+  label: string
+  category: string
+  clientId: keyof ObjectData
+}[] = [
+  {
+    id: 'name',
+    label: 'name',
+    clientId: 'path',
+    category: 'general',
+  },
+  {
+    id: 'health',
+    label: 'health',
+    clientId: 'health',
+    category: 'general',
+  },
+  {
+    id: 'size',
+    label: 'size',
+    clientId: 'size',
+    category: 'general',
+  },
+]
 
 export type ExplorerMode = 'directory' | 'flat'

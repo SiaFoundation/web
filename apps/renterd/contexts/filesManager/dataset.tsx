@@ -2,7 +2,7 @@ import { ObjectMetadata } from '@siafoundation/renterd-types'
 import { sortBy, toPairs } from '@technically/lodash'
 import useSWR from 'swr'
 import { useContracts } from '../contracts'
-import { ObjectData } from './types'
+import { ObjectData, sortOptions } from './types'
 import {
   buildDirectoryPath,
   getFilename,
@@ -127,9 +127,11 @@ export function useDataset({ id, objects, tableState }: Props) {
             dataMap[upload.path] = upload
           })
       }
+      // Re-apply sort on the client so that uploads are included.
+      const sortInfo = sortOptions.find((s) => s.id === tableState.sortField)
       const all = sortBy(
         toPairs(dataMap).map((p) => p[1]),
-        tableState.sortField as keyof ObjectData
+        sortInfo?.clientId || 'path'
       )
       if (tableState.sortDirection === 'desc') {
         all.reverse()

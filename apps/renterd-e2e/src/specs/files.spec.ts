@@ -81,18 +81,32 @@ test('can see full file paths in the all files view mode', async ({ page }) => {
 
 test('can sort files in both modes', async ({ page }) => {
   const bucketName = 'bucket1'
-  const fileA = 'a.txt'
-  const fileB = 'b.txt'
-  const filePathA = `${bucketName}/${fileA}`
-  const filePathB = `${bucketName}/${fileB}`
+  const dirA = 'dirA'
+  const dirB = 'dirB'
+  const fileA = 'fileA.txt'
+  const fileB = 'fileB.txt'
+  const fileC = 'fileC.txt'
+  const fileD = 'fileD.txt'
+  const dirPathA = `${bucketName}/${dirA}/`
+  const dirPathB = `${bucketName}/${dirB}/`
+  const filePathAA = `${dirPathA}${fileA}`
+  const filePathBB = `${dirPathB}${fileB}`
+  const filePathAC = `${dirPathA}${fileC}`
+  const filePathBD = `${dirPathB}${fileD}`
 
   await navigateToBuckets({ page })
   await createBucket(page, bucketName)
   await openBucket(page, bucketName)
 
   await createFilesMap(page, bucketName, {
-    [fileA]: 10,
-    [fileB]: 20,
+    [dirA]: {
+      [fileA]: 10,
+      [fileC]: 20,
+    },
+    [dirB]: {
+      [fileB]: 5,
+      [fileD]: 15,
+    },
   })
 
   let mode: 'directory' | 'all files' = 'directory'
@@ -109,44 +123,85 @@ test('can sort files in both modes', async ({ page }) => {
     return getFileRowByIndex(page, index, mode).and(page.getByTestId(path))
   }
 
-  await expect(getRow(page, 0, mode, filePathA)).toBeVisible()
-  await expect(getRow(page, 1, mode, filePathB)).toBeVisible()
+  // In directory mode, first test root directory sorting.
+  await expect(getRow(page, 0, mode, dirPathA)).toBeVisible()
+  await expect(getRow(page, 1, mode, dirPathB)).toBeVisible()
 
   await setSortDirection(page, 'desc')
 
-  await expect(getRow(page, 0, mode, filePathB)).toBeVisible()
-  await expect(getRow(page, 1, mode, filePathA)).toBeVisible()
+  await expect(getRow(page, 0, mode, dirPathB)).toBeVisible()
+  await expect(getRow(page, 1, mode, dirPathA)).toBeVisible()
 
-  await setSortField(page, 'size')
-
-  await expect(getRow(page, 0, mode, filePathB)).toBeVisible()
-  await expect(getRow(page, 1, mode, filePathA)).toBeVisible()
-
+  // Enter dirA and test sorting by name.
+  await openDirectory(page, dirPathA)
+  await setSortField(page, 'name')
   await setSortDirection(page, 'asc')
 
-  await expect(getRow(page, 0, mode, filePathA)).toBeVisible()
-  await expect(getRow(page, 1, mode, filePathB)).toBeVisible()
+  await expect(getRow(page, 0, mode, filePathAA)).toBeVisible()
+  await expect(getRow(page, 1, mode, filePathAC)).toBeVisible()
+
+  await setSortDirection(page, 'desc')
+
+  await expect(getRow(page, 0, mode, filePathAC)).toBeVisible()
+  await expect(getRow(page, 1, mode, filePathAA)).toBeVisible()
+
+  // Test size sorting in dirA.
+  await setSortField(page, 'size')
+  await setSortDirection(page, 'asc')
+
+  await expect(getRow(page, 0, mode, filePathAA)).toBeVisible() // 10 bytes
+  await expect(getRow(page, 1, mode, filePathAC)).toBeVisible() // 20 bytes
+
+  await setSortDirection(page, 'desc')
+
+  await expect(getRow(page, 0, mode, filePathAC)).toBeVisible() // 20 bytes
+  await expect(getRow(page, 1, mode, filePathAA)).toBeVisible() // 10 bytes
+
+  // Return to root directory for all files mode tests.
+  await navigateToParentDirectory(page)
 
   mode = 'all files'
   await changeExplorerMode(page, mode)
 
-  await expect(getRow(page, 0, mode, filePathA)).toBeVisible()
-  await expect(getRow(page, 1, mode, filePathB)).toBeVisible()
+  // In all files mode, we should see directories and files sorted by full path.
+  await setSortField(page, 'name')
+  await setSortDirection(page, 'asc')
+
+  await expect(getRow(page, 0, mode, dirPathA)).toBeVisible()
+  await expect(getRow(page, 1, mode, filePathAA)).toBeVisible()
+  await expect(getRow(page, 2, mode, filePathAC)).toBeVisible()
+  await expect(getRow(page, 3, mode, dirPathB)).toBeVisible()
+  await expect(getRow(page, 4, mode, filePathBB)).toBeVisible()
+  await expect(getRow(page, 5, mode, filePathBD)).toBeVisible()
 
   await setSortDirection(page, 'desc')
 
-  await expect(getRow(page, 0, mode, filePathB)).toBeVisible()
-  await expect(getRow(page, 1, mode, filePathA)).toBeVisible()
+  await expect(getRow(page, 0, mode, filePathBD)).toBeVisible()
+  await expect(getRow(page, 1, mode, filePathBB)).toBeVisible()
+  await expect(getRow(page, 2, mode, dirPathB)).toBeVisible()
+  await expect(getRow(page, 3, mode, filePathAC)).toBeVisible()
+  await expect(getRow(page, 4, mode, filePathAA)).toBeVisible()
+  await expect(getRow(page, 5, mode, dirPathA)).toBeVisible()
 
-  await setSortField(page, 'name')
-
-  await expect(getRow(page, 0, mode, filePathB)).toBeVisible()
-  await expect(getRow(page, 1, mode, filePathA)).toBeVisible()
-
+  // Test size sorting in all files mode.
+  await setSortField(page, 'size')
   await setSortDirection(page, 'asc')
 
-  await expect(getRow(page, 0, mode, filePathA)).toBeVisible()
-  await expect(getRow(page, 1, mode, filePathB)).toBeVisible()
+  await expect(getRow(page, 0, mode, dirPathA)).toBeVisible() // 0 bytes
+  await expect(getRow(page, 1, mode, dirPathB)).toBeVisible() // 0 bytes
+  await expect(getRow(page, 2, mode, filePathBB)).toBeVisible() // 5 bytes
+  await expect(getRow(page, 3, mode, filePathAA)).toBeVisible() // 10 bytes
+  await expect(getRow(page, 4, mode, filePathBD)).toBeVisible() // 15 bytes
+  await expect(getRow(page, 5, mode, filePathAC)).toBeVisible() // 20 bytes
+
+  await setSortDirection(page, 'desc')
+
+  await expect(getRow(page, 0, mode, filePathAC)).toBeVisible() // 20 bytes
+  await expect(getRow(page, 1, mode, filePathBD)).toBeVisible() // 15 bytes
+  await expect(getRow(page, 2, mode, filePathAA)).toBeVisible() // 10 bytes
+  await expect(getRow(page, 3, mode, filePathBB)).toBeVisible() // 5 bytes
+  await expect(getRow(page, 4, mode, dirPathB)).toBeVisible() // 0 bytes
+  await expect(getRow(page, 5, mode, dirPathA)).toBeVisible() // 0 bytes
 })
 
 test('can upload, rename, and delete files', async ({ page }) => {
