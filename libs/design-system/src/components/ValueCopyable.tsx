@@ -78,6 +78,10 @@ export function ValueCopyable({
           weight={weight}
           font={font}
           ellipsis
+          onDoubleClick={(e) => {
+            e.preventDefault()
+            copyToClipboard(cleanValue, label)
+          }}
         >
           {text}
         </Link>
@@ -89,6 +93,9 @@ export function ValueCopyable({
           weight={weight}
           font={font}
           ellipsis
+          onDoubleClick={() => {
+            copyToClipboard(cleanValue, label)
+          }}
         >
           {text}
         </Text>
