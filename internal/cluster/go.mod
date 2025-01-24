@@ -5,7 +5,7 @@ go 1.23.1
 toolchain go1.23.2
 
 require (
-	go.sia.tech/cluster v0.1.3-0.20250123081326-31c98efbee24
+	go.sia.tech/cluster v0.1.3-0.20250123154351-019739f4c4be
 	go.sia.tech/core v0.9.1
 	go.sia.tech/coreutils v0.10.1
 	go.uber.org/zap v1.27.0
