@@ -12,12 +12,12 @@ export const fillComposeTransactionSiacoin = step(
     page: Page
     receiveAddress: string
     changeAddress: string
-    amount: string
+    amount: number
   }) => {
     await fillTextInputByName(page, 'receiveAddress', receiveAddress)
     await page.getByLabel('customChangeAddress').click()
     await fillTextInputByName(page, 'changeAddress', changeAddress)
-    await fillTextInputByName(page, 'siacoin', amount)
+    await fillTextInputByName(page, 'siacoin', String(amount))
     await page.getByRole('button', { name: 'Generate transaction' }).click()
   }
 )

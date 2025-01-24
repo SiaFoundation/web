@@ -1,4 +1,4 @@
-import { SendReceipt } from '../_sharedWalletSend/SendReceipt'
+import { SendReceiptV1 } from '../_sharedWalletSend/SendReceiptV1'
 import { useForm } from 'react-hook-form'
 import { useCallback, useMemo, useState } from 'react'
 import {
@@ -9,13 +9,13 @@ import {
 import { getFieldMnemonic, MnemonicFieldType } from '../../lib/fieldMnemonic'
 import { FieldMnemonic } from '../FieldMnemonic'
 import { useWalletCachedSeed } from '../../hooks/useWalletCachedSeed'
-import { useSignAndBroadcast } from './useSignAndBroadcast'
+import { useSignAndBroadcastV1 } from './useSignAndBroadcastV1'
 import { useWallets } from '../../contexts/wallets'
-import { SendParams } from '../_sharedWalletSend/types'
+import { SendParamsV1 } from '../_sharedWalletSend/types'
 
 type Props = {
   walletId: string
-  params: SendParams
+  params: SendParamsV1
   onConfirm: (params: { transactionId?: string }) => void
 }
 
@@ -51,8 +51,8 @@ function getFields({
   }
 }
 
-export function useSendForm({ walletId, params, onConfirm }: Props) {
-  const signAndBroadcast = useSignAndBroadcast()
+export function useSendFormV1({ walletId, params, onConfirm }: Props) {
+  const signAndBroadcast = useSignAndBroadcastV1()
   const { isSeedCached } = useWalletCachedSeed(walletId)
   const { dataset } = useWallets()
   const wallet = dataset?.find((w) => w.id === walletId)
@@ -109,7 +109,7 @@ export function useSendForm({ walletId, params, onConfirm }: Props) {
         fields={fields}
         actionText="complete the transaction"
       />
-      <SendReceipt params={params} />
+      <SendReceiptV1 params={params} />
     </div>
   )
 

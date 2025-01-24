@@ -51,6 +51,12 @@ import {
   WalletAddressesResponse,
   WalletBalanceParams,
   WalletBalanceResponse,
+  WalletConstructV1TransactionParams,
+  WalletConstructV1TransactionPayload,
+  WalletConstructV1TransactionResponse,
+  WalletConstructV2TransactionParams,
+  WalletConstructV2TransactionPayload,
+  WalletConstructV2TransactionResponse,
   WalletDeleteParams,
   WalletDeletePayload,
   WalletDeleteResponse,
@@ -92,6 +98,8 @@ import {
   walletsIdAddressesAddrRoute,
   walletsIdAddressesRoute,
   walletsIdBalanceRoute,
+  walletsIdConstructTransactionRoute,
+  walletsIdConstructV2TransactionRoute,
   walletsIdEventsRoute,
   walletsIdEventsUnconfirmedRoute,
   walletsIdFundRoute,
@@ -459,4 +467,24 @@ export function useWalletRelease(
   >
 ) {
   return usePostFunc({ ...args, route: walletsIdReleaseRoute })
+}
+
+export function useWalletConstructV1Transaction(
+  args?: HookArgsCallback<
+    WalletConstructV1TransactionParams,
+    WalletConstructV1TransactionPayload,
+    WalletConstructV1TransactionResponse
+  >
+) {
+  return usePostFunc({ ...args, route: walletsIdConstructTransactionRoute })
+}
+
+export function useWalletConstructV2Transaction(
+  args?: HookArgsCallback<
+    WalletConstructV2TransactionParams,
+    WalletConstructV2TransactionPayload,
+    WalletConstructV2TransactionResponse
+  >
+) {
+  return usePostFunc({ ...args, route: walletsIdConstructV2TransactionRoute })
 }

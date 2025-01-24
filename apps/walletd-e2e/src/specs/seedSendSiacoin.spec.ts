@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { recoverWallet, rescanWallets, walletInList } from '../fixtures/wallet'
 import { navigateToWallet } from '../fixtures/navigate'
-import { fillComposeTransactionSiacoin } from '../fixtures/sendSiacoinDialog'
 import { random } from '@technically/lodash'
 import {
   afterTest,
@@ -10,6 +9,8 @@ import {
 } from '../fixtures/beforeTest'
 import { toHastings } from '@siafoundation/units'
 import { testRequiresClipboardPermissions } from '@siafoundation/e2e'
+import { sendSiacoinWithSeedWallet } from '../fixtures/seedSendSiacoin'
+import { mine, getCurrentHeight } from '@siafoundation/clusterd'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page)
@@ -19,7 +20,12 @@ test.afterEach(async () => {
   await afterTest()
 })
 
-test('send siacoin with a seed wallet', async ({ page, browserName }) => {
+test('send siacoin with a seed wallet pre and post v2 fork allow height', async ({
+  page,
+  browserName,
+}) => {
+  const height = await getCurrentHeight()
+  console.log('height', height)
   testRequiresClipboardPermissions(browserName)
   // Mnemonic and address0 for the wallet.
   const name = 'test-send-siacoin-seed-wallet'
@@ -34,8 +40,6 @@ test('send siacoin with a seed wallet', async ({ page, browserName }) => {
   const receiveAddress =
     '5739945c21e60afd70eaf97ccd33ea27836e0219212449f39e4b38acaa8b3119aa4150a9ef0f'
   const changeAddress = address0
-  const amount = String(random(1, 20))
-  const amountWithFeeString = `${amount}.004 SC`
 
   await recoverWallet(page, name, mnemonic)
   await walletInList(page, name)
@@ -43,43 +47,28 @@ test('send siacoin with a seed wallet', async ({ page, browserName }) => {
   await navigateToWallet(page, name)
   const navbar = page.getByTestId('navbar')
   await expect(navbar.getByText('1.000 MS')).toBeVisible({ timeout: 20_000 })
-  await page.getByLabel('send').click()
-  await fillComposeTransactionSiacoin({
-    page,
+
+  await sendSiacoinWithSeedWallet(page, {
+    browserName,
+    walletName: name,
+    mnemonic,
     receiveAddress,
     changeAddress,
-    amount,
+    amount: random(1, 20),
+    fee: 0.004,
   })
-  const sendDialog = page.getByRole('dialog', { name: 'Send' })
-  await expect(
-    sendDialog.getByText('The wallet is currently unlocked')
-  ).toBeVisible()
-  await expect(sendDialog.getByText('Total')).toBeVisible()
-  await expect(sendDialog.getByText(amountWithFeeString)).toBeVisible()
 
-  await page
-    .getByRole('button', { name: 'Sign and broadcast transaction' })
-    .click()
-  await expect(
-    page.getByText('Transaction successfully broadcast')
-  ).toBeVisible()
-  await expect(sendDialog.getByText(receiveAddress.slice(0, 5))).toBeVisible()
-  await expect(sendDialog.getByText(changeAddress.slice(0, 5))).toBeVisible()
-  await expect(sendDialog.getByText('Total')).toBeVisible()
-  await expect(sendDialog.getByText(amountWithFeeString)).toBeVisible()
-  await sendDialog.getByRole('button', { name: 'Close' }).click()
-
+  await mine(100)
   await page.reload()
-  await expect(page.getByTestId('eventsTable')).toBeVisible()
-  await expect(
-    page.getByTestId('eventsTable').locator('tbody tr').first()
-  ).toBeVisible()
-  await expect(
-    page
-      .getByTestId('eventsTable')
-      .locator('tbody tr')
-      .first()
-      .getByTestId('amount')
-      .getByText(`-${amountWithFeeString}`)
-  ).toBeVisible()
+
+  await sendSiacoinWithSeedWallet(page, {
+    browserName,
+    walletName: name,
+    mnemonic,
+    receiveAddress,
+    changeAddress,
+    amount: random(21, 40),
+    // Fee is calculated differently in v2 send flow.
+    fee: 0.02,
+  })
 })

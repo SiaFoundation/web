@@ -1,15 +1,32 @@
-import BigNumber from 'bignumber.js'
-import { useMemo, useState } from 'react'
-import { useComposeForm } from '../_sharedWalletSend/useComposeForm'
-import { useSendForm } from './useSendForm'
-import { useWalletBalance } from '@siafoundation/walletd-react'
-import { SendFlowDialog } from '../_sharedWalletSend/SendFlowDialog'
 import {
-  SendParams,
-  SendStep,
-  emptySendParams,
-} from '../_sharedWalletSend/types'
-import { useWalletAddresses } from '../../hooks/useWalletAddresses'
+  useConsensusNetwork,
+  useConsensusTip,
+} from '@siafoundation/walletd-react'
+import { WalletSendSeedDialogV2 } from '../WalletSendSeedDialogV2'
+import { WalletSendSeedDialogV1 } from '../WalletSendSeedDialogV1'
+
+// mainnet: https://github.com/SiaFoundation/coreutils/blob/master/chain/network.go#L50-L51
+// n.HardforkV2.AllowHeight = 526000   // June 6th, 2025 @ 6:00am UTC
+// n.HardforkV2.RequireHeight = 530000 // July 4th, 2025 @ 2:00am UTC
+
+// zen: https://github.com/SiaFoundation/coreutils/blob/master/chain/network.go#L144-L145
+// n.HardforkV2.AllowHeight = 112000   // March 1, 2025 @ 7:00:00 UTC
+// n.HardforkV2.RequireHeight = 114000 // ~ 2 weeks later
+
+// anagami: https://github.com/SiaFoundation/coreutils/blob/master/chain/network.go#L172-L173
+// n.HardforkV2.AllowHeight = 2016         // ~2 weeks in
+// n.HardforkV2.RequireHeight = 2016 + 288 // ~2 days later
+
+// test cluster: internal/cluster/cmd/clusterd/main.go#L131-L132
+// n.HardforkV2.AllowHeight = 400
+// n.HardforkV2.RequireHeight = 500
+
+const hardforkV2AllowHeights = {
+  mainnet: 526_000,
+  zen: 112_000,
+  anagami: 2_016,
+  testCluster: 400,
+}
 
 export type WalletSendSeedDialogParams = {
   walletId: string
@@ -28,90 +45,29 @@ export function WalletSendSeedDialog({
   open,
   onOpenChange,
 }: Props) {
-  const { walletId } = dialogParams || {}
-  const balance = useWalletBalance({
-    disabled: !walletId,
-    params: {
-      id: walletId,
-    },
-  })
-  const { dataset: addresses } = useWalletAddresses({ id: walletId })
-  const balanceSc = useMemo(
-    () => new BigNumber(balance.data?.siacoins || 0),
-    [balance.data]
-  )
-  const balanceSf = useMemo(
-    () => new BigNumber(balance.data?.siafunds || 0),
-    [balance.data]
-  )
+  const n = useConsensusNetwork()
+  const ct = useConsensusTip()
 
-  const [step, setStep] = useState<SendStep>('compose')
-  const [signedTxnId, setSignedTxnId] = useState<string>()
-  const [sendParams, setSendParams] = useState<SendParams>(emptySendParams)
+  const hardforkV2AllowHeight = process.env.NEXT_PUBLIC_TEST_CLUSTER
+    ? hardforkV2AllowHeights.testCluster
+    : hardforkV2AllowHeights[n.data?.name || 'mainnet']
 
-  // Form for each step
-  const compose = useComposeForm({
-    balanceSc,
-    balanceSf,
-    defaultChangeAddress: addresses?.[0]?.address,
-    defaultClaimAddress: addresses?.[0]?.address,
-    onComplete: (params) => {
-      setSendParams((d) => ({
-        ...d,
-        ...params,
-      }))
-      setStep('send')
-    },
-  })
-
-  const send = useSendForm({
-    walletId,
-    params: sendParams,
-    onConfirm: ({ transactionId }) => {
-      setSignedTxnId(transactionId)
-      setStep('done')
-    },
-  })
-
-  const controls = useMemo(() => {
-    if (step === 'compose') {
-      return {
-        submitLabel: 'Generate transaction',
-        form: compose.form,
-        handleSubmit: compose.handleSubmit,
-        reset: compose.reset,
-      }
-    }
-    if (step === 'send') {
-      return {
-        submitLabel: 'Sign and broadcast transaction',
-        form: send.form,
-        handleSubmit: send.handleSubmit,
-        reset: send.reset,
-      }
-    }
-    return undefined
-  }, [step, compose, send])
-
+  if (ct.data?.height > hardforkV2AllowHeight) {
+    return (
+      <WalletSendSeedDialogV2
+        trigger={trigger}
+        open={open}
+        onOpenChange={onOpenChange}
+        params={dialogParams}
+      />
+    )
+  }
   return (
-    <SendFlowDialog
+    <WalletSendSeedDialogV1
       trigger={trigger}
       open={open}
-      onOpenChange={(val) => {
-        if (!val) {
-          compose.reset()
-          send.reset()
-          setStep('compose')
-        }
-        onOpenChange(val)
-      }}
-      controls={controls}
-      compose={compose}
-      send={send}
-      sendParams={sendParams}
-      signedTxnId={signedTxnId}
-      step={step}
-      setStep={setStep}
+      onOpenChange={onOpenChange}
+      params={dialogParams}
     />
   )
 }

@@ -211,9 +211,9 @@ func transactionID(this js.Value, args []js.Value) result {
 	})
 }
 
-// v2TransactionInputSigHash returns the input sighash of a v2 transaction.
+// v2TransactionInputSigHash returns the input sigHash of a v2 transaction.
 func v2TransactionInputSigHash(_ js.Value, args []js.Value) result {
-	if err := checkArgs(args, js.TypeObject, js.TypeObject, js.TypeObject, js.TypeNumber, js.TypeString); err != nil {
+	if err := checkArgs(args, js.TypeObject, js.TypeObject, js.TypeObject); err != nil {
 		return resultErr(err)
 	}
 
@@ -234,7 +234,7 @@ func v2TransactionInputSigHash(_ js.Value, args []js.Value) result {
 	cs.Network = &cn
 
 	return result(map[string]any{
-		"sighash": cs.InputSigHash(txn).String(),
+		"sigHash": cs.InputSigHash(txn).String(),
 	})
 }
 

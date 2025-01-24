@@ -11,9 +11,13 @@ import {
   SiafundOutput,
   Signature,
   StateElement,
+  UnlockConditions,
 } from './core'
 
-export type SpendPolicy = string
+export type SpendPolicy = {
+  type: 'uc'
+  policy: UnlockConditions
+}
 
 export type V2SiacoinInput = {
   parent: SiacoinElement

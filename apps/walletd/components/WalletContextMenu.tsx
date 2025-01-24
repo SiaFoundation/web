@@ -29,7 +29,6 @@ export function WalletContextMenu({
       {metadata.type === 'seed' ? (
         state.status === 'unlocked' ? (
           <DropdownMenuItem
-            aria-label="Wallet context menu"
             onClick={(e) => e.stopPropagation()}
             onSelect={() => actions.lock()}
           >
