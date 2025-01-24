@@ -2,6 +2,8 @@ import { Heading } from '../core/Heading'
 import { Text } from '../core/Text'
 import { ValueCopyable } from '../components/ValueCopyable'
 import QRCode from 'react-qr-code'
+import { useCallback } from 'react'
+import { copyToClipboard } from '../lib/clipboard'
 
 type Props = {
   title?: string
@@ -10,6 +12,10 @@ type Props = {
 }
 
 export function WalletAddressCode({ title, description, address }: Props) {
+  const copy = useCallback(() => {
+    copyToClipboard(address, 'address')
+  }, [address])
+
   return (
     <div className="flex flex-col gap-4 items-center justify-center">
       {title && (
@@ -18,8 +24,8 @@ export function WalletAddressCode({ title, description, address }: Props) {
         </Heading>
       )}
       {description && <Text>{description}</Text>}
-      <div className="relative p-[5px] bg-white h-[210px] w-[210px]">
-        <div className="absolute">
+      <div className="relative p-[5px] bg-white h-[210px] w-[210px] hover:outline hover:outline-4 hover:outline-blue-500">
+        <div onClick={copy} className="absolute cursor-pointer">
           <QRCode size={200} value={address} />
         </div>
       </div>
