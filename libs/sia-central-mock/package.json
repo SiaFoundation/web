@@ -1,11 +1,11 @@
 {
   "name": "@siafoundation/sia-central-mock",
   "description": "Sia Central data and API mock library for testing.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "license": "MIT",
   "dependencies": {
     "playwright": "^1.42.1",
-    "@siafoundation/sia-central-types": "0.1.1"
+    "@siafoundation/sia-central-types": "0.2.0"
   },
   "types": "./src/index.d.ts"
 }

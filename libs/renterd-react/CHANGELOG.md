@@ -1,5 +1,13 @@
 # @siafoundation/renterd-react
 
+## 4.14.1
+
+### Patch Changes
+
+- Updated dependencies [0d7fdf2e]
+  - @siafoundation/react-core@1.8.0
+  - @siafoundation/units@3.3.1
+
 ## 4.14.0
 
 ### Minor Changes

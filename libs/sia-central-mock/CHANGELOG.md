@@ -1,5 +1,16 @@
 # @siafoundation/sia-central-mock
 
+## 0.3.0
+
+### Minor Changes
+
+- 0d7fdf2e: Removed unsupported currencies from Sia Central SDKs.
+
+### Patch Changes
+
+- Updated dependencies [0d7fdf2e]
+  - @siafoundation/sia-central-types@0.2.0
+
 ## 0.2.0
 
 ### Minor Changes

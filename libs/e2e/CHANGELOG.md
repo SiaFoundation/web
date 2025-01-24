@@ -1,5 +1,12 @@
 # @siafoundation/e2e
 
+## 0.5.1
+
+### Patch Changes
+
+- Updated dependencies [0d7fdf2e]
+  - @siafoundation/react-core@1.8.0
+
 ## 0.5.0
 
 ### Minor Changes

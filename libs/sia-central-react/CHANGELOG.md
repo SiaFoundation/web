@@ -1,5 +1,14 @@
 # @siafoundation/sia-central-react
 
+## 3.1.2
+
+### Patch Changes
+
+- Updated dependencies [0d7fdf2e]
+- Updated dependencies [0d7fdf2e]
+  - @siafoundation/react-core@1.8.0
+  - @siafoundation/sia-central-types@0.2.0
+
 ## 3.1.1
 
 ### Patch Changes

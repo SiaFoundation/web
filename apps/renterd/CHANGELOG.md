@@ -1,5 +1,15 @@
 # renterd
 
+## 0.76.0
+
+### Minor Changes
+
+- a7c3dae9: The default files sort direction is now asc instead of desc.
+
+### Patch Changes
+
+- a7c3dae9: Fixed an issue where files were being sorted by name rather than full path in all files mode.
+
 ## 0.75.0
 
 ### Minor Changes
