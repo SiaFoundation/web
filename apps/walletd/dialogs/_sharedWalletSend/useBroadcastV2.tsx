@@ -1,17 +1,24 @@
-import { ChainIndex, Transaction } from '@siafoundation/types'
+import { V2Transaction } from '@siafoundation/types'
 import { useTxPoolBroadcast } from '@siafoundation/walletd-react'
 import { useCallback } from 'react'
+import { ChainIndex } from '@siafoundation/types'
 
-export function useBroadcast({ cancel }: { cancel: (t: Transaction) => void }) {
+export function useBroadcastV2({
+  cancel,
+}: {
+  cancel: (t: V2Transaction) => void
+}) {
   const txPoolBroadcast = useTxPoolBroadcast()
 
   const broadcast = useCallback(
     async ({
-      signedTransaction,
+      id,
       basis,
+      signedTransaction,
     }: {
-      signedTransaction: Transaction
+      id: string
       basis: ChainIndex
+      signedTransaction: V2Transaction
     }) => {
       if (!signedTransaction) {
         return {
@@ -22,8 +29,8 @@ export function useBroadcast({ cancel }: { cancel: (t: Transaction) => void }) {
       const broadcastResponse = await txPoolBroadcast.post({
         payload: {
           basis,
-          transactions: [signedTransaction],
-          v2transactions: [],
+          transactions: [],
+          v2transactions: [signedTransaction],
         },
       })
       if (broadcastResponse.error) {
@@ -34,8 +41,7 @@ export function useBroadcast({ cancel }: { cancel: (t: Transaction) => void }) {
       }
 
       return {
-        // Need transaction ID, but its not part of transaction object
-        // transactionId: signResponse.data.??,
+        transactionId: id,
       }
     },
     [cancel, txPoolBroadcast]

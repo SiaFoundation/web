@@ -9,6 +9,8 @@ import {
   Hash256,
   PublicKey,
   PrivateKey,
+  V2Transaction,
+  Result,
 } from '@siafoundation/types'
 
 type AccountToken = {
@@ -97,114 +99,106 @@ export type RPC = RPCSettings | RPCReadSector | RPCWriteSector
 
 export type WasmApi = {
   rhp: {
-    generateAccount: () => {
-      privateKey?: PrivateKey
-      account?: PublicKey
-      error?: string
-    }
+    generateAccount: () => Result<{
+      privateKey: PrivateKey
+      account: PublicKey
+    }>
     // settings
-    encodeSettingsRequest: (data: RPCSettingsRequest) => {
-      rpc?: Uint8Array
-      error?: string
-    }
-    decodeSettingsRequest: (rpc: Uint8Array) => {
-      data?: Record<string, never>
-      error?: string
-    }
-    encodeSettingsResponse: (data: RPCSettingsResponse) => {
-      rpc?: Uint8Array
-      error?: string
-    }
-    decodeSettingsResponse: (rpc: Uint8Array) => {
-      data?: RPCSettingsResponse
-      error?: string
-    }
+    encodeSettingsRequest: (data: RPCSettingsRequest) => Result<{
+      rpc: Uint8Array
+    }>
+    decodeSettingsRequest: (rpc: Uint8Array) => Result<{
+      data: Record<string, never>
+    }>
+    encodeSettingsResponse: (data: RPCSettingsResponse) => Result<{
+      rpc: Uint8Array
+    }>
+    decodeSettingsResponse: (rpc: Uint8Array) => Result<{
+      data: RPCSettingsResponse
+    }>
     // read sector
-    encodeReadSectorRequest: (data: RPCReadSectorRequest) => {
-      rpc?: Uint8Array
-      error?: string
-    }
-    decodeReadSectorRequest: (rpc: Uint8Array) => {
-      data?: RPCReadSectorRequest
-      error?: string
-    }
-    encodeReadSectorResponse: (data: RPCReadSectorResponse) => {
-      rpc?: Uint8Array
-      error?: string
-    }
-    decodeReadSectorResponse: (rpc: Uint8Array) => {
-      data?: RPCReadSectorResponse
-      error?: string
-    }
+    encodeReadSectorRequest: (data: RPCReadSectorRequest) => Result<{
+      rpc: Uint8Array
+    }>
+    decodeReadSectorRequest: (rpc: Uint8Array) => Result<{
+      data: RPCReadSectorRequest
+    }>
+    encodeReadSectorResponse: (data: RPCReadSectorResponse) => Result<{
+      rpc: Uint8Array
+    }>
+    decodeReadSectorResponse: (rpc: Uint8Array) => Result<{
+      data: RPCReadSectorResponse
+    }>
     // read sector
-    encodeWriteSectorRequest: (data: RPCWriteSectorRequest) => {
-      rpc?: Uint8Array
-      error?: string
-    }
-    decodeWriteSectorRequest: (rpc: Uint8Array) => {
-      data?: RPCWriteSectorRequest
-      error?: string
-    }
-    encodeWriteSectorResponse: (data: RPCWriteSectorResponse) => {
-      rpc?: Uint8Array
-      error?: string
-    }
-    decodeWriteSectorResponse: (rpc: Uint8Array) => {
-      data?: RPCWriteSectorResponse
-      error?: string
-    }
+    encodeWriteSectorRequest: (data: RPCWriteSectorRequest) => Result<{
+      rpc: Uint8Array
+    }>
+    decodeWriteSectorRequest: (rpc: Uint8Array) => Result<{
+      data: RPCWriteSectorRequest
+    }>
+    encodeWriteSectorResponse: (data: RPCWriteSectorResponse) => Result<{
+      rpc: Uint8Array
+    }>
+    decodeWriteSectorResponse: (rpc: Uint8Array) => Result<{
+      data: RPCWriteSectorResponse
+    }>
   }
   wallet: {
-    generateSeedPhrase: () => {
-      phrase?: string
-      error?: string
-    }
-    generateKeyPair: () => {
-      privateKey?: string
-      publicKey?: string
-      error?: string
-    }
+    generateSeedPhrase: () => Result<{
+      phrase: string
+    }>
+    generateKeyPair: () => Result<{
+      privateKey: string
+      publicKey: string
+    }>
     keyPairFromSeedPhrase: (
       phrase: string,
       index: number
-    ) => {
-      privateKey?: string
-      publicKey?: string
-      error?: string
-    }
-    standardUnlockConditions: (publicKey: string) => {
-      unlockConditions?: UnlockConditions
-      error?: string
-    }
-    standardUnlockHash: (publicKey: string) => {
-      address?: string
-      error?: string
-    }
-    addressFromUnlockConditions: (unlockConditions: UnlockConditions) => {
-      address?: string
-      error?: string
-    }
-    addressFromSpendPolicy: (spendPolicy: Record<string, unknown>) => {
-      address?: string
-      error?: string
-    }
-    encodeTransaction: (txn: Transaction) => {
-      encodedTransaction?: string
-      error?: string
-    }
+    ) => Result<{
+      privateKey: string
+      publicKey: string
+    }>
+    standardUnlockConditions: (publicKey: string) => Result<{
+      unlockConditions: UnlockConditions
+    }>
+    standardUnlockHash: (publicKey: string) => Result<{
+      address: string
+    }>
+    addressFromUnlockConditions: (
+      unlockConditions: UnlockConditions
+    ) => Result<{
+      address: string
+    }>
+    addressFromSpendPolicy: (spendPolicy: Record<string, unknown>) => Result<{
+      address: string
+    }>
+    encodeTransaction: (txn: Transaction) => Result<{
+      encodedTransaction: string
+    }>
     signTransactionV1: (
       cs: ConsensusState,
       cn: ConsensusNetwork,
       txn: Transaction,
       sigIndex: number,
       privateKey: string
-    ) => {
-      signature?: string
-      error?: string
-    }
-    transactionId: (txn: Transaction) => {
-      id?: string
-      error?: string
-    }
+    ) => Result<{
+      signature: string
+    }>
+    v2TransactionInputSigHash: (
+      state: ConsensusState,
+      network: ConsensusNetwork,
+      txn: V2Transaction
+    ) => Result<{
+      sigHash: string
+    }>
+    signHash: (
+      privateKey: string,
+      hash: string
+    ) => Result<{
+      signature: string
+    }>
+    transactionId: (txn: Transaction) => Result<{
+      id: string
+    }>
   }
 }

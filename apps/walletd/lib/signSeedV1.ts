@@ -9,7 +9,7 @@ import { AddressData } from '../contexts/addresses/types'
 import { addUnlockConditionsAndSignatures, getToSignMetadata } from './sign'
 import { getSDK } from '@siafoundation/sdk'
 
-export function signTransactionSeed({
+export function signTransactionSeedV1({
   mnemonic,
   transaction,
   toSign,

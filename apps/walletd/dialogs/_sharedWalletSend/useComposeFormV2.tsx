@@ -15,20 +15,16 @@ import {
 } from '@siafoundation/design-system'
 import { useForm } from 'react-hook-form'
 import { useCallback, useMemo } from 'react'
-import { SendParams } from './types'
+import { SendParamsV2 } from './types'
 import { Information16 } from '@siafoundation/react-icons'
 
 const exampleAddr =
   'e3b1050aef388438668b52983cf78f40925af8f0aa8b9de80c18eadcefce8388d168a313e3f2'
 
-const fee = toHastings(0.00393)
-
 const defaultValues = {
   receiveAddress: '',
   changeAddress: '',
-  claimAddress: '',
   customChangeAddress: false,
-  customClaimAddress: false,
   mode: 'siacoin' as 'siacoin' | 'siafund',
   siacoin: undefined as BigNumber,
   siafund: undefined as BigNumber,
@@ -115,11 +111,6 @@ function getFields({
       title: 'Custom change adress',
       validation: {},
     },
-    customClaimAddress: {
-      type: 'boolean',
-      title: 'Custom claim adress',
-      validation: {},
-    },
     changeAddress: {
       type: 'text',
       title: 'Change address',
@@ -128,9 +119,9 @@ function getFields({
         <Tooltip
           content={
             <>
-              The address where any change from the transaction will be sent. If
-              a custom change address is not specified it is automatically set
-              to the wallet's address 0.
+              The address where any change or claims from the transaction will
+              be sent. If a custom change address is not specified it is
+              automatically set to the wallet's address 0.
             </>
           }
         >
@@ -156,50 +147,6 @@ function getFields({
         },
       },
     },
-    claimAddress: {
-      type: 'text',
-      title: 'Claim address',
-      placeholder: exampleAddr,
-      actions: (
-        <Tooltip
-          content={
-            <>
-              The address that will receive any unclaimed siacoin earnings from
-              the siafund. If a custom claim address is not specified it is
-              automatically set to the wallet's address 0.
-            </>
-          }
-        >
-          <Text color="subtle" className="cursor-pointer">
-            <Information16 className="scale-75" />
-          </Text>
-        </Tooltip>
-      ),
-      validation: {
-        validate: {
-          required: (value: string, values) => {
-            const notSiafundMode = values.mode !== 'siafund'
-            const customChangeAddressNotEnabled = !values.customChangeAddress
-            return (
-              notSiafundMode ||
-              customChangeAddressNotEnabled ||
-              !!value ||
-              'required'
-            )
-          },
-          valid: (value: string, values) => {
-            const notSiafundMode = values.mode !== 'siafund'
-            const customChangeAddressNotEnabled = !values.customChangeAddress
-            return (
-              notSiafundMode ||
-              customChangeAddressNotEnabled ||
-              isValidAddress(value) ||
-              'invalid address'
-            )
-          },
-        },
-      },
-    },
     includeFee: {
       type: 'boolean',
       title: '',
@@ -209,19 +156,19 @@ function getFields({
 }
 
 type Props = {
-  onComplete: (data: SendParams) => void
+  onComplete: (data: SendParamsV2) => void
   balanceSc?: BigNumber
   balanceSf?: BigNumber
+  fee?: BigNumber
   defaultChangeAddress: string
-  defaultClaimAddress: string
 }
 
-export function useComposeForm({
+export function useComposeFormV2({
   balanceSc,
   balanceSf,
+  fee,
   onComplete,
   defaultChangeAddress,
-  defaultClaimAddress,
 }: Props) {
   const form = useForm({
     mode: 'all',
@@ -250,16 +197,13 @@ export function useComposeForm({
         changeAddress: values.customChangeAddress
           ? values.changeAddress
           : defaultChangeAddress,
-        claimAddress: values.customClaimAddress
-          ? values.claimAddress
-          : defaultClaimAddress,
-        fee,
-        mode: values.mode,
         siacoin,
         siafund,
+        mode: values.mode,
+        fee,
       })
     },
-    [onComplete, defaultChangeAddress, defaultClaimAddress]
+    [onComplete, defaultChangeAddress, fee]
   )
 
   const handleSubmit = useMemo(
@@ -270,7 +214,6 @@ export function useComposeForm({
   const siacoin = form.watch('siacoin')
   const mode = form.watch('mode')
   const customChangeAddress = form.watch('customChangeAddress')
-  const customClaimAddress = form.watch('customClaimAddress')
   const includeFee = form.watch('includeFee')
   const sc = toHastings(siacoin || 0)
 
@@ -301,22 +244,6 @@ export function useComposeForm({
             {fields.changeAddress.actions}
           </div>
         </FieldSwitch>
-        {mode === 'siafund' && (
-          <FieldSwitch
-            size="small"
-            form={form}
-            fields={fields}
-            name="customClaimAddress"
-            group={false}
-          >
-            <div className="flex items-center gap-px">
-              <Text color="verySubtle" weight="medium" size="14" ellipsis>
-                custom claim address
-              </Text>
-              {fields.claimAddress.actions}
-            </div>
-          </FieldSwitch>
-        )}
       </div>
       {customChangeAddress && (
         <FieldText
@@ -324,15 +251,6 @@ export function useComposeForm({
           form={form}
           fields={fields}
           name="changeAddress"
-          autoComplete="off"
-        />
-      )}
-      {mode === 'siafund' && customClaimAddress && (
-        <FieldText
-          size="medium"
-          form={form}
-          fields={fields}
-          name="claimAddress"
           autoComplete="off"
         />
       )}

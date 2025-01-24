@@ -1,4 +1,9 @@
-import { SpendPolicy, UnlockConditions } from '@siafoundation/types'
+import {
+  Hash256,
+  PublicKey,
+  SpendPolicy,
+  UnlockConditions,
+} from '@siafoundation/types'
 
 export type GatewayPeer = {
   address: string
@@ -41,4 +46,9 @@ export type WalletAddress = {
   description: string
   spendPolicy?: SpendPolicy
   metadata: WalletAddressMetadata
+}
+
+export type SignaturePayload = {
+  publicKey: PublicKey
+  sigHash: Hash256
 }

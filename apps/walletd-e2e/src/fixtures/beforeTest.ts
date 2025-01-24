@@ -16,7 +16,11 @@ import {
 export async function beforeTest(page: Page) {
   await mockApiSiaScanExchangeRates({ page })
   await mockApiSiaCentralHostsNetworkAverages({ page })
-  await setupCluster({ walletdCount: 1, renterdCount: 1 })
+  await setupCluster({
+    walletdCount: 1,
+    renterdCount: 1,
+    networkVersion: 'transition',
+  })
   const walletdNode = clusterd.nodes.find((n) => n.type === 'walletd')
 
   await login({

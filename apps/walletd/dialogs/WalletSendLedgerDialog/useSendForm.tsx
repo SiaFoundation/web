@@ -1,4 +1,4 @@
-import { SendReceipt } from '../_sharedWalletSend/SendReceipt'
+import { SendReceiptV1 } from '../_sharedWalletSend/SendReceiptV1'
 import { useForm } from 'react-hook-form'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
@@ -15,9 +15,9 @@ import { LedgerSignTxn } from './LedgerSignTxn'
 import { useSign } from './useSign'
 import { useBroadcast } from '../_sharedWalletSend/useBroadcast'
 import { useFundAndSign } from './useFundAndSign'
-import { useCancel } from '../_sharedWalletSend/useCancel'
+import { useCancelV1 } from '../_sharedWalletSend/useCancelV1'
 import { useFund } from '../_sharedWalletSend/useFund'
-import { SendParams, SendStep } from '../_sharedWalletSend/types'
+import { SendParamsV1, SendStep } from '../_sharedWalletSend/types'
 
 const defaultValues = {
   isConnected: false,
@@ -27,7 +27,7 @@ const defaultValues = {
 type Props = {
   walletId: string
   step: SendStep
-  params: SendParams
+  params: SendParamsV1
   onConfirm: (params: { transactionId?: string }) => void
 }
 
@@ -62,7 +62,7 @@ export function useSendForm({ params, step, onConfirm }: Props) {
   const isConnected = form.watch('isConnected')
   const isSigned = form.watch('isSigned')
   const { device, error: ledgerError } = useLedger()
-  const cancel = useCancel()
+  const cancel = useCancelV1()
   const sign = useSign({ cancel })
   const broadcast = useBroadcast({ cancel })
   const fund = useFund()
@@ -165,7 +165,7 @@ export function useSendForm({ params, step, onConfirm }: Props) {
           />
         </div>
       </div>
-      <SendReceipt params={params} />
+      <SendReceiptV1 params={params} />
     </div>
   )
 

@@ -6,14 +6,14 @@ import {
 } from '@siafoundation/walletd-react'
 import { useWallets } from '../../contexts/wallets'
 import { useCallback } from 'react'
-import { signTransactionSeed } from '../../lib/signSeed'
+import { signTransactionSeedV2 } from '../../lib/signSeedV2'
 import { useWalletAddresses } from '../../hooks/useWalletAddresses'
-import { SendParams } from '../_sharedWalletSend/types'
-import { useBroadcast } from '../_sharedWalletSend/useBroadcast'
-import { useCancel } from '../_sharedWalletSend/useCancel'
-import { useFund } from '../_sharedWalletSend/useFund'
+import { SendParamsV2 } from '../_sharedWalletSend/types'
+import { useConstruct } from '../_sharedWalletSend/useConstruct'
+import { useBroadcastV2 } from '../_sharedWalletSend/useBroadcastV2'
+import { useCancelV2 } from '../_sharedWalletSend/useCancelV2'
 
-export function useSignAndBroadcast() {
+export function useSignAndBroadcastV2() {
   const { wallet, cacheWalletMnemonic } = useWallets()
   const walletId = wallet?.id
 
@@ -32,12 +32,18 @@ export function useSignAndBroadcast() {
   const { dataset: addresses } = useWalletAddresses({ id: walletId })
   const cs = useConsensusTipState()
   const cn = useConsensusNetwork()
-  const fund = useFund()
-  const cancel = useCancel()
-  const broadcast = useBroadcast({ cancel })
+  const construct = useConstruct()
+  const cancel = useCancelV2()
+  const broadcast = useBroadcastV2({ cancel })
 
   return useCallback(
-    async ({ mnemonic, params }: { mnemonic: string; params: SendParams }) => {
+    async ({
+      mnemonic,
+      params,
+    }: {
+      mnemonic: string
+      params: SendParamsV2
+    }) => {
       if (!addresses) {
         return {
           error: 'No addresses found',
@@ -46,43 +52,54 @@ export function useSignAndBroadcast() {
 
       // fund
       const {
+        id,
         fundedTransaction,
-        toSign,
+        basis,
         error: fundingError,
-      } = await fund(params)
+      } = await construct(params)
       if (fundingError) {
         return {
           fundedTransaction,
           error: fundingError,
         }
       }
-      const { signedTransaction, error: signingError } = signTransactionSeed({
+      console.log(
+        'fundedTransaction',
+        JSON.stringify(fundedTransaction, null, 2)
+      )
+      const signingResult = signTransactionSeedV2({
         mnemonic,
         transaction: fundedTransaction,
-        toSign,
         consensusState: cs.data,
         consensusNetwork: cn.data,
         addresses,
         siacoinOutputs: siacoinOutputs.data,
         siafundOutputs: siafundOutputs.data,
       })
-      if (signingError) {
+
+      if ('error' in signingResult) {
         cancel(fundedTransaction)
         return {
-          error: signingError,
+          error: signingResult.error,
         }
       }
+
+      const { signedTransaction } = signingResult
+      console.log(
+        'signedTransaction',
+        JSON.stringify(signedTransaction, null, 2)
+      )
 
       // if successfully signed cache the seed
       cacheWalletMnemonic(walletId, mnemonic)
 
       // broadcast
-      return broadcast({ signedTransaction })
+      return broadcast({ id, basis, signedTransaction })
     },
     [
       cancel,
       addresses,
-      fund,
+      construct,
       walletId,
       cs.data,
       cn.data,
