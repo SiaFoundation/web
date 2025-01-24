@@ -3,6 +3,7 @@ import {
   FilesTableColumn,
   columnsDefaultVisible,
   defaultSortField,
+  defaultSortDirection,
   sortOptions,
 } from './types'
 
@@ -12,5 +13,6 @@ export function useFilesTableState(columns: FilesTableColumn[]) {
     columnsDefaultVisible,
     sortOptions,
     defaultSortField,
+    defaultSortDirection,
   })
 }

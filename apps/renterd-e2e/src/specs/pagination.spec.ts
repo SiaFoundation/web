@@ -59,7 +59,7 @@ test('paginating files works as expected in both directory and all files mode', 
 
   const first = page.getByRole('button', { name: 'go to first page' })
   const next = page.getByRole('button', { name: 'go to next page' })
-  await expectFileRowById(page, 'bucket1/file5.txt')
+  await expectFileRowById(page, 'bucket1/file1.txt')
   await expect(first).toBeDisabled()
   await expect(next).toBeEnabled()
   await next.click()
@@ -67,7 +67,7 @@ test('paginating files works as expected in both directory and all files mode', 
   await expect(first).toBeEnabled()
   await expect(next).toBeEnabled()
   await next.click()
-  await expectFileRowById(page, 'bucket1/file1.txt')
+  await expectFileRowById(page, 'bucket1/file5.txt')
   await expect(first).toBeEnabled()
   await expect(next).toBeDisabled()
 
@@ -75,7 +75,7 @@ test('paginating files works as expected in both directory and all files mode', 
   url = page.url()
   await page.goto(url + '?limit=2')
 
-  await expectFileRowById(page, 'bucket1/file5.txt')
+  await expectFileRowById(page, 'bucket1/file1.txt')
   await expect(first).toBeDisabled()
   await expect(next).toBeEnabled()
   await next.click()
@@ -83,7 +83,7 @@ test('paginating files works as expected in both directory and all files mode', 
   await expect(first).toBeEnabled()
   await expect(next).toBeEnabled()
   await next.click()
-  await expectFileRowById(page, 'bucket1/file1.txt')
+  await expectFileRowById(page, 'bucket1/file5.txt')
   await expect(first).toBeEnabled()
   await expect(next).toBeDisabled()
 })
