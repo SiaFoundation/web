@@ -1,5 +1,15 @@
 # @siafoundation/react-core
 
+## 1.8.0
+
+### Minor Changes
+
+- 0d7fdf2e: Updated the list of currencies to those supported by explored.
+
+### Patch Changes
+
+- @siafoundation/units@3.3.1
+
 ## 1.7.0
 
 ### Minor Changes

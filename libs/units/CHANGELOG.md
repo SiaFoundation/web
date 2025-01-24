@@ -1,5 +1,12 @@
 # @siafoundation/units
 
+## 3.3.1
+
+### Patch Changes
+
+- Updated dependencies [0d7fdf2e]
+  - @siafoundation/sia-central-types@0.2.0
+
 ## 3.3.0
 
 ### Minor Changes

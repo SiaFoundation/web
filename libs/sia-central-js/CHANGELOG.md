@@ -1,5 +1,12 @@
 # @siafoundation/sia-central-js
 
+## 0.5.3
+
+### Patch Changes
+
+- Updated dependencies [0d7fdf2e]
+  - @siafoundation/sia-central-types@0.2.0
+
 ## 0.5.2
 
 ### Patch Changes

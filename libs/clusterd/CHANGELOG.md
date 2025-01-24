@@ -1,5 +1,11 @@
 # @siafoundation/clusterd
 
+## 0.1.5
+
+### Patch Changes
+
+- @siafoundation/units@3.3.1
+
 ## 0.1.4
 
 ### Patch Changes

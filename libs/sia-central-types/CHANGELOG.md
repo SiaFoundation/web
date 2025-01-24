@@ -1,5 +1,11 @@
 # @siafoundation/sia-central-types
 
+## 0.2.0
+
+### Minor Changes
+
+- 0d7fdf2e: Removed unsupported currencies from Sia Central SDKs.
+
 ## 0.1.1
 
 ### Patch Changes

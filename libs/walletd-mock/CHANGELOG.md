@@ -1,5 +1,13 @@
 # @siafoundation/walletd-mock
 
+## 0.1.13
+
+### Patch Changes
+
+- Updated dependencies [0d7fdf2e]
+  - @siafoundation/sia-central-mock@0.3.0
+  - @siafoundation/units@3.3.1
+
 ## 0.1.12
 
 ### Patch Changes
