@@ -8,6 +8,7 @@ import { to } from '@siafoundation/request'
 import { explored } from '../../../config/explored'
 import { blockHeightToHumanDate } from '../../../lib/time'
 import { determineContractStatus } from '../../../lib/contracts'
+import BigNumber from 'bignumber.js'
 
 export const revalidate = 0
 
@@ -64,7 +65,7 @@ export default async function Image({ params }) {
         contract.payout,
         r && {
           currency,
-          rate: r.rates.sc.usd,
+          rate: new BigNumber(r.rates.sc.usd),
         }
       ),
     },
