@@ -16,17 +16,19 @@ export function useSiascanExchangeRate({
   currency,
   config,
   disabled,
+  api = 'https://api.siascan.com',
 }: {
   currency?: CurrencyId
   config?: RequestConfig<void, number>
   disabled?: boolean
+  api?: string
 }) {
   const { settings, currencyOptions } = useAppSettings()
   const rate = useGetSwr<{ currency?: CurrencyId }, number>({
     params: {
       currency,
     },
-    api: 'https://api.siascan.com',
+    api,
     route: '/exchange-rate/siacoin/:currency',
     config: {
       ...config,
