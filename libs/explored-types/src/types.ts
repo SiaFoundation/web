@@ -154,6 +154,17 @@ export type HostMetrics = {
   priceTable: HostPriceTable
 }
 
+export type CurrencyID =
+  | 'usd'
+  | 'cad'
+  | 'eur'
+  | 'gbp'
+  | 'jpy'
+  | 'aud'
+  | 'cny'
+  | 'btc'
+  | 'eth'
+
 // Novel Explored Types
 
 /**

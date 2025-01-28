@@ -52,6 +52,10 @@ import {
   ContractByPubkeyParams,
   ContractByPubkeyPayload,
   ContractByPubkeyResponse,
+  ExchangeRateParams,
+  ExchangeRatePayload,
+  ExchangeRateResponse,
+  exchangeRateRoute,
   hostMetricsRoute,
   HostMetricsParams,
   HostMetricsPayload,
@@ -284,5 +288,11 @@ export function Explored({
       HostByPubkeyPayload,
       HostByPubkeyResponse
     >(axios, 'get', hostByPubkeyRoute),
+    // Exchange
+    exchangeRate: buildRequestHandler<
+      ExchangeRateParams,
+      ExchangeRatePayload,
+      ExchangeRateResponse
+    >(axios, 'get', exchangeRateRoute),
   }
 }

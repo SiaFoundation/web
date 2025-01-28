@@ -8,6 +8,7 @@ import {
   ConsensusNetwork,
   ConsensusState,
   Currency,
+  CurrencyID,
   ExplorerBlock,
   ExplorerEvent,
   ExplorerFileContract,
@@ -238,3 +239,11 @@ export const hostByPubkeyRoute = '/pubkey/:id/host'
 export type HostByPubkeyParams = { id: PublicKey }
 export type HostByPubkeyPayload = void
 export type HostByPubkeyResponse = ExplorerHost
+
+// Exchange Rates
+
+// Returns the value of 1 SC in the specified currency.
+export const exchangeRateRoute = '/exchange-rate/siacoin/:currency'
+export type ExchangeRateParams = { currency: CurrencyID }
+export type ExchangeRatePayload = void
+export type ExchangeRateResponse = number
