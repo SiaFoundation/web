@@ -2,14 +2,11 @@
 
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
-import { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
 import { humanBytes, humanSiacoin } from '@siafoundation/units'
 import { EntityList, EntityListItemProps } from '@siafoundation/design-system'
 import { DatumProps, ExplorerDatum } from '../ExplorerDatum'
 import { ContentLayout } from '../ContentLayout'
 import { ContractHeader } from './ContractHeader'
-import { siacoinToFiat } from '../../lib/currency'
-import { useExchangeRate } from '../../hooks/useExchangeRate'
 import {
   ChainIndex,
   ExplorerFileContract,
@@ -17,12 +14,12 @@ import {
   SiacoinOutput,
 } from '@siafoundation/explored-types'
 import { blockHeightToHumanDate } from '../../lib/time'
+import { SCToFiatDisplay } from '../SCToFiatDisplay'
 
 type Props = {
   previousRevisions: ExplorerFileContract[] | undefined
   currentHeight: number
   contract: ExplorerFileContract
-  rates?: SiaCentralExchangeRates
   renewedToID: FileContractID | null
   renewedFromID: FileContractID | null
   formationTxnChainIndex: ChainIndex[]
@@ -32,12 +29,10 @@ export function Contract({
   previousRevisions,
   currentHeight,
   contract,
-  rates,
   renewedFromID,
   renewedToID,
   formationTxnChainIndex,
 }: Props) {
-  const exchange = useExchangeRate(rates)
   const values = useMemo(() => {
     return [
       {
@@ -48,7 +43,7 @@ export function Contract({
       {
         label: 'payout',
         copyable: false,
-        value: siacoinToFiat(contract.payout, exchange),
+        value: <SCToFiatDisplay sc={contract.payout} />,
         comment: humanSiacoin(contract.payout),
       },
       {
@@ -145,7 +140,7 @@ export function Contract({
         ).toLocaleString(),
       },
     ] as DatumProps[]
-  }, [contract, exchange, previousRevisions, currentHeight])
+  }, [contract, previousRevisions, currentHeight])
 
   const validProofOutputs = useMemo(() => {
     if (isProperlyFormedNewContract(contract)) {
