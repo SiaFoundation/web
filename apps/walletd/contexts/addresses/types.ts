@@ -2,6 +2,7 @@ import {
   WalletAddress,
   WalletAddressMetadata,
 } from '@siafoundation/walletd-types'
+import { SpendPolicy } from '@siafoundation/types'
 
 export type CellContext = {
   siascanUrl: string
@@ -11,7 +12,7 @@ export type AddressData = {
   id: string
   address: string
   description?: string
-  spendPolicy?: string
+  spendPolicy?: SpendPolicy
   metadata: WalletAddressMetadata
   walletId: string
   raw?: WalletAddress

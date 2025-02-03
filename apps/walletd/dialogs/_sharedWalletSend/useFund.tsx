@@ -54,6 +54,7 @@ export function useFund() {
           }
         }
         return {
+          basis: fundResponse.data.basis,
           fundedTransaction: fundResponse.data.transaction,
           toSign: fundResponse.data.toSign,
         }
@@ -103,6 +104,7 @@ export function useFund() {
         }
         toSign.push(...fundResponse.data.toSign)
         return {
+          basis: fundResponse.data.basis,
           fundedTransaction: fundResponse.data.transaction,
           toSign,
         }

@@ -19,8 +19,8 @@ export function transformAddressesResponse(
     const datum: AddressData = {
       id: address,
       address,
-      description: description,
-      spendPolicy: spendPolicy,
+      description,
+      spendPolicy,
       metadata: (metadata || {}) as WalletAddressMetadata,
       walletId,
       onClick: () =>

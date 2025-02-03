@@ -10,7 +10,7 @@ import {
 } from '@siafoundation/design-system'
 import { DeviceConnectForm } from '../DeviceConnectForm'
 import { useLedger } from '../../contexts/ledger'
-import { Transaction } from '@siafoundation/types'
+import { Transaction, ChainIndex } from '@siafoundation/types'
 import { LedgerSignTxn } from './LedgerSignTxn'
 import { useSign } from './useSign'
 import { useBroadcast } from '../_sharedWalletSend/useBroadcast'
@@ -69,10 +69,12 @@ export function useSendForm({ params, step, onConfirm }: Props) {
   const fundAndSign = useFundAndSign({ cancel, fund, sign })
   const [waitingForUser, setWaitingForUser] = useState(false)
   const [txn, setTxn] = useState<Transaction>()
+  const [basis, setBasis] = useState<ChainIndex>()
 
   useEffect(() => {
     if (step === 'compose') {
       setTxn(undefined)
+      setBasis(undefined)
     }
   }, [step])
 
@@ -109,8 +111,17 @@ export function useSendForm({ params, step, onConfirm }: Props) {
         return
       }
 
+      if (!txn) {
+        return
+      }
+
+      if (!basis) {
+        return
+      }
+
       const { error } = await broadcast({
         signedTransaction: txn,
+        basis,
       })
 
       if (error) {
@@ -124,7 +135,7 @@ export function useSendForm({ params, step, onConfirm }: Props) {
         // transactionId,
       })
     },
-    [broadcast, txn, onConfirm]
+    [broadcast, txn, basis, onConfirm]
   )
 
   const onInvalid = useOnInvalid(fields)
@@ -136,11 +147,12 @@ export function useSendForm({ params, step, onConfirm }: Props) {
 
   const runFundAndSign = useCallback(async () => {
     setWaitingForUser(true)
-    const { signedTransaction, error } = await fundAndSign(params)
+    const { signedTransaction, error, basis } = await fundAndSign(params)
     if (error) {
       triggerErrorToast({ title: error })
     } else {
       setTxn(signedTransaction)
+      setBasis(basis)
       form.setValue('isSigned', true)
     }
     setWaitingForUser(false)
