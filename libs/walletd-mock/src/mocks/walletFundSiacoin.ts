@@ -3,6 +3,10 @@ import { Page } from 'playwright'
 
 export function getMockWalletFundSiacoinResponse(): WalletFundSiacoinResponse {
   return {
+    basis: {
+      id: '0',
+      height: 100000,
+    },
     transaction: {
       siacoinInputs: [
         {
