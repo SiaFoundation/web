@@ -11,6 +11,7 @@ type Node = {
   apiAddress: string
   password: string
 }
+type NetworkVersion = 'v1' | 'v2' | 'transition'
 
 export const clusterd = {
   process: undefined as child.ChildProcessWithoutNullStreams | undefined,
@@ -25,11 +26,18 @@ export async function setupCluster({
   renterdCount = 0,
   hostdCount = 0,
   walletdCount = 0,
+  networkVersion = 'v1',
+}: {
+  renterdCount?: number
+  hostdCount?: number
+  walletdCount?: number
+  networkVersion?: NetworkVersion
 } = {}) {
   clusterd.managementPort = random(10000, 65535)
   console.log('Starting cluster on port', clusterd.managementPort)
 
   clusterd.process = child.spawn('internal/cluster/bin/clusterd', [
+    `-network=${networkVersion}`,
     `-renterd=${renterdCount}`,
     `-hostd=${hostdCount}`,
     `-walletd=${walletdCount}`,
@@ -172,6 +180,20 @@ export async function mine(blocks: number) {
   await Axios.post(`http://localhost:${clusterd.managementPort}/mine`, {
     blocks,
   })
+}
+
+export async function mineToHeight(height: number) {
+  console.log(`Mining to height ${height}...`)
+  await Axios.post(`http://localhost:${clusterd.managementPort}/mine/to`, {
+    targetHeight: height,
+  })
+}
+
+export async function getCurrentHeight() {
+  const response = await Axios.get(
+    `http://localhost:${clusterd.managementPort}/height`
+  )
+  return response.data?.height
 }
 
 export async function teardownCluster() {
