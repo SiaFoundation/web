@@ -11,6 +11,10 @@ import {
   Transaction,
   V2Transaction,
   WalletEvent,
+  SiacoinOutput,
+  Address,
+  SiafundOutput,
+  TransactionID,
 } from '@siafoundation/types'
 import { GatewayPeer, Wallet, WalletAddress, WalletMetadata } from './types'
 
@@ -37,6 +41,10 @@ export const walletsIdFundRoute = '/wallets/:id/fund'
 export const walletsIdFundSfRoute = '/wallets/:id/fundsf'
 export const walletsIdReserveRoute = '/wallets/:id/reserve'
 export const walletsIdReleaseRoute = '/wallets/:id/release'
+export const walletsIdConstructTransactionRoute =
+  '/wallets/:id/construct/transaction'
+export const walletsIdConstructV2TransactionRoute =
+  '/wallets/:id/construct/v2/transaction'
 
 // state
 
@@ -79,6 +87,7 @@ export type SyncerConnectResponse = never
 export type TxPoolTransactionsParams = void
 export type TxPoolTransactionsPayload = void
 export type TxPoolTransactionsResponse = {
+  basis: ChainIndex
   transactions: Transaction[]
   v2transactions: V2Transaction[]
 }
@@ -89,6 +98,7 @@ export type TxPoolFeeResponse = Currency
 
 export type TxPoolBroadcastParams = void
 export type TxPoolBroadcastPayload = {
+  basis: ChainIndex
   transactions: Transaction[]
   v2transactions: V2Transaction[]
 }
@@ -188,6 +198,7 @@ export type WalletFundSiacoinPayload = {
   changeAddress: string
 }
 export type WalletFundSiacoinResponse = {
+  basis: ChainIndex
   transaction: Transaction
   toSign: string[]
   dependsOn: Transaction[] | null
@@ -203,6 +214,7 @@ export type WalletFundSiafundPayload = {
   claimAddress: string
 }
 export type WalletFundSiafundResponse = {
+  basis: ChainIndex
   transaction: Transaction
   toSign: string[]
   dependsOn: Transaction[] | null
@@ -226,3 +238,34 @@ export type WalletReleasePayload = {
   siafundOutputs?: SiafundOutputID[]
 }
 export type WalletReleaseResponse = void
+
+export type WalletConstructV1TransactionParams = {
+  id: string
+}
+export type WalletConstructV1TransactionPayload = {
+  siacoins?: SiacoinOutput[]
+  siafunds?: SiafundOutput[]
+  changeAddress: Address
+}
+
+export type WalletConstructV1TransactionResponse = {
+  basis: ChainIndex
+  id: TransactionID
+  transaction: Transaction
+  estimatedFee: Currency
+}
+
+export type WalletConstructV2TransactionParams = {
+  id: string
+}
+export type WalletConstructV2TransactionPayload = {
+  siacoins?: SiacoinOutput[]
+  siafunds?: SiafundOutput[]
+  changeAddress: Address
+}
+export type WalletConstructV2TransactionResponse = {
+  basis: ChainIndex
+  id: TransactionID
+  transaction: V2Transaction
+  estimatedFee: Currency
+}

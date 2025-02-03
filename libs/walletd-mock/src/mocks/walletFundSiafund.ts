@@ -3,6 +3,10 @@ import { Page } from 'playwright'
 
 export function getMockWalletFundSiafundResponse(): WalletFundSiafundResponse {
   return {
+    basis: {
+      id: '0',
+      height: 100000,
+    },
     transaction: {
       minerFees: ['3930000000000000000000'],
     },
