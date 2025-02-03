@@ -117,7 +117,7 @@ test('viewing a page with no data shows the correct empty state', async ({
   await expect(next).toBeDisabled()
   await expect(last).toBeDisabled()
 
-  await deleteVolume(page, 'v2', dirPath)
+  await page.goto(url + '?limit=1&offset=2')
 
   await expect(
     page.getByText('No data on this page, reset pagination to continue.')
@@ -128,8 +128,8 @@ test('viewing a page with no data shows the correct empty state', async ({
   await expectVolumeRowByIndex(page, 0)
   await expect(first).toBeDisabled()
   await expect(previous).toBeDisabled()
-  await expect(next).toBeDisabled()
-  await expect(last).toBeDisabled()
+  await expect(next).toBeEnabled()
+  await expect(last).toBeEnabled()
 })
 
 function getVolumePath(dirPath: string, name: string) {
