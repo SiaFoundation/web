@@ -63,8 +63,8 @@ export function useSignAndBroadcast() {
         consensusState: cs.data,
         consensusNetwork: cn.data,
         addresses,
-        siacoinOutputs: siacoinOutputs.data,
-        siafundOutputs: siafundOutputs.data,
+        siacoinOutputs: siacoinOutputs.data?.outputs,
+        siafundOutputs: siafundOutputs.data?.outputs,
       })
       if (signingError) {
         cancel(fundedTransaction)
