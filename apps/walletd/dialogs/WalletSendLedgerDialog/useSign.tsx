@@ -44,8 +44,8 @@ export function useSign({ cancel }: { cancel: (t: Transaction) => void }) {
         transaction: fundedTransaction,
         toSign,
         addresses,
-        siacoinOutputs: siacoinOutputs.data,
-        siafundOutputs: siafundOutputs.data,
+        siacoinOutputs: siacoinOutputs.data?.outputs,
+        siafundOutputs: siafundOutputs.data?.outputs,
       })
       if (signResponse.error) {
         cancel(fundedTransaction)

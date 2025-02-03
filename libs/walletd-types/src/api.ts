@@ -167,11 +167,17 @@ export type WalletEventsUnconfirmedResponse = WalletEvent[]
 
 export type WalletOutputsSiacoinParams = { id: string }
 export type WalletOutputsSiacoinPayload = void
-export type WalletOutputsSiacoinResponse = SiacoinElement[]
+export type WalletOutputsSiacoinResponse = {
+  basis: ChainIndex
+  outputs: SiacoinElement[]
+}
 
 export type WalletOutputsSiafundParams = { id: string }
 export type WalletOutputsSiafundPayload = void
-export type WalletOutputsSiafundResponse = SiafundElement[]
+export type WalletOutputsSiafundResponse = {
+  basis: ChainIndex
+  outputs: SiafundElement[]
+}
 
 export type WalletFundSiacoinParams = {
   id: string
