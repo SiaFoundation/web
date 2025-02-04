@@ -36,7 +36,7 @@ test('address can navigate to the unspent outputs list', async ({ page }) => {
   await explorerApp.goTo('/address/' + TEST_ADDRESS_1.id)
   await page.getByRole('tab').getByText('Unspent outputs').click()
 
-  await expect(page.getByText('073b0cbbdd6f...')).toBeVisible()
+  await expect(page.getByText('770b997a6042...')).toBeVisible()
 })
 
 test('address can navigate through to a transaction', async ({ page }) => {
@@ -44,9 +44,9 @@ test('address can navigate through to a transaction', async ({ page }) => {
 
   await page
     .locator(
-      'a[data-testid="entity-link"][href*="c0b92135ca061b5e1c540606db33708d330d97ee3cdbebe5494f69ec026f7f7f"]'
+      'a[data-testid="entity-link"][href*="b24a7d623b82206cd3363db0c0d41446f106a59227d86ef081d601315dbd8cca"]'
     )
     .click()
 
-  await expect(page.getByText('Transaction c0b92135ca061b5...')).toBeVisible()
+  await expect(page.getByText('Transaction b24a7d623b82206...')).toBeVisible()
 })
