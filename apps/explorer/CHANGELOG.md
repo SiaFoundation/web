@@ -1,5 +1,11 @@
 # explorer
 
+## 0.26.0
+
+### Minor Changes
+
+- 54a4eabe: Displayed entity values which are often truncated can now be copied to clipboard by double-clicking directly on the visible characters.
+
 ## 0.25.0
 
 ### Minor Changes

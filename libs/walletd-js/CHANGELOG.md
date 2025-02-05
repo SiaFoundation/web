@@ -1,5 +1,13 @@
 # @siafoundation/walletd-js
 
+## 0.2.7
+
+### Patch Changes
+
+- 97727dac: Updated the response structure for outputs APIs.
+- Updated dependencies [97727dac]
+  - @siafoundation/walletd-types@0.5.2
+
 ## 0.2.6
 
 ### Patch Changes

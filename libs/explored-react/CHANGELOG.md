@@ -1,5 +1,17 @@
 # @siafoundation/explored-react
 
+## 0.6.0
+
+### Minor Changes
+
+- 2ab9ec6e: Add exchange rate API.
+
+### Patch Changes
+
+- Updated dependencies [2ab9ec6e]
+  - @siafoundation/explored-types@0.12.0
+  - @siafoundation/react-core@2.0.0
+
 ## 0.5.1
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @siafoundation/sdk
 
+## 0.3.0
+
+### Minor Changes
+
+- ef647e54: Added v2TransactionInputSigHash and signHash methods to API.
+- ef647e54: Improved the accuracy of all return types.
+
+### Patch Changes
+
+- Updated dependencies [ef647e54]
+  - @siafoundation/types@0.8.0
+
 ## 0.2.4
 
 ### Patch Changes
