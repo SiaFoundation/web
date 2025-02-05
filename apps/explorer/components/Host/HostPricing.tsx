@@ -11,12 +11,8 @@ import { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
 import { useMemo } from 'react'
 import {
   getDownloadCost,
-  // getDownloadSpeed,
-  // getRemainingOverTotalStorage,
-  // getRemainingStorage,
   getStorageCost,
   getUploadCost,
-  // getUploadSpeed,
 } from '@siafoundation/units'
 import { useExchangeRate } from '../../hooks/useExchangeRate'
 
@@ -46,17 +42,6 @@ export function HostPricing({ host, rates }: Props) {
       getUploadCost({ price: host.settings.uploadbandwidthprice, exchange }),
     [exchange, host]
   )
-
-  // const downloadSpeed = useMemo(() => getDownloadSpeed(host), [host])
-
-  // const uploadSpeed = useMemo(() => getUploadSpeed(host), [host])
-
-  // const remainingOverTotalStorage = useMemo(
-  //   () => getRemainingOverTotalStorage(host),
-  //   [host]
-  // )
-
-  // const remainingStorage = useMemo(() => getRemainingStorage(host), [host])
 
   return (
     <div className="flex flex-col" data-testid="explorer-hostPricing">
@@ -92,23 +77,6 @@ export function HostPricing({ host, rates }: Props) {
           </div>
         </Tooltip>
       </div>
-      {/* <div className="grid grid-cols-3 gap-4">
-        <Tooltip content={remainingOverTotalStorage}>
-          <div className="flex justify-end">
-            <Text color="subtle">{remainingStorage}</Text>
-          </div>
-        </Tooltip>
-        <Tooltip content={`Download speed benchmarked at ${downloadSpeed}`}>
-          <div className="flex justify-end">
-            <Text color="subtle">{downloadSpeed}</Text>
-          </div>
-        </Tooltip>
-        <Tooltip content={`Upload speed benchmarked at ${uploadSpeed}`}>
-          <div className="flex justify-end">
-            <Text color="subtle">{uploadSpeed}</Text>
-          </div>
-        </Tooltip>
-      </div> */}
     </div>
   )
 }
