@@ -5,7 +5,7 @@ go 1.23.1
 toolchain go1.23.2
 
 require (
-	go.sia.tech/cluster v0.1.3-0.20250124145727-86a3c7ed979f
+	go.sia.tech/cluster v0.1.3-0.20250204161539-33bb93d45da0
 	go.sia.tech/core v0.9.1
 	go.sia.tech/coreutils v0.10.2-0.20250124134251-3a96ba4fb39c
 	go.uber.org/zap v1.27.0
@@ -19,6 +19,7 @@ require (
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/gotd/contrib v0.21.0 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
+	github.com/ip2location/ip2location-go v8.3.0+incompatible // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/julienschmidt/httprouter v1.3.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.9 // indirect
@@ -29,6 +30,7 @@ require (
 	github.com/shabbyrobe/gocovmerge v0.0.0-20230507112040-c3350d9342df // indirect
 	github.com/shopspring/decimal v1.4.0 // indirect
 	go.etcd.io/bbolt v1.3.11 // indirect
+	go.sia.tech/explored v0.0.0-20250123161922-5ec30ee5f663 // indirect
 	go.sia.tech/gofakes3 v0.0.5 // indirect
 	go.sia.tech/hostd v1.1.3-0.20250117061650-943b1da7f33a // indirect
 	go.sia.tech/jape v0.12.1 // indirect
