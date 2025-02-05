@@ -1,5 +1,13 @@
 # @siafoundation/walletd-types
 
+## 0.5.2
+
+### Patch Changes
+
+- 97727dac: Updated the response structure for outputs APIs.
+- Updated dependencies [ef647e54]
+  - @siafoundation/types@0.8.0
+
 ## 0.5.1
 
 ### Patch Changes

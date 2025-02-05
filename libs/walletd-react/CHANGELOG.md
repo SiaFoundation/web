@@ -1,5 +1,15 @@
 # @siafoundation/walletd-react
 
+## 4.3.7
+
+### Patch Changes
+
+- 97727dac: Updated the response structure for outputs APIs.
+- Updated dependencies [97727dac]
+  - @siafoundation/walletd-types@0.5.2
+  - @siafoundation/react-core@2.0.0
+  - @siafoundation/units@3.3.2
+
 ## 4.3.6
 
 ### Patch Changes

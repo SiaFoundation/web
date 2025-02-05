@@ -1,5 +1,12 @@
 # renterd
 
+## 0.77.0
+
+### Minor Changes
+
+- 54a4eabe: Displayed entity values which are often truncated can now be copied to clipboard by double-clicking directly on the visible characters.
+- 54a4eabe: Wallet addresses can now be copied to clipboard by clicking on the QR code in the address dialog.
+
 ## 0.76.0
 
 ### Minor Changes
