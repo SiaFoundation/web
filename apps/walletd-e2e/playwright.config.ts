@@ -35,7 +35,9 @@ export default defineConfig({
   outputDir: 'output',
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npx nx serve walletd',
+    // Include the test cluster env variable so that e2e tests use the
+    // test cluster hardfork activation heights defined in hardforkV2.ts.
+    command: 'NEXT_PUBLIC_TEST_CLUSTER=true npx nx serve walletd',
     url: baseURL,
     reuseExistingServer: !process.env.CI,
     cwd: workspaceRoot,
