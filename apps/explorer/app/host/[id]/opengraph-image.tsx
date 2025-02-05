@@ -2,11 +2,8 @@ import { getOGImage } from '../../../components/OGImageEntity'
 import { siaCentral } from '../../../config/siaCentral'
 import {
   getDownloadCost,
-  getDownloadSpeed,
   getStorageCost,
   getUploadCost,
-  getUploadSpeed,
-  humanBytes,
 } from '@siafoundation/units'
 import { truncate } from '@siafoundation/design-system'
 import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
@@ -78,7 +75,6 @@ export default async function Image({ params }) {
           rate: r.rates.sc.usd,
         },
       }),
-      subvalue: humanBytes(h.host.settings.remaining_storage),
     },
     {
       label: 'download',
@@ -89,7 +85,6 @@ export default async function Image({ params }) {
           rate: r.rates.sc.usd,
         },
       }),
-      subvalue: h.host.benchmark && getDownloadSpeed(h.host),
     },
     {
       label: 'upload',
@@ -100,7 +95,6 @@ export default async function Image({ params }) {
           rate: r.rates.sc.usd,
         },
       }),
-      subvalue: h.host.benchmark && getUploadSpeed(h.host),
     },
   ]
 
