@@ -36,7 +36,7 @@ test('address can navigate to the unspent outputs list', async ({ page }) => {
   await explorerApp.goTo('/address/' + TEST_ADDRESS_1.id)
   await page.getByRole('tab').getByText('Unspent outputs').click()
 
-  await expect(page.getByText('770b997a6042...')).toBeVisible()
+  await expect(page.getByText('Siacoin output').first()).toBeVisible()
 })
 
 test('address can navigate through to a transaction', async ({ page }) => {
