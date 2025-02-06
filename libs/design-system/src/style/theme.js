@@ -17,6 +17,10 @@ module.exports = {
         3: '3px',
       },
       colors,
+      containers: {
+        '2xs': '18rem',
+        '3xs': '16rem',
+      },
       boxShadow: {
         border: 'inset 0 0 0 1px rgba(0, 0, 0, 0.3)',
         'border-2': 'inset 0 0 0 2px rgba(0, 0, 0, 0.3)',
