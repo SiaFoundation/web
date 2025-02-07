@@ -10,10 +10,7 @@ import { useMemo } from 'react'
 import { routes } from '../../config/routes'
 import { ContentLayout } from '../ContentLayout'
 import { reverse, sortBy } from '@technically/lodash'
-import {
-  SiaCentralExchangeRates,
-  SiaCentralHost,
-} from '@siafoundation/sia-central-types'
+import { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
 import { hashToAvatar } from '../../lib/avatar'
 import {
   humanBytes,
@@ -24,8 +21,12 @@ import {
 } from '@siafoundation/units'
 import { HostListItem } from './HostListItem'
 import { useExchangeRate } from '../../hooks/useExchangeRate'
-import { SiaCentralHostScanned } from '../Host/types'
-import { ExplorerBlock, HostMetrics } from '@siafoundation/explored-types'
+import {
+  ExplorerBlock,
+  ExplorerHost,
+  HostMetrics,
+} from '@siafoundation/explored-types'
+import { Information20 } from '@siafoundation/react-icons'
 
 export function Home({
   metrics,
@@ -38,7 +39,7 @@ export function Home({
   metrics?: HostMetrics
   blockHeight: number
   blocks: ExplorerBlock[]
-  hosts: SiaCentralHost[]
+  hosts: ExplorerHost[]
   rates?: SiaCentralExchangeRates
   totalHosts?: number
 }) {
@@ -220,19 +221,26 @@ export function Home({
           />
         </div>
         <div>
-          <EntityList title="Top hosts">
+          <EntityList
+            title="Top hosts"
+            actions={
+              <Tooltip content="The Sia Foundation believes hosts can be evaluated in many different ways, depending on purpose. This list uses a combination of age, uptime, pricing, and used storage, with slight weight to the first two categories.">
+                <Information20 />
+              </Tooltip>
+            }
+          >
             {hosts
               .filter((host) => host.settings)
               .map((host) => (
                 <HostListItem
-                  key={host.public_key}
-                  host={host as SiaCentralHostScanned}
+                  key={host.publicKey}
+                  host={host}
                   rates={rates}
                   entity={{
-                    label: host.net_address,
+                    label: host.netAddress,
                     initials: 'H',
-                    avatar: hashToAvatar(host.public_key),
-                    href: routes.host.view.replace(':id', host.public_key),
+                    avatar: hashToAvatar(host.publicKey),
+                    href: routes.host.view.replace(':id', host.publicKey),
                   }}
                 />
               ))}
