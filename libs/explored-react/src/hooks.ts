@@ -45,6 +45,10 @@ import {
   HostMetricsParams,
   HostMetricsResponse,
   hostMetricsRoute,
+  HostsListParams,
+  HostsListPayload,
+  HostsListResponse,
+  hostsListRoute,
   OutputSiacoinParams,
   OutputSiacoinResponse,
   outputSiacoinRoute,
@@ -379,6 +383,12 @@ export function useHostByPubkey(
     ...args,
     route: hostByPubkeyRoute,
   })
+}
+
+export function useHostsList(
+  args?: HookArgsCallback<HostsListParams, HostsListPayload, HostsListResponse>
+) {
+  return usePostFunc({ ...args, route: hostsListRoute })
 }
 
 // Exchange
