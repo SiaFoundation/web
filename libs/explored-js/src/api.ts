@@ -60,6 +60,10 @@ import {
   HostMetricsParams,
   HostMetricsPayload,
   HostMetricsResponse,
+  hostsListRoute,
+  HostsListParams,
+  HostsListPayload,
+  HostsListResponse,
   hostByPubkeyRoute,
   HostByPubkeyParams,
   HostByPubkeyPayload,
@@ -288,6 +292,11 @@ export function Explored({
       HostByPubkeyPayload,
       HostByPubkeyResponse
     >(axios, 'get', hostByPubkeyRoute),
+    hostsList: buildRequestHandler<
+      HostsListParams,
+      HostsListPayload,
+      HostsListResponse
+    >(axios, 'post', hostsListRoute),
     // Exchange
     exchangeRate: buildRequestHandler<
       ExchangeRateParams,
