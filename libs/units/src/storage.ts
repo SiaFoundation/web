@@ -4,6 +4,7 @@ import BigNumber from 'bignumber.js'
 import { humanSiacoin, toSiacoins } from './currency'
 import { humanBytes, humanSpeed } from './humanUnits'
 import { valuePerBytePerBlockToPerTBPerMonth } from './valuePer'
+import { ExplorerHost } from '@siafoundation/explored-types'
 
 type Hastings = string
 
@@ -86,6 +87,11 @@ export function getRemainingOverTotalStorage(host: SiaCentralHost) {
 
 export function getRemainingStorage(host: SiaCentralHost) {
   return host.settings ? humanBytes(host.settings.remaining_storage) : '-'
+}
+
+// This may eventually be best renamed to the above function, as Sia Central usage ends.
+export function getExplorerHostRemainingStorage(host: ExplorerHost) {
+  return host.settings ? humanBytes(host.settings.remainingstorage) : '-'
 }
 
 export function getRedundancyMultiplier(
