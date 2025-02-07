@@ -17,17 +17,17 @@ import {
 import { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
 import {
   getDownloadCost,
-  getRemainingStorage,
   getStorageCost,
   getUploadCost,
+  humanBytes,
 } from '@siafoundation/units'
 import { useMemo } from 'react'
 import { routes } from '../../config/routes'
 import { useExchangeRate } from '../../hooks/useExchangeRate'
-import { SiaCentralHostScanned } from '../Host/types'
+import { ExplorerHost } from '@siafoundation/explored-types'
 
 type Props = {
-  host: SiaCentralHostScanned
+  host: ExplorerHost
   rates?: SiaCentralExchangeRates
   entity: EntityListItemLayoutProps
 }
@@ -35,21 +35,29 @@ type Props = {
 export function HostListItem({ host, rates, entity }: Props) {
   const exchange = useExchangeRate(rates)
   const storageCost = useMemo(
-    () => getStorageCost({ price: host.settings.storage_price, exchange }),
+    () => getStorageCost({ price: host.settings.storageprice, exchange }),
     [exchange, host]
   )
 
   const downloadCost = useMemo(
-    () => getDownloadCost({ price: host.settings.download_price, exchange }),
+    () =>
+      getDownloadCost({
+        price: host.settings.downloadbandwidthprice,
+        exchange,
+      }),
     [exchange, host]
   )
 
   const uploadCost = useMemo(
-    () => getUploadCost({ price: host.settings.upload_price, exchange }),
+    () =>
+      getUploadCost({ price: host.settings.uploadbandwidthprice, exchange }),
     [exchange, host]
   )
 
-  const remainingStorage = useMemo(() => getRemainingStorage(host), [host])
+  const remainingStorage = useMemo(
+    () => (host.settings ? humanBytes(host.settings.remainingstorage) : '-'),
+    [host]
+  )
 
   return (
     <EntityListItemLayout {...entity}>
@@ -60,16 +68,16 @@ export function HostListItem({ host, rates, entity }: Props) {
         <div className="flex gap-2 items-center w-full @container">
           <div className="flex gap-2 items-center">
             <Link
-              href={routes.host.view.replace(':id', host.public_key)}
+              href={routes.host.view.replace(':id', host.publicKey)}
               weight="medium"
               underline="none"
             >
-              {host.net_address}
+              {host.netAddress}
             </Link>
           </div>
           <div className="flex-1" />
           <Text color="subtle" className="hidden @sm:flex">
-            {formatDistance(new Date(host.first_seen_timestamp), new Date(), {
+            {formatDistance(new Date(host.knownSince), new Date(), {
               addSuffix: false,
             })}{' '}
             old
