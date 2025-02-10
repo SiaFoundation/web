@@ -1,8 +1,6 @@
 import { TBToBytes } from './bytes'
-import { SiaCentralHost } from '@siafoundation/sia-central-types'
 import BigNumber from 'bignumber.js'
 import { humanSiacoin, toSiacoins } from './currency'
-import { humanBytes, humanSpeed } from './humanUnits'
 import { valuePerBytePerBlockToPerTBPerMonth } from './valuePer'
 
 type Hastings = string
@@ -50,42 +48,6 @@ export function getDownloadCost({ price, exchange }: Props) {
 
 export function getUploadCost({ price, exchange }: Props) {
   return hastingsPerByteToCurrencyPerTBFormatted({ price, exchange })
-}
-
-type SiaCentralPartialHost = {
-  benchmark?: {
-    data_size: number
-    download_time: number
-    upload_time: number
-  }
-}
-
-export function getDownloadSpeed(host: SiaCentralPartialHost) {
-  return host.benchmark
-    ? humanSpeed(
-        (host.benchmark.data_size * 8) / (host.benchmark.download_time / 1000)
-      )
-    : '-'
-}
-
-export function getUploadSpeed(host: SiaCentralPartialHost) {
-  return host.benchmark
-    ? humanSpeed(
-        (host.benchmark.data_size * 8) / (host.benchmark.upload_time / 1000)
-      )
-    : '-'
-}
-
-export function getRemainingOverTotalStorage(host: SiaCentralHost) {
-  return host.settings
-    ? `${humanBytes(host.settings.remaining_storage)}/${humanBytes(
-        host.settings.total_storage
-      )} remaining`
-    : '-'
-}
-
-export function getRemainingStorage(host: SiaCentralHost) {
-  return host.settings ? humanBytes(host.settings.remaining_storage) : '-'
 }
 
 export function getRedundancyMultiplier(
