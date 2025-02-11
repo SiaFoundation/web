@@ -6,7 +6,7 @@ import {
 } from '@siafoundation/walletd-react'
 import { useWallets } from '../../contexts/wallets'
 import { useCallback } from 'react'
-import { signTransactionSeed } from '../../lib/signSeed'
+import { signTransactionSeedV1 } from '../../lib/signSeedV1'
 import { useWalletAddresses } from '../../hooks/useWalletAddresses'
 import { SendParams } from '../_sharedWalletSend/types'
 import { useBroadcast } from '../_sharedWalletSend/useBroadcast'
@@ -57,7 +57,7 @@ export function useSignAndBroadcast() {
           error: fundingError,
         }
       }
-      const { signedTransaction, error: signingError } = signTransactionSeed({
+      const { signedTransaction, error: signingError } = signTransactionSeedV1({
         mnemonic,
         transaction: fundedTransaction,
         toSign,

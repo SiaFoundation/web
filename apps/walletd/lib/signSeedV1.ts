@@ -6,10 +6,13 @@ import {
   ConsensusNetwork,
 } from '@siafoundation/types'
 import { AddressData } from '../contexts/addresses/types'
-import { addUnlockConditionsAndSignatures, getToSignMetadata } from './sign'
+import {
+  addUnlockConditionsAndSignaturesV1,
+  getToSignMetadataV1,
+} from './signV1'
 import { getSDK } from '@siafoundation/sdk'
 
-export function signTransactionSeed({
+export function signTransactionSeedV1({
   mnemonic,
   transaction,
   toSign,
@@ -38,7 +41,7 @@ export function signTransactionSeed({
     return { error: 'No outputs' }
   }
 
-  const { error } = addUnlockConditionsAndSignatures({
+  const { error } = addUnlockConditionsAndSignaturesV1({
     toSign,
     transaction,
     addresses,
@@ -53,7 +56,7 @@ export function signTransactionSeed({
   // for each toSign
   for (const [i, toSignId] of toSign.entries()) {
     // find the utxo and corresponding address
-    const { address, error: utxoAddressError } = getToSignMetadata({
+    const { address, error: utxoAddressError } = getToSignMetadataV1({
       toSignId,
       transaction,
       addresses,
