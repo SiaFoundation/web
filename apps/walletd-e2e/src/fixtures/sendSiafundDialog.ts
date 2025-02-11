@@ -1,7 +1,11 @@
 import { Page } from 'playwright'
-import { fillTextInputByName, step } from '@siafoundation/e2e'
+import {
+  fillSelectInputByName,
+  fillTextInputByName,
+  step,
+} from '@siafoundation/e2e'
 
-export const fillComposeTransactionSiacoin = step(
+export const fillComposeTransactionSiafund = step(
   'fill compose transaction siacoin',
   async ({
     page,
@@ -15,9 +19,10 @@ export const fillComposeTransactionSiacoin = step(
     amount: number
   }) => {
     await fillTextInputByName(page, 'receiveAddress', receiveAddress)
+    await fillSelectInputByName(page, 'mode', 'siafund')
     await page.getByLabel('customChangeAddress').click()
     await fillTextInputByName(page, 'changeAddress', changeAddress)
-    await fillTextInputByName(page, 'siacoin', String(amount))
+    await fillTextInputByName(page, 'siafund', String(amount))
     await page.getByRole('button', { name: 'Generate transaction' }).click()
   }
 )

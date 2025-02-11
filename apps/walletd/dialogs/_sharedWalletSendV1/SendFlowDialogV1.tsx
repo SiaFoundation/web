@@ -4,8 +4,8 @@ import {
   ProgressSteps,
   FormSubmitButton,
 } from '@siafoundation/design-system'
-import { SendDone } from './SendDone'
-import { SendParams, SendStep } from './types'
+import { SendDoneV1 } from './SendDoneV1'
+import { SendParamsV1, SendStep } from './typesV1'
 import { UseFormReturn } from 'react-hook-form'
 
 export type SendDialogParams = {
@@ -30,7 +30,7 @@ type Props = {
     handleSubmit: () => void
     reset: () => void
   }
-  sendParams: SendParams
+  sendParams: SendParamsV1
   signedTxnId?: string
   step: SendStep
   setStep: (step: SendStep) => void
@@ -42,7 +42,7 @@ type Props = {
   }
 }
 
-export function SendFlowDialog({
+export function SendFlowDialogV1({
   trigger,
   open,
   onOpenChange,
@@ -106,7 +106,7 @@ export function SendFlowDialog({
         {step === 'compose' && compose.el}
         {step === 'send' && send.el}
         {step === 'done' && (
-          <SendDone params={sendParams} transactionId={signedTxnId} />
+          <SendDoneV1 params={sendParams} transactionId={signedTxnId} />
         )}
       </div>
     </Dialog>

@@ -1,4 +1,4 @@
-import { SendReceipt } from '../_sharedWalletSend/SendReceipt'
+import { SendReceiptV1 } from '../_sharedWalletSendV1/SendReceiptV1'
 import { useForm } from 'react-hook-form'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
@@ -13,11 +13,11 @@ import { useLedger } from '../../contexts/ledger'
 import { Transaction, ChainIndex } from '@siafoundation/types'
 import { LedgerSignTxn } from './LedgerSignTxn'
 import { useSign } from './useSign'
-import { useBroadcast } from '../_sharedWalletSend/useBroadcast'
+import { useBroadcastV1 } from '../_sharedWalletSendV1/useBroadcastV1'
 import { useFundAndSign } from './useFundAndSign'
-import { useCancel } from '../_sharedWalletSend/useCancel'
-import { useFund } from '../_sharedWalletSend/useFund'
-import { SendParams, SendStep } from '../_sharedWalletSend/types'
+import { useCancelV1 } from '../_sharedWalletSendV1/useCancelV1'
+import { useFundV1 } from '../_sharedWalletSendV1/useFundV1'
+import { SendParamsV1, SendStep } from '../_sharedWalletSendV1/typesV1'
 
 const defaultValues = {
   isConnected: false,
@@ -27,7 +27,7 @@ const defaultValues = {
 type Props = {
   walletId: string
   step: SendStep
-  params: SendParams
+  params: SendParamsV1
   onConfirm: (params: { transactionId?: string }) => void
 }
 
@@ -62,10 +62,10 @@ export function useSendForm({ params, step, onConfirm }: Props) {
   const isConnected = form.watch('isConnected')
   const isSigned = form.watch('isSigned')
   const { device, error: ledgerError } = useLedger()
-  const cancel = useCancel()
+  const cancel = useCancelV1()
   const sign = useSign({ cancel })
-  const broadcast = useBroadcast({ cancel })
-  const fund = useFund()
+  const broadcast = useBroadcastV1({ cancel })
+  const fund = useFundV1()
   const fundAndSign = useFundAndSign({ cancel, fund, sign })
   const [waitingForUser, setWaitingForUser] = useState(false)
   const [txn, setTxn] = useState<Transaction>()
@@ -177,7 +177,7 @@ export function useSendForm({ params, step, onConfirm }: Props) {
           />
         </div>
       </div>
-      <SendReceipt params={params} />
+      <SendReceiptV1 params={params} />
     </div>
   )
 
