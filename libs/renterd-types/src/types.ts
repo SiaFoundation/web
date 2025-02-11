@@ -1,13 +1,11 @@
 import { CurrencyId } from '@siafoundation/react-core'
 import {
-  ChainIndex,
   Currency,
   EncryptionKey,
   FileContractRevision,
   HostSettings,
   HostPriceTable,
   PublicKey,
-  Transaction,
   TransactionSignature,
 } from '@siafoundation/types'
 
@@ -246,13 +244,4 @@ export type AutopilotConfig = {
   enabled: boolean
   hosts: AutopilotHostsConfig
   contracts: AutopilotContractsConfig
-}
-
-export type WalletTransaction = {
-  raw: Transaction
-  index: ChainIndex
-  id: string
-  inflow: Currency
-  outflow: Currency
-  timestamp: string
 }

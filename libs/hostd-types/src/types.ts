@@ -1,25 +1,11 @@
 import {
   SiacoinOutput,
-  Transaction,
   UnlockConditions,
   Hash256,
   Signature,
   Currency,
   FileContractID,
 } from '@siafoundation/types'
-
-export interface WalletTransaction {
-  id: string
-  index: {
-    id: string
-    height: number
-  }
-  inflow: Currency
-  outflow: Currency
-  source: string
-  timestamp: string
-  transaction: Transaction
-}
 
 export type ContractStatus =
   | 'pending'
