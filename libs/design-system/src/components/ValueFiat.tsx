@@ -6,6 +6,7 @@ import BigNumber from 'bignumber.js'
 import { useActiveExchangeRate } from '@siafoundation/react-core'
 
 type Props = {
+  labeledBy?: string
   size?: React.ComponentProps<typeof Text>['size']
   scaleSize?: React.ComponentProps<typeof Text>['scaleSize']
   sc: BigNumber // hastings
@@ -35,6 +36,7 @@ export function ValueFiat({
   showTooltip = true,
   tipSide,
   extendedSuffix,
+  labeledBy,
 }: Props) {
   const { rate, currency } = useActiveExchangeRate()
   const sign = sc.isZero()
@@ -63,6 +65,7 @@ export function ValueFiat({
 
   const el = (
     <Text
+      aria-labelledby={labeledBy}
       size={size}
       scaleSize={scaleSize}
       weight="medium"

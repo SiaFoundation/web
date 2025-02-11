@@ -23,6 +23,7 @@ import {
 } from '../core/DropdownMenu'
 
 type Props = {
+  labeledBy?: string
   testId?: string
   value: string
   displayValue?: string
@@ -41,6 +42,7 @@ type Props = {
 }
 
 export function ValueCopyable({
+  labeledBy,
   testId,
   value,
   displayValue,
@@ -70,6 +72,7 @@ export function ValueCopyable({
     <div data-testid={testId} className={cx('flex items-center', className)}>
       {href ? (
         <Link
+          aria-labelledby={labeledBy}
           href={href}
           underline="hover"
           size={size}
@@ -87,6 +90,7 @@ export function ValueCopyable({
         </Link>
       ) : (
         <Text
+          aria-labelledby={labeledBy}
           size={size}
           scaleSize={scaleSize}
           color={color}
