@@ -6,7 +6,7 @@ import {
   ChainIndex,
   WalletEvent,
 } from '@siafoundation/types'
-import { Contract, ContractStatus, WalletTransaction } from './types'
+import { Contract, ContractStatus } from './types'
 
 export const hostStateRoute = '/state'
 export const consensusNetworkRoute = '/consensus/network'
@@ -157,10 +157,6 @@ export type WalletResponse = {
   immature: string
   address: string
 }
-
-export type WalletTransactionsParams = { limit?: number; offset?: number }
-export type WalletTransactionsPayload = void
-export type WalletTransactionsResponse = WalletTransaction[]
 
 export type WalletEventsParams = { limit?: number; offset?: number }
 export type WalletEventsPayload = void
