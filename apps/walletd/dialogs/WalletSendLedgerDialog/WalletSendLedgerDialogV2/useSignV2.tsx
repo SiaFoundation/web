@@ -1,15 +1,15 @@
-import { Transaction } from '@siafoundation/types'
+import { V2Transaction } from '@siafoundation/types'
 import {
   useWalletOutputsSiacoin,
   useWalletOutputsSiafund,
 } from '@siafoundation/walletd-react'
-import { useWallets } from '../../contexts/wallets'
+import { useWallets } from '../../../contexts/wallets'
 import { useCallback } from 'react'
-import { useWalletAddresses } from '../../hooks/useWalletAddresses'
-import { signTransactionLedger } from '../../lib/signLedger'
-import { useLedger } from '../../contexts/ledger'
+import { useWalletAddresses } from '../../../hooks/useWalletAddresses'
+import { signTransactionLedgerV2 } from '../../../lib/signLedgerV2'
+import { useLedger } from '../../../contexts/ledger'
 
-export function useSign({ cancel }: { cancel: (t: Transaction) => void }) {
+export function useSignV2() {
   const { wallet } = useWallets()
   const walletId = wallet?.id
   const siacoinOutputs = useWalletOutputsSiacoin({
@@ -28,27 +28,19 @@ export function useSign({ cancel }: { cancel: (t: Transaction) => void }) {
 
   const { device } = useLedger()
   const sign = useCallback(
-    async ({
-      fundedTransaction,
-      toSign,
-    }: {
-      fundedTransaction: Transaction
-      toSign: string[]
-    }) => {
+    async ({ fundedTransaction }: { fundedTransaction: V2Transaction }) => {
       if (!device || !fundedTransaction) {
         return
       }
       // sign
-      const signResponse = await signTransactionLedger({
+      const signResponse = await signTransactionLedgerV2({
         device,
         transaction: fundedTransaction,
-        toSign,
         addresses,
         siacoinOutputs: siacoinOutputs.data?.outputs,
         siafundOutputs: siafundOutputs.data?.outputs,
       })
-      if (signResponse.error) {
-        cancel(fundedTransaction)
+      if ('error' in signResponse) {
         return {
           error: signResponse.error,
         }
@@ -57,7 +49,7 @@ export function useSign({ cancel }: { cancel: (t: Transaction) => void }) {
         signedTransaction: signResponse.transaction,
       }
     },
-    [device, addresses, siacoinOutputs.data, siafundOutputs.data, cancel]
+    [device, addresses, siacoinOutputs.data, siafundOutputs.data]
   )
 
   return sign

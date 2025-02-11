@@ -1,6 +1,6 @@
 import { ChainIndex, Transaction } from '@siafoundation/types'
 import { useCallback } from 'react'
-import { SendParamsV1 } from '../_sharedWalletSendV1/typesV1'
+import { SendParamsV1 } from '../../_sharedWalletSendV1/typesV1'
 
 type Props = {
   fund: (params: SendParamsV1) => Promise<{
@@ -22,7 +22,7 @@ type Props = {
   }>
 }
 
-export function useFundAndSign({ fund, cancel, sign }: Props) {
+export function useFundAndSignV1({ fund, cancel, sign }: Props) {
   const fundAndSign = useCallback(
     async (params: SendParamsV1) => {
       const {
