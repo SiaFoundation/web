@@ -3,6 +3,7 @@ import { Tooltip } from '../core/Tooltip'
 import BigNumber from 'bignumber.js'
 
 type Props = {
+  labeledBy?: string
   size?: React.ComponentProps<typeof Text>['size']
   weight?: React.ComponentProps<typeof Text>['weight']
   value: BigNumber
@@ -22,6 +23,7 @@ export function ValueNum({
   variant = 'change',
   color: customColor,
   format,
+  labeledBy,
 }: Props) {
   const sign = value.isGreaterThan(0) ? '+' : value.isLessThan(0) ? '-' : ''
   const color =
@@ -39,6 +41,7 @@ export function ValueNum({
       content={(tooltip ? `${tooltip} ` : '') + format(value)}
     >
       <Text
+        aria-labelledby={labeledBy}
         size={size}
         weight={weight}
         font="mono"
