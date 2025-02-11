@@ -5,7 +5,10 @@ import {
 } from '@siafoundation/types'
 import { AddressData } from '../contexts/addresses/types'
 import { LedgerDevice } from '../contexts/ledger/types'
-import { addUnlockConditionsAndSignatures, getToSignMetadata } from './sign'
+import {
+  addUnlockConditionsAndSignaturesV1,
+  getToSignMetadataV1,
+} from './signV1'
 import { getSDK } from '@siafoundation/sdk'
 
 export async function signTransactionLedger({
@@ -30,7 +33,7 @@ export async function signTransactionLedger({
     return { error: 'No outputs' }
   }
 
-  const { error } = addUnlockConditionsAndSignatures({
+  const { error } = addUnlockConditionsAndSignaturesV1({
     transaction,
     toSign,
     addresses,
@@ -44,7 +47,7 @@ export async function signTransactionLedger({
 
   // for each toSign
   for (const [i, toSignId] of toSign.entries()) {
-    const addressInfo = getToSignMetadata({
+    const addressInfo = getToSignMetadataV1({
       toSignId,
       addresses,
       siacoinOutputs,

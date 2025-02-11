@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`signSeed builds and signs valid transaction 1`] = `
+exports[`signSeedV1 builds and signs valid transaction 1`] = `
 Object {
   "signedTransaction": Object {
     "minerFees": Array [
