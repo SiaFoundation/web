@@ -1,5 +1,5 @@
 import { initSDK } from '@siafoundation/sdk'
-import { signTransactionLedger } from './signLedger'
+import { signTransactionLedgerV1 } from './signLedgerV1'
 import { getMockAddresses, getMockDevice } from './testMocks'
 import { getMockScenarioSeedWallet } from '@siafoundation/walletd-mock'
 
@@ -7,13 +7,13 @@ beforeEach(async () => {
   await initSDK()
 })
 
-describe('signLedger', () => {
+describe('signLedgerV1', () => {
   describe('siacoin', () => {
     it('builds and signs valid transaction', async () => {
       const device = getMockDevice()
       const mocks = getMockScenarioSeedWallet()
       expect(
-        await signTransactionLedger({
+        await signTransactionLedgerV1({
           device,
           transaction: mocks.walletFundResponse.transaction,
           toSign: mocks.walletFundResponse.toSign,
@@ -28,7 +28,7 @@ describe('signLedger', () => {
       const device = getMockDevice()
       const mocks = getMockScenarioSeedWallet()
       expect(
-        await signTransactionLedger({
+        await signTransactionLedgerV1({
           device,
           transaction: mocks.walletFundResponse.transaction,
           siacoinOutputs: mocks.walletOutputsSiacoinResponse.outputs,
@@ -45,7 +45,7 @@ describe('signLedger', () => {
       const device = getMockDevice()
       const mocks = getMockScenarioSeedWallet()
       expect(
-        await signTransactionLedger({
+        await signTransactionLedgerV1({
           device,
           transaction: mocks.walletFundResponse.transaction,
           toSign: mocks.walletFundResponse.toSign,
@@ -71,7 +71,7 @@ describe('signLedger', () => {
       const device = getMockDevice()
       const mocks = getMockScenarioSeedWallet()
       expect(
-        await signTransactionLedger({
+        await signTransactionLedgerV1({
           device,
           transaction: mocks.walletFundResponse.transaction,
           toSign: mocks.walletFundResponse.toSign,
@@ -99,7 +99,7 @@ describe('signLedger', () => {
       const addresses = getMockAddresses(mocks)
       addresses[0].spendPolicy.policy.publicKeys[0] = undefined
       expect(
-        await signTransactionLedger({
+        await signTransactionLedgerV1({
           device,
           transaction: mocks.walletFundResponse.transaction,
           toSign: mocks.walletFundResponse.toSign,
