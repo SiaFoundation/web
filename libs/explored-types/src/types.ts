@@ -165,6 +165,34 @@ export type CurrencyID =
   | 'btc'
   | 'eth'
 
+export type HostQuery = {
+  v2?: boolean
+  publicKeys?: PublicKey[]
+  minUptime?: number
+  minDuration?: number
+  maxStoragePrice?: Currency
+  maxContractPrice?: Currency
+  maxUploadPrice?: Currency
+  maxDownloadPrice?: Currency
+  maxBaseRPCPrice?: Currency
+  maxSectorAccessPrice?: Currency
+  acceptContracts?: boolean
+  online?: boolean
+}
+
+export type HostSortBy =
+  | 'date_created'
+  | 'net_address'
+  | 'public_key'
+  | 'accepting_contracts'
+  | 'uptime'
+  | 'storage_price'
+  | 'contract_price'
+  | 'download_price'
+  | 'upload_price'
+  | 'used_storage'
+  | 'total_storage'
+
 // Novel Explored Types
 
 /**

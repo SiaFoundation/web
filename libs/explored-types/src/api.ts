@@ -19,6 +19,8 @@ import {
   FileContractID,
   Hash256,
   HostMetrics,
+  HostQuery,
+  HostSortBy,
   Peer,
   PublicKey,
   SearchResultType,
@@ -239,6 +241,17 @@ export const hostByPubkeyRoute = '/pubkey/:id/host'
 export type HostByPubkeyParams = { id: PublicKey }
 export type HostByPubkeyPayload = void
 export type HostByPubkeyResponse = ExplorerHost
+
+// Searches the hosts by the given criteria.
+export const hostsListRoute = '/hosts'
+export type HostsListParams = {
+  sortBy: HostSortBy
+  dir: 'asc' | 'desc'
+  offset?: number
+  limit?: number
+}
+export type HostsListPayload = HostQuery
+export type HostsListResponse = ExplorerHost[]
 
 // Exchange Rates
 
