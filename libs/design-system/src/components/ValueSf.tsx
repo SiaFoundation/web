@@ -5,6 +5,7 @@ import { Tooltip } from '../core/Tooltip'
 import { humanNumber } from '@siafoundation/units'
 
 type Props = {
+  labeledBy?: string
   size?: React.ComponentProps<typeof Text>['size']
   scaleSize?: React.ComponentProps<typeof Text>['scaleSize']
   value: number
@@ -13,6 +14,7 @@ type Props = {
 }
 
 export function ValueSf({
+  labeledBy,
   value,
   size,
   scaleSize,
@@ -26,6 +28,7 @@ export function ValueSf({
   return (
     <Tooltip content={(tooltip ? `${tooltip} ` : '') + formattedValue}>
       <Text
+        aria-labelledby={labeledBy}
         size={size}
         scaleSize={scaleSize}
         weight="medium"
