@@ -1,4 +1,4 @@
-import { SendReceiptV1 } from '../_sharedWalletSendV1/SendReceiptV1'
+import { SendReceiptV1 } from '../../_sharedWalletSendV1/SendReceiptV1'
 import { useForm } from 'react-hook-form'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
@@ -8,16 +8,16 @@ import {
   triggerErrorToast,
   useOnInvalid,
 } from '@siafoundation/design-system'
-import { DeviceConnectForm } from '../DeviceConnectForm'
-import { useLedger } from '../../contexts/ledger'
+import { DeviceConnectForm } from '../../DeviceConnectForm'
+import { useLedger } from '../../../contexts/ledger'
 import { Transaction, ChainIndex } from '@siafoundation/types'
-import { LedgerSignTxn } from './LedgerSignTxn'
-import { useSign } from './useSign'
-import { useBroadcastV1 } from '../_sharedWalletSendV1/useBroadcastV1'
-import { useFundAndSign } from './useFundAndSign'
-import { useCancelV1 } from '../_sharedWalletSendV1/useCancelV1'
-import { useFundV1 } from '../_sharedWalletSendV1/useFundV1'
-import { SendParamsV1, SendStep } from '../_sharedWalletSendV1/typesV1'
+import { LedgerSignTxn } from '../LedgerSignTxn'
+import { useSignV1 } from './useSignV1'
+import { useBroadcastV1 } from '../../_sharedWalletSendV1/useBroadcastV1'
+import { useFundAndSignV1 } from './useFundAndSignV1'
+import { useCancelV1 } from '../../_sharedWalletSendV1/useCancelV1'
+import { useFundV1 } from '../../_sharedWalletSendV1/useFundV1'
+import { SendParamsV1, SendStep } from '../../_sharedWalletSendV1/typesV1'
 
 const defaultValues = {
   isConnected: false,
@@ -54,7 +54,7 @@ function getFields(): ConfigFields<typeof defaultValues, never> {
   }
 }
 
-export function useSendForm({ params, step, onConfirm }: Props) {
+export function useSendFormV1({ params, step, onConfirm }: Props) {
   const form = useForm({
     mode: 'all',
     defaultValues,
@@ -63,10 +63,10 @@ export function useSendForm({ params, step, onConfirm }: Props) {
   const isSigned = form.watch('isSigned')
   const { device, error: ledgerError } = useLedger()
   const cancel = useCancelV1()
-  const sign = useSign({ cancel })
+  const sign = useSignV1({ cancel })
   const broadcast = useBroadcastV1({ cancel })
   const fund = useFundV1()
-  const fundAndSign = useFundAndSign({ cancel, fund, sign })
+  const fundAndSign = useFundAndSignV1({ cancel, fund, sign })
   const [waitingForUser, setWaitingForUser] = useState(false)
   const [txn, setTxn] = useState<Transaction>()
   const [basis, setBasis] = useState<ChainIndex>()
