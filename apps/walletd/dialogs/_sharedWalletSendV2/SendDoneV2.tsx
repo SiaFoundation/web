@@ -1,17 +1,17 @@
 import { Text } from '@siafoundation/design-system'
 import { CheckmarkFilled32 } from '@siafoundation/react-icons'
-import { SendReceipt } from './SendReceipt'
-import { SendParams } from './types'
+import { SendReceiptV2 } from './SendReceiptV2'
+import { SendParamsV2 } from './typesV2'
 
 type Props = {
-  params: SendParams
+  params: SendParamsV2
   transactionId?: string
 }
 
-export function SendDone({ params, transactionId }: Props) {
+export function SendDoneV2({ params, transactionId }: Props) {
   return (
     <div className="flex flex-col gap-4">
-      <SendReceipt params={params} transactionId={transactionId} />
+      <SendReceiptV2 params={params} transactionId={transactionId} />
       <div className="flex flex-col items-center justify-center gap-2 my-4">
         <Text>
           <CheckmarkFilled32 />

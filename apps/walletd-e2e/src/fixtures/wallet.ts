@@ -5,6 +5,7 @@ import {
   fillTextareaByName,
   waitForTableToReload,
   step,
+  expectThenClick,
 } from '@siafoundation/e2e'
 import { navigateToWallet } from './navigate'
 
@@ -45,7 +46,7 @@ export const recoverWallet = step(
 export const deleteWallet = step(
   'delete wallet',
   async (page: Page, name: string) => {
-    await openWalletContextMenu(page, name)
+    await openWalletRowContextMenu(page, name)
     await page.getByRole('menuitem', { name: 'Delete wallet' }).click()
     await fillTextInputByName(page, 'name', name)
     await page.locator('input[name=name]').press('Enter')
@@ -54,14 +55,29 @@ export const deleteWallet = step(
   }
 )
 
-export const unlockWallet = step(
+export const unlockOpenWallet = step(
   'unlock wallet',
-  async (page: Page, name: string, mnemonic: string) => {
-    await openWalletContextMenu(page, name)
-    await page.getByRole('menuitem', { name: 'Unlock wallet' }).click()
-    await fillTextInputByName(page, 'mnemonic', mnemonic)
-    await page.locator('input[name=mnemonic]').press('Enter')
-    await expect(page.getByRole('dialog')).toBeHidden()
+  async (page: Page, mnemonic: string) => {
+    await openWalletNavContextMenu(page)
+    // Wait for menu to open.
+    await expect(
+      page.getByRole('menuitem', { name: 'Delete wallet' })
+    ).toBeVisible()
+    // If we see a "lock wallet" button, its already unlocked.
+    const isLocked = await page
+      .getByRole('menuitem', { name: 'Unlock wallet' })
+      .isVisible()
+    if (isLocked) {
+      await expectThenClick(
+        page.getByRole('menuitem', { name: 'Unlock wallet' })
+      )
+      await fillTextInputByName(page, 'mnemonic', mnemonic)
+      await page.locator('input[name=mnemonic]').press('Enter')
+      await expect(page.getByRole('dialog')).toBeHidden()
+    } else {
+      // Close context menu.
+      await page.keyboard.press('Escape')
+    }
   }
 )
 
@@ -153,12 +169,22 @@ export const openWallet = step(
   }
 )
 
-export const openWalletContextMenu = step(
-  'open wallet context menu',
+export const openWalletRowContextMenu = step(
+  'open wallet row context menu',
   async (page: Page, name: string) => {
     const menu = page.getByRole('row', { name }).getByRole('button').first()
     await expect(menu).toBeVisible()
     await menu.click()
+  }
+)
+
+export const openWalletNavContextMenu = step(
+  'open wallet nav context menu',
+  async (page: Page) => {
+    const menu = page.getByLabel('wallet context menu')
+    await expect(menu).toBeVisible()
+    await menu.click()
+    return menu
   }
 )
 

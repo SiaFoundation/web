@@ -8,7 +8,7 @@ export function WalletsFiltersBar() {
     useWallets()
 
   return (
-    <div className="flex gap-2 w-full">
+    <div className="flex items-center gap-2 w-full">
       {!!unlockedCount && (
         <div className="flex gap-1.5">
           <Text>

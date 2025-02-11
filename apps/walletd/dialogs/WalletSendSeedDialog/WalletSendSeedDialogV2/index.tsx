@@ -1,72 +1,77 @@
 import BigNumber from 'bignumber.js'
 import { useMemo, useState } from 'react'
-import { useWalletBalance } from '@siafoundation/walletd-react'
-import { useComposeFormV1 } from '../_sharedWalletSendV1/useComposeFormV1'
-import { useSendForm } from './useSendForm'
+import { useSendFormV2 } from './useSendFormV2'
+import { useTxPoolFee, useWalletBalance } from '@siafoundation/walletd-react'
 import {
-  SendParamsV1,
+  SendParamsV2,
   SendStep,
-  emptySendParamsV1,
-} from '../_sharedWalletSendV1/typesV1'
-import { SendFlowDialogV1 } from '../_sharedWalletSendV1/SendFlowDialogV1'
-import { useWalletAddresses } from '../../hooks/useWalletAddresses'
+  emptySendParamsV2,
+} from '../../_sharedWalletSendV2/typesV2'
+import { useWalletAddresses } from '../../../hooks/useWalletAddresses'
+import { useComposeFormV2 } from '../../_sharedWalletSendV2/useComposeFormV2'
+import { SendFlowDialogV2 } from '../../_sharedWalletSendV2/SendFlowDialogV2'
 
-export type WalletSendLedgerDialogParams = {
+export type WalletSendSeedDialogParams = {
   walletId: string
 }
 
 type Props = {
-  params?: WalletSendLedgerDialogParams
+  params?: WalletSendSeedDialogParams
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
 }
 
-export function WalletSendLedgerDialog({
+export function WalletSendSeedDialogV2({
   params: dialogParams,
   trigger,
   open,
   onOpenChange,
 }: Props) {
   const { walletId } = dialogParams || {}
-  const [step, setStep] = useState<SendStep>('compose')
-  const [signedTxnId, setSignedTxnId] = useState<string>()
-  const [sendParams, setSendParams] = useState<SendParamsV1>(emptySendParamsV1)
   const balance = useWalletBalance({
     disabled: !walletId,
     params: {
       id: walletId,
     },
   })
+  const txPoolFee = useTxPoolFee()
+  const fee = useMemo(() => {
+    // https://github.com/SiaFoundation/walletd/blob/master/api/server.go#L738
+    const feeMultiplier = 2000
+    return new BigNumber(txPoolFee.data || 0).multipliedBy(feeMultiplier)
+  }, [txPoolFee.data])
   const { dataset: addresses } = useWalletAddresses({ id: walletId })
-
   const balanceSc = useMemo(
     () => new BigNumber(balance.data?.siacoins || 0),
     [balance.data]
   )
-
   const balanceSf = useMemo(
     () => new BigNumber(balance.data?.siafunds || 0),
     [balance.data]
   )
 
+  const [step, setStep] = useState<SendStep>('compose')
+  const [signedTxnId, setSignedTxnId] = useState<string>()
+  const [sendParams, setSendParams] = useState<SendParamsV2>(emptySendParamsV2)
+
   // Form for each step
-  const compose = useComposeFormV1({
+  const compose = useComposeFormV2({
     balanceSc,
     balanceSf,
+    fee,
     defaultChangeAddress: addresses?.[0]?.address,
-    defaultClaimAddress: addresses?.[0]?.address,
-    onComplete: (data) => {
+    onComplete: (params) => {
       setSendParams((d) => ({
         ...d,
-        ...data,
+        ...params,
       }))
       setStep('send')
     },
   })
-  const send = useSendForm({
+
+  const send = useSendFormV2({
     walletId,
-    step,
     params: sendParams,
     onConfirm: ({ transactionId }) => {
       setSignedTxnId(transactionId)
@@ -95,7 +100,7 @@ export function WalletSendLedgerDialog({
   }, [step, compose, send])
 
   return (
-    <SendFlowDialogV1
+    <SendFlowDialogV2
       trigger={trigger}
       open={open}
       onOpenChange={(val) => {

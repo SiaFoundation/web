@@ -81,3 +81,11 @@ export const clickTwice = step('click twice', async (locator: Locator) => {
   await locator.click()
   await locator.click()
 })
+
+export const expectThenClick = step(
+  'expect then click',
+  async (locator: Locator) => {
+    await expect(locator).toBeVisible()
+    await locator.click()
+  }
+)
