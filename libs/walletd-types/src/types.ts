@@ -1,4 +1,4 @@
-import { SpendPolicy, UnlockConditions } from '@siafoundation/types'
+import { SpendPolicy } from '@siafoundation/types'
 
 export type GatewayPeer = {
   address: string
@@ -33,7 +33,6 @@ export type Wallet = {
 
 export type WalletAddressMetadata = {
   index?: number
-  unlockConditions?: UnlockConditions
 }
 
 export type WalletAddress = {

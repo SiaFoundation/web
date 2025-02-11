@@ -8,7 +8,7 @@ import {
 import { stripPrefix } from '@siafoundation/design-system'
 import { AddressData } from '../contexts/addresses/types'
 
-export function addUnlockConditionsAndSignatures({
+export function addUnlockConditionsAndSignaturesV1({
   transaction,
   toSign,
   addresses,
@@ -40,7 +40,7 @@ export function addUnlockConditionsAndSignatures({
       siacoinInput,
       siafundInput,
       error,
-    } = getToSignMetadata({
+    } = getToSignMetadataV1({
       toSignId,
       addresses,
       siacoinOutputs,
@@ -53,11 +53,11 @@ export function addUnlockConditionsAndSignatures({
     }
 
     if (siacoinUtxo) {
-      siacoinInput.unlockConditions = address.metadata.unlockConditions
+      siacoinInput.unlockConditions = address.spendPolicy.policy
     }
 
     if (siafundUtxo) {
-      siafundInput.unlockConditions = address.metadata.unlockConditions
+      siafundInput.unlockConditions = address.spendPolicy.policy
     }
 
     if (!transaction.signatures) {
@@ -78,7 +78,7 @@ export function addUnlockConditionsAndSignatures({
   return {}
 }
 
-export function getSiacoinUtxoAndAddress({
+function getSiacoinUtxoAndAddressV1({
   id: idPrefixed,
   addresses,
   siacoinOutputs,
@@ -110,7 +110,10 @@ export function getSiacoinUtxoAndAddress({
   if (addressData.metadata.index === undefined) {
     return { error: 'Missing address index' }
   }
-  if (!addressData.metadata.unlockConditions.publicKeys[0]) {
+  if (!addressData.spendPolicy) {
+    return { error: 'Missing address spend policy' }
+  }
+  if (!addressData.spendPolicy.policy.publicKeys[0]) {
     return { error: 'Missing address public key' }
   }
 
@@ -120,7 +123,7 @@ export function getSiacoinUtxoAndAddress({
   }
 }
 
-export function getSiafundUtxoAndAddress({
+function getSiafundUtxoAndAddressV1({
   id: idPrefixed,
   addresses,
   siafundOutputs,
@@ -152,7 +155,10 @@ export function getSiafundUtxoAndAddress({
   if (addressData.metadata.index === undefined) {
     return { error: 'Missing address index' }
   }
-  if (!addressData.metadata.unlockConditions.publicKeys[0]) {
+  if (!addressData.spendPolicy) {
+    return { error: 'Missing address spend policy' }
+  }
+  if (!addressData.spendPolicy.policy.publicKeys[0]) {
     return { error: 'Missing address public key' }
   }
 
@@ -162,7 +168,7 @@ export function getSiafundUtxoAndAddress({
   }
 }
 
-export function getToSignMetadata({
+export function getToSignMetadataV1({
   toSignId: idPrefixed,
   transaction,
   addresses,
@@ -184,7 +190,7 @@ export function getToSignMetadata({
 } {
   const id = stripPrefix(idPrefixed)
   // find the parent utxo funding element for each input
-  const scUtxoAddr = getSiacoinUtxoAndAddress({
+  const scUtxoAddr = getSiacoinUtxoAndAddressV1({
     id,
     addresses,
     siacoinOutputs,
@@ -208,7 +214,7 @@ export function getToSignMetadata({
   }
 
   // find the parent utxo funding element for each input
-  const sfUtxoAddr = getSiafundUtxoAndAddress({
+  const sfUtxoAddr = getSiafundUtxoAndAddressV1({
     id,
     addresses,
     siafundOutputs,

@@ -173,7 +173,6 @@ export function WalletAddressesGenerateSeedDialog({
         }
         const metadata: WalletAddressMetadata = {
           index: i,
-          unlockConditions: uc.unlockConditions,
         }
         const response = await addressAdd.put({
           params: {
@@ -182,7 +181,10 @@ export function WalletAddressesGenerateSeedDialog({
           payload: {
             address: stripPrefix(suh.address),
             description: '',
-            // TODO: add spendPolicy?
+            spendPolicy: {
+              type: 'uc',
+              policy: uc.unlockConditions,
+            },
             metadata,
           },
         })
