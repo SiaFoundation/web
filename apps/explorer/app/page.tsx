@@ -6,6 +6,8 @@ import { getLatestBlocks } from '../lib/blocks'
 import { siaCentral } from '../config/siaCentral'
 import { to } from '@siafoundation/request'
 import { explored } from '../config/explored'
+import { rankHosts } from '../lib/hosts'
+import { unstable_cache } from 'next/cache'
 
 export function generateMetadata(): Metadata {
   const title = 'siascan'
@@ -22,10 +24,27 @@ export function generateMetadata(): Metadata {
 
 export const revalidate = 0
 
+// Cache our top hosts fetch and ranking. Revalidate every 24 hours.
+const getCachedTopHosts = unstable_cache(
+  async () => {
+    const [hosts, hostsError] = await to(
+      explored.hostsList({
+        params: { sortBy: 'date_created', dir: 'asc', limit: 500 },
+        data: { online: true },
+      })
+    )
+    if (hostsError) return []
+    return rankHosts(hosts)
+      .slice(0, 5) // Select the top 5.
+      .map((result) => result.host) // Strip score key.
+  },
+  ['top-hosts'],
+  { revalidate: 86400 }
+)
+
 export default async function HomePage() {
   const [
     [exchangeRates, exchangeRatesError],
-    [hosts, hostsError],
     [hostMetrics, hostMetricsError],
     [blockMetrics, blockMetricsError],
   ] = await Promise.all([
@@ -34,16 +53,11 @@ export default async function HomePage() {
         params: { currencies: 'sc' },
       })
     ),
-    to(
-      siaCentral.hosts({
-        params: {
-          limit: 5,
-        },
-      })
-    ),
     to(explored.hostMetrics()),
     to(explored.blockMetrics()),
   ])
+
+  const selectedTopHosts = await getCachedTopHosts()
 
   const [latestBlocks, latestBlocksError] = await getLatestBlocks()
   const latestHeight = latestBlocks ? latestBlocks[0].height : 0
@@ -51,14 +65,12 @@ export default async function HomePage() {
   if (
     latestBlocksError ||
     exchangeRatesError ||
-    hostsError ||
     hostMetricsError ||
     blockMetricsError
   ) {
     console.log(new Date().toISOString(), {
       latestBlocksError,
       exchangeRatesError,
-      hostsError,
       hostMetricsError,
       blockMetrics,
     })
@@ -69,7 +81,7 @@ export default async function HomePage() {
       metrics={hostMetrics}
       blockHeight={latestHeight}
       blocks={latestBlocks || []}
-      hosts={hosts?.hosts || []}
+      hosts={selectedTopHosts || []}
       rates={exchangeRates?.rates}
       totalHosts={blockMetrics?.totalHosts}
     />
