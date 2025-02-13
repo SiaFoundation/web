@@ -11,7 +11,7 @@ import {
 } from './signV1'
 import { getSDK } from '@siafoundation/sdk'
 
-export async function signTransactionLedger({
+export async function signTransactionLedgerV1({
   device,
   transaction,
   toSign,
