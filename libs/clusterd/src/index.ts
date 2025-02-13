@@ -6,32 +6,66 @@ import { pluralize } from '@siafoundation/units'
 import { Hostd } from '@siafoundation/hostd-js'
 import { Maybe } from '@siafoundation/types'
 
-type Node = {
-  type: string
+export type ClusterNodeRenterd = {
+  type: 'renterd'
+  apiAddress: string
+  password: string
+  walletAddress: string
+}
+
+export type ClusterNodeHostd = {
+  type: 'hostd'
+  apiAddress: string
+  password: string
+  walletAddress: string
+}
+
+export type ClusterNodeWalletd = {
+  type: 'walletd'
   apiAddress: string
   password: string
 }
+
+export type ClusterNodeExplored = {
+  type: 'explored'
+  apiAddress: string
+  password: string
+}
+
+export type ClusterNode =
+  | ClusterNodeRenterd
+  | ClusterNodeHostd
+  | ClusterNodeWalletd
+  | ClusterNodeExplored
+
 type NetworkVersion = 'v1' | 'v2' | 'transition'
 
 export const clusterd = {
   process: undefined as child.ChildProcessWithoutNullStreams | undefined,
   managementPort: undefined as number | undefined,
-  nodes: [] as Node[],
+  nodes: [] as ClusterNode[],
 }
 
 const maxTimeWaitingForAllNodesToStartup = 100_000
 const maxTimeWaitingForContractsToForm = 60_000
 
+const randomAddress =
+  '3af8e2a77c4b666dfc3cf7f68dfabaf61fa9d7707cbcd4308a5b75b63a9452e3edc505af3c79'
+
 export async function setupCluster({
   renterdCount = 0,
   hostdCount = 0,
   walletdCount = 0,
+  exploredCount = 0,
   networkVersion = 'v1',
+  siafundAddr = randomAddress,
 }: {
   renterdCount?: number
   hostdCount?: number
   walletdCount?: number
+  exploredCount?: number
   networkVersion?: NetworkVersion
+  siafundAddr?: string
 } = {}) {
   clusterd.managementPort = random(10000, 65535)
   console.log('Starting cluster on port', clusterd.managementPort)
@@ -41,7 +75,9 @@ export async function setupCluster({
     `-renterd=${renterdCount}`,
     `-hostd=${hostdCount}`,
     `-walletd=${walletdCount}`,
+    `-explored=${exploredCount}`,
     `-api=:${clusterd.managementPort}`,
+    `-siafund=${siafundAddr}`,
   ])
   // Drain buffer to prevent process from hanging.
   clusterd.process.stdout.on('data', () => null)
@@ -66,10 +102,15 @@ export async function setupCluster({
         const runningCount = nodes.data?.length
         const totalCount = renterdCount + hostdCount + walletdCount
         if (nodes.data?.length === renterdCount + hostdCount + walletdCount) {
-          clusterd.nodes = nodes.data?.map((n) => ({
-            ...n,
-            apiAddress: n.apiAddress.replace('[::]', '127.0.0.1'),
-          }))
+          clusterd.nodes = nodes.data?.map((n) => {
+            if ('apiAddress' in n) {
+              return {
+                ...n,
+                apiAddress: n.apiAddress.replace('[::]', '127.0.0.1'),
+              } as ClusterNode
+            }
+            return n
+          })
           return true
         }
         console.log(`waiting for nodes (${runningCount}/${totalCount})...`)
@@ -87,7 +128,7 @@ export async function setupCluster({
   console.timeEnd('waiting for nodes to start')
 
   console.log(
-    `started: ${renterdCount} renterd, ${hostdCount} hostd, and ${walletdCount} walletd nodes`
+    `started: ${renterdCount} renterd, ${hostdCount} hostd, ${walletdCount} walletd, and ${exploredCount} explored nodes`
   )
 }
 
@@ -95,7 +136,7 @@ export async function renterdWaitForContracts({
   renterdNode,
   hostdCount,
 }: {
-  renterdNode: Node
+  renterdNode: ClusterNodeRenterd
   hostdCount: number
 }) {
   const renterdApi = `${renterdNode.apiAddress}/api`
@@ -142,7 +183,7 @@ export async function hostdWaitForContracts({
   hostdNode,
   renterdCount,
 }: {
-  hostdNode: Node
+  hostdNode: ClusterNodeHostd
   renterdCount: number
 }) {
   const hostdApi = `${hostdNode.apiAddress}/api`
