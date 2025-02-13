@@ -11,7 +11,7 @@ import {
   testOnlyWorksOn,
   testRequiresClipboardPermissions,
 } from '@siafoundation/e2e'
-import { clusterd, mine } from '@siafoundation/clusterd'
+import { clusterd, mineToHeight } from '@siafoundation/clusterd'
 import { createLedgerWalletWithApi } from '../fixtures/ledger'
 import { rescanWallets } from '../fixtures/wallet'
 import { ledgerComposeSiacoin } from '../fixtures/ledgerComposeSiacoin'
@@ -26,6 +26,11 @@ const wallet1PublicKey0 =
 // Second wallet - receiver
 const wallet2Address0 =
   '4e7e288504d86ae2234ffc6989aa96e70eb555ace205eb2d0afaaca650536fd1de3b5ff8f90c'
+
+// Reason for the selected mining heights:
+// test cluster: internal/cluster/cmd/clusterd/main.go#L131-L132
+const v2AllowHeight = 400
+const v2RequireHeight = 500
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page)
@@ -72,11 +77,27 @@ test('compose siacoin transaction with ledger wallet pre and post v2 fork allow 
     receiveAddress: wallet2Address0,
     changeAddress: wallet1Address0,
     amount: amountV1,
+    // v1 fee is 0.004
     expectedFee: 0.004,
   })
 
-  // Mine blocks to pass v2 fork height.
-  await mine(100)
+  // Mine blocks to pass v2 fork allow height.
+  await mineToHeight(v2AllowHeight + 1)
+  await page.reload()
+
+  // Verify still composes v1 transaction.
+  const amountV12 = random(1, 20)
+  await ledgerComposeSiacoin(page, {
+    walletName: wallet1Name,
+    receiveAddress: wallet2Address0,
+    changeAddress: wallet1Address0,
+    amount: amountV12,
+    // v1 fee is 0.004
+    expectedFee: 0.004,
+  })
+
+  // Mine blocks to pass v2 fork require height.
+  await mineToHeight(v2RequireHeight + 1)
   await page.reload()
 
   // Verify can not compose v2 transaction.

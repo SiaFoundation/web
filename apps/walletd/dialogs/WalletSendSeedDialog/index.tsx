@@ -4,7 +4,7 @@ import {
 } from '@siafoundation/walletd-react'
 import { WalletSendSeedDialogV2 } from './WalletSendSeedDialogV2'
 import { WalletSendSeedDialogV1 } from './WalletSendSeedDialogV1'
-import { getCurrentVersion } from '../_sharedWalletSendV2/hardforkV2'
+import { isPastV2AllowHeight } from '../_sharedWalletSendV2/hardforkV2'
 
 export type WalletSendSeedDialogParams = {
   walletId: string
@@ -26,12 +26,12 @@ export function WalletSendSeedDialog({
   const n = useConsensusNetwork()
   const ct = useConsensusTip()
 
-  const version = getCurrentVersion({
+  const isV2Allowed = isPastV2AllowHeight({
     network: n.data?.name || 'mainnet',
     height: ct.data?.height || 0,
   })
 
-  if (version === 'v2') {
+  if (isV2Allowed) {
     return (
       <WalletSendSeedDialogV2
         trigger={trigger}

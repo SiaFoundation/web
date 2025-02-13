@@ -21,7 +21,14 @@ const hardforkV2AllowHeights = {
   testCluster: 400,
 }
 
-export function getCurrentVersion({
+const hardforkV2RequireHeights = {
+  mainnet: 530_000,
+  zen: 114_000,
+  anagami: 2_016 + 288,
+  testCluster: 500,
+}
+
+export function isPastV2AllowHeight({
   network,
   height,
 }: {
@@ -33,5 +40,20 @@ export function getCurrentVersion({
       ? hardforkV2AllowHeights.testCluster
       : hardforkV2AllowHeights[network || 'mainnet']
 
-  return height > hardforkV2AllowHeight ? 'v2' : 'v1'
+  return height > hardforkV2AllowHeight
+}
+
+export function isPastV2RequireHeight({
+  network,
+  height,
+}: {
+  network: string
+  height: number
+}) {
+  const hardforkV2RequireHeight =
+    process.env.NEXT_PUBLIC_TEST_CLUSTER === 'true'
+      ? hardforkV2RequireHeights.testCluster
+      : hardforkV2RequireHeights[network || 'mainnet']
+
+  return height > hardforkV2RequireHeight
 }

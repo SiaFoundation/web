@@ -4,7 +4,7 @@ import {
 } from '@siafoundation/walletd-react'
 import { WalletSendLedgerDialogV2 } from './WalletSendLedgerDialogV2'
 import { WalletSendLedgerDialogV1 } from './WalletSendLedgerDialogV1'
-import { getCurrentVersion } from '../_sharedWalletSendV2/hardforkV2'
+import { isPastV2RequireHeight } from '../_sharedWalletSendV2/hardforkV2'
 
 export type WalletSendLedgerDialogParams = {
   walletId: string
@@ -26,12 +26,12 @@ export function WalletSendLedgerDialog({
   const n = useConsensusNetwork()
   const ct = useConsensusTip()
 
-  const version = getCurrentVersion({
+  const isV2Required = isPastV2RequireHeight({
     network: n.data?.name || 'mainnet',
     height: ct.data?.height || 0,
   })
 
-  if (version === 'v2') {
+  if (isV2Required) {
     return (
       <WalletSendLedgerDialogV2
         trigger={trigger}
