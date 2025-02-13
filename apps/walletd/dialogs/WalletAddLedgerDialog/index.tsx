@@ -137,7 +137,6 @@ export function WalletAddLedgerDialog({ trigger, open, onOpenChange }: Props) {
     ) => {
       const metadata: WalletAddressMetadata = {
         index: 0,
-        unlockConditions,
       }
       const response = await addressAdd.put({
         params: {
@@ -146,7 +145,10 @@ export function WalletAddLedgerDialog({ trigger, open, onOpenChange }: Props) {
         payload: {
           address,
           description: '',
-          // TODO: add spendPolicy?
+          spendPolicy: {
+            type: 'uc',
+            policy: unlockConditions,
+          },
           metadata,
         },
       })

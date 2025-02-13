@@ -245,8 +245,7 @@ export function WalletAddressesGenerateLedgerDialog({
         isNew: !existing,
         index: Number(index),
         address: existing?.address || address,
-        publicKey:
-          existing?.metadata.unlockConditions.publicKeys[0] || publicKey,
+        publicKey: existing?.spendPolicy?.policy.publicKeys[0] || publicKey,
       }
     }
     return indiciesWithAddresses
@@ -284,7 +283,6 @@ export function WalletAddressesGenerateLedgerDialog({
       }
       const metadata: WalletAddressMetadata = {
         index,
-        unlockConditions: uc.unlockConditions,
       }
       const response = await addressAdd.put({
         params: {
@@ -293,7 +291,10 @@ export function WalletAddressesGenerateLedgerDialog({
         payload: {
           address,
           description: '',
-          // TODO: add spendPolicy?
+          spendPolicy: {
+            type: 'uc',
+            policy: uc.unlockConditions,
+          },
           metadata,
         },
       })

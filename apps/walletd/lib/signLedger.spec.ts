@@ -97,7 +97,7 @@ describe('signLedger', () => {
       const device = getMockDevice()
       const mocks = getMockScenarioSeedWallet()
       const addresses = getMockAddresses(mocks)
-      addresses[0].metadata.unlockConditions.publicKeys[0] = undefined
+      addresses[0].spendPolicy.policy.publicKeys[0] = undefined
       expect(
         await signTransactionLedger({
           device,
