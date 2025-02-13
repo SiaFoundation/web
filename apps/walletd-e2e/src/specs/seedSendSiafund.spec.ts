@@ -8,7 +8,12 @@ import {
   sendSiacoinFromRenterd,
 } from '../fixtures/beforeTest'
 import { toHastings } from '@siafoundation/units'
-import { testRequiresClipboardPermissions } from '@siafoundation/e2e'
+import {
+  testRequiresClipboardPermissions,
+  fillTextInputByName,
+  fillSelectInputByName,
+  expectTextInputByName,
+} from '@siafoundation/e2e'
 import { mine } from '@siafoundation/clusterd'
 import { sendSiafundWithSeedWallet } from '../fixtures/seedSendSiafund'
 
@@ -114,4 +119,49 @@ test('send siafund between wallets pre and post v2 fork allow height', async ({
   ).toBeVisible({
     timeout: 20_000,
   })
+})
+
+test('switching between siacoin and siafund modes resets amount fields', async ({
+  page,
+  browserName,
+}) => {
+  testRequiresClipboardPermissions(browserName)
+
+  // Setup wallet.
+  const wallet1Name = 'sender-wallet'
+  await recoverWallet(page, wallet1Name, wallet1Mnemonic)
+  await walletInList(page, wallet1Name)
+  await rescanWallets(page)
+
+  await sendSiacoinFromRenterd(
+    wallet1Address0,
+    toHastings(1_000_000).toString()
+  )
+
+  // Navigate to wallet and verify initial balance.
+  await navigateToWallet(page, wallet1Name)
+  const navbar = page.getByTestId('navbar')
+  await expect(navbar.getByText('1.000 MS')).toBeVisible({ timeout: 20_000 })
+  await expect(navbar.getByText('10,000 SF')).toBeVisible({ timeout: 20_000 })
+
+  // Open send dialog.
+  await page.getByLabel('send').click()
+
+  // Fill out form with siacoin.
+  await fillTextInputByName(page, 'receiveAddress', wallet2Address0)
+  await fillTextInputByName(page, 'siacoin', '100')
+  await expectTextInputByName(page, 'siacoin', '100')
+
+  // Switch to siafund mode.
+  await fillSelectInputByName(page, 'mode', 'siafund')
+  await fillTextInputByName(page, 'siafund', '50')
+  await expectTextInputByName(page, 'siafund', '50')
+
+  // Switch back to siacoin mode.
+  await fillSelectInputByName(page, 'mode', 'siacoin')
+  await expectTextInputByName(page, 'siacoin', '')
+
+  // Switch back to siafund mode.
+  await fillSelectInputByName(page, 'mode', 'siafund')
+  await expectTextInputByName(page, 'siafund', '')
 })
