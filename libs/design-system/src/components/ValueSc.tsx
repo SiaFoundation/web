@@ -6,6 +6,7 @@ import { humanSiacoin } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 
 type Props = {
+  labeledBy?: string
   testId?: string
   size?: React.ComponentProps<typeof Text>['size']
   scaleSize?: React.ComponentProps<typeof Text>['scaleSize']
@@ -23,6 +24,7 @@ type Props = {
 }
 
 export function ValueSc({
+  labeledBy,
   testId,
   value,
   size,
@@ -51,6 +53,7 @@ export function ValueSc({
 
   const el = (
     <Text
+      aria-labelledby={labeledBy}
       data-testid={testId}
       size={size}
       scaleSize={scaleSize}
