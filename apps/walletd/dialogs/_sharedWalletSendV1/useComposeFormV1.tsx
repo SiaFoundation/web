@@ -14,7 +14,7 @@ import {
   Tooltip,
 } from '@siafoundation/design-system'
 import { useForm } from 'react-hook-form'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { SendParamsV1 } from './typesV1'
 import { Information16 } from '@siafoundation/react-icons'
 import { Maybe } from '@siafoundation/types'
@@ -274,6 +274,16 @@ export function useComposeFormV1({
   const customClaimAddress = form.watch('customClaimAddress')
   const includeFee = form.watch('includeFee')
   const sc = toHastings(siacoin || 0)
+
+  // Reset the siacoin or siafund field when the mode changes.
+  useEffect(() => {
+    if (mode === 'siafund') {
+      form.resetField('siacoin')
+    }
+    if (mode === 'siacoin') {
+      form.resetField('siafund')
+    }
+  }, [mode, form])
 
   const el = (
     <div className="flex flex-col gap-4">
