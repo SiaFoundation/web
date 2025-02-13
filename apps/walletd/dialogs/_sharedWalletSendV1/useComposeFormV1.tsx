@@ -15,8 +15,9 @@ import {
 } from '@siafoundation/design-system'
 import { useForm } from 'react-hook-form'
 import { useCallback, useMemo } from 'react'
-import { SendParams } from './types'
+import { SendParamsV1 } from './typesV1'
 import { Information16 } from '@siafoundation/react-icons'
+import { Maybe } from '@siafoundation/types'
 
 const exampleAddr =
   'e3b1050aef388438668b52983cf78f40925af8f0aa8b9de80c18eadcefce8388d168a313e3f2'
@@ -77,13 +78,13 @@ function getFields({
       placeholder: '100',
       validation: {
         validate: {
-          required: (value: BigNumber, values) =>
+          required: (value: Maybe<BigNumber>, values) =>
             values.mode !== 'siacoin' || !!value || 'required',
-          gtz: (value: BigNumber, values) =>
+          gtz: (value: Maybe<BigNumber>, values) =>
             values.mode !== 'siacoin' ||
             !new BigNumber(value || 0).isZero() ||
             'must be greater than zero',
-          balance: (value: BigNumber, values) =>
+          balance: (value: Maybe<BigNumber>, values) =>
             values.mode !== 'siacoin' ||
             balanceSc.gte(toHastings(value || 0).plus(fee)) ||
             'not enough funds in wallet',
@@ -99,11 +100,11 @@ function getFields({
         validate: {
           required: (value, values) =>
             values.mode !== 'siafund' || !!value || 'required',
-          gtz: (value: BigNumber, values) =>
+          gtz: (value: Maybe<BigNumber>, values) =>
             values.mode !== 'siafund' ||
             value?.gt(0) ||
             'must be greater than zero',
-          balance: (value: BigNumber, values) =>
+          balance: (value: Maybe<BigNumber>, values) =>
             values.mode !== 'siafund' ||
             (balanceSc?.gte(fee) && balanceSf?.gte(value)) ||
             'not enough funds in wallet',
@@ -112,12 +113,12 @@ function getFields({
     },
     customChangeAddress: {
       type: 'boolean',
-      title: 'Custom change adress',
+      title: 'Custom change address',
       validation: {},
     },
     customClaimAddress: {
       type: 'boolean',
-      title: 'Custom claim adress',
+      title: 'Custom claim address',
       validation: {},
     },
     changeAddress: {
@@ -209,14 +210,14 @@ function getFields({
 }
 
 type Props = {
-  onComplete: (data: SendParams) => void
+  onComplete: (data: SendParamsV1) => void
   balanceSc?: BigNumber
   balanceSf?: BigNumber
   defaultChangeAddress: string
   defaultClaimAddress: string
 }
 
-export function useComposeForm({
+export function useComposeFormV1({
   balanceSc,
   balanceSf,
   onComplete,

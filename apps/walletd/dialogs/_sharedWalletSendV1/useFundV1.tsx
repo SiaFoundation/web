@@ -4,9 +4,9 @@ import {
 } from '@siafoundation/walletd-react'
 import { useWallets } from '../../contexts/wallets'
 import { useCallback } from 'react'
-import { SendParams } from './types'
+import { SendParamsV1 } from './typesV1'
 
-export function useFund() {
+export function useFundV1() {
   const { wallet } = useWallets()
   const walletId = wallet?.id
   const walletFundSc = useWalletFundSiacoin()
@@ -21,7 +21,7 @@ export function useFund() {
       siacoin,
       siafund,
       fee,
-    }: SendParams) => {
+    }: SendParamsV1) => {
       if (!receiveAddress || !changeAddress || !claimAddress) {
         return {
           error: 'No addresses',

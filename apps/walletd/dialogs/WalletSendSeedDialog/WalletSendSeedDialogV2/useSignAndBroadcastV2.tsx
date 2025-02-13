@@ -4,16 +4,17 @@ import {
   useConsensusTipState,
   useWalletOutputsSiafund,
 } from '@siafoundation/walletd-react'
-import { useWallets } from '../../contexts/wallets'
+import { useWallets } from '../../../contexts/wallets'
 import { useCallback } from 'react'
-import { signTransactionSeedV1 } from '../../lib/signSeedV1'
-import { useWalletAddresses } from '../../hooks/useWalletAddresses'
-import { SendParams } from '../_sharedWalletSend/types'
-import { useBroadcast } from '../_sharedWalletSend/useBroadcast'
-import { useCancel } from '../_sharedWalletSend/useCancel'
-import { useFund } from '../_sharedWalletSend/useFund'
+import { signTransactionSeedV2 } from '../../../lib/signSeedV2'
+import { useWalletAddresses } from '../../../hooks/useWalletAddresses'
+import { SendParamsV2 } from '../../_sharedWalletSendV2/typesV2'
+import { useConstructV2 } from '../../_sharedWalletSendV2/useConstructV2'
+import { useBroadcastV2 } from '../../_sharedWalletSendV2/useBroadcastV2'
+import { useCancelV2 } from '../../_sharedWalletSendV2/useCancelV2'
+import { Result } from '@siafoundation/types'
 
-export function useSignAndBroadcast() {
+export function useSignAndBroadcastV2() {
   const { wallet, cacheWalletMnemonic } = useWallets()
   const walletId = wallet?.id
 
@@ -32,58 +33,65 @@ export function useSignAndBroadcast() {
   const { dataset: addresses } = useWalletAddresses({ id: walletId })
   const cs = useConsensusTipState()
   const cn = useConsensusNetwork()
-  const fund = useFund()
-  const cancel = useCancel()
-  const broadcast = useBroadcast({ cancel })
+  const construct = useConstructV2()
+  const cancel = useCancelV2()
+  const broadcast = useBroadcastV2()
 
   return useCallback(
-    async ({ mnemonic, params }: { mnemonic: string; params: SendParams }) => {
+    async ({
+      mnemonic,
+      params,
+    }: {
+      mnemonic: string
+      params: SendParamsV2
+    }): Promise<
+      Result<{
+        id: string
+      }>
+    > => {
       if (!addresses) {
         return {
           error: 'No addresses found',
         }
       }
 
-      // fund
-      const {
-        fundedTransaction,
-        toSign,
-        error: fundingError,
-        basis,
-      } = await fund(params)
-      if (fundingError) {
-        return {
-          fundedTransaction,
-          error: fundingError,
-        }
+      // construct
+      const constructResult = await construct(params)
+      if ('error' in constructResult) {
+        return constructResult
       }
-      const { signedTransaction, error: signingError } = signTransactionSeedV1({
+
+      // sign
+      const { id, fundedTransaction, basis } = constructResult
+      const signingResult = signTransactionSeedV2({
         mnemonic,
         transaction: fundedTransaction,
-        toSign,
         consensusState: cs.data,
         consensusNetwork: cn.data,
         addresses,
         siacoinOutputs: siacoinOutputs.data?.outputs,
         siafundOutputs: siafundOutputs.data?.outputs,
       })
-      if (signingError) {
+
+      if ('error' in signingResult) {
         cancel(fundedTransaction)
         return {
-          error: signingError,
+          error: signingResult.error,
         }
       }
 
-      // if successfully signed cache the seed
+      const { signedTransaction } = signingResult
+
+      // If successfully signed cache the seed.
       cacheWalletMnemonic(walletId, mnemonic)
 
       // broadcast
-      return broadcast({ signedTransaction, basis })
+      return broadcast({ id, basis, signedTransaction })
     },
     [
       cancel,
       addresses,
-      fund,
+      construct,
       walletId,
       cs.data,
       cn.data,

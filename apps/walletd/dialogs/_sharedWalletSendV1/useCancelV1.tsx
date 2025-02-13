@@ -4,7 +4,7 @@ import { useWallets } from '../../contexts/wallets'
 import { useCallback } from 'react'
 import { triggerErrorToast } from '@siafoundation/design-system'
 
-export function useCancel() {
+export function useCancelV1() {
   const { wallet } = useWallets()
   const walletId = wallet?.id
   const walletRelease = useWalletRelease()

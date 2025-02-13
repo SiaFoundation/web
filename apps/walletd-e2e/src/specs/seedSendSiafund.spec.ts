@@ -9,8 +9,8 @@ import {
 } from '../fixtures/beforeTest'
 import { toHastings } from '@siafoundation/units'
 import { testRequiresClipboardPermissions } from '@siafoundation/e2e'
-import { sendSiacoinWithSeedWallet } from '../fixtures/seedSendSiacoin'
 import { mine } from '@siafoundation/clusterd'
+import { sendSiafundWithSeedWallet } from '../fixtures/seedSendSiafund'
 
 // First wallet - sender
 const wallet1Mnemonic =
@@ -25,14 +25,16 @@ const wallet2Address0 =
   '4e7e288504d86ae2234ffc6989aa96e70eb555ace205eb2d0afaaca650536fd1de3b5ff8f90c'
 
 test.beforeEach(async ({ page }) => {
-  await beforeTest(page)
+  await beforeTest(page, {
+    siafundAddr: wallet1Address0,
+  })
 })
 
 test.afterEach(async () => {
   await afterTest()
 })
 
-test('send siacoin between wallets pre and post v2 fork allow height', async ({
+test('send siafund between wallets pre and post v2 fork allow height', async ({
   page,
   browserName,
 }) => {
@@ -42,7 +44,7 @@ test('send siacoin between wallets pre and post v2 fork allow height', async ({
   const wallet1Name = 'sender-wallet'
   const wallet2Name = 'receiver-wallet'
 
-  // Add initial funds to wallet1.
+  // Add some siacoins to cover fees.
   await sendSiacoinFromRenterd(
     wallet1Address0,
     toHastings(1_000_000).toString()
@@ -59,14 +61,16 @@ test('send siacoin between wallets pre and post v2 fork allow height', async ({
   await navigateToWallet(page, wallet1Name)
   const navbar = page.getByTestId('navbar')
   await expect(navbar.getByText('1.000 MS')).toBeVisible({ timeout: 20_000 })
+  await expect(navbar.getByText('10,000 SF')).toBeVisible({ timeout: 20_000 })
 
-  // Send v1 transaction.
+  // Send v1 transaction
   const amountV1 = random(1, 20)
-  await sendSiacoinWithSeedWallet(page, {
+  await sendSiafundWithSeedWallet(page, {
     walletName: wallet1Name,
     mnemonic: wallet1Mnemonic,
     receiveAddress: wallet2Address0,
     changeAddress: wallet1Address0,
+    claimAddress: wallet1Address0,
     amount: amountV1,
     expectedFee: 0.004,
     expectedVersion: 'v1',
@@ -76,9 +80,11 @@ test('send siacoin between wallets pre and post v2 fork allow height', async ({
 
   // Verify v1 transaction in wallet2.
   await navigateToWallet(page, wallet2Name)
-  await expect(navbar.getByText(`${amountV1.toFixed(3)} SC`)).toBeVisible({
-    timeout: 20_000,
-  })
+  await expect(navbar.getByText(`${amountV1.toLocaleString()} SF`)).toBeVisible(
+    {
+      timeout: 20_000,
+    }
+  )
 
   // Mine blocks to pass v2 fork height.
   await mine(100)
@@ -89,7 +95,7 @@ test('send siacoin between wallets pre and post v2 fork allow height', async ({
 
   // Send v2 transaction.
   const amountV2 = random(21, 40)
-  await sendSiacoinWithSeedWallet(page, {
+  await sendSiafundWithSeedWallet(page, {
     walletName: wallet1Name,
     mnemonic: wallet1Mnemonic,
     receiveAddress: wallet2Address0,
@@ -104,7 +110,7 @@ test('send siacoin between wallets pre and post v2 fork allow height', async ({
   // Verify v2 transaction in wallet2.
   await navigateToWallet(page, wallet2Name)
   await expect(
-    navbar.getByText(`${(amountV1 + amountV2).toFixed(3)} SC`)
+    navbar.getByText(`${(amountV1 + amountV2).toLocaleString()} SF`)
   ).toBeVisible({
     timeout: 20_000,
   })
