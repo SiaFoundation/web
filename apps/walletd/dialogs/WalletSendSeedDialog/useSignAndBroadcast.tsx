@@ -49,6 +49,7 @@ export function useSignAndBroadcast() {
         fundedTransaction,
         toSign,
         error: fundingError,
+        basis,
       } = await fund(params)
       if (fundingError) {
         return {
@@ -77,7 +78,7 @@ export function useSignAndBroadcast() {
       cacheWalletMnemonic(walletId, mnemonic)
 
       // broadcast
-      return broadcast({ signedTransaction })
+      return broadcast({ signedTransaction, basis })
     },
     [
       cancel,

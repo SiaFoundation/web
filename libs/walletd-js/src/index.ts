@@ -47,6 +47,12 @@ import {
   WalletBalanceParams,
   WalletBalancePayload,
   WalletBalanceResponse,
+  WalletConstructV1TransactionParams,
+  WalletConstructV1TransactionPayload,
+  WalletConstructV1TransactionResponse,
+  WalletConstructV2TransactionParams,
+  WalletConstructV2TransactionPayload,
+  WalletConstructV2TransactionResponse,
   WalletDeleteParams,
   WalletDeletePayload,
   WalletDeleteResponse,
@@ -93,6 +99,8 @@ import {
   walletsIdAddressesAddrRoute,
   walletsIdAddressesRoute,
   walletsIdBalanceRoute,
+  walletsIdConstructTransactionRoute,
+  walletsIdConstructV2TransactionRoute,
   walletsIdEventsRoute,
   walletsIdEventsUnconfirmedRoute,
   walletsIdFundRoute,
@@ -245,5 +253,15 @@ export function Walletd({ api, password }: { api: string; password?: string }) {
       WalletReleasePayload,
       WalletReleaseResponse
     >(axios, 'post', walletsIdReleaseRoute),
+    walletConstructV1Transaction: buildRequestHandler<
+      WalletConstructV1TransactionParams,
+      WalletConstructV1TransactionPayload,
+      WalletConstructV1TransactionResponse
+    >(axios, 'post', walletsIdConstructTransactionRoute),
+    walletConstructV2Transaction: buildRequestHandler<
+      WalletConstructV2TransactionParams,
+      WalletConstructV2TransactionPayload,
+      WalletConstructV2TransactionResponse
+    >(axios, 'post', walletsIdConstructV2TransactionRoute),
   }
 }
