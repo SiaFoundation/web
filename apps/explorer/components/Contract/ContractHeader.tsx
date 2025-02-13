@@ -18,7 +18,7 @@ type Props = {
   formationTxnChainIndex: ChainIndex[]
 }
 
-export async function ContractHeader({
+export function ContractHeader({
   currentHeight,
   contract,
   renewedFromID,
