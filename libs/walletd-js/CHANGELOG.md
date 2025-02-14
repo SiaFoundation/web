@@ -1,5 +1,24 @@
 # @siafoundation/walletd-js
 
+## 0.3.0
+
+### Minor Changes
+
+- 54570123: Added construct APIs for both v1 and v2 transactions.
+- 54570123: Added the basis ChainIndex parameter to txpool broadcast API.
+- 54570123: Added the basis ChainIndex parameter to fund APIs.
+- 54570123: Added the basis ChainIndex value to txpool transactions response.
+
+### Patch Changes
+
+- 97727dac: Updated the response structure for outputs APIs.
+- Updated dependencies [54570123]
+- Updated dependencies [54570123]
+- Updated dependencies [54570123]
+- Updated dependencies [54570123]
+- Updated dependencies [97727dac]
+  - @siafoundation/walletd-types@0.6.0
+
 ## 0.2.6
 
 ### Patch Changes

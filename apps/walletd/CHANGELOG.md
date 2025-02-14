@@ -1,5 +1,18 @@
 # walletd
 
+## 0.28.0
+
+### Minor Changes
+
+- 1c6e8c1a: Seed wallets now support and automatically switch to sending V2 transactions once the consensus height hits the V2 hardfork allow height. Closes https://github.com/SiaFoundation/walletd/issues/216 Closes https://github.com/SiaFoundation/walletd/issues/186
+- 54a4eabe: Displayed entity values which are often truncated can now be copied to clipboard by double-clicking directly on the visible characters.
+- 819c0664: V1 signing now uses the address spendPolicy.
+- 93b2e77d: Send mode only sends the amount of siacoin or siafunds specified in the active mode.
+- 819c0664: Added V2 signing method.
+- 54a4eabe: Wallet addresses can now be copied to clipboard by clicking on the QR code in the address dialog.
+- 453b5418: Ledger wallets will now disable sending transactions and display a warning once the hardfork require height is reached. The message explains that sending funds with ledger is not yet available but coming soon.
+- 819c0664: Generating addresses now stores the spendPolicy in the dedicated field rather than unlockConditions in the metadata.
+
 ## 0.27.0
 
 ### Minor Changes

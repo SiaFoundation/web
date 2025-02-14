@@ -1,5 +1,18 @@
 # @siafoundation/explored-js
 
+## 0.6.0
+
+### Minor Changes
+
+- 2ab9ec6e: Add exchange rate API.
+- b0a1ea99: Added HostsList API.
+
+### Patch Changes
+
+- Updated dependencies [2ab9ec6e]
+- Updated dependencies [b0a1ea99]
+  - @siafoundation/explored-types@0.12.0
+
 ## 0.5.1
 
 ### Patch Changes
