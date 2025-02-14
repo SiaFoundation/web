@@ -14,18 +14,32 @@
 // n.HardforkV2.AllowHeight = 400
 // n.HardforkV2.RequireHeight = 500
 
-const hardforkV2AllowHeights = {
+export const hardforkV2AllowHeights = {
   mainnet: 526_000,
   zen: 112_000,
   anagami: 2_016,
   testCluster: 400,
 }
 
-const hardforkV2RequireHeights = {
+export const hardforkV2RequireHeights = {
   mainnet: 530_000,
   zen: 114_000,
   anagami: 2_016 + 288,
   testCluster: 500,
+}
+
+export function getNetwork(network?: string) {
+  return process.env.NEXT_PUBLIC_TEST_CLUSTER === 'true'
+    ? 'testCluster'
+    : network || 'mainnet'
+}
+
+export function getHardforkV2AllowHeight(network: string) {
+  return hardforkV2AllowHeights[getNetwork(network)]
+}
+
+export function getHardforkV2RequireHeight(network: string) {
+  return hardforkV2RequireHeights[getNetwork(network)]
 }
 
 export function isPastV2AllowHeight({
@@ -35,11 +49,7 @@ export function isPastV2AllowHeight({
   network: string
   height: number
 }) {
-  const hardforkV2AllowHeight =
-    process.env.NEXT_PUBLIC_TEST_CLUSTER === 'true'
-      ? hardforkV2AllowHeights.testCluster
-      : hardforkV2AllowHeights[network || 'mainnet']
-
+  const hardforkV2AllowHeight = getHardforkV2AllowHeight(network)
   return height > hardforkV2AllowHeight
 }
 
@@ -50,10 +60,6 @@ export function isPastV2RequireHeight({
   network: string
   height: number
 }) {
-  const hardforkV2RequireHeight =
-    process.env.NEXT_PUBLIC_TEST_CLUSTER === 'true'
-      ? hardforkV2RequireHeights.testCluster
-      : hardforkV2RequireHeights[network || 'mainnet']
-
+  const hardforkV2RequireHeight = getHardforkV2RequireHeight(network)
   return height > hardforkV2RequireHeight
 }

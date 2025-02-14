@@ -15,6 +15,7 @@ export const ledgerComposeSiafund = step(
       amount,
       expectedFee,
       expectedVersion,
+      transactionVersionIndicator,
     }: {
       walletName: string
       changeAddress: string
@@ -23,6 +24,7 @@ export const ledgerComposeSiafund = step(
       amount: number
       expectedFee: number
       expectedVersion: 'v1' | 'v2'
+      transactionVersionIndicator: string
     }
   ) => {
     const amountString = `${amount} SF`
@@ -54,6 +56,9 @@ export const ledgerComposeSiafund = step(
     }
     await expect(sendDialog.getByLabel('Amount')).toContainText(amountString)
     await expect(sendDialog.getByLabel('Network fee')).toContainText(feeString)
+    await expect(
+      sendDialog.getByText(transactionVersionIndicator)
+    ).toBeVisible()
     await sendDialog.getByRole('button', { name: 'Close' }).click()
   }
 )

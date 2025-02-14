@@ -7,6 +7,7 @@ import {
 import { SendDoneV1 } from './SendDoneV1'
 import { SendParamsV1, SendStep } from './typesV1'
 import { UseFormReturn } from 'react-hook-form'
+import { TransactionVersionIndicator } from '../_sharedWalletSend/TransactionVersionIndicator'
 
 export type SendDialogParams = {
   walletId: string
@@ -40,6 +41,7 @@ type Props = {
     submitLabel: string
     handleSubmit: () => void
   }
+  type: 'seed' | 'ledger'
 }
 
 export function SendFlowDialogV1({
@@ -53,6 +55,7 @@ export function SendFlowDialogV1({
   compose,
   setStep,
   controls,
+  type,
 }: Props) {
   return (
     <Dialog
@@ -70,7 +73,11 @@ export function SendFlowDialogV1({
       onSubmit={controls ? controls.handleSubmit : undefined}
       controls={
         controls?.form && (
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-3">
+            <Separator className="w-full" />
+            <div className="flex justify-center">
+              <TransactionVersionIndicator type={type} />
+            </div>
             <FormSubmitButton form={controls.form}>
               {controls.submitLabel}
             </FormSubmitButton>

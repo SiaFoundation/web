@@ -83,6 +83,8 @@ test('compose siafund transaction with ledger wallet pre and post v2 fork allow 
     // v1 fee is 0.004
     expectedFee: 0.004,
     expectedVersion: 'v1',
+    transactionVersionIndicator:
+      'testCluster - constructing v1 transaction - switching to v2 at require height 500',
   })
 
   // Mine blocks to pass v2 fork allow height.
@@ -99,6 +101,8 @@ test('compose siafund transaction with ledger wallet pre and post v2 fork allow 
     // v1 fee is 0.004
     expectedFee: 0.004,
     expectedVersion: 'v1',
+    transactionVersionIndicator:
+      'testCluster - constructing v1 transaction - switching to v2 at require height 500',
   })
 
   // Mine blocks to pass v2 fork require height.
@@ -110,5 +114,10 @@ test('compose siafund transaction with ledger wallet pre and post v2 fork allow 
   await page.getByLabel('send').click()
   await expect(
     page.getByText('Ledger wallets do not support sending v2 transactions')
+  ).toBeVisible()
+  await expect(
+    page.getByText(
+      'testCluster - constructing v2 transaction - switched to v2 at require height 500'
+    )
   ).toBeVisible()
 })
