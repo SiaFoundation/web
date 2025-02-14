@@ -70,6 +70,8 @@ test('send siacoin between wallets pre and post v2 fork allow height', async ({
     amount: amountV1,
     expectedFee: 0.004,
     expectedVersion: 'v1',
+    transactionVersionIndicator:
+      'testCluster - constructing v1 transaction - switching to v2 at allow height 400',
   })
 
   await mine(1)
@@ -97,6 +99,8 @@ test('send siacoin between wallets pre and post v2 fork allow height', async ({
     amount: amountV2,
     expectedFee: 0.02,
     expectedVersion: 'v2',
+    transactionVersionIndicator:
+      'testCluster - constructing v2 transaction - switched to v2 at allow height 400',
   })
 
   await mine(1)

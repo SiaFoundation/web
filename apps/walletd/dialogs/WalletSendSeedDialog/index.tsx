@@ -4,7 +4,7 @@ import {
 } from '@siafoundation/walletd-react'
 import { WalletSendSeedDialogV2 } from './WalletSendSeedDialogV2'
 import { WalletSendSeedDialogV1 } from './WalletSendSeedDialogV1'
-import { isPastV2AllowHeight } from '../_sharedWalletSendV2/hardforkV2'
+import { isPastV2AllowHeight } from '../_sharedWalletSend/hardforkV2'
 
 export type WalletSendSeedDialogParams = {
   walletId: string

@@ -16,6 +16,7 @@ export const sendSiacoinWithSeedWallet = step(
       amount,
       expectedFee,
       expectedVersion,
+      transactionVersionIndicator,
     }: {
       walletName: string
       mnemonic: string
@@ -24,6 +25,7 @@ export const sendSiacoinWithSeedWallet = step(
       amount: number
       expectedFee: number
       expectedVersion: 'v1' | 'v2'
+      transactionVersionIndicator: string
     }
   ) => {
     const amountWithFeeString = `${(amount + expectedFee).toFixed(3)} SC`
@@ -50,6 +52,9 @@ export const sendSiacoinWithSeedWallet = step(
     await expect(sendDialog.getByLabel('Network fee')).toContainText(feeString)
     await expect(sendDialog.getByText('Total')).toBeVisible()
     await expect(sendDialog.getByText(amountWithFeeString)).toBeVisible()
+    await expect(
+      sendDialog.getByText(transactionVersionIndicator)
+    ).toBeVisible()
 
     await page
       .getByRole('button', { name: 'Sign and broadcast transaction' })

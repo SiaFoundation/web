@@ -4,7 +4,7 @@ import {
 } from '@siafoundation/walletd-react'
 import { WalletSendLedgerDialogV2 } from './WalletSendLedgerDialogV2'
 import { WalletSendLedgerDialogV1 } from './WalletSendLedgerDialogV1'
-import { isPastV2RequireHeight } from '../_sharedWalletSendV2/hardforkV2'
+import { isPastV2RequireHeight } from '../_sharedWalletSend/hardforkV2'
 
 export type WalletSendLedgerDialogParams = {
   walletId: string
