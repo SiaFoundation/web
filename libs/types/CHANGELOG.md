@@ -1,5 +1,11 @@
 # @siafoundation/types
 
+## 0.8.0
+
+### Minor Changes
+
+- ef647e54: Added a Result type.
+
 ## 0.7.0
 
 ### Minor Changes

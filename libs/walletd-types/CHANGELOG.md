@@ -1,5 +1,20 @@
 # @siafoundation/walletd-types
 
+## 0.6.0
+
+### Minor Changes
+
+- 54570123: Added construct APIs for both v1 and v2 transactions.
+- 54570123: Added the basis ChainIndex parameter to txpool broadcast API.
+- 54570123: Added the basis ChainIndex parameter to fund APIs.
+- 54570123: Added the basis ChainIndex value to txpool transactions response.
+
+### Patch Changes
+
+- 97727dac: Updated the response structure for outputs APIs.
+- Updated dependencies [ef647e54]
+  - @siafoundation/types@0.8.0
+
 ## 0.5.1
 
 ### Patch Changes

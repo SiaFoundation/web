@@ -1,5 +1,22 @@
 # @siafoundation/clusterd
 
+## 0.2.0
+
+### Minor Changes
+
+- 5ba5edac: Added siafund initial address support.
+- 3949f94d: Added transition network mode.
+- 3949f94d: Added mineToHeight and getCurrentHeight APIs.
+- 5ba5edac: Added explored support.
+
+### Patch Changes
+
+- Updated dependencies [ef647e54]
+  - @siafoundation/types@0.8.0
+  - @siafoundation/units@3.3.2
+  - @siafoundation/hostd-js@0.4.2
+  - @siafoundation/renterd-js@0.13.1
+
 ## 0.1.5
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @siafoundation/explored-types
 
+## 0.12.0
+
+### Minor Changes
+
+- 2ab9ec6e: Add exchange rate API.
+- b0a1ea99: Added HostsList API.
+
+### Patch Changes
+
+- Updated dependencies [ef647e54]
+  - @siafoundation/types@0.8.0
+
 ## 0.11.0
 
 ### Minor Changes

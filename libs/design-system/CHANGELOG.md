@@ -1,5 +1,20 @@
 # Changelog
 
+## 4.18.0
+
+### Minor Changes
+
+- 306400bc: Added labeledBy prop to value components.
+- 3c50ad2e: Extended theme to support 2xs and 3xs container query breakpoints.
+- 54a4eabe: ValueCopyable now supports double click to copy to clipboard.
+
+### Patch Changes
+
+- Updated dependencies [ef647e54]
+  - @siafoundation/types@0.8.0
+  - @siafoundation/react-core@2.0.0
+  - @siafoundation/units@3.3.2
+
 ## 4.17.0
 
 ### Minor Changes

@@ -1,5 +1,14 @@
 # explorer
 
+## 0.26.0
+
+### Minor Changes
+
+- 54a4eabe: Displayed entity values which are often truncated can now be copied to clipboard by double-clicking directly on the visible characters.
+- 20b12931: Removed Host benchmarks, due to lack of explored support.
+- f71b039b: Replaced top hosts Sia Central call and UI to use explored.
+- 9e24edcb: Improved app performance around the Contract Page.
+
 ## 0.25.0
 
 ### Minor Changes
