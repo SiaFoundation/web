@@ -9,6 +9,7 @@ import {
 import { SendParamsV2, SendStep } from './typesV2'
 import { UseFormReturn } from 'react-hook-form'
 import { SendDoneV2 } from './SendDoneV2'
+import { TransactionVersionIndicator } from '../_sharedWalletSend/TransactionVersionIndicator'
 
 export type SendDialogParams = {
   walletId: string
@@ -43,6 +44,7 @@ type Props = {
     handleSubmit: () => void
   }
   disabledMessage?: React.ReactNode
+  type: 'seed' | 'ledger'
 }
 
 export function SendFlowDialogV2({
@@ -57,6 +59,7 @@ export function SendFlowDialogV2({
   setStep,
   controls,
   disabledMessage,
+  type,
 }: Props) {
   return (
     <Dialog
@@ -74,7 +77,11 @@ export function SendFlowDialogV2({
       onSubmit={controls ? controls.handleSubmit : undefined}
       controls={
         controls?.form && (
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-3">
+            <Separator className="w-full" />
+            <div className="flex justify-center">
+              <TransactionVersionIndicator type={type} />
+            </div>
             {disabledMessage ? (
               <Button size="medium" onClick={() => onOpenChange(false)}>
                 Close

@@ -95,6 +95,7 @@ export function WalletSendSeedDialogV1({
 
   return (
     <SendFlowDialogV1
+      type="seed"
       trigger={trigger}
       open={open}
       onOpenChange={(val) => {

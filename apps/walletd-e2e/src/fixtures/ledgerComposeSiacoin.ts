@@ -13,12 +13,14 @@ export const ledgerComposeSiacoin = step(
       receiveAddress,
       amount,
       expectedFee,
+      transactionVersionIndicator,
     }: {
       walletName: string
       changeAddress: string
       receiveAddress: string
       amount: number
       expectedFee: number
+      transactionVersionIndicator: string
     }
   ) => {
     const amountWithFeeString = `${(amount + expectedFee).toFixed(3)} SC`
@@ -47,6 +49,9 @@ export const ledgerComposeSiacoin = step(
     await expect(sendDialog.getByLabel('Total')).toContainText(
       amountWithFeeString
     )
+    await expect(
+      sendDialog.getByText(transactionVersionIndicator)
+    ).toBeVisible()
     await sendDialog.getByRole('button', { name: 'Close' }).click()
   }
 )

@@ -100,6 +100,7 @@ export function WalletSendLedgerDialogV2({
 
   return (
     <SendFlowDialogV2
+      type="ledger"
       trigger={trigger}
       open={open}
       onOpenChange={(val) => {
