@@ -8,6 +8,7 @@ import {
 import { truncate } from '@siafoundation/design-system'
 import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
 import { to } from '@siafoundation/request'
+import { explored } from '../../../config/explored'
 
 export const revalidate = 0
 
@@ -23,9 +24,9 @@ export const contentType = 'image/png'
 
 export default async function Image({ params }) {
   const id = params?.id as string
-  const [[h], [r]] = await Promise.all([
+  const [[host, hostError], [r]] = await Promise.all([
     to(
-      siaCentral.host({
+      explored.hostByPubkey({
         params: {
           id,
         },
@@ -40,7 +41,7 @@ export default async function Image({ params }) {
     ),
   ])
 
-  if (!h || !h.host) {
+  if (hostError || !host) {
     return getOGImage(
       {
         id,
@@ -52,12 +53,12 @@ export default async function Image({ params }) {
     )
   }
 
-  if (!h.host.settings) {
+  if (!host.settings) {
     return getOGImage(
       {
-        id: h.host.public_key,
-        title: h.host.net_address,
-        subtitle: truncate(h.host.public_key, 30),
+        id: host.publicKey,
+        title: host.netAddress,
+        subtitle: truncate(host.publicKey, 30),
         initials: 'H',
         avatar: true,
       },
@@ -69,7 +70,7 @@ export default async function Image({ params }) {
     {
       label: 'storage',
       value: getStorageCost({
-        price: h.host.settings.storage_price,
+        price: host.settings.storageprice,
         exchange: r && {
           currency,
           rate: r.rates.sc.usd,
@@ -79,7 +80,7 @@ export default async function Image({ params }) {
     {
       label: 'download',
       value: getDownloadCost({
-        price: h.host.settings.download_price,
+        price: host.settings.downloadbandwidthprice,
         exchange: r && {
           currency,
           rate: r.rates.sc.usd,
@@ -89,7 +90,7 @@ export default async function Image({ params }) {
     {
       label: 'upload',
       value: getUploadCost({
-        price: h.host.settings.upload_price,
+        price: host.settings.uploadbandwidthprice,
         exchange: r && {
           currency,
           rate: r.rates.sc.usd,
@@ -100,9 +101,9 @@ export default async function Image({ params }) {
 
   return getOGImage(
     {
-      id: h.host.public_key,
-      title: h.host.net_address,
-      subtitle: truncate(h.host.public_key, 30),
+      id: host.publicKey,
+      title: host.netAddress,
+      subtitle: truncate(host.publicKey, 30),
       initials: 'H',
       avatar: true,
       values,
