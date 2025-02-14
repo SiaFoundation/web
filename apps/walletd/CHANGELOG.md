@@ -1,5 +1,11 @@
 # walletd
 
+## 0.29.0
+
+### Minor Changes
+
+- d73f9c3a: The send dialogs now indicate the network and transaction version details.
+
 ## 0.28.0
 
 ### Minor Changes
