@@ -3,7 +3,6 @@ import { appLink, network } from '../config'
 import { Home } from '../components/Home'
 import { buildMetadata } from '../lib/utils'
 import { getLatestBlocks } from '../lib/blocks'
-import { siaCentral } from '../config/siaCentral'
 import { to } from '@siafoundation/request'
 import { explored } from '../config/explored'
 import { rankHosts } from '../lib/hosts'
@@ -43,34 +42,17 @@ const getCachedTopHosts = unstable_cache(
 )
 
 export default async function HomePage() {
-  const [
-    [exchangeRates, exchangeRatesError],
-    [hostMetrics, hostMetricsError],
-    [blockMetrics, blockMetricsError],
-  ] = await Promise.all([
-    to(
-      siaCentral.exchangeRates({
-        params: { currencies: 'sc' },
-      })
-    ),
-    to(explored.hostMetrics()),
-    to(explored.blockMetrics()),
-  ])
+  const [[hostMetrics, hostMetricsError], [blockMetrics, blockMetricsError]] =
+    await Promise.all([to(explored.hostMetrics()), to(explored.blockMetrics())])
 
   const selectedTopHosts = await getCachedTopHosts()
 
   const [latestBlocks, latestBlocksError] = await getLatestBlocks()
   const latestHeight = latestBlocks ? latestBlocks[0].height : 0
 
-  if (
-    latestBlocksError ||
-    exchangeRatesError ||
-    hostMetricsError ||
-    blockMetricsError
-  ) {
+  if (latestBlocksError || hostMetricsError || blockMetricsError) {
     console.log(new Date().toISOString(), {
       latestBlocksError,
-      exchangeRatesError,
       hostMetricsError,
       blockMetrics,
     })
@@ -82,7 +64,6 @@ export default async function HomePage() {
       blockHeight={latestHeight}
       blocks={latestBlocks || []}
       hosts={selectedTopHosts || []}
-      rates={exchangeRates?.rates}
       totalHosts={blockMetrics?.totalHosts}
     />
   )

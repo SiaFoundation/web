@@ -1,4 +1,3 @@
-import { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
 import { ExplorerHost } from '@siafoundation/explored-types'
 import { ContentLayout } from '../ContentLayout'
 import { HostHeader } from './HostHeader'
@@ -8,14 +7,13 @@ import { formatDistance } from 'date-fns'
 
 type Props = {
   host: ExplorerHost
-  rates?: SiaCentralExchangeRates
 }
 
-export function Host({ host, rates }: Props) {
+export function Host({ host }: Props) {
   return (
-    <ContentLayout heading={<HostHeader host={host} rates={rates} />}>
+    <ContentLayout heading={<HostHeader host={host} />}>
       {host.settings ? (
-        <HostSettings host={host} rates={rates} />
+        <HostSettings host={host} />
       ) : (
         <Panel className="p-4 flex items-center">
           <Text>

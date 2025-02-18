@@ -1,7 +1,6 @@
 'use client'
 
 import { useMemo } from 'react'
-import { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
 import { DatumProps, ExplorerDatum } from '../ExplorerDatum'
 import { Panel, toFixedOrPrecision } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
@@ -15,17 +14,25 @@ import {
   getStorageCost,
   getUploadCost,
 } from '@siafoundation/units'
-import { useExchangeRate } from '../../hooks/useExchangeRate'
-import { siacoinToFiat } from '../../lib/currency'
 import { ExplorerHost } from '@siafoundation/explored-types'
+import { useActiveCurrencySiascanExchangeRate } from '@siafoundation/react-core'
+import LoadingCurrency from '../LoadingCurrency'
+import { exploredApi } from '../../config'
+import { siacoinToFiat } from '../../lib/currency'
 
 type Props = {
   host: ExplorerHost
-  rates?: SiaCentralExchangeRates
 }
 
-export function HostSettings({ host, rates }: Props) {
-  const exchange = useExchangeRate(rates)
+export function HostSettings({ host }: Props) {
+  const exchange = useActiveCurrencySiascanExchangeRate({
+    api: exploredApi,
+    config: {
+      swr: {
+        keepPreviousData: true,
+      },
+    },
+  })
   const priceTableValues = useMemo(() => {
     return [
       {
@@ -41,10 +48,18 @@ export function HostSettings({ host, rates }: Props) {
       {
         label: 'storage price',
         copyable: false,
-        value: `${getStorageCost({
-          price: host.settings.storageprice,
-          exchange,
-        })}/month`,
+        value:
+          exchange.currency && exchange.rate ? (
+            `${getStorageCost({
+              price: host.settings.storageprice,
+              exchange: {
+                currency: { prefix: exchange.currency.prefix },
+                rate: exchange.rate.toString(),
+              },
+            })}/month`
+          ) : (
+            <LoadingCurrency type="perTBMonth" />
+          ),
         comment: `${getStorageCost({
           price: host.settings.storageprice,
         })}/month`,
@@ -52,10 +67,18 @@ export function HostSettings({ host, rates }: Props) {
       {
         label: 'download price',
         copyable: false,
-        value: getDownloadCost({
-          price: host.settings.downloadbandwidthprice,
-          exchange,
-        }),
+        value:
+          exchange.currency && exchange.rate ? (
+            getDownloadCost({
+              price: host.settings.downloadbandwidthprice,
+              exchange: {
+                currency: { prefix: exchange.currency.prefix },
+                rate: exchange.rate.toString(),
+              },
+            })
+          ) : (
+            <LoadingCurrency type="perTB" />
+          ),
         comment: getDownloadCost({
           price: host.settings.downloadbandwidthprice,
         }),
@@ -63,39 +86,79 @@ export function HostSettings({ host, rates }: Props) {
       {
         label: 'upload price',
         copyable: false,
-        value: getUploadCost({
-          price: host.settings.uploadbandwidthprice,
-          exchange,
-        }),
+        value:
+          exchange.currency && exchange.rate ? (
+            getUploadCost({
+              price: host.settings.uploadbandwidthprice,
+              exchange: {
+                currency: { prefix: exchange.currency.prefix },
+                rate: exchange.rate.toString(),
+              },
+            })
+          ) : (
+            <LoadingCurrency type="perTB" />
+          ),
         comment: getUploadCost({ price: host.settings.uploadbandwidthprice }),
       },
       {
         label: 'collateral',
         copyable: false,
-        value: getStorageCost({ price: host.settings.collateral, exchange }),
+        value:
+          exchange.currency && exchange.rate ? (
+            getStorageCost({
+              price: host.settings.collateral,
+              exchange: {
+                currency: { prefix: exchange.currency.prefix },
+                rate: exchange.rate.toString(),
+              },
+            })
+          ) : (
+            <LoadingCurrency type="perTB" />
+          ),
         comment: getStorageCost({ price: host.settings.collateral }),
       },
       {
         label: 'max collateral',
         copyable: false,
-        value: siacoinToFiat(host.settings.maxcollateral, exchange),
+        value:
+          exchange.currency && exchange.rate ? (
+            siacoinToFiat(host.settings.maxcollateral, {
+              rate: exchange.rate,
+              currency: exchange.currency,
+            })
+          ) : (
+            <LoadingCurrency />
+          ),
         comment: humanSiacoin(host.settings.maxcollateral),
       },
       {
         label: 'contract price',
         copyable: false,
-        value: siacoinToFiat(host.settings.contractprice, exchange),
+        value:
+          exchange.currency && exchange.rate ? (
+            siacoinToFiat(host.settings.contractprice, {
+              rate: exchange.rate,
+              currency: exchange.currency,
+            })
+          ) : (
+            <LoadingCurrency />
+          ),
         comment: humanSiacoin(host.settings.contractprice),
       },
       {
         label: 'base RPC price',
         copyable: false,
-        value: `${exchange?.currency.prefix || ''}${toSiacoins(
-          host.settings.baserpcprice
-        )
-          .times(1e6)
-          .times(exchange?.rate || 1)
-          .precision(2)}/million`,
+        value:
+          exchange.currency && exchange.rate ? (
+            `${exchange.currency.prefix || ''}${toSiacoins(
+              host.settings.baserpcprice
+            )
+              .times(1e6)
+              .times(exchange.rate || 1)
+              .precision(2)}/million`
+          ) : (
+            <LoadingCurrency type="perMillion" />
+          ),
         comment: `${toSiacoins(host.settings.baserpcprice).times(
           1e6
         )} SC/million`,
@@ -103,12 +166,17 @@ export function HostSettings({ host, rates }: Props) {
       {
         label: 'sector access price',
         copyable: false,
-        value: `${exchange?.currency.prefix || ''}${toSiacoins(
-          host.settings.sectoraccessprice
-        )
-          .times(1e6)
-          .times(exchange?.rate || 1)
-          .precision(2)} SC/million`,
+        value:
+          exchange.currency && exchange.rate ? (
+            `${exchange.currency.prefix || ''}${toSiacoins(
+              host.settings.sectoraccessprice
+            )
+              .times(1e6)
+              .times(exchange.rate || 1)
+              .precision(2)} SC/million`
+          ) : (
+            <LoadingCurrency type="perSCMillion" />
+          ),
         comment: `${toSiacoins(host.settings.sectoraccessprice).times(
           1e6
         )} SC/million`,

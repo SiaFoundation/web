@@ -1,6 +1,5 @@
 import { Container, Separator } from '@siafoundation/design-system'
 import { Transaction } from '../Transaction'
-import { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
 import { Contract } from '../Contract'
 import {
   ChainIndex,
@@ -14,7 +13,6 @@ type Props = {
   previousRevisions: ExplorerFileContract[] | undefined
   currentHeight: number
   contract: ExplorerFileContract
-  rates?: SiaCentralExchangeRates
   renewedToID: FileContractID | null
   renewedFromID: FileContractID | null
   formationTransaction?: ExplorerTransaction
@@ -26,7 +24,6 @@ export function ContractView({
   previousRevisions,
   currentHeight,
   contract,
-  rates,
   renewedFromID,
   renewedToID,
   formationTransaction,
@@ -39,7 +36,6 @@ export function ContractView({
         previousRevisions={previousRevisions}
         currentHeight={currentHeight}
         contract={contract}
-        rates={rates}
         renewedFromID={renewedFromID}
         renewedToID={renewedToID}
         formationTxnChainIndex={formationTxnChainIndex}

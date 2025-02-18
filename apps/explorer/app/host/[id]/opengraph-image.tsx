@@ -1,5 +1,4 @@
 import { getOGImage } from '../../../components/OGImageEntity'
-import { siaCentral } from '../../../config/siaCentral'
 import {
   getDownloadCost,
   getStorageCost,
@@ -24,7 +23,7 @@ export const contentType = 'image/png'
 
 export default async function Image({ params }) {
   const id = params?.id as string
-  const [[host, hostError], [r]] = await Promise.all([
+  const [[host, hostError], [rate, rateError]] = await Promise.all([
     to(
       explored.hostByPubkey({
         params: {
@@ -33,15 +32,15 @@ export default async function Image({ params }) {
       })
     ),
     to(
-      siaCentral.exchangeRates({
+      explored.exchangeRate({
         params: {
-          currencies: 'sc',
+          currency: 'usd',
         },
       })
     ),
   ])
 
-  if (hostError || !host) {
+  if (hostError || !host || rateError || !rate) {
     return getOGImage(
       {
         id,
@@ -71,9 +70,9 @@ export default async function Image({ params }) {
       label: 'storage',
       value: getStorageCost({
         price: host.settings.storageprice,
-        exchange: r && {
+        exchange: {
           currency,
-          rate: r.rates.sc.usd,
+          rate: rate.toString(),
         },
       }),
     },
@@ -81,9 +80,9 @@ export default async function Image({ params }) {
       label: 'download',
       value: getDownloadCost({
         price: host.settings.downloadbandwidthprice,
-        exchange: r && {
+        exchange: {
           currency,
-          rate: r.rates.sc.usd,
+          rate: rate.toString(),
         },
       }),
     },
@@ -91,9 +90,9 @@ export default async function Image({ params }) {
       label: 'upload',
       value: getUploadCost({
         price: host.settings.uploadbandwidthprice,
-        exchange: r && {
+        exchange: {
           currency,
-          rate: r.rates.sc.usd,
+          rate: rate.toString(),
         },
       }),
     },

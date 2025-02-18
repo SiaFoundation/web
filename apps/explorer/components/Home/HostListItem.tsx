@@ -14,7 +14,6 @@ import {
   OpenPanelFilledBottom16,
   VmdkDisk16,
 } from '@siafoundation/react-icons'
-import { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
 import {
   getDownloadCost,
   getStorageCost,
@@ -23,34 +22,69 @@ import {
 } from '@siafoundation/units'
 import { useMemo } from 'react'
 import { routes } from '../../config/routes'
-import { useExchangeRate } from '../../hooks/useExchangeRate'
 import { ExplorerHost } from '@siafoundation/explored-types'
+import BigNumber from 'bignumber.js'
+import { CurrencyOption, SWRError } from '@siafoundation/react-core'
+import LoadingCurrency from '../LoadingCurrency'
 
 type Props = {
   host: ExplorerHost
-  rates?: SiaCentralExchangeRates
+  exchange: {
+    rate: BigNumber | undefined
+    error: SWRError | undefined
+    isValidating: boolean
+    isLoading: boolean
+    currency: CurrencyOption | undefined
+  }
   entity: EntityListItemLayoutProps
 }
 
-export function HostListItem({ host, rates, entity }: Props) {
-  const exchange = useExchangeRate(rates)
+export function HostListItem({ host, exchange, entity }: Props) {
   const storageCost = useMemo(
-    () => getStorageCost({ price: host.settings.storageprice, exchange }),
+    () =>
+      exchange.currency && exchange.rate ? (
+        getStorageCost({
+          price: host.settings.storageprice,
+          exchange: {
+            currency: { prefix: exchange.currency.prefix },
+            rate: exchange.rate.toString(),
+          },
+        })
+      ) : (
+        <LoadingCurrency type="perTB" />
+      ),
     [exchange, host]
   )
 
   const downloadCost = useMemo(
     () =>
-      getDownloadCost({
-        price: host.settings.downloadbandwidthprice,
-        exchange,
-      }),
+      exchange.currency && exchange.rate ? (
+        getDownloadCost({
+          price: host.settings.downloadbandwidthprice,
+          exchange: {
+            currency: { prefix: exchange.currency.prefix },
+            rate: exchange.rate.toString(),
+          },
+        })
+      ) : (
+        <LoadingCurrency type="perTB" />
+      ),
     [exchange, host]
   )
 
   const uploadCost = useMemo(
     () =>
-      getUploadCost({ price: host.settings.uploadbandwidthprice, exchange }),
+      exchange.currency && exchange.rate ? (
+        getUploadCost({
+          price: host.settings.uploadbandwidthprice,
+          exchange: {
+            currency: { prefix: exchange.currency.prefix },
+            rate: exchange.rate.toString(),
+          },
+        })
+      ) : (
+        <LoadingCurrency type="perTB" />
+      ),
     [exchange, host]
   )
 
