@@ -375,11 +375,6 @@ describe('tansforms', () => {
           gouging: { data: gouging },
           pinned: { data: pinned },
           upload: { data: upload },
-          appSettings: {
-            settings: {
-              siaCentral: false,
-            },
-          },
         },
         renterdState: {
           network: 'mainnet' as const,
