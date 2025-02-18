@@ -18,6 +18,7 @@ import { useActiveCurrencySiascanExchangeRate } from '@siafoundation/react-core'
 import { exploredApi } from '../../config'
 import { siacoinToFiat } from '../../lib/currency'
 import LoadingCurrency from '../LoadingCurrency'
+import LoadingTimestamp from '../LoadingTimestamp'
 
 type Props = {
   previousRevisions: ExplorerFileContract[] | undefined
@@ -91,11 +92,14 @@ export function Contract({
       {
         label: 'negotiation time',
         copyable: false,
-        value:
-          blockHeightToHumanDate(
-            currentHeight,
-            contract.confirmationIndex.height
-          ) || '-',
+        value: (
+          <LoadingTimestamp>
+            {blockHeightToHumanDate(
+              currentHeight,
+              contract.confirmationIndex.height
+            )}
+          </LoadingTimestamp>
+        ),
       },
       {
         label: 'expiration height',
@@ -105,8 +109,11 @@ export function Contract({
       {
         label: 'expiration time',
         copyable: false,
-        value:
-          blockHeightToHumanDate(currentHeight, contract.windowStart) || '-',
+        value: (
+          <LoadingTimestamp>
+            {blockHeightToHumanDate(currentHeight, contract.windowStart)}
+          </LoadingTimestamp>
+        ),
       },
       {
         label: 'proof height',
@@ -118,9 +125,13 @@ export function Contract({
       {
         label: 'proof time',
         copyable: false,
-        value: contract.proofIndex
-          ? blockHeightToHumanDate(currentHeight, contract.proofIndex.height)
-          : '-',
+        value: contract.proofIndex ? (
+          <LoadingTimestamp>
+            {blockHeightToHumanDate(currentHeight, contract.proofIndex.height)}
+          </LoadingTimestamp>
+        ) : (
+          '-'
+        ),
       },
       {
         label: 'proof deadline height',
@@ -130,7 +141,11 @@ export function Contract({
       {
         label: 'proof deadline time',
         copyable: false,
-        value: blockHeightToHumanDate(currentHeight, contract.windowEnd) || '-',
+        value: (
+          <LoadingTimestamp>
+            {blockHeightToHumanDate(currentHeight, contract.windowEnd)}
+          </LoadingTimestamp>
+        ),
       },
       {
         label: 'payout height',
@@ -140,11 +155,14 @@ export function Contract({
       {
         label: 'payout time',
         copyable: false,
-        value:
-          blockHeightToHumanDate(
-            currentHeight,
-            determinePayoutHeight(contract)
-          ) || '-',
+        value: (
+          <LoadingTimestamp>
+            {blockHeightToHumanDate(
+              currentHeight,
+              determinePayoutHeight(contract)
+            )}
+          </LoadingTimestamp>
+        ),
       },
       {
         label: 'revision number',
