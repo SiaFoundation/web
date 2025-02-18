@@ -5,6 +5,13 @@ import { usePrefersReducedMotion } from '../userPrefersReducedMotion'
 // esm compat
 const { getGPUTier } = detectGpu
 
+// Extend window to support GPU info.
+declare global {
+  interface Window {
+    GPUInfo: detectGpu.TierResult
+  }
+}
+
 export function useGpuFeatures() {
   const reduceMotion = usePrefersReducedMotion()
   const [hasCheckedGpu, setHasCheckedGpu] = useState<boolean>(false)
@@ -36,7 +43,8 @@ export function useGpuFeatures() {
     // skip check during tests
     if (process.env['NODE_ENV'] !== 'test') {
       const gpu = await getGPUTier()
-      console.log('GPU', gpu)
+      // Attach the GPU information to window for easy debugging with users.
+      window.GPUInfo = gpu
       // canRender = gpu.gpu?.startsWith('apple') || (gpu.fps || 0) >= 15
       canRender = gpu.tier > 0
       // if user has not made a selection yet, and gpu is not powerful, disable gpu
