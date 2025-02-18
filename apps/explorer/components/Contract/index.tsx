@@ -3,7 +3,11 @@
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
 import { humanBytes, humanSiacoin } from '@siafoundation/units'
-import { EntityList, EntityListItemProps } from '@siafoundation/design-system'
+import {
+  ClientSideOnly,
+  EntityList,
+  EntityListItemProps,
+} from '@siafoundation/design-system'
 import { DatumProps, ExplorerDatum } from '../ExplorerDatum'
 import { ContentLayout } from '../ContentLayout'
 import { ContractHeader } from './ContractHeader'
@@ -76,11 +80,14 @@ export function Contract({
       {
         label: 'negotiation time',
         copyable: false,
-        value:
-          blockHeightToHumanDate(
-            currentHeight,
-            contract.confirmationIndex.height
-          ) || '-',
+        value: (
+          <ClientSideOnly fallback={<div className="animate-pulse">...</div>}>
+            {blockHeightToHumanDate(
+              currentHeight,
+              contract.confirmationIndex.height
+            )}
+          </ClientSideOnly>
+        ),
       },
       {
         label: 'expiration height',
@@ -90,8 +97,11 @@ export function Contract({
       {
         label: 'expiration time',
         copyable: false,
-        value:
-          blockHeightToHumanDate(currentHeight, contract.windowStart) || '-',
+        value: (
+          <ClientSideOnly fallback={<div className="animate-pulse">...</div>}>
+            {blockHeightToHumanDate(currentHeight, contract.windowStart)}
+          </ClientSideOnly>
+        ),
       },
       {
         label: 'proof height',
@@ -103,9 +113,13 @@ export function Contract({
       {
         label: 'proof time',
         copyable: false,
-        value: contract.proofIndex
-          ? blockHeightToHumanDate(currentHeight, contract.proofIndex.height)
-          : '-',
+        value: contract.proofIndex ? (
+          <ClientSideOnly fallback={<div className="animate-pulse">...</div>}>
+            {blockHeightToHumanDate(currentHeight, contract.proofIndex.height)}
+          </ClientSideOnly>
+        ) : (
+          '-'
+        ),
       },
       {
         label: 'proof deadline height',
@@ -115,7 +129,11 @@ export function Contract({
       {
         label: 'proof deadline time',
         copyable: false,
-        value: blockHeightToHumanDate(currentHeight, contract.windowEnd) || '-',
+        value: (
+          <ClientSideOnly fallback={<div className="animate-pulse">...</div>}>
+            {blockHeightToHumanDate(currentHeight, contract.windowEnd)}
+          </ClientSideOnly>
+        ),
       },
       {
         label: 'payout height',
@@ -125,11 +143,14 @@ export function Contract({
       {
         label: 'payout time',
         copyable: false,
-        value:
-          blockHeightToHumanDate(
-            currentHeight,
-            determinePayoutHeight(contract)
-          ) || '-',
+        value: (
+          <ClientSideOnly fallback={<div className="animate-pulse">...</div>}>
+            {blockHeightToHumanDate(
+              currentHeight,
+              determinePayoutHeight(contract)
+            )}
+          </ClientSideOnly>
+        ),
       },
       {
         label: 'revision number',
