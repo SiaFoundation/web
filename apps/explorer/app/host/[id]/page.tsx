@@ -4,7 +4,6 @@ import { buildMetadata } from '../../../lib/utils'
 import { Host } from '../../../components/Host'
 import { notFound } from 'next/navigation'
 import { truncate } from '@siafoundation/design-system'
-import { siaCentral } from '../../../config/siaCentral'
 import { to } from '@siafoundation/request'
 import { explored } from '../../../config/explored'
 
@@ -24,15 +23,8 @@ export const revalidate = 0
 
 export default async function Page({ params }) {
   const id = params?.id as string
-  const [[host, hostError], [r]] = await Promise.all([
+  const [[host, hostError]] = await Promise.all([
     to(explored.hostByPubkey({ params: { id } })),
-    to(
-      siaCentral.exchangeRates({
-        params: {
-          currencies: 'sc',
-        },
-      })
-    ),
   ])
 
   if (hostError) {
@@ -43,5 +35,5 @@ export default async function Page({ params }) {
     return notFound()
   }
 
-  return <Host host={host} rates={r?.rates} />
+  return <Host host={host} />
 }
