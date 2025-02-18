@@ -7,6 +7,8 @@ import { formatDistance } from 'date-fns'
 import { EntityAvatar } from './EntityAvatar'
 import { cx } from 'class-variance-authority'
 import { EntityListSkeleton } from './EntityListSkeleton'
+import { ClientSideOnly } from './ClientSideOnly'
+import { Skeleton } from '../core/Skeleton'
 
 type BlockListItemProps = {
   miningPool?: string
@@ -99,9 +101,13 @@ export function BlockList({
                         : ''}
                     </Text>
                     <Text color="subtle">
-                      {formatDistance(new Date(block.timestamp), new Date(), {
-                        addSuffix: true,
-                      })}
+                      <ClientSideOnly
+                        fallback={<Skeleton className="w-[100px] h-[24px]" />}
+                      >
+                        {formatDistance(new Date(block.timestamp), new Date(), {
+                          addSuffix: true,
+                        })}
+                      </ClientSideOnly>
                     </Text>
                   </div>
                 </div>

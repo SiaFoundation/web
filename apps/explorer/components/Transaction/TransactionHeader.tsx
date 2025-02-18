@@ -2,6 +2,7 @@ import { Badge, Text, Tooltip } from '@siafoundation/design-system'
 import { humanDate } from '@siafoundation/units'
 import { routes } from '../../config/routes'
 import { EntityHeading } from '../EntityHeading'
+import LoadingTimestamp from '../LoadingTimestamp'
 
 export type TransactionHeaderData = {
   id: string
@@ -27,14 +28,16 @@ export function TransactionHeader({ title, transactionHeaderData }: Props) {
       />
       <div className="flex gap-4 items-center overflow-hidden">
         {!!timestamp && (
-          <Tooltip content={timestamp}>
-            <Text font="mono" color="subtle" ellipsis>
-              {humanDate(timestamp, {
-                dateStyle: 'medium',
-                timeStyle: 'short',
-              })}
-            </Text>
-          </Tooltip>
+          <LoadingTimestamp>
+            <Tooltip content={timestamp}>
+              <Text font="mono" color="subtle" ellipsis>
+                {humanDate(timestamp, {
+                  dateStyle: 'medium',
+                  timeStyle: 'short',
+                })}{' '}
+              </Text>
+            </Tooltip>
+          </LoadingTimestamp>
         )}
         {!!blockHeight && (
           <Badge variant="accent">
