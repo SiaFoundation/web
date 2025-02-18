@@ -2,7 +2,6 @@ import { ContractView } from '../../../components/ContractView'
 import { Metadata } from 'next'
 import { routes } from '../../../config/routes'
 import { buildMetadata } from '../../../lib/utils'
-import { siaCentral } from '../../../config/siaCentral'
 import { notFound } from 'next/navigation'
 import { stripPrefix, truncate } from '@siafoundation/design-system'
 import { to } from '@siafoundation/request'
@@ -28,24 +27,14 @@ export default async function Page({ params }) {
 
   // Grab the contract and previous revisions data.
   const [
-    [rate, rateError],
     [contract, contractError],
     [previousRevisions, previousRevisionsError],
     [currentTip, currentTipError],
   ] = await Promise.all([
-    to(
-      siaCentral.exchangeRates({
-        params: {
-          currencies: 'sc',
-        },
-      })
-    ),
     to(explored.contractByID({ params: { id } })),
     to<ExplorerFileContract[]>(explored.contractRevisions({ params: { id } })),
     to(explored.consensusTip()),
   ])
-
-  if (rateError) throw rateError
 
   if (contractError) throw contractError
   if (!contract) return notFound()
@@ -122,7 +111,6 @@ export default async function Page({ params }) {
       previousRevisions={previousRevisions}
       currentHeight={currentTip.height}
       contract={contract}
-      rates={rate?.rates}
       renewedFromID={renewedFromID ? stripPrefix(renewedFromID) : renewedFromID}
       renewedToID={renewedToID ? stripPrefix(renewedToID) : renewedToID}
       formationTransaction={formationTransaction}

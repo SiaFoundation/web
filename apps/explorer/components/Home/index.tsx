@@ -10,7 +10,6 @@ import { useMemo } from 'react'
 import { routes } from '../../config/routes'
 import { ContentLayout } from '../ContentLayout'
 import { reverse, sortBy } from '@technically/lodash'
-import { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
 import { hashToAvatar } from '../../lib/avatar'
 import {
   humanBytes,
@@ -20,30 +19,37 @@ import {
   getUploadCost,
 } from '@siafoundation/units'
 import { HostListItem } from './HostListItem'
-import { useExchangeRate } from '../../hooks/useExchangeRate'
 import {
   ExplorerBlock,
   ExplorerHost,
   HostMetrics,
 } from '@siafoundation/explored-types'
 import { Information20 } from '@siafoundation/react-icons'
+import { useActiveCurrencySiascanExchangeRate } from '@siafoundation/react-core'
+import LoadingCurrency from '../LoadingCurrency'
+import { exploredApi } from '../../config'
 
 export function Home({
   metrics,
   blockHeight,
   blocks,
   hosts,
-  rates,
   totalHosts,
 }: {
   metrics?: HostMetrics
   blockHeight: number
   blocks: ExplorerBlock[]
   hosts: ExplorerHost[]
-  rates?: SiaCentralExchangeRates
   totalHosts?: number
 }) {
-  const exchange = useExchangeRate(rates)
+  const exchange = useActiveCurrencySiascanExchangeRate({
+    api: exploredApi,
+    config: {
+      swr: {
+        keepPreviousData: true,
+      },
+    },
+  })
   const values = useMemo(() => {
     const list = [
       {
@@ -123,10 +129,19 @@ export function Home({
                   weight="semibold"
                   color="contrast"
                 >
-                  {getStorageCost({
-                    price: metrics?.settings.storageprice,
-                    exchange,
-                  })}
+                  {exchange.currency && exchange.rate ? (
+                    getStorageCost({
+                      price: metrics?.settings.storageprice,
+                      exchange: {
+                        currency: {
+                          prefix: exchange.currency.prefix,
+                        },
+                        rate: exchange.rate.toString(),
+                      },
+                    })
+                  ) : (
+                    <LoadingCurrency type="perTB" />
+                  )}
                 </Text>
                 <Text color="subtle">
                   {getStorageCost({
@@ -147,10 +162,19 @@ export function Home({
                   weight="semibold"
                   color="contrast"
                 >
-                  {getDownloadCost({
-                    price: metrics?.priceTable.downloadbandwidthcost,
-                    exchange,
-                  })}
+                  {exchange.currency && exchange.rate ? (
+                    getDownloadCost({
+                      price: metrics?.priceTable.downloadbandwidthcost,
+                      exchange: {
+                        currency: {
+                          prefix: exchange.currency.prefix,
+                        },
+                        rate: exchange.rate.toString(),
+                      },
+                    })
+                  ) : (
+                    <LoadingCurrency type="perTB" />
+                  )}
                 </Text>
                 <Text color="subtle">
                   {getDownloadCost({
@@ -171,10 +195,19 @@ export function Home({
                   weight="semibold"
                   color="contrast"
                 >
-                  {getUploadCost({
-                    price: metrics?.priceTable.uploadbandwidthcost,
-                    exchange,
-                  })}
+                  {exchange.currency && exchange.rate ? (
+                    getUploadCost({
+                      price: metrics?.priceTable.uploadbandwidthcost,
+                      exchange: {
+                        currency: {
+                          prefix: exchange.currency.prefix,
+                        },
+                        rate: exchange.rate.toString(),
+                      },
+                    })
+                  ) : (
+                    <LoadingCurrency type="perTB" />
+                  )}
                 </Text>
                 <Text color="subtle">
                   {getUploadCost({
@@ -235,7 +268,7 @@ export function Home({
                 <HostListItem
                   key={host.publicKey}
                   host={host}
-                  rates={rates}
+                  exchange={exchange}
                   entity={{
                     label: host.netAddress,
                     initials: 'H',
