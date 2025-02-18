@@ -1,6 +1,5 @@
 import { humanBytes } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
-import { siaCentral } from '../../../config/siaCentral'
 import { truncate } from '@siafoundation/design-system'
 import { siacoinToFiat } from '../../../lib/currency'
 import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
@@ -8,6 +7,7 @@ import { to } from '@siafoundation/request'
 import { explored } from '../../../config/explored'
 import { blockHeightToHumanDate } from '../../../lib/time'
 import { determineContractStatus } from '../../../lib/contracts'
+import BigNumber from 'bignumber.js'
 
 export const revalidate = 0
 
@@ -19,25 +19,31 @@ export const size = {
 
 export const contentType = 'image/png'
 
-const currency = currencyOptions.find((c) => c.id === 'usd') as CurrencyOption
+const currencyOpt = currencyOptions.find(
+  (c) => c.id === 'usd'
+) as CurrencyOption
 
 export default async function Image({ params }) {
   const id = params?.id as string
 
-  const [[contract, contractError], [currentTip, currentTipError], [r]] =
-    await Promise.all([
-      to(explored.contractByID({ params: { id } })),
-      to(explored.consensusTip()),
-      to(
-        siaCentral.exchangeRates({
-          params: {
-            currencies: 'sc',
-          },
-        })
-      ),
-    ])
+  const [
+    [contract, contractError],
+    [currentTip, currentTipError],
+    [rate, rateError],
+  ] = await Promise.all([
+    to(explored.contractByID({ params: { id } })),
+    to(explored.consensusTip()),
+    to(explored.exchangeRate({ params: { currency: 'usd' } })),
+  ])
 
-  if (contractError || !contract || currentTipError || !currentTip) {
+  if (
+    contractError ||
+    !contract ||
+    currentTipError ||
+    !currentTip ||
+    rateError ||
+    !rate
+  ) {
     return getOGImage(
       {
         id,
@@ -60,13 +66,10 @@ export default async function Image({ params }) {
     },
     {
       label: 'payout',
-      value: siacoinToFiat(
-        contract.payout,
-        r && {
-          currency,
-          rate: r.rates.sc.usd,
-        }
-      ),
+      value: siacoinToFiat(contract.payout, {
+        currency: currencyOpt,
+        rate: new BigNumber(rate),
+      }),
     },
   ]
 

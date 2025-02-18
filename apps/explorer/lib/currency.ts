@@ -7,7 +7,7 @@ const digits = 2
 
 export function siacoinToFiat(
   sc: string,
-  exchange?: { currency: CurrencyOption; rate: string }
+  exchange?: { currency: CurrencyOption; rate: BigNumber }
 ) {
   if (exchange) {
     const val = new BigNumber(sc).div(1e24).times(exchange?.rate || 1)
