@@ -38,9 +38,7 @@ export function useMutate(args?: { api: string }): UseMutateReturn {
 }
 
 export function buildMutateMatcherFn<T>(
-  // This is the exact type from swr.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  mutate: ScopedMutator<any>,
+  mutate: ScopedMutator,
   requestSettings: RequestSettings,
   hookArgs: { api?: string } | undefined,
   callArgs: { api?: string } | undefined,
