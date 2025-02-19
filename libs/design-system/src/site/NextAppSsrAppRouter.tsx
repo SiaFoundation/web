@@ -7,11 +7,13 @@ import { ThemeProvider } from 'next-themes'
 
 export function NextAppSsrAppRouter({
   children,
+  fallback,
 }: {
   children: React.ReactNode
+  fallback?: Record<string, unknown>
 }) {
   return (
-    <CoreProvider>
+    <CoreProvider fallback={fallback}>
       <ThemeProvider attribute="class">
         <TooltipProvider>
           <AppSettingsProvider>
