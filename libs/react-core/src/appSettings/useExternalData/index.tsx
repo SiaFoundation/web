@@ -56,6 +56,7 @@ function useExternalDataMain({
         setExternalDataSettings({
           currency,
         })
+        window.document.cookie = `currency=${id}; path=/`
       }
     },
     [setExternalDataSettings]

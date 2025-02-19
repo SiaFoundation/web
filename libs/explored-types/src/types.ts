@@ -317,6 +317,7 @@ export type ExplorerHost = {
   publicKey: PublicKey
   netAddress: string
   countryCode: string
+  location: [number, number]
 
   knownSince: string
   lastScan: string

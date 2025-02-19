@@ -1,33 +1,36 @@
-import { SiaCentralHost } from '@siafoundation/sia-central-types'
 import { getCacheValue } from '../lib/cache'
-import { siaCentral } from '../config/siaCentral'
+import { siascan } from '../config/siascan'
 import { to } from '@siafoundation/request'
 import { minutesInSeconds } from '@siafoundation/units'
+import { ExplorerHost } from '@siafoundation/explored-types'
 
 const maxAge = minutesInSeconds(5)
 
 const maxHosts = 1000
 const minDegreesApart = 1
 
-export async function getGeoHosts(): Promise<SiaCentralPartialHost[]> {
+export async function getGeoHosts(): Promise<ExplorerPartialHost[]> {
   return getCacheValue(
     'geoHosts',
     async () => {
-      const [siaCentralHosts, error] = await to(
-        siaCentral.hosts({
+      const [hosts, error] = await to(
+        siascan.hostsList({
           params: {
-            limit: 300,
+            sortBy: 'uptime',
+            dir: 'desc',
+          },
+          data: {
+            online: true,
           },
         })
       )
       if (error) {
         return []
       }
-      const hosts = siaCentralHosts.hosts
 
       hosts.sort((a, b) =>
-        a.settings.total_storage - a.settings.remaining_storage <
-        b.settings.total_storage - a.settings.remaining_storage
+        a.settings.totalstorage - a.settings.remainingstorage <
+        b.settings.totalstorage - b.settings.remainingstorage
           ? 1
           : -1
       )
@@ -37,7 +40,7 @@ export async function getGeoHosts(): Promise<SiaCentralPartialHost[]> {
 
       // to get a more even distribution, we want to select the top 64 hosts
       // where no two hosts are within n degrees of each other.
-      const hostsToDisplay: SiaCentralHost[] = []
+      const hostsToDisplay: ExplorerHost[] = []
       for (const host of uniqueHosts) {
         let unique = true
         for (const hostToDisplay of hostsToDisplay) {
@@ -65,41 +68,31 @@ export async function getGeoHosts(): Promise<SiaCentralPartialHost[]> {
   )
 }
 
-export type SiaCentralPartialHost = {
-  public_key: string
-  country_code: string
+export type ExplorerPartialHost = {
+  publicKey: string
+  countryCode: string
   location: [number, number]
   settings: {
-    storage_price: string
-    download_price: string
-    upload_price: string
-    total_storage: number
-    remaining_storage: number
-  }
-  benchmark?: {
-    data_size: number
-    download_time: number
-    upload_time: number
+    storageprice: string
+    downloadbandwidthprice: string
+    uploadbandwidthprice: string
+    totalstorage: number
+    remainingstorage: number
   }
 }
 
 // transform to only necessary data to limit transfer size
-export function transformHost(h: SiaCentralHost): SiaCentralPartialHost {
+export function transformHost(h: ExplorerHost): ExplorerPartialHost {
   return {
-    public_key: h.public_key,
-    country_code: h.country_code,
+    publicKey: h.publicKey,
+    countryCode: h.countryCode,
     location: h.location,
     settings: {
-      storage_price: h.settings.storage_price,
-      download_price: h.settings.download_price,
-      upload_price: h.settings.upload_price,
-      total_storage: h.settings.total_storage,
-      remaining_storage: h.settings.remaining_storage,
-    },
-    benchmark: {
-      data_size: h.benchmark?.data_size || null,
-      download_time: h.benchmark?.download_time || null,
-      upload_time: h.benchmark?.upload_time || null,
+      storageprice: h.settings.storageprice,
+      downloadbandwidthprice: h.settings.downloadbandwidthprice,
+      uploadbandwidthprice: h.settings.uploadbandwidthprice,
+      totalstorage: h.settings.totalstorage,
+      remainingstorage: h.settings.remainingstorage,
     },
   }
 }
