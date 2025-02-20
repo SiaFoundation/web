@@ -101,12 +101,14 @@ export function HostInfo({ host }: Props) {
             </Text>
           </Tooltip>
         ) : null}
-        {host.countryCode.length ? (
-          <Tooltip content={`Host located in ${host.countryCode}`}>
+        {host.location.countryCode.length ? (
+          <Tooltip content={`Host located in ${host.location.countryCode}`}>
             <div className="flex gap-1 items-center">
-              <Text size="14">{countryCodeEmoji(host.countryCode)}</Text>
+              <Text size="14">
+                {countryCodeEmoji(host.location.countryCode)}
+              </Text>
               <Text size="14" color="subtle">
-                {host.countryCode}
+                {host.location.countryCode}
               </Text>
             </div>
           </Tooltip>
