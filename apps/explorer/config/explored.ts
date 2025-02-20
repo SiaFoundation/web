@@ -1,4 +1,3 @@
-import { Explored } from '@siafoundation/explored-js'
-import { exploredApi as api } from '.'
-
-export const explored = Explored({ api })
+// Allow passing a custom explored address via a cookie for testing purposes.
+export const exploredCustomApiCookieName = 'exploredAddress'
+export const exploredCustomApiSwrKey = 'exploredAddress'

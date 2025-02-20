@@ -4,7 +4,7 @@ import { truncate } from '@siafoundation/design-system'
 import { siacoinToFiat } from '../../../lib/currency'
 import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
 import { to } from '@siafoundation/request'
-import { explored } from '../../../config/explored'
+import { getExplored } from '../../../lib/explored'
 import { blockHeightToHumanDate } from '../../../lib/time'
 import { determineContractStatus } from '../../../lib/contracts'
 import BigNumber from 'bignumber.js'
@@ -31,9 +31,9 @@ export default async function Image({ params }) {
     [currentTip, currentTipError],
     [rate, rateError],
   ] = await Promise.all([
-    to(explored.contractByID({ params: { id } })),
-    to(explored.consensusTip()),
-    to(explored.exchangeRate({ params: { currency: 'usd' } })),
+    to(getExplored().contractByID({ params: { id } })),
+    to(getExplored().consensusTip()),
+    to(getExplored().exchangeRate({ params: { currency: 'usd' } })),
   ])
 
   if (

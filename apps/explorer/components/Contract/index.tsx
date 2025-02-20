@@ -15,10 +15,10 @@ import {
 } from '@siafoundation/explored-types'
 import { blockHeightToHumanDate } from '../../lib/time'
 import { useActiveCurrencySiascanExchangeRate } from '@siafoundation/react-core'
-import { exploredApi } from '../../config'
 import { siacoinToFiat } from '../../lib/currency'
 import LoadingCurrency from '../LoadingCurrency'
 import LoadingTimestamp from '../LoadingTimestamp'
+import { useExploredAddress } from '../../hooks/useExploredAddress'
 
 type Props = {
   previousRevisions: ExplorerFileContract[] | undefined
@@ -37,8 +37,9 @@ export function Contract({
   renewedToID,
   formationTxnChainIndex,
 }: Props) {
+  const api = useExploredAddress()
   const exchange = useActiveCurrencySiascanExchangeRate({
-    api: exploredApi,
+    api,
     config: {
       swr: {
         keepPreviousData: true,

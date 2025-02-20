@@ -1,6 +1,6 @@
 import { ExplorerHost } from '@siafoundation/explored-types'
 import { to } from '@siafoundation/request'
-import { explored } from '../config/explored'
+import { getExplored } from './explored'
 
 const weights = {
   age: 0.3,
@@ -78,9 +78,9 @@ function rankHosts(hosts: ExplorerHost[] | undefined) {
     .sort((a, b) => b.score - a.score) // Sort descending
 }
 
-export async function getTopHosts() {
+export async function getTopHosts(exploredAddress: string) {
   const [hosts, hostsError] = await to(
-    explored.hostsList({
+    getExplored(exploredAddress).hostsList({
       params: { sortBy: 'date_created', dir: 'asc', limit: 500 },
       data: { online: true, acceptContracts: true },
     })

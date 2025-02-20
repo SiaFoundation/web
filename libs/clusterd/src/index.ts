@@ -100,8 +100,9 @@ export async function setupCluster({
           Maybe<{ type: string; apiAddress: string; password: string }[]>
         >(`http://localhost:${clusterd.managementPort}/nodes`)
         const runningCount = nodes.data?.length
-        const totalCount = renterdCount + hostdCount + walletdCount
-        if (nodes.data?.length === renterdCount + hostdCount + walletdCount) {
+        const totalCount =
+          renterdCount + hostdCount + walletdCount + exploredCount
+        if (nodes.data?.length === totalCount) {
           clusterd.nodes = nodes.data?.map((n) => {
             if ('apiAddress' in n) {
               return {

@@ -5,7 +5,7 @@ import { Host } from '../../../components/Host'
 import { notFound } from 'next/navigation'
 import { truncate } from '@siafoundation/design-system'
 import { to } from '@siafoundation/request'
-import { explored } from '../../../config/explored'
+import { getExplored } from '../../../lib/explored'
 
 export function generateMetadata({ params }): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
@@ -24,7 +24,7 @@ export const revalidate = 0
 export default async function Page({ params }) {
   const id = params?.id as string
   const [[host, hostError]] = await Promise.all([
-    to(explored.hostByPubkey({ params: { id } })),
+    to(getExplored().hostByPubkey({ params: { id } })),
   ])
 
   if (hostError) {

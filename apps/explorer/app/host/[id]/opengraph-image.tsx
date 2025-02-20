@@ -7,7 +7,7 @@ import {
 import { truncate } from '@siafoundation/design-system'
 import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
 import { to } from '@siafoundation/request'
-import { explored } from '../../../config/explored'
+import { getExplored } from '../../../lib/explored'
 
 export const revalidate = 0
 
@@ -25,14 +25,14 @@ export default async function Image({ params }) {
   const id = params?.id as string
   const [[host, hostError], [rate, rateError]] = await Promise.all([
     to(
-      explored.hostByPubkey({
+      getExplored().hostByPubkey({
         params: {
           id,
         },
       })
     ),
     to(
-      explored.exchangeRate({
+      getExplored().exchangeRate({
         params: {
           currency: 'usd',
         },

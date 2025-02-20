@@ -5,7 +5,7 @@ import { Metadata } from 'next'
 import { buildMetadata } from '../../../lib/utils'
 import { notFound } from 'next/navigation'
 import { to } from '@siafoundation/request'
-import { explored } from '../../../config/explored'
+import { getExplored } from '../../../lib/explored'
 
 export function generateMetadata({ params }): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
@@ -39,7 +39,7 @@ export default async function Page({ params }) {
   if (!isNaN(Number(params?.id))) {
     // If it is, we need the block ID at that height.
     const [tipAtHeightInfo, tipAtHeightInfoError] = await to(
-      explored.consensusTipByHeight({ params: { height: params?.id } })
+      getExplored().consensusTipByHeight({ params: { height: params?.id } })
     )
     if (tipAtHeightInfoError) throw tipAtHeightInfoError
     if (!tipAtHeightInfo) throw notFound()
@@ -54,8 +54,8 @@ export default async function Page({ params }) {
   // currentTip for next block navigation handling.
   const [[block, blockError], [currentTipInfo, currentTipInfoError]] =
     await Promise.all([
-      to(explored.blockByID({ params: { id } })),
-      to(explored.consensusTip()),
+      to(getExplored().blockByID({ params: { id } })),
+      to(getExplored().consensusTip()),
     ])
 
   if (blockError) throw blockError
