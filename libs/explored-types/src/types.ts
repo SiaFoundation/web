@@ -193,6 +193,12 @@ export type HostSortBy =
   | 'used_storage'
   | 'total_storage'
 
+export type Location = {
+  countryCode: string
+  latitude: number
+  longitude: number
+}
+
 // Novel Explored Types
 
 /**
@@ -316,7 +322,7 @@ export type ExplorerBlock = {
 export type ExplorerHost = {
   publicKey: PublicKey
   netAddress: string
-  countryCode: string
+  location: Location
 
   knownSince: string
   lastScan: string
