@@ -1,5 +1,11 @@
 # explorer
 
+## 0.27.0
+
+### Minor Changes
+
+- bbc64938: Reworked Host location data to match new typing.
+
 ## 0.26.0
 
 ### Minor Changes
