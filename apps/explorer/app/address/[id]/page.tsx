@@ -5,7 +5,7 @@ import { buildMetadata } from '../../../lib/utils'
 import { notFound } from 'next/navigation'
 import { truncate } from '@siafoundation/design-system'
 import { to } from '@siafoundation/request'
-import { explored } from '../../../config/explored'
+import { getExplored } from '../../../lib/explored'
 
 export function generateMetadata({ params }): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
@@ -29,9 +29,9 @@ export default async function Page({ params }) {
     [events, eventsError],
     [unspentOutputs, unspentOutputsError],
   ] = await Promise.all([
-    to(explored.addressBalance({ params: { address } })),
-    to(explored.addressEvents({ params: { address, limit: 500 } })),
-    to(explored.addressSiacoinUTXOs({ params: { address } })),
+    to(getExplored().addressBalance({ params: { address } })),
+    to(getExplored().addressEvents({ params: { address, limit: 500 } })),
+    to(getExplored().addressSiacoinUTXOs({ params: { address } })),
   ])
 
   if (balanceError) throw balanceError

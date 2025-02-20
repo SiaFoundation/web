@@ -12,8 +12,8 @@ import React, { useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { routes } from '../../config/routes'
-import { explored } from '../../config/explored'
 import { to } from '@siafoundation/request'
+import { useExplored } from '../../hooks/useExplored'
 
 const defaultValues = {
   query: '',
@@ -36,6 +36,8 @@ export function Search() {
   const form = useForm({
     defaultValues,
   })
+
+  const explored = useExplored()
 
   const onSubmit = useCallback(
     async (values: { query: string }) => {
@@ -99,7 +101,7 @@ export function Search() {
 
       form.reset()
     },
-    [form, router]
+    [form, router, explored]
   )
 
   return (
