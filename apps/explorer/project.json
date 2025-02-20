@@ -23,6 +23,15 @@
             }
           ]
         },
+        "development-testnet-cluster": {
+          "outputPath": "dist/apps/explorer-testnet-cluster",
+          "fileReplacements": [
+            {
+              "replace": "apps/explorer/config/index.ts",
+              "with": "apps/explorer/config/testnet-cluster.ts"
+            }
+          ]
+        },
         "local": {},
         "local-testnet-zen": {
           "outputPath": "dist/apps/explorer-testnet-zen",
@@ -59,6 +68,11 @@
         },
         "development-testnet-zen": {
           "buildTarget": "explorer:build:development-testnet-zen",
+          "dev": true,
+          "port": 3005
+        },
+        "development-testnet-cluster": {
+          "buildTarget": "explorer:build:development-testnet-cluster",
           "dev": true,
           "port": 3005
         },

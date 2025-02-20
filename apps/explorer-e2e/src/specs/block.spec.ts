@@ -63,7 +63,8 @@ test('block displays the intended data', async ({ page }) => {
   await explorerApp.goTo('/block/' + TEST_BLOCK_1.height)
 
   for (const key of displayKeys) {
-    const currentProperty = TEST_BLOCK_1.display[key]
+    const currentProperty =
+      TEST_BLOCK_1.display[key as keyof typeof TEST_BLOCK_1.display]
     await expect(page.getByText(currentProperty)).toBeVisible()
   }
 })

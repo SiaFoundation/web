@@ -47,6 +47,7 @@ deploy.log
 
 # Next.js
 .next
+.next-*
 
 # builds
 dist
