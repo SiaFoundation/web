@@ -8,6 +8,7 @@ import { cookies } from 'next/headers'
 import { CurrencyID } from '@siafoundation/explored-types'
 import { buildFallbackDataDefaultCurrencyId } from '@siafoundation/react-core'
 import { buildFallbackDataExchangeRate } from './fallback'
+import { buildFallbackDataExploredAddress } from '../lib/explored'
 
 export const metadata = {
   title: 'Explorer',
@@ -19,7 +20,7 @@ export const metadata = {
   ),
 }
 
-function getUserCurrencyPreference() {
+function getUserCurrencyPreferenceCookie() {
   const cookieStore = cookies()
   const currency = cookieStore.get('currency')?.value as CurrencyID
   return currency || 'usd'
@@ -30,7 +31,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const currency = getUserCurrencyPreference()
+  const currency = getUserCurrencyPreferenceCookie()
   return (
     <html lang="en" suppressHydrationWarning className={rootFontClasses}>
       <body>
@@ -42,6 +43,10 @@ export default async function RootLayout({
             // Pass the currency's initial exchange rate value to the exchange rate
             // hooks so that they initialize and server-render with the value.
             ...(await buildFallbackDataExchangeRate(currency)),
+            // Pass any custom explored address to the client-side. The cookie is
+            // only allowed in development mode and is used to point the explorer
+            // to a local cluster.
+            ...buildFallbackDataExploredAddress(),
           }}
         >
           <Layout>{children}</Layout>

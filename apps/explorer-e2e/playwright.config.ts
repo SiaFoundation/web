@@ -1,6 +1,5 @@
 import { defineConfig, devices } from '@playwright/test'
 import { nxE2EPreset } from '@nx/playwright/preset'
-
 import { workspaceRoot } from '@nx/devkit'
 
 // For CI, you may want to set BASE_URL to the deployed application.
@@ -25,8 +24,8 @@ export default defineConfig({
     trace: 'on-first-retry',
     video: 'on-first-retry',
   },
-  // Timeout per test.
-  timeout: 60_000,
+  // Timeout per test. The cluster takes up to 30 seconds to start and form contracts.
+  timeout: 180_000,
   expect: {
     // Raise the timeout because it is running against next dev mode
     // which requires compilation the first to a page is visited.

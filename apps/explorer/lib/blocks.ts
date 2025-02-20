@@ -1,11 +1,11 @@
 import { to } from '@siafoundation/request'
 import { ExplorerBlock } from '@siafoundation/explored-types'
-import { explored } from '../config/explored'
+import { getExplored } from '../lib/explored'
 
 export async function getBlockByHeight(height: number) {
   // Grab the tip at this height.
   const [tip, tipError] = await to(
-    explored.consensusTipByHeight({ params: { height } })
+    getExplored().consensusTipByHeight({ params: { height } })
   )
 
   if (tipError) throw tipError
@@ -13,7 +13,7 @@ export async function getBlockByHeight(height: number) {
 
   // Grab the block with the ID at this tip height.
   const [block, blockError] = await to(
-    explored.blockByID({ params: { id: tip.id } })
+    getExplored().blockByID({ params: { id: tip.id } })
   )
 
   if (blockError) throw blockError
@@ -26,7 +26,7 @@ export async function getLatestBlocks(
   n = 6
 ): Promise<[ExplorerBlock[], undefined] | [undefined, Error]> {
   // Grab the latest tip.
-  const [latestTip, latestTipError] = await to(explored.consensusTip())
+  const [latestTip, latestTipError] = await to(getExplored().consensusTip())
   if (latestTipError) throw latestTipError
   if (!latestTip) return [undefined, Error('No tip found')]
 
@@ -36,7 +36,7 @@ export async function getLatestBlocks(
   // Fetch the latest n blocks.
   for (let i = 1; i <= n; i++) {
     const [block, blockError] = await to(
-      explored.blockByID({ params: { id: parentBlockID } })
+      getExplored().blockByID({ params: { id: parentBlockID } })
     )
     if (blockError) throw blockError
     if (!block) continue

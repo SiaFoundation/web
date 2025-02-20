@@ -56,15 +56,6 @@ export const TEST_TX_1 = {
   },
 }
 
-export const TEST_ADDRESS_1 = {
-  id: '68bf48e81536f2221f3809aa9d1c89c1c869a17c6f186a088e49fd2605e4bfaaa24f26e4c42c',
-  display: {
-    title: 'Address 68bf48e81536f22...',
-    transactionNumber: '500 events',
-    transactionID: '95a2b31155be...',
-  },
-}
-
 export const TEST_CONTRACT_1 = {
   id: '25c94822bf7bd86a92d28a148d9d30151949f3599bf93af0df7b4f1e1b3c990d',
   renewedFromTitle: 'Contract 494d147a8028217...',

@@ -15,15 +15,16 @@ import {
 } from '@siafoundation/units'
 import { useActiveCurrencySiascanExchangeRate } from '@siafoundation/react-core'
 import LoadingCurrency from '../LoadingCurrency'
-import { exploredApi } from '../../config'
+import { useExploredAddress } from '../../hooks/useExploredAddress'
 
 type Props = {
   host: ExplorerHost
 }
 
 export function HostPricing({ host }: Props) {
+  const api = useExploredAddress()
   const exchange = useActiveCurrencySiascanExchangeRate({
-    api: exploredApi,
+    api,
     config: {
       swr: {
         keepPreviousData: true,

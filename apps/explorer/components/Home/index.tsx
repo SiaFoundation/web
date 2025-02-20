@@ -27,7 +27,7 @@ import {
 import { Information20 } from '@siafoundation/react-icons'
 import { useActiveCurrencySiascanExchangeRate } from '@siafoundation/react-core'
 import LoadingCurrency from '../LoadingCurrency'
-import { exploredApi } from '../../config'
+import { useExploredAddress } from '../../hooks/useExploredAddress'
 
 export function Home({
   metrics,
@@ -42,8 +42,9 @@ export function Home({
   hosts: ExplorerHost[]
   totalHosts?: number
 }) {
+  const api = useExploredAddress()
   const exchange = useActiveCurrencySiascanExchangeRate({
-    api: exploredApi,
+    api,
     config: {
       swr: {
         keepPreviousData: true,

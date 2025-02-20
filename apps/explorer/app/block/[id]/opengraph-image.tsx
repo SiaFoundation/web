@@ -2,7 +2,7 @@ import { humanDate } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
 import { stripPrefix, truncate } from '@siafoundation/design-system'
 import { to } from '@siafoundation/request'
-import { explored } from '../../../config/explored'
+import { getExplored } from '../../../lib/explored'
 
 export const revalidate = 0
 
@@ -31,7 +31,7 @@ export default async function Image({ params }) {
 
   // Grab chainIndex at height.
   const [chainIndex, chainIndexError] = await to(
-    explored.consensusTipByHeight({ params: { height: Number(id) } })
+    getExplored().consensusTipByHeight({ params: { height: Number(id) } })
   )
 
   if (!chainIndex || chainIndexError) {
@@ -40,7 +40,7 @@ export default async function Image({ params }) {
 
   // Grab block for id at ChainIndex in request above.
   const [block, blockError] = await to(
-    explored.blockByID({ params: { id: stripPrefix(chainIndex.id) } })
+    getExplored().blockByID({ params: { id: stripPrefix(chainIndex.id) } })
   )
 
   if (!block || blockError) {

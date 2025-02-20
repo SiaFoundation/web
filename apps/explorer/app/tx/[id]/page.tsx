@@ -5,7 +5,7 @@ import { buildMetadata } from '../../../lib/utils'
 import { notFound } from 'next/navigation'
 import { stripPrefix, truncate } from '@siafoundation/design-system'
 import { to } from '@siafoundation/request'
-import { explored } from '../../../config/explored'
+import { getExplored } from '../../../lib/explored'
 
 export function generateMetadata({ params }): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
@@ -30,9 +30,9 @@ export default async function Page({ params }) {
     [transactionChainIndices, transactionChainIndicesError],
     [currentTip, currentTipError],
   ] = await Promise.all([
-    to(explored.transactionByID({ params: { id } })),
-    to(explored.transactionChainIndices({ params: { id } })),
-    to(explored.consensusTip()),
+    to(getExplored().transactionByID({ params: { id } })),
+    to(getExplored().transactionChainIndices({ params: { id } })),
+    to(getExplored().consensusTip()),
   ])
 
   if (transactionError) throw transactionError
@@ -42,7 +42,7 @@ export default async function Page({ params }) {
 
   // Use the first chainIndex from the above call to get our parent block.
   const [parentBlock, parentBlockError] = await to(
-    explored.blockByID({ params: { id: transactionChainIndices[0].id } })
+    getExplored().blockByID({ params: { id: transactionChainIndices[0].id } })
   )
 
   if (parentBlockError) throw parentBlockError

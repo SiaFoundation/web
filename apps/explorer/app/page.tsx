@@ -4,8 +4,8 @@ import { Home } from '../components/Home'
 import { buildMetadata } from '../lib/utils'
 import { getLatestBlocks } from '../lib/blocks'
 import { to } from '@siafoundation/request'
-import { explored } from '../config/explored'
 import { getTopHosts } from '../lib/hosts'
+import { getExplored, getExploredAddress } from '../lib/explored'
 import { unstable_cache } from 'next/cache'
 
 export function generateMetadata(): Metadata {
@@ -24,16 +24,24 @@ export function generateMetadata(): Metadata {
 export const revalidate = 0
 
 // Cache our top hosts fetch and ranking. Revalidate every 5 minutes.
-const getCachedTopHosts = unstable_cache(getTopHosts, ['top-hosts'], {
-  tags: ['top-hosts'],
-  revalidate: 300,
-})
+const getCachedTopHosts = unstable_cache(
+  (exploredAddress: string) => getTopHosts(exploredAddress),
+  [],
+  {
+    tags: ['top-hosts'],
+    revalidate: 300,
+  }
+)
 
 export default async function HomePage() {
   const [[hostMetrics, hostMetricsError], [blockMetrics, blockMetricsError]] =
-    await Promise.all([to(explored.hostMetrics()), to(explored.blockMetrics())])
+    await Promise.all([
+      to(getExplored().hostMetrics()),
+      to(getExplored().blockMetrics()),
+    ])
 
-  const selectedTopHosts = await getCachedTopHosts()
+  const exploredAddress = getExploredAddress()
+  const selectedTopHosts = await getCachedTopHosts(exploredAddress)
 
   const [latestBlocks, latestBlocksError] = await getLatestBlocks()
   const latestHeight = latestBlocks ? latestBlocks[0].height : 0

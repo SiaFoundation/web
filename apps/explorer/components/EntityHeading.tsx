@@ -21,7 +21,7 @@ type Props = {
 export function EntityHeading({ label, type, value, href }: Props) {
   return (
     <div className="flex gap-1 items-center pr-1 py-1 overflow-hidden">
-      <Heading className="inline" ellipsis>
+      <Heading data-testid="entity-heading" className="inline" ellipsis>
         {upperFirst(label)}{' '}
         <Link href={href} underline="hover">
           {type === 'block' && Number(value).toLocaleString()}
