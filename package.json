@@ -113,7 +113,7 @@
     "request-promise-native": "^1.0.9",
     "rss-parser": "^3.13.0",
     "sharp": "^0.31.2",
-    "swr": "^2.1.1",
+    "swr": "^2.3.2",
     "tailwindcss-shadow-fill": "^1.0.1",
     "tailwindcss-text-fill": "^0.2.0",
     "typed.js": "^2.0.12",
