@@ -2,7 +2,7 @@
 
 # Web
 
-Web packages for the Sia project and ecosystem.
+Web packages for the Sia project and ecosystem.s
 
 ## Apps
 
