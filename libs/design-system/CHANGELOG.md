@@ -1,5 +1,18 @@
 # Changelog
 
+## 4.19.0
+
+### Minor Changes
+
+- 70e57bf6: Added fallback to NextAppSsrAppRouter.
+
+### Patch Changes
+
+- Updated dependencies [0bdf8534]
+- Updated dependencies [70e57bf6]
+- Updated dependencies [70e57bf6]
+  - @siafoundation/react-core@2.1.0
+
 ## 4.18.0
 
 ### Minor Changes
