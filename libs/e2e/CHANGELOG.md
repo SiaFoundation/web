@@ -1,5 +1,14 @@
 # @siafoundation/e2e
 
+## 0.5.3
+
+### Patch Changes
+
+- Updated dependencies [0bdf8534]
+- Updated dependencies [70e57bf6]
+- Updated dependencies [70e57bf6]
+  - @siafoundation/react-core@2.1.0
+
 ## 0.5.2
 
 ### Patch Changes
