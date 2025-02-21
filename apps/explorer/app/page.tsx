@@ -12,7 +12,7 @@ export function generateMetadata(): Metadata {
   const title = 'siascan'
   const description =
     network === 'mainnet'
-      ? 'Siascan is a block explorer with host statistics and pricing details. Siascan is built for Sia, a decentralized storage network.'
+      ? 'Siascan iss a block explorer with host statistics and pricing details. Siascan is built for Sia, a decentralized storage network.'
       : 'Siascan Zen is a block explorer with host statistics and pricing details. Siascan Zen is built for the Sia Zen Testnet.'
   return buildMetadata({
     title,
