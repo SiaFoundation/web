@@ -1,4 +1,6 @@
-const { composePlugins, withNx } = require('@nx/next');
+const { composePlugins, withNx } = require('@nx/next')
+
+const runningTargetConfiguration = process.env.NX_TASK_TARGET_CONFIGURATION
 
 /**
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
@@ -12,10 +14,12 @@ const nextConfig = {
     svgr: false,
   },
   output: 'standalone',
+  // Use the Nx target name for the dist directory
+  distDir: runningTargetConfiguration?.includes('development')
+    ? `.next-${runningTargetConfiguration}`
+    : '.next',
 }
 
-const plugins = [
-  withNx,
-];
+const plugins = [withNx]
 
-module.exports = composePlugins(...plugins)(nextConfig);
+module.exports = composePlugins(...plugins)(nextConfig)

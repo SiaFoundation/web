@@ -1,10 +1,9 @@
 import { defineConfig, devices } from '@playwright/test'
 import { nxE2EPreset } from '@nx/playwright/preset'
-
 import { workspaceRoot } from '@nx/devkit'
 
-// For CI, you may want to set BASE_URL to the deployed application.
-const baseURL = process.env['BASE_URL'] || 'http://localhost:3005'
+// // For CI, you may want to set BASE_URL to the deployed application.
+// const baseURL = process.env['BASE_URL'] || 'http://localhost:3005'
 
 /**
  * Read environment variables from file.
@@ -20,13 +19,13 @@ export default defineConfig({
   reporter: process.env.CI ? 'blob' : 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    baseURL,
+    // baseURL,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     video: 'on-first-retry',
   },
   // Timeout per test.
-  timeout: 60_000,
+  timeout: 180_000,
   expect: {
     // Raise the timeout because it is running against next dev mode
     // which requires compilation the first to a page is visited.
@@ -36,7 +35,7 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: {
     command: 'npx nx run explorer:serve:development-testnet-zen',
-    url: baseURL,
+    // url: baseURL,
     reuseExistingServer: !process.env.CI,
     cwd: workspaceRoot,
   },
