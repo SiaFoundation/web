@@ -1,4 +1,6 @@
 import { ExplorerHost } from '@siafoundation/explored-types'
+import { to } from '@siafoundation/request'
+import { explored } from '../config/explored'
 
 const weights = {
   age: 0.3,
@@ -15,7 +17,7 @@ function normalize(value, min, max, invert = false) {
   return invert ? 1 - normalized : normalized
 }
 
-export function rankHosts(hosts: ExplorerHost[] | undefined) {
+function rankHosts(hosts: ExplorerHost[] | undefined) {
   if (!hosts) return []
   const minMax = (key) => ({
     min: Math.min(...hosts.map((h) => h[key])),
@@ -74,4 +76,28 @@ export function rankHosts(hosts: ExplorerHost[] | undefined) {
           ),
     }))
     .sort((a, b) => b.score - a.score) // Sort descending
+}
+
+export async function getTopHosts() {
+  const [hosts, hostsError] = await to(
+    explored.hostsList({
+      params: { sortBy: 'date_created', dir: 'asc', limit: 500 },
+      data: { online: true, acceptContracts: true },
+    })
+  )
+  if (hostsError)
+    throw new Error(
+      'Error from getcachedTopHostsFunc /hosts request:' + hostsError.message
+    )
+  if (!hosts)
+    throw new Error('No hosts found from getcachedTopHostsFunc /hosts request')
+
+  const rankedHosts = rankHosts(hosts)
+    .slice(0, 5) // Select the top 5.
+    .map((result) => result.host) // Strip score key.
+
+  if (!rankedHosts || rankedHosts.length === 0)
+    throw new Error('No hosts from getcachedTopHostsFunc rankHosts call')
+
+  return rankedHosts
 }
