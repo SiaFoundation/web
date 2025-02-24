@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { ExplorerApp } from '../fixtures/ExplorerApp'
 import { TEST_BLOCK_1 } from '../fixtures/constants'
+import { keys } from '../utils'
 
 let explorerApp: ExplorerApp
 
@@ -58,7 +59,7 @@ test('block can click through to a transaction', async ({ page }) => {
 })
 
 test('block displays the intended data', async ({ page }) => {
-  const displayKeys = Object.keys(TEST_BLOCK_1.display)
+  const displayKeys = keys(TEST_BLOCK_1.display)
 
   await explorerApp.goTo('/block/' + TEST_BLOCK_1.height)
 

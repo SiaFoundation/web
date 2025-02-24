@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { ExplorerApp } from '../fixtures/ExplorerApp'
 import { TEST_TX_1 } from '../fixtures/constants'
+import { keys } from '../utils'
 
 let explorerApp: ExplorerApp
 
@@ -45,7 +46,7 @@ test('transaction can click through to an address', async ({ page }) => {
 })
 
 test('transaction displays the intended data', async ({ page }) => {
-  const displayKeys = Object.keys(TEST_TX_1.display)
+  const displayKeys = keys(TEST_TX_1.display)
 
   await explorerApp.goTo('/tx/' + TEST_TX_1.id)
 
