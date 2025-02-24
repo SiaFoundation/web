@@ -5,7 +5,7 @@ import { buildMetadata } from '../lib/utils'
 import { getLatestBlocks } from '../lib/blocks'
 import { to } from '@siafoundation/request'
 import { explored } from '../config/explored'
-import { rankHosts } from '../lib/hosts'
+import { getTopHosts } from '../lib/hosts'
 import { unstable_cache } from 'next/cache'
 
 export function generateMetadata(): Metadata {
@@ -23,23 +23,11 @@ export function generateMetadata(): Metadata {
 
 export const revalidate = 0
 
-// Cache our top hosts fetch and ranking. Revalidate every 24 hours.
-const getCachedTopHosts = unstable_cache(
-  async () => {
-    const [hosts, hostsError] = await to(
-      explored.hostsList({
-        params: { sortBy: 'date_created', dir: 'asc', limit: 500 },
-        data: { online: true },
-      })
-    )
-    if (hostsError) return []
-    return rankHosts(hosts)
-      .slice(0, 5) // Select the top 5.
-      .map((result) => result.host) // Strip score key.
-  },
-  ['top-hosts'],
-  { revalidate: 86400 }
-)
+// Cache our top hosts fetch and ranking. Revalidate every 5 minutes.
+const getCachedTopHosts = unstable_cache(getTopHosts, ['top-hosts'], {
+  tags: ['top-hosts'],
+  revalidate: 300,
+})
 
 export default async function HomePage() {
   const [[hostMetrics, hostMetricsError], [blockMetrics, blockMetricsError]] =
