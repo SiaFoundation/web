@@ -5,6 +5,7 @@ import {
   RENEWED_TO_BUTTON,
   TEST_CONTRACT_1,
 } from '../fixtures/constants'
+import { keys } from '../utils'
 
 let explorerApp: ExplorerApp
 
@@ -26,7 +27,7 @@ test('contract can be directly navigated to', async ({ page }) => {
 })
 
 test('contract displays the intended data', async ({ page }) => {
-  const displayKeys = Object.keys(TEST_CONTRACT_1.display)
+  const displayKeys = keys(TEST_CONTRACT_1.display)
 
   await explorerApp.goTo('/contract/' + TEST_CONTRACT_1.id)
 

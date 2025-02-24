@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { ExplorerApp } from '../fixtures/ExplorerApp'
 import { TEST_ADDRESS_1 } from '../fixtures/constants'
+import { keys } from '../utils'
 
 let explorerApp: ExplorerApp
 
@@ -22,7 +23,7 @@ test('address can be directly navigated to by id', async ({ page }) => {
 })
 
 test('address displays the intended data', async ({ page }) => {
-  const displayKeys = Object.keys(TEST_ADDRESS_1.display)
+  const displayKeys = keys(TEST_ADDRESS_1.display)
 
   await explorerApp.goTo('/address/' + TEST_ADDRESS_1.id)
 
