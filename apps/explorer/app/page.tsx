@@ -1,12 +1,12 @@
 import { Metadata } from 'next'
-import { appLink, network } from '../config'
+import { appLink, network, topHostsCacheTag } from '../config'
 import { Home } from '../components/Home'
 import { buildMetadata } from '../lib/utils'
 import { getLatestBlocks } from '../lib/blocks'
 import { to } from '@siafoundation/request'
 import { explored } from '../config/explored'
 import { rankHosts } from '../lib/hosts'
-import { unstable_cache } from 'next/cache'
+import { revalidateTag, unstable_cache } from 'next/cache'
 
 export function generateMetadata(): Metadata {
   const title = 'siascan'
@@ -37,7 +37,7 @@ const getCachedTopHosts = unstable_cache(
       .slice(0, 5) // Select the top 5.
       .map((result) => result.host) // Strip score key.
   },
-  ['top-hosts'],
+  [topHostsCacheTag],
   { revalidate: 86400 }
 )
 
@@ -46,6 +46,8 @@ export default async function HomePage() {
     await Promise.all([to(explored.hostMetrics()), to(explored.blockMetrics())])
 
   const selectedTopHosts = await getCachedTopHosts()
+  if (!selectedTopHosts || selectedTopHosts.length === 0)
+    revalidateTag(topHostsCacheTag)
 
   const [latestBlocks, latestBlocksError] = await getLatestBlocks()
   const latestHeight = latestBlocks ? latestBlocks[0].height : 0
