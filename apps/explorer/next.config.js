@@ -1,4 +1,6 @@
-const { composePlugins, withNx } = require('@nx/next');
+const { composePlugins, withNx } = require('@nx/next')
+
+const runningTargetConfiguration = process.env.NX_TASK_TARGET_CONFIGURATION
 
 /**
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
@@ -12,10 +14,14 @@ const nextConfig = {
     svgr: false,
   },
   output: 'standalone',
+  // Since explorer is built for multiple networks, we need to use the target
+  // name to ensure the next build directory is unique to avoid conflicts when
+  // switching between networks during development.
+  distDir: runningTargetConfiguration.includes('development')
+    ? `.next-${runningTargetConfiguration}`
+    : '.next',
 }
 
-const plugins = [
-  withNx,
-];
+const plugins = [withNx]
 
-module.exports = composePlugins(...plugins)(nextConfig);
+module.exports = composePlugins(...plugins)(nextConfig)
