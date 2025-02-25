@@ -12,10 +12,10 @@ import { random, throttle } from '@technically/lodash'
 import { HostItem } from './HostItem'
 import { Globe } from './Globe'
 import { cx } from 'class-variance-authority'
-import { SiaCentralPartialHost } from '../../content/geoHosts'
+import { ExplorerPartialHost } from '../../content/geoHosts'
 
 type Props = {
-  hosts: SiaCentralPartialHost[]
+  hosts: ExplorerPartialHost[]
 
   rates: {
     usd: string
@@ -52,7 +52,7 @@ export function HostMap({ className, hosts, rates }: Props) {
 
   const selectActiveHost = useCallback(
     (publicKey: string) => {
-      const index = hosts.findIndex((h) => h.public_key === publicKey)
+      const index = hosts.findIndex((h) => h.publicKey === publicKey)
       setActiveIndex(index)
       setReset(String(Math.random()))
     },
@@ -221,7 +221,7 @@ export function HostMap({ className, hosts, rates }: Props) {
           <div className="flex-1 flex p-1">
             {hosts.map((h, i) => (
               <HostItem
-                key={h.public_key}
+                key={h.publicKey}
                 host={h}
                 activeHost={activeHost}
                 selectActiveHost={selectActiveHost}

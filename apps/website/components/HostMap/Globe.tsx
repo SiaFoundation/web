@@ -11,15 +11,15 @@ import dynamic from 'next/dynamic'
 import { GlobeMethods } from 'react-globe.gl'
 import { random, sortBy } from '@technically/lodash'
 import { getHostLabel } from './utils'
-import { SiaCentralPartialHost } from '../../content/geoHosts'
 import { getAssetUrl } from '../../content/assets'
 import { useTheme } from 'next-themes'
 import { useElementSize } from 'usehooks-ts'
+import { ExplorerPartialHost } from '../../content/geoHosts'
 
 type Props = {
-  activeHost?: SiaCentralPartialHost
+  activeHost?: ExplorerPartialHost
   selectActiveHost: (public_key: string) => void
-  hosts: SiaCentralPartialHost[]
+  hosts: ExplorerPartialHost[]
   rates: {
     usd: string
   }
@@ -27,8 +27,8 @@ type Props = {
 
 type Route = {
   distance: number
-  src: SiaCentralPartialHost
-  dst: SiaCentralPartialHost
+  src: ExplorerPartialHost
+  dst: ExplorerPartialHost
 }
 
 const GlobeGl = dynamic(() => import('./GlobeGl'), {
@@ -44,7 +44,7 @@ const ReactGlobe = forwardRef(function ReactGlobe(
 
 function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
   const globeEl = useRef<GlobeMethods>(null)
-  const moveToHost = useCallback((host: SiaCentralPartialHost) => {
+  const moveToHost = useCallback((host: ExplorerPartialHost) => {
     globeEl.current?.pointOfView(
       {
         lat: host.location[0] - 8,
@@ -118,7 +118,7 @@ function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
     let routes: Route[] = []
     for (let i = 0; i < hosts.length; i++) {
       const host = hosts[i]
-      if (activeHost.public_key === host.public_key) {
+      if (activeHost.publicKey === host.publicKey) {
         continue
       }
       const distance = distanceBetweenHosts(activeHost, host)
@@ -176,26 +176,26 @@ function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
             : [`rgba(187, 229, 201, 0.10)`, `rgba(187, 229, 201, 0.10)`]
         }
         onArcClick={(r: Route) => {
-          selectActiveHost(r.dst.public_key)
+          selectActiveHost(r.dst.publicKey)
         }}
         arcsTransitionDuration={0}
         pointsData={hosts}
-        pointLat={(h: SiaCentralPartialHost) => h.location[0]}
-        pointLng={(h: SiaCentralPartialHost) => h.location[1]}
-        pointLabel={(h: SiaCentralPartialHost) =>
+        pointLat={(h: ExplorerPartialHost) => h.location[0]}
+        pointLng={(h: ExplorerPartialHost) => h.location[1]}
+        pointLabel={(h: ExplorerPartialHost) =>
           getHostLabel({ host: h, rates })
         }
         pointAltitude={0}
-        pointColor={(h: SiaCentralPartialHost) =>
-          h.public_key === activeHost.public_key
+        pointColor={(h: ExplorerPartialHost) =>
+          h.publicKey === activeHost?.publicKey
             ? 'rgba(0,255,0,1)'
             : 'rgba(0,255,0,1)'
         }
-        pointRadius={(h: SiaCentralPartialHost) =>
-          h.public_key === activeHost.public_key ? 0.6 : 0.2
+        pointRadius={(h: ExplorerPartialHost) =>
+          h.publicKey === activeHost?.publicKey ? 0.6 : 0.2
         }
-        onPointClick={(h: SiaCentralPartialHost) => {
-          selectActiveHost(h.public_key)
+        onPointClick={(h: ExplorerPartialHost) => {
+          selectActiveHost(h.publicKey)
         }}
         pointsMerge={false}
       />
@@ -206,8 +206,8 @@ function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
 export const Globe = memo(GlobeComponent)
 
 function distanceBetweenHosts(
-  h1: SiaCentralPartialHost,
-  h2: SiaCentralPartialHost
+  h1: ExplorerPartialHost,
+  h2: ExplorerPartialHost
 ) {
   return Math.sqrt(
     Math.pow(h1.location[0] - h2.location[0], 2) +
@@ -215,15 +215,12 @@ function distanceBetweenHosts(
   )
 }
 
-function doesIncludeActiveHost(
-  route: Route,
-  activeHost?: SiaCentralPartialHost
-) {
+function doesIncludeActiveHost(route: Route, activeHost?: ExplorerPartialHost) {
   if (!activeHost) {
     return false
   }
   return (
-    route.dst.public_key === activeHost.public_key ||
-    route.src.public_key === activeHost.public_key
+    route.dst.publicKey === activeHost.publicKey ||
+    route.src.publicKey === activeHost.publicKey
   )
 }
