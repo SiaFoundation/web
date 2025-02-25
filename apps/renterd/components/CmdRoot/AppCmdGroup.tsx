@@ -46,12 +46,12 @@ export function AppCmdGroup({ currentPage, parentPage }: Props) {
         currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
-          setExternalDataSettings({ siaCentral: !settings.siaCentral })
+          setExternalDataSettings({ siascan: !settings.siascan })
           closeDialog()
         }}
       >
-        {(settings.siaCentral ? 'Disable' : 'Enable') +
-          ' external API - Sia Central exchange rates'}
+        {(settings.siascan ? 'Disable' : 'Enable') +
+          ' external API - Siascan exchange rates'}
       </CommandItemSearch>
       <CommandItemRootAndSearch
         currentPage={currentPage}
