@@ -217,9 +217,7 @@ export function SettingsDialog({
                       {daemonExplorer.api ? (
                         <ValueCopyable
                           maxLength={30}
-                          value={
-                            daemonExplorer.api || 'https://api.siascan.com'
-                          }
+                          value={daemonExplorer.api}
                         />
                       ) : (
                         <Text size="14" weight="medium" color="subtle">
