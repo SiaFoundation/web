@@ -2,7 +2,7 @@ import { humanDate } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
 import { stripPrefix, truncate } from '@siafoundation/design-system'
 import { to } from '@siafoundation/request'
-import { explored } from '../../../config/explored'
+import { getExplored } from '../../../lib/explored'
 
 export const revalidate = 0
 
@@ -23,20 +23,20 @@ export default async function Image({ params }) {
     [currentTip, currentTipError],
   ] = await Promise.all([
     to(
-      explored.transactionByID({
+      getExplored().transactionByID({
         params: {
           id,
         },
       })
     ),
     to(
-      explored.transactionChainIndices({
+      getExplored().transactionChainIndices({
         params: {
           id,
         },
       })
     ),
-    to(explored.consensusTip()),
+    to(getExplored().consensusTip()),
   ])
 
   if (
@@ -60,7 +60,7 @@ export default async function Image({ params }) {
 
   // Get the related block
   const [relatedBlock, relatedBlockError] = await to(
-    explored.blockByID({ params: { id: transactionChainIndices[0].id } })
+    getExplored().blockByID({ params: { id: transactionChainIndices[0].id } })
   )
 
   if (!relatedBlock || relatedBlockError) {

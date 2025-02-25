@@ -5,7 +5,7 @@ import { buildMetadata } from '../../../lib/utils'
 import { notFound } from 'next/navigation'
 import { stripPrefix, truncate } from '@siafoundation/design-system'
 import { to } from '@siafoundation/request'
-import { explored } from '../../../config/explored'
+import { getExplored } from '../../../lib/explored'
 import { ChainIndex, ExplorerFileContract } from '@siafoundation/explored-types'
 
 export function generateMetadata({ params }): Metadata {
@@ -31,9 +31,11 @@ export default async function Page({ params }) {
     [previousRevisions, previousRevisionsError],
     [currentTip, currentTipError],
   ] = await Promise.all([
-    to(explored.contractByID({ params: { id } })),
-    to<ExplorerFileContract[]>(explored.contractRevisions({ params: { id } })),
-    to(explored.consensusTip()),
+    to(getExplored().contractByID({ params: { id } })),
+    to<ExplorerFileContract[]>(
+      getExplored().contractRevisions({ params: { id } })
+    ),
+    to(getExplored().consensusTip()),
   ])
 
   if (contractError) throw contractError
@@ -58,14 +60,14 @@ export default async function Page({ params }) {
     [renewalTransaction, renewalTransactionError],
   ] = await Promise.all([
     to(
-      explored.transactionByID({
+      getExplored().transactionByID({
         params: {
           id: formationTxnID,
         },
       })
     ),
     to(
-      explored.transactionByID({
+      getExplored().transactionByID({
         params: {
           id: finalRevisionTxnID,
         },
@@ -88,7 +90,7 @@ export default async function Page({ params }) {
   const [formationTxnChainIndices, formationTxnChainIndicesError] = await to<
     ChainIndex[]
   >(
-    explored.transactionChainIndices({
+    getExplored().transactionChainIndices({
       params: { id: formationTransaction.id },
     })
   )
@@ -99,7 +101,7 @@ export default async function Page({ params }) {
 
   // Use the first chainIndex from the above call to get our parent block.
   const [parentBlock, parentBlockError] = await to(
-    explored.blockByID({ params: { id: formationTxnChainIndices[0].id } })
+    getExplored().blockByID({ params: { id: formationTxnChainIndices[0].id } })
   )
 
   if (parentBlockError) throw parentBlockError

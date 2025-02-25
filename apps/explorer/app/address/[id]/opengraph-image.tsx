@@ -2,7 +2,7 @@ import { humanSiacoin, humanSiafund } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
 import { truncate } from '@siafoundation/design-system'
 import { to } from '@siafoundation/request'
-import { explored } from '../../../config/explored'
+import { getExplored } from '../../../lib/explored'
 
 export const revalidate = 0
 
@@ -18,7 +18,7 @@ export default async function Image({ params }) {
   const address = params?.id as string
 
   const [[balance, balanceError]] = await Promise.all([
-    to(explored.addressBalance({ params: { address } })),
+    to(getExplored().addressBalance({ params: { address } })),
   ])
 
   if (balanceError) throw balanceError

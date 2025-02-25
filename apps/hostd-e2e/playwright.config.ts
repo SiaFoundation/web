@@ -25,7 +25,7 @@ export default defineConfig({
     trace: 'on-first-retry',
     video: 'on-first-retry',
   },
-  // Timeout per test.
+  // Timeout per test. The cluster takes up to 30 seconds to start and form contracts.
   timeout: 180_000,
   expect: {
     // Raise the timeout because it is running against next dev mode
