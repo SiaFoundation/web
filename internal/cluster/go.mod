@@ -5,9 +5,9 @@ go 1.23.1
 toolchain go1.23.2
 
 require (
-	go.sia.tech/cluster v0.1.3-0.20250220162007-1df1985e5941
-	go.sia.tech/core v0.10.2-0.20250220080632-dcacdc2ff551
-	go.sia.tech/coreutils v0.11.2-0.20250220040304-419a43c302a2
+	go.sia.tech/cluster v0.1.3-0.20250225162755-3f0d8bb0974a
+	go.sia.tech/core v0.10.3-0.20250225045648-07b92f8cf455
+	go.sia.tech/coreutils v0.11.2-0.20250225051012-d01f7fa285c7
 	go.uber.org/zap v1.27.0
 )
 
@@ -31,22 +31,22 @@ require (
 	github.com/oschwald/geoip2-golang v1.11.0 // indirect
 	github.com/oschwald/maxminddb-golang v1.13.0 // indirect
 	github.com/quic-go/qpack v0.5.1 // indirect
-	github.com/quic-go/quic-go v0.49.0 // indirect
+	github.com/quic-go/quic-go v0.50.0 // indirect
 	github.com/quic-go/webtransport-go v0.8.1-0.20241018022711-4ac2c9250e66 // indirect
 	github.com/ryszard/goskiplist v0.0.0-20150312221310-2dfbae5fcf46 // indirect
 	github.com/shabbyrobe/gocovmerge v0.0.0-20230507112040-c3350d9342df // indirect
 	github.com/shopspring/decimal v1.4.0 // indirect
 	go.etcd.io/bbolt v1.4.0 // indirect
-	go.sia.tech/explored v0.0.0-20250218233741-b118cd402c20 // indirect
+	go.sia.tech/explored v0.0.0-20250225162032-a0f5115f8d08 // indirect
 	go.sia.tech/gofakes3 v0.0.5 // indirect
-	go.sia.tech/hostd v1.1.3-0.20250217211034-200b1cd9d633 // indirect
+	go.sia.tech/hostd v1.1.3-0.20250225151212-e578290d928e // indirect
 	go.sia.tech/jape v0.12.1 // indirect
-	go.sia.tech/mux v1.3.0 // indirect
-	go.sia.tech/renterd v1.1.2-0.20250219074103-dcdc7d00ca36 // indirect
-	go.sia.tech/walletd v0.9.0-beta.1.0.20250217183006-fd7ad2d9e9c0 // indirect
+	go.sia.tech/mux v1.4.0 // indirect
+	go.sia.tech/renterd v1.1.2-0.20250225091147-8e1279247c9c // indirect
+	go.sia.tech/walletd v0.9.0-beta.1.0.20250224212402-c82c1fb1d43d // indirect
 	go.uber.org/mock v0.5.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	golang.org/x/crypto v0.33.0 // indirect
+	golang.org/x/crypto v0.34.0 // indirect
 	golang.org/x/exp v0.0.0-20240506185415-9bf2ced13842 // indirect
 	golang.org/x/mod v0.22.0 // indirect
 	golang.org/x/net v0.34.0 // indirect
