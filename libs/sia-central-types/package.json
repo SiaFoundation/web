@@ -1,8 +1,0 @@
-{
-  "name": "@siafoundation/sia-central-types",
-  "description": "Types for the Sia Central API.",
-  "version": "0.2.0",
-  "license": "MIT",
-  "dependencies": {},
-  "types": "./src/index.d.ts"
-}
