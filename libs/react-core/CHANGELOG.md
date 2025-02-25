@@ -1,5 +1,13 @@
 # @siafoundation/react-core
 
+## 2.1.0
+
+### Minor Changes
+
+- 0bdf8534: Added optional API parameter for exchange rates.
+- 70e57bf6: User currency preference now sets a cookie.
+- 70e57bf6: User currency preference stored in local storage can now initialize and server-render with an optional fallback data value.
+
 ## 2.0.0
 
 ### Patch Changes

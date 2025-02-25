@@ -1,5 +1,16 @@
 # @siafoundation/walletd-mock
 
+## 0.2.0
+
+### Minor Changes
+
+- d0be2c24: Upgraded playwright dependencies.
+
+### Patch Changes
+
+- Updated dependencies [d0be2c24]
+  - @siafoundation/sia-central-mock@0.4.0
+
 ## 0.1.14
 
 ### Patch Changes
