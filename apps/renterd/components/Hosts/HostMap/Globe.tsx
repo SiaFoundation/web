@@ -2,7 +2,8 @@ import { useEffect, useRef, useCallback, useMemo } from 'react'
 import { GlobeMethods } from 'react-globe.gl'
 import { getHostLabel } from './utils'
 import { useElementSize } from 'usehooks-ts'
-import { useTryUntil, useExchangeRate } from '@siafoundation/react-core'
+import { useTryUntil } from '@siafoundation/react-core'
+import { useExchangeRate } from '@siafoundation/design-system'
 import earthDarkContrast from '../../../assets/earth-dark-contrast.png'
 import earthTopology from '../../../assets/earth-topology.png'
 import { GlobeDyn } from './GlobeDyn'
@@ -74,7 +75,12 @@ export function Globe({
       return false
     }
 
-    moveToLocation(activeHost?.location || [48.8323, 2.4075], 1.5)
+    moveToLocation(
+      activeHost?.location
+        ? [activeHost.location.latitude, activeHost.location.longitude]
+        : [48.8323, 2.4075],
+      1.5
+    )
 
     const directionalLight = globeEl.current
       ?.scene()
@@ -121,10 +127,10 @@ export function Globe({
         arcLabel={(r: Route) =>
           getHostLabel({ host: r.dst, exchangeRateUSD: exchangeRateUSD.rate })
         }
-        arcStartLat={(r: Route) => +r.src.location[0]}
-        arcStartLng={(r: Route) => +r.src.location[1]}
-        arcEndLat={(r: Route) => +r.dst.location[0]}
-        arcEndLng={(r: Route) => +r.dst.location[1]}
+        arcStartLat={(r: Route) => +r.src.location.latitude}
+        arcStartLng={(r: Route) => +r.src.location.longitude}
+        arcEndLat={(r: Route) => +r.dst.location.latitude}
+        arcEndLng={(r: Route) => +r.dst.location.longitude}
         arcDashLength={0.75}
         arcAltitude={0}
         arcDashGap={0.1}
@@ -143,8 +149,8 @@ export function Globe({
         // }}
         arcsTransitionDuration={0}
         pointsData={points}
-        pointLat={(h: HostDataWithLocation) => h.location[0]}
-        pointLng={(h: HostDataWithLocation) => h.location[1]}
+        pointLat={(h: HostDataWithLocation) => h.location.latitude}
+        pointLng={(h: HostDataWithLocation) => h.location.longitude}
         pointLabel={(h: HostDataWithLocation) =>
           getHostLabel({ host: h, exchangeRateUSD: exchangeRateUSD.rate })
         }
@@ -186,13 +192,19 @@ export function Globe({
           if (!h) {
             return
           }
-          onHostHover?.(h.publicKey, h.location)
+          onHostHover?.(h.publicKey, [
+            h.location.latitude,
+            h.location.longitude,
+          ])
         }}
         onPointClick={(h: HostDataWithLocation) => {
           if (!h) {
             return
           }
-          onHostClick?.(h.publicKey, h.location)
+          onHostClick?.(h.publicKey, [
+            h.location.latitude,
+            h.location.longitude,
+          ])
         }}
         pointsMerge={false}
       />

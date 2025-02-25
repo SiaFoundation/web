@@ -2,13 +2,13 @@ import { useContracts as useContractsData } from '@siafoundation/renterd-react'
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
 import { ContractData, ContractDataWithoutPrunable } from './types'
-import { useSiaCentralHosts } from '@siafoundation/sia-central-react'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { blockHeightToTime } from '@siafoundation/units'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { usePrunableContractSizes } from './usePrunableContractSizes'
 import { Maybe } from '@siafoundation/types'
 import { maybeFromNullishArrayResponse } from '@siafoundation/react-core'
+import { useExternalHostsList } from '@siafoundation/design-system'
 
 export function useDataset() {
   const response = useContractsData({
@@ -18,8 +18,16 @@ export function useDataset() {
       },
     },
   })
-  const geo = useSiaCentralHosts()
-  const geoHosts = useMemo(() => geo.data?.hosts || [], [geo.data])
+  const geo = useExternalHostsList({
+    params: {
+      sortBy: 'storage_price',
+      dir: 'asc',
+    },
+    payload: {
+      online: true,
+    },
+  })
+  const geoHosts = useMemo(() => geo.data || [], [geo.data])
 
   const syncStatus = useSyncStatus()
   const currentHeight = syncStatus.isSynced
@@ -45,7 +53,7 @@ export function useDataset() {
           id: c.id,
           state: c.state,
           hostKey: c.hostKey,
-          location: geoHosts.find((h) => h.public_key === c.hostKey)?.location,
+          location: geoHosts.find((h) => h.publicKey === c.hostKey)?.location,
           timeline: startTime,
           usability: c.usability,
           startTime,

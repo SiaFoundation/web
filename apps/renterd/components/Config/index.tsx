@@ -5,12 +5,12 @@ import {
   ConfigurationSiacoin,
   PanelMenuSection,
   PanelMenuSetting,
+  useExchangeRate,
 } from '@siafoundation/design-system'
 import { useConfig } from '../../contexts/config'
 import { StateConnError } from './StateConnError'
 import { ShouldPinSwitch } from './ShouldPinSwitch'
 import { PinnedCurrencyWarning } from './PinnedCurrencyWarning'
-import { useExchangeRate } from '@siafoundation/react-core'
 
 export function Config() {
   const { form, fields, remoteError, configRef } = useConfig()
