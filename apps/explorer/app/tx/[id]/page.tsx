@@ -54,7 +54,8 @@ export default async function Page({ params }) {
       transactionHeaderData={{
         id: stripPrefix(transaction.id),
         blockHeight: transactionChainIndices[0].height,
-        confirmations: currentTip.height - transactionChainIndices[0].height,
+        confirmations:
+          currentTip.height - transactionChainIndices[0].height + 1,
         timestamp: parentBlock.timestamp,
       }}
     />
