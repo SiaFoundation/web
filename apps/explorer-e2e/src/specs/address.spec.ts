@@ -9,21 +9,20 @@ import {
 import { addWalletToWalletd, sendSiacoinFromRenterd } from '../fixtures/walletd'
 import { Cluster } from '../fixtures/cluster'
 import { toHastings } from '@siafoundation/units'
+import { exploredStabilization } from '../helpers/exploredStabilization'
 
 let explorerApp: ExplorerApp
 let cluster: Cluster
 
 test.beforeEach(async ({ page, context }) => {
-  // Start the cluster which includes an explored node, a renterd node, a
-  // walletd node, and 3 hostd nodes.
   cluster = await startCluster({ context })
-  // The renterd node will automatically form contracts with the hostd nodes.
-  // Wait for the contracts to form so that all related activity is on the
-  // blockchain and visible to explored.
   await renterdWaitForContracts({
     renterdNode: cluster.daemons.renterds[0].node,
     hostdCount: cluster.daemons.hostds.length,
   })
+
+  await exploredStabilization(cluster)
+
   explorerApp = new ExplorerApp(page)
 })
 
@@ -98,5 +97,7 @@ test('address can navigate through to a transaction', async ({ page }) => {
     .locator(`a[data-testid="entity-link"][href*="${events.data[0].id}"]`)
     .click()
 
-  await expect(page.getByText(events.data[0].id.slice(0, 5))).toBeVisible()
+  await expect(
+    page.getByTestId('entity-heading').getByText(events.data[0].id.slice(0, 5))
+  ).toBeVisible()
 })

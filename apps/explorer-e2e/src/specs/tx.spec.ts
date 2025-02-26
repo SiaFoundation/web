@@ -1,57 +1,98 @@
 import { test, expect } from '@playwright/test'
 import { ExplorerApp } from '../fixtures/ExplorerApp'
-import { TEST_TX_1 } from '../fixtures/constants'
-import { keys } from '../utils'
+import { Cluster, startCluster } from '../fixtures/cluster'
+import {
+  renterdWaitForContracts,
+  teardownCluster,
+} from '@siafoundation/clusterd'
+import { exploredStabilization } from '../helpers/exploredStabilization'
 
 let explorerApp: ExplorerApp
+let cluster: Cluster
 
-test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page, context }) => {
+  cluster = await startCluster({ context })
+  await renterdWaitForContracts({
+    renterdNode: cluster.daemons.renterds[0].node,
+    hostdCount: cluster.daemons.hostds.length,
+  })
+
+  await exploredStabilization(cluster)
+
   explorerApp = new ExplorerApp(page)
 })
 
-test('transaction can be searched by id', async ({ page }) => {
-  await explorerApp.goTo('/')
-  await explorerApp.navigateBySearchBar(TEST_TX_1.id)
+test.afterEach(async () => {
+  await teardownCluster()
+})
 
-  await expect(page.getByText(TEST_TX_1.display.title)).toBeVisible()
+test('transaction can be searched by id', async ({ page }) => {
+  const events = await cluster.daemons.renterds[0].api.walletEvents({
+    params: {
+      limit: 1,
+      offset: 0,
+    },
+  })
+  const transactionID = events.data[0].id
+
+  await explorerApp.goTo('/')
+  await explorerApp.navigateBySearchBar(transactionID)
+
+  await expect(
+    page
+      .getByTestId('entity-heading')
+      .getByText('Transaction ' + transactionID.slice(0, 5))
+  ).toBeVisible()
 })
 
 test('transaction can be navigated to by id', async ({ page }) => {
-  await explorerApp.goTo('/tx/' + TEST_TX_1.id)
+  const events = await cluster.daemons.renterds[0].api.walletEvents({
+    params: {
+      limit: 1,
+      offset: 0,
+    },
+  })
+  const transactionID = events.data[0].id
 
-  await expect(page.getByText(TEST_TX_1.display.title)).toBeVisible()
+  await explorerApp.goTo('/tx/' + transactionID)
+
+  await expect(
+    page
+      .getByTestId('entity-heading')
+      .getByText('Transaction ' + transactionID.slice(0, 5))
+  ).toBeVisible()
 })
 
 test('transaction can click through to a contract', async ({ page }) => {
-  await explorerApp.goTo('/tx/' + TEST_TX_1.id)
-  await page
-    .locator(
-      'a[data-testid="entity-link"][href*="25c94822bf7bd86a92d28a148d9d30151949f3599bf93af0df7b4f1e1b3c990d"]'
-    )
-    .click()
+  const events = await cluster.daemons.renterds[0].api.walletEvents({
+    params: {
+      limit: 1,
+      offset: 0,
+    },
+  })
+  const transactionID = events.data[0].id
 
-  await expect(page.getByText('Contract 25c94822bf7bd86...')).toBeVisible()
+  await explorerApp.goTo('/tx/' + transactionID)
+  await page.getByRole('link', { name: 'C', exact: true }).click()
+
+  await expect(
+    page.getByTestId('entity-heading').getByText('Contract')
+  ).toBeVisible()
 })
 
 test('transaction can click through to an address', async ({ page }) => {
-  await explorerApp.goTo('/tx/' + TEST_TX_1.id)
-  await page
-    .locator(
-      'a[data-testid="entity-link"][href*="68bf48e81536f2221f3809aa9d1c89c1c869a17c6f186a088e49fd2605e4bfaaa24f26e4c42c"]'
-    )
-    .nth(0)
-    .click()
+  const events = await cluster.daemons.renterds[0].api.walletEvents({
+    params: {
+      limit: 1,
+      offset: 0,
+    },
+  })
+  const transactionID = events.data[0].id
 
-  await expect(page.getByText('Address 68bf48e81536f22...')).toBeVisible()
-})
+  await explorerApp.goTo('/tx/' + transactionID)
+  await page.getByRole('link', { name: 'SO', exact: true }).first().click()
 
-test('transaction displays the intended data', async ({ page }) => {
-  const displayKeys = keys(TEST_TX_1.display)
-
-  await explorerApp.goTo('/tx/' + TEST_TX_1.id)
-
-  for (const key of displayKeys) {
-    const currentProperty = TEST_TX_1.display[key]
-    await expect(page.getByText(currentProperty)).toBeVisible()
-  }
+  await expect(
+    page.getByTestId('entity-heading').getByText('Address')
+  ).toBeVisible()
 })

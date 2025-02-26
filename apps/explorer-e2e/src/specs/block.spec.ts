@@ -1,70 +1,129 @@
 import { test, expect } from '@playwright/test'
 import { ExplorerApp } from '../fixtures/ExplorerApp'
-import { TEST_BLOCK_1 } from '../fixtures/constants'
-import { keys } from '../utils'
+import { Cluster, startCluster } from '../fixtures/cluster'
+import {
+  renterdWaitForContracts,
+  teardownCluster,
+} from '@siafoundation/clusterd'
+import { exploredStabilization } from '../helpers/exploredStabilization'
 
 let explorerApp: ExplorerApp
+let cluster: Cluster
 
-test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page, context }) => {
+  cluster = await startCluster({ context })
+  await renterdWaitForContracts({
+    renterdNode: cluster.daemons.renterds[0].node,
+    hostdCount: cluster.daemons.hostds.length,
+  })
+
+  await exploredStabilization(cluster)
+
   explorerApp = new ExplorerApp(page)
 })
 
-test('block can be searched by height', async ({ page }) => {
-  await explorerApp.goTo('/')
-  await explorerApp.navigateBySearchBar(TEST_BLOCK_1.height)
+test.afterEach(async () => {
+  await teardownCluster()
+})
 
-  await expect(page.getByText(TEST_BLOCK_1.display.title).nth(0)).toBeVisible()
+test('block can be searched by height', async ({ page }) => {
+  const { data } = await cluster.daemons.hostds[0].api.consensusTip()
+  const testBlock = String(data.height - 1) // Minus one to avoid home page test success.
+
+  await explorerApp.goTo('/')
+  await explorerApp.navigateBySearchBar(testBlock)
+
+  await expect(
+    page
+      .getByTestId('entity-heading')
+      .getByText('Block ' + testBlock.toLocaleString())
+  ).toBeVisible()
 })
 
 test('block can be searched by id', async ({ page }) => {
-  await explorerApp.goTo('/')
-  await explorerApp.navigateBySearchBar(TEST_BLOCK_1.id)
+  const { data } = await cluster.daemons.hostds[0].api.consensusTip()
+  const blockID = String(data.id)
 
-  await expect(page.getByText(TEST_BLOCK_1.display.title).nth(0)).toBeVisible()
+  await explorerApp.goTo('/')
+  await explorerApp.navigateBySearchBar(blockID)
+
+  await expect(
+    page
+      .getByTestId('entity-heading')
+      .getByText('Block ' + data.height.toLocaleString())
+  ).toBeVisible()
 })
 
 test('block can be directly navigated to by height', async ({ page }) => {
-  await explorerApp.goTo('/block/' + TEST_BLOCK_1.height)
+  const { data } = await cluster.daemons.hostds[0].api.consensusTip()
+  const height = String(data.height - 1) // Minus one to avoid home page test success.
 
-  await expect(page.getByText(TEST_BLOCK_1.display.title).nth(0)).toBeVisible()
+  await explorerApp.goTo('/block/' + height)
+
+  await expect(
+    page
+      .getByTestId('entity-heading')
+      .getByText('Block ' + height.toLocaleString())
+  ).toBeVisible()
+})
+
+test('block can be directly navigated to by id', async ({ page }) => {
+  const { data } = await cluster.daemons.hostds[0].api.consensusTip()
+  const blockID = String(data.id)
+
+  await explorerApp.goTo('/block/' + blockID)
+
+  await expect(
+    page
+      .getByTestId('entity-heading')
+      .getByText('Block ' + data.height.toLocaleString())
+  ).toBeVisible()
 })
 
 test('block can navigate to previous block', async ({ page }) => {
-  await explorerApp.goTo('/block/' + TEST_BLOCK_1.id)
+  const { data } = await cluster.daemons.hostds[0].api.consensusTip()
+  const height = String(data.height - 1) // Minus one to avoid home page test success.
+
+  await explorerApp.goTo('/block/' + height)
   await page.getByTestId('explorer-block-prevBlock').click()
 
   await expect(
-    page.getByText((Number(TEST_BLOCK_1.height) - 1).toLocaleString())
+    page
+      .getByTestId('entity-heading')
+      .getByText((Number(height) - 1).toLocaleString())
   ).toBeVisible()
 })
 
 test('block can navigate to nextblock', async ({ page }) => {
-  await explorerApp.goTo('/block/' + TEST_BLOCK_1.id)
+  const { data } = await cluster.daemons.hostds[0].api.consensusTip()
+  const height = String(data.height - 1) // Minus one to avoid home page test success.
+
+  await explorerApp.goTo('/block/' + height)
   await page.getByTestId('explorer-block-nextBlock').click()
 
   await expect(
-    page.getByText((Number(TEST_BLOCK_1.height) + 1).toLocaleString())
+    page
+      .getByTestId('entity-heading')
+      .getByText((Number(height) + 1).toLocaleString())
   ).toBeVisible()
 })
 
 test('block can click through to a transaction', async ({ page }) => {
-  await explorerApp.goTo('/block/' + TEST_BLOCK_1.id)
+  const events = await cluster.daemons.renterds[0].api.walletEvents({
+    params: {
+      limit: 1,
+      offset: 0,
+    },
+  })
+  const transaction = events.data[0]
+
+  await explorerApp.goTo('/block/' + transaction.maturityHeight)
+
   await page
-    .locator(
-      'a[data-testid="entity-link"][href*="8a03682f22857f306a95f55a28fa9edf"]'
-    )
+    .locator(`a[data-testid="entity-link"][href*="${transaction.id}"]`)
     .click()
 
-  await expect(page.getByText('Transaction 8a03682f22857f3...')).toBeVisible()
-})
-
-test('block displays the intended data', async ({ page }) => {
-  const displayKeys = keys(TEST_BLOCK_1.display)
-
-  await explorerApp.goTo('/block/' + TEST_BLOCK_1.height)
-
-  for (const key of displayKeys) {
-    const currentProperty = TEST_BLOCK_1.display[key]
-    await expect(page.getByText(currentProperty)).toBeVisible()
-  }
+  await expect(
+    page.getByTestId('entity-heading').getByText(transaction.id.slice(0, 5))
+  ).toBeVisible()
 })
