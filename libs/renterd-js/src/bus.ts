@@ -259,6 +259,10 @@ import {
   AuthTokenResponse,
   authRoute,
   AuthTokenParams,
+  busContractsFormRoute,
+  ContractsFormParams,
+  ContractsFormPayload,
+  ContractsFormResponse,
 } from '@siafoundation/renterd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
@@ -401,6 +405,11 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       ContractsPayload,
       ContractsResponse
     >(axios, 'get', busContractsRoute),
+    contractsForm: buildRequestHandler<
+      ContractsFormParams,
+      ContractsFormPayload,
+      ContractsFormResponse
+    >(axios, 'post', busContractsFormRoute),
     contractsAcquire: buildRequestHandler<
       ContractAcquireParams,
       ContractAcquirePayload,

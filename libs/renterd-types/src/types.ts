@@ -7,6 +7,7 @@ import {
   HostPriceTable,
   PublicKey,
   TransactionSignature,
+  FileContractID,
 } from '@siafoundation/types'
 
 export type ConsensusState = {
@@ -136,25 +137,38 @@ export type ContractSpending = {
   uploads: Currency
 }
 
-export type ContractState = 'pending' | 'active' | 'complete' | 'failed'
+export type ContractState =
+  | 'invalid'
+  | 'unknown'
+  | 'pending'
+  | 'active'
+  | 'complete'
+  | 'failed'
 
 export type ContractUsability = 'good' | 'bad'
 
 export type Contract = {
-  id: string
-  usability: ContractUsability
-  hostKey: string
+  id: FileContractID
+  hostKey: PublicKey
+  v2: boolean
+
   proofHeight: number
+  renewedFrom: FileContractID
   revisionHeight: number
   revisionNumber: number
+  size: number
   startHeight: number
+  state: ContractState
+  usability: ContractUsability
   windowStart: number
   windowEnd: number
-  renewedFrom: string
-  spending: ContractSpending
+
+  contractPrice: Currency
   initialRenterFunds: Currency
-  size: number
-  state: ContractState
+  spending: ContractSpending
+
+  archivalReason: 'hostpruned' | 'removed' | 'renewed'
+  renewedTo: FileContractID
 }
 
 export type HostInteractions = {
