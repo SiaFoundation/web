@@ -2,11 +2,6 @@ import { test, expect } from '@playwright/test'
 import { afterTest } from '../fixtures/beforeTest'
 import { clusterd, setupCluster } from '@siafoundation/clusterd'
 import { login } from '../fixtures/login'
-import {
-  mockApiSiaCentralHostsNetworkAverages,
-  mockApiSiaCentralHostsNetworkAveragesHanging,
-  mockApiSiaCentralHostsNetworkAveragesUnroute,
-} from '@siafoundation/sia-central-mock'
 import { configResetBasicSettings } from '../fixtures/configResetSettings'
 import {
   expectTextInputByName,
@@ -15,11 +10,14 @@ import {
   mockApiSiaScanExchangeRatesUnroute,
   mockApiSiaScanExchangeRatesHanging,
   fillSelectInputByName,
+  mockApiSiaScanHostMetrics,
+  mockApiSiaScanHostMetricsUnroute,
+  mockApiSiaScanHostMetricsHanging,
 } from '@siafoundation/e2e'
 
 test.beforeEach(async ({ page }) => {
   await mockApiSiaScanExchangeRates({ page })
-  await mockApiSiaCentralHostsNetworkAverages({ page })
+  await mockApiSiaScanHostMetrics({ page })
   await setupCluster({ renterdCount: 1 })
   const renterdNode = clusterd.nodes.find((n) => n.type === 'renterd')
   await login({
@@ -83,8 +81,8 @@ test('configuration shows not-enabled message when exchange rates API hangs', as
 test('configuration does not show network averages when sia central API hangs', async ({
   page,
 }) => {
-  await mockApiSiaCentralHostsNetworkAveragesUnroute({ page })
-  await mockApiSiaCentralHostsNetworkAveragesHanging({ page })
+  await mockApiSiaScanHostMetricsUnroute({ page })
+  await mockApiSiaScanHostMetricsHanging({ page })
   await page.reload()
 
   await fillSelectInputByName(page, 'pinnedCurrency', 'usd')
@@ -120,8 +118,8 @@ test('configuration does not show network averages when sia central API hangs', 
     page.getByTestId('maxDownloadPriceTBGroup').getByText('Network average')
   ).toBeHidden()
 
-  await mockApiSiaCentralHostsNetworkAveragesUnroute({ page })
-  await mockApiSiaCentralHostsNetworkAverages({ page })
+  await mockApiSiaScanHostMetricsUnroute({ page })
+  await mockApiSiaScanHostMetrics({ page })
   await page.reload()
 
   // Regular field should be shown.

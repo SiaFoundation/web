@@ -51,7 +51,6 @@ function useAppSettingsMain() {
     setRequestSettings,
     setExternalDataSettings,
     siascan: externalDataSettings.siascan,
-    siaCentral: externalDataSettings.siaCentral,
     gpu,
     lock,
     isUnlockedAndAuthedRoute,

@@ -2,13 +2,14 @@ import { useEffect, useRef, useCallback, useMemo } from 'react'
 import { GlobeMethods } from 'react-globe.gl'
 import { getHostLabel } from './utils'
 import { useElementSize } from 'usehooks-ts'
-import { useTryUntil, useExchangeRate } from '@siafoundation/react-core'
+import { useTryUntil } from '@siafoundation/react-core'
+import { useExchangeRate } from '@siafoundation/design-system'
 import earthDarkContrast from '../../assets/earth-dark-contrast.png'
 import earthTopology from '../../assets/earth-topology.png'
 import nightSky from '../../assets/night-sky.png'
 import { GlobeDyn } from './GlobeDyn'
 import { useDecRoutes } from './useRoutes'
-import { SiaCentralPartialHost } from '../../content/geoHosts'
+import { ExplorerPartialHost } from '../../content/geoHosts'
 
 export type Commands = {
   moveToLocation: (
@@ -22,8 +23,8 @@ export const emptyCommands: Commands = {
 }
 
 type Props = {
-  activeHost?: SiaCentralPartialHost
-  hosts?: SiaCentralPartialHost[]
+  activeHost?: ExplorerPartialHost
+  hosts?: ExplorerPartialHost[]
   onHostClick: (public_key: string, location: [number, number]) => void
   onHostHover: (public_key: string, location: [number, number]) => void
   onMount?: (cmd: Commands) => void
@@ -31,8 +32,8 @@ type Props = {
 
 type Route = {
   distance: number
-  src: SiaCentralPartialHost
-  dst: SiaCentralPartialHost
+  src: ExplorerPartialHost
+  dst: ExplorerPartialHost
 }
 
 export function Globe({
@@ -133,50 +134,50 @@ export function Globe({
             : [`rgba(187, 229, 201, 0.13)`, `rgba(187, 229, 201, 0.13)`]
         }
         // onArcClick={(r: Route) => {
-        //   selectActiveHost(r.dst.public_key)
+        //   selectActiveHost(r.dst.publicKey)
         // }}
         arcsTransitionDuration={0}
         pointsData={points}
-        pointLat={(h: SiaCentralPartialHost) => h.location[0]}
-        pointLng={(h: SiaCentralPartialHost) => h.location[1]}
-        pointLabel={(h: SiaCentralPartialHost) =>
+        pointLat={(h: ExplorerPartialHost) => h.location[0]}
+        pointLng={(h: ExplorerPartialHost) => h.location[1]}
+        pointLabel={(h: ExplorerPartialHost) =>
           getHostLabel({ host: h, exchangeRateUSD: exchangeRateUSD.rate })
         }
         // pointAltitude={
-        //   (h: SiaCentralPartialHost) => h.settings.remainingstorage / 1e13 / 100
-        //   // h.public_key === activeHost.public_key ? 0.6 : 0.2
+        //   (h: ExplorerPartialHost) => h.settings.remainingstorage / 1e13 / 100
+        //   // h.publicKey === activeHost.publicKey ? 0.6 : 0.2
         // }
-        pointAltitude={(h: SiaCentralPartialHost) => {
+        pointAltitude={(h: ExplorerPartialHost) => {
           let radius = 0
-          radius = h.settings.total_storage / 1e15
+          radius = h.settings.totalstorage / 1e15
           const minSize = 0.005
           const maxSize = 0.1
           return Math.min(Math.max(radius, minSize), maxSize)
         }}
         pointsTransitionDuration={0}
-        pointColor={(h: SiaCentralPartialHost) =>
-          h.public_key === activeHost.public_key
+        pointColor={(h: ExplorerPartialHost) =>
+          h.publicKey === activeHost?.publicKey
             ? 'rgba(0,255,0,1)'
             : 'rgba(0,255,0,1)'
         }
-        pointRadius={(h: SiaCentralPartialHost) => {
+        pointRadius={(h: ExplorerPartialHost) => {
           let radius = 0
-          radius = h.settings.total_storage / 1e13 / 3
+          radius = h.settings.totalstorage / 1e13 / 3
           const minSize = 0.2
           const maxSize = 2
           return Math.min(Math.max(radius, minSize), maxSize)
         }}
-        onPointHover={(h: SiaCentralPartialHost) => {
+        onPointHover={(h: ExplorerPartialHost) => {
           if (!h) {
             return
           }
-          onHostHover?.(h.public_key, h.location)
+          onHostHover?.(h.publicKey, h.location)
         }}
-        onPointClick={(h: SiaCentralPartialHost) => {
+        onPointClick={(h: ExplorerPartialHost) => {
           if (!h) {
             return
           }
-          onHostClick?.(h.public_key, h.location)
+          onHostClick?.(h.publicKey, h.location)
         }}
         pointsMerge={false}
       />
@@ -184,16 +185,13 @@ export function Globe({
   )
 }
 
-function doesIncludeActiveHost(
-  route: Route,
-  activeHost?: SiaCentralPartialHost
-) {
+function doesIncludeActiveHost(route: Route, activeHost?: ExplorerPartialHost) {
   if (!activeHost) {
     return false
   }
   return (
-    route.dst.public_key === activeHost.public_key ||
-    route.src.public_key === activeHost.public_key
+    route.dst.publicKey === activeHost.publicKey ||
+    route.src.publicKey === activeHost.publicKey
   )
 }
 
