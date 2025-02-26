@@ -1,68 +1,81 @@
 import { test, expect } from '@playwright/test'
 import { ExplorerApp } from '../fixtures/ExplorerApp'
+import { Cluster, startCluster } from '../fixtures/cluster'
+import { teardownCluster } from '@siafoundation/clusterd'
+import { exploredStabilization } from '../helpers/exploredStabilization'
 import {
-  DATUM_VALUE,
-  TEST_HOST_1,
-  HOST_SETTINGS_PATTERNS,
-  HOST_PRICING,
-} from '../fixtures/constants'
+  getDownloadCost,
+  getStorageCost,
+  getUploadCost,
+} from '@siafoundation/units'
+import { currencyOptions } from '@siafoundation/react-core'
 
 // Hosts can not be guaranteed like other test slices. Therefore, we'll grab
 // the displayed values and test them against the patterns we expect to see.
 
 let explorerApp: ExplorerApp
+let cluster: Cluster
 
-test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page, context }) => {
+  cluster = await startCluster({ context })
+  await exploredStabilization(cluster)
+
   explorerApp = new ExplorerApp(page)
 })
 
+test.afterEach(async () => {
+  await teardownCluster()
+})
+
 test('host can be searched by id', async ({ page }) => {
+  const host = await cluster.daemons.hostds[0].api.stateHost()
+  const { publicKey } = host.data
+
   await explorerApp.goTo('/')
-  await explorerApp.navigateBySearchBar(TEST_HOST_1.pubkey)
+  await explorerApp.navigateBySearchBar(publicKey)
 
   await expect(
-    page
-      .getByText(TEST_HOST_1.display.v1Title)
-      .or(page.getByText(TEST_HOST_1.display.v2Title))
+    page.getByText(String(publicKey.slice(0, 6))).first()
   ).toBeVisible()
 })
 
 test('host can be directly navigated to', async ({ page }) => {
-  await explorerApp.goTo('/host/' + TEST_HOST_1.pubkey)
+  const host = await cluster.daemons.hostds[0].api.stateHost()
+  const { publicKey } = host.data
+
+  await explorerApp.goTo('/host/' + publicKey)
 
   await expect(
-    page
-      .getByText(TEST_HOST_1.display.v1Title)
-      .or(page.getByText(TEST_HOST_1.display.v2Title))
+    page.getByText(String(publicKey.slice(0, 6))).first()
   ).toBeVisible()
 })
 
-test('host displays properly formatted host pricing', async ({ page }) => {
-  await explorerApp.goTo('/host/' + TEST_HOST_1.pubkey)
+test('host displays properly formatted data', async ({ page }) => {
+  const host = await cluster.daemons.hostds[0].api.stateHost()
+  const { publicKey } = host.data
+  const usd = currencyOptions.filter((currency) => currency.id === 'usd')[0]
+  const {
+    data: { egressPrice, ingressPrice, storagePrice },
+  } = await cluster.daemons.hostds[0].api.settings()
+  const { data: rate } = await cluster.daemons.explored.api.exchangeRate({
+    params: { currency: usd.id },
+  })
+  const downloadCost = getDownloadCost({
+    price: egressPrice,
+    exchange: { currency: { prefix: usd.prefix }, rate: rate.toString() },
+  })
+  const uploadCost = getUploadCost({
+    price: ingressPrice,
+    exchange: { currency: { prefix: usd.prefix }, rate: rate.toString() },
+  })
+  const storageCost = getStorageCost({
+    price: storagePrice,
+    exchange: { currency: { prefix: usd.prefix }, rate: rate.toString() },
+  })
 
-  const hostSettings = await page.getByTestId(HOST_PRICING).allInnerTexts()
+  await explorerApp.goTo('/host/' + publicKey)
 
-  for (const text of hostSettings) {
-    const matched = HOST_SETTINGS_PATTERNS.some((pattern) => {
-      return text.match(new RegExp(pattern))
-    })
-    // If we're failing, uncomment this and check console.
-    // console.log(matched || text)
-    expect(matched).toBe(true)
-  }
-})
-
-test('host displays properly formatted host settings', async ({ page }) => {
-  await explorerApp.goTo('/host/' + TEST_HOST_1.pubkey)
-
-  const hostSettings = await page.getByTestId(DATUM_VALUE).allInnerTexts()
-
-  for (const text of hostSettings) {
-    const matched = HOST_SETTINGS_PATTERNS.some((pattern) => {
-      return text.match(new RegExp(pattern))
-    })
-    // If we're failing, uncomment this and check console.
-    // console.log(matched || text)
-    expect(matched).toBe(true)
-  }
+  expect(await page.getByText(downloadCost).count()).toBe(2)
+  expect(await page.getByText(uploadCost).count()).toBe(2)
+  expect(await page.getByText(storageCost).count()).toBe(2)
 })

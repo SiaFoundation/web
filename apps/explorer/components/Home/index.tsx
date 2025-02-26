@@ -64,6 +64,7 @@ export function Home({
               className="text-xl md:text-3xl"
               weight="semibold"
               color="contrast"
+              data-testid="explorer-home-height"
             >
               {humanNumber(blockHeight)}
             </Text>
@@ -118,7 +119,10 @@ export function Home({
         {
           label: 'Active hosts',
           value: (
-            <div className="flex flex-col gap-1 items-baseline">
+            <div
+              className="flex flex-col gap-1 items-baseline"
+              data-testid="explorer-home-activeHosts"
+            >
               <Tooltip content="Active hosts">
                 <Text
                   className="text-xl md:text-3xl"
