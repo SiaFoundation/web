@@ -51,6 +51,7 @@ export const busHostsAllowlistRoute = '/bus/hosts/allowlist'
 export const busHostPublicKeyResetlostsectorsRoute =
   '/bus/host/:hostkey/resetlostsectors'
 export const busContractsRoute = '/bus/contracts'
+export const busContractsFormRoute = '/bus/contracts/form'
 export const busContractIdAcquireRoute = '/bus/contract/:id/acquire'
 export const busContractIdReleaseRoute = '/bus/contract/:id/release'
 export const busContractRoute = '/bus/contract'
@@ -293,20 +294,35 @@ export type ContractsParams = void
 export type ContractsPayload = void
 export type ContractsResponse = Nullable<Contract[]>
 
+export type ContractsFormParams = void
+export type ContractsFormPayload = {
+  endHeight: number
+  hostCollateral: Currency
+  hostKey: PublicKey
+  renterFunds: Currency
+  renterAddress: string
+}
+export type ContractsFormResponse = Contract
+
 export type ContractAcquireParams = {
   id: string
 }
 export type ContractAcquirePayload = {
-  Duration: number
+  duration: number
+  priority: number
 }
 export type ContractAcquireResponse = {
-  locked: boolean
+  lockID: number
 }
 
 export type ContractsReleaseParams = {
   id: string
 }
-export type ContractsReleasePayload = void
+export type ContractsReleasePayload = {
+  lockID: {
+    lockID: number
+  }
+}
 export type ContractsReleaseResponse = void
 
 export type ContractParams = {

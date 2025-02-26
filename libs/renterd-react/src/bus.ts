@@ -252,6 +252,10 @@ import {
   AuthTokenPayload,
   AuthTokenResponse,
   authRoute,
+  ContractsFormParams,
+  ContractsFormPayload,
+  ContractsFormResponse,
+  busContractsFormRoute,
 } from '@siafoundation/renterd-types'
 
 // state
@@ -631,6 +635,21 @@ export function useContract(
   args: HookArgsSwr<ContractParams, ContractResponse>
 ) {
   return useGetSwr({ ...args, route: busContractIdRoute })
+}
+
+export function useContractsForm(
+  args: HookArgsCallback<
+    ContractsFormParams,
+    ContractsFormPayload,
+    ContractsFormResponse
+  >
+) {
+  return usePostFunc(
+    { ...args, route: busContractsFormRoute },
+    async (mutate) => {
+      mutate((key) => key.startsWith(busContractsRoute))
+    }
+  )
 }
 
 export function useContractAdd(
