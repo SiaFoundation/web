@@ -1,5 +1,11 @@
 # @siafoundation/explored-types
 
+## 0.13.0
+
+### Minor Changes
+
+- 61af4d04: Rearranged location data for the ExplorerHost type to match explored.
+
 ## 0.12.0
 
 ### Minor Changes
