@@ -1,5 +1,18 @@
 # @siafoundation/e2e
 
+## 0.6.0
+
+### Minor Changes
+
+- d0be2c24: Upgraded playwright dependencies.
+
+### Patch Changes
+
+- Updated dependencies [0bdf8534]
+- Updated dependencies [70e57bf6]
+- Updated dependencies [70e57bf6]
+  - @siafoundation/react-core@2.1.0
+
 ## 0.5.2
 
 ### Patch Changes
