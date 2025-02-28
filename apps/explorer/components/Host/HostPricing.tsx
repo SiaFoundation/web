@@ -1,7 +1,11 @@
 'use client'
 
 import { ExplorerHost } from '@siafoundation/explored-types'
-import { Text, Tooltip } from '@siafoundation/design-system'
+import {
+  Text,
+  Tooltip,
+  useActiveCurrencySiascanExchangeRate,
+} from '@siafoundation/design-system'
 import {
   CloudDownload16,
   CloudUpload16,
@@ -13,7 +17,6 @@ import {
   getStorageCost,
   getUploadCost,
 } from '@siafoundation/units'
-import { useActiveCurrencySiascanExchangeRate } from '@siafoundation/react-core'
 import LoadingCurrency from '../LoadingCurrency'
 import { useExploredAddress } from '../../hooks/useExploredAddress'
 

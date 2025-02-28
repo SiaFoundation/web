@@ -20,8 +20,8 @@ export function HostsActionsMenu() {
       </Button>
       <Tooltip
         content={
-          !settings.siaCentral
-            ? 'Enable Sia Central to view interactive map'
+          !settings.siascan
+            ? 'Enable Siascan to view interactive map'
             : gpu.canGpuRender && gpu.isGpuEnabled
             ? 'Toggle interactive map'
             : 'Enable GPU to view interactive map'
@@ -30,7 +30,7 @@ export function HostsActionsMenu() {
         <Button
           disabled={!gpu.canGpuRender}
           onClick={() => {
-            if (!settings.siaCentral) {
+            if (!settings.siascan) {
               openDialog('settings')
               return
             }

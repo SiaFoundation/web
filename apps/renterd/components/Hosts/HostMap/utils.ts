@@ -39,7 +39,9 @@ export function getHostLabel({
     host.settings?.remainingstorage || 0
   )} / ${humanBytes(host.settings?.totalstorage || 0)} available`
 
-  const cc = host.countryCode ? countryCodeEmoji(host.countryCode) : '🌍'
+  const cc = host.location.countryCode
+    ? countryCodeEmoji(host.location.countryCode)
+    : '🌍'
 
   return `${cc} · ${storageCost} · ${usedStorage} · ${availableStorage}`
 }
