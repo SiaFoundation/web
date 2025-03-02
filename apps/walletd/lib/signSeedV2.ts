@@ -1,6 +1,4 @@
 import {
-  SiacoinElement,
-  SiafundElement,
   ConsensusState,
   ConsensusNetwork,
   V2Transaction,
@@ -8,7 +6,7 @@ import {
 } from '@siafoundation/types'
 import { AddressData } from '../contexts/addresses/types'
 import { getSDK } from '@siafoundation/sdk'
-import { addSignaturesSiacoinV2, addSignaturesSiafundV2 } from './signV2'
+import { addSignaturesV2, getAddressKeyIndex } from './signV2'
 
 export function signTransactionSeedV2({
   mnemonic,
@@ -16,25 +14,18 @@ export function signTransactionSeedV2({
   consensusState,
   consensusNetwork,
   addresses,
-  siacoinOutputs,
-  siafundOutputs,
 }: {
   mnemonic: string
   consensusState: ConsensusState
   consensusNetwork: ConsensusNetwork
   transaction: V2Transaction
   addresses: AddressData[]
-  siacoinOutputs: SiacoinElement[]
-  siafundOutputs: SiafundElement[]
 }): Result<{ signedTransaction: V2Transaction }> {
   if (!consensusState) {
     return { error: 'No consensus state' }
   }
   if (!addresses) {
     return { error: 'No addresses' }
-  }
-  if (!siacoinOutputs) {
-    return { error: 'No outputs' }
   }
 
   const sigHashResult = getSDK().wallet.v2TransactionInputSigHash(
@@ -49,28 +40,68 @@ export function signTransactionSeedV2({
 
   const { sigHash } = sigHashResult
 
-  const addSigScResult = addSignaturesSiacoinV2({
-    mnemonic,
-    transaction,
-    addresses,
-    siacoinOutputs,
-    sigHash,
-  })
+  for (const input of transaction.siacoinInputs ?? []) {
+    // Find the index of the address in the list of addresses.
+    const indexResponse = getAddressKeyIndex({
+        address: input.parent.siacoinOutput.address,
+        addresses,
+      }
+    );
+    if ('error' in indexResponse) {
+      return { error: indexResponse.error }
+    }
+    const { index } = indexResponse
 
-  if ('error' in addSigScResult) {
-    return { error: addSigScResult.error }
+    const pkResponse = getSDK().wallet.keyPairFromSeedPhrase(
+      mnemonic,
+      indexResponse.index
+    )
+
+    if ('error' in pkResponse) {
+      return { error: pkResponse.error }
+    }
+
+    const signResult = addSignaturesV2({
+      mnemonic,
+      input,
+      sigHash,
+      index,
+    })
+    if ('error' in signResult) {
+      return { error: signResult.error }
+    }
   }
 
-  const addSigSfResult = addSignaturesSiafundV2({
-    mnemonic,
-    transaction,
-    addresses,
-    siafundOutputs,
-    sigHash,
-  })
+  for (const input of transaction.siafundInputs ?? []) {
+    // Find the index of the address in the list of addresses.
+    const indexResponse = getAddressKeyIndex({
+      address: input.parent.siafundOutput.address,
+      addresses,
+    }
+    );
+    if ('error' in indexResponse) {
+      return { error: indexResponse.error }
+    }
+    const { index } = indexResponse
 
-  if ('error' in addSigSfResult) {
-    return { error: addSigSfResult.error }
+    const pkResponse = getSDK().wallet.keyPairFromSeedPhrase(
+      mnemonic,
+      indexResponse.index
+    )
+
+    if ('error' in pkResponse) {
+      return { error: pkResponse.error }
+    }
+
+    const signResult = addSignaturesV2({
+      mnemonic,
+      input,
+      sigHash,
+      index,
+    })
+    if ('error' in signResult) {
+      return { error: signResult.error }
+    }
   }
 
   return {
