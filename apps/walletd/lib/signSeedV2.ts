@@ -51,16 +51,6 @@ export function signTransactionSeedV2({
       return { error: indexResponse.error }
     }
     const { index } = indexResponse
-
-    const pkResponse = getSDK().wallet.keyPairFromSeedPhrase(
-      mnemonic,
-      indexResponse.index
-    )
-
-    if ('error' in pkResponse) {
-      return { error: pkResponse.error }
-    }
-
     const signResult = addSignaturesV2({
       mnemonic,
       input,
@@ -83,16 +73,6 @@ export function signTransactionSeedV2({
       return { error: indexResponse.error }
     }
     const { index } = indexResponse
-
-    const pkResponse = getSDK().wallet.keyPairFromSeedPhrase(
-      mnemonic,
-      indexResponse.index
-    )
-
-    if ('error' in pkResponse) {
-      return { error: pkResponse.error }
-    }
-
     const signResult = addSignaturesV2({
       mnemonic,
       input,
