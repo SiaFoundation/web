@@ -16,8 +16,6 @@ describe('signSeedV2', () => {
         transaction: mocks.walletConstructV2Response.transaction,
         consensusState: mocks.consensusState,
         consensusNetwork: mocks.consensusNetwork,
-        siacoinOutputs: mocks.walletOutputsSiacoinResponse.outputs,
-        siafundOutputs: mocks.walletOutputsSiafundResponse.outputs,
         addresses: getMockAddresses(mocks),
       })
     ).toMatchSnapshot()
@@ -31,8 +29,6 @@ describe('signSeedV2', () => {
         transaction: mocks.walletConstructV2Response.transaction,
         consensusState: mocks.consensusState,
         consensusNetwork: mocks.consensusNetwork,
-        siacoinOutputs: [],
-        siafundOutputs: [],
         addresses: getMockAddresses(mocks),
       })
     ).toEqual({
@@ -48,8 +44,6 @@ describe('signSeedV2', () => {
         transaction: mocks.walletConstructV2Response.transaction,
         consensusState: mocks.consensusState,
         consensusNetwork: mocks.consensusNetwork,
-        siacoinOutputs: mocks.walletOutputsSiacoinResponse.outputs,
-        siafundOutputs: mocks.walletOutputsSiafundResponse.outputs,
         addresses: [
           {
             id: 'id',
@@ -74,8 +68,6 @@ describe('signSeedV2', () => {
         transaction: mocks.walletConstructV2Response.transaction,
         consensusState: mocks.consensusState,
         consensusNetwork: mocks.consensusNetwork,
-        siacoinOutputs: mocks.walletOutputsSiacoinResponse.outputs,
-        siafundOutputs: mocks.walletOutputsSiafundResponse.outputs,
         addresses: [
           {
             id: 'id',
@@ -102,8 +94,6 @@ describe('signSeedV2', () => {
         transaction: mocks.walletConstructV2Response.transaction,
         consensusState: mocks.consensusState,
         consensusNetwork: mocks.consensusNetwork,
-        siacoinOutputs: mocks.walletOutputsSiacoinResponse.outputs,
-        siafundOutputs: mocks.walletOutputsSiafundResponse.outputs,
         addresses,
       })
     ).toEqual({
