@@ -24,6 +24,10 @@ export type V2SiacoinInput = {
   satisfiedPolicy: SatisfiedPolicy
 }
 
+export interface V2TransactionInput {
+  satisfiedPolicy: SatisfiedPolicy
+}
+
 export type V2SiafundInput = {
   parent: SiafundElement
   claimAddress: Address

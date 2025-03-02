@@ -1,8 +1,6 @@
 import {
   useConsensusNetwork,
-  useWalletOutputsSiacoin,
   useConsensusTipState,
-  useWalletOutputsSiafund,
 } from '@siafoundation/walletd-react'
 import { useWallets } from '../../../contexts/wallets'
 import { useCallback } from 'react'
@@ -17,19 +15,6 @@ import { Result } from '@siafoundation/types'
 export function useSignAndBroadcastV2() {
   const { wallet, cacheWalletMnemonic } = useWallets()
   const walletId = wallet?.id
-
-  const siacoinOutputs = useWalletOutputsSiacoin({
-    disabled: !walletId,
-    params: {
-      id: walletId,
-    },
-  })
-  const siafundOutputs = useWalletOutputsSiafund({
-    disabled: !walletId,
-    params: {
-      id: walletId,
-    },
-  })
   const { dataset: addresses } = useWalletAddresses({ id: walletId })
   const cs = useConsensusTipState()
   const cn = useConsensusNetwork()
@@ -69,8 +54,6 @@ export function useSignAndBroadcastV2() {
         consensusState: cs.data,
         consensusNetwork: cn.data,
         addresses,
-        siacoinOutputs: siacoinOutputs.data?.outputs,
-        siafundOutputs: siafundOutputs.data?.outputs,
       })
 
       if ('error' in signingResult) {
@@ -95,8 +78,6 @@ export function useSignAndBroadcastV2() {
       walletId,
       cs.data,
       cn.data,
-      siacoinOutputs.data,
-      siafundOutputs.data,
       cacheWalletMnemonic,
       broadcast,
     ]
