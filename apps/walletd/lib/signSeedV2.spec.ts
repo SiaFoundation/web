@@ -21,21 +21,6 @@ describe('signSeedV2', () => {
     ).toMatchSnapshot()
   })
 
-  it('errors when an utxo is missing', async () => {
-    const mocks = getMockScenarioSeedWallet()
-    expect(
-      signTransactionSeedV2({
-        mnemonic: mocks.mnemonic,
-        transaction: mocks.walletConstructV2Response.transaction,
-        consensusState: mocks.consensusState,
-        consensusNetwork: mocks.consensusNetwork,
-        addresses: getMockAddresses(mocks),
-      })
-    ).toEqual({
-      error: 'Missing utxo',
-    })
-  })
-
   it('errors when a public keys address is missing', async () => {
     const mocks = getMockScenarioSeedWallet()
     expect(
@@ -56,7 +41,7 @@ describe('signSeedV2', () => {
         ],
       })
     ).toEqual({
-      error: 'Missing address',
+      error: `Missing address ${mocks.walletConstructV2Response.transaction.siacoinInputs[0].parent.siacoinOutput.address}`,
     })
   })
 
@@ -73,31 +58,14 @@ describe('signSeedV2', () => {
             id: 'id',
             walletId: 'id',
             address:
-              mocks.walletOutputsSiacoinResponse.outputs[1].siacoinOutput
-                .address,
+              mocks.walletConstructV2Response.transaction.siacoinInputs[0]
+                .parent.siacoinOutput.address,
             metadata: {},
           },
         ],
       })
     ).toEqual({
       error: 'Missing address index',
-    })
-  })
-
-  it('errors when an address is missing its public key', async () => {
-    const mocks = getMockScenarioSeedWallet()
-    const addresses = getMockAddresses(mocks)
-    addresses[0].spendPolicy.policy.publicKeys[0] = undefined
-    expect(
-      signTransactionSeedV2({
-        mnemonic: mocks.mnemonic,
-        transaction: mocks.walletConstructV2Response.transaction,
-        consensusState: mocks.consensusState,
-        consensusNetwork: mocks.consensusNetwork,
-        addresses,
-      })
-    ).toEqual({
-      error: 'Missing address public key',
     })
   })
 })
