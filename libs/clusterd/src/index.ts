@@ -50,7 +50,7 @@ const maxTimeWaitingForAllNodesToStartup = 100_000
 const maxTimeWaitingForContractsToForm = 60_000
 
 const randomAddress =
-  '3af8e2a77c4b666dfc3cf7f68dfabaf61fa9d7707cbcd4308a5b75b63a9452e3edc505af3c79'
+  '0373a398eae5a7a682ff516d44cf122613c45aae75eac98fc094e3a5979d496088e656bcf925'
 
 export async function setupCluster({
   renterdCount = 0,

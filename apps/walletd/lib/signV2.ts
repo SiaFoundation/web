@@ -1,7 +1,4 @@
-import {
-  Result,
-  V2TransactionInput,
-} from '@siafoundation/types'
+import { Result, V2TransactionInput } from '@siafoundation/types'
 import { AddressData } from '../contexts/addresses/types'
 import { getSDK } from '@siafoundation/sdk'
 
@@ -9,17 +6,14 @@ export function addSignaturesV2({
   mnemonic,
   input,
   sigHash,
-  index
-} : {
+  index,
+}: {
   mnemonic: string
   input: V2TransactionInput
   sigHash: string
   index: number
-}): Result<{ error?: string }> {  
-  const pkResponse = getSDK().wallet.keyPairFromSeedPhrase(
-    mnemonic,
-    index
-  )
+}): Result<{ error?: string }> {
+  const pkResponse = getSDK().wallet.keyPairFromSeedPhrase(mnemonic, index)
 
   if ('error' in pkResponse) {
     return { error: pkResponse.error }
@@ -40,10 +34,10 @@ export function addSignaturesV2({
 export function getAddressKeyIndex({
   address,
   addresses,
-} : {
+}: {
   address: string
   addresses: AddressData[]
-}): Result<{ index: number, error?: string }> {
+}): Result<{ index: number; error?: string }> {
   const addressData = addresses.find((a) => a.address === address)
   if (!addressData) {
     return { error: `Missing address ${address}` }
