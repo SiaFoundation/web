@@ -49,28 +49,39 @@ function rankHosts(hosts: ExplorerHost[] | undefined) {
           ) +
         weights.downloadPrice *
           normalize(
-            host.settings.downloadbandwidthprice,
+            host.v2
+              ? host.rhpV4Settings.prices.egressPrice
+              : host.settings.downloadbandwidthprice,
             ranges.downloadPrice.min,
             ranges.downloadPrice.max,
             true
           ) +
         weights.uploadPrice *
           normalize(
-            host.settings.uploadbandwidthprice,
+            host.v2
+              ? host.rhpV4Settings.prices.ingressPrice
+              : host.settings.uploadbandwidthprice,
             ranges.uploadPrice.min,
             ranges.uploadPrice.max,
             true
           ) +
         weights.storagePrice *
           normalize(
-            host.settings.storageprice,
+            host.v2
+              ? host.rhpV4Settings.prices.storagePrice
+              : host.settings.storageprice,
             ranges.storagePrice.min,
             ranges.storagePrice.max,
             true
           ) +
         weights.usedStorage *
           normalize(
-            host.settings.totalstorage - host.settings.remainingstorage,
+            (host.v2
+              ? host.rhpV4Settings.totalStorage
+              : host.settings.totalstorage) -
+              (host.v2
+                ? host.rhpV4Settings.remainingStorage
+                : host.settings.remainingstorage),
             ranges.usedStorage.min,
             ranges.usedStorage.max
           ),
