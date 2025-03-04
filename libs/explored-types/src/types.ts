@@ -24,6 +24,7 @@ import type {
   TransactionID,
   TransactionSignature,
   V2Transaction,
+  Signature,
 } from '@siafoundation/types'
 
 // Unchanged Types - Re-exported for a more straight-forward DX like:
@@ -316,12 +317,49 @@ export type ExplorerBlock = {
   transactions: ExplorerTransaction[]
 }
 
+export type Protocol = 'siamux' | 'quic'
+
+export type NetAddress = {
+  protocol: Protocol
+  address: string
+}
+
+export type V2HostPrices = {
+  contractPrice: Currency
+  collateral: Currency
+  storagePrice: Currency
+  ingressPrice: Currency
+  egressPrice: Currency
+  freeSectorPrice: Currency
+  tipHeight: number
+  validUntil: string
+
+  signature: Signature
+}
+
+export type V2HostSettings = {
+  protocolVersion: number
+  release: string
+  walletAddress: string
+  acceptingContracts: boolean
+  maxCollateral: Currency
+  maxContractDuration: number
+  remainingStorage: number
+  totalStorage: number
+  prices: V2HostPrices
+}
+
 /**
  * An ExplorerHost represents a host and the information gathered from scanning it.
  */
-export type ExplorerHost = {
+export type ExplorerHost = ExplorerV1Host | ExplorerV2Host
+
+export type ExplorerV1Host = {
+  v2: false
+
   publicKey: PublicKey
   netAddress: string
+
   location: Location
 
   knownSince: string
@@ -334,4 +372,24 @@ export type ExplorerHost = {
 
   settings: HostSettings
   priceTable: HostPriceTable
+}
+
+export type ExplorerV2Host = {
+  v2: true
+
+  publicKey: PublicKey
+  v2NetAddresses: NetAddress[]
+
+  location: Location
+
+  knownSince: string
+  lastScan: string
+  lastScanSuccessful: boolean
+  lastAnnouncement: string
+  totalScans: number
+  successfulInteractions: number
+  failedInteractions: number
+
+  //
+  rhpV4Settings: V2HostSettings
 }
