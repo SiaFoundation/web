@@ -76,7 +76,8 @@ export const TEST_HOST_1 = {
     'ed25519:3926a0434232bba9eaca2041303a1039d4f65bf54d7bd4e2a9164ea2d778b714',
   display: {
     pubkey: 'ed25519:3926a0434232bba9eaca20...',
-    title: '51.81.242.140:9882',
+    v1Title: '51.81.242.140:9882',
+    v2Title: '51.81.242.140:9884',
     location: 'US',
   },
 }

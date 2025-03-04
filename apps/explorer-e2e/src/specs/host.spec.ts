@@ -20,13 +20,21 @@ test('host can be searched by id', async ({ page }) => {
   await explorerApp.goTo('/')
   await explorerApp.navigateBySearchBar(TEST_HOST_1.pubkey)
 
-  await expect(page.getByText(TEST_HOST_1.display.title)).toBeVisible()
+  await expect(
+    page
+      .getByText(TEST_HOST_1.display.v1Title)
+      .or(page.getByText(TEST_HOST_1.display.v2Title))
+  ).toBeVisible()
 })
 
 test('host can be directly navigated to', async ({ page }) => {
   await explorerApp.goTo('/host/' + TEST_HOST_1.pubkey)
 
-  await expect(page.getByText(TEST_HOST_1.display.title)).toBeVisible()
+  await expect(
+    page
+      .getByText(TEST_HOST_1.display.v1Title)
+      .or(page.getByText(TEST_HOST_1.display.v2Title))
+  ).toBeVisible()
 })
 
 test('host displays properly formatted host pricing', async ({ page }) => {
