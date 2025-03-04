@@ -24,7 +24,7 @@
     "e2e": {
       "executor": "@nx/playwright:playwright",
       "outputs": ["{workspaceRoot}/dist/.playwright/apps/explorer-e2e"],
-      "dependsOn": ["build-cluster"],
+      "dependsOn": ["^build", "build-cluster"],
       "options": {
         "config": "apps/explorer-e2e/playwright.config.ts"
       }
