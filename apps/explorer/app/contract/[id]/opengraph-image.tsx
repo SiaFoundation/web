@@ -62,7 +62,11 @@ export default async function Image({ params }) {
     },
     {
       label: 'expiration',
-      value: blockHeightToHumanDate(currentTip.height, contract.windowStart),
+      value: blockHeightToHumanDate(
+        currentTip.height,
+        contract.windowStart,
+        'short'
+      ),
     },
     {
       label: 'payout',
