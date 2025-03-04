@@ -1,10 +1,7 @@
-import {
-  CurrencyOption,
-  useAppSettings,
-  useExchangeRate,
-} from '@siafoundation/react-core'
+import { CurrencyOption, useAppSettings } from '@siafoundation/react-core'
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
+import { useExchangeRate } from './useExternalExchangeRate'
 
 type Props = {
   sc?: BigNumber

@@ -4,29 +4,25 @@ import {
   Text,
   Tooltip,
   countryCodeEmoji,
+  useActiveExchangeRate,
 } from '@siafoundation/design-system'
 import { cx } from 'class-variance-authority'
 import BigNumber from 'bignumber.js'
-import { SiaCentralHost } from '@siafoundation/sia-central-types'
 import {
   monthsToBlocks,
   TBToBytes,
   humanBytes,
   humanSiacoin,
-  getDownloadSpeed,
-  getUploadSpeed,
 } from '@siafoundation/units'
+import { ExplorerHost } from '@siafoundation/explored-types'
 
-type Host = SiaCentralHost
+type Host = ExplorerHost
 
 type Props = {
   host: Host
   activeHost: Host
   setRef?: (el: HTMLButtonElement | null) => void
   selectActiveHost: (public_key: string) => void
-  rates: {
-    usd: string
-  }
 }
 
 export function HostItem({
@@ -34,56 +30,62 @@ export function HostItem({
   activeHost,
   selectActiveHost,
   setRef,
-  rates,
 }: Props) {
+  const { rate, currency } = useActiveExchangeRate()
   const storageCost = useMemo(
     () =>
-      rates
-        ? `$${new BigNumber(host.settings?.storage_price || 0)
+      rate && currency
+        ? `${currency.prefix}${new BigNumber(host.settings?.storageprice || 0)
             .times(TBToBytes(1))
             .times(monthsToBlocks(1))
             .div(1e24)
-            .times(rates?.usd || 1)
+            .times(rate)
             .toFixed(2)}/TB`
         : `${humanSiacoin(
-            new BigNumber(host.settings?.storage_price || 0)
+            new BigNumber(host.settings?.storageprice || 0)
               .times(TBToBytes(1))
               .times(monthsToBlocks(1)),
             { fixed: 0 }
           )}/TB`,
-    [rates, host]
+    [rate, currency, host]
   )
 
   const downloadCost = useMemo(
     () =>
-      rates
-        ? `$${new BigNumber(host.settings?.download_price || 0)
+      rate && currency
+        ? `${currency.prefix}${new BigNumber(
+            host.settings?.downloadbandwidthprice || 0
+          )
             .times(TBToBytes(1))
             .div(1e24)
-            .times(rates?.usd || 1)
+            .times(rate)
             .toFixed(2)}/TB`
         : `${humanSiacoin(
-            new BigNumber(host.settings?.download_price || 0).times(
+            new BigNumber(host.settings?.downloadbandwidthprice || 0).times(
               TBToBytes(1)
             ),
             { fixed: 0 }
           )}/TB`,
-    [rates, host]
+    [rate, currency, host]
   )
 
   const uploadCost = useMemo(
     () =>
-      rates
-        ? `$${new BigNumber(host.settings?.upload_price || 0)
+      rate && currency
+        ? `${currency.prefix}${new BigNumber(
+            host.settings?.uploadbandwidthprice || 0
+          )
             .times(TBToBytes(1))
             .div(1e24)
-            .times(rates?.usd || 1)
+            .times(rate)
             .toFixed(2)}/TB`
         : `${humanSiacoin(
-            new BigNumber(host.settings?.upload_price || 0).times(TBToBytes(1)),
+            new BigNumber(host.settings?.uploadbandwidthprice || 0).times(
+              TBToBytes(1)
+            ),
             { fixed: 0 }
           )}/TB`,
-    [rates, host]
+    [rate, currency, host]
   )
 
   return (
@@ -91,7 +93,8 @@ export function HostItem({
       content={
         <div className="flex flex-col gap-1">
           <Text size="12" color="contrast" weight="bold">
-            {countryCodeEmoji(host.country_code)} {host.country_code}
+            {countryCodeEmoji(host.location.countryCode)}{' '}
+            {host.location.countryCode}
           </Text>
           <div className="flex gap-2">
             <div className="flex flex-col gap-1">
@@ -103,17 +106,6 @@ export function HostItem({
               </Text>
               <Text size="12" color="subtle">
                 upload
-              </Text>
-            </div>
-            <div className="flex flex-col gap-1">
-              <Text size="12" color="contrast">
-                {humanBytes(host.settings?.total_storage || 0)}
-              </Text>
-              <Text size="12" color="contrast">
-                {getDownloadSpeed(host)}
-              </Text>
-              <Text size="12" color="contrast">
-                {getUploadSpeed(host)}
               </Text>
             </div>
             <div className="flex flex-col gap-1">
@@ -130,7 +122,7 @@ export function HostItem({
           </div>
         </div>
       }
-      key={host.public_key}
+      key={host.publicKey}
     >
       <Button
         variant="ghost"
@@ -140,18 +132,18 @@ export function HostItem({
           }
         }}
         onClick={() => {
-          selectActiveHost(host.public_key)
+          selectActiveHost(host.publicKey)
         }}
         className={cx(
           'flex gap-1',
-          host.public_key === activeHost?.public_key
+          host.publicKey === activeHost?.publicKey
             ? 'opacity-100'
             : 'opacity-50',
           'hover:opacity-100'
         )}
       >
         <Text size="12" noWrap>
-          {countryCodeEmoji(host.country_code)}
+          {countryCodeEmoji(host.location.countryCode)}
         </Text>
         <Text
           color="contrast"
@@ -159,11 +151,10 @@ export function HostItem({
           className="text-white"
           noWrap
           weight={
-            host.public_key === activeHost?.public_key ? 'semibold' : 'regular'
+            host.publicKey === activeHost?.publicKey ? 'semibold' : 'regular'
           }
         >
-          {humanBytes(host.settings?.total_storage || 0)}
-          {host.benchmark && ` · ${getDownloadSpeed(host)}`}
+          {humanBytes(host.settings?.totalstorage || 0)}
           {' · '}
           {storageCost}
         </Text>

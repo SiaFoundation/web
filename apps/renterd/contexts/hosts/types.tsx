@@ -2,6 +2,7 @@ import { HostPriceTable, HostSettings } from '@siafoundation/types'
 import BigNumber from 'bignumber.js'
 import { ContractData } from '../contracts/types'
 import { MultiSelect } from '@siafoundation/design-system'
+import { Location } from '@siafoundation/explored-types'
 
 export type HostContext = {
   siascanUrl: string
@@ -60,10 +61,9 @@ export type HostData = {
   settings?: HostSettings
   activeContractsCount: BigNumber
   activeContracts: ContractData[]
-  // merged in from sia central API
 
-  location?: [number, number]
-  countryCode?: string
+  // Merged in from explored API.
+  location?: Location
 
   onClick: (e: React.MouseEvent<HTMLTableRowElement>) => void
   isSelected: boolean
@@ -198,5 +198,5 @@ export const columnsDefaultVisible: TableColumnId[] = [
 export type ViewMode = 'list' | 'map'
 
 export type HostDataWithLocation = HostData & {
-  location: [number, number]
+  location: Location
 }
