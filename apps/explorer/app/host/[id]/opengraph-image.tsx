@@ -8,6 +8,7 @@ import { truncate } from '@siafoundation/design-system'
 import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
 import { to } from '@siafoundation/request'
 import { getExplored } from '../../../lib/explored'
+import { getHostNetAddress } from '../../../lib/hostType'
 
 export const revalidate = 0
 
@@ -52,11 +53,11 @@ export default async function Image({ params }) {
     )
   }
 
-  if (!host.settings) {
+  if (host.v2 ? !host.rhpV4Settings : !host.settings) {
     return getOGImage(
       {
         id: host.publicKey,
-        title: host.netAddress,
+        title: getHostNetAddress(host),
         subtitle: truncate(host.publicKey, 30),
         initials: 'H',
         avatar: true,
@@ -69,7 +70,9 @@ export default async function Image({ params }) {
     {
       label: 'storage',
       value: getStorageCost({
-        price: host.settings.storageprice,
+        price: host.v2
+          ? host.rhpV4Settings.prices.storagePrice
+          : host.settings.storageprice,
         exchange: {
           currency,
           rate: rate.toString(),
@@ -79,7 +82,9 @@ export default async function Image({ params }) {
     {
       label: 'download',
       value: getDownloadCost({
-        price: host.settings.downloadbandwidthprice,
+        price: host.v2
+          ? host.rhpV4Settings.prices.egressPrice
+          : host.settings.downloadbandwidthprice,
         exchange: {
           currency,
           rate: rate.toString(),
@@ -89,7 +94,9 @@ export default async function Image({ params }) {
     {
       label: 'upload',
       value: getUploadCost({
-        price: host.settings.uploadbandwidthprice,
+        price: host.v2
+          ? host.rhpV4Settings.prices.ingressPrice
+          : host.settings.uploadbandwidthprice,
         exchange: {
           currency,
           rate: rate.toString(),
@@ -101,7 +108,7 @@ export default async function Image({ params }) {
   return getOGImage(
     {
       id: host.publicKey,
-      title: host.netAddress,
+      title: getHostNetAddress(host),
       subtitle: truncate(host.publicKey, 30),
       initials: 'H',
       avatar: true,

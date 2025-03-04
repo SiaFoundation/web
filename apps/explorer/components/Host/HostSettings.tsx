@@ -19,6 +19,7 @@ import { useActiveCurrencySiascanExchangeRate } from '@siafoundation/react-core'
 import LoadingCurrency from '../LoadingCurrency'
 import { siacoinToFiat } from '../../lib/currency'
 import { useExploredAddress } from '../../hooks/useExploredAddress'
+import { getHostNetAddress } from '../../lib/hostType'
 
 type Props = {
   host: ExplorerHost
@@ -39,12 +40,18 @@ export function HostSettings({ host }: Props) {
       {
         label: 'total storage',
         copyable: false,
-        value: humanBytes(host.settings.totalstorage),
+        value: humanBytes(
+          host.v2 ? host.rhpV4Settings.totalStorage : host.settings.totalstorage
+        ),
       },
       {
         label: 'remaining storage',
         copyable: false,
-        value: humanBytes(host.settings.remainingstorage),
+        value: humanBytes(
+          host.v2
+            ? host.rhpV4Settings.remainingStorage
+            : host.settings.remainingstorage
+        ),
       },
       {
         label: 'storage price',
@@ -52,7 +59,9 @@ export function HostSettings({ host }: Props) {
         value:
           exchange.currency && exchange.rate ? (
             `${getStorageCost({
-              price: host.settings.storageprice,
+              price: host.v2
+                ? host.rhpV4Settings.prices.storagePrice
+                : host.settings.storageprice,
               exchange: {
                 currency: { prefix: exchange.currency.prefix },
                 rate: exchange.rate.toString(),
@@ -62,7 +71,9 @@ export function HostSettings({ host }: Props) {
             <LoadingCurrency type="perTBMonth" />
           ),
         comment: `${getStorageCost({
-          price: host.settings.storageprice,
+          price: host.v2
+            ? host.rhpV4Settings.prices.storagePrice
+            : host.settings.storageprice,
         })}/month`,
       },
       {
@@ -71,7 +82,9 @@ export function HostSettings({ host }: Props) {
         value:
           exchange.currency && exchange.rate ? (
             getDownloadCost({
-              price: host.settings.downloadbandwidthprice,
+              price: host.v2
+                ? host.rhpV4Settings.prices.egressPrice
+                : host.settings.downloadbandwidthprice,
               exchange: {
                 currency: { prefix: exchange.currency.prefix },
                 rate: exchange.rate.toString(),
@@ -81,7 +94,9 @@ export function HostSettings({ host }: Props) {
             <LoadingCurrency type="perTB" />
           ),
         comment: getDownloadCost({
-          price: host.settings.downloadbandwidthprice,
+          price: host.v2
+            ? host.rhpV4Settings.prices.egressPrice
+            : host.settings.downloadbandwidthprice,
         }),
       },
       {
@@ -90,7 +105,9 @@ export function HostSettings({ host }: Props) {
         value:
           exchange.currency && exchange.rate ? (
             getUploadCost({
-              price: host.settings.uploadbandwidthprice,
+              price: host.v2
+                ? host.rhpV4Settings.prices.ingressPrice
+                : host.settings.uploadbandwidthprice,
               exchange: {
                 currency: { prefix: exchange.currency.prefix },
                 rate: exchange.rate.toString(),
@@ -99,7 +116,11 @@ export function HostSettings({ host }: Props) {
           ) : (
             <LoadingCurrency type="perTB" />
           ),
-        comment: getUploadCost({ price: host.settings.uploadbandwidthprice }),
+        comment: getUploadCost({
+          price: host.v2
+            ? host.rhpV4Settings.prices.ingressPrice
+            : host.settings.uploadbandwidthprice,
+        }),
       },
       {
         label: 'collateral',
@@ -107,7 +128,9 @@ export function HostSettings({ host }: Props) {
         value:
           exchange.currency && exchange.rate ? (
             getStorageCost({
-              price: host.settings.collateral,
+              price: host.v2
+                ? host.rhpV4Settings.prices.collateral
+                : host.settings.collateral,
               exchange: {
                 currency: { prefix: exchange.currency.prefix },
                 rate: exchange.rate.toString(),
@@ -116,37 +139,59 @@ export function HostSettings({ host }: Props) {
           ) : (
             <LoadingCurrency type="perTB" />
           ),
-        comment: getStorageCost({ price: host.settings.collateral }),
+        comment: getStorageCost({
+          price: host.v2
+            ? host.rhpV4Settings.prices.collateral
+            : host.settings.collateral,
+        }),
       },
       {
         label: 'max collateral',
         copyable: false,
         value:
           exchange.currency && exchange.rate ? (
-            siacoinToFiat(host.settings.maxcollateral, {
-              rate: exchange.rate,
-              currency: exchange.currency,
-            })
+            siacoinToFiat(
+              host.v2
+                ? host.rhpV4Settings.maxCollateral
+                : host.settings.maxcollateral,
+              {
+                rate: exchange.rate,
+                currency: exchange.currency,
+              }
+            )
           ) : (
             <LoadingCurrency />
           ),
-        comment: humanSiacoin(host.settings.maxcollateral),
+        comment: humanSiacoin(
+          host.v2
+            ? host.rhpV4Settings.maxCollateral
+            : host.settings.maxcollateral
+        ),
       },
       {
         label: 'contract price',
         copyable: false,
         value:
           exchange.currency && exchange.rate ? (
-            siacoinToFiat(host.settings.contractprice, {
-              rate: exchange.rate,
-              currency: exchange.currency,
-            })
+            siacoinToFiat(
+              host.v2
+                ? host.rhpV4Settings.prices.contractPrice
+                : host.settings.contractprice,
+              {
+                rate: exchange.rate,
+                currency: exchange.currency,
+              }
+            )
           ) : (
             <LoadingCurrency />
           ),
-        comment: humanSiacoin(host.settings.contractprice),
+        comment: humanSiacoin(
+          host.v2
+            ? host.rhpV4Settings.prices.contractPrice
+            : host.settings.contractprice
+        ),
       },
-      {
+      !host.v2 && {
         label: 'base RPC price',
         copyable: false,
         value:
@@ -164,7 +209,7 @@ export function HostSettings({ host }: Props) {
           1e6
         )} SC/million`,
       },
-      {
+      !host.v2 && {
         label: 'sector access price',
         copyable: false,
         value:
@@ -182,7 +227,7 @@ export function HostSettings({ host }: Props) {
           1e6
         )} SC/million`,
       },
-      {
+      !host.v2 && {
         label: 'ephemeral account expiry',
         copyable: false,
         value: host.settings.ephemeralaccountexpiry,
@@ -191,19 +236,27 @@ export function HostSettings({ host }: Props) {
         label: 'max duration',
         copyable: false,
         value: `${toFixedOrPrecision(
-          blocksToMonths(host.settings.maxduration),
+          blocksToMonths(
+            host.v2
+              ? host.rhpV4Settings.maxContractDuration
+              : host.settings.maxduration
+          ),
           {
             digits: 2,
           }
         )} months`,
-        comment: `${host.settings.maxduration} blocks`,
+        comment: `${
+          host.v2
+            ? host.rhpV4Settings.maxContractDuration
+            : host.settings.maxduration
+        } blocks`,
       },
-      {
+      !host.v2 && {
         label: 'max ephemeral account balance',
         copyable: false,
         sc: new BigNumber(host.settings.maxephemeralaccountbalance),
       },
-      {
+      !host.v2 && {
         label: 'sector size',
         copyable: false,
         value: humanBytes(host.settings.sectorsize),
@@ -211,9 +264,9 @@ export function HostSettings({ host }: Props) {
       {
         label: 'sia mux port',
         copyable: false,
-        value: host.settings.siamuxport,
+        value: getHostNetAddress(host).slice(-4),
       },
-      {
+      !host.v2 && {
         label: 'window size',
         copyable: false,
         value: `${toFixedOrPrecision(blocksToDays(host.settings.windowsize), {
@@ -229,9 +282,9 @@ export function HostSettings({ host }: Props) {
       <div className="flex flex-col">
         {!!priceTableValues?.length && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-4">
-            {priceTableValues.map((item) => (
-              <ExplorerDatum key={item.label} {...item} />
-            ))}
+            {priceTableValues.map(
+              (item) => item && <ExplorerDatum key={item.label} {...item} />
+            )}
           </div>
         )}
       </div>

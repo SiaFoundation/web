@@ -13,6 +13,7 @@ import {
   WarningFilled16,
 } from '@siafoundation/react-icons'
 import { humanDate } from '@siafoundation/units'
+import { getHostNetAddress } from '../../lib/hostType'
 import { formatDistance } from 'date-fns'
 
 type Props = {
@@ -29,7 +30,7 @@ export function HostInfo({ host }: Props) {
       <ValueCopyable
         size="20"
         weight="semibold"
-        value={host.netAddress}
+        value={getHostNetAddress(host)}
         label="network address"
         maxLength={50}
       />
@@ -67,25 +68,39 @@ export function HostInfo({ host }: Props) {
             </Text>
           </Text>
         </Tooltip>
-        {host.settings && (
+        {(host.v2 ? host.rhpV4Settings : host.settings) && (
           <Tooltip
             content={
-              host.settings.acceptingcontracts
+              host.v2
+                ? host.rhpV4Settings.acceptingContracts
+                : host.settings.acceptingcontracts
                 ? 'Host is accepting contracts'
                 : 'Host is not accepting contracts'
             }
           >
             <Text
               size="14"
-              color={host.settings.acceptingcontracts ? 'green' : 'subtle'}
+              color={
+                (
+                  host.v2
+                    ? host.rhpV4Settings.acceptingContracts
+                    : host.settings.acceptingcontracts
+                )
+                  ? 'green'
+                  : 'subtle'
+              }
               className="flex gap-1 items-center"
             >
-              {host.settings.acceptingcontracts ? (
+              {host.v2 ? (
+                host.rhpV4Settings.acceptingContracts
+              ) : host.settings.acceptingcontracts ? (
                 <CheckmarkFilled16 />
               ) : (
                 <WarningFilled16 />
               )}
-              {host.settings.acceptingcontracts
+              {host.v2
+                ? host.rhpV4Settings.acceptingContracts
+                : host.settings.acceptingcontracts
                 ? 'Accepting contracts'
                 : 'Not accepting contracts'}
             </Text>
@@ -93,14 +108,23 @@ export function HostInfo({ host }: Props) {
         )}
       </div>
       <div className="flex flex-wrap gap-x-2 gap-y-1 items-center">
-        {host.settings.version.length ? (
+        {host.v2 ? (
+          <Tooltip
+            content={`Host version ${host.rhpV4Settings.protocolVersion}`}
+          >
+            <Text size="14" color="subtle" className="flex gap-1 items-center">
+              <Fork16 />
+              {host.rhpV4Settings.protocolVersion}
+            </Text>
+          </Tooltip>
+        ) : (
           <Tooltip content={`Host version ${host.settings.version}`}>
             <Text size="14" color="subtle" className="flex gap-1 items-center">
               <Fork16 />
               {host.settings.version}
             </Text>
           </Tooltip>
-        ) : null}
+        )}
         {host.location.countryCode.length ? (
           <Tooltip content={`Host located in ${host.location.countryCode}`}>
             <div className="flex gap-1 items-center">

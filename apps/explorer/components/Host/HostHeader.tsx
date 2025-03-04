@@ -3,6 +3,7 @@ import { ExplorerHost } from '@siafoundation/explored-types'
 import { hashToAvatar } from '../../lib/avatar'
 import { HostPricing } from './HostPricing'
 import { HostInfo } from './HostInfo'
+import { getHostSettings } from '../../lib/hostType'
 
 type Props = {
   host: ExplorerHost
@@ -26,7 +27,7 @@ export function HostHeader({ host }: Props) {
         />
         <div className="flex flex-wrap gap-3 items-start justify-between w-full">
           <HostInfo host={host} />
-          {host.settings && <HostPricing host={host} />}
+          {getHostSettings(host) && <HostPricing host={host} />}
         </div>
       </div>
     </div>
