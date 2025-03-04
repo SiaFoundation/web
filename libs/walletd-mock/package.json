@@ -1,12 +1,12 @@
 {
   "name": "@siafoundation/walletd-mock",
   "description": "walletd data and API mock library for testing.",
-  "version": "0.1.14",
+  "version": "0.2.0",
   "license": "MIT",
   "dependencies": {
-    "@siafoundation/types": "0.8.0",
-    "@siafoundation/sia-central-mock": "0.3.0",
-    "@siafoundation/units": "3.3.2",
+    "@siafoundation/types": "0.8.1",
+    "@siafoundation/sia-central-mock": "0.4.0",
+    "@siafoundation/units": "3.3.3",
     "playwright": "^1.49.1",
     "@siafoundation/walletd-types": "0.6.0"
   },
