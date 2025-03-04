@@ -1,5 +1,17 @@
 # @siafoundation/clusterd
 
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [a8e77c6c]
+- Updated dependencies [a9f2cede]
+- Updated dependencies [a9f2cede]
+- Updated dependencies [a9f2cede]
+  - @siafoundation/types@0.8.1
+  - @siafoundation/renterd-js@0.14.0
+  - @siafoundation/units@3.3.3
+
 ## 0.2.0
 
 ### Minor Changes

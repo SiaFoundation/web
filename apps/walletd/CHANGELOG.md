@@ -1,5 +1,11 @@
 # walletd
 
+## 0.29.1
+
+### Patch Changes
+
+- a8e77c6c: Fixed V2 signing for wallets that do not have siafund outputs.
+
 ## 0.29.0
 
 ### Minor Changes

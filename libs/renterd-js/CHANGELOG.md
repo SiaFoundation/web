@@ -1,5 +1,20 @@
 # @siafoundation/renterd-js
 
+## 0.14.0
+
+### Minor Changes
+
+- a9f2cede: Added contract formation API.
+- a9f2cede: Updated payloads for contract lock and release APIs.
+- a9f2cede: Added new fields to Contract type.
+
+### Patch Changes
+
+- Updated dependencies [a9f2cede]
+- Updated dependencies [a9f2cede]
+- Updated dependencies [a9f2cede]
+  - @siafoundation/renterd-types@0.16.0
+
 ## 0.13.1
 
 ### Patch Changes

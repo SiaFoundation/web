@@ -1,16 +1,16 @@
 {
   "name": "@siafoundation/clusterd",
   "description": "Methods controlling clusterd in e2e testing.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "private": true,
   "dependencies": {
     "@technically/lodash": "^4.17.0",
     "axios": "^0.27.2",
-    "@siafoundation/renterd-js": "0.13.1",
-    "@siafoundation/units": "3.3.2",
+    "@siafoundation/renterd-js": "0.14.0",
+    "@siafoundation/units": "3.3.3",
     "@siafoundation/hostd-js": "0.4.2",
-    "@siafoundation/types": "0.8.0"
+    "@siafoundation/types": "0.8.1"
   },
   "types": "./src/index.d.ts"
 }
