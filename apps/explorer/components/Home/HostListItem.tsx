@@ -26,6 +26,7 @@ import { ExplorerHost } from '@siafoundation/explored-types'
 import BigNumber from 'bignumber.js'
 import { CurrencyOption, SWRError } from '@siafoundation/react-core'
 import LoadingCurrency from '../LoadingCurrency'
+import { getHostNetAddress } from '../../lib/hostType'
 
 type Props = {
   host: ExplorerHost
@@ -44,7 +45,9 @@ export function HostListItem({ host, exchange, entity }: Props) {
     () =>
       exchange.currency && exchange.rate ? (
         getStorageCost({
-          price: host.settings.storageprice,
+          price: host.v2
+            ? host.rhpV4Settings.prices.storagePrice
+            : host.settings.storageprice,
           exchange: {
             currency: { prefix: exchange.currency.prefix },
             rate: exchange.rate.toString(),
@@ -60,7 +63,9 @@ export function HostListItem({ host, exchange, entity }: Props) {
     () =>
       exchange.currency && exchange.rate ? (
         getDownloadCost({
-          price: host.settings.downloadbandwidthprice,
+          price: host.v2
+            ? host.rhpV4Settings.prices.egressPrice
+            : host.settings.downloadbandwidthprice,
           exchange: {
             currency: { prefix: exchange.currency.prefix },
             rate: exchange.rate.toString(),
@@ -76,7 +81,9 @@ export function HostListItem({ host, exchange, entity }: Props) {
     () =>
       exchange.currency && exchange.rate ? (
         getUploadCost({
-          price: host.settings.uploadbandwidthprice,
+          price: host.v2
+            ? host.rhpV4Settings.prices.ingressPrice
+            : host.settings.uploadbandwidthprice,
           exchange: {
             currency: { prefix: exchange.currency.prefix },
             rate: exchange.rate.toString(),
@@ -89,7 +96,14 @@ export function HostListItem({ host, exchange, entity }: Props) {
   )
 
   const remainingStorage = useMemo(
-    () => (host.settings ? humanBytes(host.settings.remainingstorage) : '-'),
+    () =>
+      (host.v2 ? host.rhpV4Settings : host.settings)
+        ? humanBytes(
+            host.v2
+              ? host.rhpV4Settings.remainingStorage
+              : host.settings.remainingstorage
+          )
+        : '-',
     [host]
   )
 
@@ -106,7 +120,7 @@ export function HostListItem({ host, exchange, entity }: Props) {
               weight="medium"
               underline="none"
             >
-              {host.netAddress}
+              {getHostNetAddress(host)}
             </Link>
           </div>
           <div className="flex-1" />

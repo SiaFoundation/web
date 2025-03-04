@@ -390,6 +390,5 @@ export type ExplorerV2Host = {
   successfulInteractions: number
   failedInteractions: number
 
-  //
   rhpV4Settings: V2HostSettings
 }

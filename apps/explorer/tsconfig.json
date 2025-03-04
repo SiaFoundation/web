@@ -11,7 +11,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "incremental": true,
-    "types": ["jest", "node"],
+    "types": [
+      "jest",
+      "node"
+    ],
     "plugins": [
       {
         "name": "next"
@@ -27,7 +30,11 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     ".next-development/types/**/*.ts",
-    ".next-development-testnet-zen/types/**/*.ts"
+    ".next-development-testnet-zen/types/**/*.ts",
+    "../../dist/apps/explorer/.next/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "jest.config.ts"]
+  "exclude": [
+    "node_modules",
+    "jest.config.ts"
+  ]
 }

@@ -28,6 +28,7 @@ import { Information20 } from '@siafoundation/react-icons'
 import { useActiveCurrencySiascanExchangeRate } from '@siafoundation/react-core'
 import LoadingCurrency from '../LoadingCurrency'
 import { useExploredAddress } from '../../hooks/useExploredAddress'
+import { getHostNetAddress } from '../../lib/hostType'
 
 export function Home({
   metrics,
@@ -264,14 +265,14 @@ export function Home({
             }
           >
             {hosts
-              .filter((host) => host.settings)
+              .filter((host) => (host.v2 ? host.rhpV4Settings : host.settings))
               .map((host) => (
                 <HostListItem
                   key={host.publicKey}
                   host={host}
                   exchange={exchange}
                   entity={{
-                    label: host.netAddress,
+                    label: getHostNetAddress(host),
                     initials: 'H',
                     avatar: hashToAvatar(host.publicKey),
                     href: routes.host.view.replace(':id', host.publicKey),
