@@ -4,7 +4,6 @@ import { HostHeader } from './HostHeader'
 import { HostSettings } from './HostSettings'
 import { Panel, Text } from '@siafoundation/design-system'
 import { formatDistance } from 'date-fns'
-import { getHostSettings } from '../../lib/hostType'
 
 type Props = {
   host: ExplorerHost
@@ -13,7 +12,7 @@ type Props = {
 export function Host({ host }: Props) {
   return (
     <ContentLayout heading={<HostHeader host={host} />}>
-      {getHostSettings(host) ? (
+      {host.successfulInteractions > 0 ? (
         <HostSettings host={host} />
       ) : (
         <Panel className="p-4 flex items-center">
