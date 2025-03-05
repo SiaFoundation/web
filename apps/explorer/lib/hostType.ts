@@ -1,9 +1,5 @@
 import { ExplorerHost } from '@siafoundation/explored-types'
 
-export function getHostSettings(host: ExplorerHost) {
-  return host.v2 ? host.rhpV4Settings : host.settings
-}
-
 export function getHostNetAddress(host: ExplorerHost) {
   let netAddress: string | undefined
 
