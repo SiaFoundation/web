@@ -1,5 +1,17 @@
 # @siafoundation/explored-types
 
+## 0.13.0
+
+### Minor Changes
+
+- 61af4d04: Rearranged location data for the ExplorerHost type to match explored.
+- 443c4a47: Add v2 Host support.
+
+### Patch Changes
+
+- Updated dependencies [a8e77c6c]
+  - @siafoundation/types@0.8.1
+
 ## 0.12.0
 
 ### Minor Changes

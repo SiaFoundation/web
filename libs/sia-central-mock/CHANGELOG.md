@@ -1,5 +1,11 @@
 # @siafoundation/sia-central-mock
 
+## 0.4.0
+
+### Minor Changes
+
+- d0be2c24: Upgraded playwright dependencies.
+
 ## 0.3.0
 
 ### Minor Changes

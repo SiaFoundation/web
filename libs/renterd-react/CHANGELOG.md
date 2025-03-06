@@ -1,5 +1,25 @@
 # @siafoundation/renterd-react
 
+## 4.15.0
+
+### Minor Changes
+
+- a9f2cede: Added contract formation API.
+- a9f2cede: Updated payloads for contract lock and release APIs.
+- a9f2cede: Added new fields to Contract type.
+
+### Patch Changes
+
+- Updated dependencies [0bdf8534]
+- Updated dependencies [a9f2cede]
+- Updated dependencies [a9f2cede]
+- Updated dependencies [a9f2cede]
+- Updated dependencies [70e57bf6]
+- Updated dependencies [70e57bf6]
+  - @siafoundation/react-core@2.1.0
+  - @siafoundation/renterd-types@0.16.0
+  - @siafoundation/units@3.3.3
+
 ## 4.14.2
 
 ### Patch Changes
