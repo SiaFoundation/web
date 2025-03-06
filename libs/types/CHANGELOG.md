@@ -1,5 +1,11 @@
 # @siafoundation/types
 
+## 0.8.1
+
+### Patch Changes
+
+- a8e77c6c: Unified V2 input types for signing.
+
 ## 0.8.0
 
 ### Minor Changes

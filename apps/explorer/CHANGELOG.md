@@ -1,5 +1,20 @@
 # explorer
 
+## 0.27.0
+
+### Minor Changes
+
+- 547747a4: Removed Sia Central dependency from explorer.
+- 9323af7f: Added support for v2 Hosts.
+- 2d83b418: Corrected transaction confirmation count.
+- b7ecfb2f: Improved app performance/display around local timestamps.
+- bbc64938: Reworked Host location data to match new typing.
+- 5f4ebab0: Improved unscanned host detection.
+- c93054e6: Fixed contract opengraph image date display. Closes https://github.com/SiaFoundation/web/issues/961
+- 39360c6c: Moved exchange rate lookups to explored.
+- 74200556: Improved top hosts list caching.
+- 095b1f05: Moved host opengraph lookup to explored.
+
 ## 0.26.0
 
 ### Minor Changes
