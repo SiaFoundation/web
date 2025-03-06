@@ -6,6 +6,7 @@ import { isMainnet, network, networkName, appName } from '../../config'
 import { NavDropdownMenu } from './NavDropdownMenu'
 import { Footer } from './Footer'
 import { Navbar } from './Navbar'
+import { HardforkCountdown } from '../HardforkCountdown'
 
 type Props = {
   children: React.ReactNode
@@ -15,6 +16,7 @@ export function Layout({ children }: Props) {
   return (
     <div className="relative h-full bg-gray-100 dark:bg-graydark-50 overflow-hidden">
       <div className="relative z-10 h-full overflow-y-auto">
+        <HardforkCountdown network={network} />
         <Navbar
           appName={appName}
           homeHref={routes.home.index}
