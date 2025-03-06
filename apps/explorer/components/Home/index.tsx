@@ -29,6 +29,8 @@ import { useActiveCurrencySiascanExchangeRate } from '@siafoundation/react-core'
 import LoadingCurrency from '../LoadingCurrency'
 import { useExploredAddress } from '../../hooks/useExploredAddress'
 import { getHostNetAddress } from '../../lib/hostType'
+import { HardforkCountdown } from '../HardforkCountdown'
+import { network } from '../../config'
 
 export function Home({
   metrics,
@@ -226,62 +228,67 @@ export function Home({
   }, [metrics, blockHeight, exchange, totalHosts])
 
   return (
-    <ContentLayout
-      panel={
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 md:gap-x-12 gap-y-12">
-          {values.map(({ label, value }) => (
-            <div
-              className="flex flex-col gap-6 items-start overflow-hidden"
-              key={label}
-              data-testid="explorer-metrics-item"
+    <>
+      <HardforkCountdown network={network} />
+      <ContentLayout
+        panel={
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 md:gap-x-12 gap-y-12">
+            {values.map(({ label, value }) => (
+              <div
+                className="flex flex-col gap-6 items-start overflow-hidden"
+                key={label}
+                data-testid="explorer-metrics-item"
+              >
+                <Text color="subtle" scaleSize="14" className="w-full" ellipsis>
+                  {label}
+                </Text>
+                {value}
+              </div>
+            ))}
+          </div>
+        }
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-5">
+          <div>
+            <BlockList
+              title="Latest blocks"
+              dataset={reverse(sortBy(blocks, 'timestamp')).map((block) => ({
+                height: block.height,
+                timestamp: block.timestamp,
+                href: routes.block.view.replace(':id', String(block.height)),
+              }))}
+            />
+          </div>
+          <div>
+            <EntityList
+              title="Top hosts"
+              actions={
+                <Tooltip content="The Sia Foundation believes hosts can be evaluated in many different ways, depending on purpose. This list uses a combination of age, uptime, pricing, and used storage, with slight weight to the first two categories.">
+                  <Information20 />
+                </Tooltip>
+              }
             >
-              <Text color="subtle" scaleSize="14" className="w-full" ellipsis>
-                {label}
-              </Text>
-              {value}
-            </div>
-          ))}
+              {hosts
+                .filter((host) =>
+                  host.v2 ? host.rhpV4Settings : host.settings
+                )
+                .map((host) => (
+                  <HostListItem
+                    key={host.publicKey}
+                    host={host}
+                    exchange={exchange}
+                    entity={{
+                      label: getHostNetAddress(host),
+                      initials: 'H',
+                      avatar: hashToAvatar(host.publicKey),
+                      href: routes.host.view.replace(':id', host.publicKey),
+                    }}
+                  />
+                ))}
+            </EntityList>
+          </div>
         </div>
-      }
-    >
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-5">
-        <div>
-          <BlockList
-            title="Latest blocks"
-            dataset={reverse(sortBy(blocks, 'timestamp')).map((block) => ({
-              height: block.height,
-              timestamp: block.timestamp,
-              href: routes.block.view.replace(':id', String(block.height)),
-            }))}
-          />
-        </div>
-        <div>
-          <EntityList
-            title="Top hosts"
-            actions={
-              <Tooltip content="The Sia Foundation believes hosts can be evaluated in many different ways, depending on purpose. This list uses a combination of age, uptime, pricing, and used storage, with slight weight to the first two categories.">
-                <Information20 />
-              </Tooltip>
-            }
-          >
-            {hosts
-              .filter((host) => (host.v2 ? host.rhpV4Settings : host.settings))
-              .map((host) => (
-                <HostListItem
-                  key={host.publicKey}
-                  host={host}
-                  exchange={exchange}
-                  entity={{
-                    label: getHostNetAddress(host),
-                    initials: 'H',
-                    avatar: hashToAvatar(host.publicKey),
-                    href: routes.host.view.replace(':id', host.publicKey),
-                  }}
-                />
-              ))}
-          </EntityList>
-        </div>
-      </div>
-    </ContentLayout>
+      </ContentLayout>
+    </>
   )
 }
