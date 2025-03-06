@@ -2,7 +2,11 @@
 
 import { useMemo } from 'react'
 import { DatumProps, ExplorerDatum } from '../ExplorerDatum'
-import { Panel, toFixedOrPrecision } from '@siafoundation/design-system'
+import {
+  Panel,
+  toFixedOrPrecision,
+  useActiveCurrencySiascanExchangeRate,
+} from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import {
   blocksToDays,
@@ -15,7 +19,6 @@ import {
   getUploadCost,
 } from '@siafoundation/units'
 import { ExplorerHost } from '@siafoundation/explored-types'
-import { useActiveCurrencySiascanExchangeRate } from '@siafoundation/react-core'
 import LoadingCurrency from '../LoadingCurrency'
 import { siacoinToFiat } from '../../lib/currency'
 import { useExploredAddress } from '../../hooks/useExploredAddress'

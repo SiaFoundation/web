@@ -5,6 +5,7 @@ import {
   BlockList,
   Tooltip,
   EntityList,
+  useActiveCurrencySiascanExchangeRate,
 } from '@siafoundation/design-system'
 import { useMemo } from 'react'
 import { routes } from '../../config/routes'
@@ -25,7 +26,6 @@ import {
   HostMetrics,
 } from '@siafoundation/explored-types'
 import { Information20 } from '@siafoundation/react-icons'
-import { useActiveCurrencySiascanExchangeRate } from '@siafoundation/react-core'
 import LoadingCurrency from '../LoadingCurrency'
 import { useExploredAddress } from '../../hooks/useExploredAddress'
 import { getHostNetAddress } from '../../lib/hostType'
