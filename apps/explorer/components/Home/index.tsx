@@ -265,7 +265,7 @@ export function Home({
             }
           >
             {hosts
-              .filter((host) => (host.v2 ? host.rhpV4Settings : host.settings))
+              .filter((host) => (host.v2 ? host.v2Settings : host.settings))
               .map((host) => (
                 <HostListItem
                   key={host.publicKey}

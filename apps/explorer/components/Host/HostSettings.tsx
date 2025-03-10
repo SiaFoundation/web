@@ -41,7 +41,7 @@ export function HostSettings({ host }: Props) {
         label: 'total storage',
         copyable: false,
         value: humanBytes(
-          host.v2 ? host.rhpV4Settings.totalStorage : host.settings.totalstorage
+          host.v2 ? host.v2Settings.totalStorage : host.settings.totalstorage
         ),
       },
       {
@@ -49,7 +49,7 @@ export function HostSettings({ host }: Props) {
         copyable: false,
         value: humanBytes(
           host.v2
-            ? host.rhpV4Settings.remainingStorage
+            ? host.v2Settings.remainingStorage
             : host.settings.remainingstorage
         ),
       },
@@ -60,7 +60,7 @@ export function HostSettings({ host }: Props) {
           exchange.currency && exchange.rate ? (
             `${getStorageCost({
               price: host.v2
-                ? host.rhpV4Settings.prices.storagePrice
+                ? host.v2Settings.prices.storagePrice
                 : host.settings.storageprice,
               exchange: {
                 currency: { prefix: exchange.currency.prefix },
@@ -72,7 +72,7 @@ export function HostSettings({ host }: Props) {
           ),
         comment: `${getStorageCost({
           price: host.v2
-            ? host.rhpV4Settings.prices.storagePrice
+            ? host.v2Settings.prices.storagePrice
             : host.settings.storageprice,
         })}/month`,
       },
@@ -83,7 +83,7 @@ export function HostSettings({ host }: Props) {
           exchange.currency && exchange.rate ? (
             getDownloadCost({
               price: host.v2
-                ? host.rhpV4Settings.prices.egressPrice
+                ? host.v2Settings.prices.egressPrice
                 : host.settings.downloadbandwidthprice,
               exchange: {
                 currency: { prefix: exchange.currency.prefix },
@@ -95,7 +95,7 @@ export function HostSettings({ host }: Props) {
           ),
         comment: getDownloadCost({
           price: host.v2
-            ? host.rhpV4Settings.prices.egressPrice
+            ? host.v2Settings.prices.egressPrice
             : host.settings.downloadbandwidthprice,
         }),
       },
@@ -106,7 +106,7 @@ export function HostSettings({ host }: Props) {
           exchange.currency && exchange.rate ? (
             getUploadCost({
               price: host.v2
-                ? host.rhpV4Settings.prices.ingressPrice
+                ? host.v2Settings.prices.ingressPrice
                 : host.settings.uploadbandwidthprice,
               exchange: {
                 currency: { prefix: exchange.currency.prefix },
@@ -118,7 +118,7 @@ export function HostSettings({ host }: Props) {
           ),
         comment: getUploadCost({
           price: host.v2
-            ? host.rhpV4Settings.prices.ingressPrice
+            ? host.v2Settings.prices.ingressPrice
             : host.settings.uploadbandwidthprice,
         }),
       },
@@ -129,7 +129,7 @@ export function HostSettings({ host }: Props) {
           exchange.currency && exchange.rate ? (
             getStorageCost({
               price: host.v2
-                ? host.rhpV4Settings.prices.collateral
+                ? host.v2Settings.prices.collateral
                 : host.settings.collateral,
               exchange: {
                 currency: { prefix: exchange.currency.prefix },
@@ -141,7 +141,7 @@ export function HostSettings({ host }: Props) {
           ),
         comment: getStorageCost({
           price: host.v2
-            ? host.rhpV4Settings.prices.collateral
+            ? host.v2Settings.prices.collateral
             : host.settings.collateral,
         }),
       },
@@ -152,7 +152,7 @@ export function HostSettings({ host }: Props) {
           exchange.currency && exchange.rate ? (
             siacoinToFiat(
               host.v2
-                ? host.rhpV4Settings.maxCollateral
+                ? host.v2Settings.maxCollateral
                 : host.settings.maxcollateral,
               {
                 rate: exchange.rate,
@@ -163,9 +163,7 @@ export function HostSettings({ host }: Props) {
             <LoadingCurrency />
           ),
         comment: humanSiacoin(
-          host.v2
-            ? host.rhpV4Settings.maxCollateral
-            : host.settings.maxcollateral
+          host.v2 ? host.v2Settings.maxCollateral : host.settings.maxcollateral
         ),
       },
       {
@@ -175,7 +173,7 @@ export function HostSettings({ host }: Props) {
           exchange.currency && exchange.rate ? (
             siacoinToFiat(
               host.v2
-                ? host.rhpV4Settings.prices.contractPrice
+                ? host.v2Settings.prices.contractPrice
                 : host.settings.contractprice,
               {
                 rate: exchange.rate,
@@ -187,7 +185,7 @@ export function HostSettings({ host }: Props) {
           ),
         comment: humanSiacoin(
           host.v2
-            ? host.rhpV4Settings.prices.contractPrice
+            ? host.v2Settings.prices.contractPrice
             : host.settings.contractprice
         ),
       },
@@ -238,7 +236,7 @@ export function HostSettings({ host }: Props) {
         value: `${toFixedOrPrecision(
           blocksToMonths(
             host.v2
-              ? host.rhpV4Settings.maxContractDuration
+              ? host.v2Settings.maxContractDuration
               : host.settings.maxduration
           ),
           {
@@ -247,7 +245,7 @@ export function HostSettings({ host }: Props) {
         )} months`,
         comment: `${
           host.v2
-            ? host.rhpV4Settings.maxContractDuration
+            ? host.v2Settings.maxContractDuration
             : host.settings.maxduration
         } blocks`,
       },

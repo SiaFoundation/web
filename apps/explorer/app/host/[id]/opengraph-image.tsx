@@ -53,7 +53,7 @@ export default async function Image({ params }) {
     )
   }
 
-  if (host.v2 ? !host.rhpV4Settings : !host.settings) {
+  if (host.v2 ? !host.v2Settings : !host.settings) {
     return getOGImage(
       {
         id: host.publicKey,
@@ -71,7 +71,7 @@ export default async function Image({ params }) {
       label: 'storage',
       value: getStorageCost({
         price: host.v2
-          ? host.rhpV4Settings.prices.storagePrice
+          ? host.v2Settings.prices.storagePrice
           : host.settings.storageprice,
         exchange: {
           currency,
@@ -83,7 +83,7 @@ export default async function Image({ params }) {
       label: 'download',
       value: getDownloadCost({
         price: host.v2
-          ? host.rhpV4Settings.prices.egressPrice
+          ? host.v2Settings.prices.egressPrice
           : host.settings.downloadbandwidthprice,
         exchange: {
           currency,
@@ -95,7 +95,7 @@ export default async function Image({ params }) {
       label: 'upload',
       value: getUploadCost({
         price: host.v2
-          ? host.rhpV4Settings.prices.ingressPrice
+          ? host.v2Settings.prices.ingressPrice
           : host.settings.uploadbandwidthprice,
         exchange: {
           currency,
