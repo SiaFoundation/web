@@ -36,7 +36,7 @@ export function HostPricing({ host }: Props) {
       exchange.currency && exchange.rate ? (
         getStorageCost({
           price: host.v2
-            ? host.rhpV4Settings.prices.storagePrice
+            ? host.v2Settings.prices.storagePrice
             : host.settings.storageprice,
           exchange: {
             currency: { prefix: exchange.currency.prefix },
@@ -54,7 +54,7 @@ export function HostPricing({ host }: Props) {
       exchange.currency && exchange.rate ? (
         getDownloadCost({
           price: host.v2
-            ? host.rhpV4Settings.prices.egressPrice
+            ? host.v2Settings.prices.egressPrice
             : host.settings.downloadbandwidthprice,
           exchange: {
             currency: { prefix: exchange.currency.prefix },
@@ -72,7 +72,7 @@ export function HostPricing({ host }: Props) {
       exchange.currency && exchange.rate ? (
         getUploadCost({
           price: host.v2
-            ? host.rhpV4Settings.prices.ingressPrice
+            ? host.v2Settings.prices.ingressPrice
             : host.settings.uploadbandwidthprice,
           exchange: {
             currency: { prefix: exchange.currency.prefix },

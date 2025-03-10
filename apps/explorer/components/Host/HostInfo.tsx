@@ -68,11 +68,11 @@ export function HostInfo({ host }: Props) {
             </Text>
           </Text>
         </Tooltip>
-        {(host.v2 ? host.rhpV4Settings : host.settings) && (
+        {(host.v2 ? host.v2Settings : host.settings) && (
           <Tooltip
             content={
               host.v2
-                ? host.rhpV4Settings.acceptingContracts
+                ? host.v2Settings.acceptingContracts
                 : host.settings.acceptingcontracts
                 ? 'Host is accepting contracts'
                 : 'Host is not accepting contracts'
@@ -83,7 +83,7 @@ export function HostInfo({ host }: Props) {
               color={
                 (
                   host.v2
-                    ? host.rhpV4Settings.acceptingContracts
+                    ? host.v2Settings.acceptingContracts
                     : host.settings.acceptingcontracts
                 )
                   ? 'green'
@@ -92,14 +92,14 @@ export function HostInfo({ host }: Props) {
               className="flex gap-1 items-center"
             >
               {host.v2 ? (
-                host.rhpV4Settings.acceptingContracts
+                host.v2Settings.acceptingContracts
               ) : host.settings.acceptingcontracts ? (
                 <CheckmarkFilled16 />
               ) : (
                 <WarningFilled16 />
               )}
               {host.v2
-                ? host.rhpV4Settings.acceptingContracts
+                ? host.v2Settings.acceptingContracts
                 : host.settings.acceptingcontracts
                 ? 'Accepting contracts'
                 : 'Not accepting contracts'}
@@ -109,12 +109,10 @@ export function HostInfo({ host }: Props) {
       </div>
       <div className="flex flex-wrap gap-x-2 gap-y-1 items-center">
         {host.v2 ? (
-          <Tooltip
-            content={`Host version ${host.rhpV4Settings.protocolVersion}`}
-          >
+          <Tooltip content={`Host version ${host.v2Settings.protocolVersion}`}>
             <Text size="14" color="subtle" className="flex gap-1 items-center">
               <Fork16 />
-              {host.rhpV4Settings.protocolVersion}
+              {host.v2Settings.protocolVersion}
             </Text>
           </Tooltip>
         ) : (
