@@ -113,6 +113,10 @@ import {
   walletPendingRoute,
   walletRoute,
   walletSendRoute,
+  V2ContractsParams,
+  V2ContractsPayload,
+  V2ContractsResponse,
+  v2ContractsRoute,
 } from '@siafoundation/hostd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
@@ -180,6 +184,11 @@ export function Hostd({ api, password }: { api: string; password?: string }) {
       ContractsPayload,
       ContractsResponse
     >(axios, 'post', contractsRoute),
+    contractsV2: buildRequestHandler<
+      V2ContractsParams,
+      V2ContractsPayload,
+      V2ContractsResponse
+    >(axios, 'post', v2ContractsRoute),
     contractsIntegrityCheck: buildRequestHandler<
       ContractsIntegrityCheckParams,
       ContractsIntegrityCheckPayload,

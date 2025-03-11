@@ -40,6 +40,7 @@ export type V2FileContractRevision = {
 }
 
 export type V2FileContract = {
+  capacity: number
   filesize: number
   fileMerkleRoot: Hash256
   proofHeight: number

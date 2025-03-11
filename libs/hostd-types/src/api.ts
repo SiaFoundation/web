@@ -6,7 +6,7 @@ import {
   ChainIndex,
   WalletEvent,
 } from '@siafoundation/types'
-import { Contract, ContractStatus } from './types'
+import { Contract, ContractStatus, V2Contract, V2ContractStatus } from './types'
 
 export const hostStateRoute = '/state'
 export const consensusNetworkRoute = '/consensus/network'
@@ -20,6 +20,7 @@ export const walletPendingRoute = '/wallet/pending'
 export const walletSendRoute = '/wallet/send'
 export const tpoolFeeRoute = '/tpool/fee'
 export const contractsRoute = '/contracts'
+export const v2ContractsRoute = '/v2/contracts'
 export const contractsIdIntegrityRoute = '/contracts/:id/integrity'
 export const metricsRoute = '/metrics'
 export const metricsIntervalRoute = '/metrics/:interval'
@@ -213,6 +214,41 @@ export type ContractsPayload = {
 
 export type ContractsResponse = {
   contracts: Contract[]
+  count: number
+}
+
+export type V2ContractFilterSortField =
+  | 'status'
+  | 'negotiationHeight'
+  | 'expirationHeight'
+
+export type V2ContractsParams = void
+
+export type V2ContractsPayload = {
+  // filters
+  statuses?: V2ContractStatus[]
+  contractIDs?: FileContractID[]
+  renewedFrom?: FileContractID[]
+  renewedTo?: FileContractID[]
+  renterKey?: PublicKey[]
+
+  minNegotiationHeight?: number
+  maxNegotiationHeight?: number
+
+  minExpirationHeight?: number
+  maxExpirationHeight?: number
+
+  // pagination
+  limit?: number
+  offset?: number
+
+  // sorting
+  sortField?: V2ContractFilterSortField
+  sortDesc?: boolean
+}
+
+export type V2ContractsResponse = {
+  contracts: V2Contract[]
   count: number
 }
 
