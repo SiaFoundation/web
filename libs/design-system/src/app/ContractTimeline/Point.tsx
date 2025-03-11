@@ -49,6 +49,7 @@ export function Point({
 
   return (
     <div
+      aria-label={`${label} ${eventHeight}`}
       className={cx(
         'group',
         'absolute -top-[5px] w-4 h-4',

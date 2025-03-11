@@ -1,32 +1,13 @@
-import {
-  FileContractID,
-  Hash256,
-  Signature,
-  UnlockConditions,
-  SiacoinOutput,
-} from '@siafoundation/types'
-import {
-  ContractFilterSortField,
-  ContractStatus,
-} from '@siafoundation/hostd-types'
+import { FileContractID, Hash256 } from '@siafoundation/types'
 import BigNumber from 'bignumber.js'
 
 export type ContractData = {
   id: string
-  revision: {
-    parentID: FileContractID
-    unlockConditions: UnlockConditions
-    filesize: BigNumber
-    fileMerkleRoot: Hash256
-    windowStart: number
-    windowEnd: number
-    payout: BigNumber
-    remainingRenterFunds: BigNumber
-    validProofOutputs: SiacoinOutput[]
-    missedProofOutputs: SiacoinOutput[]
-    unlockHash: Hash256
-    revisionNumber: number
-  }
+  version: 1 | 2
+  filesize: BigNumber
+  fileMerkleRoot: Hash256
+  payout: BigNumber | null
+  remainingRenterFunds: BigNumber
   usage: {
     total: BigNumber
     accountFunding: BigNumber
@@ -36,11 +17,13 @@ export type ContractData = {
     rpc: BigNumber
     storage: BigNumber
   }
-
-  hostSignature: Signature
-  renterSignature: Signature
-
-  status: ContractStatus
+  status:
+    | 'pending'
+    | 'active'
+    | 'rejected'
+    | 'failed'
+    | 'renewed'
+    | 'successful'
   lockedCollateral: BigNumber
   negotiationHeight: number
   formationConfirmed: boolean
@@ -49,6 +32,8 @@ export type ContractData = {
   contractHeightStart: number
   contractHeightEnd: number
   resolutionHeight: number
+  proofWindowHeightStart: number
+  proofWindowHeightEnd: number
   renewedTo: FileContractID
   renewedFrom: FileContractID
   isRenewedTo: boolean
@@ -59,6 +44,7 @@ export type TableColumnId =
   | 'actions'
   | 'contractId'
   | 'status'
+  | 'version'
   | 'usageTotal'
   | 'usageAccountFunding'
   | 'usageEgress'
@@ -68,9 +54,11 @@ export type TableColumnId =
   | 'usageStorage'
   | 'lockedCollateral'
   | 'timeline'
+  | 'negotiationHeight'
   | 'contractHeightStart'
   | 'contractHeightEnd'
   | 'payoutHeight'
+  | 'resolutionHeight'
 
 export const columnsDefaultVisible: TableColumnId[] = [
   'contractId',
@@ -83,37 +71,63 @@ export const columnsDefaultVisible: TableColumnId[] = [
 export type SortField =
   | 'status'
   | 'timeline'
+  | 'negotiationHeight'
   | 'contractHeightStart'
-  | 'contractHeightEnd'
-
+  | 'proofWindowHeightEnd'
+  | 'resolutionHeight'
+  | 'payoutHeight'
 export const sortOptions: {
   id: SortField
-  value: ContractFilterSortField
   label: string
   category: string
+  clientId:
+    | 'status'
+    | 'negotiationHeight'
+    | 'contractHeightStart'
+    | 'proofWindowHeightEnd'
+    | 'resolutionHeight'
+    | 'payoutHeight'
 }[] = [
   {
     id: 'status',
-    value: 'status',
+    clientId: 'status',
     label: 'status',
     category: 'general',
   },
   {
     id: 'timeline',
-    value: 'negotiationHeight',
+    clientId: 'contractHeightStart',
     label: 'timeline',
     category: 'time',
   },
   {
-    id: 'contractHeightStart',
-    value: 'negotiationHeight',
-    label: 'start height',
+    id: 'negotiationHeight',
+    clientId: 'negotiationHeight',
+    label: 'negotiation height',
     category: 'time',
   },
   {
-    id: 'contractHeightEnd',
-    value: 'expirationHeight',
+    id: 'contractHeightStart',
+    clientId: 'contractHeightStart',
+    label: 'formation height',
+    category: 'time',
+  },
+  {
+    id: 'proofWindowHeightEnd',
+    clientId: 'proofWindowHeightEnd',
     label: 'expiration height',
+    category: 'time',
+  },
+  {
+    id: 'resolutionHeight',
+    clientId: 'resolutionHeight',
+    label: 'resolution height',
+    category: 'time',
+  },
+  {
+    id: 'payoutHeight',
+    clientId: 'payoutHeight',
+    label: 'payout height',
     category: 'time',
   },
 ]

@@ -26,6 +26,7 @@ export const toggleColumnVisibility = step(
     const configureView = page.getByRole('dialog')
     const columnToggle = configureView.getByRole('checkbox', {
       name,
+      exact: true,
     })
 
     if (visible) {

@@ -32,7 +32,6 @@ export type Contract = {
     fileMerkleRoot: Hash256
     windowStart: number
     windowEnd: number
-    payout: Currency
     validProofOutputs: SiacoinOutput[]
     missedProofOutputs: SiacoinOutput[]
     unlockHash: Hash256

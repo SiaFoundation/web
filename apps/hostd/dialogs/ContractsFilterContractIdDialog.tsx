@@ -1,4 +1,5 @@
 import {
+  ClientFilterItem,
   Dialog,
   FormFieldFormik,
   FormSubmitButtonFormik,
@@ -7,12 +8,16 @@ import { useContracts } from '../contexts/contracts'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useDialog } from '../contexts/dialog'
+import { ContractData } from '../contexts/contracts/types'
 
-export function filterContractId(contractId: string) {
+export function filterContractId(
+  contractId: string
+): ClientFilterItem<ContractData> {
   return {
     id: 'filterContractId',
     value: contractId,
     label: `contract ID is ${contractId}`,
+    fn: (c) => c.id === contractId,
   }
 }
 

@@ -50,6 +50,7 @@ export function Segment({
 
   return (
     <div
+      aria-label={`${label} ${startHeight} - ${endHeight}`}
       className={cx(
         'group flex items-center justify-center',
         'absolute -top-[5px] h-4',

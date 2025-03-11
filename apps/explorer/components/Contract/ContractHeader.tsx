@@ -83,7 +83,9 @@ export function ContractHeader({
             contractHeightEnd={contract.windowStart}
             proofWindowHeightStart={contract.windowStart}
             proofWindowHeightEnd={contract.windowEnd}
-            proofHeight={contract.proofIndex ? contract.proofIndex.height : 0}
+            resolutionHeight={
+              contract.proofIndex ? contract.proofIndex.height : 0
+            }
             range={{
               startHeight:
                 contract.confirmationIndex?.height ||
