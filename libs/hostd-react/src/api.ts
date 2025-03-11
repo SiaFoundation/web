@@ -118,6 +118,10 @@ import {
   WalletEventsParams,
   WalletEventsResponse,
   walletEventsRoute,
+  V2ContractsParams,
+  V2ContractsPayload,
+  V2ContractsResponse,
+  v2ContractsRoute,
 } from '@siafoundation/hostd-types'
 import {
   getMainnetBlockHeight,
@@ -292,6 +296,19 @@ export function useContracts(
   return usePostSwr({
     ...args,
     route: contractsRoute,
+  })
+}
+
+export function useContractsV2(
+  args: HookArgsWithPayloadSwr<
+    V2ContractsParams,
+    V2ContractsPayload,
+    V2ContractsResponse
+  >
+) {
+  return usePostSwr({
+    ...args,
+    route: v2ContractsRoute,
   })
 }
 

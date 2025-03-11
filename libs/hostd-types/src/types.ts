@@ -5,6 +5,8 @@ import {
   Signature,
   Currency,
   FileContractID,
+  V2FileContract,
+  ChainIndex,
 } from '@siafoundation/types'
 
 export type ContractStatus =
@@ -12,6 +14,14 @@ export type ContractStatus =
   | 'active'
   | 'rejected'
   | 'failed'
+  | 'successful'
+
+export type V2ContractStatus =
+  | 'pending'
+  | 'active'
+  | 'rejected'
+  | 'failed'
+  | 'renewed'
   | 'successful'
 
 export type Contract = {
@@ -47,6 +57,27 @@ export type Contract = {
   formationConfirmed: boolean
   revisionConfirmed: boolean
   resolutionHeight: number
+  renewedTo: FileContractID
+  renewedFrom: FileContractID
+}
+
+export type Usage = {
+  rpc: Currency
+  storage: Currency
+  egress: Currency
+  ingress: Currency
+  accountFunding: Currency
+  collateral: Currency
+}
+
+export type V2Contract = V2FileContract & {
+  id: FileContractID
+  status: V2ContractStatus
+  usage: Usage
+  negotiationHeight: number
+  revisionConfirmed: boolean
+  formationIndex: ChainIndex
+  resolutionHeight: ChainIndex
   renewedTo: FileContractID
   renewedFrom: FileContractID
 }
