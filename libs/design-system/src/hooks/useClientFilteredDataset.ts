@@ -29,7 +29,7 @@ export function useClientFilteredDataset<
       return undefined
     }
     const filterList = Object.entries(filters).map(([_, f]) => f)
-    let data = filterList.length
+    const subset = filterList.length
       ? dataset.filter((datum) => {
           for (const filter of filterList) {
             if (!filter.fn(datum)) {
@@ -39,7 +39,8 @@ export function useClientFilteredDataset<
           return true
         })
       : dataset
-    data = data.sort((a, b) => {
+    const data = [...subset]
+    return data.sort((a, b) => {
       const aVal = a[sortField]
       const bVal = b[sortField]
       if (sortDirection === 'desc') {
@@ -65,7 +66,6 @@ export function useClientFilteredDataset<
       }
       return aVal >= bVal ? 1 : -1
     })
-    return [...data]
   }, [dataset, filters, sortField, sortDirection])
 
   const datasetPage = useMemo(() => {

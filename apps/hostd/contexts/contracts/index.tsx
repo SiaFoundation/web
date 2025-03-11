@@ -1,14 +1,17 @@
 import {
   useTableState,
   useDatasetState,
-  useServerFilters,
   getContractsTimeRangeBlockHeight,
   useMultiSelect,
   usePaginationOffset,
+  useClientFilters,
+  useClientFilteredDataset,
 } from '@siafoundation/design-system'
 import { Maybe } from '@siafoundation/types'
-import { ContractStatus } from '@siafoundation/hostd-types'
-import { useContracts as useContractsData } from '@siafoundation/hostd-react'
+import {
+  useContracts as useContractsData,
+  useContractsV2 as useContractsV2Data,
+} from '@siafoundation/hostd-react'
 import { createContext, useContext, useMemo } from 'react'
 import {
   columnsDefaultVisible,
@@ -26,8 +29,6 @@ const defaultLimit = 50
 
 function useContractsMain() {
   const { limit, offset } = usePaginationOffset(defaultLimit)
-  const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
-    useServerFilters()
 
   const {
     configurableColumns,
@@ -51,18 +52,7 @@ function useContractsMain() {
   })
 
   const response = useContractsData({
-    payload: {
-      limit,
-      offset,
-      sortField: sortOptions.find((o) => o.id === sortField)?.value,
-      sortDesc: sortDirection === 'desc',
-      contractIDs: filters
-        .filter((f) => f.id === 'filterContractId')
-        .map((f) => f.value),
-      statuses: filters
-        .filter((f) => f.id.startsWith('filterStatus'))
-        .map((f) => f.value) as ContractStatus[],
-    },
+    payload: {},
     config: {
       swr: {
         refreshInterval: defaultDatasetRefreshInterval,
@@ -70,12 +60,39 @@ function useContractsMain() {
     },
   })
 
-  const _datasetPage = useDataset({
-    response,
+  const responseV2 = useContractsV2Data({
+    payload: {},
+    config: {
+      swr: {
+        refreshInterval: defaultDatasetRefreshInterval,
+      },
+    },
   })
+
+  const dataset = useDataset({
+    response,
+    responseV2,
+  })
+
+  const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
+    useClientFilters<ContractData>()
 
   const { estimatedBlockHeight, isSynced, nodeBlockHeight } = useSyncStatus()
   const currentHeight = isSynced ? nodeBlockHeight : estimatedBlockHeight
+
+  const clientSortField = useMemo(
+    () => sortOptions.find((o) => o.id === sortField)?.clientId || sortField,
+    [sortField]
+  )
+  const { datasetFiltered, datasetPage: _datasetPage } =
+    useClientFilteredDataset({
+      dataset,
+      filters,
+      sortField: clientSortField,
+      sortDirection,
+      offset,
+      limit,
+    })
 
   const { range: contractsTimeRange } = useMemo(
     () => getContractsTimeRangeBlockHeight(currentHeight, _datasetPage || []),
@@ -126,8 +143,10 @@ function useContractsMain() {
     limit,
     cellContext,
     datasetPageTotal: datasetPage?.length || 0,
-    datasetFilteredTotal: response.data?.count,
+    datasetFilteredTotal: datasetFiltered?.length || 0,
+    datasetTotal: dataset?.length || 0,
     visibleColumns,
+    datasetFiltered,
     datasetPage,
     configurableColumns,
     visibleColumnIds,

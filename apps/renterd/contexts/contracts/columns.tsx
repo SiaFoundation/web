@@ -223,7 +223,7 @@ export const columns: ContractsTableColumn[] = [
             contractHeightEnd={contractHeightEnd}
             proofWindowHeightStart={proofWindowHeightStart}
             proofWindowHeightEnd={proofWindowHeightEnd}
-            proofHeight={proofHeight}
+            resolutionHeight={proofHeight}
             revisionHeight={revisionHeight}
             range={contractsTimeRange}
           />

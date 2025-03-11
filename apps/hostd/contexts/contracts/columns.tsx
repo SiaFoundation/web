@@ -16,7 +16,6 @@ import {
   ArrowDownRight16,
   Money16,
 } from '@siafoundation/react-icons'
-import { ContractStatus } from '@siafoundation/hostd-types'
 import { blockHeightToTime, humanBytes, humanDate } from '@siafoundation/units'
 import { ContractContextMenu } from '../../components/Contracts/ContractContextMenu'
 import { ContractData, TableColumnId } from './types'
@@ -119,12 +118,30 @@ export const columns: ContractsTableColumn[] = (
       },
     },
     {
+      id: 'version',
+      label: 'version',
+      category: 'general',
+      render: ({ data: { version } }) => {
+        return <Badge variant="gray">v{version}</Badge>
+      },
+    },
+    {
       id: 'timeline',
       label: 'timeline',
       category: 'time',
       render: ({ data, context: { currentHeight, contractsTimeRange } }) => {
-        const { contractHeightStart, contractHeightEnd, revision, status } =
-          data
+        const {
+          contractHeightStart,
+          contractHeightEnd,
+          proofWindowHeightStart,
+          proofWindowHeightEnd,
+          resolutionHeight,
+          status,
+          payoutHeight,
+        } = data
+        if (contractHeightStart === 0) {
+          return null
+        }
         return (
           <div className="w-[400px]">
             <ContractTimeline
@@ -134,11 +151,13 @@ export const columns: ContractsTableColumn[] = (
                 status === 'rejected' ? undefined : contractHeightEnd
               }
               proofWindowHeightStart={
-                status === 'rejected' ? undefined : revision.windowStart
+                status === 'rejected' ? undefined : proofWindowHeightStart
               }
               proofWindowHeightEnd={
-                status === 'rejected' ? undefined : revision.windowEnd
+                status === 'rejected' ? undefined : proofWindowHeightEnd
               }
+              resolutionHeight={resolutionHeight}
+              payoutHeight={payoutHeight}
               range={contractsTimeRange}
             />
           </div>
@@ -146,8 +165,19 @@ export const columns: ContractsTableColumn[] = (
       },
     },
     {
+      id: 'negotiationHeight',
+      label: 'negotiation height',
+      category: 'time',
+      contentClassName: 'w-[120px] justify-end',
+      render: ({ data: { negotiationHeight }, context: { currentHeight } }) => (
+        <Text size="12">
+          {humanDate(blockHeightToTime(currentHeight, negotiationHeight))}
+        </Text>
+      ),
+    },
+    {
       id: 'contractHeightStart',
-      label: 'start date',
+      label: 'formation height',
       category: 'time',
       contentClassName: 'w-[120px] justify-end',
       render: ({
@@ -160,37 +190,65 @@ export const columns: ContractsTableColumn[] = (
       ),
     },
     {
-      id: 'contractHeightEnd',
-      label: 'expiration date',
+      id: 'proofWindowHeightEnd',
+      label: 'expiration height',
       category: 'time',
       contentClassName: 'w-[120px] justify-end',
-      render: ({ data: { contractHeightEnd }, context: { currentHeight } }) => (
+      render: ({
+        data: { proofWindowHeightEnd },
+        context: { currentHeight },
+      }) => (
         <Text size="12">
-          {humanDate(blockHeightToTime(currentHeight, contractHeightEnd))}
+          {humanDate(blockHeightToTime(currentHeight, proofWindowHeightEnd))}
         </Text>
       ),
     },
     {
-      id: 'payoutHeight',
-      label: 'payout date',
+      id: 'resolutionHeight',
+      label: 'resolution height',
       category: 'time',
       contentClassName: 'w-[120px] justify-end',
-      render: ({ data: { payoutHeight }, context: { currentHeight } }) => (
-        <Text size="12">
-          {humanDate(blockHeightToTime(currentHeight, payoutHeight))}
-        </Text>
-      ),
+      render: ({ data: { resolutionHeight }, context: { currentHeight } }) => {
+        if (resolutionHeight === 0) {
+          return (
+            <Text size="12" color="subtle">
+              -
+            </Text>
+          )
+        }
+        return (
+          <Text size="12">
+            {humanDate(blockHeightToTime(currentHeight, resolutionHeight))}
+          </Text>
+        )
+      },
+    },
+    {
+      id: 'payoutHeight',
+      label: 'payout height',
+      category: 'time',
+      contentClassName: 'w-[120px] justify-end',
+      render: ({ data: { payoutHeight }, context: { currentHeight } }) => {
+        if (payoutHeight === 0) {
+          return (
+            <Text size="12" color="subtle">
+              -
+            </Text>
+          )
+        }
+        return (
+          <Text size="12">
+            {humanDate(blockHeightToTime(currentHeight, payoutHeight))}
+          </Text>
+        )
+      },
     },
     {
       id: 'filesize',
       label: 'data size',
       category: 'general',
       contentClassName: 'w-[120px] justify-end',
-      render: ({
-        data: {
-          revision: { filesize },
-        },
-      }) => (
+      render: ({ data: { filesize } }) => (
         <ValueNum
           size="12"
           value={filesize}
@@ -204,32 +262,40 @@ export const columns: ContractsTableColumn[] = (
       label: 'merkle root',
       category: 'general',
       contentClassName: 'w-[120px] justify-end',
-      render: ({
-        data: {
-          revision: { fileMerkleRoot },
-        },
-      }) => <ValueCopyable size="12" value={stripPrefix(fileMerkleRoot)} />,
+      render: ({ data: { fileMerkleRoot } }) => (
+        <ValueCopyable size="12" value={stripPrefix(fileMerkleRoot)} />
+      ),
     },
     {
       id: 'payout',
       label: 'payout',
       category: 'financial',
       contentClassName: 'w-[120px] justify-end',
-      render: ({ data: { revision } }) => (
-        <ValueScFiat displayBoth size="12" value={revision.payout} />
-      ),
+      render: ({ data: { payoutHeight, payout } }) => {
+        if (payoutHeight === 0) {
+          return (
+            <Text size="12" color="subtle">
+              -
+            </Text>
+          )
+        }
+        if (payout === null) {
+          return (
+            <Text size="12" color="subtle">
+              unknown
+            </Text>
+          )
+        }
+        return <ValueScFiat displayBoth size="12" value={payout} />
+      },
     },
     {
       id: 'remainingRenterFunds',
       label: 'remaining renter funds',
       category: 'financial',
       contentClassName: 'w-[120px] justify-end',
-      render: ({ data: { revision } }) => (
-        <ValueScFiat
-          displayBoth
-          size="12"
-          value={revision.remainingRenterFunds}
-        />
+      render: ({ data: { remainingRenterFunds } }) => (
+        <ValueScFiat displayBoth size="12" value={remainingRenterFunds} />
       ),
     },
     {
@@ -330,7 +396,15 @@ function getFullLabelAndTip(col: ContractsTableColumn): {
   }
 }
 
-function getStatusColor(status: ContractStatus) {
+function getStatusColor(
+  status:
+    | 'pending'
+    | 'active'
+    | 'rejected'
+    | 'failed'
+    | 'renewed'
+    | 'successful'
+) {
   if (status === 'active') {
     return 'amber'
   }
@@ -342,6 +416,9 @@ function getStatusColor(status: ContractStatus) {
   }
   if (status === 'rejected') {
     return 'red'
+  }
+  if (status === 'renewed') {
+    return 'green'
   }
   if (status === 'successful') {
     return 'green'

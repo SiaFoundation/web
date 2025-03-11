@@ -12,14 +12,19 @@ import {
   Text,
 } from '@siafoundation/design-system'
 import { CaretDown16, DataCheck16 } from '@siafoundation/react-icons'
-import { ContractStatus } from '@siafoundation/hostd-types'
 import { useContractsIntegrityCheck } from '@siafoundation/hostd-react'
 import { useCallback } from 'react'
 import { routes } from '../../config/routes'
 
 type Props = {
   id: string
-  status: ContractStatus
+  status:
+    | 'pending'
+    | 'active'
+    | 'rejected'
+    | 'failed'
+    | 'renewed'
+    | 'successful'
   contentProps?: React.ComponentProps<typeof DropdownMenu>['contentProps']
   buttonProps?: React.ComponentProps<typeof Button>
 }

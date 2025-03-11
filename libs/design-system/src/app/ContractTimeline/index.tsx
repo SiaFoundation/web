@@ -8,7 +8,8 @@ type Props = {
   proofWindowHeightStart: number
   proofWindowHeightEnd: number
   revisionHeight?: number
-  proofHeight?: number
+  resolutionHeight?: number
+  payoutHeight?: number
   range: {
     startHeight: number
     endHeight: number
@@ -22,7 +23,8 @@ export function ContractTimeline({
   proofWindowHeightStart,
   proofWindowHeightEnd,
   revisionHeight,
-  proofHeight,
+  resolutionHeight,
+  payoutHeight,
   range,
 }: Props) {
   const unconfirmed = currentHeight - contractHeightStart < 6
@@ -73,9 +75,17 @@ export function ContractTimeline({
               className="z-20"
             />
             <Point
-              label="storage proof"
+              label="resolution"
               currentHeight={currentHeight}
-              eventHeight={proofHeight}
+              eventHeight={resolutionHeight}
+              range={range}
+              color="green"
+              className="z-20"
+            />
+            <Point
+              label="payout"
+              currentHeight={currentHeight}
+              eventHeight={payoutHeight}
               range={range}
               color="green"
               className="z-20"
