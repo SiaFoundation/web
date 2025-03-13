@@ -122,9 +122,9 @@ export function Home({
           ),
         },
         {
-          label: 'Average storage price',
+          label: 'Median storage price',
           value: (
-            <Tooltip content="Average storage price per TB/month">
+            <Tooltip content="Median storage price per TB/month">
               <div className="flex flex-col gap-1">
                 <Text
                   className="text-xl md:text-3xl"
@@ -155,9 +155,9 @@ export function Home({
           ),
         },
         {
-          label: 'Average download price',
+          label: 'Median download price',
           value: (
-            <Tooltip content="Average download price per TB">
+            <Tooltip content="Median download price per TB">
               <div className="flex flex-col gap-1">
                 <Text
                   className="text-xl md:text-3xl"
@@ -188,9 +188,9 @@ export function Home({
           ),
         },
         {
-          label: 'Average upload price',
+          label: 'Median upload price',
           value: (
-            <Tooltip content="Average upload price per TB">
+            <Tooltip content="Median upload price per TB">
               <div className="flex flex-col gap-1">
                 <Text
                   className="text-xl md:text-3xl"
