@@ -338,7 +338,7 @@ export type V2HostPrices = {
 }
 
 export type V2HostSettings = {
-  protocolVersion: number
+  protocolVersion: number[]
   release: string
   walletAddress: string
   acceptingContracts: boolean

@@ -109,10 +109,14 @@ export function HostInfo({ host }: Props) {
       </div>
       <div className="flex flex-wrap gap-x-2 gap-y-1 items-center">
         {host.v2 ? (
-          <Tooltip content={`Host version ${host.v2Settings.protocolVersion}`}>
+          <Tooltip
+            content={`Host version ${host.v2Settings.protocolVersion.join(
+              '.'
+            )}`}
+          >
             <Text size="14" color="subtle" className="flex gap-1 items-center">
               <Fork16 />
-              {host.v2Settings.protocolVersion}
+              {host.v2Settings.protocolVersion.join('.')}
             </Text>
           </Tooltip>
         ) : (
