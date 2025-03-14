@@ -1,5 +1,14 @@
 # explorer
 
+## 0.28.0
+
+### Minor Changes
+
+- e63d9818: Changed network metrics price average titles to median.
+- ea9cc58f: Fixed v2 host protocol version.
+- 7147e156: Fixed host page display.
+- 7d137c16: Added v2 hardfork countdowns to home page.
+
 ## 0.27.0
 
 ### Minor Changes
