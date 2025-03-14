@@ -169,6 +169,7 @@ export type CurrencyID =
 export type HostQuery = {
   v2?: boolean
   publicKeys?: PublicKey[]
+  netAddresses?: string[]
   minUptime?: number
   minDuration?: number
   maxStoragePrice?: Currency

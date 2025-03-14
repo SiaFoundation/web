@@ -51,8 +51,43 @@ export function Search() {
       }
 
       // Catch possible host pubkey, avoid request, go there.
-      if (values.query.slice(0, 7) === 'ed25519') {
+      if (values.query.slice(0, 8) === 'ed25519:') {
         router.push(routes.host.view.replace(':id', values.query))
+        form.reset()
+        return
+      }
+
+      // Catch possible host address, make a different request, go there.
+      if (values.query.includes(':')) {
+        const [hostSearch, hostSearchError] = await to(
+          explored.hostsList({
+            params: { sortBy: 'net_address', dir: 'asc' },
+            data: { netAddresses: [values.query] },
+          })
+        )
+
+        if (hostSearchError)
+          return triggerErrorToast({
+            title: 'Request failed. Try again later.',
+          })
+
+        if (!hostSearch || !hostSearch.length)
+          return triggerErrorToast({
+            title: 'Host not found. Make sure to include port.',
+          })
+
+        // If we have more than one result, it could be due to a malicious
+        // host announcement or remap of the DNS. In either case, we
+        // should narrow the user into searching by public key.
+        if (hostSearch.length > 1) {
+          triggerErrorToast({
+            title: "Multiple results found. Please use this host's public key.",
+          })
+          form.reset()
+          return
+        }
+
+        router.push(routes.host.view.replace(':id', hostSearch[0].publicKey))
         form.reset()
         return
       }
