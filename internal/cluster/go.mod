@@ -5,9 +5,9 @@ go 1.23.1
 toolchain go1.23.2
 
 require (
-	go.sia.tech/cluster v0.1.3-0.20250225162755-3f0d8bb0974a
-	go.sia.tech/core v0.10.3-0.20250225045648-07b92f8cf455
-	go.sia.tech/coreutils v0.11.2-0.20250225051012-d01f7fa285c7
+	go.sia.tech/cluster v0.1.3-0.20250313160709-52002ed2916f
+	go.sia.tech/core v0.10.4
+	go.sia.tech/coreutils v0.12.1
 	go.uber.org/zap v1.27.0
 )
 
@@ -37,23 +37,24 @@ require (
 	github.com/shabbyrobe/gocovmerge v0.0.0-20230507112040-c3350d9342df // indirect
 	github.com/shopspring/decimal v1.4.0 // indirect
 	go.etcd.io/bbolt v1.4.0 // indirect
-	go.sia.tech/explored v0.0.0-20250225162032-a0f5115f8d08 // indirect
+	go.sia.tech/explored v0.0.0-20250312120716-95238def74fb // indirect
 	go.sia.tech/gofakes3 v0.0.5 // indirect
 	go.sia.tech/hostd v1.1.3-0.20250225151212-e578290d928e // indirect
+	go.sia.tech/hostd/v2 v2.1.0-beta.2.0.20250313081452-86d4e34d782f // indirect
 	go.sia.tech/jape v0.12.1 // indirect
 	go.sia.tech/mux v1.4.0 // indirect
-	go.sia.tech/renterd v1.1.2-0.20250225091147-8e1279247c9c // indirect
-	go.sia.tech/walletd v0.9.0-beta.1.0.20250224212402-c82c1fb1d43d // indirect
+	go.sia.tech/renterd/v2 v2.0.2-0.20250312081818-65ef6bdb87ec // indirect
+	go.sia.tech/walletd/v2 v2.1.0-beta.1.0.20250313082637-b8d36f9f7a95 // indirect
 	go.uber.org/mock v0.5.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	golang.org/x/crypto v0.34.0 // indirect
+	golang.org/x/crypto v0.36.0 // indirect
 	golang.org/x/exp v0.0.0-20240506185415-9bf2ced13842 // indirect
 	golang.org/x/mod v0.22.0 // indirect
-	golang.org/x/net v0.34.0 // indirect
-	golang.org/x/sync v0.11.0 // indirect
-	golang.org/x/sys v0.30.0 // indirect
-	golang.org/x/text v0.22.0 // indirect
-	golang.org/x/time v0.10.0 // indirect
+	golang.org/x/net v0.36.0 // indirect
+	golang.org/x/sync v0.12.0 // indirect
+	golang.org/x/sys v0.31.0 // indirect
+	golang.org/x/text v0.23.0 // indirect
+	golang.org/x/time v0.11.0 // indirect
 	golang.org/x/tools v0.28.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	lukechampine.com/frand v1.5.1 // indirect
