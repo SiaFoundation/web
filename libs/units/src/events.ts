@@ -20,7 +20,7 @@ export function getEventContractId(e: WalletEvent) {
     return e.data.parent.id
   }
   if (e.type === 'v2ContractResolution') {
-    return e.data.parent.id
+    return e.data.resolution.parent.id
   }
   return undefined
 }
