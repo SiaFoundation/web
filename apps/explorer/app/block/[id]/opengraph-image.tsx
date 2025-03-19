@@ -1,7 +1,6 @@
 import { humanDate } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
-import { stripPrefix, truncate } from '@siafoundation/design-system'
-import { to } from '@siafoundation/request'
+import { truncate } from '@siafoundation/design-system'
 import { getExplored } from '../../../lib/explored'
 
 export const revalidate = 0
@@ -27,48 +26,50 @@ const formatOGImage = (id: string) => {
 }
 
 export default async function Image({ params }) {
-  const id = params?.id as string
+  let id: string
 
-  // Grab chainIndex at height.
-  const [chainIndex, chainIndexError] = await to(
-    getExplored().consensusTipByHeight({ params: { height: Number(id) } })
-  )
-
-  if (!chainIndex || chainIndexError) {
-    return formatOGImage(id)
+  // Check if the incoming id is referencing height.
+  if (!isNaN(Number(params?.id))) {
+    // If it is, we need the block ID at that height.
+    const { data: tipAtHeight } = await getExplored().consensusTipByHeight(
+      params?.id
+    )
+    id = tipAtHeight.id
+  } else {
+    // If it is not the height, assume we're referencing ID. No call necessary.
+    id = params?.id
   }
 
-  // Grab block for id at ChainIndex in request above.
-  const [block, blockError] = await to(
-    getExplored().blockByID({ params: { id: stripPrefix(chainIndex.id) } })
-  )
+  try {
+    const { data: block } = await getExplored().blockByID({ params: { id } })
+    const values = [
+      {
+        label: 'transactions',
+        value: (
+          (block.transactions?.length ?? 0) +
+          (block.v2?.transactions?.length ?? 0)
+        ).toLocaleString(),
+      },
+      {
+        label: 'time',
+        value: humanDate(block.timestamp, {
+          dateStyle: 'medium',
+          timeStyle: 'short',
+        }),
+      },
+    ]
 
-  if (!block || blockError) {
+    return getOGImage(
+      {
+        id,
+        title: (block.v2?.height || block.height).toLocaleString(),
+        subtitle: 'block',
+        initials: 'B',
+        values,
+      },
+      size
+    )
+  } catch (e) {
     return formatOGImage(id)
   }
-
-  const values = [
-    {
-      label: 'transactions',
-      value: (block.transactions.length || 0).toLocaleString(),
-    },
-    {
-      label: 'time',
-      value: humanDate(block.timestamp, {
-        dateStyle: 'medium',
-        timeStyle: 'short',
-      }),
-    },
-  ]
-
-  return getOGImage(
-    {
-      id,
-      title: block.height.toLocaleString(),
-      subtitle: 'block',
-      initials: 'B',
-      values,
-    },
-    size
-  )
 }

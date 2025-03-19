@@ -4,8 +4,8 @@ import { Transaction } from '../../../components/Transaction'
 import { buildMetadata } from '../../../lib/utils'
 import { notFound } from 'next/navigation'
 import { stripPrefix, truncate } from '@siafoundation/design-system'
-import { to } from '@siafoundation/request'
 import { getExplored } from '../../../lib/explored'
+import { to } from '@siafoundation/request'
 
 export function generateMetadata({ params }): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
@@ -24,40 +24,75 @@ export const revalidate = 0
 export default async function Page({ params }) {
   const id = params?.id as string
 
-  // Make all non-dependent requests together.
-  const [
-    [transaction, transactionError],
-    [transactionChainIndices, transactionChainIndicesError],
-    [currentTip, currentTipError],
-  ] = await Promise.all([
-    to(getExplored().transactionByID({ params: { id } })),
-    to(getExplored().transactionChainIndices({ params: { id } })),
-    to(getExplored().consensusTip()),
-  ])
+  // Do we have a v1 or v2 transaction?
+  const { data: searchResult } = await getExplored().searchResultType({
+    params: { id },
+  })
 
-  if (transactionError) throw transactionError
-  if (transactionChainIndicesError) throw transactionChainIndicesError
-  if (currentTipError) throw currentTipError
-  if (!transaction || !transactionChainIndices || !currentTip) return notFound()
+  // Hit the v1 or v2 transaction-related endpoints.
+  if (searchResult === 'transaction') {
+    const [
+      [transaction, transactionError, transactionResponse],
+      { data: transactionChainIndices },
+      { data: currentTip },
+    ] = await Promise.all([
+      to(getExplored().transactionByID({ params: { id } })),
+      getExplored().transactionChainIndices({ params: { id } }),
+      getExplored().consensusTip(),
+    ])
 
-  // Use the first chainIndex from the above call to get our parent block.
-  const [parentBlock, parentBlockError] = await to(
-    getExplored().blockByID({ params: { id: transactionChainIndices[0].id } })
-  )
+    if (transactionError) {
+      if (transactionResponse?.status === 404) return notFound()
+      throw transactionError
+    }
 
-  if (parentBlockError) throw parentBlockError
-  if (!parentBlock) return notFound()
+    const { data: parentBlock } = await getExplored().blockByID({
+      params: { id: transactionChainIndices[0].id },
+    })
+    return (
+      <Transaction
+        transaction={transaction}
+        transactionHeaderData={{
+          id: stripPrefix(transaction.id),
+          blockHeight: transactionChainIndices[0].height,
+          confirmations:
+            currentTip.height - transactionChainIndices[0].height + 1,
+          timestamp: parentBlock.timestamp,
+        }}
+      />
+    )
+  } else if (searchResult === 'v2Transaction') {
+    const [
+      [transaction, transactionError, transactionResponse],
+      { data: transactionChainIndices },
+      { data: currentTip },
+    ] = await Promise.all([
+      to(getExplored().v2TransactionByID({ params: { id } })),
+      getExplored().v2TransactionChainIndices({ params: { id } }),
+      getExplored().consensusTip(),
+    ])
 
-  return (
-    <Transaction
-      transaction={transaction}
-      transactionHeaderData={{
-        id: stripPrefix(transaction.id),
-        blockHeight: transactionChainIndices[0].height,
-        confirmations:
-          currentTip.height - transactionChainIndices[0].height + 1,
-        timestamp: parentBlock.timestamp,
-      }}
-    />
-  )
+    if (transactionError) {
+      if (transactionResponse?.status === 404) return notFound()
+      throw transactionError
+    }
+
+    const { data: parentBlock } = await getExplored().blockByID({
+      params: { id: transactionChainIndices[0].id },
+    })
+    return (
+      <Transaction
+        transaction={transaction}
+        transactionHeaderData={{
+          id: stripPrefix(transaction.id),
+          blockHeight: transactionChainIndices[0].height,
+          confirmations:
+            currentTip.height - transactionChainIndices[0].height + 1,
+          timestamp: parentBlock.timestamp,
+        }}
+      />
+    )
+  } else {
+    return notFound()
+  }
 }
