@@ -11,11 +11,16 @@ import { routes } from '../../config/routes'
 import { ContentLayout } from '../ContentLayout'
 import { TransactionHeader, TransactionHeaderData } from './TransactionHeader'
 import { OutputListItem } from './OutputListItem'
-import { ExplorerTransaction } from '@siafoundation/explored-types'
+import {
+  ExplorerFileContractRevision,
+  ExplorerTransaction,
+  ExplorerV2Transaction,
+  V2FileContractRevision,
+} from '@siafoundation/explored-types'
 
 type Props = {
   transactionHeaderData: TransactionHeaderData
-  transaction: ExplorerTransaction
+  transaction: ExplorerTransaction | ExplorerV2Transaction
   title?: string
 }
 
@@ -40,20 +45,26 @@ export function Transaction({
     const list: OutputItem[] = []
     transaction.siacoinInputs?.forEach((o) => {
       list.push({
-        label: 'siacoin output',
-        addressHref: routes.address.view.replace(':id', stripPrefix(o.address)),
-        address: o.address,
-        sc: new BigNumber(o.value),
-        outputId: o.parentID,
+        label: 'siacoin input',
+        addressHref: routes.address.view.replace(
+          ':id',
+          stripPrefix(o.address || o.parent.siacoinOutput.address)
+        ),
+        address: o.address || o.parent.siacoinOutput.address,
+        sc: new BigNumber(o.value || o.parent.siacoinOutput.value),
+        outputId: o.parentID || o.parent.id,
       })
     })
     transaction.siafundInputs?.forEach((o) => {
       list.push({
-        label: 'siafund output',
-        addressHref: routes.address.view.replace(':id', stripPrefix(o.address)),
-        address: o.address,
-        sc: new BigNumber(o.value),
-        outputId: o.parentID,
+        label: 'siafund input',
+        addressHref: routes.address.view.replace(
+          ':id',
+          stripPrefix(o.address || o.parent.siafundOutput.address)
+        ),
+        address: o.address || o.parent.siafundOutput.address,
+        sc: new BigNumber(o.value || o.parent.siafundOutput.value),
+        outputId: o.parentID || o.parent.id,
       })
     })
     return list
@@ -100,21 +111,34 @@ export function Transaction({
     }
     const operations: EntityListItemProps[] = []
     transaction.fileContracts?.forEach((contract) => {
-      operations.push({
+      return operations.push({
         label: 'contract formation',
         type: 'contract',
         href: routes.contract.view.replace(':id', stripPrefix(contract.id)),
         hash: contract.id,
       })
     })
-    transaction.fileContractRevisions?.forEach((contract) => {
-      operations.push({
-        label: 'contract revision',
-        type: 'contract',
-        href: routes.contract.view.replace(':id', stripPrefix(contract.id)),
-        hash: contract.id,
-      })
-    })
+    transaction.fileContractRevisions?.forEach(
+      (contract: ExplorerFileContractRevision | V2FileContractRevision) => {
+        if ('parent' in contract) {
+          return operations.push({
+            label: 'contract revision',
+            type: 'contract',
+            href: routes.contract.view.replace(
+              ':id',
+              stripPrefix(contract.parent.id)
+            ),
+            hash: contract.parent.id,
+          })
+        }
+        return operations.push({
+          label: 'contract revision',
+          type: 'contract',
+          href: routes.contract.view.replace(':id', stripPrefix(contract.id)),
+          hash: contract.id,
+        })
+      }
+    )
     transaction.hostAnnouncements?.forEach((host) => {
       operations.push({
         label: 'host announcement',
@@ -122,12 +146,15 @@ export function Transaction({
         hash: host.netAddress,
       })
     })
-    transaction.storageProofs?.forEach((proof) => {
-      operations.push({
-        label: 'storage proof',
-        hash: proof.parentID,
-      })
-    })
+    {
+      'storageProofs' in transaction &&
+        transaction.storageProofs?.forEach((proof) => {
+          operations.push({
+            label: 'storage proof',
+            hash: proof.parentID,
+          })
+        })
+    }
     return operations
   }, [transaction])
 

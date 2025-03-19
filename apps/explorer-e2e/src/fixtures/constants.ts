@@ -65,7 +65,7 @@ export const TEST_CONTRACT_1 = {
     transactionID: 'a3a4a6808e33...',
     unlockHash: 'c50b70e7dd79...',
     revisionNumber: '18,446,744,0...',
-    status: 'obligation succeeded',
+    status: 'complete',
     missedProofTitle: 'Missed proof outputs (3)',
     validProofTitle: 'Valid proof outputs (2)',
   },

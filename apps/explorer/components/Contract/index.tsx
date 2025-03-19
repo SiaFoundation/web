@@ -14,30 +14,34 @@ import { ContractHeader } from './ContractHeader'
 import {
   ChainIndex,
   ExplorerFileContract,
-  FileContractID,
-  SiacoinOutput,
+  ExplorerV2FileContract,
+  // FileContractID,
 } from '@siafoundation/explored-types'
 import { blockHeightToHumanDate } from '../../lib/time'
 import { hastingsToFiat } from '../../lib/currency'
 import LoadingCurrency from '../LoadingCurrency'
 import LoadingTimestamp from '../LoadingTimestamp'
 import { useExploredAddress } from '../../hooks/useExploredAddress'
+import { ContractData } from '../../lib/contracts'
 
 type Props = {
-  previousRevisions: ExplorerFileContract[] | undefined
+  contractRevisions:
+    | ExplorerFileContract[]
+    | ExplorerV2FileContract[]
+    | undefined
   currentHeight: number
-  contract: ExplorerFileContract
-  renewedToID: FileContractID | null
-  renewedFromID: FileContractID | null
+  contract: ContractData
+  // renewedToID: FileContractID | null
+  // renewedFromID: FileContractID | null
   formationTxnChainIndex: ChainIndex[]
 }
 
 export function Contract({
-  previousRevisions,
+  contractRevisions,
   currentHeight,
   contract,
-  renewedFromID,
-  renewedToID,
+  // renewedFromID,
+  // renewedToID,
   formationTxnChainIndex,
 }: Props) {
   const api = useExploredAddress()
@@ -79,14 +83,14 @@ export function Contract({
         label: 'merkle root',
         value: contract.fileMerkleRoot,
       },
-      {
+      !('v2FileContract' in contract) && {
         label: 'unlock hash',
         value: contract.unlockHash,
       },
       {
         label: 'proof confirmed',
         copyable: false,
-        value: String(!!contract.proofTransactionID),
+        value: contract.resolutionTransactionID,
       },
       {
         label: 'negotiation height',
@@ -108,30 +112,34 @@ export function Contract({
       {
         label: 'expiration height',
         copyable: false,
-        value: contract.windowStart.toLocaleString() || '-',
+        value: contract.resolutionWindowStart.toLocaleString(),
       },
       {
         label: 'expiration time',
         copyable: false,
         value: (
           <LoadingTimestamp>
-            {blockHeightToHumanDate(currentHeight, contract.windowStart)}
+            {blockHeightToHumanDate(
+              currentHeight,
+              contract.resolutionWindowStart
+            )}
           </LoadingTimestamp>
         ),
       },
       {
         label: 'proof height',
         copyable: false,
-        value: contract.proofIndex
-          ? contract.proofIndex.height.toLocaleString()
-          : '-',
+        value: contract.resolutionIndex?.height.toLocaleString() || '-',
       },
       {
         label: 'proof time',
         copyable: false,
-        value: contract.proofIndex ? (
+        value: contract.resolutionIndex ? (
           <LoadingTimestamp>
-            {blockHeightToHumanDate(currentHeight, contract.proofIndex.height)}
+            {blockHeightToHumanDate(
+              currentHeight,
+              contract.resolutionIndex.height
+            )}
           </LoadingTimestamp>
         ) : (
           '-'
@@ -140,14 +148,17 @@ export function Contract({
       {
         label: 'proof deadline height',
         copyable: false,
-        value: contract.windowEnd.toLocaleString() || '-',
+        value: contract.resolutionWindowEnd.toLocaleString(),
       },
       {
         label: 'proof deadline time',
         copyable: false,
         value: (
           <LoadingTimestamp>
-            {blockHeightToHumanDate(currentHeight, contract.windowEnd)}
+            {blockHeightToHumanDate(
+              currentHeight,
+              contract.resolutionWindowEnd
+            )}
           </LoadingTimestamp>
         ),
       },
@@ -175,98 +186,61 @@ export function Contract({
       {
         label: 'previous revisions',
         copyable: false,
-        value: (previousRevisions && previousRevisions.length > 1
-          ? previousRevisions.length - 1
+        value: (contractRevisions && contractRevisions.length > 1
+          ? contractRevisions.length - 1
           : 0
         ).toLocaleString(),
       },
     ] as DatumProps[]
-  }, [contract, exchange, previousRevisions, currentHeight])
+  }, [
+    contract,
+    currentHeight,
+    exchange.currency,
+    exchange.rate,
+    contractRevisions,
+  ])
 
   const validProofOutputs = useMemo(() => {
-    if (isProperlyFormedNewContract(contract)) {
-      const { renterPayoutValid, hostPayoutValid } =
-        getNewContractFormattedOutputs(contract)
-      return [
-        {
-          label: 'renter payout: remaining renter allowance',
-          initials: 'r',
-          sc: renterPayoutValid && new BigNumber(renterPayoutValid.value),
-          hash: renterPayoutValid?.id,
-        },
-        {
-          label: 'host payout',
-          initials: 'h',
-          sc: hostPayoutValid && new BigNumber(hostPayoutValid.value),
-          hash: hostPayoutValid?.id,
-        },
-      ] as EntityListItemProps[]
-    }
-    if (isProperlyFormedRenewedContract(contract)) {
-      const { renterPayoutValid, hostPayoutValid } =
-        getRenewedContractFormattedOutputs(contract)
-      return [
-        {
-          label: 'renter payout: remaining renter allowance',
-          initials: 'r',
-          sc: renterPayoutValid && new BigNumber(renterPayoutValid.value),
-          hash: renterPayoutValid?.id,
-        },
-        {
-          label: 'host payout',
-          initials: 'h',
-          sc: hostPayoutValid && new BigNumber(hostPayoutValid.value),
-          hash: hostPayoutValid?.id,
-        },
-      ] as EntityListItemProps[]
-    }
-    return contract.validProofOutputs?.map(genericOutputListItem) || []
+    return [
+      {
+        label: 'renter payout: remaining renter allowance',
+        initials: 'r',
+        sc:
+          contract.renterPayoutValid &&
+          new BigNumber(contract.renterPayoutValid.value),
+      },
+      {
+        label: 'host payout',
+        initials: 'h',
+        sc:
+          contract.hostPayoutValid &&
+          new BigNumber(contract.hostPayoutValid.value),
+      },
+    ] as EntityListItemProps[]
   }, [contract])
 
   const missedProofOutputs = useMemo(() => {
-    if (isProperlyFormedNewContract(contract)) {
-      const { renterPayoutMissed, hostPayoutMissed, hostBurned } =
-        getNewContractFormattedOutputs(contract)
-      return [
-        {
-          label: 'renter payout: remaining renter allowance',
-          initials: 'r',
-          sc: renterPayoutMissed && new BigNumber(renterPayoutMissed.value),
-          hash: renterPayoutMissed?.id,
-        },
-        {
-          label: `host payout: payout minus risked collateral and storage revenue`,
-          initials: 'h',
-          sc: hostPayoutMissed && new BigNumber(hostPayoutMissed.value),
-          hash: hostPayoutMissed?.id,
-        },
-        {
-          label: 'host burn: host revenue plus risked collateral',
-          initials: 'b',
-          sc: hostBurned && new BigNumber(hostBurned.value),
-          hash: hostBurned?.id,
-        },
-      ] as EntityListItemProps[]
-    }
-    if (isProperlyFormedRenewedContract(contract)) {
-      const { renterPayoutMissed, hostPayoutMissed } =
-        getRenewedContractFormattedOutputs(contract)
-      return [
-        {
-          label: 'renter payout: remaining renter allowance',
-          initials: 'r',
-          sc: renterPayoutMissed && new BigNumber(renterPayoutMissed.value),
-          hash: renterPayoutMissed?.id,
-        },
-        {
-          label: `host payout: payout minus risked collateral and storage revenue`,
-          initials: 'h',
-          sc: hostPayoutMissed && new BigNumber(hostPayoutMissed.value),
-          hash: hostPayoutMissed?.id,
-        },
-      ] as EntityListItemProps[]
-    }
-    return contract.missedProofOutputs?.map(genericOutputListItem) || []
+    return [
+      {
+        label: 'renter payout: remaining renter allowance',
+        initials: 'r',
+        sc:
+          contract.renterPayoutMissed &&
+          new BigNumber(contract.renterPayoutMissed.value),
+      },
+      {
+        label: `host payout: payout minus risked collateral and storage revenue`,
+        initials: 'h',
+        sc:
+          contract.hostPayoutMissed &&
+          new BigNumber(contract.hostPayoutMissed.value),
+      },
+      contract.hostBurned && {
+        label: 'host burn: host revenue plus risked collateral',
+        initials: 'b',
+        sc: contract.hostBurned && new BigNumber(contract.hostBurned.value),
+      },
+    ].filter(Boolean) as EntityListItemProps[]
   }, [contract])
 
   return (
@@ -276,8 +250,8 @@ export function Contract({
           <ContractHeader
             currentHeight={currentHeight}
             contract={contract}
-            renewedFromID={renewedFromID}
-            renewedToID={renewedToID}
+            // renewedFromID={renewedFromID}
+            // renewedToID={renewedToID}
             formationTxnChainIndex={formationTxnChainIndex}
           />
           {!!values?.length && (
@@ -310,100 +284,10 @@ export function Contract({
   )
 }
 
-function isProperlyFormedNewContract(contract: ExplorerFileContract) {
-  // renter payout, host payout
-  if (contract.validProofOutputs?.length !== 2) {
-    return false
-  }
-  // renter payout, host payout, and host burned
-  if (contract.missedProofOutputs?.length !== 3) {
-    return false
-  }
-
-  const { renterPayoutValid, renterPayoutMissed } =
-    getNewContractFormattedOutputs(contract)
-
-  // renter payout valid and missed should be the same
-  if (renterPayoutValid?.value !== renterPayoutMissed?.value) {
-    // Do we need to catch undefined cases now?
-    return false
-  }
-
-  // math.MaxUint64 with lost precision
-  const mathMaxUint64 = 18446744073709552000
-  if (contract.revisionNumber >= mathMaxUint64) {
-    return false
-  }
-  return true
-}
-
-function isProperlyFormedRenewedContract(contract: ExplorerFileContract) {
-  // renter payout, host payout
-  if (contract.validProofOutputs?.length !== 2) {
-    return false
-  }
-  // renter payout, host payout
-  if (contract.missedProofOutputs?.length !== 2) {
-    return false
-  }
-
-  const {
-    renterPayoutValid,
-    renterPayoutMissed,
-    hostPayoutValid,
-    hostPayoutMissed,
-  } = getRenewedContractFormattedOutputs(contract)
-
-  // renter payout valid and missed should be the same
-  if (renterPayoutValid?.value !== renterPayoutMissed?.value) {
-    return false
-  }
-
-  // host payout valid and missed should be the same
-  if (hostPayoutValid?.value !== hostPayoutMissed?.value) {
-    return false
-  }
-
-  // math.MaxUint64 with lost precision
-  const mathMaxUint64 = 18446744073709552000
-  if (contract.revisionNumber !== mathMaxUint64) {
-    return false
-  }
-  return true
-}
-
-function getNewContractFormattedOutputs(contract: ExplorerFileContract) {
-  return {
-    renterPayoutValid: contract.validProofOutputs?.[0],
-    renterPayoutMissed: contract.missedProofOutputs?.[0],
-    hostPayoutValid: contract.validProofOutputs?.[1],
-    hostPayoutMissed: contract.missedProofOutputs?.[1],
-    hostBurned: contract.missedProofOutputs?.[2],
-  }
-}
-
-function getRenewedContractFormattedOutputs(contract: ExplorerFileContract) {
-  return {
-    renterPayoutValid: contract.validProofOutputs?.[0],
-    renterPayoutMissed: contract.missedProofOutputs?.[0],
-    hostPayoutValid: contract.validProofOutputs?.[1],
-    hostPayoutMissed: contract.missedProofOutputs?.[1],
-  }
-}
-
-function genericOutputListItem(
-  siacoinOutput: SiacoinOutput
-): EntityListItemProps {
-  const { value, address } = siacoinOutput
-  return {
-    // label: o.source ? o.source.replace(/_/g, ' ') : 'output',
-    sc: new BigNumber(value),
-    hash: address,
-  }
-}
-
-// The payout height is either the proofIndex.height + 144, if it exists,
+// The payout height is either the resolution.height + 144, if it exists,
 // or the windowEnd + 144.
-function determinePayoutHeight(contract: ExplorerFileContract) {
-  return (contract.proofIndex?.height || contract.windowEnd) + 144
+function determinePayoutHeight(contract: ContractData) {
+  return (
+    (contract.resolutionIndex?.height || contract.resolutionWindowEnd) + 144
+  )
 }

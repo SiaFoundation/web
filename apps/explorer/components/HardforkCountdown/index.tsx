@@ -1,5 +1,4 @@
 import { Text } from '@siafoundation/design-system'
-import { to } from '@siafoundation/request'
 import { getExplored } from '../../lib/explored'
 import clsx from 'clsx'
 import { blocksToDays } from '@siafoundation/units'
@@ -26,29 +25,16 @@ export async function HardforkCountdown({ network }: { network: string }) {
   const isMainnet = network === 'mainnet'
   const networkName = isMainnet ? 'mainnet' : 'the zen network'
   const [
-    [chainIndex, chainIndexError],
-    [consensusNetwork, consensusNetworkError],
-    [consensusState, consensusStateError],
-    [blockMetrics, blockMetricsError],
+    { data: chainIndex },
+    { data: consensusNetwork },
+    { data: consensusState },
+    { data: blockMetrics },
   ] = await Promise.all([
-    to(getExplored().consensusTip()),
-    to(getExplored().consensusNetwork()),
-    to(getExplored().consensusState()),
-    to(getExplored().blockMetrics()),
+    getExplored().consensusTip(),
+    getExplored().consensusNetwork(),
+    getExplored().consensusState(),
+    getExplored().blockMetrics(),
   ])
-
-  if (chainIndexError || !chainIndex)
-    throw new Error('explored consensusTip request failed in HardforkCountdown')
-  if (consensusNetworkError || !consensusNetwork)
-    throw new Error(
-      'explored consensusNetwork request failed in HardforkCountdown'
-    )
-  if (consensusStateError || !consensusState)
-    throw new Error(
-      'explored consensusState request failed in HardforkCountdown'
-    )
-  if (blockMetricsError || !blockMetrics)
-    throw new Error('explored blockMetrics request failed in HardforkCountdown')
 
   // If the node is not synced, don't show the countdown.
   const isSynced = getIsSynced(consensusState)

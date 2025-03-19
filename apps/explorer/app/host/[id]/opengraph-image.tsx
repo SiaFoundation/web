@@ -6,9 +6,8 @@ import {
 } from '@siafoundation/units'
 import { truncate } from '@siafoundation/design-system'
 import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
-import { to } from '@siafoundation/request'
-import { getExplored } from '../../../lib/explored'
 import { getHostNetAddress } from '../../../lib/hostType'
+import { getExplored } from '../../../lib/explored'
 
 export const revalidate = 0
 
@@ -24,24 +23,77 @@ export const contentType = 'image/png'
 
 export default async function Image({ params }) {
   const id = params?.id as string
-  const [[host, hostError], [rate, rateError]] = await Promise.all([
-    to(
-      getExplored().hostByPubkey({
-        params: {
-          id,
-        },
-      })
-    ),
-    to(
-      getExplored().exchangeRate({
-        params: {
-          currency: 'usd',
-        },
-      })
-    ),
-  ])
 
-  if (hostError || !host || rateError || !rate) {
+  try {
+    const { data: host } = await getExplored().hostByPubkey({ params: { id } })
+    const { data: rate } = await getExplored().exchangeRate({
+      params: { currency: 'usd' },
+    })
+
+    if (host.v2 ? !host.v2Settings : !host.settings) {
+      return getOGImage(
+        {
+          id: host.publicKey,
+          title: getHostNetAddress(host),
+          subtitle: truncate(host.publicKey, 30),
+          initials: 'H',
+          avatar: true,
+        },
+        size
+      )
+    }
+
+    const values = [
+      {
+        label: 'storage',
+        value: getStorageCost({
+          price: host.v2
+            ? host.v2Settings.prices.storagePrice
+            : host.settings.storageprice,
+          exchange: {
+            currency,
+            rate: rate.toString(),
+          },
+        }),
+      },
+      {
+        label: 'download',
+        value: getDownloadCost({
+          price: host.v2
+            ? host.v2Settings.prices.egressPrice
+            : host.settings.downloadbandwidthprice,
+          exchange: {
+            currency,
+            rate: rate.toString(),
+          },
+        }),
+      },
+      {
+        label: 'upload',
+        value: getUploadCost({
+          price: host.v2
+            ? host.v2Settings.prices.ingressPrice
+            : host.settings.uploadbandwidthprice,
+          exchange: {
+            currency,
+            rate: rate.toString(),
+          },
+        }),
+      },
+    ]
+
+    return getOGImage(
+      {
+        id: host.publicKey,
+        title: getHostNetAddress(host),
+        subtitle: truncate(host.publicKey, 30),
+        initials: 'H',
+        avatar: true,
+        values,
+      },
+      size
+    )
+  } catch (e) {
     return getOGImage(
       {
         id,
@@ -52,68 +104,4 @@ export default async function Image({ params }) {
       size
     )
   }
-
-  if (host.v2 ? !host.v2Settings : !host.settings) {
-    return getOGImage(
-      {
-        id: host.publicKey,
-        title: getHostNetAddress(host),
-        subtitle: truncate(host.publicKey, 30),
-        initials: 'H',
-        avatar: true,
-      },
-      size
-    )
-  }
-
-  const values = [
-    {
-      label: 'storage',
-      value: getStorageCost({
-        price: host.v2
-          ? host.v2Settings.prices.storagePrice
-          : host.settings.storageprice,
-        exchange: {
-          currency,
-          rate: rate.toString(),
-        },
-      }),
-    },
-    {
-      label: 'download',
-      value: getDownloadCost({
-        price: host.v2
-          ? host.v2Settings.prices.egressPrice
-          : host.settings.downloadbandwidthprice,
-        exchange: {
-          currency,
-          rate: rate.toString(),
-        },
-      }),
-    },
-    {
-      label: 'upload',
-      value: getUploadCost({
-        price: host.v2
-          ? host.v2Settings.prices.ingressPrice
-          : host.settings.uploadbandwidthprice,
-        exchange: {
-          currency,
-          rate: rate.toString(),
-        },
-      }),
-    },
-  ]
-
-  return getOGImage(
-    {
-      id: host.publicKey,
-      title: getHostNetAddress(host),
-      subtitle: truncate(host.publicKey, 30),
-      initials: 'H',
-      avatar: true,
-      values,
-    },
-    size
-  )
 }

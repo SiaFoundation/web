@@ -90,7 +90,11 @@ export function Block({ block, blockID, currentHeight }: Props) {
                 )} transactions`}
               >
                 <Badge variant="accent">
-                  {`${humanNumber(block.transactions?.length || 0)}`}{' '}
+                  {`${humanNumber(
+                    block.v2?.transactions.length ||
+                      block.transactions?.length ||
+                      0
+                  )}`}{' '}
                   transactions
                 </Badge>
               </Tooltip>
@@ -104,19 +108,36 @@ export function Block({ block, blockID, currentHeight }: Props) {
         </div>
       }
     >
-      <EntityList
-        title={`Transactions (${block.transactions?.length || 0})`}
-        dataset={block.transactions?.map((tx) => {
-          const txID = stripPrefix(tx.id)
-          return {
-            type: 'transaction',
-            hash: txID,
-            label: 'transaction',
-            initials: 'T',
-            href: routes.transaction.view.replace(':id', txID),
-          }
-        })}
-      />
+      {block.v2?.transactions && (
+        <EntityList
+          title={`Transactions (${block.v2.transactions.length || 0})`}
+          dataset={block.v2.transactions.map((tx) => {
+            const txID = stripPrefix(tx.id)
+            return {
+              type: 'transaction',
+              hash: txID,
+              label: 'transaction',
+              initials: 'T',
+              href: routes.transaction.view.replace(':id', txID),
+            }
+          })}
+        />
+      )}
+      {block.transactions && (
+        <EntityList
+          title={`Transactions (${block.transactions?.length || 0})`}
+          dataset={block.transactions?.map((tx) => {
+            const txID = stripPrefix(tx.id)
+            return {
+              type: 'transaction',
+              hash: txID,
+              label: 'transaction',
+              initials: 'T',
+              href: routes.transaction.view.replace(':id', txID),
+            }
+          })}
+        />
+      )}
     </ContentLayout>
   )
 }

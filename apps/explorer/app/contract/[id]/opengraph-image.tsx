@@ -3,11 +3,13 @@ import { getOGImage } from '../../../components/OGImageEntity'
 import { truncate } from '@siafoundation/design-system'
 import { hastingsToFiat } from '../../../lib/currency'
 import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
-import { to } from '@siafoundation/request'
-import { getExplored } from '../../../lib/explored'
 import { blockHeightToHumanDate } from '../../../lib/time'
-import { determineContractStatus } from '../../../lib/contracts'
+import {
+  determineContractStatusColor,
+  normalizeContract,
+} from '../../../lib/contracts'
 import BigNumber from 'bignumber.js'
+import { getExplored } from '../../../lib/explored'
 
 export const revalidate = 0
 
@@ -26,24 +28,57 @@ const currencyOpt = currencyOptions.find(
 export default async function Image({ params }) {
   const id = params?.id as string
 
-  const [
-    [contract, contractError],
-    [currentTip, currentTipError],
-    [rate, rateError],
-  ] = await Promise.all([
-    to(getExplored().contractByID({ params: { id } })),
-    to(getExplored().consensusTip()),
-    to(getExplored().exchangeRate({ params: { currency: 'usd' } })),
-  ])
+  const { data: contractType } = await getExplored().searchResultType({
+    params: { id },
+  })
 
-  if (
-    contractError ||
-    !contract ||
-    currentTipError ||
-    !currentTip ||
-    rateError ||
-    !rate
-  ) {
+  try {
+    const { data: c } =
+      contractType === 'v2Contract'
+        ? await getExplored().v2ContractByID({ params: { id } })
+        : await getExplored().contractByID({ params: { id } })
+
+    const nContract = normalizeContract(c)
+    const { data: currentTip } = await getExplored().consensusTip()
+    const { data: rate } = await getExplored().exchangeRate({
+      params: { currency: 'usd' },
+    })
+
+    const values = [
+      {
+        label: 'data size',
+        value: humanBytes(nContract.filesize),
+      },
+      {
+        label: 'expiration',
+        value: blockHeightToHumanDate(
+          currentTip.height,
+          nContract.resolutionWindowStart,
+          'short'
+        ),
+      },
+      {
+        label: 'payout',
+        value: hastingsToFiat(nContract.payout, {
+          currency: currencyOpt,
+          rate: new BigNumber(rate),
+        }),
+      },
+    ]
+
+    return getOGImage(
+      {
+        id,
+        title: truncate(nContract.id, 30),
+        subtitle: 'contract',
+        status: nContract.status,
+        statusColor: determineContractStatusColor(nContract.status),
+        initials: 'C',
+        values,
+      },
+      size
+    )
+  } catch (e) {
     return getOGImage(
       {
         id,
@@ -54,46 +89,4 @@ export default async function Image({ params }) {
       size
     )
   }
-
-  const values = [
-    {
-      label: 'data size',
-      value: humanBytes(contract.filesize),
-    },
-    {
-      label: 'expiration',
-      value: blockHeightToHumanDate(
-        currentTip.height,
-        contract.windowStart,
-        'short'
-      ),
-    },
-    {
-      label: 'payout',
-      value: hastingsToFiat(contract.payout, {
-        currency: currencyOpt,
-        rate: new BigNumber(rate),
-      }),
-    },
-  ]
-
-  const contractStatus = determineContractStatus(contract)
-
-  return getOGImage(
-    {
-      id,
-      title: truncate(contract.id, 30),
-      subtitle: 'contract',
-      status: contractStatus,
-      statusColor:
-        contractStatus === 'in progress'
-          ? 'amber'
-          : contractStatus === 'obligation succeeded'
-          ? 'green'
-          : 'red',
-      initials: 'C',
-      values,
-    },
-    size
-  )
 }

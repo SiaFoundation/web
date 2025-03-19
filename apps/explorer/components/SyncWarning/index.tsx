@@ -1,16 +1,13 @@
 import { Text } from '@siafoundation/design-system'
-import { to } from '@siafoundation/request'
-import { getExplored } from '../../lib/explored'
 import { getIsSynced, getIsIndexing } from '../../lib/sync'
 import { Warning24 } from '@siafoundation/react-icons'
+import { getExplored } from '../../lib/explored'
 
 export async function SyncWarning() {
-  const [consensusState, consensusStateError] = await to(
-    getExplored().consensusState()
-  )
-
-  if (consensusStateError || !consensusState)
-    throw new Error('explored consensusState request failed in SyncWarning')
+  const [{ data: consensusState }, { data: blockMetrics }] = await Promise.all([
+    getExplored().consensusState(),
+    getExplored().blockMetrics(),
+  ])
 
   const isSynced = getIsSynced(consensusState)
   if (!isSynced) {
@@ -24,12 +21,6 @@ export async function SyncWarning() {
       </div>
     )
   }
-
-  const [blockMetrics, blockMetricsError] = await to(
-    getExplored().blockMetrics()
-  )
-  if (blockMetricsError || !blockMetrics)
-    throw new Error('explored blockMetrics request failed in SyncWarning')
 
   const isIndexing = getIsIndexing(consensusState, blockMetrics)
 

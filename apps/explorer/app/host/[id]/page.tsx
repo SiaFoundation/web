@@ -2,10 +2,10 @@ import { Metadata } from 'next'
 import { routes } from '../../../config/routes'
 import { buildMetadata } from '../../../lib/utils'
 import { Host } from '../../../components/Host'
-import { notFound } from 'next/navigation'
 import { truncate } from '@siafoundation/design-system'
-import { to } from '@siafoundation/request'
 import { getExplored } from '../../../lib/explored'
+import { to } from '@siafoundation/request'
+import { notFound } from 'next/navigation'
 
 export function generateMetadata({ params }): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
@@ -22,17 +22,14 @@ export function generateMetadata({ params }): Metadata {
 export const revalidate = 0
 
 export default async function Page({ params }) {
-  const id = params?.id as string
-  const [[host, hostError]] = await Promise.all([
-    to(getExplored().hostByPubkey({ params: { id } })),
-  ])
+  const id = params?.id
+  const [host, hostError, hostResponse] = await to(
+    getExplored().hostByPubkey({ params: { id } })
+  )
 
   if (hostError) {
+    if (hostResponse?.status === 404) return notFound()
     throw hostError
-  }
-
-  if (!host) {
-    return notFound()
   }
 
   return <Host host={host} />

@@ -3,9 +3,9 @@ import { Block } from '../../../components/Block'
 import { routes } from '../../../config/routes'
 import { Metadata } from 'next'
 import { buildMetadata } from '../../../lib/utils'
-import { notFound } from 'next/navigation'
-import { to } from '@siafoundation/request'
 import { getExplored } from '../../../lib/explored'
+import { to } from '@siafoundation/request'
+import { notFound } from 'next/navigation'
 
 export function generateMetadata({ params }): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
@@ -38,13 +38,10 @@ export default async function Page({ params }) {
   // Check if the incoming id is referencing height.
   if (!isNaN(Number(params?.id))) {
     // If it is, we need the block ID at that height.
-    const [tipAtHeightInfo, tipAtHeightInfoError] = await to(
-      getExplored().consensusTipByHeight({ params: { height: params?.id } })
-    )
-    if (tipAtHeightInfoError) throw tipAtHeightInfoError
-    if (!tipAtHeightInfo) throw notFound()
-
-    id = tipAtHeightInfo.id
+    const { data: tipAtHeight } = await getExplored().consensusTipByHeight({
+      params: { height: params?.id },
+    })
+    id = tipAtHeight.id
   } else {
     // If it is not the height, assume we're referencing ID. No call necessary.
     id = params?.id
@@ -52,16 +49,16 @@ export default async function Page({ params }) {
 
   // Get the block using the id from the previous sequence. Also grab the
   // currentTip for next block navigation handling.
-  const [[block, blockError], [currentTipInfo, currentTipInfoError]] =
+  const [[block, blockError, blockResponse], { data: currentTipInfo }] =
     await Promise.all([
       to(getExplored().blockByID({ params: { id } })),
-      to(getExplored().consensusTip()),
+      getExplored().consensusTip(),
     ])
 
-  if (blockError) throw blockError
-  if (currentTipInfoError) throw currentTipInfoError
-  if (!block) return notFound()
-  if (!currentTipInfo) throw notFound()
+  if (blockError) {
+    if (blockResponse?.status === 404) return notFound()
+    throw blockError
+  }
 
   return (
     <Block block={block} blockID={id} currentHeight={currentTipInfo.height} />
