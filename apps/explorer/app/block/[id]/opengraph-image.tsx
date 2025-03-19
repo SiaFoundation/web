@@ -1,8 +1,11 @@
 import { humanDate } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
-import { stripPrefix, truncate } from '@siafoundation/design-system'
-import { to } from '@siafoundation/request'
-import { getExplored } from '../../../lib/explored'
+import { truncate } from '@siafoundation/design-system'
+import {
+  fetchBlockByID,
+  fetchConsensusTipByHeight,
+} from '../../../lib/fetchChainData'
+import { ExplorerBlock } from '@siafoundation/explored-types'
 
 export const revalidate = 0
 
@@ -27,30 +30,32 @@ const formatOGImage = (id: string) => {
 }
 
 export default async function Image({ params }) {
-  const id = params?.id as string
+  let id: string
+  let block: ExplorerBlock
 
-  // Grab chainIndex at height.
-  const [chainIndex, chainIndexError] = await to(
-    getExplored().consensusTipByHeight({ params: { height: Number(id) } })
-  )
-
-  if (!chainIndex || chainIndexError) {
-    return formatOGImage(id)
+  // Check if the incoming id is referencing height.
+  if (!isNaN(Number(params?.id))) {
+    // If it is, we need the block ID at that height.
+    const tipAtHeight = await fetchConsensusTipByHeight(params?.id)
+    id = tipAtHeight.id
+  } else {
+    // If it is not the height, assume we're referencing ID. No call necessary.
+    id = params?.id
   }
 
-  // Grab block for id at ChainIndex in request above.
-  const [block, blockError] = await to(
-    getExplored().blockByID({ params: { id: stripPrefix(chainIndex.id) } })
-  )
-
-  if (!block || blockError) {
+  try {
+    block = await fetchBlockByID(id)
+  } catch (e) {
     return formatOGImage(id)
   }
 
   const values = [
     {
       label: 'transactions',
-      value: (block.transactions.length || 0).toLocaleString(),
+      value: (
+        (block.transactions?.length ?? 0) +
+        (block.v2?.transactions?.length ?? 0)
+      ).toLocaleString(),
     },
     {
       label: 'time',
@@ -64,7 +69,7 @@ export default async function Image({ params }) {
   return getOGImage(
     {
       id,
-      title: block.height.toLocaleString(),
+      title: (block.v2?.height || block.height).toLocaleString(),
       subtitle: 'block',
       initials: 'B',
       values,

@@ -11,11 +11,14 @@ import { routes } from '../../config/routes'
 import { ContentLayout } from '../ContentLayout'
 import { TransactionHeader, TransactionHeaderData } from './TransactionHeader'
 import { OutputListItem } from './OutputListItem'
-import { ExplorerTransaction } from '@siafoundation/explored-types'
+import {
+  ExplorerTransaction,
+  ExplorerV2Transaction,
+} from '@siafoundation/explored-types'
 
 type Props = {
   transactionHeaderData: TransactionHeaderData
-  transaction: ExplorerTransaction
+  transaction: ExplorerTransaction | ExplorerV2Transaction
   title?: string
 }
 
@@ -40,20 +43,26 @@ export function Transaction({
     const list: OutputItem[] = []
     transaction.siacoinInputs?.forEach((o) => {
       list.push({
-        label: 'siacoin output',
-        addressHref: routes.address.view.replace(':id', stripPrefix(o.address)),
-        address: o.address,
-        sc: new BigNumber(o.value),
-        outputId: o.parentID,
+        label: 'siacoin input',
+        addressHref: routes.address.view.replace(
+          ':id',
+          stripPrefix(o.address || o.parent.siacoinOutput.address)
+        ),
+        address: o.address || o.parent.siacoinOutput.address,
+        sc: new BigNumber(o.value || o.parent.siacoinOutput.value),
+        outputId: o.parentID || o.parent.id,
       })
     })
     transaction.siafundInputs?.forEach((o) => {
       list.push({
-        label: 'siafund output',
-        addressHref: routes.address.view.replace(':id', stripPrefix(o.address)),
-        address: o.address,
-        sc: new BigNumber(o.value),
-        outputId: o.parentID,
+        label: 'siafund input',
+        addressHref: routes.address.view.replace(
+          ':id',
+          stripPrefix(o.address || o.parent.siafundOutput.address)
+        ),
+        address: o.address || o.parent.siafundOutput.address,
+        sc: new BigNumber(o.value || o.parent.siafundOutput.value),
+        outputId: o.parentID || o.parent.id,
       })
     })
     return list
@@ -122,12 +131,15 @@ export function Transaction({
         hash: host.netAddress,
       })
     })
-    transaction.storageProofs?.forEach((proof) => {
-      operations.push({
-        label: 'storage proof',
-        hash: proof.parentID,
-      })
-    })
+    {
+      'storageProofs' in transaction &&
+        transaction.storageProofs?.forEach((proof) => {
+          operations.push({
+            label: 'storage proof',
+            hash: proof.parentID,
+          })
+        })
+    }
     return operations
   }, [transaction])
 

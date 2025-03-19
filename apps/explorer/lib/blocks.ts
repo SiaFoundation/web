@@ -1,23 +1,16 @@
-import { to } from '@siafoundation/request'
 import { ExplorerBlock } from '@siafoundation/explored-types'
-import { getExplored } from '../lib/explored'
+import {
+  fetchBlockByID,
+  fetchConsensusTip,
+  fetchConsensusTipByHeight,
+} from './fetchChainData'
 
 export async function getBlockByHeight(height: number) {
   // Grab the tip at this height.
-  const [tip, tipError] = await to(
-    getExplored().consensusTipByHeight({ params: { height } })
-  )
+  const tip = await fetchConsensusTipByHeight(height)
 
-  if (tipError) throw tipError
-  if (!tip) return null
-
-  // Grab the block with the ID at this tip height.
-  const [block, blockError] = await to(
-    getExplored().blockByID({ params: { id: tip.id } })
-  )
-
-  if (blockError) throw blockError
-  if (!block) return null
+  // Return the block with the ID at this tip height.
+  const block = await fetchBlockByID(tip.id)
 
   return block
 }
@@ -26,20 +19,14 @@ export async function getLatestBlocks(
   n = 6
 ): Promise<[ExplorerBlock[], undefined] | [undefined, Error]> {
   // Grab the latest tip.
-  const [latestTip, latestTipError] = await to(getExplored().consensusTip())
-  if (latestTipError) throw latestTipError
-  if (!latestTip) return [undefined, Error('No tip found')]
+  const latestTip = await fetchConsensusTip()
 
   const fetchedBlocks: ExplorerBlock[] = []
   let parentBlockID = latestTip.id
 
   // Fetch the latest n blocks.
   for (let i = 1; i <= n; i++) {
-    const [block, blockError] = await to(
-      getExplored().blockByID({ params: { id: parentBlockID } })
-    )
-    if (blockError) throw blockError
-    if (!block) continue
+    const block = await fetchBlockByID(parentBlockID)
     parentBlockID = block.parentID
     fetchedBlocks.push(block)
   }

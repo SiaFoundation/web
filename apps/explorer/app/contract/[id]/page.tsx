@@ -4,9 +4,27 @@ import { routes } from '../../../config/routes'
 import { buildMetadata } from '../../../lib/utils'
 import { notFound } from 'next/navigation'
 import { stripPrefix, truncate } from '@siafoundation/design-system'
-import { to } from '@siafoundation/request'
-import { getExplored } from '../../../lib/explored'
-import { ChainIndex, ExplorerFileContract } from '@siafoundation/explored-types'
+import {
+  ChainIndex,
+  ExplorerFileContract,
+  ExplorerTransaction,
+  ExplorerV2FileContract,
+  ExplorerV2Transaction,
+} from '@siafoundation/explored-types'
+import { normalizeContract } from '../../../lib/contracts'
+import {
+  fetchV1Contract,
+  fetchV1ContractRevisions,
+  fetchV2Contract,
+  fetchV2ContractRevisions,
+  fetchV1Transaction,
+  fetchV1TransactionChainIndices,
+  fetchV2Transaction,
+  fetchV2TransactionChainIndices,
+  fetchSearchType,
+  fetchBlockByID,
+  fetchConsensusTip,
+} from '../../../lib/fetchChainData'
 
 export function generateMetadata({ params }): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
@@ -24,97 +42,58 @@ export const revalidate = 0
 
 export default async function Page({ params }) {
   const id = params?.id
+  let contract: ExplorerFileContract | ExplorerV2FileContract
+  let contractRevisions: ExplorerFileContract[] | ExplorerV2FileContract[]
 
-  // Grab the contract and previous revisions data.
-  const [
-    [contract, contractError],
-    [previousRevisions, previousRevisionsError],
-    [currentTip, currentTipError],
-  ] = await Promise.all([
-    to(getExplored().contractByID({ params: { id } })),
-    to<ExplorerFileContract[]>(
-      getExplored().contractRevisions({ params: { id } })
-    ),
-    to(getExplored().consensusTip()),
-  ])
+  const searchResultType = await fetchSearchType(id)
 
-  if (contractError) throw contractError
-  if (!contract) return notFound()
-
-  if (previousRevisionsError) throw previousRevisionsError
-  if (!previousRevisions)
-    throw new Error('No previousRevisions found in successful request')
-
-  if (currentTipError) throw currentTipError
-  if (!currentTip) throw new Error('No currentTip found in successful request')
+  // Grab the v1 or v2 contract and revisions.
+  if (searchResultType === 'contract') {
+    contract = await fetchV1Contract(id)
+    contractRevisions = await fetchV1ContractRevisions(id)
+  } else if (searchResultType === 'v2contract') {
+    contract = await fetchV2Contract(id)
+    contractRevisions = await fetchV2ContractRevisions(id)
+  } else {
+    return notFound()
+  }
 
   const formationTxnID =
-    previousRevisions[0].transactionID ?? contract.transactionID
-  const finalRevisionTxnID =
-    previousRevisions[previousRevisions.length - 1].transactionID ??
-    contract.transactionID
+    contractRevisions[0].transactionID ?? contract.transactionID
 
-  // Fetch our formation and finalRevision transaction information.
-  const [
-    [formationTransaction, formationTransactionError],
-    [renewalTransaction, renewalTransactionError],
-  ] = await Promise.all([
-    to(
-      getExplored().transactionByID({
-        params: {
-          id: formationTxnID,
-        },
-      })
-    ),
-    to(
-      getExplored().transactionByID({
-        params: {
-          id: finalRevisionTxnID,
-        },
-      })
-    ),
+  let formationTransaction: ExplorerTransaction | ExplorerV2Transaction
+  let formationTxnChainIndices: ChainIndex[]
+  // let renewedToID: string | null
+  // let renewedFromID: string | null
+
+  if (searchResultType === 'contract') {
+    formationTransaction = await fetchV1Transaction(formationTxnID)
+    formationTxnChainIndices = await fetchV1TransactionChainIndices(
+      formationTxnID
+    )
+  } else {
+    formationTransaction = await fetchV2Transaction(formationTxnID)
+    formationTxnChainIndices = await fetchV2TransactionChainIndices(
+      formationTxnID
+    )
+  }
+
+  // Use the first chainIndex from the above call to get our parent block
+  // and our currentTip.
+  const [parentBlock, currentTip] = await Promise.all([
+    fetchBlockByID(formationTxnChainIndices[0].id),
+    fetchConsensusTip(),
   ])
 
-  if (formationTransactionError) throw formationTransactionError
-  if (!formationTransaction)
-    throw new Error('No formation transaction found in successful request')
-
-  if (renewalTransactionError) throw renewalTransactionError
-  if (!renewalTransaction)
-    throw new Error('No renewal transaction found in successful request')
-
-  const renewedFromID =
-    formationTransaction.fileContractRevisions?.[0].id ?? null
-  const renewedToID = renewalTransaction.fileContracts?.[0].id ?? null
-
-  const [formationTxnChainIndices, formationTxnChainIndicesError] = await to<
-    ChainIndex[]
-  >(
-    getExplored().transactionChainIndices({
-      params: { id: formationTransaction.id },
-    })
-  )
-
-  if (formationTxnChainIndicesError) throw formationTxnChainIndicesError
-  if (!formationTxnChainIndices)
-    throw new Error('No formationTxnChainIndices found in successful request')
-
-  // Use the first chainIndex from the above call to get our parent block.
-  const [parentBlock, parentBlockError] = await to(
-    getExplored().blockByID({ params: { id: formationTxnChainIndices[0].id } })
-  )
-
-  if (parentBlockError) throw parentBlockError
-  if (!parentBlock)
-    throw new Error('No parentBlock found in successful request')
+  const normalizedContractData = normalizeContract(contract)
 
   return (
     <ContractView
-      previousRevisions={previousRevisions}
+      contractRevisions={contractRevisions}
       currentHeight={currentTip.height}
-      contract={contract}
-      renewedFromID={renewedFromID ? stripPrefix(renewedFromID) : renewedFromID}
-      renewedToID={renewedToID ? stripPrefix(renewedToID) : renewedToID}
+      contract={normalizedContractData}
+      // renewedFromID={renewedFromID ? stripPrefix(renewedFromID) : renewedFromID}
+      // renewedToID={renewedToID ? stripPrefix(renewedToID) : renewedToID}
       formationTransaction={formationTransaction}
       formationTxnChainIndex={formationTxnChainIndices}
       formationTransactionHeaderData={{

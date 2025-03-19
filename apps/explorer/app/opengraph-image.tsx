@@ -2,8 +2,7 @@ import { getOGImage } from '../components/OGImage'
 import { network } from '../config'
 import { humanBytes } from '@siafoundation/units'
 import { PreviewValue } from '../components/OGImage/Preview'
-import { to } from '@siafoundation/request'
-import { getExplored } from '../lib/explored'
+import { fetchConsensusTip, fetchHostMetrics } from '../lib/fetchChainData'
 
 export const revalidate = 0
 
@@ -16,10 +15,8 @@ export const size = {
 export const contentType = 'image/png'
 
 export default async function Image() {
-  const [[tip], [hostMetrics]] = await Promise.all([
-    to(getExplored().consensusTip()),
-    to(getExplored().hostMetrics()),
-  ])
+  const tip = await fetchConsensusTip()
+  const hostMetrics = await fetchHostMetrics()
 
   const values: PreviewValue[] = []
   if (tip) {

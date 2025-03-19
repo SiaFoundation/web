@@ -3,11 +3,24 @@ import { getOGImage } from '../../../components/OGImageEntity'
 import { truncate } from '@siafoundation/design-system'
 import { hastingsToFiat } from '../../../lib/currency'
 import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
-import { to } from '@siafoundation/request'
-import { getExplored } from '../../../lib/explored'
 import { blockHeightToHumanDate } from '../../../lib/time'
-import { determineContractStatus } from '../../../lib/contracts'
+import {
+  determineContractStatus,
+  normalizeContract,
+} from '../../../lib/contracts'
 import BigNumber from 'bignumber.js'
+import {
+  ChainIndex,
+  ExplorerFileContract,
+  ExplorerV2FileContract,
+} from '@siafoundation/explored-types'
+import {
+  fetchConsensusTip,
+  fetchExchangeRateByCurrencyID,
+  fetchSearchType,
+  fetchV1Contract,
+  fetchV2Contract,
+} from '../../../lib/fetchChainData'
 
 export const revalidate = 0
 
@@ -26,24 +39,17 @@ const currencyOpt = currencyOptions.find(
 export default async function Image({ params }) {
   const id = params?.id as string
 
-  const [
-    [contract, contractError],
-    [currentTip, currentTipError],
-    [rate, rateError],
-  ] = await Promise.all([
-    to(getExplored().contractByID({ params: { id } })),
-    to(getExplored().consensusTip()),
-    to(getExplored().exchangeRate({ params: { currency: 'usd' } })),
-  ])
+  const contractType = await fetchSearchType(id)
 
-  if (
-    contractError ||
-    !contract ||
-    currentTipError ||
-    !currentTip ||
-    rateError ||
-    !rate
-  ) {
+  let contract: ExplorerFileContract | ExplorerV2FileContract
+
+  try {
+    if (contractType === 'v2contract') {
+      contract = await fetchV2Contract(id)
+    } else {
+      contract = await fetchV1Contract(id)
+    }
+  } catch (e) {
     return getOGImage(
       {
         id,
@@ -55,22 +61,42 @@ export default async function Image({ params }) {
     )
   }
 
+  let currentTip: ChainIndex
+  let rate: number
+
+  try {
+    currentTip = await fetchConsensusTip()
+    rate = await fetchExchangeRateByCurrencyID('usd')
+  } catch (e) {
+    return getOGImage(
+      {
+        id,
+        title: truncate(id, 30),
+        subtitle: 'contract',
+        initials: 'C',
+      },
+      size
+    )
+  }
+
+  const nContract = normalizeContract(contract)
+
   const values = [
     {
       label: 'data size',
-      value: humanBytes(contract.filesize),
+      value: humanBytes(nContract.filesize),
     },
     {
       label: 'expiration',
       value: blockHeightToHumanDate(
         currentTip.height,
-        contract.windowStart,
+        nContract.resolutionWindowStart,
         'short'
       ),
     },
     {
       label: 'payout',
-      value: hastingsToFiat(contract.payout, {
+      value: hastingsToFiat(nContract.payout, {
         currency: currencyOpt,
         rate: new BigNumber(rate),
       }),
@@ -82,7 +108,7 @@ export default async function Image({ params }) {
   return getOGImage(
     {
       id,
-      title: truncate(contract.id, 30),
+      title: truncate(nContract.id, 30),
       subtitle: 'contract',
       status: contractStatus,
       statusColor:

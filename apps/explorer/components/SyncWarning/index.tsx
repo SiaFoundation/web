@@ -1,18 +1,10 @@
 import { Text } from '@siafoundation/design-system'
-import { to } from '@siafoundation/request'
-import { getExplored } from '../../lib/explored'
 import { getIsSynced } from '../../lib/sync'
 import { Warning24 } from '@siafoundation/react-icons'
+import { fetchConsensusState } from '../../lib/fetchChainData'
 
 export async function SyncWarning() {
-  const [consensusState, consensusStateError] = await to(
-    getExplored().consensusState()
-  )
-
-  if (consensusStateError || !consensusState)
-    throw new Error(
-      'explored consensusState request failed in HardforkCountdown'
-    )
+  const consensusState = await fetchConsensusState()
 
   const isSynced = getIsSynced(consensusState)
   if (!isSynced) {

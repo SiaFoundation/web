@@ -24,6 +24,8 @@ import {
   EventV1ContractResolution,
   EventV1Transaction,
   ExplorerSiacoinOutput,
+  ExplorerV2Transaction,
+  EventV2ContractResolution,
 } from '@siafoundation/explored-types'
 
 type Tab = 'events' | 'evolution' | 'utxos'
@@ -72,11 +74,17 @@ export function Address({
           case 'v1Transaction':
             list.push(formatV1TransactionEntity(id, event))
             break
+          case 'v2Transaction':
+            list.push(formatV2TransactionEntity(id, event))
+            break
           case 'v1ContractResolution':
             list.push(formatV1ContractResolutionEntity(event))
             break
-          case 'miner':
-            list.push(formatMinerPayoutEntity(event))
+          case 'v2ContractResolution':
+            list.push(formatV2ContractResolutionEntity(event))
+            break
+          case 'payout':
+            list.push(formatPayoutEntity(event))
             break
         }
       })
@@ -190,6 +198,31 @@ function formatV1TransactionEntity(id: string, v1Transaction: ExplorerEvent) {
   }
 }
 
+function formatV2TransactionEntity(id: string, v2Transaction: ExplorerEvent) {
+  const transaction = v2Transaction.data as ExplorerV2Transaction
+  return {
+    hash: v2Transaction.id,
+    sc: getTotal({
+      address: id,
+      inputs: transaction.siacoinInputs?.map((o) => o.parent.siacoinOutput),
+      outputs: transaction.siacoinOutputs,
+    }),
+    sf: getTotal({
+      address: id,
+      inputs: transaction.siafundInputs?.map((o) => ({
+        address: o.parent.siafundOutput.address,
+        value: String(o.parent.siafundOutput.value),
+      })),
+      outputs: transaction.siafundOutputs,
+    }).toNumber(),
+    label: 'Transaction',
+    initials: 'TX',
+    href: routes.transaction.view.replace(':id', transaction.id),
+    height: v2Transaction.index.height,
+    timestamp: new Date(v2Transaction.timestamp).getTime(),
+  }
+}
+
 function formatV1ContractResolutionEntity(v1ContractResolution: ExplorerEvent) {
   const { parent, siacoinElement } =
     v1ContractResolution.data as EventV1ContractResolution
@@ -203,16 +236,29 @@ function formatV1ContractResolutionEntity(v1ContractResolution: ExplorerEvent) {
   }
 }
 
-function formatMinerPayoutEntity(minerPayout: ExplorerEvent) {
-  const { siacoinElement } = minerPayout.data as EventPayout
+function formatV2ContractResolutionEntity(v1ContractResolution: ExplorerEvent) {
+  const { resolution, siacoinElement } =
+    v1ContractResolution.data as EventV2ContractResolution
   return {
-    hash: minerPayout.id,
-    label: 'Miner Payout',
-    initials: 'MP',
-    href: routes.address.view.replace(':id', siacoinElement.source),
-    height: minerPayout.index.height,
+    hash: v1ContractResolution.id,
+    label: 'Contract Resolution',
+    initials: 'CR',
+    href: routes.contract.view.replace(':id', resolution.parent.id),
     sc: new BigNumber(siacoinElement.siacoinOutput.value),
-    timestamp: new Date(minerPayout.timestamp).getTime(),
+    timestamp: new Date(v1ContractResolution.timestamp).getTime(),
+  }
+}
+
+function formatPayoutEntity(payout: ExplorerEvent) {
+  const { siacoinElement } = payout.data as EventPayout
+  return {
+    hash: payout.id,
+    label: 'Payout',
+    initials: 'P',
+    href: routes.address.view.replace(':id', siacoinElement.source),
+    height: payout.index.height,
+    sc: new BigNumber(siacoinElement.siacoinOutput.value),
+    timestamp: new Date(payout.timestamp).getTime(),
   }
 }
 
