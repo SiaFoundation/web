@@ -1,5 +1,11 @@
 # @siafoundation/sia-central-react
 
+## 3.1.4
+
+### Patch Changes
+
+- @siafoundation/react-core@3.0.0
+
 ## 3.1.3
 
 ### Patch Changes

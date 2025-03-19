@@ -1,5 +1,13 @@
 # @siafoundation/units
 
+## 3.3.4
+
+### Patch Changes
+
+- Updated dependencies [cad48e35]
+- Updated dependencies [ce20d281]
+  - @siafoundation/types@0.9.0
+
 ## 3.3.3
 
 ### Patch Changes

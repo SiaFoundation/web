@@ -1,5 +1,11 @@
 # walletd
 
+## 0.29.2
+
+### Patch Changes
+
+- cad48e35: Fixed an issue where a v2ContractResolution event in the wallet would crash the app. Closes https://github.com/SiaFoundation/hostd/issues/629
+
 ## 0.29.1
 
 ### Patch Changes

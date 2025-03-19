@@ -1,5 +1,17 @@
 # hostd
 
+## 0.59.0
+
+### Minor Changes
+
+- b9cb4393: The contracts list now has a version column that displays either v1 or v2.
+- b9cb4393: The contracts list now shows both v1 and v2 contracts. Closes https://github.com/SiaFoundation/hostd/issues/623
+- b9cb4393: The contracts explorer now supports sorting on all key event heights.
+
+### Patch Changes
+
+- cad48e35: Fixed an issue where a v2ContractResolution event in the wallet would crash the app. Closes https://github.com/SiaFoundation/hostd/issues/629
+
 ## 0.58.0
 
 ### Minor Changes

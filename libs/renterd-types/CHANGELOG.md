@@ -1,5 +1,14 @@
 # @siafoundation/renterd-types
 
+## 0.16.1
+
+### Patch Changes
+
+- Updated dependencies [cad48e35]
+- Updated dependencies [ce20d281]
+  - @siafoundation/types@0.9.0
+  - @siafoundation/react-core@3.0.0
+
 ## 0.16.0
 
 ### Minor Changes

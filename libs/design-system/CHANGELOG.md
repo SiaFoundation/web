@@ -1,5 +1,20 @@
 # Changelog
 
+## 4.20.0
+
+### Minor Changes
+
+- b9cb4393: ContractTimeline proofHeight is now resolutionHeight.
+- b9cb4393: Added payoutHeight to ContractTimeline.
+
+### Patch Changes
+
+- Updated dependencies [cad48e35]
+- Updated dependencies [ce20d281]
+  - @siafoundation/types@0.9.0
+  - @siafoundation/react-core@3.0.0
+  - @siafoundation/units@3.3.4
+
 ## 4.19.0
 
 ### Minor Changes
