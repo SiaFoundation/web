@@ -1,5 +1,11 @@
 # @siafoundation/walletd-js
 
+## 0.3.1
+
+### Patch Changes
+
+- @siafoundation/walletd-types@0.6.1
+
 ## 0.3.0
 
 ### Minor Changes

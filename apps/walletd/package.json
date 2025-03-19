@@ -1,7 +1,7 @@
 {
   "name": "walletd",
   "description": "The `walletd` user interface, includes a wallet with support for hot, cold, and hardware wallets.",
-  "version": "0.29.1",
+  "version": "0.29.2",
   "private": true,
   "license": "MIT"
 }

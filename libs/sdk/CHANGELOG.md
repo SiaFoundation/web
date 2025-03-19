@@ -1,5 +1,13 @@
 # @siafoundation/sdk
 
+## 0.3.2
+
+### Patch Changes
+
+- Updated dependencies [cad48e35]
+- Updated dependencies [ce20d281]
+  - @siafoundation/types@0.9.0
+
 ## 0.3.1
 
 ### Patch Changes

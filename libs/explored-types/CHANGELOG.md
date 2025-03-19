@@ -1,5 +1,17 @@
 # @siafoundation/explored-types
 
+## 0.14.0
+
+### Minor Changes
+
+- ea9cc58f: Fixed v2 host protocol version.
+
+### Patch Changes
+
+- Updated dependencies [cad48e35]
+- Updated dependencies [ce20d281]
+  - @siafoundation/types@0.9.0
+
 ## 0.13.0
 
 ### Minor Changes

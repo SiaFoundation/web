@@ -1,5 +1,15 @@
 # @siafoundation/types
 
+## 0.9.0
+
+### Minor Changes
+
+- ce20d281: Add capacity field to V2FileContract.
+
+### Patch Changes
+
+- cad48e35: Removed parent from the data field of WalletEventContractResolutionV2.
+
 ## 0.8.1
 
 ### Patch Changes

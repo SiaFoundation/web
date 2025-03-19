@@ -1,5 +1,18 @@
 # @siafoundation/hostd-react
 
+## 4.6.0
+
+### Minor Changes
+
+- ce20d281: Added V2 contracts API.
+
+### Patch Changes
+
+- Updated dependencies [ce20d281]
+  - @siafoundation/hostd-types@0.7.0
+  - @siafoundation/react-core@3.0.0
+  - @siafoundation/units@3.3.4
+
 ## 4.5.4
 
 ### Patch Changes

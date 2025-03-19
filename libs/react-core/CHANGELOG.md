@@ -1,5 +1,14 @@
 # @siafoundation/react-core
 
+## 3.0.0
+
+### Patch Changes
+
+- Updated dependencies [cad48e35]
+- Updated dependencies [ce20d281]
+  - @siafoundation/types@0.9.0
+  - @siafoundation/units@3.3.4
+
 ## 2.1.0
 
 ### Minor Changes

@@ -1,5 +1,17 @@
 # @siafoundation/hostd-types
 
+## 0.7.0
+
+### Minor Changes
+
+- ce20d281: Added V2 contracts API.
+
+### Patch Changes
+
+- Updated dependencies [cad48e35]
+- Updated dependencies [ce20d281]
+  - @siafoundation/types@0.9.0
+
 ## 0.6.1
 
 ### Patch Changes
