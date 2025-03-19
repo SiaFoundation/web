@@ -16,6 +16,8 @@ import {
   ExplorerSiacoinOutput,
   ExplorerSiafundOutput,
   ExplorerTransaction,
+  ExplorerV2FileContract,
+  ExplorerV2Transaction,
   FileContractID,
   Hash256,
   HostMetrics,
@@ -130,6 +132,27 @@ export type TransactionChainIndicesParams = {
 export type TransactionChainIndicesPayload = void
 export type TransactionChainIndicesResponse = ChainIndex[]
 
+// Returns the v2 transaction with the specified ID.
+export const v2TransactionByIDRoute = '/v2/transactions/:id'
+export type V2TransactionByIDParams = { id: TransactionID }
+export type V2TransactionByIDPayload = void
+export type V2TransactionByIDResponse = ExplorerV2Transaction
+
+// Returns the v2 transactions with the specified IDs.
+export const v2TransactionsByIDsRoute = '/v2/transactions'
+export type V2TransactionsByIDsParams = void
+export type V2TransactionsByIDsPayload = { ids: TransactionID[] }
+export type V2TransactionsByIDsResponse = ExplorerV2Transaction[]
+
+export const v2TransactionChainIndicesRoute = '/v2/transactions/:id/indices'
+export type V2TransactionChainIndicesParams = {
+  id: TransactionID
+  offset?: number
+  limit?: number
+}
+export type V2TransactionChainIndicesPayload = void
+export type V2TransactionChainIndicesResponse = ChainIndex[]
+
 // Address
 
 // Returns the specified address' unspent siacoin outputs.
@@ -206,6 +229,30 @@ export const contractRevisionsRoute = '/contracts/:id/revisions'
 export type ContractRevisionsParams = { id: FileContractID }
 export type ContractRevisionsPayload = void
 export type ContractRevisionsResponse = ExplorerFileContract[]
+
+// Returns a v2 file contract with the specified ID.
+export const v2ContractByIDRoute = '/v2/contracts/:id'
+export type V2ContractByIDParams = { id: FileContractID }
+export type V2ContractByIDPayload = void
+export type V2ContractByIDResponse = ExplorerV2FileContract
+
+// Returns the v2 file contracts with the specified IDs.
+export const v2ContractsByIDsRoute = '/v2/contracts'
+export type V2ContractsByIDsParams = void
+export type V2ContractsByIDsPayload = { ids: FileContractID[] }
+export type V2ContractsByIDsResponse = ExplorerV2FileContract[]
+
+// Returns the file contracts for a particular ed25519 key.
+export const v2ContractsByPubkeyRoute = '/v2/pubkey/:pubkey/contracts'
+export type V2ContractsByPubkeyParams = { key: number }
+export type V2ContractsByPubkeyPayload = void
+export type V2ContractsByPubkeyResponse = ExplorerV2FileContract
+
+// Returns all the revisions of the contract with the specified ID.
+export const v2ContractRevisionsByIDRoute = '/v2/contracts/:id/revisions'
+export type V2ContractRevisionsByIDParams = { id: FileContractID }
+export type V2ContractRevisionsByIDPayload = void
+export type V2ContractRevisionsByIDResponse = ExplorerV2FileContract[]
 
 // Metrics
 
