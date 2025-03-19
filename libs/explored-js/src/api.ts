@@ -128,6 +128,34 @@ import {
   TransactionChainIndicesParams,
   TransactionChainIndicesPayload,
   TransactionChainIndicesResponse,
+  V2ContractByIDParams,
+  V2ContractByIDPayload,
+  V2ContractByIDResponse,
+  v2ContractByIDRoute,
+  V2ContractsByIDsParams,
+  V2ContractsByIDsPayload,
+  V2ContractsByIDsResponse,
+  v2ContractsByIDsRoute,
+  V2ContractRevisionsByIDParams,
+  V2ContractRevisionsByIDPayload,
+  V2ContractRevisionsByIDResponse,
+  v2ContractRevisionsByIDRoute,
+  V2ContractsByPubkeyParams,
+  V2ContractsByPubkeyPayload,
+  V2ContractsByPubkeyResponse,
+  v2ContractsByPubkeyRoute,
+  V2TransactionByIDParams,
+  V2TransactionByIDPayload,
+  V2TransactionByIDResponse,
+  V2TransactionsByIDsParams,
+  V2TransactionsByIDsPayload,
+  V2TransactionsByIDsResponse,
+  V2TransactionChainIndicesParams,
+  V2TransactionChainIndicesPayload,
+  V2TransactionChainIndicesResponse,
+  v2TransactionByIDRoute,
+  v2TransactionsByIDsRoute,
+  v2TransactionChainIndicesRoute,
 } from '@siafoundation/explored-types'
 
 export function Explored({
@@ -215,6 +243,23 @@ export function Explored({
       TransactionChainIndicesPayload,
       TransactionChainIndicesResponse
     >(axios, 'get', transactionChainIndicesRoute),
+
+    v2TransactionByID: buildRequestHandler<
+      V2TransactionByIDParams,
+      V2TransactionByIDPayload,
+      V2TransactionByIDResponse
+    >(axios, 'get', v2TransactionByIDRoute),
+    v2TransactionsByIDs: buildRequestHandler<
+      V2TransactionsByIDsParams,
+      V2TransactionsByIDsPayload,
+      V2TransactionsByIDsResponse
+    >(axios, 'post', v2TransactionsByIDsRoute),
+    v2TransactionChainIndices: buildRequestHandler<
+      V2TransactionChainIndicesParams,
+      V2TransactionChainIndicesPayload,
+      V2TransactionChainIndicesResponse
+    >(axios, 'get', v2TransactionChainIndicesRoute),
+
     // Address
     addressSiacoinUTXOs: buildRequestHandler<
       AddressSiacoinUTXOsParams,
@@ -268,6 +313,27 @@ export function Explored({
       ContractRevisionsPayload,
       ContractRevisionsResponse
     >(axios, 'get', contractRevisionsRoute),
+    // Contract - V2
+    v2ContractByID: buildRequestHandler<
+      V2ContractByIDParams,
+      V2ContractByIDPayload,
+      V2ContractByIDResponse
+    >(axios, 'get', v2ContractByIDRoute),
+    v2ContractsByID: buildRequestHandler<
+      V2ContractsByIDsParams,
+      V2ContractsByIDsPayload,
+      V2ContractsByIDsResponse
+    >(axios, 'post', v2ContractsByIDsRoute),
+    v2ContractRevisionsByID: buildRequestHandler<
+      V2ContractRevisionsByIDParams,
+      V2ContractRevisionsByIDPayload,
+      V2ContractRevisionsByIDResponse
+    >(axios, 'get', v2ContractRevisionsByIDRoute),
+    v2ContractsByPubKey: buildRequestHandler<
+      V2ContractsByPubkeyParams,
+      V2ContractsByPubkeyPayload,
+      V2ContractsByPubkeyResponse
+    >(axios, 'get', v2ContractsByPubkeyRoute),
     // Metrics
     blockMetrics: buildRequestHandler<
       BlockMetricsParams,

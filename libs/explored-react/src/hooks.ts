@@ -92,6 +92,29 @@ import {
   TxpoolTransactionsParams,
   TxpoolTransactionsResponse,
   txpoolTransactionsRoute,
+  V2ContractByIDParams,
+  V2ContractByIDResponse,
+  v2ContractByIDRoute,
+  V2ContractRevisionsByIDParams,
+  V2ContractRevisionsByIDResponse,
+  v2ContractRevisionsByIDRoute,
+  V2ContractsByIDsParams,
+  V2ContractsByIDsPayload,
+  V2ContractsByIDsResponse,
+  v2ContractsByIDsRoute,
+  V2ContractsByPubkeyParams,
+  V2ContractsByPubkeyResponse,
+  v2ContractsByPubkeyRoute,
+  V2TransactionByIDParams,
+  V2TransactionByIDResponse,
+  v2TransactionByIDRoute,
+  V2TransactionChainIndicesParams,
+  V2TransactionChainIndicesResponse,
+  v2TransactionChainIndicesRoute,
+  V2TransactionsByIDsParams,
+  V2TransactionsByIDsPayload,
+  V2TransactionsByIDsResponse,
+  v2TransactionsByIDsRoute,
 } from '@siafoundation/explored-types'
 import {
   HookArgsCallback,
@@ -247,6 +270,40 @@ export function useTransactionChainIndices(
   })
 }
 
+export function useV2TransactionByID(
+  args: HookArgsSwr<V2TransactionByIDParams, V2TransactionByIDResponse>
+) {
+  return useGetSwr({
+    ...args,
+    route: v2TransactionByIDRoute,
+  })
+}
+
+export function useV2TransactionsByIDs(
+  args: HookArgsWithPayloadSwr<
+    V2TransactionsByIDsParams,
+    V2TransactionsByIDsPayload,
+    V2TransactionsByIDsResponse
+  >
+) {
+  return usePostSwr({
+    ...args,
+    route: v2TransactionsByIDsRoute,
+  })
+}
+
+export function useV2TransactionChainIndices(
+  args: HookArgsSwr<
+    V2TransactionChainIndicesParams,
+    V2TransactionChainIndicesResponse
+  >
+) {
+  return useGetSwr({
+    ...args,
+    route: v2TransactionChainIndicesRoute,
+  })
+}
+
 // Address
 
 export function useAddressSiacoinUTXOs(
@@ -335,6 +392,49 @@ export function useContractRevisions(
   return useGetSwr({
     ...args,
     route: contractRevisionsRoute,
+  })
+}
+
+export function useV2ContractByID(
+  args: HookArgsSwr<V2ContractByIDParams, V2ContractByIDResponse>
+) {
+  return useGetSwr({
+    ...args,
+    route: v2ContractByIDRoute,
+  })
+}
+
+export function useV2ContractsByIDs(
+  args: HookArgsWithPayloadSwr<
+    V2ContractsByIDsParams,
+    V2ContractsByIDsPayload,
+    V2ContractsByIDsResponse
+  >
+) {
+  return usePostSwr({
+    ...args,
+    route: v2ContractsByIDsRoute,
+  })
+}
+
+export function useV2ContractByPubkey(
+  args: HookArgsSwr<V2ContractsByPubkeyParams, V2ContractsByPubkeyResponse>
+) {
+  return useGetSwr({
+    ...args,
+    route: v2ContractsByPubkeyRoute,
+  })
+}
+
+export function useV2ContractRevisions(
+  args: HookArgsSwr<
+    V2ContractRevisionsByIDParams,
+    V2ContractRevisionsByIDResponse
+  >
+) {
+  return useGetSwr({
+    ...args,
+    route: v2ContractRevisionsByIDRoute,
   })
 }
 

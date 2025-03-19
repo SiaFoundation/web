@@ -25,6 +25,10 @@ import type {
   TransactionSignature,
   V2Transaction,
   V2HostSettings,
+  Signature,
+  V2FileContractElement,
+  V2FileContractResolution,
+  V2FileContractRevision,
 } from '@siafoundation/types'
 
 // Unchanged Types - Re-exported for a more straight-forward DX like:
@@ -46,6 +50,8 @@ export {
   SiafundOutputID,
   Transaction,
   TransactionID,
+  V2FileContractElement,
+  V2FileContractRevision,
   V2Transaction,
 }
 
@@ -71,6 +77,14 @@ export type EventV1ContractResolution = {
   missed: boolean
 }
 
+export type EventV2ContractResolution = {
+  resolution: V2FileContractResolution
+  siacoinElement: ExplorerSiacoinOutput
+  missed: boolean
+}
+
+export type EventV2Transaction = ExplorerV2Transaction
+
 type ExplorerEventBase = {
   id: Hash256
   index: ChainIndex
@@ -81,7 +95,7 @@ type ExplorerEventBase = {
 }
 
 type ExplorerMinerPayoutEvent = ExplorerEventBase & {
-  type: 'miner'
+  type: 'payout'
   data: EventPayout
 }
 
@@ -95,10 +109,22 @@ type ExplorerV1ContractResolutionEvent = ExplorerEventBase & {
   data: EventV1ContractResolution
 }
 
+type ExplorerV2TransactionEvent = ExplorerEventBase & {
+  type: 'v2Transaction'
+  data: EventV2Transaction
+}
+
+type ExplorerV2ContractResolutionEvent = ExplorerEventBase & {
+  type: 'v2ContractResolution'
+  data: EventV2ContractResolution
+}
+
 export type ExplorerEvent =
   | ExplorerMinerPayoutEvent
   | ExplorerV1TransactionEvent
   | ExplorerV1ContractResolutionEvent
+  | ExplorerV2TransactionEvent
+  | ExplorerV2ContractResolutionEvent
 
 export type BlockMetrics = {
   index: ChainIndex
@@ -132,15 +158,17 @@ export type SearchResultType =
   | 'siacoinElement'
   | 'siafundElement'
   | 'transaction'
+  | 'v2Contract'
+  | 'v2Transaction'
 
 export type TxpoolBroadcast = {
   transactions: Transaction[]
-  v2transactions: V2Transaction[]
+  v2transactions: ExplorerV2Transaction[]
 }
 
 export type TxpoolTransactions = {
   transactions: Transaction[]
-  v2transactions: V2Transaction[]
+  v2transactions: ExplorerV2Transaction[]
 }
 
 export type HostMetrics = {
@@ -262,8 +290,8 @@ export type ExplorerFileContract = {
   confirmationIndex: ChainIndex
   confirmationTransactionID: TransactionID
 
-  proofIndex: ChainIndex | null
-  proofTransactionID: TransactionID | null
+  proofIndex?: ChainIndex
+  proofTransactionID?: TransactionID
 
   id: FileContractID
   filesize: number
@@ -271,8 +299,8 @@ export type ExplorerFileContract = {
   windowStart: number
   windowEnd: number
   payout: Currency
-  validProofOutputs: (SiacoinOutput & { id: SiacoinOutputID })[]
-  missedProofOutputs: (SiacoinOutput & { id: SiacoinOutputID })[]
+  validProofOutputs: SiacoinOutput[]
+  missedProofOutputs: SiacoinOutput[]
   unlockHash: Hash256
   revisionNumber: number
 }
@@ -317,6 +345,8 @@ export type ExplorerBlock = {
   timestamp: string
   minerPayouts: ExplorerSiacoinOutput[]
   transactions: ExplorerTransaction[]
+
+  v2?: V2BlockData
 }
 
 export type Protocol = 'siamux' | 'quic'
@@ -368,4 +398,58 @@ export type ExplorerV2Host = {
   failedInteractions: number
 
   v2Settings: V2HostSettings
+}
+
+export type ExplorerV2HostAnnouncement = {
+  publicKey: PublicKey
+  V2HostAnnouncement: NetAddress[]
+}
+
+export type ExplorerV2Transaction = V2Transaction & {
+  id: string
+  hostAnnouncements?: ExplorerV2HostAnnouncement[]
+}
+
+export type V2BlockData = {
+  height: number
+  commitment: Hash256
+  transactions: ExplorerV2Transaction[]
+}
+
+export type ExplorerV2FileContractResolutionType =
+  | 'renewal'
+  | 'storage_proof'
+  | 'expiration'
+
+export type ExplorerV2FileContract = V2FileContractElement & {
+  transactionID: TransactionID
+
+  confirmationIndex: ChainIndex
+  confirmationTransactionID: TransactionID
+
+  resolutionIndex?: ChainIndex
+  resolutionTransactionID?: TransactionID
+  resolutionType?: ExplorerV2FileContractResolutionType | 'invalid'
+}
+
+export type ExplorerV2FileContractRevision = {
+  parent: ExplorerV2FileContract
+  revision: ExplorerV2FileContract
+}
+
+export type ExplorerV2FileContractRenewal = {
+  finalRenterOutput: SiacoinOutput
+  finalHostOutput: SiacoinOutput
+  renterRollover: Currency
+  hostRollover: Currency
+  newContract: ExplorerV2FileContract
+
+  renterSignature: Signature
+  hostSignature: Signature
+}
+
+export type ExplorerV2ContractResolution = {
+  parent: ExplorerV2FileContract
+  type: ExplorerV2FileContractResolutionType
+  resolution: string
 }
