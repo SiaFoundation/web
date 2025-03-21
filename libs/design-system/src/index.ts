@@ -184,7 +184,6 @@ export * from './multi/MultiSelectionMenu'
 export * from './data/webLinks'
 
 // lib
-export * from './lib/sectors'
 export * from './lib/toast'
 export * from './lib/clipboard'
 export * from './lib/image'

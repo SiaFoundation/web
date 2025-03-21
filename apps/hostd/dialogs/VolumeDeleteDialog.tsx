@@ -4,7 +4,6 @@ import {
   InfoTip,
   Dialog,
   Code,
-  sectorsToBytes,
   triggerErrorToast,
   triggerSuccessToast,
   ConfigFields,
@@ -14,7 +13,7 @@ import {
   FieldText,
 } from '@siafoundation/design-system'
 import { useVolume, useVolumeDelete } from '@siafoundation/hostd-react'
-import { humanBytes } from '@siafoundation/units'
+import { humanBytes, sectorsToBytes } from '@siafoundation/units'
 import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDialog } from '../contexts/dialog'
