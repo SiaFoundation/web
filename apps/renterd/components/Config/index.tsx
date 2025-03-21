@@ -5,12 +5,12 @@ import {
   ConfigurationSiacoin,
   PanelMenuSection,
   PanelMenuSetting,
+  useDaemonExplorerExchangeRate,
 } from '@siafoundation/design-system'
 import { useConfig } from '../../contexts/config'
 import { StateConnError } from './StateConnError'
 import { ShouldPinSwitch } from './ShouldPinSwitch'
 import { PinnedCurrencyWarning } from './PinnedCurrencyWarning'
-import { useExchangeRate } from '@siafoundation/react-core'
 
 export function Config() {
   const { form, fields, remoteError, configRef } = useConfig()
@@ -20,7 +20,7 @@ export function Config() {
   const shouldPinMaxUploadPrice = form.watch('shouldPinMaxUploadPrice')
   const shouldPinMaxDownloadPrice = form.watch('shouldPinMaxDownloadPrice')
 
-  const { rate } = useExchangeRate({
+  const { rate } = useDaemonExplorerExchangeRate({
     currency: pinnedCurrency || undefined,
   })
   const canUseExchangeRates = !!rate

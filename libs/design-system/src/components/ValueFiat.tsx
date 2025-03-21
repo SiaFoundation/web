@@ -3,7 +3,7 @@
 import { Text } from '../core/Text'
 import { Tooltip } from '../core/Tooltip'
 import BigNumber from 'bignumber.js'
-import { useActiveExchangeRate } from '@siafoundation/react-core'
+import { useExternalActiveExchangeRate } from '../hooks/useExternalExchangeRate'
 
 type Props = {
   labeledBy?: string
@@ -38,7 +38,7 @@ export function ValueFiat({
   extendedSuffix,
   labeledBy,
 }: Props) {
-  const { rate, currency } = useActiveExchangeRate()
+  const { rate, currency } = useExternalActiveExchangeRate()
   const sign = sc.isZero()
     ? ''
     : sc.isGreaterThan(0) && variant === 'change'

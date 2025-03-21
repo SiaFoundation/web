@@ -5,7 +5,7 @@ import { getFields } from './fields'
 import useLocalStorageState from 'use-local-storage-state'
 import { useHostState } from '@siafoundation/hostd-react'
 import { useAutoCalculatedFields } from './useAutoCalculatedFields'
-import { useExchangeRate } from '@siafoundation/react-core'
+import { useDaemonExplorerExchangeRate } from '@siafoundation/design-system'
 
 export function useForm() {
   const form = useHookForm({
@@ -24,7 +24,7 @@ export function useForm() {
     form,
   })
 
-  const exchangeRateUSD = useExchangeRate({
+  const exchangeRateUSD = useDaemonExplorerExchangeRate({
     currency: 'usd',
   })
   const state = useHostState()
