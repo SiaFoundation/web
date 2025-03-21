@@ -1,7 +1,7 @@
 import { initSDK } from '@siafoundation/sdk'
 import { signTransactionLedgerV1 } from './signLedgerV1'
 import { getMockAddresses, getMockDevice } from './testMocks'
-import { getMockScenarioSeedWallet } from '@siafoundation/walletd-mock'
+import { getMockScenarioSeedWallet } from './mocks/mockSeedWallet'
 
 beforeEach(async () => {
   await initSDK()
