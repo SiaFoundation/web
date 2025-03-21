@@ -1,9 +1,10 @@
 import { TBToBytes } from './bytes'
-import { SiaCentralHost } from '@siafoundation/sia-central-types'
 import BigNumber from 'bignumber.js'
 import { humanSiacoin, toSiacoins } from './currency'
-import { humanBytes, humanSpeed } from './humanUnits'
+import { humanBytes } from './humanUnits'
 import { valuePerBytePerBlockToPerTBPerMonth } from './valuePer'
+import { ExplorerHost } from '@siafoundation/explored-types'
+import { sectorsToBytes } from './sectors'
 
 type Hastings = string
 
@@ -52,40 +53,22 @@ export function getUploadCost({ price, exchange }: Props) {
   return hastingsPerByteToCurrencyPerTBFormatted({ price, exchange })
 }
 
-type SiaCentralPartialHost = {
-  benchmark?: {
-    data_size: number
-    download_time: number
-    upload_time: number
+export function getRemainingOverTotalStorage(host: ExplorerHost) {
+  if (host.v2 === true) {
+    return `${humanBytes(
+      sectorsToBytes(host.v2Settings.remainingStorage)
+    )}/${humanBytes(sectorsToBytes(host.v2Settings.totalStorage))} remaining`
   }
+  return `${humanBytes(host.settings.remainingstorage)}/${humanBytes(
+    host.settings.totalstorage
+  )} remaining`
 }
 
-export function getDownloadSpeed(host: SiaCentralPartialHost) {
-  return host.benchmark
-    ? humanSpeed(
-        (host.benchmark.data_size * 8) / (host.benchmark.download_time / 1000)
-      )
-    : '-'
-}
-
-export function getUploadSpeed(host: SiaCentralPartialHost) {
-  return host.benchmark
-    ? humanSpeed(
-        (host.benchmark.data_size * 8) / (host.benchmark.upload_time / 1000)
-      )
-    : '-'
-}
-
-export function getRemainingOverTotalStorage(host: SiaCentralHost) {
-  return host.settings
-    ? `${humanBytes(host.settings.remaining_storage)}/${humanBytes(
-        host.settings.total_storage
-      )} remaining`
-    : '-'
-}
-
-export function getRemainingStorage(host: SiaCentralHost) {
-  return host.settings ? humanBytes(host.settings.remaining_storage) : '-'
+export function getRemainingStorage(host: ExplorerHost) {
+  if (host.v2 === true) {
+    return humanBytes(sectorsToBytes(host.v2Settings.remainingStorage))
+  }
+  return humanBytes(host.settings.remainingstorage)
 }
 
 export function getRedundancyMultiplier(

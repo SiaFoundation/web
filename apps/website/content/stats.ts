@@ -3,7 +3,7 @@ import { humanBytes, humanNumber } from '@siafoundation/units'
 import { AsyncReturnType } from '../lib/types'
 import { getCacheValue } from '../lib/cache'
 import { minutesInSeconds } from '@siafoundation/units'
-import { siaCentral } from '../config/siaCentral'
+import { siascan } from '../config/siascan'
 import { to } from '@siafoundation/request'
 
 const maxAge = minutesInSeconds(5)
@@ -20,13 +20,10 @@ export async function getStats() {
 async function readStats() {
   if (process.env.NODE_ENV === 'development') {
     return {
+      blockHeight: '200,000',
       activeHosts: '20,531',
-      onlineHosts: '20,634',
       totalStorage: '207.38 PB',
       usedStorage: '202.44 PB',
-      totalRegistry: '1,000 M',
-      usedRegistry: '100 M',
-      blockHeight: '200,000',
       commits: '2,020,909',
       contributors: '2,069',
       forks: '20,472',
@@ -34,31 +31,20 @@ async function readStats() {
     }
   }
 
-  const [[latestBlock], [hostsStats], github] = await Promise.all([
-    to(siaCentral.blockLatest()),
-    to(siaCentral.hostsNetworkMetrics()),
+  const [[latestBlock], [hostMetrics], github] = await Promise.all([
+    to(siascan.consensusTip()),
+    to(siascan.hostMetrics()),
     getGitHub(),
   ])
 
   const stats = {
     // network
-    blockHeight: humanNumber(latestBlock?.block.height),
-    activeHosts: humanNumber(hostsStats?.totals.active_hosts),
-    onlineHosts: humanNumber(hostsStats?.totals.total_hosts),
+    blockHeight: humanNumber(latestBlock?.height),
+    activeHosts: humanNumber(hostMetrics?.activeHosts),
     // storage
-    totalStorage: humanBytes(hostsStats?.totals.total_storage),
+    totalStorage: humanBytes(hostMetrics?.totalStorage),
     usedStorage: humanBytes(
-      hostsStats?.totals.total_storage - hostsStats?.totals.remaining_storage
-    ),
-    totalRegistry: humanNumber(
-      (hostsStats?.totals.total_registry_entries || 0) / 1_000_000,
-      { units: 'M' }
-    ),
-    usedRegistry: humanNumber(
-      ((hostsStats?.totals.total_registry_entries || 0) -
-        (hostsStats?.totals.remaining_registry_entries || 0)) /
-        1_000_000,
-      { units: 'M' }
+      hostMetrics?.totalStorage - hostMetrics?.remainingStorage
     ),
     // software
     commits: humanNumber(github.data?.commits),

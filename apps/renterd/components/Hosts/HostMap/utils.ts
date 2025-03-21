@@ -4,10 +4,10 @@ import {
   TBToBytes,
   humanBytes,
   humanSiacoin,
+  sectorsToBytes,
 } from '@siafoundation/units'
 import { HostDataWithLocation } from '../../../contexts/hosts/types'
 import BigNumber from 'bignumber.js'
-
 export function getHostLabel({
   host,
   exchangeRateUSD,
@@ -15,15 +15,18 @@ export function getHostLabel({
   host: HostDataWithLocation
   exchangeRateUSD?: BigNumber
 }) {
+  const storagePrice = host.v2
+    ? host.v2Settings.prices.storagePrice
+    : host.settings.storageprice
   const storageCost = exchangeRateUSD
-    ? `$${new BigNumber(host.settings?.storageprice || 0)
+    ? `$${new BigNumber(storagePrice || 0)
         .times(TBToBytes(1))
         .times(monthsToBlocks(1))
         .div(1e24)
         .times(exchangeRateUSD)
         .toFixed(2)}/TB`
     : `${humanSiacoin(
-        new BigNumber(host.settings?.storageprice || 0)
+        new BigNumber(storagePrice || 0)
           .times(TBToBytes(1))
           .times(monthsToBlocks(1)),
         { fixed: 0 }
@@ -35,11 +38,19 @@ export function getHostLabel({
       .toNumber()
   )} utilized`
 
-  const availableStorage = `${humanBytes(
-    host.settings?.remainingstorage || 0
-  )} / ${humanBytes(host.settings?.totalstorage || 0)} available`
+  const remainingStorage = host.v2
+    ? sectorsToBytes(host.v2Settings.remainingStorage)
+    : host.settings.remainingstorage
+  const totalStorage = host.v2
+    ? sectorsToBytes(host.v2Settings.totalStorage)
+    : host.settings.totalstorage
+  const availableStorage = `${humanBytes(remainingStorage || 0)} / ${humanBytes(
+    totalStorage || 0
+  )} available`
 
-  const cc = host.countryCode ? countryCodeEmoji(host.countryCode) : '🌍'
+  const cc = host.location.countryCode
+    ? countryCodeEmoji(host.location.countryCode)
+    : '🌍'
 
   return `${cc} · ${storageCost} · ${usedStorage} · ${availableStorage}`
 }
