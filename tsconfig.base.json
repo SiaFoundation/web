@@ -48,7 +48,6 @@
       "@siafoundation/sia-central-mock": ["libs/sia-central-mock/src/index.ts"],
       "@siafoundation/types": ["libs/types/src/index.ts"],
       "@siafoundation/units": ["libs/units/src/index.ts"],
-      "@siafoundation/walletd-mock": ["libs/walletd-mock/src/index.ts"],
       "@siafoundation/clusterd": ["libs/clusterd/src/index.ts"]
     }
   },

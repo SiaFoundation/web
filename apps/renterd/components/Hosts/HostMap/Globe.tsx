@@ -9,7 +9,7 @@ import { GlobeDyn } from './GlobeDyn'
 import { HostDataWithLocation } from '../../../contexts/hosts/types'
 import BigNumber from 'bignumber.js'
 import { getHostStatus } from '../../../contexts/hosts/status'
-import { useDaemonExplorerExchangeRate } from '@siafoundation/design-system'
+import { useActiveDaemonExplorerExchangeRate } from '@siafoundation/design-system'
 
 export type Commands = {
   moveToLocation: (
@@ -44,9 +44,7 @@ export function Globe({
   onHostClick,
   onHostHover,
 }: Props) {
-  const exchangeRateUSD = useDaemonExplorerExchangeRate({
-    currency: 'usd',
-  })
+  const { currency, rate } = useActiveDaemonExplorerExchangeRate()
   const globeEl = useRef<GlobeMethods>(null)
   const cmdRef = useRef<Commands>(emptyCommands)
   const moveToLocation = useCallback(
@@ -75,7 +73,12 @@ export function Globe({
       return false
     }
 
-    moveToLocation(activeHost?.location || [48.8323, 2.4075], 1.5)
+    moveToLocation(
+      activeHost?.location
+        ? [activeHost.location.latitude, activeHost.location.longitude]
+        : [48.8323, 2.4075],
+      1.5
+    )
 
     const directionalLight = globeEl.current
       ?.scene()
@@ -119,13 +122,11 @@ export function Globe({
         atmosphereColor="rgba(0,0,0,0)"
         atmosphereAltitude={0.16}
         animateIn={false}
-        arcLabel={(r: Route) =>
-          getHostLabel({ host: r.dst, exchangeRateUSD: exchangeRateUSD.rate })
-        }
-        arcStartLat={(r: Route) => +r.src.location[0]}
-        arcStartLng={(r: Route) => +r.src.location[1]}
-        arcEndLat={(r: Route) => +r.dst.location[0]}
-        arcEndLng={(r: Route) => +r.dst.location[1]}
+        arcLabel={(r: Route) => getHostLabel({ host: r.dst, currency, rate })}
+        arcStartLat={(r: Route) => +r.src.location.latitude}
+        arcStartLng={(r: Route) => +r.src.location.longitude}
+        arcEndLat={(r: Route) => +r.dst.location.latitude}
+        arcEndLng={(r: Route) => +r.dst.location.longitude}
         arcDashLength={0.75}
         arcAltitude={0}
         arcDashGap={0.1}
@@ -144,10 +145,10 @@ export function Globe({
         // }}
         arcsTransitionDuration={0}
         pointsData={points}
-        pointLat={(h: HostDataWithLocation) => h.location[0]}
-        pointLng={(h: HostDataWithLocation) => h.location[1]}
+        pointLat={(h: HostDataWithLocation) => h.location.latitude}
+        pointLng={(h: HostDataWithLocation) => h.location.longitude}
         pointLabel={(h: HostDataWithLocation) =>
-          getHostLabel({ host: h, exchangeRateUSD: exchangeRateUSD.rate })
+          getHostLabel({ host: h, currency, rate })
         }
         // pointAltitude={
         //   (h: HostDataWithLocation) => h.settings.remainingstorage / 1e13 / 100
@@ -187,13 +188,19 @@ export function Globe({
           if (!h) {
             return
           }
-          onHostHover?.(h.publicKey, h.location)
+          onHostHover?.(h.publicKey, [
+            h.location.latitude,
+            h.location.longitude,
+          ])
         }}
         onPointClick={(h: HostDataWithLocation) => {
           if (!h) {
             return
           }
-          onHostClick?.(h.publicKey, h.location)
+          onHostClick?.(h.publicKey, [
+            h.location.latitude,
+            h.location.longitude,
+          ])
         }}
         pointsMerge={false}
       />

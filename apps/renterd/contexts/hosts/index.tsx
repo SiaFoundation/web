@@ -1,6 +1,7 @@
 import {
   triggerToast,
   truncate,
+  useDaemonExplorerHostsList,
   useDatasetState,
   useMultiSelect,
   usePaginationOffset,
@@ -18,7 +19,6 @@ import {
   HostsPayload,
   HostsUsabilityMode,
 } from '@siafoundation/renterd-types'
-import { useSiaCentralHosts } from '@siafoundation/sia-central-react'
 import {
   createContext,
   useCallback,
@@ -91,22 +91,24 @@ function useHostsMain() {
   const isAllowlistActive = !!allowlist.data?.length
 
   const { settings } = useAppSettings()
-  const geo = useSiaCentralHosts({
-    disabled: !settings.siaCentral,
-    config: {
-      swr: {
-        revalidateOnFocus: false,
-      },
+  const geo = useDaemonExplorerHostsList({
+    params: {
+      sortBy: 'storage_price',
+      dir: 'asc',
+      limit: 1000,
+    },
+    payload: {
+      online: true,
     },
   })
 
   useEffect(() => {
-    if (!settings.siaCentral) {
+    if (!settings.siascan) {
       setViewMode('list')
     }
-  }, [settings.siaCentral])
+  }, [settings.siascan])
 
-  const geoHosts = useMemo(() => geo.data?.hosts || [], [geo.data])
+  const geoHosts = useMemo(() => geo.data || [], [geo.data])
 
   const cmdRef = useRef<Commands>(emptyCommands)
 
@@ -216,7 +218,7 @@ function useHostsMain() {
     }
     const { location } = activeHost || {}
     if (location) {
-      cmdRef.current.moveToLocation(location)
+      cmdRef.current.moveToLocation([location.latitude, location.longitude])
     } else {
       triggerToast({
         title: `Location not available for host ${truncate(

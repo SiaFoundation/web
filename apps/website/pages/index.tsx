@@ -21,19 +21,12 @@ import { backgrounds, patterns, previews } from '../content/assets'
 import { HostMap } from '../components/HostMap'
 import { CalloutProject } from '../components/CalloutProject'
 import { getGeoHosts } from '../content/geoHosts'
-import { getExchangeRates } from '../content/exchangeRates'
 import { getStats } from '../content/stats'
 import { minutesInSeconds } from '@siafoundation/units'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-export default function Home({
-  featured,
-  tutorials,
-  services,
-  rates,
-  hosts,
-}: Props) {
+export default function Home({ featured, tutorials, services, hosts }: Props) {
   const description = (
     <>
       Cryptography has unleashed the latent power of the Internet by enabling
@@ -66,7 +59,7 @@ export default function Home({
             description={description}
             className="relative z-10"
           />
-          <HostMap hosts={hosts} rates={rates} />
+          <HostMap hosts={hosts} />
         </SectionTransparent>
       }
       backgroundImage={backgrounds.mountain}
@@ -281,7 +274,6 @@ export async function getStaticProps() {
   const featured = await getFeedContent(['sia-all', 'featured'], 5)
   const tutorials = await getTutorialArticles()
   const hosts = await getGeoHosts()
-  const rates = await getExchangeRates()
   const services = await getProjects('featured', 5)
   const stats = await getStats()
 
@@ -289,7 +281,6 @@ export async function getStaticProps() {
     featured,
     tutorials,
     hosts,
-    rates: rates?.rates.sc,
     services,
     fallback: {
       '/api/stats': stats,

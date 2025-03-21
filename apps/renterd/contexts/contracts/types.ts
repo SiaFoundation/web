@@ -23,7 +23,6 @@ export type ContractData = {
   id: string
   hostKey: string
   state: ContractState
-  location?: [number, number]
   usability: ContractUsability
   isRenewed: boolean
   renewedFrom: string

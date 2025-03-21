@@ -1,4 +1,4 @@
-import { useAppSettings, SWRError } from '@siafoundation/react-core'
+import { SWRError } from '@siafoundation/react-core'
 import {
   AutopilotConfig,
   AutopilotState,
@@ -53,8 +53,6 @@ export function useResources() {
     },
   })
 
-  const appSettings = useAppSettings()
-
   // Resources required to intialize form.
   const resources: ResourcesMaybeLoaded = useMemo(
     () => ({
@@ -78,11 +76,6 @@ export function useResources() {
         data: upload.data,
         error: upload.error,
       },
-      appSettings: {
-        settings: {
-          siaCentral: appSettings.settings.siaCentral,
-        },
-      },
     }),
     [
       autopilotState.data,
@@ -95,7 +88,6 @@ export function useResources() {
       pinned.error,
       upload.data,
       upload.error,
-      appSettings.settings.siaCentral,
     ]
   )
 
@@ -106,7 +98,6 @@ export function useResources() {
     gouging,
     pinned,
     upload,
-    appSettings,
   }
 }
 
@@ -162,11 +153,6 @@ export type ResourcesMaybeLoaded = {
     data?: SettingsUpload
     error?: SWRError
   }
-  appSettings: {
-    settings: {
-      siaCentral: boolean
-    }
-  }
 }
 
 export type ResourcesRequiredLoaded = {
@@ -189,10 +175,5 @@ export type ResourcesRequiredLoaded = {
   upload: {
     data: SettingsUpload
     error?: undefined
-  }
-  appSettings: {
-    settings: {
-      siaCentral: boolean
-    }
   }
 }

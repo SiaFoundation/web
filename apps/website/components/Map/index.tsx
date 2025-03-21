@@ -4,7 +4,7 @@ import { useCallback, useMemo, useRef, useState } from 'react'
 import { ScrollArea, Text, Tooltip } from '@siafoundation/design-system'
 import { HostItem } from './HostItem'
 import { Navbar } from '../Layout/Navbar'
-import { SiaCentralPartialHost } from '../../content/geoHosts'
+import { ExplorerPartialHost } from '../../content/geoHosts'
 import { PageHead } from '../PageHead'
 import { previews } from '../../content/assets'
 import { Stats } from '../../content/stats'
@@ -21,20 +21,19 @@ export const emptyCommands: Commands = {
 }
 
 type Props = {
-  hosts: SiaCentralPartialHost[]
-  rates: { usd: string }
+  hosts: ExplorerPartialHost[]
   stats: Stats
 }
 
-export function Map({ hosts, rates, stats }: Props) {
+export function Map({ hosts, stats }: Props) {
   const { gpu, settings } = useAppSettings()
 
   const [activeHostPublicKey, setActiveHostPublicKey] = useState<string>(
-    hosts[0].public_key
+    hosts[0].publicKey
   )
 
   const activeHost = useMemo(
-    () => hosts?.find((d) => d.public_key === activeHostPublicKey),
+    () => hosts?.find((d) => d.publicKey === activeHostPublicKey),
     [hosts, activeHostPublicKey]
   )
 
@@ -99,7 +98,7 @@ export function Map({ hosts, rates, stats }: Props) {
     []
   )
 
-  if (settings.siaCentral && !gpu.shouldRender) {
+  if (settings.siascan && !gpu.shouldRender) {
     return null
   }
 
@@ -156,14 +155,16 @@ export function Map({ hosts, rates, stats }: Props) {
           <ScrollArea id="scroll-hosts">
             <div className="flex px-2 pb-2 pt-1 gap-2">
               {hosts.map((h, i) => (
-                <div key={h.public_key}>
+                <div key={h.publicKey}>
                   <HostItem
                     host={h}
                     activeHost={activeHost}
                     selectActiveHost={() =>
-                      onHostListClick(h.public_key, h.location)
+                      onHostListClick(h.publicKey, [
+                        h.location.latitude,
+                        h.location.longitude,
+                      ])
                     }
-                    rates={rates}
                   />
                 </div>
               ))}

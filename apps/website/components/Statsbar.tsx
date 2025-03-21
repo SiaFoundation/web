@@ -10,12 +10,9 @@ export function Statsbar() {
   })
   const {
     activeHosts,
-    onlineHosts,
     blockHeight,
     totalStorage,
     usedStorage,
-    totalRegistry,
-    usedRegistry,
     commits,
     contributors,
     forks,
@@ -32,10 +29,6 @@ export function Statsbar() {
             {
               value: blockHeight,
               label: 'block height',
-            },
-            {
-              value: onlineHosts,
-              label: 'online hosts',
             },
             {
               value: activeHosts,
@@ -55,14 +48,6 @@ export function Statsbar() {
             {
               value: usedStorage,
               label: 'used storage',
-            },
-            {
-              value: totalRegistry,
-              label: 'total registry',
-            },
-            {
-              value: usedRegistry,
-              label: 'used registry',
             },
           ]}
         />

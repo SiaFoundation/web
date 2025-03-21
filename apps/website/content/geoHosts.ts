@@ -1,51 +1,57 @@
-import { SiaCentralHost } from '@siafoundation/sia-central-types'
 import { getCacheValue } from '../lib/cache'
-import { siaCentral } from '../config/siaCentral'
+import { siascan } from '../config/siascan'
 import { to } from '@siafoundation/request'
-import { minutesInSeconds } from '@siafoundation/units'
+import { minutesInSeconds, sectorsToBytes } from '@siafoundation/units'
+import { ExplorerHost, Location } from '@siafoundation/explored-types'
 
 const maxAge = minutesInSeconds(5)
 
 const maxHosts = 1000
 const minDegreesApart = 1
 
-export async function getGeoHosts(): Promise<SiaCentralPartialHost[]> {
+export async function getGeoHosts(): Promise<ExplorerPartialHost[]> {
   return getCacheValue(
     'geoHosts',
     async () => {
-      const [siaCentralHosts, error] = await to(
-        siaCentral.hosts({
+      const [results, error] = await to(
+        siascan.hostsList({
           params: {
-            limit: 300,
+            sortBy: 'uptime',
+            dir: 'desc',
+          },
+          data: {
+            online: true,
           },
         })
       )
       if (error) {
         return []
       }
-      const hosts = siaCentralHosts.hosts
+
+      const hosts = results.map(transformHost)
 
       hosts.sort((a, b) =>
-        a.settings.total_storage - a.settings.remaining_storage <
-        b.settings.total_storage - a.settings.remaining_storage
+        a.totalStorage - a.remainingStorage <
+        b.totalStorage - b.remainingStorage
           ? 1
           : -1
       )
 
       // Filter out hosts without location data
-      const uniqueHosts = hosts.filter((h) => h.location)
+      const uniqueHosts = results.filter((h) => h.location)
 
       // to get a more even distribution, we want to select the top 64 hosts
       // where no two hosts are within n degrees of each other.
-      const hostsToDisplay: SiaCentralHost[] = []
+      const hostsToDisplay: ExplorerHost[] = []
       for (const host of uniqueHosts) {
         let unique = true
         for (const hostToDisplay of hostsToDisplay) {
           if (
-            Math.abs(hostToDisplay.location[0] - host.location[0]) <
+            Math.abs(hostToDisplay.location.latitude - host.location.latitude) <
               minDegreesApart &&
-            Math.abs(hostToDisplay.location[1] - host.location[1]) <
-              minDegreesApart
+            Math.abs(
+              hostToDisplay.location.longitude - host.location.longitude
+            ) < minDegreesApart
           ) {
             unique = false
             break
@@ -65,41 +71,42 @@ export async function getGeoHosts(): Promise<SiaCentralPartialHost[]> {
   )
 }
 
-export type SiaCentralPartialHost = {
-  public_key: string
-  country_code: string
-  location: [number, number]
-  settings: {
-    storage_price: string
-    download_price: string
-    upload_price: string
-    total_storage: number
-    remaining_storage: number
-  }
-  benchmark?: {
-    data_size: number
-    download_time: number
-    upload_time: number
-  }
+export type ExplorerPartialHost = {
+  publicKey: string
+  location: Location
+  v2: boolean
+  storagePrice: string
+  downloadPrice: string
+  uploadPrice: string
+  remainingStorage: number
+  totalStorage: number
 }
 
 // transform to only necessary data to limit transfer size
-export function transformHost(h: SiaCentralHost): SiaCentralPartialHost {
+export function transformHost(h: ExplorerHost): ExplorerPartialHost {
+  if (h.v2 === true) {
+    return {
+      v2: h.v2,
+      publicKey: h.publicKey,
+      location: h.location,
+      storagePrice: h.v2Settings.prices.storagePrice,
+      downloadPrice: h.v2Settings.prices.egressPrice,
+      uploadPrice: h.v2Settings.prices.ingressPrice,
+      remainingStorage: sectorsToBytes(
+        h.v2Settings.remainingStorage
+      ).toNumber(),
+      totalStorage: sectorsToBytes(h.v2Settings.totalStorage).toNumber(),
+    }
+  }
+
   return {
-    public_key: h.public_key,
-    country_code: h.country_code,
+    v2: h.v2,
+    publicKey: h.publicKey,
     location: h.location,
-    settings: {
-      storage_price: h.settings.storage_price,
-      download_price: h.settings.download_price,
-      upload_price: h.settings.upload_price,
-      total_storage: h.settings.total_storage,
-      remaining_storage: h.settings.remaining_storage,
-    },
-    benchmark: {
-      data_size: h.benchmark?.data_size || null,
-      download_time: h.benchmark?.download_time || null,
-      upload_time: h.benchmark?.upload_time || null,
-    },
+    storagePrice: h.settings.storageprice,
+    downloadPrice: h.settings.downloadbandwidthprice,
+    uploadPrice: h.settings.uploadbandwidthprice,
+    remainingStorage: h.settings.remainingstorage,
+    totalStorage: h.settings.totalstorage,
   }
 }
