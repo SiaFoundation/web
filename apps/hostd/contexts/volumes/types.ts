@@ -20,6 +20,7 @@ export type VolumeData = {
 
 export type TableColumnId =
   | 'actions'
+  | 'id'
   | 'path'
   | 'storage'
   | 'available'
@@ -31,6 +32,7 @@ export type TableColumnId =
 
 export const columnsDefaultVisible: TableColumnId[] = [
   'actions',
+  'id',
   'path',
   'storage',
   'available',

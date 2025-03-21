@@ -32,6 +32,16 @@ export const columns: VolumesTableColumn[] = [
     render: ({ data }) => <VolumeContextMenu id={data.id} />,
   },
   {
+    id: 'id',
+    label: 'id',
+    category: 'general',
+    render: ({ data }) => (
+      <Text font="mono" ellipsis>
+        {data.id}
+      </Text>
+    ),
+  },
+  {
     id: 'path',
     label: 'path',
     category: 'general',
