@@ -32,7 +32,8 @@ type Props = {
 
 export function FileContextMenu({ trigger, path, contentProps }: Props) {
   const { navigateToModeSpecificFiltering } = useFilesManager()
-  const { getAuthenticatedFileUrl, getFileUrl, downloadFiles } = useDownloads()
+  const { getAuthenticatedFileUrl, getDownloadUrl, downloadFiles } =
+    useDownloads()
   const deleteFile = useFileDelete()
   const { openDialog } = useDialog()
 
@@ -115,7 +116,7 @@ export function FileContextMenu({ trigger, path, contentProps }: Props) {
       </DropdownMenuItem>
       <DropdownMenuItem
         onSelect={() => {
-          copyToClipboard(getFileUrl(path), 'file URL')
+          copyToClipboard(getDownloadUrl(path), 'file URL')
         }}
       >
         <DropdownMenuLeftSlot>

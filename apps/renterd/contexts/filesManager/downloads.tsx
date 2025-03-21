@@ -10,13 +10,13 @@ export function useDownloads() {
   const { settings } = useAppSettings()
   const generateAuthToken = useAuthToken()
 
-  const getFileUrl = useCallback(
+  const getDownloadUrl = useCallback(
     (path: FullPath, token?: string) => {
       const { bucket, key } = bucketAndKeyParamsFromPath(path)
       let workerPath = `${workerObjectKeyRoute.replace(
         ':key',
         key
-      )}?bucket=${bucket}`
+      )}?bucket=${bucket}&dl=true`
       if (token) {
         workerPath += `&apikey=${token}`
       }
@@ -72,17 +72,16 @@ export function useDownloads() {
       }
 
       files.forEach(async (path) => {
-        const url = getFileUrl(path, token)
-        // open download in new tab
-        window.open(url, '_blank')
+        const url = getDownloadUrl(path, token)
+        window.open(url)
       })
     },
-    [getAuthToken, getFileUrl]
+    [getAuthToken, getDownloadUrl]
   )
 
   return {
     downloadFiles,
-    getFileUrl,
+    getDownloadUrl,
     getAuthenticatedFileUrl,
   }
 }
