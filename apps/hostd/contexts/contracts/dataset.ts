@@ -117,7 +117,7 @@ function getContractFieldsFromV2(c: V2Contract): ContractData {
       c.status === 'renewed'
         ? null
         : new BigNumber(
-            c.status == 'active' || c.resolutionHeight.height > 0
+            c.status == 'active' || c.resolutionIndex.height > 0
               ? c.hostOutput.value
               : c.missedHostValue
           ),
@@ -129,10 +129,10 @@ function getContractFieldsFromV2(c: V2Contract): ContractData {
     contractHeightEnd: c.proofHeight,
     proofWindowHeightStart: c.proofHeight,
     proofWindowHeightEnd: c.expirationHeight,
-    resolutionHeight: c.resolutionHeight.height,
+    resolutionHeight: c.resolutionIndex.height,
     payoutHeight:
-      c.resolutionHeight.height > 0
-        ? c.resolutionHeight.height + 144
+      c.resolutionIndex.height > 0
+        ? c.resolutionIndex.height + 144
         : c.expirationHeight + 144,
     renewedTo: c.renewedTo,
     renewedFrom: c.renewedFrom,

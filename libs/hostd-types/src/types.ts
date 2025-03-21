@@ -76,7 +76,7 @@ export type V2Contract = V2FileContract & {
   negotiationHeight: number
   revisionConfirmed: boolean
   formationIndex: ChainIndex
-  resolutionHeight: ChainIndex
+  resolutionIndex: ChainIndex
   renewedTo: FileContractID
   renewedFrom: FileContractID
 }
