@@ -12,7 +12,7 @@ export function VolumesFiltersBar() {
   const free = total - used
 
   return (
-    <div className="flex gap-2 justify-between w-full">
+    <div className="flex gap-2 justify-between items-center w-full">
       <div className="flex gap-4">
         <Text size="12" font="mono" weight="medium">{`${humanBytes(
           used
