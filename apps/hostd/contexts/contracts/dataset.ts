@@ -113,6 +113,29 @@ function getContractFieldsFromV2(c: V2Contract): ContractData {
       storage,
     },
     lockedCollateral: new BigNumber(c.totalCollateral || 0),
+    remainingRenterFunds: new BigNumber(c.renterOutput.value),
+    negotiationHeight: c.negotiationHeight,
+    formationConfirmed: c.formationIndex.height > 0,
+    revisionConfirmed: c.revisionConfirmed,
+    contractHeightStart: c.formationIndex.height,
+    contractHeightEnd: c.proofHeight,
+    // For v2 contracts "proofHeight" means the start of the proof window.
+    proofWindowHeightStart: c.proofHeight,
+    proofWindowHeightEnd: c.expirationHeight,
+    // In V1 a resolution was always a valid proof. In V2 there are multiple
+    // types of resolutions. Renewals, proofs, and expiration are all different
+    // types of resolutions and one of them needs to happen for funds to be unlocked.
+    resolutionHeight: c.resolutionHeight.height,
+    // The payout height is 144 blocks after the resolution height. Until we
+    // know the resolution height, the latest possible payout height is used.
+    payoutHeight:
+      c.resolutionHeight.height > 0
+        ? c.resolutionHeight.height + 144
+        : c.expirationHeight + 144,
+    // There might be a payout. but the contract API does not provide enough
+    // information to calculate it. If there is going to be a payout, it will
+    // show up in the wallet at least.
+    // When this value is null, it is rendered in the table as 'unknown'.
     payout:
       c.status === 'renewed'
         ? null
@@ -121,19 +144,6 @@ function getContractFieldsFromV2(c: V2Contract): ContractData {
               ? c.hostOutput.value
               : c.missedHostValue
           ),
-    remainingRenterFunds: new BigNumber(c.renterOutput.value),
-    negotiationHeight: c.negotiationHeight,
-    formationConfirmed: c.formationIndex.height > 0,
-    revisionConfirmed: c.revisionConfirmed,
-    contractHeightStart: c.formationIndex.height,
-    contractHeightEnd: c.proofHeight,
-    proofWindowHeightStart: c.proofHeight,
-    proofWindowHeightEnd: c.expirationHeight,
-    resolutionHeight: c.resolutionHeight.height,
-    payoutHeight:
-      c.resolutionHeight.height > 0
-        ? c.resolutionHeight.height + 144
-        : c.expirationHeight + 144,
     renewedTo: c.renewedTo,
     renewedFrom: c.renewedFrom,
     isRenewedFrom:
