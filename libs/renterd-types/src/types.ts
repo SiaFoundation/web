@@ -8,6 +8,7 @@ import {
   PublicKey,
   TransactionSignature,
   FileContractID,
+  V2HostSettings,
 } from '@siafoundation/types'
 
 export type ConsensusState = {
@@ -190,13 +191,15 @@ export type Host = {
   lastAnnouncement: string
   interactions: HostInteractions
   scanned: boolean
-  priceTable?: HostPriceTable
-  settings?: HostSettings
+  priceTable: HostPriceTable
+  settings: HostSettings
+  v2Settings: V2HostSettings
   blocked: boolean
   storedData: number
   resolvedAddresses?: string[]
   subnets?: string[]
   checks?: HostAutopilotChecks
+  v2SiamuxAddresses?: string[]
 }
 
 export type HostAutopilotChecks = {
