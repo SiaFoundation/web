@@ -260,7 +260,7 @@ test('contract timeline displays correct heights for v1 and v2 contracts', async
             height: 114454,
             id: '0000000046a61214e665c168f785c53ce166755a93c4128f0ea6d90d2a24c82d',
           },
-          resolutionHeight: {
+          resolutionIndex: {
             height: 122518,
             id: '0000000000000000000000000000000000000000000000000000000000000000',
           },
