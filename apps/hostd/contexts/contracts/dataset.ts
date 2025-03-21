@@ -125,12 +125,12 @@ function getContractFieldsFromV2(c: V2Contract): ContractData {
     // In V1 a resolution was always a valid proof. In V2 there are multiple
     // types of resolutions. Renewals, proofs, and expiration are all different
     // types of resolutions and one of them needs to happen for funds to be unlocked.
-    resolutionHeight: c.resolutionHeight.height,
+    resolutionHeight: c.resolutionIndex.height,
     // The payout height is 144 blocks after the resolution height. Until we
     // know the resolution height, the latest possible payout height is used.
     payoutHeight:
-      c.resolutionHeight.height > 0
-        ? c.resolutionHeight.height + 144
+      c.resolutionIndex.height > 0
+        ? c.resolutionIndex.height + 144
         : c.expirationHeight + 144,
     // There might be a payout. but the contract API does not provide enough
     // information to calculate it. If there is going to be a payout, it will
@@ -140,7 +140,7 @@ function getContractFieldsFromV2(c: V2Contract): ContractData {
       c.status === 'renewed'
         ? null
         : new BigNumber(
-            c.status == 'active' || c.resolutionHeight.height > 0
+            c.status == 'active' || c.resolutionIndex.height > 0
               ? c.hostOutput.value
               : c.missedHostValue
           ),
