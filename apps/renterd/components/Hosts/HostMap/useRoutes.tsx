@@ -86,7 +86,7 @@ function distanceBetweenHosts(
   h2: HostDataWithLocation
 ) {
   return Math.sqrt(
-    Math.pow(h1.location[0] - h2.location[0], 2) +
-      Math.pow(h1.location[1] - h2.location[1], 2)
+    Math.pow(h1.location.latitude - h2.location.latitude, 2) +
+      Math.pow(h1.location.longitude - h2.location.longitude, 2)
   )
 }

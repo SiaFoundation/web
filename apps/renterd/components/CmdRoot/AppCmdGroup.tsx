@@ -23,13 +23,7 @@ type Props = {
 export function AppCmdGroup({ currentPage, parentPage }: Props) {
   const { openDialog, closeDialog } = useDialog()
   const { setTheme } = useTheme()
-  const {
-    settings,
-    setExternalDataSettings,
-    lock,
-    currencyOptions,
-    setCurrency,
-  } = useAppSettings()
+  const { lock, currencyOptions, setCurrency } = useAppSettings()
   return (
     <CommandGroup currentPage={currentPage} commandPage={commandPage}>
       <CommandItemNav
@@ -42,17 +36,6 @@ export function AppCmdGroup({ currentPage, parentPage }: Props) {
       >
         Open settings
       </CommandItemNav>
-      <CommandItemSearch
-        currentPage={currentPage}
-        commandPage={commandPage}
-        onSelect={() => {
-          setExternalDataSettings({ siaCentral: !settings.siaCentral })
-          closeDialog()
-        }}
-      >
-        {(settings.siaCentral ? 'Disable' : 'Enable') +
-          ' external API - Sia Central exchange rates'}
-      </CommandItemSearch>
       <CommandItemRootAndSearch
         currentPage={currentPage}
         commandPage={commandPage}
@@ -119,6 +102,24 @@ export function AppCmdGroup({ currentPage, parentPage }: Props) {
         }}
       >
         Open currency settings menu
+      </CommandItemSearch>
+      <CommandItemSearch
+        currentPage={currentPage}
+        commandPage={commandPage}
+        onSelect={() => {
+          openDialog('settings')
+        }}
+      >
+        Open security settings menu
+      </CommandItemSearch>
+      <CommandItemSearch
+        currentPage={currentPage}
+        commandPage={commandPage}
+        onSelect={() => {
+          openDialog('settings')
+        }}
+      >
+        Open privacy settings menu
       </CommandItemSearch>
       {currencyOptions.map(({ id, label }) => (
         <CommandItemSearch

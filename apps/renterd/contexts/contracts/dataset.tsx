@@ -2,7 +2,6 @@ import { useContracts as useContractsData } from '@siafoundation/renterd-react'
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
 import { ContractData, ContractDataWithoutPrunable } from './types'
-import { useSiaCentralHosts } from '@siafoundation/sia-central-react'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { blockHeightToTime } from '@siafoundation/units'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
@@ -18,8 +17,6 @@ export function useDataset() {
       },
     },
   })
-  const geo = useSiaCentralHosts()
-  const geoHosts = useMemo(() => geo.data?.hosts || [], [geo.data])
 
   const syncStatus = useSyncStatus()
   const currentHeight = syncStatus.isSynced
@@ -45,7 +42,6 @@ export function useDataset() {
           id: c.id,
           state: c.state,
           hostKey: c.hostKey,
-          location: geoHosts.find((h) => h.public_key === c.hostKey)?.location,
           timeline: startTime,
           usability: c.usability,
           startTime,
@@ -71,7 +67,7 @@ export function useDataset() {
         return datum
       }) || []
     return datums
-  }, [response, geoHosts, currentHeight])
+  }, [response, currentHeight])
 
   const {
     prunableSizes,

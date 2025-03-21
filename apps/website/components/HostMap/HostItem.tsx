@@ -6,28 +6,24 @@ import {
   countryCodeEmoji,
   LinkButton,
   webLinks,
+  useSiascanExchangeRate,
 } from '@siafoundation/design-system'
 import { cx } from 'class-variance-authority'
 import BigNumber from 'bignumber.js'
-import { SiaCentralPartialHost } from '../../content/geoHosts'
+import { ExplorerPartialHost } from '../../content/geoHosts'
 import { Launch16 } from '@siafoundation/react-icons'
 import {
   monthsToBlocks,
   TBToBytes,
   humanBytes,
   humanSiacoin,
-  getDownloadSpeed,
-  getUploadSpeed,
 } from '@siafoundation/units'
 
 type Props = {
-  host: SiaCentralPartialHost
-  activeHost?: SiaCentralPartialHost
+  host: ExplorerPartialHost
+  activeHost?: ExplorerPartialHost
   setRef?: (el: HTMLButtonElement) => void
   selectActiveHost: (public_key: string) => void
-  rates: {
-    usd: string
-  }
 }
 
 export function HostItem({
@@ -35,54 +31,53 @@ export function HostItem({
   activeHost,
   selectActiveHost,
   setRef,
-  rates,
 }: Props) {
-  const storageCost = useMemo(
-    () =>
-      rates
-        ? `$${new BigNumber(host.settings.storage_price)
+  const { rate: rateUsd } = useSiascanExchangeRate({
+    currency: 'usd',
+  })
+  const storageCost = useMemo(() => {
+    return rateUsd
+      ? `$${new BigNumber(host.storagePrice)
+          .times(TBToBytes(1))
+          .times(monthsToBlocks(1))
+          .div(1e24)
+          .times(rateUsd)
+          .toFixed(2)}/TB`
+      : `${humanSiacoin(
+          new BigNumber(host.storagePrice)
             .times(TBToBytes(1))
-            .times(monthsToBlocks(1))
-            .div(1e24)
-            .times(rates?.usd || 1)
-            .toFixed(2)}/TB`
-        : `${humanSiacoin(
-            new BigNumber(host.settings.storage_price)
-              .times(TBToBytes(1))
-              .times(monthsToBlocks(1)),
-            { fixed: 0 }
-          )}/TB`,
-    [rates, host]
-  )
+            .times(monthsToBlocks(1)),
+          { fixed: 0 }
+        )}/TB`
+  }, [rateUsd, host])
 
   const downloadCost = useMemo(
     () =>
-      rates
-        ? `$${new BigNumber(host.settings.download_price)
+      rateUsd
+        ? `$${new BigNumber(host.downloadPrice)
             .times(TBToBytes(1))
             .div(1e24)
-            .times(rates?.usd || 1)
+            .times(rateUsd)
             .toFixed(2)}/TB`
         : `${humanSiacoin(
-            new BigNumber(host.settings.download_price).times(TBToBytes(1)),
+            new BigNumber(host.downloadPrice).times(TBToBytes(1)),
             { fixed: 0 }
           )}/TB`,
-    [rates, host]
+    [rateUsd, host]
   )
 
   const uploadCost = useMemo(
     () =>
-      rates
-        ? `$${new BigNumber(host.settings.upload_price)
+      rateUsd
+        ? `$${new BigNumber(host.uploadPrice)
             .times(TBToBytes(1))
             .div(1e24)
-            .times(rates?.usd || 1)
+            .times(rateUsd)
             .toFixed(2)}/TB`
-        : `${humanSiacoin(
-            new BigNumber(host.settings.upload_price).times(TBToBytes(1)),
-            { fixed: 0 }
-          )}/TB`,
-    [rates, host]
+        : `${humanSiacoin(new BigNumber(host.uploadPrice).times(TBToBytes(1)), {
+            fixed: 0,
+          })}/TB`,
+    [rateUsd, host]
   )
 
   return (
@@ -96,14 +91,15 @@ export function HostItem({
               weight="bold"
               className="text-start"
             >
-              {countryCodeEmoji(host.country_code)} {host.country_code}
+              {countryCodeEmoji(host.location.countryCode)}{' '}
+              {host.location.countryCode}
             </Text>
             <LinkButton
               size="none"
               variant="ghost"
               target="_blank"
               tabIndex={-1}
-              href={`${webLinks.explore.mainnet}/host/${host.public_key}`}
+              href={`${webLinks.explore.mainnet}/host/${host.publicKey}`}
             >
               <Launch16 />
             </LinkButton>
@@ -122,17 +118,6 @@ export function HostItem({
             </div>
             <div className="flex flex-col gap-1">
               <Text size="12" color="contrast">
-                {humanBytes(host.settings.total_storage)}
-              </Text>
-              <Text size="12" color="contrast">
-                {getDownloadSpeed(host)}
-              </Text>
-              <Text size="12" color="contrast">
-                {getUploadSpeed(host)}
-              </Text>
-            </div>
-            <div className="flex flex-col gap-1">
-              <Text size="12" color="contrast">
                 {storageCost}
               </Text>
               <Text size="12" color="contrast">
@@ -145,7 +130,7 @@ export function HostItem({
           </div>
         </div>
       }
-      key={host.public_key}
+      key={host.publicKey}
     >
       <Button
         variant="ghost"
@@ -155,29 +140,28 @@ export function HostItem({
           }
         }}
         onClick={() => {
-          selectActiveHost(host.public_key)
+          selectActiveHost(host.publicKey)
         }}
         className={cx(
           'flex gap-1',
-          host.public_key === activeHost?.public_key
+          host.publicKey === activeHost?.publicKey
             ? 'opacity-100'
             : 'opacity-50',
           'hover:opacity-100'
         )}
       >
         <Text size="12" noWrap>
-          {countryCodeEmoji(host.country_code)}
+          {countryCodeEmoji(host.location.countryCode)}
         </Text>
         <Text
           color="contrast"
           size="12"
           noWrap
           weight={
-            host.public_key === activeHost?.public_key ? 'semibold' : 'regular'
+            host.publicKey === activeHost?.publicKey ? 'semibold' : 'regular'
           }
         >
-          {humanBytes(host.settings.total_storage)}
-          {host.benchmark && ` · ${getDownloadSpeed(host)}`}
+          {humanBytes(host.totalStorage)}
           {' · '}
           {storageCost}
         </Text>

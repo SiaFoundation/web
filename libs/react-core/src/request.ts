@@ -254,6 +254,10 @@ export function buildRouteWithParams<
   }
   route = parameterizeRoute(route, params)
   const api = getApi(settings, hookArgs, callArgs)
+  // If the api is the same as the settings api then we are signing in to a
+  // daemon app and calling a default daemon API which is always prefixed with
+  // /api. If this implicit assumption does not hold in the future we can make
+  // control over this path building logic more explicit.
   if (api === settings.api) {
     return `${api}/api${route}`
   }

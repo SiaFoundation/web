@@ -1,6 +1,5 @@
 import { login } from './login'
 import { Page } from 'playwright'
-import { mockApiSiaCentralHostsNetworkAverages } from '@siafoundation/sia-central-mock'
 import {
   clusterd,
   mine,
@@ -11,6 +10,7 @@ import { Bus } from '@siafoundation/renterd-js'
 import {
   setCurrencyDisplay,
   mockApiSiaScanExchangeRates,
+  mockApiSiaScanHostMetrics,
 } from '@siafoundation/e2e'
 
 export async function beforeTest(
@@ -18,7 +18,7 @@ export async function beforeTest(
   { siafundAddr }: { siafundAddr?: string } = {}
 ) {
   await mockApiSiaScanExchangeRates({ page })
-  await mockApiSiaCentralHostsNetworkAverages({ page })
+  await mockApiSiaScanHostMetrics({ page })
   await setupCluster({
     walletdCount: 1,
     renterdCount: 1,

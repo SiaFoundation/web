@@ -1,6 +1,5 @@
 import { login } from './login'
 import { Page } from 'playwright'
-import { mockApiSiaCentralHostsNetworkAverages } from '@siafoundation/sia-central-mock'
 import {
   clusterd,
   setupCluster,
@@ -11,11 +10,12 @@ import {
   setCurrencyDisplay,
   mockApiSiaScanExchangeRates,
   clickIf,
+  mockApiSiaScanHostMetrics,
 } from '@siafoundation/e2e'
 
 export async function beforeTest(page: Page, { hostdCount = 0 } = {}) {
   await mockApiSiaScanExchangeRates({ page })
-  await mockApiSiaCentralHostsNetworkAverages({ page })
+  await mockApiSiaScanHostMetrics({ page })
   await setupCluster({ renterdCount: 1, hostdCount })
   const renterdNode = clusterd.nodes.find((n) => n.type === 'renterd')
   await renterdWaitForContracts({ renterdNode, hostdCount })

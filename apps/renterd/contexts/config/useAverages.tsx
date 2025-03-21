@@ -4,98 +4,87 @@ import {
   valuePerBytePerBlockToPerTBPerMonth,
   toSiacoins,
   valuePerByteToPerTB,
-  valuePerOneToPerMillion,
 } from '@siafoundation/units'
-import { useSiaCentralHostsNetworkAverages } from '@siafoundation/sia-central-react'
+import { useConsensusState } from '@siafoundation/renterd-react'
+import {
+  useDaemonExplorerConsensusNetwork,
+  useDaemonExplorerHostMetrics,
+} from '@siafoundation/design-system'
 
 export function useAverages() {
-  const siaCentralAverages = useSiaCentralHostsNetworkAverages({
+  const nodeState = useConsensusState()
+  // renterd does not have an endpoint that returns the full consensus state
+  // so we use the explorer api to get the v2 allow height.
+  const explorerState = useDaemonExplorerConsensusNetwork({
     config: {
       swr: {
         revalidateOnFocus: false,
       },
     },
   })
+  const nodeHeight = nodeState.data?.blockHeight
+  const networkV2AllowHeight = explorerState.data?.hardforkV2.allowHeight
+  const isV2Allowed =
+    nodeHeight && networkV2AllowHeight
+      ? nodeHeight >= networkV2AllowHeight
+      : true // Default to v2
+
+  const explorerAverages = useDaemonExplorerHostMetrics({
+    config: {
+      swr: {
+        revalidateOnFocus: false,
+      },
+    },
+  })
+
+  const storagePrice = isV2Allowed
+    ? explorerAverages.data?.v2Settings.prices.storagePrice
+    : explorerAverages.data?.settings.storageprice
+  const uploadPrice = isV2Allowed
+    ? explorerAverages.data?.v2Settings.prices.ingressPrice
+    : explorerAverages.data?.settings.uploadbandwidthprice
+  const downloadPrice = isV2Allowed
+    ? explorerAverages.data?.v2Settings.prices.egressPrice
+    : explorerAverages.data?.settings.downloadbandwidthprice
+
   const storageAverage = useMemo(
     () =>
-      siaCentralAverages.data
+      storagePrice
         ? new BigNumber(
             valuePerBytePerBlockToPerTBPerMonth(
-              toSiacoins(siaCentralAverages.data.settings.storage_price)
+              toSiacoins(storagePrice)
             ).toFixed(0)
           )
         : undefined,
-    [siaCentralAverages.data]
+    [storagePrice]
   )
   const uploadAverage = useMemo(
     () =>
-      siaCentralAverages.data
-        ? new BigNumber(
-            valuePerByteToPerTB(
-              toSiacoins(siaCentralAverages.data.settings.upload_price)
-            ).toFixed(0)
-          )
+      uploadPrice
+        ? new BigNumber(valuePerByteToPerTB(toSiacoins(uploadPrice)).toFixed(0))
         : undefined,
-    [siaCentralAverages.data]
+    [uploadPrice]
   )
   const downloadAverage = useMemo(
     () =>
-      siaCentralAverages.data
+      downloadPrice
         ? new BigNumber(
-            valuePerByteToPerTB(
-              toSiacoins(siaCentralAverages.data.settings.download_price)
-            ).toFixed(0)
+            valuePerByteToPerTB(toSiacoins(downloadPrice)).toFixed(0)
           )
         : undefined,
-    [siaCentralAverages.data]
-  )
-
-  const contractAverage = useMemo(
-    () =>
-      siaCentralAverages.data
-        ? new BigNumber(
-            toSiacoins(siaCentralAverages.data.settings.contract_price).toFixed(
-              0
-            )
-          )
-        : undefined,
-    [siaCentralAverages.data]
-  )
-
-  const rpcAverage = useMemo(
-    () =>
-      siaCentralAverages.data
-        ? valuePerOneToPerMillion(
-            toSiacoins(siaCentralAverages.data.settings.base_rpc_price)
-          )
-        : undefined,
-    [siaCentralAverages.data]
+    [downloadPrice]
   )
 
   const averages = useMemo(() => {
-    if (
-      !storageAverage ||
-      !uploadAverage ||
-      !downloadAverage ||
-      !contractAverage ||
-      !rpcAverage
-    ) {
+    if (!storageAverage || !uploadAverage || !downloadAverage) {
       return {}
     }
     return {
       storageAverage,
       uploadAverage,
       downloadAverage,
-      contractAverage,
-      rpcAverage,
     }
-  }, [
-    storageAverage,
-    uploadAverage,
-    downloadAverage,
-    contractAverage,
-    rpcAverage,
-  ])
+  }, [storageAverage, uploadAverage, downloadAverage])
 
   return averages
 }

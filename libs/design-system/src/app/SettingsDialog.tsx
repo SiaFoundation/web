@@ -201,29 +201,6 @@ export function SettingsDialog({
               listed below to improve the user experience. Third-party APIs are
               optional and can be toggled on or off.
             </Paragraph>
-            <Alert>
-              <div className="flex flex-col gap-4">
-                <div className="flex gap-2 items-center">
-                  <Text>
-                    <Information16 />
-                  </Text>
-                  <Heading size="20" className="flex-1">
-                    Sia Central
-                  </Heading>
-                  <Switch
-                    size="medium"
-                    checked={settings.siaCentral}
-                    onCheckedChange={(val) =>
-                      setExternalDataSettings({ siaCentral: val })
-                    }
-                  />
-                </div>
-                <Paragraph size="14">
-                  The app fetches network average prices and host geolocation
-                  from the Sia Central API.
-                </Paragraph>
-              </div>
-            </Alert>
             {daemonExplorer.isSupported ? (
               <Alert>
                 <div className="flex flex-col gap-4">
@@ -254,15 +231,16 @@ export function SettingsDialog({
                         disabled
                         checked={daemonExplorer.enabled}
                         onCheckedChange={(val) =>
-                          setExternalDataSettings({ siaCentral: val })
+                          setExternalDataSettings({ siascan: val })
                         }
                       />
                     </div>
                   </div>
                   <Paragraph size="14">
-                    The app fetches Siacoin exchange rates from the configured
-                    explorer API. This API is configured and enabled in the
-                    daemon's startup configuration.
+                    The app fetches average prices, exchange rates, and host
+                    geolocation from the configured explorer API. This API is
+                    configured and enabled in the daemon's startup
+                    configuration.
                   </Paragraph>
                 </div>
               </Alert>
@@ -285,7 +263,8 @@ export function SettingsDialog({
                     />
                   </div>
                   <Paragraph size="14">
-                    The app fetches Siacoin exchange rates from the Siascan API.
+                    The app fetches average prices, exchange rates, and host
+                    geolocation from the Siascan API.
                   </Paragraph>
                 </div>
               </Alert>

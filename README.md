@@ -35,9 +35,6 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 - [@siafoundation/explored-react](libs/explored-react) - React hooks for interacting with `explored`.
 - [@siafoundation/explored-types](libs/explored-types) - Types for `explored`.
 - [@siafoundation/design-system](libs/design-system) - React-based design system used across Sia apps and websites.
-- [@siafoundation/sia-central-types](libs/sia-central-types) - Types for the Sia Central API.
-- [@siafoundation/sia-central-js](libs/sia-central-js) - SDK for interacting with the Sia Central API.
-- [@siafoundation/sia-central-react](libs/sia-central-react) - React hooks for interacting with the Sia Central API.
 - [@siafoundation/units](libs/units) - Methods and types for converting and displaying units.
 - [@siafoundation/types](libs/types) - Core Sia types and library methods.
 - [@siafoundation/react-core](libs/react-core) - Core library for building React hooks for interacting with a Sia daemon.
@@ -73,8 +70,6 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 - [explorer-e2e](apps/explorer-e2e) - App for testing explorer.
 - [e2e](libs/e2e) - Shared e2e testing code.
 - [@siafoundation/clusterd](libs/clusterd) - Methods for controlling `clusterd` in e2e testing.
-- [@siafoundation/walletd-mock](libs/walletd-mock) - `walletd` data and API mock library for testing.
-- [@siafoundation/sia-central-mock](libs/sia-central-mock) - Sia Central data and API mock library for testing.
 
 ## Development
 
