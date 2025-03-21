@@ -24,7 +24,7 @@ import type {
   TransactionID,
   TransactionSignature,
   V2Transaction,
-  Signature,
+  V2HostSettings,
 } from '@siafoundation/types'
 
 // Unchanged Types - Re-exported for a more straight-forward DX like:
@@ -322,31 +322,6 @@ export type Protocol = 'siamux' | 'quic'
 export type NetAddress = {
   protocol: Protocol
   address: string
-}
-
-export type V2HostPrices = {
-  contractPrice: Currency
-  collateral: Currency
-  storagePrice: Currency
-  ingressPrice: Currency
-  egressPrice: Currency
-  freeSectorPrice: Currency
-  tipHeight: number
-  validUntil: string
-
-  signature: Signature
-}
-
-export type V2HostSettings = {
-  protocolVersion: number[]
-  release: string
-  walletAddress: string
-  acceptingContracts: boolean
-  maxCollateral: Currency
-  maxContractDuration: number
-  remainingStorage: number
-  totalStorage: number
-  prices: V2HostPrices
 }
 
 /**

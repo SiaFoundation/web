@@ -229,6 +229,36 @@ export type HostSettings = {
   siamuxport: string
 }
 
+export type V2HostPrices = {
+  contractPrice: Currency
+  collateral: Currency
+  storagePrice: Currency
+  ingressPrice: Currency
+  egressPrice: Currency
+  freeSectorPrice: Currency
+  tipHeight: number
+  validUntil: string
+  signature: Signature
+}
+
+/**
+ * HostSettingsV2 are the settings and prices used when interacting with a host.
+ */
+export type V2HostSettings = {
+  protocolVersion: [number, number, number]
+  release: string
+  walletAddress: string
+  acceptingContracts: boolean
+  maxCollateral: Currency
+  maxContractDuration: number
+  // Remaining storage in sectors.
+  remainingStorage: number
+  // Total storage in sectors.
+  totalStorage: number
+  prices: V2HostPrices
+  validity: number
+}
+
 /**
  * An HostPriceTable contains the host's current prices for each RPC.
  */
