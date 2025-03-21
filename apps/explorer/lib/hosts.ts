@@ -1,6 +1,7 @@
 import { ExplorerHost } from '@siafoundation/explored-types'
 import { to } from '@siafoundation/request'
 import { getExplored } from './explored'
+import { sectorsToBytes } from '@siafoundation/units'
 
 const weights = {
   age: 0.3,
@@ -77,10 +78,10 @@ function rankHosts(hosts: ExplorerHost[] | undefined) {
         weights.usedStorage *
           normalize(
             (host.v2
-              ? host.v2Settings.totalStorage
+              ? sectorsToBytes(host.v2Settings.totalStorage).toNumber()
               : host.settings.totalstorage) -
               (host.v2
-                ? host.v2Settings.remainingStorage
+                ? sectorsToBytes(host.v2Settings.remainingStorage).toNumber()
                 : host.settings.remainingstorage),
             ranges.usedStorage.min,
             ranges.usedStorage.max

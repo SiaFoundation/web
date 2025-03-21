@@ -13,6 +13,7 @@ import {
   getDownloadCost,
   getStorageCost,
   getUploadCost,
+  sectorsToBytes,
 } from '@siafoundation/units'
 import { ExplorerHost } from '@siafoundation/explored-types'
 import { useActiveCurrencySiascanExchangeRate } from '@siafoundation/react-core'
@@ -41,7 +42,9 @@ export function HostSettings({ host }: Props) {
         label: 'total storage',
         copyable: false,
         value: humanBytes(
-          host.v2 ? host.v2Settings.totalStorage : host.settings.totalstorage
+          host.v2
+            ? sectorsToBytes(host.v2Settings.totalStorage)
+            : host.settings.totalstorage
         ),
       },
       {
@@ -49,7 +52,7 @@ export function HostSettings({ host }: Props) {
         copyable: false,
         value: humanBytes(
           host.v2
-            ? host.v2Settings.remainingStorage
+            ? sectorsToBytes(host.v2Settings.remainingStorage)
             : host.settings.remainingstorage
         ),
       },
