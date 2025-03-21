@@ -8,10 +8,10 @@ import {
   useHosts,
 } from '@siafoundation/renterd-react'
 import { ContractData } from '../contracts/types'
-import { SiaCentralHost } from '@siafoundation/sia-central-types'
 import { Maybe } from '@siafoundation/types'
 import { objectEntries } from '@siafoundation/design-system'
 import { maybeFromNullishArrayResponse } from '@siafoundation/react-core'
+import { ExplorerHost } from '@siafoundation/explored-types'
 
 export function useDataset({
   response,
@@ -26,7 +26,7 @@ export function useDataset({
   allowlist: ReturnType<typeof useHostsAllowlist>
   blocklist: ReturnType<typeof useHostsBlocklist>
   isAllowlistActive: boolean
-  geoHosts: SiaCentralHost[]
+  geoHosts: ExplorerHost[]
 }) {
   return useMemo<Maybe<HostData[]>>(() => {
     const data = maybeFromNullishArrayResponse(response.data)
@@ -36,7 +36,7 @@ export function useDataset({
       return undefined
     }
     return data.map((host) => {
-      const sch = geoHosts.find((gh) => gh.public_key === host.publicKey)
+      const sch = geoHosts.find((gh) => gh.publicKey === host.publicKey)
       return {
         ...getHostFields(host, allContracts),
         ...getAllowedFields({
@@ -47,7 +47,6 @@ export function useDataset({
         }),
         ...getAutopilotFields(host.checks),
         location: sch?.location,
-        countryCode: sch?.country_code,
         // selectable
         onClick: () => null,
         isSelected: false,
@@ -99,6 +98,8 @@ function getHostFields(host: Host, allContracts: Maybe<ContractData[]>) {
       allContracts?.filter((c) => c.hostKey === host.publicKey) || [],
     priceTable: host.priceTable,
     settings: host.settings,
+    v2Settings: host.v2Settings,
+    v2: !!host.v2SiamuxAddresses,
   }
 }
 

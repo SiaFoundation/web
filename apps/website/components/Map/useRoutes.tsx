@@ -1,16 +1,16 @@
 import { useMemo } from 'react'
 import { random, sortBy } from '@technically/lodash'
-import { SiaCentralPartialHost } from '../../content/geoHosts'
+import { ExplorerPartialHost } from '../../content/geoHosts'
 
 type Props = {
-  activeHost?: SiaCentralPartialHost
-  hosts?: SiaCentralPartialHost[]
+  activeHost?: ExplorerPartialHost
+  hosts?: ExplorerPartialHost[]
 }
 
 type Route = {
   distance: number
-  src: SiaCentralPartialHost
-  dst: SiaCentralPartialHost
+  src: ExplorerPartialHost
+  dst: ExplorerPartialHost
 }
 
 export function useDecRoutes({ activeHost, hosts }: Props) {
@@ -59,7 +59,7 @@ export function useDecRoutes({ activeHost, hosts }: Props) {
     }
     for (let i = 0; i < hosts.length; i++) {
       const host = hosts[i]
-      if (activeHost.public_key === host.public_key) {
+      if (activeHost.publicKey === host.publicKey) {
         continue
       }
       const distance = distanceBetweenHosts(activeHost, host)
@@ -82,11 +82,11 @@ export function useDecRoutes({ activeHost, hosts }: Props) {
 }
 
 function distanceBetweenHosts(
-  h1: SiaCentralPartialHost,
-  h2: SiaCentralPartialHost
+  h1: ExplorerPartialHost,
+  h2: ExplorerPartialHost
 ) {
   return Math.sqrt(
-    Math.pow(h1.location[0] - h2.location[0], 2) +
-      Math.pow(h1.location[1] - h2.location[1], 2)
+    Math.pow(h1.location.latitude - h2.location.latitude, 2) +
+      Math.pow(h1.location.longitude - h2.location.longitude, 2)
   )
 }

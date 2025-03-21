@@ -9,7 +9,7 @@ export function HostMap() {
   const { gpu, settings } = useAppSettings()
   const { setCmd, activeHost, onHostMapClick, hostsWithLocation } = useHosts()
 
-  if (settings.siaCentral && !gpu.shouldRender) {
+  if (settings.siascan && !gpu.shouldRender) {
     return null
   }
 

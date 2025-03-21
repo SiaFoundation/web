@@ -2,7 +2,11 @@
 
 import { useMemo } from 'react'
 import { DatumProps, ExplorerDatum } from '../ExplorerDatum'
-import { Panel, toFixedOrPrecision } from '@siafoundation/design-system'
+import {
+  Panel,
+  toFixedOrPrecision,
+  useActiveSiascanExchangeRate,
+} from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import {
   blocksToDays,
@@ -16,7 +20,6 @@ import {
   sectorsToBytes,
 } from '@siafoundation/units'
 import { ExplorerHost } from '@siafoundation/explored-types'
-import { useActiveCurrencySiascanExchangeRate } from '@siafoundation/react-core'
 import LoadingCurrency from '../LoadingCurrency'
 import { siacoinToFiat } from '../../lib/currency'
 import { useExploredAddress } from '../../hooks/useExploredAddress'
@@ -28,7 +31,7 @@ type Props = {
 
 export function HostSettings({ host }: Props) {
   const api = useExploredAddress()
-  const exchange = useActiveCurrencySiascanExchangeRate({
+  const exchange = useActiveSiascanExchangeRate({
     api,
     config: {
       swr: {

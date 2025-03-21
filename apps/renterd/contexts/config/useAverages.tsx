@@ -4,12 +4,11 @@ import {
   valuePerBytePerBlockToPerTBPerMonth,
   toSiacoins,
   valuePerByteToPerTB,
-  valuePerOneToPerMillion,
 } from '@siafoundation/units'
-import { useSiaCentralHostsNetworkAverages } from '@siafoundation/sia-central-react'
+import { useExternalHostMetrics } from '@siafoundation/design-system'
 
 export function useAverages() {
-  const siaCentralAverages = useSiaCentralHostsNetworkAverages({
+  const explorerAverages = useExternalHostMetrics({
     config: {
       swr: {
         revalidateOnFocus: false,
@@ -18,84 +17,48 @@ export function useAverages() {
   })
   const storageAverage = useMemo(
     () =>
-      siaCentralAverages.data
+      explorerAverages.data
         ? new BigNumber(
             valuePerBytePerBlockToPerTBPerMonth(
-              toSiacoins(siaCentralAverages.data.settings.storage_price)
+              toSiacoins(explorerAverages.data.v2Settings.prices.storagePrice)
             ).toFixed(0)
           )
         : undefined,
-    [siaCentralAverages.data]
+    [explorerAverages.data]
   )
   const uploadAverage = useMemo(
     () =>
-      siaCentralAverages.data
+      explorerAverages.data
         ? new BigNumber(
             valuePerByteToPerTB(
-              toSiacoins(siaCentralAverages.data.settings.upload_price)
+              toSiacoins(explorerAverages.data.v2Settings.prices.ingressPrice)
             ).toFixed(0)
           )
         : undefined,
-    [siaCentralAverages.data]
+    [explorerAverages.data]
   )
   const downloadAverage = useMemo(
     () =>
-      siaCentralAverages.data
+      explorerAverages.data
         ? new BigNumber(
             valuePerByteToPerTB(
-              toSiacoins(siaCentralAverages.data.settings.download_price)
+              toSiacoins(explorerAverages.data.v2Settings.prices.egressPrice)
             ).toFixed(0)
           )
         : undefined,
-    [siaCentralAverages.data]
-  )
-
-  const contractAverage = useMemo(
-    () =>
-      siaCentralAverages.data
-        ? new BigNumber(
-            toSiacoins(siaCentralAverages.data.settings.contract_price).toFixed(
-              0
-            )
-          )
-        : undefined,
-    [siaCentralAverages.data]
-  )
-
-  const rpcAverage = useMemo(
-    () =>
-      siaCentralAverages.data
-        ? valuePerOneToPerMillion(
-            toSiacoins(siaCentralAverages.data.settings.base_rpc_price)
-          )
-        : undefined,
-    [siaCentralAverages.data]
+    [explorerAverages.data]
   )
 
   const averages = useMemo(() => {
-    if (
-      !storageAverage ||
-      !uploadAverage ||
-      !downloadAverage ||
-      !contractAverage ||
-      !rpcAverage
-    ) {
+    if (!storageAverage || !uploadAverage || !downloadAverage) {
       return {}
     }
     return {
       storageAverage,
       uploadAverage,
       downloadAverage,
-      contractAverage,
-      rpcAverage,
     }
-  }, [
-    storageAverage,
-    uploadAverage,
-    downloadAverage,
-    contractAverage,
-    rpcAverage,
-  ])
+  }, [storageAverage, uploadAverage, downloadAverage])
 
   return averages
 }

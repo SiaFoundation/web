@@ -1,4 +1,8 @@
-import { Button, Tooltip } from '@siafoundation/design-system'
+import {
+  Button,
+  Tooltip,
+  triggerErrorToast,
+} from '@siafoundation/design-system'
 import { Earth16, ListChecked16 } from '@siafoundation/react-icons'
 import { HostsViewDropdownMenu } from './HostsViewDropdownMenu'
 import { useDialog } from '../../contexts/dialog'
@@ -8,7 +12,7 @@ import { useAppSettings } from '@siafoundation/react-core'
 export function HostsActionsMenu() {
   const { openDialog } = useDialog()
   const { viewMode, setViewMode } = useHosts()
-  const { settings, gpu } = useAppSettings()
+  const { daemonExplorer, settings, gpu } = useAppSettings()
   return (
     <div className="flex gap-2">
       <Button
@@ -20,8 +24,8 @@ export function HostsActionsMenu() {
       </Button>
       <Tooltip
         content={
-          !settings.siaCentral
-            ? 'Enable Sia Central to view interactive map'
+          !settings.siascan
+            ? 'Configure an explorer to view interactive map'
             : gpu.canGpuRender && gpu.isGpuEnabled
             ? 'Toggle interactive map'
             : 'Enable GPU to view interactive map'
@@ -30,8 +34,11 @@ export function HostsActionsMenu() {
         <Button
           disabled={!gpu.canGpuRender}
           onClick={() => {
-            if (!settings.siaCentral) {
-              openDialog('settings')
+            if (!daemonExplorer.enabled) {
+              triggerErrorToast({
+                title: 'Explorer not configured',
+                body: 'Configure an explorer in the startup configuration to enable the interactive map.',
+              })
               return
             }
             if (gpu.isGpuEnabled) {
