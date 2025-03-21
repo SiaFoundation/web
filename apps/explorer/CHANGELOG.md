@@ -1,5 +1,16 @@
 # explorer
 
+## 0.29.0
+
+### Minor Changes
+
+- 22ce3717: Fixed hardfork countdown layout responsiveness. Closes https://github.com/SiaFoundation/web/issues/991.
+- 5c8694b1: Added host netaddress search. Closes https://github.com/SiaFoundation/web/issues/977
+
+### Patch Changes
+
+- 4cde5537: Fixed the units for v2 host settings total and remaining storage.
+
 ## 0.28.0
 
 ### Minor Changes

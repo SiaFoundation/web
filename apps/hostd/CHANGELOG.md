@@ -1,5 +1,15 @@
 # hostd
 
+## 0.60.0
+
+### Minor Changes
+
+- 2976e5ec: The volumes list now has an ID column. Closes https://github.com/SiaFoundation/hostd/issues/635
+
+### Patch Changes
+
+- a33fb963: Fixed the alignment of volume stats in the subnav.
+
 ## 0.59.0
 
 ### Minor Changes

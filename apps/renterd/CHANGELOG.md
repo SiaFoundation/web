@@ -1,5 +1,11 @@
 # renterd
 
+## 0.78.0
+
+### Minor Changes
+
+- 9e603732: File download behaviour is now consistent across all browsers.
+
 ## 0.77.1
 
 ### Patch Changes
