@@ -153,6 +153,7 @@ export type HostMetrics = {
 
   settings: HostSettings
   priceTable: HostPriceTable
+  v2Settings: V2HostSettings
 }
 
 export type CurrencyID =
