@@ -1,5 +1,19 @@
 # Changelog
 
+## 4.21.0
+
+### Minor Changes
+
+- 3d5b2090: The sector utils were moved to @siafoundation/units.
+
+### Patch Changes
+
+- Updated dependencies [3d5b2090]
+- Updated dependencies [eb4b6a1f]
+  - @siafoundation/units@3.4.0
+  - @siafoundation/types@0.10.0
+  - @siafoundation/react-core@4.0.0
+
 ## 4.20.0
 
 ### Minor Changes
