@@ -278,7 +278,6 @@ test('contract timeline displays correct heights for v1 and v2 contracts', async
 
   await navigateToContracts(page)
   await toggleColumnVisibility(page, 'payout', true)
-  await toggleColumnVisibility(page, 'payout height', true)
   await page.reload()
 
   const rows = getContractRows(page)
@@ -298,9 +297,7 @@ test('contract timeline displays correct heights for v1 and v2 contracts', async
     rowV1.getByLabel('contract duration 96831 - 97032')
   ).toBeVisible()
   await expect(rowV1.getByLabel('proof window 97032 - 97176')).toBeVisible()
-  await expect(
-    rowV1.getByTestId('payoutHeight').getByText('1/20/27')
-  ).toBeVisible()
+  await expect(rowV1.getByLabel('payout 97177')).toBeVisible()
   await expect(
     rowV1.getByTestId('payout').getByText('+403.759 mS')
   ).toBeVisible()
@@ -311,9 +308,7 @@ test('contract timeline displays correct heights for v1 and v2 contracts', async
     rowV2.getByLabel('contract duration 114454 - 122517')
   ).toBeVisible()
   await expect(rowV2.getByLabel('proof window 122517 - 122661')).toBeVisible()
-  await expect(
-    rowV2.getByTestId('payoutHeight').getByText('7/16/27')
-  ).toBeVisible()
+  await expect(rowV2.getByLabel('payout 122662')).toBeVisible()
   await expect(
     rowV2.getByTestId('payout').getByText('+15.747 SC')
   ).toBeVisible()
