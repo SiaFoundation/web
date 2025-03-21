@@ -1,14 +1,12 @@
 'use client'
 
-import {
-  useAppSettings,
-  useActiveExchangeRate,
-} from '@siafoundation/react-core'
+import { useAppSettings } from '@siafoundation/react-core'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import { cx } from 'class-variance-authority'
 import { toFixedMaxString } from '../lib/numbers'
 import { BaseNumberField } from './BaseNumberField'
+import { useActiveExchangeRate } from '../hooks/useExternalExchangeRate'
 
 type Props = Omit<
   React.ComponentProps<typeof BaseNumberField>,

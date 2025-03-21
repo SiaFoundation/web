@@ -1,10 +1,12 @@
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
 import { minutesInMilliseconds } from '@siafoundation/units'
-import { CurrencyId } from './appSettings/useExternalData/currency'
-import { RequestConfig } from './request'
-import { useAppSettings } from './appSettings'
-import { useGetSwr } from './useGet'
+import {
+  CurrencyId,
+  RequestConfig,
+  useAppSettings,
+  useGetSwr,
+} from '@siafoundation/react-core'
 
 const swrConfigDefaults = {
   revalidateOnFocus: false,
@@ -57,7 +59,7 @@ export function useSiascanExchangeRate({
   ])
 }
 
-export function useActiveCurrencySiascanExchangeRate({
+export function useActiveSiascanExchangeRate({
   config,
   disabled,
   api,
@@ -65,7 +67,7 @@ export function useActiveCurrencySiascanExchangeRate({
   config?: RequestConfig<void, number>
   disabled?: boolean
   api?: string
-}) {
+} = {}) {
   const { settings } = useAppSettings()
   return useSiascanExchangeRate({
     currency: settings.currency.id,
@@ -121,7 +123,7 @@ export function useDaemonExplorerExchangeRate({
   ])
 }
 
-export function useActiveCurrencyDaemonExplorerExchangeRate({
+export function useActiveDaemonExplorerExchangeRate({
   config,
   disabled,
 }: {
@@ -136,6 +138,11 @@ export function useActiveCurrencyDaemonExplorerExchangeRate({
   })
 }
 
+// useExchangeRate is a generic hook for getting the exchange rate.
+// This hook checks for whether the daemon has an explorer configuration
+// endpoint and if so uses that to check whether the feature is enabled or not.
+// Otherwise it falls back to the siascan api and uses the appSettings siascan
+// flag to check whether the feature is enabled.
 export function useExchangeRate({
   currency,
   config,
@@ -158,9 +165,14 @@ export function useExchangeRate({
     disabled: daemonExplorer.enabled || disabled,
   })
 
-  return daemonExplorer.enabled ? daemonRate : siascanRate
+  return daemonExplorer.isSupported ? daemonRate : siascanRate
 }
 
+// useActiveExchangeRate is a generic hook for getting the active exchange rate.
+// This hook checks for whether the daemon has an explorer configuration
+// endpoint and if so uses that to check whether the feature is enabled or not.
+// Otherwise it falls back to the siascan api and uses the appSettings siascan
+// flag to check whether the feature is enabled.
 export function useActiveExchangeRate({
   config,
   disabled,

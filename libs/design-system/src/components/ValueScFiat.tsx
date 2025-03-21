@@ -4,10 +4,8 @@ import { Text } from '../core/Text'
 import BigNumber from 'bignumber.js'
 import { ValueSc } from './ValueSc'
 import { ValueFiat } from './ValueFiat'
-import {
-  useAppSettings,
-  useActiveExchangeRate,
-} from '@siafoundation/react-core'
+import { useAppSettings } from '@siafoundation/react-core'
+import { useActiveExchangeRate } from '../hooks/useExternalExchangeRate'
 import { useMemo } from 'react'
 import { Tooltip } from '../core/Tooltip'
 
