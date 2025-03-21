@@ -1,10 +1,12 @@
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
 import { minutesInMilliseconds } from '@siafoundation/units'
-import { CurrencyId } from './appSettings/useExternalData/currency'
-import { RequestConfig } from './request'
-import { useAppSettings } from './appSettings'
-import { useGetSwr } from './useGet'
+import {
+  CurrencyId,
+  RequestConfig,
+  useAppSettings,
+} from '@siafoundation/react-core'
+import { useExchangeRate } from '@siafoundation/explored-react'
 
 const swrConfigDefaults = {
   revalidateOnFocus: false,
@@ -24,12 +26,11 @@ export function useSiascanExchangeRate({
   api?: string
 }) {
   const { settings, currencyOptions } = useAppSettings()
-  const rate = useGetSwr<{ currency?: CurrencyId }, number>({
+  const rate = useExchangeRate({
     params: {
-      currency,
+      currency: currency ?? 'usd',
     },
     api,
-    route: '/exchange-rate/siacoin/:currency',
     config: {
       ...config,
       swr: {
@@ -57,15 +58,15 @@ export function useSiascanExchangeRate({
   ])
 }
 
-export function useActiveCurrencySiascanExchangeRate({
+export function useActiveSiascanExchangeRate({
   config,
   disabled,
-  api,
+  api = 'https://api.siascan.com',
 }: {
   config?: RequestConfig<void, number>
   disabled?: boolean
   api?: string
-}) {
+} = {}) {
   const { settings } = useAppSettings()
   return useSiascanExchangeRate({
     currency: settings.currency.id,
@@ -88,13 +89,12 @@ export function useDaemonExplorerExchangeRate({
     daemonExplorer: { enabled, api },
     currencyOptions,
   } = useAppSettings()
-  const rate = useGetSwr<{ currency?: CurrencyId }, number>({
+  const rate = useExchangeRate({
     params: {
-      currency,
+      currency: currency ?? 'usd',
     },
     disabled: !enabled || disabled || !currency,
     api,
-    route: '/exchange-rate/siacoin/:currency',
     config: {
       ...config,
       swr: {
@@ -121,7 +121,7 @@ export function useDaemonExplorerExchangeRate({
   ])
 }
 
-export function useActiveCurrencyDaemonExplorerExchangeRate({
+export function useActiveDaemonExplorerExchangeRate({
   config,
   disabled,
 }: {
@@ -136,7 +136,13 @@ export function useActiveCurrencyDaemonExplorerExchangeRate({
   })
 }
 
-export function useExchangeRate({
+// useExternalExchangeRate is a generic hook for getting the exchange rate.
+// This hook checks for whether the daemon has an explorer configuration
+// endpoint and if so uses that to check whether the feature is enabled or not.
+// Otherwise it falls back to the siascan api and uses the appSettings siascan
+// flag to check whether the feature is enabled.
+// This hook is used in design-system components that get used in both types of contexts.
+export function useExternalExchangeRate({
   currency,
   config,
   disabled,
@@ -158,10 +164,16 @@ export function useExchangeRate({
     disabled: daemonExplorer.enabled || disabled,
   })
 
-  return daemonExplorer.enabled ? daemonRate : siascanRate
+  return daemonExplorer.isSupported ? daemonRate : siascanRate
 }
 
-export function useActiveExchangeRate({
+// useExternalActiveExchangeRate is a generic hook for getting the active exchange rate.
+// This hook checks for whether the daemon has an explorer configuration
+// endpoint and if so uses that to check whether the feature is enabled or not.
+// Otherwise it falls back to the siascan api and uses the appSettings siascan
+// flag to check whether the feature is enabled.
+// This hook is used in design-system components that get used in both types of contexts.
+export function useExternalActiveExchangeRate({
   config,
   disabled,
 }: {
@@ -169,7 +181,7 @@ export function useActiveExchangeRate({
   disabled?: boolean
 } = {}) {
   const { settings } = useAppSettings()
-  return useExchangeRate({
+  return useExternalExchangeRate({
     currency: settings.currency.id,
     config,
     disabled,

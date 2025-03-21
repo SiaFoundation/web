@@ -4,7 +4,8 @@ import { FieldProps } from './configurationFields'
 import { FieldFiat } from './FieldFiat'
 import { TipNumber } from './TipNumber'
 import { useFormSetField } from './useFormSetField'
-import { CurrencyId, useExchangeRate } from '@siafoundation/react-core'
+import { CurrencyId } from '@siafoundation/react-core'
+import { useExternalExchangeRate } from '../hooks/useExternalExchangeRate'
 import BigNumber from 'bignumber.js'
 import { useMemo } from 'react'
 
@@ -36,7 +37,7 @@ export function ConfigurationFiat<
     fields,
     name,
   })
-  const exchangeRate = useExchangeRate({
+  const exchangeRate = useExternalExchangeRate({
     currency: currency || undefined,
   })
   const rate = exchangeRate.rate

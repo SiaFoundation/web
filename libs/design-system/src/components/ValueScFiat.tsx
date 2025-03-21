@@ -4,10 +4,8 @@ import { Text } from '../core/Text'
 import BigNumber from 'bignumber.js'
 import { ValueSc } from './ValueSc'
 import { ValueFiat } from './ValueFiat'
-import {
-  useAppSettings,
-  useActiveExchangeRate,
-} from '@siafoundation/react-core'
+import { useAppSettings } from '@siafoundation/react-core'
+import { useExternalActiveExchangeRate } from '../hooks/useExternalExchangeRate'
 import { useMemo } from 'react'
 import { Tooltip } from '../core/Tooltip'
 
@@ -51,7 +49,7 @@ export function ValueScFiat({
   const {
     settings: { currencyDisplay },
   } = useAppSettings()
-  const { rate } = useActiveExchangeRate()
+  const { rate } = useExternalActiveExchangeRate()
 
   const scEl = useMemo(
     () => (

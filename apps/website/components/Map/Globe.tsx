@@ -2,7 +2,8 @@ import { useEffect, useRef, useCallback, useMemo } from 'react'
 import { GlobeMethods } from 'react-globe.gl'
 import { getHostLabel } from './utils'
 import { useElementSize } from 'usehooks-ts'
-import { useTryUntil, useExchangeRate } from '@siafoundation/react-core'
+import { useTryUntil } from '@siafoundation/react-core'
+import { useExternalExchangeRate } from '@siafoundation/design-system'
 import earthDarkContrast from '../../assets/earth-dark-contrast.png'
 import earthTopology from '../../assets/earth-topology.png'
 import nightSky from '../../assets/night-sky.png'
@@ -42,7 +43,7 @@ export function Globe({
   onHostClick,
   onHostHover,
 }: Props) {
-  const exchangeRateUSD = useExchangeRate({
+  const exchangeRateUSD = useExternalExchangeRate({
     currency: 'usd',
   })
   const globeEl = useRef<GlobeMethods>(null)

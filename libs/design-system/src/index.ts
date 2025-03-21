@@ -175,6 +175,10 @@ export * from './hooks/useOS'
 export * from './hooks/usePaginationOffset'
 export * from './hooks/usePaginationMarker'
 export * from './hooks/useResetPagination'
+export * from './hooks/useExternalHostMetrics'
+export * from './hooks/useExternalHostsList'
+export * from './hooks/useExternalExchangeRate'
+export * from './hooks/useExternalConsensusNetwork'
 
 // multi
 export * from './multi/useMultiSelect'

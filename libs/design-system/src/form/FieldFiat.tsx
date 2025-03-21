@@ -11,11 +11,8 @@ import { ChartArea16 } from '@siafoundation/react-icons'
 import { Panel } from '../core/Panel'
 import { Text } from '../core/Text'
 import { toHastings } from '@siafoundation/units'
-import {
-  CurrencyId,
-  currencyOptions,
-  useExchangeRate,
-} from '@siafoundation/react-core'
+import { CurrencyId, currencyOptions } from '@siafoundation/react-core'
+import { useExternalExchangeRate } from '../hooks/useExternalExchangeRate'
 import { useMemo } from 'react'
 import { Tooltip } from '../core/Tooltip'
 import { ValueSc } from '../components/ValueSc'
@@ -36,7 +33,7 @@ export function FieldFiat<
   currency: CurrencyId | ''
   group?: boolean
 }) {
-  const exchangeRate = useExchangeRate({
+  const exchangeRate = useExternalExchangeRate({
     currency: currency || undefined,
   })
   const rate = exchangeRate.rate

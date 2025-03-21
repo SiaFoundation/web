@@ -4,7 +4,9 @@
   "version": "4.20.0",
   "license": "MIT",
   "peerDependencies": {
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "@siafoundation/explored-types": "0.14.0",
+    "@siafoundation/explored-react": "0.6.2"
   },
   "dependencies": {
     "@siafoundation/react-icons": "^0.3.0",
