@@ -19,6 +19,7 @@ import {
   getStorageCost,
   getUploadCost,
   humanBytes,
+  sectorsToBytes,
 } from '@siafoundation/units'
 import { useMemo } from 'react'
 import { routes } from '../../config/routes'
@@ -100,7 +101,7 @@ export function HostListItem({ host, exchange, entity }: Props) {
       (host.v2 ? host.v2Settings : host.settings)
         ? humanBytes(
             host.v2
-              ? host.v2Settings.remainingStorage
+              ? sectorsToBytes(host.v2Settings.remainingStorage)
               : host.settings.remainingstorage
           )
         : '-',
