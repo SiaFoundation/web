@@ -10,5 +10,8 @@ contact_links:
     url: https://github.com/SiaFoundation/walletd/issues/new/choose
     about: Please create walletd UI issues on the walletd repo.
   - name: other issues
-    url: https://github.com/SiaFoundation/web/issues/new
+    url: https://github.com/SiaFoundation/web/issues/new?template=blank.md
     about: Create other issues on the web repo.
+  - name: Sia Community Discord
+    url: https://discord.gg/sia
+    about: Join the Sia community discord for more help with Sia.
