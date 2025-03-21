@@ -9,6 +9,7 @@ import { GlobeDyn } from './GlobeDyn'
 import { HostDataWithLocation } from '../../../contexts/hosts/types'
 import BigNumber from 'bignumber.js'
 import { getHostStatus } from '../../../contexts/hosts/status'
+import { useDaemonExplorerExchangeRate } from '@siafoundation/design-system'
 
 export type Commands = {
   moveToLocation: (

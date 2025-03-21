@@ -386,9 +386,13 @@ export function useHostByPubkey(
 }
 
 export function useHostsList(
-  args?: HookArgsCallback<HostsListParams, HostsListPayload, HostsListResponse>
+  args?: HookArgsWithPayloadSwr<
+    HostsListParams,
+    HostsListPayload,
+    HostsListResponse
+  >
 ) {
-  return usePostFunc({ ...args, route: hostsListRoute })
+  return usePostSwr({ ...args, route: hostsListRoute })
 }
 
 // Exchange

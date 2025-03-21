@@ -3,7 +3,11 @@
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
 import { humanBytes, humanSiacoin } from '@siafoundation/units'
-import { EntityList, EntityListItemProps } from '@siafoundation/design-system'
+import {
+  EntityList,
+  EntityListItemProps,
+  useActiveSiascanExchangeRate,
+} from '@siafoundation/design-system'
 import { DatumProps, ExplorerDatum } from '../ExplorerDatum'
 import { ContentLayout } from '../ContentLayout'
 import { ContractHeader } from './ContractHeader'
@@ -14,7 +18,6 @@ import {
   SiacoinOutput,
 } from '@siafoundation/explored-types'
 import { blockHeightToHumanDate } from '../../lib/time'
-import { useActiveCurrencySiascanExchangeRate } from '@siafoundation/react-core'
 import { siacoinToFiat } from '../../lib/currency'
 import LoadingCurrency from '../LoadingCurrency'
 import LoadingTimestamp from '../LoadingTimestamp'
@@ -38,7 +41,7 @@ export function Contract({
   formationTxnChainIndex,
 }: Props) {
   const api = useExploredAddress()
-  const exchange = useActiveCurrencySiascanExchangeRate({
+  const exchange = useActiveSiascanExchangeRate({
     api,
     config: {
       swr: {
