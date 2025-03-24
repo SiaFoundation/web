@@ -5,9 +5,9 @@ go 1.23.1
 toolchain go1.23.2
 
 require (
-	go.sia.tech/cluster v0.1.3-0.20250313160709-52002ed2916f
-	go.sia.tech/core v0.10.4
-	go.sia.tech/coreutils v0.12.1
+	go.sia.tech/cluster v0.1.3-0.20250324173607-6a14d90d0389
+	go.sia.tech/core v0.10.5-0.20250320183438-fbd9976fa9ca
+	go.sia.tech/coreutils v0.12.2-0.20250317235740-9e6e9fe76b2e
 	go.uber.org/zap v1.27.0
 )
 
@@ -37,9 +37,8 @@ require (
 	github.com/shabbyrobe/gocovmerge v0.0.0-20230507112040-c3350d9342df // indirect
 	github.com/shopspring/decimal v1.4.0 // indirect
 	go.etcd.io/bbolt v1.4.0 // indirect
-	go.sia.tech/explored v0.0.0-20250312120716-95238def74fb // indirect
+	go.sia.tech/explored v0.0.0-20250321181115-472aa681c27f // indirect
 	go.sia.tech/gofakes3 v0.0.5 // indirect
-	go.sia.tech/hostd v1.1.3-0.20250225151212-e578290d928e // indirect
 	go.sia.tech/hostd/v2 v2.1.0-beta.2.0.20250313081452-86d4e34d782f // indirect
 	go.sia.tech/jape v0.12.1 // indirect
 	go.sia.tech/mux v1.4.0 // indirect
