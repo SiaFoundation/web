@@ -3,6 +3,7 @@ import { to } from '@siafoundation/request'
 import { getExplored } from '../../lib/explored'
 import clsx from 'clsx'
 import { blocksToDays } from '@siafoundation/units'
+import { getIsSynced } from '../../lib/sync'
 
 function LearnMore({ color }: { color: string }) {
   return (
@@ -27,9 +28,11 @@ export async function HardforkCountdown({ network }: { network: string }) {
   const [
     [chainIndex, chainIndexError],
     [consensusNetwork, consensusNetworkError],
+    [consensusState, consensusStateError],
   ] = await Promise.all([
     to(getExplored().consensusTip()),
     to(getExplored().consensusNetwork()),
+    to(getExplored().consensusState()),
   ])
 
   if (chainIndexError || !chainIndex)
@@ -38,6 +41,16 @@ export async function HardforkCountdown({ network }: { network: string }) {
     throw new Error(
       'explored consensusNetwork request failed in HardforkCountdown'
     )
+  if (consensusStateError || !consensusState)
+    throw new Error(
+      'explored consensusState request failed in HardforkCountdown'
+    )
+
+  // If the node is not synced, don't show the countdown.
+  const isSynced = getIsSynced(consensusState)
+  if (!isSynced) {
+    return null
+  }
 
   const allowHeight = consensusNetwork.hardforkV2.allowHeight
   const requireHeight = consensusNetwork.hardforkV2.requireHeight
