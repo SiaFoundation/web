@@ -39,11 +39,11 @@ require (
 	go.etcd.io/bbolt v1.4.0 // indirect
 	go.sia.tech/explored v0.0.0-20250325082605-43748737ab0a // indirect
 	go.sia.tech/gofakes3 v0.0.5 // indirect
-	go.sia.tech/hostd/v2 v2.1.0-beta.2.0.20250313081452-86d4e34d782f // indirect
+	go.sia.tech/hostd/v2 v2.1.0-beta.2.0.20250324083831-31afb884d365 // indirect
 	go.sia.tech/jape v0.12.1 // indirect
 	go.sia.tech/mux v1.4.0 // indirect
-	go.sia.tech/renterd/v2 v2.0.2-0.20250312081818-65ef6bdb87ec // indirect
-	go.sia.tech/walletd/v2 v2.1.0-beta.1.0.20250313082637-b8d36f9f7a95 // indirect
+	go.sia.tech/renterd/v2 v2.0.2-0.20250324094922-683eac531ae5 // indirect
+	go.sia.tech/walletd/v2 v2.1.0-beta.1.0.20250325081948-629b4eae2496 // indirect
 	go.uber.org/mock v0.5.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/crypto v0.36.0 // indirect
