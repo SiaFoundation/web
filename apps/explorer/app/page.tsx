@@ -7,6 +7,7 @@ import { to } from '@siafoundation/request'
 import { getTopHosts } from '../lib/hosts'
 import { getExplored, getExploredAddress } from '../lib/explored'
 import { unstable_cache } from 'next/cache'
+import { getNetworkVersion } from '../lib/networkVersion'
 
 export function generateMetadata(): Metadata {
   const title = 'siascan'
@@ -45,17 +46,20 @@ export default async function HomePage() {
 
   const [latestBlocks, latestBlocksError] = await getLatestBlocks()
   const latestHeight = latestBlocks ? latestBlocks[0].height : 0
+  const version = await getNetworkVersion()
 
   if (latestBlocksError || hostMetricsError || blockMetricsError) {
     console.log(new Date().toISOString(), {
       latestBlocksError,
       hostMetricsError,
-      blockMetrics,
+      blockMetricsError,
+      version,
     })
   }
 
   return (
     <Home
+      version={version}
       metrics={hostMetrics}
       blockHeight={latestHeight}
       blocks={latestBlocks || []}

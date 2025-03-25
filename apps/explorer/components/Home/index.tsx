@@ -31,12 +31,14 @@ import { useExploredAddress } from '../../hooks/useExploredAddress'
 import { getHostNetAddress } from '../../lib/hostType'
 
 export function Home({
+  version,
   metrics,
   blockHeight,
   blocks,
   hosts,
   totalHosts,
 }: {
+  version: 'v1' | 'v2'
   metrics?: HostMetrics
   blockHeight: number
   blocks: ExplorerBlock[]
@@ -70,6 +72,19 @@ export function Home({
       },
     ]
     if (metrics) {
+      const storagePrice =
+        version === 'v1'
+          ? metrics?.settings.storageprice
+          : metrics?.v2Settings.prices.storagePrice
+      const downloadPrice =
+        version === 'v1'
+          ? metrics?.priceTable.downloadbandwidthcost
+          : metrics?.v2Settings.prices.egressPrice
+      const uploadPrice =
+        version === 'v1'
+          ? metrics?.priceTable.uploadbandwidthcost
+          : metrics?.v2Settings.prices.ingressPrice
+
       list.push(
         {
           label: 'Storage utilization',
@@ -133,7 +148,7 @@ export function Home({
                 >
                   {exchange.currency && exchange.rate ? (
                     getStorageCost({
-                      price: metrics?.settings.storageprice,
+                      price: storagePrice,
                       exchange: {
                         currency: {
                           prefix: exchange.currency.prefix,
@@ -147,7 +162,7 @@ export function Home({
                 </Text>
                 <Text color="subtle">
                   {getStorageCost({
-                    price: metrics?.settings.storageprice,
+                    price: storagePrice,
                   })}
                 </Text>
               </div>
@@ -166,7 +181,7 @@ export function Home({
                 >
                   {exchange.currency && exchange.rate ? (
                     getDownloadCost({
-                      price: metrics?.priceTable.downloadbandwidthcost,
+                      price: downloadPrice,
                       exchange: {
                         currency: {
                           prefix: exchange.currency.prefix,
@@ -180,7 +195,7 @@ export function Home({
                 </Text>
                 <Text color="subtle">
                   {getDownloadCost({
-                    price: metrics?.priceTable.downloadbandwidthcost,
+                    price: downloadPrice,
                   })}
                 </Text>
               </div>
@@ -199,7 +214,7 @@ export function Home({
                 >
                   {exchange.currency && exchange.rate ? (
                     getUploadCost({
-                      price: metrics?.priceTable.uploadbandwidthcost,
+                      price: uploadPrice,
                       exchange: {
                         currency: {
                           prefix: exchange.currency.prefix,
@@ -213,7 +228,7 @@ export function Home({
                 </Text>
                 <Text color="subtle">
                   {getUploadCost({
-                    price: metrics?.priceTable.uploadbandwidthcost,
+                    price: uploadPrice,
                   })}
                 </Text>
               </div>
@@ -223,7 +238,7 @@ export function Home({
       )
     }
     return list
-  }, [metrics, blockHeight, exchange, totalHosts])
+  }, [metrics, blockHeight, exchange, totalHosts, version])
 
   return (
     <ContentLayout
