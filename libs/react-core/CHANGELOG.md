@@ -1,5 +1,17 @@
 # @siafoundation/react-core
 
+## 4.0.0
+
+### Minor Changes
+
+- 07bcec5e: Exchange rate and other external data hooks now live in the design-system.
+- 2138d300: AppSettings no longer has a siaCentral settings.
+
+### Patch Changes
+
+- Updated dependencies [eb4b6a1f]
+  - @siafoundation/types@0.10.0
+
 ## 3.0.0
 
 ### Patch Changes

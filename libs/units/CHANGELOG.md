@@ -1,5 +1,19 @@
 # @siafoundation/units
 
+## 3.4.0
+
+### Minor Changes
+
+- 3d5b2090: The sector utils were moved to @siafoundation/units.
+
+### Patch Changes
+
+- Updated dependencies [17d53d9b]
+- Updated dependencies [eb4b6a1f]
+- Updated dependencies [5c8694b1]
+  - @siafoundation/explored-types@0.15.0
+  - @siafoundation/types@0.10.0
+
 ## 3.3.4
 
 ### Patch Changes

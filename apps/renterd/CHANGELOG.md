@@ -1,5 +1,16 @@
 # renterd
 
+## 0.78.0
+
+### Minor Changes
+
+- 96a58672: The siascan setting toggle was removed from the cmd+k menu.
+- 96a58672: Averages prices in the configuration page are based off v2 settings once the current network passes the allow height.
+- 9e603732: File download behaviour is now consistent across all browsers.
+- 96a58672: Host geolocation data is now provided by the configured explorer.
+- 96a58672: Privacy and security settings quick nav actions were added to the cmd+k menu.
+- 96a58672: Averages prices in the configuration page are now provided by the configured explorer.
+
 ## 0.77.1
 
 ### Patch Changes

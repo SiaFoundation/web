@@ -1,5 +1,14 @@
 # website
 
+## 0.57.0
+
+### Minor Changes
+
+- 96a58672: Removed online hosts and registry stats.
+- 96a58672: Host list metadata no longer includes download and upload speeds.
+- 96a58672: The globe maps now uses siascan for host metadata and geolocation.
+- 96a58672: The website now uses siascan for exchange rates, block metrics, and host metrics.
+
 ## 0.56.1
 
 ### Patch Changes
