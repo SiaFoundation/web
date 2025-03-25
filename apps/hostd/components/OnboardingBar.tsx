@@ -51,14 +51,7 @@ export function OnboardingBar() {
   const step2Volumes = volumes?.length > 0
   const step3Configured = settings.data?.acceptingContracts
   const step4Synced = syncStatus.isSynced
-  // const step5Announced = false
-  const steps = [
-    step1Funded,
-    step2Volumes,
-    step3Configured,
-    step4Synced,
-    //step5Announced
-  ]
+  const steps = [step1Funded, step2Volumes, step3Configured, step4Synced]
   const totalSteps = steps.length
   const completedSteps = steps.filter((step) => step).length
 
