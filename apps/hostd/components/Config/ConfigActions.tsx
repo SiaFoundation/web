@@ -1,6 +1,5 @@
 import { Text, Button } from '@siafoundation/design-system'
 import { Reset16, Save16 } from '@siafoundation/react-icons'
-import { AnnounceButton } from './AnnounceButton'
 import { useConfig } from '../../contexts/config'
 import { ConfigContextMenu } from './ConfigContextMenu'
 import { ConfigViewDropdownMenu } from './ConfigViewDropdownMenu'
@@ -32,7 +31,6 @@ export function ConfigActions() {
         <Save16 />
         Save changes
       </Button>
-      <AnnounceButton />
       <ConfigContextMenu />
       <ConfigViewDropdownMenu />
     </div>
