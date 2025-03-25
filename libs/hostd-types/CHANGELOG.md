@@ -1,5 +1,16 @@
 # @siafoundation/hostd-types
 
+## 0.8.0
+
+### Minor Changes
+
+- 2d69b0dd: V2Contract resolutionHeight is now resolutionIndex. Relates to https://github.com/SiaFoundation/hostd/pull/634
+
+### Patch Changes
+
+- Updated dependencies [eb4b6a1f]
+  - @siafoundation/types@0.10.0
+
 ## 0.7.0
 
 ### Minor Changes

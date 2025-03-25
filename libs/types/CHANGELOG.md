@@ -1,5 +1,11 @@
 # @siafoundation/types
 
+## 0.10.0
+
+### Minor Changes
+
+- eb4b6a1f: Add V2HostSettings.
+
 ## 0.9.0
 
 ### Minor Changes

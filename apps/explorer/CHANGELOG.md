@@ -1,5 +1,20 @@
 # explorer
 
+## 0.29.0
+
+### Minor Changes
+
+- f2607c77: The hardfork countdown only shows if the explorer is fully synced.
+- 22ce3717: Fixed hardfork countdown layout responsiveness. Closes https://github.com/SiaFoundation/web/issues/991.
+- 6a3bcdb4: The home page will now show median prices based off v2 host settings after the allow height.
+- f2607c77: The explorer now shows a warning banner if syncing is in progress.
+- 5c8694b1: Added host netaddress search. Closes https://github.com/SiaFoundation/web/issues/977
+
+### Patch Changes
+
+- 17d53d9b: Fixed useHostsList to be a declarative hook.
+- 4cde5537: Fixed the units for v2 host settings total and remaining storage.
+
 ## 0.28.0
 
 ### Minor Changes

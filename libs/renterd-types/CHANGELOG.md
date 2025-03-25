@@ -1,5 +1,19 @@
 # @siafoundation/renterd-types
 
+## 0.17.0
+
+### Minor Changes
+
+- 17d53d9b: Added v2Settings and v2SiamuxAddresses to Host.
+
+### Patch Changes
+
+- Updated dependencies [07bcec5e]
+- Updated dependencies [2138d300]
+- Updated dependencies [eb4b6a1f]
+  - @siafoundation/react-core@4.0.0
+  - @siafoundation/types@0.10.0
+
 ## 0.16.1
 
 ### Patch Changes

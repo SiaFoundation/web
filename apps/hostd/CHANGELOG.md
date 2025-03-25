@@ -1,5 +1,18 @@
 # hostd
 
+## 0.60.0
+
+### Minor Changes
+
+- 96a58672: The siascan setting toggle was removed from the cmd+k menu.
+- ab80eb67: The announce button has been removed in favor of automatic announcements. Closes https://github.com/SiaFoundation/hostd/issues/605
+- 96a58672: Privacy and security settings quick nav actions were added to the cmd+k menu.
+- 2976e5ec: The volumes list now has an ID column. Closes https://github.com/SiaFoundation/hostd/issues/635
+
+### Patch Changes
+
+- a33fb963: Fixed the alignment of volume stats in the subnav.
+
 ## 0.59.0
 
 ### Minor Changes

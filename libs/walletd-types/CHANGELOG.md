@@ -1,5 +1,12 @@
 # @siafoundation/walletd-types
 
+## 0.6.2
+
+### Patch Changes
+
+- Updated dependencies [eb4b6a1f]
+  - @siafoundation/types@0.10.0
+
 ## 0.6.1
 
 ### Patch Changes

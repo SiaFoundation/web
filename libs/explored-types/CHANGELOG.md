@@ -1,5 +1,17 @@
 # @siafoundation/explored-types
 
+## 0.15.0
+
+### Minor Changes
+
+- 17d53d9b: Added v2Settings to HostMetrics.
+- 5c8694b1: Added host netaddress search. Closes https://github.com/SiaFoundation/web/issues/977
+
+### Patch Changes
+
+- Updated dependencies [eb4b6a1f]
+  - @siafoundation/types@0.10.0
+
 ## 0.14.0
 
 ### Minor Changes
