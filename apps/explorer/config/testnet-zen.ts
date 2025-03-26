@@ -9,4 +9,4 @@ export const isMainnet = false
 
 // APIs
 export const faucetApi = 'https://api.siascan.com/zen/faucet'
-export const exploredApi = 'https://api.beta.siascan.com/zen'
+export const exploredApi = 'https://api.siascan.com/zen'

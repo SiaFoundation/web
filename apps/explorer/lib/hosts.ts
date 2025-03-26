@@ -99,17 +99,17 @@ export async function getTopHosts(exploredAddress: string) {
   )
   if (hostsError)
     throw new Error(
-      'Error from getcachedTopHostsFunc /hosts request:' + hostsError.message
+      'Error from getCachedTopHostsFunc /hosts request:' + hostsError.message
     )
   if (!hosts)
-    throw new Error('No hosts found from getcachedTopHostsFunc /hosts request')
+    throw new Error('No hosts found from getCachedTopHostsFunc /hosts request')
 
   const rankedHosts = rankHosts(hosts)
     .slice(0, 5) // Select the top 5.
     .map((result) => result.host) // Strip score key.
 
   if (!rankedHosts || rankedHosts.length === 0)
-    throw new Error('No hosts from getcachedTopHostsFunc rankHosts call')
+    throw new Error('No hosts from getCachedTopHostsFunc rankHosts call')
 
   return rankedHosts
 }

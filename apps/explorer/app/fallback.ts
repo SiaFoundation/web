@@ -18,11 +18,7 @@ export async function buildFallbackDataExchangeRate(currency: CurrencyID) {
     // ['method', `${api}${route}${params}${JSON.stringify(args.payload)}`]
     [unstable_serialize([
       'get',
-      path.join(
-        exploredApi,
-        'api',
-        exchangeRateRoute.replace(':currency', currency)
-      ),
+      path.join(exploredApi, exchangeRateRoute.replace(':currency', currency)),
     ])]: rate.data,
   }
 }

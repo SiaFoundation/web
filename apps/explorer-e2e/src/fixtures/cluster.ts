@@ -79,7 +79,7 @@ export async function startCluster({
     {
       // This should match `exploredCustomApiCookieName` in apps/explorer/config/explored.ts
       name: 'exploredAddress',
-      value: daemons.explored.node.apiAddress,
+      value: `${daemons.explored.node.apiAddress}/api`,
       url: 'http://localhost:3005',
     },
   ])
