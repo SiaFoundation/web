@@ -18,7 +18,7 @@ import {
   SiacoinOutput,
 } from '@siafoundation/explored-types'
 import { blockHeightToHumanDate } from '../../lib/time'
-import { siacoinToFiat } from '../../lib/currency'
+import { hastingsToFiat } from '../../lib/currency'
 import LoadingCurrency from '../LoadingCurrency'
 import LoadingTimestamp from '../LoadingTimestamp'
 import { useExploredAddress } from '../../hooks/useExploredAddress'
@@ -61,7 +61,7 @@ export function Contract({
         copyable: false,
         value:
           exchange.currency && exchange.rate ? (
-            siacoinToFiat(contract.payout, {
+            hastingsToFiat(contract.payout, {
               rate: exchange.rate,
               currency: exchange.currency,
             })

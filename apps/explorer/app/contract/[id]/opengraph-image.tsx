@@ -1,7 +1,7 @@
 import { humanBytes } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
 import { truncate } from '@siafoundation/design-system'
-import { siacoinToFiat } from '../../../lib/currency'
+import { hastingsToFiat } from '../../../lib/currency'
 import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
 import { to } from '@siafoundation/request'
 import { getExplored } from '../../../lib/explored'
@@ -70,7 +70,7 @@ export default async function Image({ params }) {
     },
     {
       label: 'payout',
-      value: siacoinToFiat(contract.payout, {
+      value: hastingsToFiat(contract.payout, {
         currency: currencyOpt,
         rate: new BigNumber(rate),
       }),

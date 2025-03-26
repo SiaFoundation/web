@@ -21,7 +21,7 @@ import {
 } from '@siafoundation/units'
 import { ExplorerHost } from '@siafoundation/explored-types'
 import LoadingCurrency from '../LoadingCurrency'
-import { siacoinToFiat } from '../../lib/currency'
+import { hastingsToFiat } from '../../lib/currency'
 import { useExploredAddress } from '../../hooks/useExploredAddress'
 import { getHostNetAddress } from '../../lib/hostType'
 
@@ -156,7 +156,7 @@ export function HostSettings({ host }: Props) {
         copyable: false,
         value:
           exchange.currency && exchange.rate ? (
-            siacoinToFiat(
+            hastingsToFiat(
               host.v2
                 ? host.v2Settings.maxCollateral
                 : host.settings.maxcollateral,
@@ -177,7 +177,7 @@ export function HostSettings({ host }: Props) {
         copyable: false,
         value:
           exchange.currency && exchange.rate ? (
-            siacoinToFiat(
+            hastingsToFiat(
               host.v2
                 ? host.v2Settings.prices.contractPrice
                 : host.settings.contractprice,
