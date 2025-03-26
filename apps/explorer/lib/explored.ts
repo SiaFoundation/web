@@ -35,11 +35,11 @@ export function getExploredAddress() {
 
 export function getExplored(explicitAddress?: string) {
   if (explicitAddress) {
-    return Explored({ api: `${explicitAddress}/api` })
+    return Explored({ api: explicitAddress })
   }
   if (process.env.NODE_ENV === 'development') {
     const exploredAddress = getExploredAddress()
-    return Explored({ api: `${exploredAddress}/api` })
+    return Explored({ api: exploredAddress })
   }
-  return Explored({ api: `${exploredApi}/api` })
+  return Explored({ api: exploredApi })
 }
