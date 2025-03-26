@@ -65,7 +65,9 @@ export function useDataset({
 function getHostFields(host: Host, allContracts: Maybe<ContractData[]>) {
   return {
     id: host.publicKey,
-    netAddress: host.netAddress,
+    netAddress: host.v2SiamuxAddresses?.length
+      ? host.v2SiamuxAddresses[0]
+      : host.netAddress,
     publicKey: host.publicKey,
     lastScanSuccess: host.interactions.lastScanSuccess,
     lastScan:

@@ -7,6 +7,7 @@ import {
   LoadingDots,
   ValueScFiat,
   Checkbox,
+  Badge,
 } from '@siafoundation/design-system'
 import {
   WarningSquareFilled16,
@@ -16,7 +17,13 @@ import {
   UndefinedFilled16,
   CheckboxCheckedFilled16,
 } from '@siafoundation/react-icons'
-import { humanBytes, humanNumber } from '@siafoundation/units'
+import {
+  humanBytes,
+  humanNumber,
+  monthsToBlocks,
+  sectorsToBytes,
+  TBToBytes,
+} from '@siafoundation/units'
 import { HostContext, HostData, TableColumnId } from './types'
 import { format, formatDistance, formatRelative } from 'date-fns'
 import { HostContextMenu } from '../../components/Hosts/HostContextMenu'
@@ -25,7 +32,12 @@ import {
   HostScanPayload,
   busHostHostKeyScanRoute,
 } from '@siafoundation/renterd-types'
-import { HostPriceTable, HostSettings } from '@siafoundation/types'
+import {
+  HostPriceTable,
+  HostSettings,
+  V2HostPrices,
+  V2HostSettings,
+} from '@siafoundation/types'
 import { useHostsAllowlist } from '@siafoundation/renterd-react'
 import BigNumber from 'bignumber.js'
 import React, { memo } from 'react'
@@ -125,6 +137,15 @@ export const columns: HostsTableColumn[] = (
             </div>
           </Tooltip>
         )
+      },
+    },
+    {
+      id: 'version',
+      label: 'version',
+      category: 'general',
+      contentClassName: 'justify-center',
+      render: ({ data }) => {
+        return <Badge size="small">{data.v2 ? 'v2' : 'v1'}</Badge>
       },
     },
     {
@@ -291,14 +312,19 @@ export const columns: HostsTableColumn[] = (
       id: 'netAddress',
       label: 'address',
       category: 'general',
-      render: ({ data, context }) => (
-        <ValueCopyable
-          value={data.netAddress}
-          size="12"
-          type="hostIp"
-          siascanUrl={context.siascanUrl}
-        />
-      ),
+      render: ({ data, context }) => {
+        if (!data.netAddress) {
+          return <Text color="subtle">-</Text>
+        }
+        return (
+          <ValueCopyable
+            value={data.netAddress}
+            size="12"
+            type="hostIp"
+            siascanUrl={context.siascanUrl}
+          />
+        )
+      },
     },
     {
       id: 'publicKey',
@@ -568,6 +594,138 @@ export const columns: HostsTableColumn[] = (
           />
         )
       },
+    },
+    // v2 settings
+    {
+      id: 'v2_acceptingContracts',
+      label: 'accepting contracts',
+      category: 'v2Settings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderBool('v2Settings', 'acceptingContracts'),
+    },
+    {
+      id: 'v2_remainingStorage',
+      label: 'remaining storage',
+      category: 'v2Settings',
+      contentClassName: 'w-[120px] justify-end',
+      render: function RenderRemainingStorage({ data }) {
+        return (
+          <ValueNum
+            size="12"
+            value={sectorsToBytes(data.v2Settings.remainingStorage || 0)}
+            variant="value"
+            format={(v) => humanBytes(v.toNumber())}
+          />
+        )
+      },
+    },
+    {
+      id: 'v2_totalStorage',
+      label: 'total storage',
+      category: 'v2Settings',
+      contentClassName: 'w-[120px] justify-end',
+      render: function RenderTotalStorage({ data }) {
+        return (
+          <ValueNum
+            size="12"
+            value={sectorsToBytes(data.v2Settings.totalStorage || 0)}
+            variant="value"
+            format={(v) => humanBytes(v.toNumber())}
+          />
+        )
+      },
+    },
+    {
+      id: 'v2_storagePrice',
+      label: 'storage price (per TB per month)',
+      category: 'v2Settings',
+      contentClassName: 'w-[120px] justify-end',
+      render: function RenderStoragePrice({ data }) {
+        return (
+          <ValueScFiat
+            displayBoth
+            size="12"
+            value={new BigNumber(data.v2Settings.prices.storagePrice || 0)
+              .times(TBToBytes(1))
+              .times(monthsToBlocks(1))}
+            fixedFiat={4}
+            variant="value"
+          />
+        )
+      },
+    },
+    {
+      id: 'v2_ingressPrice',
+      label: 'ingress price (per TB)',
+      category: 'v2Settings',
+      contentClassName: 'w-[120px] justify-end',
+      render: function RenderIngressPrice({ data }) {
+        return (
+          <ValueScFiat
+            displayBoth
+            size="12"
+            value={new BigNumber(
+              data.v2Settings.prices.ingressPrice || 0
+            ).times(TBToBytes(1))}
+            fixedFiat={4}
+            variant="value"
+          />
+        )
+      },
+    },
+    {
+      id: 'v2_egressPrice',
+      label: 'egress price (per TB)',
+      category: 'v2Settings',
+      contentClassName: 'w-[120px] justify-end',
+      render: function RenderEgressPrice({ data }) {
+        return (
+          <ValueScFiat
+            displayBoth
+            size="12"
+            value={new BigNumber(data.v2Settings.prices.egressPrice || 0).times(
+              TBToBytes(1)
+            )}
+            fixedFiat={4}
+            variant="value"
+          />
+        )
+      },
+    },
+    {
+      id: 'v2_contractPrice',
+      label: 'contract price',
+      category: 'v2Settings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderV2Price('contractPrice'),
+    },
+    {
+      id: 'v2_collateral',
+      label: 'collateral',
+      category: 'v2Settings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderV2Price('collateral'),
+    },
+    {
+      id: 'v2_freeSectorPrice',
+      label: 'free sector price',
+      category: 'v2Settings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderV2Price('freeSectorPrice'),
+    },
+    {
+      id: 'v2_maxCollateral',
+      label: 'max collateral',
+      category: 'v2Settings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('v2Settings', 'maxCollateral'),
+    },
+    {
+      id: 'v2_maxContractDuration',
+      label: 'max contract duration (blocks)',
+      category: 'v2Settings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderNumber('v2Settings', 'maxContractDuration'),
     },
     // price table
     {
@@ -1004,15 +1162,25 @@ function getFullLabelAndTip(col: HostsTableColumn): {
       tip: `price table (RHPv3): ${col.label}`,
     }
   }
+  if (col.category === 'v2Settings') {
+    return {
+      icon: <Settings16 className="relative top-px opacity-50 scale-75" />,
+      label: col.label,
+      tip: `v2 settings: ${col.label}`,
+    }
+  }
   return {
     label: col.label,
     tip: col.label,
   }
 }
 
-type Key = keyof HostPriceTable | keyof HostSettings
+type Key = keyof HostPriceTable | keyof HostSettings | keyof V2HostSettings
 
-function makeRenderSc(section: 'priceTable' | 'settings', name: Key) {
+function makeRenderSc(
+  section: 'priceTable' | 'settings' | 'v2Settings',
+  name: Key
+) {
   return memo(function RenderPriceTableNumber({ data }: { data: HostData }) {
     if (!data[section]) {
       return null
@@ -1031,7 +1199,7 @@ function makeRenderSc(section: 'priceTable' | 'settings', name: Key) {
 }
 
 function makeRenderNumber(
-  section: 'priceTable' | 'settings',
+  section: 'priceTable' | 'settings' | 'v2Settings',
   name: Key,
   abbreviated?: boolean
 ) {
@@ -1055,7 +1223,10 @@ function makeRenderNumber(
   }
 }
 
-function makeRenderString(section: 'priceTable' | 'settings', name: Key) {
+function makeRenderString(
+  section: 'priceTable' | 'settings' | 'v2Settings',
+  name: Key
+) {
   return function RenderStringColumn({ data }: { data: HostData }) {
     if (!data[section]) {
       return null
@@ -1065,7 +1236,10 @@ function makeRenderString(section: 'priceTable' | 'settings', name: Key) {
   }
 }
 
-function makeRenderBytes(section: 'priceTable' | 'settings', name: Key) {
+function makeRenderBytes(
+  section: 'priceTable' | 'settings' | 'v2Settings',
+  name: Key
+) {
   return function RenderBytesColumn({ data }: { data: HostData }) {
     if (!data[section]) {
       return null
@@ -1080,7 +1254,10 @@ function makeRenderBytes(section: 'priceTable' | 'settings', name: Key) {
   }
 }
 
-function makeRenderBool(section: 'priceTable' | 'settings', name: Key) {
+function makeRenderBool(
+  section: 'priceTable' | 'settings' | 'v2Settings',
+  name: Key
+) {
   return function RenderBoolColumn({ data }: { data: HostData }) {
     if (!data[section]) {
       return null
@@ -1093,6 +1270,23 @@ function makeRenderBool(section: 'priceTable' | 'settings', name: Key) {
           {val ? <CheckboxCheckedFilled16 /> : <WarningSquareFilled16 />}
         </Text>
       </div>
+    )
+  }
+}
+
+function makeRenderV2Price(key: keyof V2HostPrices) {
+  return function RenderV2PriceColumn({ data }: { data: HostData }) {
+    if (!data.v2Settings) {
+      return null
+    }
+    return (
+      <ValueScFiat
+        displayBoth
+        size="12"
+        value={new BigNumber(data.v2Settings.prices[key] || 0)}
+        fixedFiat={4}
+        variant="value"
+      />
     )
   }
 }
