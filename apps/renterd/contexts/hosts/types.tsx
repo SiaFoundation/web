@@ -107,6 +107,19 @@ const autopilotColumns = [
   'ap_scoreVersion',
 ] as const
 
+const v2SettingsColumns = [
+  'v2_acceptingContracts',
+  'v2_maxCollateral',
+  'v2_maxContractDuration',
+  'v2_remainingStorage',
+  'v2_totalStorage',
+  'v2_storagePrice',
+  'v2_contractPrice',
+  'v2_collateral',
+  'v2_ingressPrice',
+  'v2_egressPrice',
+] as const
+
 const priceTableColumns = [
   'hpt_accountbalancecost',
   'hpt_collateralcost',
@@ -174,10 +187,12 @@ export type HostTableColumnGeneral = typeof generalColumns[number]
 export type HostTableColumnAutopilot = typeof autopilotColumns[number]
 export type HostTableColumnPriceTable = typeof priceTableColumns[number]
 export type HostTableColumnSettings = typeof settingsColumns[number]
+export type HostTableColumnV2Settings = typeof v2SettingsColumns[number]
 
 export type TableColumnId =
   | HostTableColumnGeneral
   | HostTableColumnAutopilot
+  | HostTableColumnV2Settings
   | HostTableColumnPriceTable
   | HostTableColumnSettings
 
@@ -192,6 +207,11 @@ export const columnsDefaultVisible: TableColumnId[] = [
   'hasContract',
   'ap_usable',
   'ap_scoreOverall',
+  'v2_remainingStorage',
+  'v2_totalStorage',
+  'v2_storagePrice',
+  'v2_ingressPrice',
+  'v2_egressPrice',
 ]
 
 // export type SortField = never

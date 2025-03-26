@@ -36,6 +36,12 @@ export function HostsViewDropdownMenu() {
       label: column.label,
       value: column.id,
     }))
+  const v2SettingsColumns = configurableColumns
+    .filter((c) => c.category === 'v2Settings')
+    .map((column) => ({
+      label: column.label,
+      value: column.id,
+    }))
   const priceTableColumns = configurableColumns
     .filter((c) => c.category === 'priceTable')
     .map((column) => ({
@@ -103,6 +109,24 @@ export function HostsViewDropdownMenu() {
           <BaseMenuItem>
             <PoolCombo
               options={autopilotColumns}
+              values={visibleColumnIds}
+              onChange={(value) => toggleColumnVisibility(value)}
+            />
+          </BaseMenuItem>
+        </>
+      ) : null}
+      {v2SettingsColumns.length ? (
+        <>
+          <MenuSectionLabelToggleAll
+            label="V2 settings (RHPv4)"
+            columns={v2SettingsColumns.map((c) => c.value)}
+            enabled={visibleColumnIds}
+            setColumnsVisible={setColumnsVisible}
+            setColumnsHidden={setColumnsHidden}
+          />
+          <BaseMenuItem>
+            <PoolCombo
+              options={v2SettingsColumns}
               values={visibleColumnIds}
               onChange={(value) => toggleColumnVisibility(value)}
             />
