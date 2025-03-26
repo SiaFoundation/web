@@ -5,16 +5,16 @@ import BigNumber from 'bignumber.js'
 
 const digits = 2
 
-export function siacoinToFiat(
-  sc: string,
+export function hastingsToFiat(
+  hastings: string,
   exchange?: { currency: CurrencyOption; rate: BigNumber }
 ) {
   if (exchange) {
-    const val = new BigNumber(sc).div(1e24).times(exchange?.rate || 1)
+    const val = new BigNumber(hastings).div(1e24).times(exchange?.rate || 1)
     return `${exchange?.currency.prefix || ''}${toFixedOrPrecision(val, {
       digits,
     })}`
   } else {
-    return humanSiacoin(sc)
+    return humanSiacoin(hastings)
   }
 }
