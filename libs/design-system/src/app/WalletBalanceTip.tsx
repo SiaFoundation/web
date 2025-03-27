@@ -58,7 +58,7 @@ export function WalletBalanceTip({
                     size="12"
                     displayBoth
                     variant="value"
-                    value={balanceSc.unconfirmed}
+                    value={balanceSc.immature}
                   />
                 </div>
               </div>
