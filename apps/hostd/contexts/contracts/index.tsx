@@ -4,15 +4,14 @@ import {
   getContractsTimeRangeBlockHeight,
   useMultiSelect,
   usePaginationOffset,
-  useClientFilters,
-  useClientFilteredDataset,
+  useServerFilters,
 } from '@siafoundation/design-system'
 import { Maybe } from '@siafoundation/types'
 import {
   useContracts as useContractsData,
   useContractsV2 as useContractsV2Data,
 } from '@siafoundation/hostd-react'
-import { createContext, useContext, useMemo } from 'react'
+import { createContext, useCallback, useContext, useMemo } from 'react'
 import {
   columnsDefaultVisible,
   ContractData,
@@ -24,11 +23,28 @@ import { useDataset } from './dataset'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { ContractStatus, V2ContractStatus } from '@siafoundation/hostd-types'
+import useLocalStorageState from 'use-local-storage-state'
 
 const defaultLimit = 50
 
 function useContractsMain() {
   const { limit, offset } = usePaginationOffset(defaultLimit)
+  const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
+    useServerFilters()
+  const [versionMode, _setVersionMode] = useLocalStorageState<'v1' | 'v2'>(
+    'hostd/v0/contracts/versionMode',
+    {
+      defaultValue: 'v2',
+    }
+  )
+  const setVersionMode = useCallback(
+    (mode: 'v1' | 'v2') => {
+      _setVersionMode(mode)
+      resetFilters()
+    },
+    [resetFilters, _setVersionMode]
+  )
 
   const {
     configurableColumns,
@@ -52,7 +68,19 @@ function useContractsMain() {
   })
 
   const response = useContractsData({
-    payload: {},
+    disabled: versionMode === 'v2',
+    payload: {
+      limit,
+      offset,
+      sortField: sortOptions.find((o) => o.id === sortField)?.serverId,
+      sortDesc: sortDirection === 'desc',
+      contractIDs: filters
+        .filter((f) => f.id === 'filterContractId')
+        .map((f) => f.value),
+      statuses: filters
+        .filter((f) => f.id.startsWith('filterStatus'))
+        .map((f) => f.value) as ContractStatus[],
+    },
     config: {
       swr: {
         refreshInterval: defaultDatasetRefreshInterval,
@@ -61,7 +89,19 @@ function useContractsMain() {
   })
 
   const responseV2 = useContractsV2Data({
-    payload: {},
+    disabled: versionMode === 'v1',
+    payload: {
+      limit,
+      offset,
+      sortField: sortOptions.find((o) => o.id === sortField)?.serverId,
+      sortDesc: sortDirection === 'desc',
+      contractIDs: filters
+        .filter((f) => f.id === 'filterContractId')
+        .map((f) => f.value),
+      statuses: filters
+        .filter((f) => f.id.startsWith('filterStatus'))
+        .map((f) => f.value) as V2ContractStatus[],
+    },
     config: {
       swr: {
         refreshInterval: defaultDatasetRefreshInterval,
@@ -69,30 +109,14 @@ function useContractsMain() {
     },
   })
 
-  const dataset = useDataset({
+  const _datasetPage = useDataset({
+    versionMode,
     response,
     responseV2,
   })
 
-  const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
-    useClientFilters<ContractData>()
-
   const { estimatedBlockHeight, isSynced, nodeBlockHeight } = useSyncStatus()
   const currentHeight = isSynced ? nodeBlockHeight : estimatedBlockHeight
-
-  const clientSortField = useMemo(
-    () => sortOptions.find((o) => o.id === sortField)?.clientId || sortField,
-    [sortField]
-  )
-  const { datasetFiltered, datasetPage: _datasetPage } =
-    useClientFilteredDataset({
-      dataset,
-      filters,
-      sortField: clientSortField,
-      sortDirection,
-      offset,
-      limit,
-    })
 
   const { range: contractsTimeRange } = useMemo(
     () => getContractsTimeRangeBlockHeight(currentHeight, _datasetPage || []),
@@ -142,12 +166,13 @@ function useContractsMain() {
     offset,
     limit,
     cellContext,
-    datasetPageTotal: datasetPage?.length || 0,
-    datasetFilteredTotal: datasetFiltered?.length || 0,
-    datasetTotal: dataset?.length || 0,
-    visibleColumns,
-    datasetFiltered,
     datasetPage,
+    datasetPageTotal: datasetPage?.length || 0,
+    datasetFilteredTotal:
+      versionMode === 'v1'
+        ? response.data?.count || 0
+        : responseV2.data?.count || 0,
+    visibleColumns,
     configurableColumns,
     visibleColumnIds,
     sortableColumns,
@@ -166,6 +191,8 @@ function useContractsMain() {
     removeLastFilter,
     resetFilters,
     multiSelect,
+    versionMode,
+    setVersionMode,
   }
 }
 

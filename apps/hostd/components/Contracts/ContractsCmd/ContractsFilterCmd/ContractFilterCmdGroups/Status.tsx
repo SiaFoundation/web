@@ -1,46 +1,47 @@
-import {
-  ClientFilterItem,
-  ServerFilterItem,
-} from '@siafoundation/design-system'
+import { ServerFilterItem } from '@siafoundation/design-system'
 import { CommandGroup, CommandItemSearch } from '../../../../CmdRoot/Item'
 import { Page } from '../../../../CmdRoot/types'
-import { ContractData } from '../../../../../contexts/contracts/types'
+import { useContracts } from '../../../../../contexts/contracts'
 
 export const contractsFilterStatusPage = {
   namespace: 'contracts/filterStatus',
   label: 'Contracts filter by status',
 }
 
-const options: ClientFilterItem<ContractData>[] = [
+const optionsV1: ServerFilterItem[] = [
   {
     id: 'filterStatusActive',
     value: 'active',
     label: 'Contract is active',
-    fn: (c) => c.status === 'active',
   },
   {
     id: 'filterStatusSuccessful',
     value: 'successful',
     label: 'Contract was successful',
-    fn: (c) => c.status === 'successful',
   },
   {
     id: 'filterStatusPending',
     value: 'pending',
     label: 'Contract is pending',
-    fn: (c) => c.status === 'pending',
   },
   {
     id: 'filterStatusRejected',
     value: 'rejected',
     label: 'Contract was rejected',
-    fn: (c) => c.status === 'rejected',
   },
   {
     id: 'filterStatusFailed',
     value: 'failed',
     label: 'Contract has failed',
-    fn: (c) => c.status === 'failed',
+  },
+]
+
+const optionsV2: ServerFilterItem[] = [
+  ...optionsV1,
+  {
+    id: 'filterStatusRenewed',
+    value: 'renewed',
+    label: 'Contract was renewed',
   },
 ]
 
@@ -51,6 +52,8 @@ export function StatusCmdGroup({
   currentPage: Page
   select: (filter: ServerFilterItem) => void
 }) {
+  const { versionMode } = useContracts()
+  const options = versionMode === 'v1' ? optionsV1 : optionsV2
   return (
     <CommandGroup
       currentPage={currentPage}
