@@ -6,22 +6,30 @@ import BigNumber from 'bignumber.js'
 import { Maybe } from '@siafoundation/types'
 
 export function useDataset({
+  versionMode,
   response,
   responseV2,
 }: {
+  versionMode: 'v1' | 'v2'
   response: ReturnType<typeof useContracts>
   responseV2: ReturnType<typeof useContractsV2>
 }) {
   return useMemo<Maybe<ContractData[]>>(() => {
-    if (!response.data || !responseV2.data) {
+    if (versionMode === 'v1') {
+      if (response.data) {
+        return (
+          response.data.contracts?.map((c) => getContractFieldsFromV1(c)) || []
+        )
+      }
       return undefined
     }
-    const v1 =
-      response.data.contracts?.map((c) => getContractFieldsFromV1(c)) || []
-    const v2 =
-      responseV2.data.contracts?.map((c) => getContractFieldsFromV2(c)) || []
-    return [...v1, ...v2]
-  }, [response.data, responseV2.data])
+    if (responseV2.data) {
+      return (
+        responseV2.data.contracts?.map((c) => getContractFieldsFromV2(c)) || []
+      )
+    }
+    return undefined
+  }, [versionMode, response.data, responseV2.data])
 }
 
 function getContractFieldsFromV1(c: Contract): ContractData {

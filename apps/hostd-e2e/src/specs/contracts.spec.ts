@@ -6,6 +6,8 @@ import {
   getContractRowById,
   getContractRows,
   getContractRowsAll,
+  setVersionMode,
+  expectVersionMode,
 } from '../fixtures/contracts'
 import {
   ContractsResponse,
@@ -24,6 +26,8 @@ test('contracts bulk integrity check', async ({ page }) => {
     renterdCount: 3,
   })
   await navigateToContracts(page)
+  await setVersionMode(page, 'v1')
+  await expectVersionMode(page, 'v1')
   const rows = await getContractRowsAll(page)
   await rows.at(0).click({ position: { x: 5, y: 5 } })
   await rows.at(2).click({ modifiers: ['Shift'] })
@@ -44,6 +48,8 @@ test('new contracts do not show a renewed from or to contract', async ({
     renterdCount: 3,
   })
   await navigateToContracts(page)
+  await setVersionMode(page, 'v1')
+  await expectVersionMode(page, 'v1')
   await expect(getContractRows(page).getByTestId('renewedFrom')).toBeHidden()
   await expect(getContractRows(page).getByTestId('renewedTo')).toBeHidden()
 })
@@ -54,6 +60,9 @@ test('viewing a page with no data shows the correct empty state', async ({
   await beforeTest(page, {
     renterdCount: 3,
   })
+  await navigateToContracts(page)
+  await setVersionMode(page, 'v1')
+  await expectVersionMode(page, 'v1')
   await page.goto('/contracts?offset=100')
   // Check that the empty state is correct.
   await expect(
@@ -73,6 +82,8 @@ test('paginating contracts with known total and client side pagination', async (
   })
   await interceptApiContactsAndEnsure3Results(page)
   await navigateToContracts(page)
+  await setVersionMode(page, 'v1')
+  await expectVersionMode(page, 'v1')
   const url = page.url()
   await page.goto(url + '?limit=1')
 
@@ -280,29 +291,13 @@ test('contract timeline displays correct heights for v1 and v2 contracts', async
   await toggleColumnVisibility(page, 'payout', true)
   await page.reload()
 
-  const rows = getContractRows(page)
-  await expect(rows).toHaveCount(2)
-  const rowV1 = await getContractRowById(
-    page,
-    '8f455ffa8c916336f5492f88bd54e6d67ca6cf2aee324cc212eb201431b2d3fc'
-  )
+  // v2
+  const rowsV2 = getContractRows(page)
+  await expect(rowsV2).toHaveCount(1)
   const rowV2 = await getContractRowById(
     page,
     '0eb545efe95764aae11c186c5f07983c24ecea19dff9ef7fe7df97cb173a0565'
   )
-
-  // v1
-  await expect(rowV1.getByLabel('contract formation 96831')).toBeVisible()
-  await expect(
-    rowV1.getByLabel('contract duration 96831 - 97032')
-  ).toBeVisible()
-  await expect(rowV1.getByLabel('proof window 97032 - 97176')).toBeVisible()
-  await expect(rowV1.getByLabel('payout 97177')).toBeVisible()
-  await expect(
-    rowV1.getByTestId('payout').getByText('+403.759 mS')
-  ).toBeVisible()
-
-  // v2
   await expect(rowV2.getByLabel('contract formation 114454')).toBeVisible()
   await expect(
     rowV2.getByLabel('contract duration 114454 - 122517')
@@ -311,5 +306,24 @@ test('contract timeline displays correct heights for v1 and v2 contracts', async
   await expect(rowV2.getByLabel('payout 122662')).toBeVisible()
   await expect(
     rowV2.getByTestId('payout').getByText('+15.747 SC')
+  ).toBeVisible()
+
+  // v1
+  await setVersionMode(page, 'v1')
+  await expectVersionMode(page, 'v1')
+  const rowsV1 = getContractRows(page)
+  await expect(rowsV1).toHaveCount(1)
+  const rowV1 = await getContractRowById(
+    page,
+    '8f455ffa8c916336f5492f88bd54e6d67ca6cf2aee324cc212eb201431b2d3fc'
+  )
+  await expect(rowV1.getByLabel('contract formation 96831')).toBeVisible()
+  await expect(
+    rowV1.getByLabel('contract duration 96831 - 97032')
+  ).toBeVisible()
+  await expect(rowV1.getByLabel('proof window 97032 - 97176')).toBeVisible()
+  await expect(rowV1.getByLabel('payout 97177')).toBeVisible()
+  await expect(
+    rowV1.getByTestId('payout').getByText('+403.759 mS')
   ).toBeVisible()
 })

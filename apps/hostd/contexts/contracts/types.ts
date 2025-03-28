@@ -1,5 +1,6 @@
 import { FileContractID, Hash256 } from '@siafoundation/types'
 import BigNumber from 'bignumber.js'
+import { V2ContractFilterSortField } from '@siafoundation/hostd-types'
 
 export type ContractData = {
   id: string
@@ -72,62 +73,36 @@ export type SortField =
   | 'status'
   | 'timeline'
   | 'negotiationHeight'
-  | 'contractHeightStart'
   | 'proofWindowHeightEnd'
-  | 'resolutionHeight'
-  | 'payoutHeight'
+
 export const sortOptions: {
   id: SortField
   label: string
   category: string
-  clientId:
-    | 'status'
-    | 'negotiationHeight'
-    | 'contractHeightStart'
-    | 'proofWindowHeightEnd'
-    | 'resolutionHeight'
-    | 'payoutHeight'
+  serverId: V2ContractFilterSortField
 }[] = [
   {
     id: 'status',
-    clientId: 'status',
+    serverId: 'status',
     label: 'status',
     category: 'general',
   },
   {
     id: 'timeline',
-    clientId: 'contractHeightStart',
+    serverId: 'negotiationHeight',
     label: 'timeline',
     category: 'time',
   },
   {
     id: 'negotiationHeight',
-    clientId: 'negotiationHeight',
+    serverId: 'negotiationHeight',
     label: 'negotiation height',
     category: 'time',
   },
   {
-    id: 'contractHeightStart',
-    clientId: 'contractHeightStart',
-    label: 'formation height',
-    category: 'time',
-  },
-  {
     id: 'proofWindowHeightEnd',
-    clientId: 'proofWindowHeightEnd',
+    serverId: 'expirationHeight',
     label: 'expiration height',
-    category: 'time',
-  },
-  {
-    id: 'resolutionHeight',
-    clientId: 'resolutionHeight',
-    label: 'resolution height',
-    category: 'time',
-  },
-  {
-    id: 'payoutHeight',
-    clientId: 'payoutHeight',
-    label: 'payout height',
     category: 'time',
   },
 ]

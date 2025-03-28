@@ -1,23 +1,19 @@
 import {
-  ClientFilterItem,
   Dialog,
   FormFieldFormik,
   FormSubmitButtonFormik,
+  ServerFilterItem,
 } from '@siafoundation/design-system'
 import { useContracts } from '../contexts/contracts'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useDialog } from '../contexts/dialog'
-import { ContractData } from '../contexts/contracts/types'
 
-export function filterContractId(
-  contractId: string
-): ClientFilterItem<ContractData> {
+export function filterContractId(contractId: string): ServerFilterItem {
   return {
     id: 'filterContractId',
     value: contractId,
     label: `contract ID is ${contractId}`,
-    fn: (c) => c.id === contractId,
   }
 }
 
