@@ -1,5 +1,15 @@
 # hostd
 
+## 0.61.0
+
+### Minor Changes
+
+- e617f655: The contract explorer now has distinct v1 and v2 viewing modes.
+
+### Patch Changes
+
+- e617f655: Fixed an issue where the contract explorer did not show the correct total number of contracts.
+
 ## 0.60.0
 
 ### Minor Changes

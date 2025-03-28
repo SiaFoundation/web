@@ -1,7 +1,7 @@
 {
   "name": "renterd",
   "description": "The `renterd` user interface, dedicated to renter related functionality.",
-  "version": "0.78.0",
+  "version": "0.79.0",
   "private": true,
   "license": "MIT"
 }
