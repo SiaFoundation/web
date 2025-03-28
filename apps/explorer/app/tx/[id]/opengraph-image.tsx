@@ -1,8 +1,22 @@
 import { humanDate } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
 import { stripPrefix, truncate } from '@siafoundation/design-system'
-import { to } from '@siafoundation/request'
-import { getExplored } from '../../../lib/explored'
+import {
+  ChainIndex,
+  ExplorerBlock,
+  ExplorerTransaction,
+  ExplorerV2Transaction,
+  SearchResultType,
+} from '@siafoundation/explored-types'
+import {
+  fetchBlockByID,
+  fetchConsensusTip,
+  fetchSearchType,
+  fetchV1Transaction,
+  fetchV1TransactionChainIndices,
+  fetchV2Transaction,
+  fetchV2TransactionChainIndices,
+} from '../../../lib/fetchChainData'
 
 export const revalidate = 0
 
@@ -14,65 +28,50 @@ export const size = {
 
 export const contentType = 'image/png'
 
-export default async function Image({ params }) {
-  const id = params?.id as string
-
-  const [
-    [transaction, transactionError],
-    [transactionChainIndices, transactionChainIndicesError],
-    [currentTip, currentTipError],
-  ] = await Promise.all([
-    to(
-      getExplored().transactionByID({
-        params: {
-          id,
-        },
-      })
-    ),
-    to(
-      getExplored().transactionChainIndices({
-        params: {
-          id,
-        },
-      })
-    ),
-    to(getExplored().consensusTip()),
-  ])
-
-  if (
-    !transaction ||
-    !transactionChainIndices ||
-    !currentTip ||
-    transactionError ||
-    transactionChainIndicesError ||
-    currentTipError
-  ) {
-    return getOGImage(
-      {
-        id,
-        title: truncate(id, 30),
-        subtitle: 'transaction',
-        initials: 'T',
-      },
-      size
-    )
-  }
-
-  // Get the related block
-  const [relatedBlock, relatedBlockError] = await to(
-    getExplored().blockByID({ params: { id: transactionChainIndices[0].id } })
+const NotFoundImage = (id: string) =>
+  getOGImage(
+    {
+      id,
+      title: truncate(id, 30),
+      subtitle: 'transaction',
+      initials: 'T',
+    },
+    size
   )
 
-  if (!relatedBlock || relatedBlockError) {
-    return getOGImage(
-      {
-        id,
-        title: truncate(id, 30),
-        subtitle: 'transaction',
-        initials: 'T',
-      },
-      size
-    )
+export default async function Image({ params }) {
+  const id = params?.id as string
+  let searchResult: SearchResultType
+  let transaction: ExplorerTransaction | ExplorerV2Transaction
+  let transactionChainIndices: ChainIndex | ChainIndex[]
+
+  // Do we have a v1 or v2 transaction?
+  try {
+    searchResult = await fetchSearchType(id)
+  } catch (e) {
+    return NotFoundImage(id)
+  }
+
+  // Hit the v1 or v2 transaction-related endpoints.
+  if (searchResult === 'transaction') {
+    transaction = await fetchV1Transaction(id)
+    transactionChainIndices = await fetchV1TransactionChainIndices(id)
+  } else if (searchResult === 'v2Transaction') {
+    transaction = await fetchV2Transaction(id)
+    transactionChainIndices = await fetchV2TransactionChainIndices(id)
+  } else {
+    return NotFoundImage(id)
+  }
+
+  // Grab the current tip.
+  let currentTip: ChainIndex
+  let relatedBlock: ExplorerBlock
+
+  try {
+    currentTip = await fetchConsensusTip()
+    relatedBlock = await fetchBlockByID(transactionChainIndices[0].id)
+  } catch (e) {
+    return NotFoundImage(id)
   }
 
   const confirmations = currentTip.height - transactionChainIndices[0].height

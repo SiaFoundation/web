@@ -3,11 +3,11 @@ import { appLink, network } from '../config'
 import { Home } from '../components/Home'
 import { buildMetadata } from '../lib/utils'
 import { getLatestBlocks } from '../lib/blocks'
-import { to } from '@siafoundation/request'
 import { getTopHosts } from '../lib/hosts'
-import { getExplored, getExploredAddress } from '../lib/explored'
+import { getExploredAddress } from '../lib/explored'
 import { unstable_cache } from 'next/cache'
 import { getNetworkVersion } from '../lib/networkVersion'
+import { fetchBlockMetrics, fetchHostMetrics } from '../lib/fetchChainData'
 
 export function generateMetadata(): Metadata {
   const title = 'siascan'
@@ -35,11 +35,8 @@ const getCachedTopHosts = unstable_cache(
 )
 
 export default async function HomePage() {
-  const [[hostMetrics, hostMetricsError], [blockMetrics, blockMetricsError]] =
-    await Promise.all([
-      to(getExplored().hostMetrics()),
-      to(getExplored().blockMetrics()),
-    ])
+  const hostMetrics = await fetchHostMetrics()
+  const blockMetrics = await fetchBlockMetrics()
 
   const exploredAddress = getExploredAddress()
   const selectedTopHosts = await getCachedTopHosts(exploredAddress)
@@ -48,11 +45,9 @@ export default async function HomePage() {
   const latestHeight = latestBlocks ? latestBlocks[0].height : 0
   const version = await getNetworkVersion()
 
-  if (latestBlocksError || hostMetricsError || blockMetricsError) {
+  if (latestBlocksError) {
     console.log(new Date().toISOString(), {
       latestBlocksError,
-      hostMetricsError,
-      blockMetricsError,
       version,
     })
   }

@@ -6,9 +6,12 @@ import {
 } from '@siafoundation/units'
 import { truncate } from '@siafoundation/design-system'
 import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
-import { to } from '@siafoundation/request'
-import { getExplored } from '../../../lib/explored'
 import { getHostNetAddress } from '../../../lib/hostType'
+import { ExplorerHost } from '@siafoundation/explored-types'
+import {
+  fetchExchangeRateByCurrencyID,
+  fetchHostByPubkey,
+} from '../../../lib/fetchChainData'
 
 export const revalidate = 0
 
@@ -24,24 +27,13 @@ export const contentType = 'image/png'
 
 export default async function Image({ params }) {
   const id = params?.id as string
-  const [[host, hostError], [rate, rateError]] = await Promise.all([
-    to(
-      getExplored().hostByPubkey({
-        params: {
-          id,
-        },
-      })
-    ),
-    to(
-      getExplored().exchangeRate({
-        params: {
-          currency: 'usd',
-        },
-      })
-    ),
-  ])
+  let host: ExplorerHost
+  let rate: number
 
-  if (hostError || !host || rateError || !rate) {
+  try {
+    host = await fetchHostByPubkey(id)
+    rate = await fetchExchangeRateByCurrencyID('usd')
+  } catch (e) {
     return getOGImage(
       {
         id,
