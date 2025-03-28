@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.0.1
+
+### Patch Changes
+
+- 0bf07ad9: The wallet now correctly displays the immature balance.
+
 ## 5.0.0
 
 ### Minor Changes

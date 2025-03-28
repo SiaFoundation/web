@@ -1,5 +1,13 @@
 # renterd
 
+## 0.79.0
+
+### Minor Changes
+
+- e32e617f: The host explorer now has a version column.
+- e32e617f: The host explorer now has columns for v2 settings.
+- e32e617f: The host explorer address column now gets populates v2 host addresses.
+
 ## 0.78.0
 
 ### Minor Changes
