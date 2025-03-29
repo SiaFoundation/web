@@ -66,7 +66,7 @@ export const TEST_CONTRACT_1 = {
     unlockHash: 'c50b70e7dd79...',
     revisionNumber: '18,446,744,0...',
     status: 'obligation succeeded',
-    missedProofTitle: 'Missed proof outputs (2)',
+    missedProofTitle: 'Missed proof outputs (3)',
     validProofTitle: 'Valid proof outputs (2)',
   },
 }
