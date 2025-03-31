@@ -3,7 +3,7 @@ import { to } from '@siafoundation/request'
 import { getExplored } from '../../lib/explored'
 import clsx from 'clsx'
 import { blocksToDays } from '@siafoundation/units'
-import { getIsSynced } from '../../lib/sync'
+import { getIsIndexing, getIsSynced } from '../../lib/sync'
 
 function LearnMore({ color }: { color: string }) {
   return (
@@ -29,10 +29,12 @@ export async function HardforkCountdown({ network }: { network: string }) {
     [chainIndex, chainIndexError],
     [consensusNetwork, consensusNetworkError],
     [consensusState, consensusStateError],
+    [blockMetrics, blockMetricsError],
   ] = await Promise.all([
     to(getExplored().consensusTip()),
     to(getExplored().consensusNetwork()),
     to(getExplored().consensusState()),
+    to(getExplored().blockMetrics()),
   ])
 
   if (chainIndexError || !chainIndex)
@@ -45,10 +47,18 @@ export async function HardforkCountdown({ network }: { network: string }) {
     throw new Error(
       'explored consensusState request failed in HardforkCountdown'
     )
+  if (blockMetricsError || !blockMetrics)
+    throw new Error('explored blockMetrics request failed in HardforkCountdown')
 
   // If the node is not synced, don't show the countdown.
   const isSynced = getIsSynced(consensusState)
   if (!isSynced) {
+    return null
+  }
+
+  // If the node is indexing, don't show the countdown.
+  const isIndexing = getIsIndexing(consensusState, blockMetrics)
+  if (isIndexing) {
     return null
   }
 
