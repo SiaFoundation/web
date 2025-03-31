@@ -7,3 +7,16 @@ export function getIsSynced(data?: { prevTimestamps: string[] }) {
         Date.now() - hoursInMilliseconds(12)
     : false
 }
+
+export function getIsIndexing(
+  consensusState?: { index: { height: number } },
+  blockMetrics?: { index: { height: number } }
+) {
+  if (!blockMetrics || !consensusState) {
+    return false
+  }
+
+  // Only show indexing warnings if the node is more than 2 blocks behind on indexing.
+  const padding = 2
+  return blockMetrics.index.height < consensusState.index.height - padding
+}
