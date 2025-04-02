@@ -92,20 +92,22 @@ export function buildRequestHandler<
   }
 }
 
+type Success<T> = [data: T, error: undefined, response: AxiosResponse<T>]
+type Failure<T> = [
+  data: undefined,
+  error: AxiosError<T>,
+  response: AxiosResponse<T> | undefined
+]
+
 export async function to<T>(
   promise: Promise<AxiosResponse<T>>
-): Promise<
-  [
-    AxiosResponse<T>['data'] | undefined,
-    AxiosError<T> | undefined,
-    AxiosResponse<T> | undefined
-  ]
-> {
+): Promise<Success<T> | Failure<T>> {
   try {
     const response = await promise
     return [response.data, undefined, response]
   } catch (error) {
-    return [undefined, error as AxiosError<T>, undefined]
+    const axiosError = error as AxiosError<T>
+    return [undefined, axiosError, axiosError.response]
   }
 }
 
