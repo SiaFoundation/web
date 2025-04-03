@@ -8,6 +8,7 @@ require (
 	go.sia.tech/cluster v0.1.3-0.20250402145302-9be676ebc4c6
 	go.sia.tech/core v0.10.5
 	go.sia.tech/coreutils v0.12.2-0.20250317235740-9e6e9fe76b2e
+	go.sia.tech/explored v0.0.0-20250409081126-720b7a5845d5
 	go.uber.org/zap v1.27.0
 )
 
@@ -25,7 +26,7 @@ require (
 	github.com/julienschmidt/httprouter v1.3.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.9 // indirect
 	github.com/klauspost/reedsolomon v1.12.4 // indirect
-	github.com/mattn/go-sqlite3 v1.14.24 // indirect
+	github.com/mattn/go-sqlite3 v1.14.27 // indirect
 	github.com/montanaflynn/stats v0.7.1 // indirect
 	github.com/onsi/ginkgo/v2 v2.12.0 // indirect
 	github.com/oschwald/geoip2-golang v1.11.0 // indirect
@@ -37,7 +38,6 @@ require (
 	github.com/shabbyrobe/gocovmerge v0.0.0-20230507112040-c3350d9342df // indirect
 	github.com/shopspring/decimal v1.4.0 // indirect
 	go.etcd.io/bbolt v1.4.0 // indirect
-	go.sia.tech/explored v0.0.0-20250403073337-cec4c9b48e7e // indirect
 	go.sia.tech/gofakes3 v0.0.5 // indirect
 	go.sia.tech/hostd/v2 v2.1.0-beta.3.0.20250401074759-6e319d55765f // indirect
 	go.sia.tech/jape v0.12.1 // indirect
