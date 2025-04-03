@@ -5,6 +5,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"net"
@@ -26,6 +27,24 @@ import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
+
+type FixtureV1ContractAddresses struct {
+	// expired, unsuccessful
+	ExpiredContract *types.FileContractElement `json:"expiredContract"`
+	// revised once, storage proof submitted, successful
+	SuccessfulContract *types.FileContractElement `json:"successfulContract"`
+	// renewed, not yet resolved, only resolves at very high block height (10000+)
+	RenewedContract *types.FileContractElement `json:"renewedContract"`
+}
+
+type FixtureV2ContractAddresses struct {
+	// expired, unsuccessful
+	ExpiredContract *types.V2FileContractElement `json:"expiredContract"`
+	// revised once, storage proof submitted, successful
+	SuccessfulContract *types.V2FileContractElement `json:"successfulContract"`
+	// renewed, not yet resolved, only resolves at very high block height (10000+)
+	RenewedContract *types.V2FileContractElement `json:"renewedContract"`
+}
 
 func main() {
 	var (
@@ -164,9 +183,33 @@ func main() {
 	go s.Run()
 
 	nm := nodes.NewManager(dir, cm, s, nodes.WithSharedConsensus(true))
+	handler := api.Handler(cm, s, nm, log.Named("api"))
 
+	var mu sync.Mutex
+	var v1ContractAddresses FixtureV1ContractAddresses
+	var v2ContractAddresses FixtureV2ContractAddresses
+	mux := http.NewServeMux()
+	mux.HandleFunc("/fixtures/explored/v1", func(w http.ResponseWriter, r *http.Request) {
+		mu.Lock()
+		defer mu.Unlock()
+
+		if err := json.NewEncoder(w).Encode(v1ContractAddresses); err != nil {
+			http.Error(w, "failed to write contract addresses", http.StatusInternalServerError)
+			return
+		}
+	})
+	mux.HandleFunc("/fixtures/explored/v2", func(w http.ResponseWriter, r *http.Request) {
+		mu.Lock()
+		defer mu.Unlock()
+
+		if err := json.NewEncoder(w).Encode(v2ContractAddresses); err != nil {
+			http.Error(w, "failed to write contract addresses", http.StatusInternalServerError)
+			return
+		}
+	})
+	mux.Handle("/", handler)
 	server := &http.Server{
-		Handler:     api.Handler(cm, s, nm, log.Named("api")),
+		Handler:     mux,
 		ReadTimeout: 5 * time.Second,
 	}
 	defer server.Close()
@@ -209,6 +252,7 @@ func main() {
 		<-ready
 	}
 
+	pk := types.GeneratePrivateKey()
 	for i := 0; i < exploredCount; i++ {
 		wg.Add(1)
 		ready := make(chan struct{}, 1)
@@ -220,18 +264,39 @@ func main() {
 			}
 		}()
 		<-ready
+
+		b, ok := coreutils.MineBlock(cm, types.StandardUnlockHash(pk.PublicKey()), 5*time.Second)
+		if !ok {
+			log.Fatal("Failed to mine funding block")
+		} else if err := cm.AddBlocks([]types.Block{b}); err != nil {
+			log.Fatal("failed to add funding block", zap.Error(err))
+		}
+		log.Debug("mined block", zap.Stringer("index", cm.Tip()))
 	}
 
-	// mine until all payouts have matured
-	for n := 144; n > 0; {
-		b, ok := coreutils.MineBlock(cm, types.VoidAddress, 5*time.Second)
+	bid := cm.Tip().ID
+
+	mineBlocks(log, cm, 144)
+
+	if exploredCount > 0 {
+		b, ok := cm.Block(bid)
 		if !ok {
-			continue
-		} else if err := cm.AddBlocks([]types.Block{b}); err != nil {
-			log.Panic("failed to add funding block", zap.Error(err))
+			log.Panic("Failed to retrieve explorer funding block")
 		}
-		n--
-		log.Debug("mined block", zap.Stringer("index", cm.Tip()))
+
+		if network == "v1" {
+			addrs := setupV1Contracts(log, cm, pk, b)
+
+			mu.Lock()
+			v1ContractAddresses = addrs
+			mu.Unlock()
+		} else if network == "v2" {
+			addrs := setupV2Contracts(log, cm, pk, b)
+
+			mu.Lock()
+			v2ContractAddresses = addrs
+			mu.Unlock()
+		}
 	}
 
 	<-ctx.Done()
