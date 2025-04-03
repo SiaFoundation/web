@@ -29,7 +29,7 @@ export function Map({ hosts, stats }: Props) {
   const { gpu, settings } = useAppSettings()
 
   const [activeHostPublicKey, setActiveHostPublicKey] = useState<string>(
-    hosts[0].publicKey
+    hosts[0]?.publicKey
   )
 
   const activeHost = useMemo(
