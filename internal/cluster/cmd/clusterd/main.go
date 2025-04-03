@@ -214,7 +214,7 @@ func main() {
 		ready := make(chan struct{}, 1)
 		go func() {
 			defer wg.Done()
-			if err := nm.StartExplored(ctx, ready); err != nil {
+			if err := nm.StartExplored(ctx, ready, "sia is cool"); err != nil {
 				cancel()
 				log.Error("explored failed to start", zap.Error(err))
 			}
