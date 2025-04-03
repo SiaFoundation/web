@@ -23,6 +23,7 @@ import (
 	"go.sia.tech/coreutils/chain"
 	"go.sia.tech/coreutils/syncer"
 	"go.sia.tech/coreutils/testutil"
+	eapi "go.sia.tech/explored/api"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
@@ -164,7 +165,6 @@ func main() {
 	go s.Run()
 
 	nm := nodes.NewManager(dir, cm, s, nodes.WithSharedConsensus(true))
-
 	server := &http.Server{
 		Handler:     api.Handler(cm, s, nm, log.Named("api")),
 		ReadTimeout: 5 * time.Second,
@@ -209,6 +209,7 @@ func main() {
 		<-ready
 	}
 
+	pk := types.GeneratePrivateKey()
 	for i := 0; i < exploredCount; i++ {
 		wg.Add(1)
 		ready := make(chan struct{}, 1)
@@ -220,18 +221,47 @@ func main() {
 			}
 		}()
 		<-ready
+
+		if err := nm.MineBlocks(context.Background(), 1, types.StandardUnlockHash(pk.PublicKey())); err != nil {
+			log.Panic("failed to mine funding block", zap.Error(err))
+		}
 	}
 
-	// mine until all payouts have matured
-	for n := 144; n > 0; {
-		b, ok := coreutils.MineBlock(cm, types.VoidAddress, 5*time.Second)
-		if !ok {
-			continue
-		} else if err := cm.AddBlocks([]types.Block{b}); err != nil {
-			log.Panic("failed to add funding block", zap.Error(err))
+	if err := nm.MineBlocks(context.Background(), 144, types.VoidAddress); err != nil {
+		log.Panic("failed to mine blocks", zap.Error(err))
+	}
+
+	if exploredCount > 0 {
+		w, err := newWallet(cm, pk)
+		if err != nil {
+			log.Panic("Failed to setup wallet", zap.Error(err))
 		}
-		n--
-		log.Debug("mined block", zap.Stringer("index", cm.Tip()))
+		defer w.Close()
+
+		var e *eapi.Client
+		for _, n := range nm.Nodes() {
+			if n.Type == nodes.NodeTypeExplored {
+				e = eapi.NewClient(n.APIAddress+"/api", n.Password)
+			}
+		}
+		if e == nil {
+			log.Panic("Failed to find explored node")
+		}
+
+		switch network {
+		case "v1":
+			err = setupV1Contracts(nm, w, cm)
+		case "v2":
+			err = setupV2Contracts(nm, e, w, cm)
+		case "transition":
+			err = setupV1Contracts(nm, w, cm)
+		default:
+			err = fmt.Errorf("invalid network provided: %s", network)
+		}
+		if err != nil {
+			log.Panic("Failed to set up contracts", zap.Error(err))
+		}
+		log.Info("Set up contracts")
 	}
 
 	<-ctx.Done()
