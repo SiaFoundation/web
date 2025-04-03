@@ -237,7 +237,7 @@ export type SearchResultTypeResponse = SearchResultType
 // Host
 
 // Returns the host with the specified public key
-export const hostByPubkeyRoute = '/pubkey/:id/host'
+export const hostByPubkeyRoute = '/hosts/:id'
 export type HostByPubkeyParams = { id: PublicKey }
 export type HostByPubkeyPayload = void
 export type HostByPubkeyResponse = ExplorerHost
