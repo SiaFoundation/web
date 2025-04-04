@@ -39,6 +39,9 @@ import {
   ExchangeRateParams,
   ExchangeRateResponse,
   exchangeRateRoute,
+  ExplorerTipParams,
+  ExplorerTipResponse,
+  explorerTipRoute,
   HostByPubkeyParams,
   HostByPubkeyResponse,
   hostByPubkeyRoute,
@@ -402,5 +405,15 @@ export function useExchangeRate(
   return useGetSwr({
     ...args,
     route: exchangeRateRoute,
+  })
+}
+
+// Explorer Tip
+export function useExplorerTip(
+  args: HookArgsSwr<ExplorerTipParams, ExplorerTipResponse>
+) {
+  return useGetSwr({
+    ...args,
+    route: explorerTipRoute,
   })
 }
