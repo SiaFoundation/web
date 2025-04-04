@@ -260,3 +260,9 @@ export const exchangeRateRoute = '/exchange-rate/siacoin/:currency'
 export type ExchangeRateParams = { currency: CurrencyID }
 export type ExchangeRatePayload = void
 export type ExchangeRateResponse = number
+
+// Explorer Tip
+export const explorerTipRoute = '/explorer/tip'
+export type ExplorerTipParams = void
+export type ExplorerTipPayload = void
+export type ExplorerTipResponse = ChainIndex

@@ -20,6 +20,14 @@ import {
   BlockByIDParams,
   BlockByIDPayload,
   BlockByIDResponse,
+  blockMetricsRoute,
+  BlockMetricsParams,
+  BlockMetricsPayload,
+  BlockMetricsResponse,
+  blockMetricsByIDRoute,
+  BlockMetricsByIDParams,
+  BlockMetricsByIDPayload,
+  BlockMetricsByIDResponse,
   consensusNetworkRoute,
   ConsensusNetworkParams,
   ConsensusNetworkPayload,
@@ -56,6 +64,10 @@ import {
   ExchangeRatePayload,
   ExchangeRateResponse,
   exchangeRateRoute,
+  explorerTipRoute,
+  ExplorerTipParams,
+  ExplorerTipPayload,
+  ExplorerTipResponse,
   hostMetricsRoute,
   HostMetricsParams,
   HostMetricsPayload,
@@ -68,14 +80,6 @@ import {
   HostByPubkeyParams,
   HostByPubkeyPayload,
   HostByPubkeyResponse,
-  blockMetricsRoute,
-  BlockMetricsParams,
-  BlockMetricsPayload,
-  BlockMetricsResponse,
-  blockMetricsByIDRoute,
-  BlockMetricsByIDParams,
-  BlockMetricsByIDPayload,
-  BlockMetricsByIDResponse,
   OutputSiacoinParams,
   OutputSiacoinPayload,
   OutputSiacoinResponse,
@@ -303,5 +307,11 @@ export function Explored({
       ExchangeRatePayload,
       ExchangeRateResponse
     >(axios, 'get', exchangeRateRoute),
+    // Explorer Tip
+    explorerTip: buildRequestHandler<
+      ExplorerTipParams,
+      ExplorerTipPayload,
+      ExplorerTipResponse
+    >(axios, 'get', explorerTipRoute),
   }
 }
