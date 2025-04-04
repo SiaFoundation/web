@@ -1,5 +1,11 @@
 # @siafoundation/request
 
+## 0.3.0
+
+### Minor Changes
+
+- 03a50151: Improved typing for network response handling.
+
 ## 0.2.0
 
 ### Minor Changes
