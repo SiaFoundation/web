@@ -1,5 +1,13 @@
 # @siafoundation/explored-types
 
+## 0.16.0
+
+### Minor Changes
+
+- b95e34d7: Added explorerTip API.
+- cefe1ef1: Added support for v2 types.
+- 05b0b5b4: Updated to new hostByPubkey URL.
+
 ## 0.15.0
 
 ### Minor Changes

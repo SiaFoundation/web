@@ -1,5 +1,12 @@
 # explorer
 
+## 0.30.0
+
+### Minor Changes
+
+- 95250580: Added support for v2 types.
+- f7d32b13: The explorer now shows specific syncing and indexing warnings.
+
 ## 0.29.0
 
 ### Minor Changes

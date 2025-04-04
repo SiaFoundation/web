@@ -1,5 +1,20 @@
 # @siafoundation/explored-react
 
+## 0.7.0
+
+### Minor Changes
+
+- b95e34d7: Added explorerTip API.
+- cefe1ef1: Added support for v2 types.
+
+### Patch Changes
+
+- Updated dependencies [b95e34d7]
+- Updated dependencies [cefe1ef1]
+- Updated dependencies [05b0b5b4]
+  - @siafoundation/explored-types@0.16.0
+  - @siafoundation/react-core@4.0.1
+
 ## 0.6.3
 
 ### Patch Changes
