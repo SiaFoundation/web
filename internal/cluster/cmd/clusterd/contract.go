@@ -11,8 +11,6 @@ import (
 	proto2 "go.sia.tech/core/rhp/v2"
 	"go.sia.tech/core/types"
 	"go.sia.tech/coreutils/chain"
-	"go.sia.tech/coreutils/testutil"
-	"go.sia.tech/coreutils/wallet"
 	"go.uber.org/zap"
 )
 
@@ -70,16 +68,16 @@ func taxAdjustedPayout(target types.Currency) types.Currency {
 	return guess.Add(tm).Sub(gm)
 }
 
-func mineBlocks(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddressWallet, ws *testutil.EphemeralWalletStore, cm *chain.Manager) {
+func mineBlocks(log *zap.Logger, nm *nodes.Manager, w *swallet) {
 	if err := nm.MineBlocks(context.Background(), 1, types.VoidAddress); err != nil {
 		log.Panic("failed to mine blocks", zap.Error(err))
 	}
-	if err := syncWallet(cm, w, ws); err != nil {
+	if err := w.Sync(); err != nil {
 		log.Panic("Failed to scan wallet", zap.Error(err))
 	}
 }
 
-func setupV1Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddressWallet, ws *testutil.EphemeralWalletStore, cm *chain.Manager) FixtureV1ContractAddresses {
+func setupV1Contracts(log *zap.Logger, nm *nodes.Manager, w *swallet, cm *chain.Manager) FixtureV1ContractAddresses {
 	renterPrivateKey := types.GeneratePrivateKey()
 	renterAddr := types.StandardUnlockHash(renterPrivateKey.PublicKey())
 	hostPrivateKey := types.GeneratePrivateKey()
@@ -130,7 +128,7 @@ func setupV1Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddres
 	if _, err := cm.AddPoolTransactions([]types.Transaction{txn}); err != nil {
 		log.Panic("Failed to add contract creation txn to pool", zap.Error(err))
 	}
-	mineBlocks(log, nm, w, ws, cm)
+	mineBlocks(log, nm, w)
 
 	fc2ID := txn.FileContractID(1)
 	fc2Rev := fc2
@@ -161,7 +159,7 @@ func setupV1Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddres
 	if _, err := cm.AddPoolTransactions([]types.Transaction{reviseTxn}); err != nil {
 		log.Panic("Failed to add revision txn to pool", zap.Error(err))
 	}
-	mineBlocks(log, nm, w, ws, cm)
+	mineBlocks(log, nm, w)
 
 	proveTxn := types.Transaction{
 		StorageProofs: []types.StorageProof{{
@@ -174,7 +172,7 @@ func setupV1Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddres
 	if _, err := cm.AddPoolTransactions([]types.Transaction{proveTxn}); err != nil {
 		log.Panic("Failed to add proof txn to pool", zap.Error(err))
 	}
-	mineBlocks(log, nm, w, ws, cm)
+	mineBlocks(log, nm, w)
 
 	fc3ID := txn.FileContractID(2)
 	fc3Rev := fc3
@@ -208,7 +206,7 @@ func setupV1Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddres
 	if _, err := cm.AddPoolTransactions([]types.Transaction{renewalTxn}); err != nil {
 		log.Panic("Failed to add renewal txn to pool", zap.Error(err))
 	}
-	mineBlocks(log, nm, w, ws, cm)
+	mineBlocks(log, nm, w)
 
 	fc1ID, fc2ID, fc3ID := txn.FileContractID(0), txn.FileContractID(1), txn.FileContractID(2)
 	return FixtureV1ContractAddresses{
@@ -227,7 +225,7 @@ func setupV1Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddres
 	}
 }
 
-func setupV2Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddressWallet, ws *testutil.EphemeralWalletStore, cm *chain.Manager) FixtureV2ContractAddresses {
+func setupV2Contracts(log *zap.Logger, nm *nodes.Manager, w *swallet, cm *chain.Manager) FixtureV2ContractAddresses {
 	renterPrivateKey := types.GeneratePrivateKey()
 	renterAddr := types.StandardUnlockHash(renterPrivateKey.PublicKey())
 	hostPrivateKey := types.GeneratePrivateKey()
@@ -282,11 +280,7 @@ func setupV2Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddres
 		log.Panic("Failed to add contract creation txn to pool", zap.Error(err))
 	}
 	tip := cm.Tip()
-	mineBlocks(log, nm, w, ws, cm)
-
-	if err := syncWallet(cm, w, ws); err != nil {
-		log.Panic("Failed to scan wallet", zap.Error(err))
-	}
+	mineBlocks(log, nm, w)
 
 	_, applied, err := cm.UpdatesSince(tip, 1000)
 	if err != nil {
@@ -334,11 +328,7 @@ func setupV2Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddres
 	}
 
 	tip = cm.Tip()
-	mineBlocks(log, nm, w, ws, cm)
-
-	if err := syncWallet(cm, w, ws); err != nil {
-		log.Panic("Failed to scan wallet", zap.Error(err))
-	}
+	mineBlocks(log, nm, w)
 
 	_, applied, err = cm.UpdatesSince(tip, 1000)
 	if err != nil {
@@ -380,11 +370,7 @@ func setupV2Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddres
 	}
 
 	tip = cm.Tip()
-	mineBlocks(log, nm, w, ws, cm)
-
-	if err := syncWallet(cm, w, ws); err != nil {
-		log.Panic("Failed to scan wallet", zap.Error(err))
-	}
+	mineBlocks(log, nm, w)
 
 	_, applied, err = cm.UpdatesSince(tip, 1000)
 	if err != nil {
@@ -431,11 +417,7 @@ func setupV2Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddres
 	}
 
 	tip = cm.Tip()
-	mineBlocks(log, nm, w, ws, cm)
-
-	if err := syncWallet(cm, w, ws); err != nil {
-		log.Panic("Failed to scan wallet", zap.Error(err))
-	}
+	mineBlocks(log, nm, w)
 
 	_, applied, err = cm.UpdatesSince(tip, 1000)
 	if err != nil {

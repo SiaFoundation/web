@@ -10,29 +10,37 @@ import (
 	"go.sia.tech/coreutils/wallet"
 )
 
-func syncWallet(cm *chain.Manager, w *wallet.SingleAddressWallet, ws *testutil.EphemeralWalletStore) error {
-	index, err := ws.Tip()
+type swallet struct {
+	*wallet.SingleAddressWallet
+	ws *testutil.EphemeralWalletStore
+
+	cm *chain.Manager
+}
+
+func (w *swallet) Sync() error {
+	index, err := w.ws.Tip()
 	if err != nil {
 		return err
 	}
-	reverted, applied, err := cm.UpdatesSince(index, math.MaxInt)
+	reverted, applied, err := w.cm.UpdatesSince(index, math.MaxInt)
 	if err != nil {
 		return err
 	}
-	return ws.UpdateChainState(func(tx wallet.UpdateTx) error {
+	return w.ws.UpdateChainState(func(tx wallet.UpdateTx) error {
 		return w.UpdateChainState(tx, reverted, applied)
 	})
 }
 
-func setupWallet(cm *chain.Manager, pk types.PrivateKey) (*wallet.SingleAddressWallet, *testutil.EphemeralWalletStore, error) {
+func newWallet(cm *chain.Manager, pk types.PrivateKey) (*swallet, error) {
 	ws := testutil.NewEphemeralWalletStore()
 	sw, err := wallet.NewSingleAddressWallet(pk, cm, ws)
 	if err != nil {
-		return nil, nil, fmt.Errorf("failed to create renter wallet: %w", err)
+		return nil, fmt.Errorf("failed to create wallet: %w", err)
 	}
-
-	if err := syncWallet(cm, sw, ws); err != nil {
-		return nil, nil, fmt.Errorf("failed to scan wallet: %w", err)
+	w := &swallet{
+		SingleAddressWallet: sw,
+		ws:                  ws,
+		cm:                  cm,
 	}
-	return sw, ws, nil
+	return w, w.Sync()
 }

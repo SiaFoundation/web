@@ -275,20 +275,20 @@ func main() {
 	}
 
 	if exploredCount > 0 {
-		w, ws, err := setupWallet(cm, pk)
+		w, err := newWallet(cm, pk)
 		if err != nil {
 			log.Panic("Failed to setup wallet", zap.Error(err))
 		}
 		defer w.Close()
 
 		if network == "v1" {
-			addrs := setupV1Contracts(log, nm, w, ws, cm)
+			addrs := setupV1Contracts(log, nm, w, cm)
 
 			mu.Lock()
 			v1ContractAddresses = addrs
 			mu.Unlock()
 		} else if network == "v2" {
-			addrs := setupV2Contracts(log, nm, w, ws, cm)
+			addrs := setupV2Contracts(log, nm, w, cm)
 
 			mu.Lock()
 			v2ContractAddresses = addrs
