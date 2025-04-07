@@ -185,6 +185,15 @@ export type AddressEventsParams = {
 export type AddressEventsPayload = void
 export type AddressEventsResponse = ExplorerEvent[]
 
+// Return the specified address' unconfirmed events.
+export const addressUnconfirmedEventsRoute =
+  '/addresses/:address/events/unconfirmed'
+export type AddressUnconfirmedEventsParams = {
+  address: Address
+}
+export type AddressUnconfirmedEventsPayload = void
+export type AddressUnconfirmedEventsResponse = ExplorerEvent[]
+
 // Returns the specified address' balance.
 export const addressBalanceRoute = '/addresses/:address/balance'
 export type AddressBalanceParams = { address: Address }
