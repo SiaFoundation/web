@@ -1,4 +1,4 @@
-import { Skeleton } from '../core/Skeleton'
+import { Skeleton } from '@siafoundation/design-system'
 import { times } from '@technically/lodash'
 import { cx } from 'class-variance-authority'
 

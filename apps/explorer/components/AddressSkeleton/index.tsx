@@ -4,9 +4,9 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-  EntityList,
   DatumSkeleton,
 } from '@siafoundation/design-system'
+import { EntityList } from '../Entity/EntityList'
 import { times } from '@technically/lodash'
 import { ContentLayout } from '../ContentLayout'
 

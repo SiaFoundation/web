@@ -1,4 +1,6 @@
-import { Skeleton, BlockList, EntityList } from '@siafoundation/design-system'
+import { Skeleton } from '@siafoundation/design-system'
+import { EntityList } from '../Entity/EntityList'
+import { BlockList } from '../Entity/BlockList'
 import { ContentLayout } from '../ContentLayout'
 
 export function HomeSkeleton() {

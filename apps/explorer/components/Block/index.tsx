@@ -1,10 +1,10 @@
 import {
   Badge,
   Tooltip,
-  EntityList,
   stripPrefix,
   LinkButton,
 } from '@siafoundation/design-system'
+import { EntityList } from '../Entity/EntityList'
 import { humanNumber } from '@siafoundation/units'
 import { ExplorerDatum, DatumProps } from '../ExplorerDatum'
 import { useMemo } from 'react'

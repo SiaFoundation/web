@@ -3,11 +3,9 @@
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
 import { humanBytes, humanSiacoin } from '@siafoundation/units'
-import {
-  EntityList,
-  EntityListItemProps,
-  useActiveSiascanExchangeRate,
-} from '@siafoundation/design-system'
+import { useActiveSiascanExchangeRate } from '@siafoundation/design-system'
+import { EntityList } from '../Entity/EntityList'
+import { EntityListItemProps } from '../Entity/EntityListItem'
 import { DatumProps, ExplorerDatum } from '../ExplorerDatum'
 import { ContentLayout } from '../ContentLayout'
 import { ContractHeader } from './ContractHeader'
