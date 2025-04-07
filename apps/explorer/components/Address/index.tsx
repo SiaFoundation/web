@@ -35,6 +35,7 @@ type Props = {
   addressInfo: {
     balance: AddressBalance
     events: ExplorerEvent[]
+    unconfirmedEvents: ExplorerEvent[]
     unspentOutputs: ExplorerSiacoinOutput[]
   }
 }
@@ -44,6 +45,7 @@ export function Address({
   addressInfo: {
     balance: { unspentSiacoins, unspentSiafunds },
     events,
+    unconfirmedEvents,
     unspentOutputs,
   },
 }: Props) {
@@ -66,36 +68,17 @@ export function Address({
   }, [unspentSiacoins, unspentSiafunds])
 
   const eventEntities = useMemo(() => {
-    const list: EntityListItemProps[] = []
-
-    if (events.length) {
-      events.forEach((event) => {
-        switch (event.type) {
-          case 'v1Transaction':
-            list.push(formatV1TransactionEntity(id, event))
-            break
-          case 'v2Transaction':
-            list.push(formatV2TransactionEntity(id, event))
-            break
-          case 'v1ContractResolution':
-            list.push(formatV1ContractResolutionEntity(event))
-            break
-          case 'v2ContractResolution':
-            list.push(formatV2ContractResolutionEntity(event))
-            break
-          case 'payout':
-            list.push(formatPayoutEntity(event))
-            break
-        }
-      })
-    }
+    const list: EntityListItemProps[] = [
+      ...unconfirmedEvents.map((uEvent) => formatEvent(id, uEvent, true)),
+      ...events.map((event) => formatEvent(id, event)),
+    ]
 
     return list.sort(
       (a, b) =>
         new Date(b.timestamp || 0).getTime() -
         new Date(a.timestamp || 0).getTime()
     )
-  }, [id, events])
+  }, [id, events, unconfirmedEvents])
 
   const utxos = useMemo(() => {
     const list: EntityListItemProps[] = []
@@ -176,7 +159,10 @@ function getTotal({
     )
 }
 
-function formatV1TransactionEntity(id: string, v1Transaction: ExplorerEvent) {
+function formatV1TransactionEntity(
+  id: string,
+  v1Transaction: ExplorerEvent
+): EntityListItemProps {
   const { transaction } = v1Transaction.data as EventV1Transaction
   return {
     hash: v1Transaction.id,
@@ -198,7 +184,10 @@ function formatV1TransactionEntity(id: string, v1Transaction: ExplorerEvent) {
   }
 }
 
-function formatV2TransactionEntity(id: string, v2Transaction: ExplorerEvent) {
+function formatV2TransactionEntity(
+  id: string,
+  v2Transaction: ExplorerEvent
+): EntityListItemProps {
   const transaction = v2Transaction.data as ExplorerV2Transaction
   return {
     hash: v2Transaction.id,
@@ -223,7 +212,9 @@ function formatV2TransactionEntity(id: string, v2Transaction: ExplorerEvent) {
   }
 }
 
-function formatV1ContractResolutionEntity(v1ContractResolution: ExplorerEvent) {
+function formatV1ContractResolutionEntity(
+  v1ContractResolution: ExplorerEvent
+): EntityListItemProps {
   const { parent, siacoinElement } =
     v1ContractResolution.data as EventV1ContractResolution
   return {
@@ -236,7 +227,9 @@ function formatV1ContractResolutionEntity(v1ContractResolution: ExplorerEvent) {
   }
 }
 
-function formatV2ContractResolutionEntity(v1ContractResolution: ExplorerEvent) {
+function formatV2ContractResolutionEntity(
+  v1ContractResolution: ExplorerEvent
+): EntityListItemProps {
   const { resolution, siacoinElement } =
     v1ContractResolution.data as EventV2ContractResolution
   return {
@@ -249,7 +242,7 @@ function formatV2ContractResolutionEntity(v1ContractResolution: ExplorerEvent) {
   }
 }
 
-function formatPayoutEntity(payout: ExplorerEvent) {
+function formatPayoutEntity(payout: ExplorerEvent): EntityListItemProps {
   const { siacoinElement } = payout.data as EventPayout
   return {
     hash: payout.id,
@@ -264,7 +257,7 @@ function formatPayoutEntity(payout: ExplorerEvent) {
 
 function formatUnspentSiacoinOutputEntity(
   siacoinOutput: ExplorerSiacoinOutput
-) {
+): EntityListItemProps {
   return {
     hash: siacoinOutput.id,
     sc: new BigNumber(siacoinOutput.siacoinOutput.value),
@@ -272,4 +265,32 @@ function formatUnspentSiacoinOutputEntity(
     initials: 'SO',
     scVariant: 'value' as const,
   }
+}
+
+const formatEvent = (
+  id: string,
+  event: ExplorerEvent,
+  isUnconfirmed = false
+): EntityListItemProps => {
+  let baseEntity: EntityListItemProps
+
+  switch (event.type) {
+    case 'v1Transaction':
+      baseEntity = formatV1TransactionEntity(id, event)
+      break
+    case 'v2Transaction':
+      baseEntity = formatV2TransactionEntity(id, event)
+      break
+    case 'v1ContractResolution':
+      baseEntity = formatV1ContractResolutionEntity(event)
+      break
+    case 'v2ContractResolution':
+      baseEntity = formatV2ContractResolutionEntity(event)
+      break
+    case 'payout':
+      baseEntity = formatPayoutEntity(event)
+      break
+  }
+
+  return isUnconfirmed ? { ...baseEntity, unconfirmed: true } : baseEntity
 }
