@@ -270,18 +270,11 @@ func main() {
 		}
 	}
 
-	bid := cm.Tip().ID
-
 	if err := nm.MineBlocks(context.Background(), 144, types.VoidAddress); err != nil {
 		log.Panic("failed to mine blocks", zap.Error(err))
 	}
 
 	if exploredCount > 0 {
-		b, ok := cm.Block(bid)
-		if !ok {
-			log.Panic("Failed to retrieve explorer funding block")
-		}
-
 		w, ws, err := setupWallet(cm, pk)
 		if err != nil {
 			log.Panic("Failed to setup wallet", zap.Error(err))
@@ -289,7 +282,7 @@ func main() {
 		defer w.Close()
 
 		if network == "v1" {
-			addrs := setupV1Contracts(log, nm, w, ws, cm, pk, b)
+			addrs := setupV1Contracts(log, nm, w, ws, cm)
 
 			mu.Lock()
 			v1ContractAddresses = addrs

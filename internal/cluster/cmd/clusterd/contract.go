@@ -2,15 +2,14 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"math/bits"
 	"sort"
-	"time"
 
 	"go.sia.tech/cluster/nodes"
 	"go.sia.tech/core/consensus"
 	proto2 "go.sia.tech/core/rhp/v2"
 	"go.sia.tech/core/types"
-	"go.sia.tech/coreutils"
 	"go.sia.tech/coreutils/chain"
 	"go.sia.tech/coreutils/testutil"
 	"go.sia.tech/coreutils/wallet"
@@ -71,23 +70,16 @@ func taxAdjustedPayout(target types.Currency) types.Currency {
 	return guess.Add(tm).Sub(gm)
 }
 
-func mineBlocks(log *zap.Logger, cm *chain.Manager, n int) {
-	for n > 0 {
-		b, ok := coreutils.MineBlock(cm, types.VoidAddress, 5*time.Second)
-		if !ok {
-			continue
-		} else if err := cm.AddBlocks([]types.Block{b}); err != nil {
-			log.Panic("failed to add funding block", zap.Error(err))
-		}
-		n--
-		log.Debug("mined block", zap.Stringer("index", cm.Tip()))
+func mineBlocks(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddressWallet, ws *testutil.EphemeralWalletStore, cm *chain.Manager) {
+	if err := nm.MineBlocks(context.Background(), 1, types.VoidAddress); err != nil {
+		log.Panic("failed to mine blocks", zap.Error(err))
+	}
+	if err := syncWallet(cm, w, ws); err != nil {
+		log.Panic("Failed to scan wallet", zap.Error(err))
 	}
 }
 
-func setupV1Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddressWallet, ws *testutil.EphemeralWalletStore, cm *chain.Manager, pk types.PrivateKey, fundingBlock types.Block) FixtureV1ContractAddresses {
-	addr := types.StandardUnlockHash(pk.PublicKey())
-	uc := types.StandardUnlockConditions(pk.PublicKey())
-
+func setupV1Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddressWallet, ws *testutil.EphemeralWalletStore, cm *chain.Manager) FixtureV1ContractAddresses {
 	renterPrivateKey := types.GeneratePrivateKey()
 	renterAddr := types.StandardUnlockHash(renterPrivateKey.PublicKey())
 	hostPrivateKey := types.GeneratePrivateKey()
@@ -101,7 +93,7 @@ func setupV1Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddres
 	fc1 := types.FileContract{
 		// we could use joint unlock conditions with renter and host key, but
 		// this is simpler
-		UnlockHash:  uc.UnlockHash(),
+		UnlockHash:  w.Address(),
 		WindowStart: cm.Tip().Height + 1,
 		WindowEnd:   cm.Tip().Height + 2,
 		Payout:      contractPayout,
@@ -126,32 +118,19 @@ func setupV1Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddres
 	fc3.WindowStart += 10000
 	fc3.WindowEnd += 10000
 
-	scID := fundingBlock.ID().MinerOutputID(0)
 	txn := types.Transaction{
-		SiacoinInputs: []types.SiacoinInput{
-			{ParentID: scID, UnlockConditions: uc},
-		},
-		SiacoinOutputs: []types.SiacoinOutput{
-			{Address: addr, Value: fundingBlock.MinerPayouts[0].Value.Sub(contractPayout.Mul64(3))}, // return the remainder to the wallet
-		},
 		FileContracts: []types.FileContract{fc1, fc2, fc3},
-		Signatures: []types.TransactionSignature{
-			{
-				ParentID:       types.Hash256(scID),
-				PublicKeyIndex: 0,
-				Timelock:       0,
-				CoveredFields:  types.CoveredFields{WholeTransaction: true},
-			},
-		},
 	}
-	sigHash := cm.TipState().WholeSigHash(txn, types.Hash256(scID), 0, 0, nil)
-	sig := pk.SignHash(sigHash)
-	txn.Signatures[0].Signature = sig[:]
+	toSign, err := w.FundTransaction(&txn, contractPayout.Mul64(3), false)
+	if err != nil {
+		log.Panic("Failed to fund contract creation transaction", zap.Error(err))
+	}
+	w.SignTransaction(&txn, toSign, types.CoveredFields{WholeTransaction: true})
 
 	if _, err := cm.AddPoolTransactions([]types.Transaction{txn}); err != nil {
 		log.Panic("Failed to add contract creation txn to pool", zap.Error(err))
 	}
-	mineBlocks(log, cm, 1)
+	mineBlocks(log, nm, w, ws, cm)
 
 	fc2ID := txn.FileContractID(1)
 	fc2Rev := fc2
@@ -163,7 +142,7 @@ func setupV1Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddres
 	reviseTxn := types.Transaction{
 		FileContractRevisions: []types.FileContractRevision{{
 			ParentID:         fc2ID,
-			UnlockConditions: uc,
+			UnlockConditions: w.UnlockConditions(),
 			FileContract:     fc2Rev,
 		}},
 		Signatures: []types.TransactionSignature{
@@ -175,14 +154,14 @@ func setupV1Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddres
 			},
 		},
 	}
-	sigHash = cm.TipState().WholeSigHash(reviseTxn, types.Hash256(fc2ID), 0, 0, nil)
-	sig = pk.SignHash(sigHash)
+	sigHash := cm.TipState().WholeSigHash(reviseTxn, types.Hash256(fc2ID), 0, 0, nil)
+	sig := w.SignHash(sigHash)
 	reviseTxn.Signatures[0].Signature = sig[:]
 
 	if _, err := cm.AddPoolTransactions([]types.Transaction{reviseTxn}); err != nil {
 		log.Panic("Failed to add revision txn to pool", zap.Error(err))
 	}
-	mineBlocks(log, cm, 1)
+	mineBlocks(log, nm, w, ws, cm)
 
 	proveTxn := types.Transaction{
 		StorageProofs: []types.StorageProof{{
@@ -195,52 +174,41 @@ func setupV1Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddres
 	if _, err := cm.AddPoolTransactions([]types.Transaction{proveTxn}); err != nil {
 		log.Panic("Failed to add proof txn to pool", zap.Error(err))
 	}
-	mineBlocks(log, cm, 1)
+	mineBlocks(log, nm, w, ws, cm)
 
-	scID = txn.SiacoinOutputID(0)
 	fc3ID := txn.FileContractID(2)
 	fc3Rev := fc3
 	fc3Rev.RevisionNumber = types.MaxRevisionNumber
 	renewalTxn := types.Transaction{
-		SiacoinInputs: []types.SiacoinInput{{
-			ParentID:         scID,
-			UnlockConditions: uc,
-		}},
-		SiacoinOutputs: []types.SiacoinOutput{{
-			Address: addr,
-			Value:   txn.SiacoinOutputs[0].Value.Sub(fc3.Payout),
-		}},
 		FileContracts: []types.FileContract{fc3},
 		FileContractRevisions: []types.FileContractRevision{{
 			ParentID:         fc3ID,
-			UnlockConditions: uc,
+			UnlockConditions: w.UnlockConditions(),
 			FileContract:     fc3Rev,
 		}},
-		Signatures: []types.TransactionSignature{
-			{
-				ParentID:       types.Hash256(scID),
-				PublicKeyIndex: 0,
-				Timelock:       0,
-				CoveredFields:  types.CoveredFields{WholeTransaction: true},
-			},
-			{
-				ParentID:       types.Hash256(fc3ID),
-				PublicKeyIndex: 0,
-				Timelock:       0,
-				CoveredFields:  types.CoveredFields{WholeTransaction: true},
-			},
-		},
 	}
-	for i := 0; i < len(renewalTxn.Signatures); i++ {
-		sigHash := cm.TipState().WholeSigHash(renewalTxn, types.Hash256(renewalTxn.Signatures[i].ParentID), 0, 0, nil)
-		sig := pk.SignHash(sigHash)
-		renewalTxn.Signatures[i].Signature = sig[:]
+	toSign, err = w.FundTransaction(&renewalTxn, fc3.Payout, false)
+	if err != nil {
+		log.Panic("Failed to fund renewal transaction", zap.Error(err))
+	}
+	w.SignTransaction(&renewalTxn, toSign, types.CoveredFields{WholeTransaction: true})
+	{
+		// sign FCR
+		sigHash := cm.TipState().WholeSigHash(renewalTxn, types.Hash256(fc3ID), 0, 0, nil)
+		sig := w.SignHash(sigHash)
+		renewalTxn.Signatures = append(renewalTxn.Signatures, types.TransactionSignature{
+			ParentID:       types.Hash256(fc3ID),
+			PublicKeyIndex: 0,
+			Timelock:       0,
+			CoveredFields:  types.CoveredFields{WholeTransaction: true},
+			Signature:      sig[:],
+		})
 	}
 
 	if _, err := cm.AddPoolTransactions([]types.Transaction{renewalTxn}); err != nil {
 		log.Panic("Failed to add renewal txn to pool", zap.Error(err))
 	}
-	mineBlocks(log, cm, 1)
+	mineBlocks(log, nm, w, ws, cm)
 
 	fc1ID, fc2ID, fc3ID := txn.FileContractID(0), txn.FileContractID(1), txn.FileContractID(2)
 	return FixtureV1ContractAddresses{
@@ -314,7 +282,7 @@ func setupV2Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddres
 		log.Panic("Failed to add contract creation txn to pool", zap.Error(err))
 	}
 	tip := cm.Tip()
-	mineBlocks(log, cm, 1)
+	mineBlocks(log, nm, w, ws, cm)
 
 	if err := syncWallet(cm, w, ws); err != nil {
 		log.Panic("Failed to scan wallet", zap.Error(err))
@@ -366,7 +334,7 @@ func setupV2Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddres
 	}
 
 	tip = cm.Tip()
-	mineBlocks(log, cm, 1)
+	mineBlocks(log, nm, w, ws, cm)
 
 	if err := syncWallet(cm, w, ws); err != nil {
 		log.Panic("Failed to scan wallet", zap.Error(err))
@@ -412,7 +380,7 @@ func setupV2Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddres
 	}
 
 	tip = cm.Tip()
-	mineBlocks(log, cm, 1)
+	mineBlocks(log, nm, w, ws, cm)
 
 	if err := syncWallet(cm, w, ws); err != nil {
 		log.Panic("Failed to scan wallet", zap.Error(err))
@@ -463,7 +431,7 @@ func setupV2Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddres
 	}
 
 	tip = cm.Tip()
-	mineBlocks(log, cm, 1)
+	mineBlocks(log, nm, w, ws, cm)
 
 	if err := syncWallet(cm, w, ws); err != nil {
 		log.Panic("Failed to scan wallet", zap.Error(err))
