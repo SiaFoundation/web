@@ -156,6 +156,10 @@ import {
   v2TransactionByIDRoute,
   v2TransactionsByIDsRoute,
   v2TransactionChainIndicesRoute,
+  addressUnconfirmedEventsRoute,
+  AddressUnconfirmedEventsParams,
+  AddressUnconfirmedEventsPayload,
+  AddressUnconfirmedEventsResponse,
 } from '@siafoundation/explored-types'
 
 export function Explored({
@@ -243,7 +247,6 @@ export function Explored({
       TransactionChainIndicesPayload,
       TransactionChainIndicesResponse
     >(axios, 'get', transactionChainIndicesRoute),
-
     v2TransactionByID: buildRequestHandler<
       V2TransactionByIDParams,
       V2TransactionByIDPayload,
@@ -259,7 +262,6 @@ export function Explored({
       V2TransactionChainIndicesPayload,
       V2TransactionChainIndicesResponse
     >(axios, 'get', v2TransactionChainIndicesRoute),
-
     // Address
     addressSiacoinUTXOs: buildRequestHandler<
       AddressSiacoinUTXOsParams,
@@ -276,6 +278,11 @@ export function Explored({
       AddressEventsPayload,
       AddressEventsResponse
     >(axios, 'get', addressEventsRoute),
+    addressUnconfirmedEvents: buildRequestHandler<
+      AddressUnconfirmedEventsParams,
+      AddressUnconfirmedEventsPayload,
+      AddressUnconfirmedEventsResponse
+    >(axios, 'get', addressUnconfirmedEventsRoute),
     addressBalance: buildRequestHandler<
       AddressBalanceParams,
       AddressBalancePayload,

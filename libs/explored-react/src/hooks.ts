@@ -2,12 +2,18 @@ import {
   AddressBalanceParams,
   AddressBalanceResponse,
   addressBalanceRoute,
+  AddressEventsParams,
+  AddressEventsResponse,
+  addressEventsRoute,
   AddressSiacoinUTXOsParams,
   AddressSiacoinUTXOsResponse,
   addressSiacoinUTXOsRoute,
   AddressSiafundUTXOsParams,
   AddressSiafundUTXOsResponse,
   addressSiafundUTXOsRoute,
+  AddressUnconfirmedEventsParams,
+  AddressUnconfirmedEventsResponse,
+  addressUnconfirmedEventsRoute,
   BlockMetricsByIDParams,
   BlockMetricsByIDResponse,
   blockMetricsByIDRoute,
@@ -321,6 +327,27 @@ export function useAddressSiafundUTXOs(
   return useGetSwr({
     ...args,
     route: addressSiafundUTXOsRoute,
+  })
+}
+
+export function useAddressEvents(
+  args: HookArgsSwr<AddressEventsParams, AddressEventsResponse>
+) {
+  return useGetSwr({
+    ...args,
+    route: addressEventsRoute,
+  })
+}
+
+export function useAddressUnconfirmedEvents(
+  args: HookArgsSwr<
+    AddressUnconfirmedEventsParams,
+    AddressUnconfirmedEventsResponse
+  >
+) {
+  return useGetSwr({
+    ...args,
+    route: addressUnconfirmedEventsRoute,
   })
 }
 
