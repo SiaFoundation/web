@@ -6,11 +6,14 @@ import (
 	"sort"
 	"time"
 
+	"go.sia.tech/cluster/nodes"
 	"go.sia.tech/core/consensus"
 	proto2 "go.sia.tech/core/rhp/v2"
 	"go.sia.tech/core/types"
 	"go.sia.tech/coreutils"
 	"go.sia.tech/coreutils/chain"
+	"go.sia.tech/coreutils/testutil"
+	"go.sia.tech/coreutils/wallet"
 	"go.uber.org/zap"
 )
 
@@ -81,7 +84,7 @@ func mineBlocks(log *zap.Logger, cm *chain.Manager, n int) {
 	}
 }
 
-func setupV1Contracts(log *zap.Logger, cm *chain.Manager, pk types.PrivateKey, fundingBlock types.Block) FixtureV1ContractAddresses {
+func setupV1Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddressWallet, ws *testutil.EphemeralWalletStore, cm *chain.Manager, pk types.PrivateKey, fundingBlock types.Block) FixtureV1ContractAddresses {
 	addr := types.StandardUnlockHash(pk.PublicKey())
 	uc := types.StandardUnlockConditions(pk.PublicKey())
 
@@ -256,12 +259,7 @@ func setupV1Contracts(log *zap.Logger, cm *chain.Manager, pk types.PrivateKey, f
 	}
 }
 
-func setupV2Contracts(log *zap.Logger, cm *chain.Manager, pk types.PrivateKey, fundingBlock types.Block) FixtureV2ContractAddresses {
-	w, ws, err := setupWallet(cm, pk)
-	if err != nil {
-		log.Panic("Failed to setup wallet", zap.Error(err))
-	}
-
+func setupV2Contracts(log *zap.Logger, nm *nodes.Manager, w *wallet.SingleAddressWallet, ws *testutil.EphemeralWalletStore, cm *chain.Manager) FixtureV2ContractAddresses {
 	renterPrivateKey := types.GeneratePrivateKey()
 	renterAddr := types.StandardUnlockHash(renterPrivateKey.PublicKey())
 	hostPrivateKey := types.GeneratePrivateKey()

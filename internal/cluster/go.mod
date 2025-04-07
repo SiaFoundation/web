@@ -25,7 +25,7 @@ require (
 	github.com/julienschmidt/httprouter v1.3.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.9 // indirect
 	github.com/klauspost/reedsolomon v1.12.4 // indirect
-	github.com/mattn/go-sqlite3 v1.14.24 // indirect
+	github.com/mattn/go-sqlite3 v1.14.27 // indirect
 	github.com/montanaflynn/stats v0.7.1 // indirect
 	github.com/onsi/ginkgo/v2 v2.12.0 // indirect
 	github.com/oschwald/geoip2-golang v1.11.0 // indirect
@@ -37,7 +37,7 @@ require (
 	github.com/shabbyrobe/gocovmerge v0.0.0-20230507112040-c3350d9342df // indirect
 	github.com/shopspring/decimal v1.4.0 // indirect
 	go.etcd.io/bbolt v1.4.0 // indirect
-	go.sia.tech/explored v0.0.0-20250404095954-95bda6d5c57c // indirect
+	go.sia.tech/explored v0.0.0-20250407133214-4fca1b6dbe89 // indirect
 	go.sia.tech/gofakes3 v0.0.5 // indirect
 	go.sia.tech/hostd/v2 v2.1.0-beta.3.0.20250401074759-6e319d55765f // indirect
 	go.sia.tech/jape v0.12.1 // indirect

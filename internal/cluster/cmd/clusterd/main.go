@@ -265,18 +265,16 @@ func main() {
 		}()
 		<-ready
 
-		b, ok := coreutils.MineBlock(cm, types.StandardUnlockHash(pk.PublicKey()), 5*time.Second)
-		if !ok {
-			log.Fatal("Failed to mine funding block")
-		} else if err := cm.AddBlocks([]types.Block{b}); err != nil {
-			log.Fatal("failed to add funding block", zap.Error(err))
+		if err := nm.MineBlocks(context.Background(), 1, types.StandardUnlockHash(pk.PublicKey())); err != nil {
+			log.Panic("failed to mine funding block", zap.Error(err))
 		}
-		log.Debug("mined block", zap.Stringer("index", cm.Tip()))
 	}
 
 	bid := cm.Tip().ID
 
-	mineBlocks(log, cm, 144)
+	if err := nm.MineBlocks(context.Background(), 144, types.VoidAddress); err != nil {
+		log.Panic("failed to mine blocks", zap.Error(err))
+	}
 
 	if exploredCount > 0 {
 		b, ok := cm.Block(bid)
@@ -284,14 +282,20 @@ func main() {
 			log.Panic("Failed to retrieve explorer funding block")
 		}
 
+		w, ws, err := setupWallet(cm, pk)
+		if err != nil {
+			log.Panic("Failed to setup wallet", zap.Error(err))
+		}
+		defer w.Close()
+
 		if network == "v1" {
-			addrs := setupV1Contracts(log, cm, pk, b)
+			addrs := setupV1Contracts(log, nm, w, ws, cm, pk, b)
 
 			mu.Lock()
 			v1ContractAddresses = addrs
 			mu.Unlock()
 		} else if network == "v2" {
-			addrs := setupV2Contracts(log, cm, pk, b)
+			addrs := setupV2Contracts(log, nm, w, ws, cm)
 
 			mu.Lock()
 			v2ContractAddresses = addrs

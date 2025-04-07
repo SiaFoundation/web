@@ -30,7 +30,6 @@ func setupWallet(cm *chain.Manager, pk types.PrivateKey) (*wallet.SingleAddressW
 	if err != nil {
 		return nil, nil, fmt.Errorf("failed to create renter wallet: %w", err)
 	}
-	defer sw.Close()
 
 	if err := syncWallet(cm, sw, ws); err != nil {
 		return nil, nil, fmt.Errorf("failed to scan wallet: %w", err)
