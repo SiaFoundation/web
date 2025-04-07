@@ -1,15 +1,16 @@
-import { Panel } from '../core/Panel'
-import { Heading } from '../core/Heading'
-import { Link } from '../core/Link'
-import { Text } from '../core/Text'
+import {
+  ClientSideOnly,
+  Heading,
+  Link,
+  Panel,
+  Skeleton,
+  Text,
+} from '@siafoundation/design-system'
 import { humanNumber, getEntityTypeLabel } from '@siafoundation/units'
 import { formatDistance } from 'date-fns'
 import { EntityAvatar } from './EntityAvatar'
 import { cx } from 'class-variance-authority'
 import { EntityListSkeleton } from './EntityListSkeleton'
-import { ClientSideOnly } from './ClientSideOnly'
-import { Skeleton } from '../core/Skeleton'
-
 type BlockListItemProps = {
   miningPool?: string
   timestamp: string | number

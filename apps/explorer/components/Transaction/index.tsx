@@ -2,11 +2,9 @@
 
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
-import {
-  EntityList,
-  EntityListItemProps,
-  stripPrefix,
-} from '@siafoundation/design-system'
+import { stripPrefix } from '@siafoundation/design-system'
+import { EntityList } from '../Entity/EntityList'
+import { EntityListItemProps } from '../Entity/EntityListItem'
 import { routes } from '../../config/routes'
 import { ContentLayout } from '../ContentLayout'
 import { TransactionHeader, TransactionHeaderData } from './TransactionHeader'

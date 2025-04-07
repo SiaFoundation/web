@@ -1,8 +1,6 @@
 'use client'
 
-import { Avatar } from '../core/Avatar'
-import { Link } from '../core/Link'
-import { Tooltip } from '../core/Tooltip'
+import { Avatar, Link, Tooltip } from '@siafoundation/design-system'
 import { EntityType, getEntityTypeLabel } from '@siafoundation/units'
 
 type Props = {
@@ -54,6 +52,6 @@ export function EntityAvatar({
 function initializeWords(str: string) {
   return str
     .split(' ')
-    .map((word) => word.charAt(0).toUpperCase)
+    .map((word) => word.charAt(0).toUpperCase())
     .join('')
 }

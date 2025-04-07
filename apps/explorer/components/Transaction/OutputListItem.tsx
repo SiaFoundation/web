@@ -1,12 +1,12 @@
 'use client'
 
 import {
-  EntityListItemLayout,
   Link,
   ValueCopyable,
   ValueSc,
   ValueSf,
 } from '@siafoundation/design-system'
+import { EntityListItemLayout } from '../Entity/EntityListItemLayout'
 import BigNumber from 'bignumber.js'
 
 type Props = {

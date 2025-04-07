@@ -1,13 +1,11 @@
 'use client'
 
 import { formatDistance } from 'date-fns'
+import { Text, Tooltip, Link } from '@siafoundation/design-system'
 import {
   EntityListItemLayout,
   EntityListItemLayoutProps,
-  Text,
-  Tooltip,
-  Link,
-} from '@siafoundation/design-system'
+} from '../Entity/EntityListItemLayout'
 import {
   CloudDownload16,
   CloudUpload16,

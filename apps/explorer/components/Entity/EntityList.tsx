@@ -1,8 +1,6 @@
 'use client'
 
-import { Heading } from '../core/Heading'
-import { Panel } from '../core/Panel'
-import { Text } from '../core/Text'
+import { Heading, Panel, Text } from '@siafoundation/design-system'
 import React from 'react'
 import { cx } from 'class-variance-authority'
 import { EntityListSkeleton } from './EntityListSkeleton'

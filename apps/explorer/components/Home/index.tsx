@@ -2,11 +2,11 @@
 
 import {
   Text,
-  BlockList,
   Tooltip,
-  EntityList,
   useActiveSiascanExchangeRate,
 } from '@siafoundation/design-system'
+import { EntityList } from '../Entity/EntityList'
+import { BlockList } from '../Entity/BlockList'
 import { useMemo } from 'react'
 import { routes } from '../../config/routes'
 import { ContentLayout } from '../ContentLayout'

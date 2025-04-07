@@ -7,9 +7,9 @@ import {
   TabsList,
   TabsTrigger,
   Tooltip,
-  EntityList,
-  EntityListItemProps,
 } from '@siafoundation/design-system'
+import { EntityList } from '../Entity/EntityList'
+import { EntityListItemProps } from '../Entity/EntityListItem'
 import { humanNumber } from '@siafoundation/units'
 import { ExplorerDatum, DatumProps } from '../ExplorerDatum'
 import { useMemo, useState } from 'react'

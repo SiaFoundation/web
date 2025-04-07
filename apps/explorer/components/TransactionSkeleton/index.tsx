@@ -1,4 +1,5 @@
-import { Skeleton, EntityList } from '@siafoundation/design-system'
+import { Skeleton } from '@siafoundation/design-system'
+import { EntityList } from '../Entity/EntityList'
 import { ContentLayout } from '../ContentLayout'
 
 export function TransactionSkeleton() {

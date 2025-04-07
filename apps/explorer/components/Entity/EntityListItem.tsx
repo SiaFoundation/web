@@ -1,9 +1,13 @@
 'use client'
 
-import { Link } from '../core/Link'
-import { Text } from '../core/Text'
-import { ValueSf } from './ValueSf'
-import { ValueCopyable } from './ValueCopyable'
+import {
+  Link,
+  Text,
+  Tooltip,
+  ValueCopyable,
+  ValueScFiat,
+  ValueSf,
+} from '@siafoundation/design-system'
 import {
   EntityType,
   getEntityTypeLabel,
@@ -16,8 +20,6 @@ import { upperFirst } from '@technically/lodash'
 import BigNumber from 'bignumber.js'
 import { DotMark16 } from '@siafoundation/react-icons'
 import { EntityListItemLayout } from './EntityListItemLayout'
-import { ValueScFiat } from './ValueScFiat'
-import { Tooltip } from '../core/Tooltip'
 
 export type EntityListItemProps = {
   label?: string
