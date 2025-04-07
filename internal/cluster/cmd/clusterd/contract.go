@@ -77,7 +77,7 @@ func mineBlocks(log *zap.Logger, nm *nodes.Manager, w *swallet) {
 	}
 }
 
-func setupV1Contracts(log *zap.Logger, nm *nodes.Manager, w *swallet, cm *chain.Manager) FixtureV1ContractAddresses {
+func setupV1Contracts(log *zap.Logger, nm *nodes.Manager, w *swallet, cm *chain.Manager) {
 	renterPrivateKey := types.GeneratePrivateKey()
 	renterAddr := types.StandardUnlockHash(renterPrivateKey.PublicKey())
 	hostPrivateKey := types.GeneratePrivateKey()
@@ -207,25 +207,9 @@ func setupV1Contracts(log *zap.Logger, nm *nodes.Manager, w *swallet, cm *chain.
 		log.Panic("Failed to add renewal txn to pool", zap.Error(err))
 	}
 	mineBlocks(log, nm, w)
-
-	fc1ID, fc2ID, fc3ID := txn.FileContractID(0), txn.FileContractID(1), txn.FileContractID(2)
-	return FixtureV1ContractAddresses{
-		ExpiredContract: &types.FileContractElement{
-			ID:           fc1ID,
-			FileContract: fc1,
-		},
-		SuccessfulContract: &types.FileContractElement{
-			ID:           fc2ID,
-			FileContract: fc2Rev,
-		},
-		RenewedContract: &types.FileContractElement{
-			ID:           fc3ID,
-			FileContract: fc3,
-		},
-	}
 }
 
-func setupV2Contracts(log *zap.Logger, nm *nodes.Manager, w *swallet, cm *chain.Manager) FixtureV2ContractAddresses {
+func setupV2Contracts(log *zap.Logger, nm *nodes.Manager, w *swallet, cm *chain.Manager) {
 	renterPrivateKey := types.GeneratePrivateKey()
 	renterAddr := types.StandardUnlockHash(renterPrivateKey.PublicKey())
 	hostPrivateKey := types.GeneratePrivateKey()
@@ -427,11 +411,5 @@ func setupV2Contracts(log *zap.Logger, nm *nodes.Manager, w *swallet, cm *chain.
 		for i := range fces {
 			cau.UpdateElementProof(&fces[i].StateElement)
 		}
-	}
-
-	return FixtureV2ContractAddresses{
-		ExpiredContract:    &fces[0],
-		SuccessfulContract: &fces[1],
-		RenewedContract:    &fces[2],
 	}
 }

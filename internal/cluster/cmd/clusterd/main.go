@@ -5,7 +5,6 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"flag"
 	"fmt"
 	"net"
@@ -183,33 +182,8 @@ func main() {
 	go s.Run()
 
 	nm := nodes.NewManager(dir, cm, s, nodes.WithSharedConsensus(true))
-	handler := api.Handler(cm, s, nm, log.Named("api"))
-
-	var mu sync.Mutex
-	var v1ContractAddresses FixtureV1ContractAddresses
-	var v2ContractAddresses FixtureV2ContractAddresses
-	mux := http.NewServeMux()
-	mux.HandleFunc("/fixtures/explored/v1", func(w http.ResponseWriter, r *http.Request) {
-		mu.Lock()
-		defer mu.Unlock()
-
-		if err := json.NewEncoder(w).Encode(v1ContractAddresses); err != nil {
-			http.Error(w, "failed to write contract addresses", http.StatusInternalServerError)
-			return
-		}
-	})
-	mux.HandleFunc("/fixtures/explored/v2", func(w http.ResponseWriter, r *http.Request) {
-		mu.Lock()
-		defer mu.Unlock()
-
-		if err := json.NewEncoder(w).Encode(v2ContractAddresses); err != nil {
-			http.Error(w, "failed to write contract addresses", http.StatusInternalServerError)
-			return
-		}
-	})
-	mux.Handle("/", handler)
 	server := &http.Server{
-		Handler:     mux,
+		Handler:     api.Handler(cm, s, nm, log.Named("api")),
 		ReadTimeout: 5 * time.Second,
 	}
 	defer server.Close()
@@ -282,17 +256,9 @@ func main() {
 		defer w.Close()
 
 		if network == "v1" {
-			addrs := setupV1Contracts(log, nm, w, cm)
-
-			mu.Lock()
-			v1ContractAddresses = addrs
-			mu.Unlock()
+			setupV1Contracts(log, nm, w, cm)
 		} else if network == "v2" {
-			addrs := setupV2Contracts(log, nm, w, cm)
-
-			mu.Lock()
-			v2ContractAddresses = addrs
-			mu.Unlock()
+			setupV2Contracts(log, nm, w, cm)
 		}
 	}
 
