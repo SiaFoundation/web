@@ -1,5 +1,15 @@
 # explorer
 
+## 0.30.0
+
+### Minor Changes
+
+- e4039406: Added entity components.
+- 96ac130a: Added unconfirmed transactions to the address page.
+- f3480b15: Fixed missing address event types.
+- 95250580: Added support for v2 types.
+- f7d32b13: The explorer now shows specific syncing and indexing warnings.
+
 ## 0.29.0
 
 ### Minor Changes

@@ -1,7 +1,7 @@
 {
   "name": "@siafoundation/request",
   "description": "Core library for building request APIs.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.27.2",
