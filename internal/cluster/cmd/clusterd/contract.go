@@ -88,23 +88,11 @@ func setupV1Contracts(log *zap.Logger, nm *nodes.Manager, w *swallet, cm *chain.
 	contractPayout := taxAdjustedPayout(renterPayout.Add(hostPayout))
 
 	// contract we will let expire
-	fc1 := types.FileContract{
-		// we could use joint unlock conditions with renter and host key, but
-		// this is simpler
-		UnlockHash:  w.Address(),
-		WindowStart: cm.Tip().Height + 1,
-		WindowEnd:   cm.Tip().Height + 2,
-		Payout:      contractPayout,
-		ValidProofOutputs: []types.SiacoinOutput{
-			{Value: renterPayout, Address: renterAddr},
-			{Value: hostPayout, Address: hostAddr},
-		},
-		MissedProofOutputs: []types.SiacoinOutput{
-			{Value: renterPayout, Address: renterAddr},
-			{Value: hostPayout, Address: hostAddr},
-			{Value: types.ZeroCurrency, Address: types.VoidAddress},
-		},
-	}
+	fc1 := proto2.PrepareContractFormation(renterPrivateKey.PublicKey(), hostPrivateKey.PublicKey(), renterPayout, hostPayout, cm.Tip().Height+1, proto2.HostSettings{
+		WindowSize: 1,
+		Address:    hostAddr,
+	}, renterAddr)
+	fc1.UnlockHash = w.Address()
 
 	// contract we will revise and prove
 	fc2 := fc1

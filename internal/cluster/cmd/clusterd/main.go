@@ -27,24 +27,6 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-type FixtureV1ContractAddresses struct {
-	// expired, unsuccessful
-	ExpiredContract *types.FileContractElement `json:"expiredContract"`
-	// revised once, storage proof submitted, successful
-	SuccessfulContract *types.FileContractElement `json:"successfulContract"`
-	// renewed, not yet resolved, only resolves at very high block height (10000+)
-	RenewedContract *types.FileContractElement `json:"renewedContract"`
-}
-
-type FixtureV2ContractAddresses struct {
-	// expired, unsuccessful
-	ExpiredContract *types.V2FileContractElement `json:"expiredContract"`
-	// revised once, storage proof submitted, successful
-	SuccessfulContract *types.V2FileContractElement `json:"successfulContract"`
-	// renewed, not yet resolved, only resolves at very high block height (10000+)
-	RenewedContract *types.V2FileContractElement `json:"renewedContract"`
-}
-
 func main() {
 	var (
 		dir      string
