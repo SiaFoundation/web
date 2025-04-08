@@ -244,10 +244,12 @@ function formatV2ContractResolutionEntity(
 
 function formatPayoutEntity(payout: ExplorerEvent): EntityListItemProps {
   const { siacoinElement } = payout.data as EventPayout
+  const capitalizedType =
+    payout.type.slice(0, 1).toUpperCase() + payout.type.slice(1)
   return {
     hash: payout.id,
-    label: 'Payout',
-    initials: 'P',
+    label: `${capitalizedType} Payout`,
+    initials: `${capitalizedType.slice(0, 1)}P`,
     href: routes.address.view.replace(':id', siacoinElement.source),
     height: payout.index.height,
     sc: new BigNumber(siacoinElement.siacoinOutput.value),
@@ -287,7 +289,9 @@ const formatEvent = (
     case 'v2ContractResolution':
       baseEntity = formatV2ContractResolutionEntity(event)
       break
-    case 'payout':
+    case 'miner':
+    case 'foundation':
+    case 'siafundClaim':
       baseEntity = formatPayoutEntity(event)
       break
   }

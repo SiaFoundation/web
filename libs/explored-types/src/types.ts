@@ -95,7 +95,7 @@ type ExplorerEventBase = {
 }
 
 type ExplorerMinerPayoutEvent = ExplorerEventBase & {
-  type: 'payout'
+  type: 'miner' | 'foundation' | 'siafundClaim'
   data: EventPayout
 }
 
