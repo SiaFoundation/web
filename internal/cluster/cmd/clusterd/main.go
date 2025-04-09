@@ -23,6 +23,7 @@ import (
 	"go.sia.tech/coreutils/chain"
 	"go.sia.tech/coreutils/syncer"
 	"go.sia.tech/coreutils/testutil"
+	eapi "go.sia.tech/explored/api"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
@@ -237,11 +238,22 @@ func main() {
 		}
 		defer w.Close()
 
+		var e *eapi.Client
+		for _, n := range nm.Nodes() {
+			if n.Type == nodes.NodeTypeExplored {
+				e = eapi.NewClient(n.APIAddress+"/api", n.Password)
+			}
+		}
+		if e == nil {
+			log.Panic("Failed to find explored node")
+		}
+
 		if network == "v1" {
 			setupV1Contracts(log, nm, w, cm)
 		} else if network == "v2" {
-			setupV2Contracts(log, nm, w, cm)
+			setupV2Contracts(log, nm, e, w, cm)
 		}
+		log.Info("Set up contracts")
 	}
 
 	<-ctx.Done()
