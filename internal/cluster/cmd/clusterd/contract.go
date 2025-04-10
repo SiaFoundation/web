@@ -7,6 +7,7 @@ import (
 
 	"go.sia.tech/cluster/nodes"
 	proto2 "go.sia.tech/core/rhp/v2"
+	proto4 "go.sia.tech/core/rhp/v4"
 	"go.sia.tech/core/types"
 	"go.sia.tech/coreutils/chain"
 	"go.sia.tech/explored/api"
@@ -161,22 +162,18 @@ func setupV2Contracts(log *zap.Logger, nm *nodes.Manager, e *api.Client, w *swal
 	hostAddr := types.StandardUnlockHash(hostPrivateKey.PublicKey())
 
 	// create a storage contract
-	contractPayout := types.Siacoins(10)
 	height := cm.Tip().Height
+
 	// this contract will expire
-	fc1 := types.V2FileContract{
-		RevisionNumber:   0,
-		Capacity:         4096,
-		Filesize:         0,
-		ProofHeight:      height + 1,
-		ExpirationHeight: height + 2,
-		RenterOutput:     types.SiacoinOutput{Address: renterAddr, Value: contractPayout},
-		HostOutput:       types.SiacoinOutput{Address: hostAddr, Value: contractPayout},
-		MissedHostValue:  types.ZeroCurrency,
-		TotalCollateral:  contractPayout,
-		RenterPublicKey:  renterPrivateKey.PublicKey(),
-		HostPublicKey:    hostPrivateKey.PublicKey(),
-	}
+	fc1, _ := proto4.NewContract(proto4.HostPrices{}, proto4.RPCFormContractParams{
+		ProofHeight:     height + 1,
+		Allowance:       types.Siacoins(5),
+		RenterAddress:   renterAddr,
+		Collateral:      types.Siacoins(5),
+		RenterPublicKey: renterPrivateKey.PublicKey(),
+	}, hostPrivateKey.PublicKey(), hostAddr)
+	fc1.Capacity = proto4.SectorSize
+	fc1.ExpirationHeight = fc1.ProofHeight + 1
 	fcOut := fc1.RenterOutput.Value.Add(fc1.HostOutput.Value).Add(cm.TipState().V2FileContractTax(fc1))
 
 	// this contract will be revised and then resolved with storage proof
@@ -277,19 +274,16 @@ func setupV2Contracts(log *zap.Logger, nm *nodes.Manager, e *api.Client, w *swal
 
 	fc3FinalRev := fc3
 	fc3FinalRev.RevisionNumber = types.MaxRevisionNumber
-	fc3NewContract := fc3
-	fc3NewContract.RevisionNumber++
-	renewal := &types.V2FileContractRenewal{
-		NewContract:       fc3NewContract,
-		FinalRenterOutput: fc3FinalRev.RenterOutput,
-		FinalHostOutput:   fc3FinalRev.HostOutput,
-		RenterRollover:    types.ZeroCurrency,
-		HostRollover:      types.ZeroCurrency,
-	}
+	renewal, _ := proto4.RenewContract(fc3FinalRev, proto4.HostPrices{}, proto4.RPCRenewContractParams{
+		ProofHeight: fc3FinalRev.ProofHeight,
+		Allowance:   fc3FinalRev.RenterOutput.Value,
+		Collateral:  fc3FinalRev.HostOutput.Value,
+	})
+	fcOut = (renewal.NewContract.RenterOutput.Value).Add(renewal.NewContract.HostOutput.Value).Add(cm.TipState().V2FileContractTax(renewal.NewContract)).Sub(renewal.RenterRollover).Sub(renewal.HostRollover)
 	{
 		cs := cm.TipState()
-		renewal.RenterSignature = renterPrivateKey.SignHash(cs.RenewalSigHash(*renewal))
-		renewal.HostSignature = hostPrivateKey.SignHash(cs.RenewalSigHash(*renewal))
+		renewal.RenterSignature = renterPrivateKey.SignHash(cs.RenewalSigHash(renewal))
+		renewal.HostSignature = hostPrivateKey.SignHash(cs.RenewalSigHash(renewal))
 		renewal.NewContract.RenterSignature = renterPrivateKey.SignHash(cs.ContractSigHash(renewal.NewContract))
 		renewal.NewContract.HostSignature = hostPrivateKey.SignHash(cs.ContractSigHash(renewal.NewContract))
 	}
@@ -300,7 +294,7 @@ func setupV2Contracts(log *zap.Logger, nm *nodes.Manager, e *api.Client, w *swal
 	renewalTxn := types.V2Transaction{
 		FileContractResolutions: []types.V2FileContractResolution{{
 			Parent:     fce3.V2FileContractElement,
-			Resolution: renewal,
+			Resolution: &renewal,
 		}},
 	}
 	basis, toSign, err = w.FundV2Transaction(&renewalTxn, fcOut, false)
