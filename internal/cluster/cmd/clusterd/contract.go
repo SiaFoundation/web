@@ -3,71 +3,15 @@ package main
 import (
 	"bytes"
 	"context"
-	"math/bits"
 	"time"
 
 	"go.sia.tech/cluster/nodes"
-	"go.sia.tech/core/consensus"
 	proto2 "go.sia.tech/core/rhp/v2"
 	"go.sia.tech/core/types"
 	"go.sia.tech/coreutils/chain"
 	"go.sia.tech/explored/api"
 	"go.uber.org/zap"
 )
-
-// NOTE: due to a bug in the transaction validation code, calculating payouts
-// is way harder than it needs to be. Tax is calculated on the post-tax
-// contract payout (instead of the sum of the renter and host payouts). So the
-// equation for the payout is:
-//
-//	   payout = renterPayout + hostPayout + payout*tax
-//	∴  payout = (renterPayout + hostPayout) / (1 - tax)
-//
-// This would work if 'tax' were a simple fraction, but because the tax must
-// be evenly distributed among siafund holders, 'tax' is actually a function
-// that multiplies by a fraction and then rounds down to the nearest multiple
-// of the siafund count. Thus, when inverting the function, we have to make an
-// initial guess and then fix the rounding error.
-func taxAdjustedPayout(target types.Currency) types.Currency {
-	// compute initial guess as target * (1 / 1-tax); since this does not take
-	// the siafund rounding into account, the guess will be up to
-	// types.SiafundCount greater than the actual payout value.
-	guess := target.Mul64(1000).Div64(961)
-
-	// now, adjust the guess to remove the rounding error. We know that:
-	//
-	//   (target % types.SiafundCount) == (payout % types.SiafundCount)
-	//
-	// therefore, we can simply adjust the guess to have this remainder as
-	// well. The only wrinkle is that, since we know guess >= payout, if the
-	// guess remainder is smaller than the target remainder, we must subtract
-	// an extra types.SiafundCount.
-	//
-	// for example, if target = 87654321 and types.SiafundCount = 10000, then:
-	//
-	//   initial_guess  = 87654321 * (1 / (1 - tax))
-	//                  = 91211572
-	//   target % 10000 =     4321
-	//   adjusted_guess = 91204321
-
-	mod64 := func(c types.Currency, v uint64) types.Currency {
-		var r uint64
-		if c.Hi < v {
-			_, r = bits.Div64(c.Hi, c.Lo, v)
-		} else {
-			_, r = bits.Div64(0, c.Hi, v)
-			_, r = bits.Div64(r, c.Lo, v)
-		}
-		return types.NewCurrency64(r)
-	}
-	sfc := (consensus.State{}).SiafundCount()
-	tm := mod64(target, sfc)
-	gm := mod64(guess, sfc)
-	if gm.Cmp(tm) < 0 {
-		guess = guess.Sub(types.NewCurrency64(sfc))
-	}
-	return guess.Add(tm).Sub(gm)
-}
 
 func mineBlocks(log *zap.Logger, nm *nodes.Manager, e *api.Client, w *swallet) {
 	if err := nm.MineBlocks(context.Background(), 1, types.VoidAddress); err != nil {
@@ -98,7 +42,6 @@ func setupV1Contracts(log *zap.Logger, nm *nodes.Manager, w *swallet, cm *chain.
 
 	// create a storage contract
 	renterPayout, hostPayout := types.Siacoins(5), types.Siacoins(5)
-	contractPayout := taxAdjustedPayout(renterPayout.Add(hostPayout))
 
 	// contract we will let expire
 	fc1 := proto2.PrepareContractFormation(renterPrivateKey.PublicKey(), hostPrivateKey.PublicKey(), renterPayout, hostPayout, cm.Tip().Height+1, proto2.HostSettings{
@@ -106,6 +49,7 @@ func setupV1Contracts(log *zap.Logger, nm *nodes.Manager, w *swallet, cm *chain.
 		Address:    hostAddr,
 	}, renterAddr)
 	fc1.UnlockHash = w.Address()
+	contractPayout := fc1.Payout
 
 	// contract we will revise and prove
 	fc2 := fc1
