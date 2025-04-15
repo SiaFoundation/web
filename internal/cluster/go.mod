@@ -8,7 +8,7 @@ require (
 	go.sia.tech/cluster v0.1.3-0.20250402145302-9be676ebc4c6
 	go.sia.tech/core v0.10.5
 	go.sia.tech/coreutils v0.12.2-0.20250317235740-9e6e9fe76b2e
-	go.sia.tech/explored v0.0.0-20250409081126-720b7a5845d5
+	go.sia.tech/explored v0.0.0-20250412041317-3dc566b1d359
 	go.uber.org/zap v1.27.0
 )
 

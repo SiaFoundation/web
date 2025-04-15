@@ -251,17 +251,18 @@ func main() {
 		switch network {
 		case "v1":
 			err = setupV1Contracts(nm, w, cm)
+			log.Info("Set up v1 contracts")
 		case "v2":
 			err = setupV2Contracts(nm, e, w, cm)
+			log.Info("Set up v2 contracts")
 		case "transition":
-			err = setupV1Contracts(nm, w, cm)
+			log.Info("Not forming contracts because transition network selected")
 		default:
 			err = fmt.Errorf("invalid network provided: %s", network)
 		}
 		if err != nil {
 			log.Panic("Failed to set up contracts", zap.Error(err))
 		}
-		log.Info("Set up contracts")
 	}
 
 	<-ctx.Done()
