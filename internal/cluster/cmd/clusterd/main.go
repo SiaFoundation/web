@@ -140,7 +140,7 @@ func main() {
 	}
 	defer bdb.Close()
 
-	dbstore, tipState, err := chain.NewDBStore(bdb, n, genesis)
+	dbstore, tipState, err := chain.NewDBStore(bdb, n, genesis, nil)
 	if err != nil {
 		log.Panic("failed to create dbstore", zap.Error(err))
 	}
