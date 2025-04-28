@@ -81,7 +81,7 @@ export default async function Page({ params }) {
     )
   } else if (searchResultType === 'v2Contract') {
     const [c, contractError, contractResponse] = await to(
-      getExplored().v2ContractByID({ params: id })
+      getExplored().v2ContractByID({ params: { id } })
     )
 
     if (contractError) {
