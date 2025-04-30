@@ -7,7 +7,6 @@ import {
   ExplorerTransaction,
   ExplorerV2FileContract,
   ExplorerV2Transaction,
-  // FileContractID,
 } from '@siafoundation/explored-types'
 import { TransactionHeaderData } from '../Transaction/TransactionHeader'
 import { ContractData } from '../../lib/contracts'
@@ -19,8 +18,6 @@ type Props = {
     | undefined
   currentHeight: number
   contract: ContractData
-  // renewedToID: FileContractID | null
-  // renewedFromID: FileContractID | null
   formationTransaction?: ExplorerTransaction | ExplorerV2Transaction
   formationTxnChainIndex: ChainIndex[]
   formationTransactionHeaderData?: TransactionHeaderData
@@ -30,8 +27,6 @@ export function ContractView({
   contractRevisions,
   currentHeight,
   contract,
-  // renewedFromID,
-  // renewedToID,
   formationTransaction,
   formationTxnChainIndex,
   formationTransactionHeaderData,
@@ -42,8 +37,6 @@ export function ContractView({
         contractRevisions={contractRevisions}
         currentHeight={currentHeight}
         contract={contract}
-        // renewedFromID={renewedFromID}
-        // renewedToID={renewedToID}
         formationTxnChainIndex={formationTxnChainIndex}
       />
       <Container>

@@ -1,10 +1,11 @@
 import {
   Badge,
   ContractTimeline,
-  // LinkButton,
+  LinkButton,
   stripPrefix,
+  Text,
 } from '@siafoundation/design-system'
-// import { ArrowLeft16, ArrowRight16 } from '@siafoundation/react-icons'
+import { ArrowLeft16, ArrowRight16 } from '@siafoundation/react-icons'
 import { routes } from '../../config/routes'
 import { EntityHeading } from '../EntityHeading'
 import { ChainIndex } from '@siafoundation/explored-types'
@@ -13,16 +14,12 @@ import { ContractData, determineContractStatusColor } from '../../lib/contracts'
 type Props = {
   currentHeight: number
   contract: ContractData
-  // renewedToID: string | null
-  // renewedFromID: string | null
   formationTxnChainIndex: ChainIndex[]
 }
 
 export function ContractHeader({
   currentHeight,
   contract,
-  // renewedFromID,
-  // renewedToID,
   formationTxnChainIndex,
 }: Props) {
   const { id } = contract
@@ -35,34 +32,37 @@ export function ContractHeader({
           value={stripPrefix(id)}
           href={routes.contract.view.replace(':id', id)}
         />
-        <div className="flex gap-1">
-          {/* {renewedFromID && renewedFromID !== stripPrefix(id) && (
+        <div className="flex gap-2 items-center">
+          {contract.renewedFromContractID && (
             <LinkButton
-              className="hidden sm:flex"
-              variant="gray"
-              href={routes.contract.view.replace(':id', renewedFromID)}
+              variant="active"
+              href={routes.contract.view.replace(
+                ':id',
+                contract.renewedFromContractID
+              )}
               data-testid="explorer-contract-renewedFrom"
             >
-              <ArrowLeft16 />
-              renewed from
+              <ArrowLeft16 /> <Text color="subtle">renewed from</Text>
             </LinkButton>
-          )} */}
+          )}
+          {contract.renewedToContractID && (
+            <LinkButton
+              variant="active"
+              href={routes.contract.view.replace(
+                ':id',
+                contract.renewedToContractID
+              )}
+              data-testid="explorer-contract-renewedTo"
+            >
+              <Text color="subtle">renewed to</Text> <ArrowRight16 />
+            </LinkButton>
+          )}
           <Badge
             interactive={false}
             variant={determineContractStatusColor(contract.status)}
           >
             {contract.status}
           </Badge>
-          {/* {renewedToID && renewedToID !== stripPrefix(id) && (
-            <LinkButton
-              className="hidden sm:flex"
-              href={routes.contract.view.replace(':id', renewedToID)}
-              data-testid="explorer-contract-renewedTo"
-            >
-              renewed to
-              <ArrowRight16 />
-            </LinkButton>
-          )} */}
         </div>
       </div>
       {currentHeight && (
