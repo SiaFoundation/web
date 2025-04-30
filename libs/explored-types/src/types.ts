@@ -424,6 +424,9 @@ export type ExplorerV2FileContractResolutionType =
 export type ExplorerV2FileContract = V2FileContractElement & {
   transactionID: TransactionID
 
+  renewedFrom?: FileContractID
+  renewedTo?: FileContractID
+
   confirmationIndex: ChainIndex
   confirmationTransactionID: TransactionID
 
