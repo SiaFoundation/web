@@ -13,7 +13,6 @@ import {
   ChainIndex,
   ExplorerFileContract,
   ExplorerV2FileContract,
-  // FileContractID,
 } from '@siafoundation/explored-types'
 import { blockHeightToHumanDate } from '../../lib/time'
 import { hastingsToFiat } from '../../lib/currency'
@@ -29,8 +28,6 @@ type Props = {
     | undefined
   currentHeight: number
   contract: ContractData
-  // renewedToID: FileContractID | null
-  // renewedFromID: FileContractID | null
   formationTxnChainIndex: ChainIndex[]
 }
 
@@ -38,8 +35,6 @@ export function Contract({
   contractRevisions,
   currentHeight,
   contract,
-  // renewedFromID,
-  // renewedToID,
   formationTxnChainIndex,
 }: Props) {
   const api = useExploredAddress()
@@ -248,8 +243,6 @@ export function Contract({
           <ContractHeader
             currentHeight={currentHeight}
             contract={contract}
-            // renewedFromID={renewedFromID}
-            // renewedToID={renewedToID}
             formationTxnChainIndex={formationTxnChainIndex}
           />
           {!!values?.length && (

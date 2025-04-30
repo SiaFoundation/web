@@ -3,6 +3,7 @@ import {
   ExplorerFileContract,
   ExplorerV2FileContract,
   ExplorerV2FileContractResolutionType,
+  FileContractID,
   SiacoinOutput,
 } from '@siafoundation/explored-types'
 import BigNumber from 'bignumber.js'
@@ -70,6 +71,8 @@ export type ContractData = {
   hostPayoutMissed: SiacoinOutput
   id: string
   payout: string
+  renewedFromContractID: FileContractID | undefined
+  renewedToContractID: FileContractID | undefined
   renterPayoutMissed: SiacoinOutput
   renterPayoutValid: SiacoinOutput
   resolutionWindowStart: number
@@ -100,6 +103,8 @@ export function normalizeContract(
       payout: new BigNumber(contract.v2FileContract.hostOutput.value)
         .plus(contract.v2FileContract.renterOutput.value)
         .toString(),
+      renewedFromContractID: contract.renewedFrom,
+      renewedToContractID: contract.renewedTo,
       renterPayoutMissed: contract.v2FileContract.renterOutput,
       renterPayoutValid: contract.v2FileContract.renterOutput,
       resolutionWindowStart: contract.v2FileContract.proofHeight,
@@ -120,6 +125,8 @@ export function normalizeContract(
     hostPayoutValid: contract.validProofOutputs[1],
     id: contract.id,
     payout: contract.payout,
+    renewedFromContractID: undefined,
+    renewedToContractID: undefined,
     renterPayoutMissed: contract.missedProofOutputs[1],
     renterPayoutValid: contract.validProofOutputs[1],
     resolutionWindowStart: contract.windowStart,

@@ -67,8 +67,6 @@ export default async function Page({ params }) {
         contractRevisions={contractRevisions}
         currentHeight={currentTip.height}
         contract={contract}
-        // renewedFromID={renewedFromID ? stripPrefix(renewedFromID) : renewedFromID}
-        // renewedToID={renewedToID ? stripPrefix(renewedToID) : renewedToID}
         formationTransaction={formationTransaction}
         formationTxnChainIndex={formationTxnChainIndices}
         formationTransactionHeaderData={{
@@ -117,8 +115,6 @@ export default async function Page({ params }) {
         contractRevisions={contractRevisions}
         currentHeight={currentTip.height}
         contract={contract}
-        // renewedFromID={renewedFromID ? stripPrefix(renewedFromID) : renewedFromID}
-        // renewedToID={renewedToID ? stripPrefix(renewedToID) : renewedToID}
         formationTransaction={formationTransaction}
         formationTxnChainIndex={formationTxnChainIndices}
         formationTransactionHeaderData={{
