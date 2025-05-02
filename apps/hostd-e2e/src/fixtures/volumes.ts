@@ -46,7 +46,16 @@ export const deleteVolume = step(
       page.getByText('Volume is now being permanently deleted')
     ).toBeVisible()
     const row = page.getByRole('row', { name: fullPath })
-    await expect(row.getByText('removing')).toBeVisible()
+    await expect
+      .poll(
+        async () =>
+          (await row.getByText('removing').isVisible()) ||
+          (await page
+            .getByTestId('volumesTable')
+            .getByText(fullPath)
+            .isHidden())
+      )
+      .toBe(true)
   }
 )
 
