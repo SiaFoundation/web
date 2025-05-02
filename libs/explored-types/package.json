@@ -1,7 +1,7 @@
 {
   "name": "@siafoundation/explored-types",
   "description": "Types for `explored`.",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "license": "MIT",
   "dependencies": {
     "@siafoundation/types": "^0.10.0"

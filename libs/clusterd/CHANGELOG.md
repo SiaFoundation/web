@@ -1,5 +1,14 @@
 # @siafoundation/clusterd
 
+## 0.2.4
+
+### Patch Changes
+
+- 540f9157: waitFor now waits for the current condition to return before next iteration.
+  - @siafoundation/hostd-js@0.5.2
+  - @siafoundation/renterd-js@0.14.3
+  - @siafoundation/units@3.4.1
+
 ## 0.2.3
 
 ### Patch Changes
