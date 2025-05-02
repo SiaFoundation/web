@@ -251,15 +251,30 @@ function waitFor(
   }: { timeout?: number; interval?: number } = {}
 ) {
   return new Promise<void>((resolve, reject) => {
-    const intervalRef = setInterval(async () => {
-      if (await condition()) {
-        clearInterval(intervalRef)
-        resolve()
+    const startTime = Date.now()
+
+    const checkCondition = async () => {
+      try {
+        // Check if condition is met.
+        if (await condition()) {
+          resolve()
+          return
+        }
+
+        // Check if we've exceeded the timeout.
+        if (Date.now() - startTime >= timeout) {
+          reject(new Error('Timeout'))
+          return
+        }
+
+        // Schedule next check after this one is complete.
+        setTimeout(checkCondition, interval)
+      } catch (error) {
+        reject(error)
       }
-    }, interval)
-    setTimeout(() => {
-      clearInterval(intervalRef)
-      reject(new Error('Timeout'))
-    }, timeout)
+    }
+
+    // Start the first check.
+    checkCondition()
   })
 }

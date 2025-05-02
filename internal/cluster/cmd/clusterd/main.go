@@ -76,7 +76,7 @@ func main() {
 
 	zap.RedirectStdLog(log)
 
-	if hostdCount == 0 && renterdCount == 0 && walletdCount == 0 {
+	if hostdCount == 0 && renterdCount == 0 && walletdCount == 0 && exploredCount == 0 {
 		log.Panic("no nodes to run")
 	}
 

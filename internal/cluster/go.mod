@@ -5,7 +5,7 @@ go 1.23.2
 toolchain go1.23.4
 
 require (
-	go.sia.tech/cluster v0.1.3-0.20250429184218-965bc9400872
+	go.sia.tech/cluster v0.1.3-0.20250502195935-d28b7bd4e6de
 	go.sia.tech/core v0.12.0
 	go.sia.tech/coreutils v0.13.2
 	go.sia.tech/explored v0.0.0-20250430142716-e1daab1b0823
