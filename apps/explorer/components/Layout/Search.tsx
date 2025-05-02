@@ -112,12 +112,14 @@ export function Search() {
           router.push(routes.block.view.replace(':id', values.query))
           break
         case 'contract':
+        case 'v2Contract':
           router.push(routes.contract.view.replace(':id', values.query))
           break
         case 'host':
           router.push(routes.host.view.replace(':id', values.query))
           break
         case 'transaction':
+        case 'v2Transaction':
           router.push(routes.transaction.view.replace(':id', values.query))
           break
         case 'invalid':
