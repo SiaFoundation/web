@@ -1,5 +1,24 @@
 # @siafoundation/explored-js
 
+## 0.7.0
+
+### Minor Changes
+
+- b95e34d7: Added explorerTip API.
+- cefe1ef1: Added support for v2 types.
+- 6547d895: Added unconfirmed address events API.
+
+### Patch Changes
+
+- Updated dependencies [03a50151]
+- Updated dependencies [b95e34d7]
+- Updated dependencies [cefe1ef1]
+- Updated dependencies [05b0b5b4]
+- Updated dependencies [f3480b15]
+- Updated dependencies [6547d895]
+  - @siafoundation/request@0.3.0
+  - @siafoundation/explored-types@0.16.0
+
 ## 0.6.3
 
 ### Patch Changes

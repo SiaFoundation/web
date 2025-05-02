@@ -1,5 +1,11 @@
 # @siafoundation/walletd-mock
 
+## 0.2.3
+
+### Patch Changes
+
+- @siafoundation/units@3.4.1
+
 ## 0.2.2
 
 ### Patch Changes

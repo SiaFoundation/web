@@ -1,5 +1,11 @@
 # website
 
+## 0.57.1
+
+### Patch Changes
+
+- 04e98e04: Fixed the map when zero hosts are found.
+
 ## 0.57.0
 
 ### Minor Changes
