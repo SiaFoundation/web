@@ -9,16 +9,13 @@ import {
   RPCWriteSectorResponse,
 } from './types'
 import { initSDKTest } from './initTest'
+import { Result } from '@siafoundation/types'
 
 describe('rhp', () => {
   describe('generateAccount', () => {
     it('works', async () => {
       const sdk = await initSDKTest()
-      const response = sdk.rhp.generateAccount()
-      if ('error' in response) {
-        throw new Error(response.error)
-      }
-      const { privateKey, account } = response
+      const { privateKey, account } = expectResult(sdk.rhp.generateAccount())
       expect(privateKey).toBeDefined()
       expect(privateKey?.length).toBeGreaterThan(40)
       expect(account).toBeDefined()
@@ -29,35 +26,21 @@ describe('rhp', () => {
     describe('request', () => {
       it('valid', async () => {
         const sdk = await initSDKTest()
-        const encode = sdk.rhp.encodeSettingsRequest()
-        if ('error' in encode) {
-          throw new Error(encode.error)
-        }
-        const { rpc } = encode
+        const { rpc } = expectResult(sdk.rhp.encodeSettingsRequest())
         expect(rpc).toBeDefined()
-        const decode = sdk.rhp.decodeSettingsRequest(rpc!)
-        if ('error' in decode) {
-          throw new Error(decode.error)
-        }
-        expect(decode.data).toEqual({})
+        const { data } = expectResult(sdk.rhp.decodeSettingsRequest(rpc!))
+        expect(data).toEqual({})
       })
     })
     describe('response', () => {
       it('valid', async () => {
         const sdk = await initSDKTest()
         const json = getSampleRPCSettingsResponse()
-        const encode = sdk.rhp.encodeSettingsResponse(json)
-        if ('error' in encode) {
-          throw new Error(encode.error)
-        }
-        const { rpc } = encode
+        const { rpc } = expectResult(sdk.rhp.encodeSettingsResponse(json))
         expect(rpc).toBeDefined()
         expect(rpc?.length).toEqual(264)
-        const decode = sdk.rhp.decodeSettingsResponse(rpc!)
-        if ('error' in decode) {
-          throw new Error(decode.error)
-        }
-        expect(decode.data).toEqual(json)
+        const { data } = expectResult(sdk.rhp.decodeSettingsResponse(rpc!))
+        expect(data).toEqual(json)
       })
       it('encode error', async () => {
         const sdk = await initSDKTest()
@@ -66,30 +49,21 @@ describe('rhp', () => {
             walletAddress: 'invalid',
           },
         } as RPCSettingsResponse
-        const encode = sdk.rhp.encodeSettingsResponse(json)
-        if ('error' in encode) {
-          expect(encode.error).toEqual('address must be 76 characters')
-        } else {
-          throw new Error('expected error')
-        }
+        expectError(
+          sdk.rhp.encodeSettingsResponse(json),
+          'address must be 76 characters'
+        )
       })
       it('decode error', async () => {
         const sdk = await initSDKTest()
         const json = getSampleRPCSettingsResponse()
-        const encode = sdk.rhp.encodeSettingsResponse(json)
-        if ('error' in encode) {
-          throw new Error(encode.error)
-        }
+        const { rpc } = expectResult(sdk.rhp.encodeSettingsResponse(json))
         // manipulate the valid rpc to make it invalid
-        encode.rpc!.set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 0)
-        const decode = sdk.rhp.decodeSettingsResponse(encode.rpc!)
-        if ('error' in decode) {
-          expect(decode.error).toEqual(
-            'encoded object contains invalid length prefix (723118041428460547 elems > 11254 bytes left in stream)'
-          )
-        } else {
-          throw new Error('expected error')
-        }
+        rpc!.set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 0)
+        expectError(
+          sdk.rhp.decodeSettingsResponse(rpc!),
+          'encoded object contains invalid length prefix (723118041428460547 elems > 11254 bytes left in stream)'
+        )
       })
     })
   })
@@ -112,17 +86,10 @@ describe('rhp', () => {
           offset: 0,
           length: 4,
         }
-        const encode = sdk.rhp.encodeReadSectorRequest(json)
-        if ('error' in encode) {
-          throw new Error(encode.error)
-        }
-        const { rpc } = encode
-        expect(rpc?.length).toEqual(376)
-        const decode = sdk.rhp.decodeReadSectorRequest(rpc!)
-        if ('error' in decode) {
-          throw new Error(decode.error)
-        }
-        expect(decode.data).toEqual(json)
+        const { rpc } = expectResult(sdk.rhp.encodeReadSectorRequest(json))
+        expect(rpc.length).toEqual(376)
+        const { data } = expectResult(sdk.rhp.decodeReadSectorRequest(rpc!))
+        expect(data).toEqual(json)
       })
       it('encode error', async () => {
         const sdk = await initSDKTest()
@@ -140,14 +107,10 @@ describe('rhp', () => {
           offset: 0,
           length: 4,
         }
-        const encode = sdk.rhp.encodeReadSectorRequest(json)
-        if ('error' in encode) {
-          expect(encode.error).toEqual(
-            "decoding acct:<hex> failed: encoding/hex: invalid byte: U+0069 'i'"
-          )
-        } else {
-          throw new Error('expected error')
-        }
+        expectError(
+          sdk.rhp.encodeReadSectorRequest(json),
+          "decoding acct:<hex> failed: encoding/hex: invalid byte: U+0069 'i'"
+        )
       })
     })
     describe('response', () => {
@@ -159,23 +122,16 @@ describe('rhp', () => {
           ],
           dataLength: 4,
         }
-        const encode = sdk.rhp.encodeReadSectorResponse(json)
-        if ('error' in encode) {
-          throw new Error(encode.error)
-        }
-        const { rpc } = encode
-        expect(rpc?.toString()).toEqual(
+        const { rpc } = expectResult(sdk.rhp.encodeReadSectorResponse(json))
+        expect(rpc.toString()).toEqual(
           [
             0, 1, 0, 0, 0, 0, 0, 0, 0, 69, 114, 86, 214, 161, 96, 59, 239, 127,
             169, 87, 167, 11, 91, 169, 106, 157, 239, 47, 234, 139, 76, 20, 131,
             6, 13, 123, 165, 207, 138, 7, 44, 4, 0, 0, 0, 0, 0, 0, 0,
           ].toString()
         )
-        const decode = sdk.rhp.decodeReadSectorResponse(rpc!)
-        if ('error' in decode) {
-          throw new Error(decode.error)
-        }
-        expect(decode.data).toEqual(json)
+        const { data } = expectResult(sdk.rhp.decodeReadSectorResponse(rpc!))
+        expect(data).toEqual(json)
       })
       it('encode error', async () => {
         const sdk = await initSDKTest()
@@ -183,14 +139,10 @@ describe('rhp', () => {
           proof: ['invalid'],
           dataLength: 4,
         }
-        const encode = sdk.rhp.encodeReadSectorResponse(json)
-        if ('error' in encode) {
-          expect(encode.error).toEqual(
-            'decoding "invalid" failed: encoding/hex: invalid byte: U+0069 \'i\''
-          )
-        } else {
-          throw new Error('expected error')
-        }
+        expectError(
+          sdk.rhp.encodeReadSectorResponse(json),
+          'decoding "invalid" failed: encoding/hex: invalid byte: U+0069 \'i\''
+        )
       })
     })
   })
@@ -211,17 +163,10 @@ describe('rhp', () => {
           dataLength: 4,
           prices: getSampleHostPrices(),
         }
-        const encode = sdk.rhp.encodeWriteSectorRequest(json)
-        if ('error' in encode) {
-          throw new Error(encode.error)
-        }
-        const { rpc } = encode
-        expect(rpc?.length).toEqual(336)
-        const decode = sdk.rhp.decodeWriteSectorRequest(rpc!)
-        if ('error' in decode) {
-          throw new Error(decode.error)
-        }
-        expect(decode.data).toEqual(json)
+        const { rpc } = expectResult(sdk.rhp.encodeWriteSectorRequest(json))
+        expect(rpc.length).toEqual(336)
+        const { data } = expectResult(sdk.rhp.decodeWriteSectorRequest(rpc!))
+        expect(data).toEqual(json)
       })
       it('encode error', async () => {
         const sdk = await initSDKTest()
@@ -237,14 +182,10 @@ describe('rhp', () => {
           dataLength: 4,
           prices: getSampleHostPrices(),
         } as RPCWriteSectorRequest
-        const encode = sdk.rhp.encodeWriteSectorRequest(json)
-        if ('error' in encode) {
-          expect(encode.error).toEqual(
-            "decoding acct:<hex> failed: encoding/hex: invalid byte: U+0069 'i'"
-          )
-        } else {
-          throw new Error('expected error')
-        }
+        expectError(
+          sdk.rhp.encodeWriteSectorRequest(json),
+          "decoding acct:<hex> failed: encoding/hex: invalid byte: U+0069 'i'"
+        )
       })
     })
     describe('response', () => {
@@ -253,37 +194,26 @@ describe('rhp', () => {
         const json: RPCWriteSectorResponse = {
           root: '457256d6a1603bef7fa957a70b5ba96a9def2fea8b4c1483060d7ba5cf8a072c',
         }
-        const encode = sdk.rhp.encodeWriteSectorResponse(json)
-        if ('error' in encode) {
-          throw new Error(encode.error)
-        }
-        const { rpc } = encode
-        expect(rpc?.toString()).toEqual(
+        const { rpc } = expectResult(sdk.rhp.encodeWriteSectorResponse(json))
+        expect(rpc.toString()).toEqual(
           [
             0, 69, 114, 86, 214, 161, 96, 59, 239, 127, 169, 87, 167, 11, 91,
             169, 106, 157, 239, 47, 234, 139, 76, 20, 131, 6, 13, 123, 165, 207,
             138, 7, 44,
           ].toString()
         )
-        const decode = sdk.rhp.decodeWriteSectorResponse(rpc!)
-        if ('error' in decode) {
-          throw new Error(decode.error)
-        }
-        expect(decode.data).toEqual(json)
+        const { data } = expectResult(sdk.rhp.decodeWriteSectorResponse(rpc!))
+        expect(data).toEqual(json)
       })
       it('encode error', async () => {
         const sdk = await initSDKTest()
         const json = {
           root: 'invalid',
         } as RPCWriteSectorResponse
-        const encode = sdk.rhp.encodeWriteSectorResponse(json)
-        if ('error' in encode) {
-          expect(encode.error).toEqual(
-            'decoding "invalid" failed: encoding/hex: invalid byte: U+0069 \'i\''
-          )
-        } else {
-          throw new Error('expected error')
-        }
+        expectError(
+          sdk.rhp.encodeWriteSectorResponse(json),
+          'decoding "invalid" failed: encoding/hex: invalid byte: U+0069 \'i\''
+        )
       })
     })
   })
@@ -321,5 +251,20 @@ function getSampleRPCSettingsResponse(): RPCSettingsResponse {
   }
   return {
     settings,
+  }
+}
+
+function expectResult<T extends object>(result: Result<T>) {
+  if ('error' in result) {
+    throw new Error(result.error)
+  }
+  return result
+}
+
+function expectError(result: Result<object>, error: string) {
+  if ('error' in result) {
+    expect(result.error).toEqual(error)
+  } else {
+    throw new Error('expected error')
   }
 }
