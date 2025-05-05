@@ -36,7 +36,7 @@
       "@siafoundation/explored-js": ["libs/explored-js/src/index.ts"],
       // "buildLibsFromSource": false does not work with the next executor
       // this is a very annoying workaround
-      "@siafoundation/sdk": ["dist/libs/sdk/index.esm.js"],
+      "@siafoundation/sdk": ["dist/libs/sdk/index.cjs.js"],
       "@siafoundation/e2e": ["libs/e2e/src/index.ts"],
       "@siafoundation/types": ["libs/types/src/index.ts"],
       "@siafoundation/units": ["libs/units/src/index.ts"],
