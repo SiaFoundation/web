@@ -1,5 +1,6 @@
 import {
   Address,
+  BlockID,
   ChainIndex,
   Currency,
   Hash256,
@@ -97,12 +98,22 @@ export type SatisfiedPolicy = {
   preimages?: string[]
 }
 
-export type V2FileContractElement = StateElement & {
+export type V2FileContractElement = {
+  id: string
   v2FileContract: V2FileContract
+  stateElement: StateElement
 }
 
-export type AttestationElement = StateElement & {
+export type AttestationElement = {
+  id: string
   attestation: Attestation
+  stateElement: StateElement
+}
+
+export type ChainIndexElement = {
+  id: BlockID
+  stateElement: StateElement
+  chainIndex: ChainIndex
 }
 
 type V2FileContractResolutionTypeBase = {
@@ -137,9 +148,7 @@ export type V2FileContractResolutionDataStorageProof =
   V2FileContractResolutionTypeBase & {
     type: 'storage proof'
     resolution: {
-      proofIndex: StateElement & {
-        chainIndex: ChainIndex
-      }
+      proofIndex: ChainIndexElement
       leaf: string
       proof: MerkleProof
     }
