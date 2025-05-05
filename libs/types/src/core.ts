@@ -17,9 +17,8 @@ export type Address = string
 export type MerkleProof = Hash256[] | null
 
 export type StateElement = {
-  id: string
   leafIndex: number
-  merkleProof: MerkleProof
+  merkleProof?: MerkleProof
 }
 
 export type UnlockConditions = {
@@ -59,14 +58,18 @@ export type SiacoinOutput = {
   address: string
 }
 
-export type SiacoinElement = StateElement & {
-  siacoinOutput: SiacoinOutput
+export type SiacoinElement = {
+  id: string
   maturityHeight: number
+  siacoinOutput: SiacoinOutput
+  stateElement: StateElement
 }
 
-export type SiafundElement = StateElement & {
+export type SiafundElement = {
+  id: string
+  maturityHeight: number
   siafundOutput: SiafundOutput
-  claimStart: string
+  stateElement: StateElement
 }
 
 export type CoveredFields = {
@@ -83,8 +86,10 @@ export type CoveredFields = {
   signatures?: number[]
 }
 
-export type FileContractElement = StateElement & {
+export type FileContractElement = {
+  id: string
   fileContract: FileContract
+  stateElement: StateElement
 }
 
 export type FileContract = {

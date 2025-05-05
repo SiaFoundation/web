@@ -1,5 +1,11 @@
 # @siafoundation/types
 
+## 0.11.0-beta.3
+
+### Minor Changes
+
+- bc271296: The v2 element structure was changed.
+
 ## 0.11.0-beta.2
 
 ### Minor Changes

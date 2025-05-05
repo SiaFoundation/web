@@ -1,5 +1,12 @@
 # @siafoundation/react-core
 
+## 5.0.0-beta.3
+
+### Patch Changes
+
+- Updated dependencies [bc271296]
+  - @siafoundation/types@0.11.0-beta.3
+
 ## 5.0.0-beta.2
 
 ### Patch Changes
