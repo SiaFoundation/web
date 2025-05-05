@@ -1,5 +1,15 @@
 # @siafoundation/renterd-react
 
+## 4.15.4-beta.0
+
+### Patch Changes
+
+- The library is now published in both ESM and CJS.
+- Updated dependencies
+  - @siafoundation/react-core@4.0.2-beta.0
+  - @siafoundation/renterd-types@0.17.1-beta.0
+  - @siafoundation/units@3.4.2-beta.0
+
 ## 4.15.3
 
 ### Patch Changes

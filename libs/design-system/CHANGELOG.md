@@ -1,5 +1,19 @@
 # Changelog
 
+## 6.0.1-beta.0
+
+### Patch Changes
+
+- The library is now published in both ESM and CJS.
+- Updated dependencies
+  - @siafoundation/explored-react@0.7.1-beta.0
+  - @siafoundation/explored-types@0.16.1-beta.0
+  - @siafoundation/next@0.1.4-beta.0
+  - @siafoundation/react-core@4.0.2-beta.0
+  - @siafoundation/react-icons@0.3.1-beta.0
+  - @siafoundation/types@0.10.1-beta.0
+  - @siafoundation/units@3.4.2-beta.0
+
 ## 6.0.0
 
 ### Minor Changes

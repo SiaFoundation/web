@@ -1,11 +1,11 @@
 {
   "name": "@siafoundation/walletd-js",
   "description": "SDK for interacting with `walletd`.",
-  "version": "0.3.3",
+  "version": "0.3.4-beta.0",
   "license": "MIT",
   "dependencies": {
-    "@siafoundation/request": "0.3.0",
-    "@siafoundation/walletd-types": "0.6.2"
+    "@siafoundation/request": "0.3.1-beta.0",
+    "@siafoundation/walletd-types": "0.6.3-beta.0"
   },
   "types": "./src/index.d.ts"
 }

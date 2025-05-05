@@ -1,7 +1,7 @@
 {
   "name": "@siafoundation/types",
   "description": "Core Sia types and library methods.",
-  "version": "0.10.0",
+  "version": "0.10.1-beta.0",
   "license": "MIT",
   "types": "./src/index.d.ts"
 }

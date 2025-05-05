@@ -1,5 +1,14 @@
 # @siafoundation/explored-js
 
+## 0.7.1-beta.0
+
+### Patch Changes
+
+- The library is now published in both ESM and CJS.
+- Updated dependencies
+  - @siafoundation/explored-types@0.16.1-beta.0
+  - @siafoundation/request@0.3.1-beta.0
+
 ## 0.7.0
 
 ### Minor Changes

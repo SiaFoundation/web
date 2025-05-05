@@ -1,5 +1,14 @@
 # @siafoundation/hostd-js
 
+## 0.5.3-beta.0
+
+### Patch Changes
+
+- The library is now published in both ESM and CJS.
+- Updated dependencies
+  - @siafoundation/hostd-types@0.8.1-beta.0
+  - @siafoundation/request@0.3.1-beta.0
+
 ## 0.5.2
 
 ### Patch Changes

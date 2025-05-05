@@ -1,5 +1,12 @@
 # @siafoundation/sia-central-react
 
+## 3.1.6-beta.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @siafoundation/react-core@4.0.2-beta.0
+
 ## 3.1.5
 
 ### Patch Changes

@@ -1,7 +1,7 @@
 {
   "name": "@siafoundation/data-sources",
   "description": "Data sources used for stats on the website.",
-  "version": "0.5.0",
+  "version": "0.5.1-beta.0",
   "private": true,
   "license": "MIT",
   "dependencies": {

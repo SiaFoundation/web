@@ -1,5 +1,16 @@
 # @siafoundation/clusterd
 
+## 0.2.5-beta.0
+
+### Patch Changes
+
+- The library is now published in both ESM and CJS.
+- Updated dependencies
+  - @siafoundation/hostd-js@0.5.3-beta.0
+  - @siafoundation/renterd-js@0.14.4-beta.0
+  - @siafoundation/types@0.10.1-beta.0
+  - @siafoundation/units@3.4.2-beta.0
+
 ## 0.2.4
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @siafoundation/explored-types
 
+## 0.16.1-beta.0
+
+### Patch Changes
+
+- The library is now published in both ESM and CJS.
+- Updated dependencies
+  - @siafoundation/types@0.10.1-beta.0
+
 ## 0.16.0
 
 ### Minor Changes

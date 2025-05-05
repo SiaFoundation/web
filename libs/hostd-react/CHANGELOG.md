@@ -1,5 +1,15 @@
 # @siafoundation/hostd-react
 
+## 4.6.3-beta.0
+
+### Patch Changes
+
+- The library is now published in both ESM and CJS.
+- Updated dependencies
+  - @siafoundation/hostd-types@0.8.1-beta.0
+  - @siafoundation/react-core@4.0.2-beta.0
+  - @siafoundation/units@3.4.2-beta.0
+
 ## 4.6.2
 
 ### Patch Changes

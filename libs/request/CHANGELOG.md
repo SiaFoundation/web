@@ -1,5 +1,11 @@
 # @siafoundation/request
 
+## 0.3.1-beta.0
+
+### Patch Changes
+
+- The library is now published in both ESM and CJS.
+
 ## 0.3.0
 
 ### Minor Changes

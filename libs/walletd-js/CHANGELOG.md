@@ -1,5 +1,14 @@
 # @siafoundation/walletd-js
 
+## 0.3.4-beta.0
+
+### Patch Changes
+
+- The library is now published in both ESM and CJS.
+- Updated dependencies
+  - @siafoundation/request@0.3.1-beta.0
+  - @siafoundation/walletd-types@0.6.3-beta.0
+
 ## 0.3.3
 
 ### Patch Changes

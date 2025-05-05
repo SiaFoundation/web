@@ -1,10 +1,10 @@
 {
   "name": "@siafoundation/hostd-types",
   "description": "Types for `hostd`.",
-  "version": "0.8.0",
+  "version": "0.8.1-beta.0",
   "license": "MIT",
   "dependencies": {
-    "@siafoundation/types": "^0.10.0"
+    "@siafoundation/types": "^0.10.1-beta.0"
   },
   "types": "./src/index.d.ts"
 }
