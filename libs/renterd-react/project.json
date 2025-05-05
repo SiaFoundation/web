@@ -17,6 +17,7 @@
         "compiler": "tsc",
         "outputFileName": "index.js",
         "rollupConfig": "libs/renterd-react/rollup.config.js",
+        "format": ["esm", "cjs"],
         "assets": [
           {
             "glob": "libs/renterd-react/*.md",
