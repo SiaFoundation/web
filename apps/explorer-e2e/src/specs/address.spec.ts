@@ -75,7 +75,7 @@ test('address displays the intended data', async ({ page }) => {
   await explorerApp.goTo('/address/' + address)
   await expect(page.getByText(`Address ${address.slice(0, 5)}`)).toBeVisible()
   await expect(page.getByText(events.data[0].id.slice(0, 5))).toBeVisible()
-  await expect(page.getByText(`${events.data.length} events`)).toBeVisible()
+  await expect(page.getByTestId('entity-link')).toHaveCount(events.data.length)
   await page.getByRole('tab').getByText('Unspent outputs').click()
   await expect(page.getByText('Siacoin output').first()).toBeVisible()
   await expect(
