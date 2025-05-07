@@ -316,13 +316,13 @@ export function getConsensusState() {
     depth: '00000000000203572d5b49ea0e554f31ba43d81854d4313433fbb59f6c0db0b3',
     childTarget:
       '00000001724087005d8de96a9feb9a37bd483392cbb691f9cc73b5c9d14cc861',
-    siafundPool: '33603845293260630383068710000',
+    siafundTaxRevenue: '33603845293260630383068710000',
     oakTime: 117766000000000,
     oakTarget:
       '0000000001d8373aecb257ac55c0077f7fe0d8e7c02053cefe7215aa480fdc63',
-    foundationPrimaryAddress:
+    foundationSubsidyAddress:
       '053b2def3cbdd078c19d62ce2b4f0b1a3c5e0ffbeeff01280efb1f8969b2f5bb4fdc680f0807',
-    foundationFailsafeAddress:
+    foundationManagementAddress:
       '000000000000000000000000000000000000000000000000000000000000000089eb0d6a8a69',
     totalWork: '139825201060364',
     difficulty: '2969630008',
