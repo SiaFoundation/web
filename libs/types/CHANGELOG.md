@@ -1,5 +1,11 @@
 # @siafoundation/types
 
+## 0.11.0-beta.2
+
+### Minor Changes
+
+- Renamed state foundationSubsidyAddress and foundationManagementAddress.
+
 ## 0.11.0-beta.1
 
 ### Minor Changes

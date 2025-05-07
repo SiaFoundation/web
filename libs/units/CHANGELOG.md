@@ -1,5 +1,12 @@
 # @siafoundation/units
 
+## 3.4.2-beta.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @siafoundation/types@0.11.0-beta.2
+
 ## 3.4.2-beta.1
 
 ### Patch Changes

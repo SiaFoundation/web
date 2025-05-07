@@ -187,8 +187,8 @@ export type ConsensusState = {
   siafundTaxRevenue: string
   oakTime: number
   oakTarget: string
-  foundationPrimaryAddress: string
-  foundationFailsafeAddress: string
+  foundationSubsidyAddress: string
+  foundationManagementAddress: string
   totalWork: string
   difficulty: string
   oakWork: string

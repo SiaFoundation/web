@@ -1,5 +1,12 @@
 # @siafoundation/walletd-react
 
+## 4.4.5-beta.2
+
+### Patch Changes
+
+- @siafoundation/react-core@5.0.0-beta.2
+- @siafoundation/units@3.4.2-beta.2
+
 ## 4.4.5-beta.1
 
 ### Patch Changes
