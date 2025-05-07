@@ -25,13 +25,13 @@ export function getMockConsensusTipStateResponse(): ConsensusState {
     depth: '000000000001aa096ddebfbf467c56faba46eb4b3e53e72c775bf9ab202a4890',
     childTarget:
       '0000005a6c49bca6186415827e15b13371c3de541dd64b7cf36a519b5128b2f8',
-    siafundPool: '88386728360671853873752300000',
+    siafundTaxRevenue: '88386728360671853873752300000',
     oakTime: 127103000000000,
     oakTarget:
       '0000000024d11bd550a6acf3718192825fa2cef5582314db8e92c4f4e5efbf4c',
-    foundationPrimaryAddress:
+    foundationSubsidyAddress:
       '053b2def3cbdd078c19d62ce2b4f0b1a3c5e0ffbeeff01280efb1f8969b2f5bb4fdc680f0807',
-    foundationFailsafeAddress:
+    foundationManagementAddress:
       '000000000000000000000000000000000000000000000000000000000000000089eb0d6a8a69',
     totalWork: '169134658088983',
     difficulty: '47498615',
