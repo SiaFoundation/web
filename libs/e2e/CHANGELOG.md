@@ -1,5 +1,12 @@
 # @siafoundation/e2e
 
+## 0.6.4-beta.1
+
+### Patch Changes
+
+- @siafoundation/explored-types@0.16.1-beta.1
+- @siafoundation/react-core@5.0.0-beta.1
+
 ## 0.6.4-beta.0
 
 ### Patch Changes

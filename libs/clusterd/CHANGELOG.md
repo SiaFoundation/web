@@ -1,5 +1,15 @@
 # @siafoundation/clusterd
 
+## 0.2.5-beta.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @siafoundation/types@0.11.0-beta.1
+  - @siafoundation/units@3.4.2-beta.1
+  - @siafoundation/hostd-js@0.5.3-beta.1
+  - @siafoundation/renterd-js@0.14.4-beta.1
+
 ## 0.2.5-beta.0
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @siafoundation/explored-js
 
+## 0.7.1-beta.1
+
+### Patch Changes
+
+- @siafoundation/explored-types@0.16.1-beta.1
+
 ## 0.7.1-beta.0
 
 ### Patch Changes

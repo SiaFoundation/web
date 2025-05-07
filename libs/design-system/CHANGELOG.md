@@ -1,5 +1,16 @@
 # Changelog
 
+## 6.0.1-beta.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @siafoundation/types@0.11.0-beta.1
+  - @siafoundation/explored-types@0.16.1-beta.1
+  - @siafoundation/react-core@5.0.0-beta.1
+  - @siafoundation/units@3.4.2-beta.1
+  - @siafoundation/explored-react@0.7.1-beta.1
+
 ## 6.0.1-beta.0
 
 ### Patch Changes

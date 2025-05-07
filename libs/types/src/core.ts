@@ -184,7 +184,7 @@ export type ConsensusState = {
   prevTimestamps: string[]
   depth: string
   childTarget: string
-  siafundPool: string
+  siafundTaxRevenue: string
   oakTime: number
   oakTarget: string
   foundationPrimaryAddress: string

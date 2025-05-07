@@ -38,6 +38,7 @@
     "@siafoundation/walletd-types": "0.6.2"
   },
   "changesets": [
+    "kind-plants-sin",
     "pretty-insects-rhyme"
   ]
 }

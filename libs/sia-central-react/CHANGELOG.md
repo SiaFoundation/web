@@ -1,5 +1,11 @@
 # @siafoundation/sia-central-react
 
+## 3.1.6-beta.1
+
+### Patch Changes
+
+- @siafoundation/react-core@5.0.0-beta.1
+
 ## 3.1.6-beta.0
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @siafoundation/renterd-react
 
+## 4.15.4-beta.1
+
+### Patch Changes
+
+- @siafoundation/react-core@5.0.0-beta.1
+- @siafoundation/renterd-types@0.17.1-beta.1
+- @siafoundation/units@3.4.2-beta.1
+
 ## 4.15.4-beta.0
 
 ### Patch Changes

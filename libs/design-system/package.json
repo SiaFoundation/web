@@ -1,18 +1,18 @@
 {
   "name": "@siafoundation/design-system",
   "description": "React-based design system used across Sia apps and websites.",
-  "version": "6.0.1-beta.0",
+  "version": "6.0.1-beta.1",
   "license": "MIT",
   "peerDependencies": {
     "react": "^18.2.0",
-    "@siafoundation/explored-types": "0.16.1-beta.0",
-    "@siafoundation/explored-react": "0.7.1-beta.0"
+    "@siafoundation/explored-types": "0.16.1-beta.1",
+    "@siafoundation/explored-react": "0.7.1-beta.1"
   },
   "dependencies": {
     "@siafoundation/react-icons": "^0.3.1-beta.0",
-    "@siafoundation/react-core": "^4.0.2-beta.0",
-    "@siafoundation/units": "^3.4.2-beta.0",
-    "@siafoundation/types": "^0.10.1-beta.0",
+    "@siafoundation/react-core": "^5.0.0-beta.1",
+    "@siafoundation/units": "^3.4.2-beta.1",
+    "@siafoundation/types": "^0.11.0-beta.1",
     "@siafoundation/next": "^0.1.4-beta.0",
     "@radix-ui/react-visually-hidden": "^1.1.0",
     "class-variance-authority": "^0.7.0",

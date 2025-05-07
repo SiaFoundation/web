@@ -1,5 +1,12 @@
 # @siafoundation/explored-types
 
+## 0.16.1-beta.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @siafoundation/types@0.11.0-beta.1
+
 ## 0.16.1-beta.0
 
 ### Patch Changes

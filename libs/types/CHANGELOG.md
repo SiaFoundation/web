@@ -1,5 +1,11 @@
 # @siafoundation/types
 
+## 0.11.0-beta.1
+
+### Minor Changes
+
+- ConsensusState siafundPool is now siafundTaxRevenue.
+
 ## 0.10.1-beta.0
 
 ### Patch Changes
