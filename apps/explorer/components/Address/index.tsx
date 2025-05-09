@@ -1,40 +1,38 @@
 'use client'
 
+import { useMemo, useState } from 'react'
+import useSWRInfinite from 'swr/infinite'
+import BigNumber from 'bignumber.js'
 import {
-  Badge,
+  AddressBalance,
+  EventPayout,
+  EventV1ContractResolution,
+  EventV1Transaction,
+  EventV2ContractResolution,
+  ExplorerEvent,
+  ExplorerSiacoinOutput,
+  ExplorerV2Transaction,
+} from '@siafoundation/explored-types'
+import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-  Tooltip,
 } from '@siafoundation/design-system'
+import { routes } from '../../config/routes'
 import { EntityList } from '../Entity/EntityList'
 import { EntityListItemProps } from '../Entity/EntityListItem'
-import { humanNumber } from '@siafoundation/units'
 import { ExplorerDatum, DatumProps } from '../ExplorerDatum'
-import { useMemo, useState } from 'react'
-import { routes } from '../../config/routes'
 import { EntityHeading } from '../EntityHeading'
-import BigNumber from 'bignumber.js'
 import { ContentLayout } from '../ContentLayout'
-import {
-  AddressBalance,
-  ExplorerEvent,
-  EventPayout,
-  EventV1ContractResolution,
-  EventV1Transaction,
-  ExplorerSiacoinOutput,
-  ExplorerV2Transaction,
-  EventV2ContractResolution,
-} from '@siafoundation/explored-types'
+import { useExplored } from '../../hooks/useExplored'
 
-type Tab = 'events' | 'evolution' | 'utxos'
+type Tab = 'events' | 'utxos'
 
 type Props = {
   id: string
   addressInfo: {
     balance: AddressBalance
-    events: ExplorerEvent[]
     unconfirmedEvents: ExplorerEvent[]
     unspentOutputs: ExplorerSiacoinOutput[]
   }
@@ -44,12 +42,54 @@ export function Address({
   id,
   addressInfo: {
     balance: { unspentSiacoins, unspentSiafunds },
-    events,
     unconfirmedEvents,
     unspentOutputs,
   },
 }: Props) {
   const [tab, setTab] = useState<Tab>('events')
+  const [exhausted, setExhausted] = useState(false)
+  const explored = useExplored()
+
+  const getKey = (
+    pageIndex: number,
+    previousPageData: ExplorerEvent[] | null
+  ) => {
+    if (previousPageData && !previousPageData.length) return null
+    return { address: id, limit: 100, offset: pageIndex * 100 }
+  }
+
+  const { data, isValidating, setSize } = useSWRInfinite<ExplorerEvent[]>(
+    getKey,
+    async ({ address, limit, offset }) => {
+      const { data } = await explored.addressEvents({
+        params: { address, limit, offset },
+      })
+      if (data.length < 100) setExhausted(true)
+      return data
+    },
+    {
+      revalidateOnFocus: false,
+      revalidateFirstPage: false,
+    }
+  )
+
+  const confirmedEvents = useMemo(() => data?.flat() || [], [data])
+
+  const eventEntities = useMemo(() => {
+    return [
+      ...unconfirmedEvents.map((event) => formatEvent(id, event, true)),
+      ...confirmedEvents.map((event) => formatEvent(id, event, false)),
+    ].sort(
+      (a, b) =>
+        new Date(b.timestamp || 0).getTime() -
+        new Date(a.timestamp || 0).getTime()
+    )
+  }, [id, confirmedEvents, unconfirmedEvents])
+
+  const fetchMoreEvents = () => {
+    if (isValidating || exhausted) return
+    setSize((prevSize) => prevSize + 1)
+  }
 
   const values = useMemo(() => {
     const list: DatumProps[] = [
@@ -67,52 +107,28 @@ export function Address({
     return list
   }, [unspentSiacoins, unspentSiafunds])
 
-  const eventEntities = useMemo(() => {
-    const list: EntityListItemProps[] = [
-      ...unconfirmedEvents.map((uEvent) => formatEvent(id, uEvent, true)),
-      ...events.map((event) => formatEvent(id, event)),
-    ]
-
-    return list.sort(
-      (a, b) =>
-        new Date(b.timestamp || 0).getTime() -
-        new Date(a.timestamp || 0).getTime()
-    )
-  }, [id, events, unconfirmedEvents])
-
   const utxos = useMemo(() => {
-    const list: EntityListItemProps[] = []
-    if (unspentOutputs.length) {
-      unspentOutputs.forEach((output) =>
-        list.push(formatUnspentSiacoinOutputEntity(output))
-      )
-    }
-    return list
+    return unspentOutputs.map((output) =>
+      formatUnspentSiacoinOutputEntity(output)
+    )
   }, [unspentOutputs])
 
   return (
     <ContentLayout
       panel={
         <div className="flex flex-col gap-10">
-          <div className="flex flex-wrap gap-y-2 justify-between items-center">
+          <div className="flex flex-wrap gap-y-2 justify-between items-start">
             <EntityHeading
               label="address"
               type="address"
               value={id}
               href={routes.address.view.replace(':id', id)}
             />
-            <div className="flex gap-2 items-center">
-              <Tooltip content={`${humanNumber(events.length)} total events`}>
-                <Badge variant="accent">
-                  {`${humanNumber(events.length)}`} events
-                </Badge>
-              </Tooltip>
+            <div className="flex flex-col gap-1">
+              {values.map((item) => (
+                <ExplorerDatum key={item.label} {...item} />
+              ))}
             </div>
-          </div>
-          <div className="flex flex-col gap-y-2 md:gap-y-4 max-w-sm">
-            {values.map((item) => (
-              <ExplorerDatum key={item.label} {...item} />
-            ))}
           </div>
         </div>
       }
@@ -127,10 +143,16 @@ export function Address({
           <TabsTrigger value="utxos">Unspent outputs</TabsTrigger>
         </TabsList>
         <TabsContent value="events">
-          <EntityList dataset={eventEntities} />
+          <EntityList
+            dataset={eventEntities}
+            onScrollThroughMiddle={!exhausted ? fetchMoreEvents : undefined}
+            exhausted={exhausted}
+            isLoading={isValidating}
+            skeletonCount={100}
+          />
         </TabsContent>
         <TabsContent value="utxos">
-          <EntityList dataset={utxos} />
+          <EntityList dataset={utxos} skeletonCount={100} />
         </TabsContent>
       </Tabs>
     </ContentLayout>

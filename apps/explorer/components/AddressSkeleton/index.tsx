@@ -4,22 +4,18 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-  DatumSkeleton,
 } from '@siafoundation/design-system'
 import { EntityList } from '../Entity/EntityList'
-import { times } from '@technically/lodash'
 import { ContentLayout } from '../ContentLayout'
 
 export function AddressSkeleton() {
   return (
     <ContentLayout
       panel={
-        <div className="flex flex-col gap-12">
-          <Skeleton className="h-[32px] w-[70%]" />
-          <div className="flex flex-col gap-y-2 md:gap-y-4 max-w-sm">
-            {times(1, (i) => (
-              <DatumSkeleton key={i} />
-            ))}
+        <div className="flex flex-col gap-10">
+          <div className="flex flex-wrap gap-y-2 justify-between items-start">
+            <Skeleton className="h-[32px] w-[30%]" />
+            <Skeleton className="h-[32px] w-[10%]" />
           </div>
         </div>
       }

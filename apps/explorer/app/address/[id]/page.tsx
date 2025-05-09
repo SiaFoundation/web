@@ -24,14 +24,13 @@ export const revalidate = 0
 export default async function Page({ params }) {
   const address = params?.id as string
 
+  // Fetch initial 20 events only
   const [
     [balance, balanceError, balanceResponse],
-    { data: events },
     { data: unconfirmedEvents },
     { data: unspentOutputs },
   ] = await Promise.all([
     to(getExplored().addressBalance({ params: { address } })),
-    getExplored().addressEvents({ params: { address, limit: 500 } }),
     getExplored().addressUnconfirmedEvents({ params: { address } }),
     getExplored().addressSiacoinUTXOs({ params: { address } }),
   ])
@@ -46,7 +45,6 @@ export default async function Page({ params }) {
       id={address}
       addressInfo={{
         balance,
-        events,
         unconfirmedEvents,
         unspentOutputs,
       }}

@@ -20,6 +20,7 @@ import { upperFirst } from '@technically/lodash'
 import BigNumber from 'bignumber.js'
 import { DotMark16 } from '@siafoundation/react-icons'
 import { EntityListItemLayout } from './EntityListItemLayout'
+import LoadingTimestamp from '../LoadingTimestamp'
 
 export type EntityListItemProps = {
   label?: string
@@ -107,11 +108,13 @@ export function EntityListItem(entity: EntityListItemProps) {
               </>
             ) : null}
             {entity.timestamp && (
-              <Text color="subtle">
-                {formatDistance(new Date(entity.timestamp), new Date(), {
-                  addSuffix: true,
-                })}
-              </Text>
+              <LoadingTimestamp className="w-[130px]">
+                <Text color="subtle">
+                  {formatDistance(new Date(entity.timestamp), new Date(), {
+                    addSuffix: true,
+                  })}
+                </Text>
+              </LoadingTimestamp>
             )}
           </div>
         </div>
