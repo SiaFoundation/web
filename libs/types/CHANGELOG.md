@@ -1,5 +1,12 @@
 # @siafoundation/types
 
+## 0.11.0
+
+### Minor Changes
+
+- ca620883: The siafund and foundation fields on ConsensusState were renamed.
+- 4f1fb6eb: The v2 element structure was changed.
+
 ## 0.10.0
 
 ### Minor Changes
