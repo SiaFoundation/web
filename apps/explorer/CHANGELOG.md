@@ -1,5 +1,12 @@
 # explorer
 
+## 0.31.0
+
+### Minor Changes
+
+- c649f08e: Added renewedTo and renewedFrom buttons to the v2 contract pages.
+- 8a48af34: Added search support for v2 contracts and transactions.
+
 ## 0.30.0
 
 ### Minor Changes
