@@ -118,13 +118,6 @@ export function WalletSendLedgerDialogV2({
       signedTxnId={signedTxnId}
       step={step}
       setStep={setStep}
-      disabledMessage={
-        <>
-          Ledger wallets do not support sending V2 transactions at this time.
-          This feature will be released very soon in a future version so make
-          sure to check for updates.
-        </>
-      }
     />
   )
 }

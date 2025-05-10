@@ -33,6 +33,7 @@ func main() {
 			"addressFromUnlockConditions": jsFunc(addressFromUnlockConditions),
 			"addressFromSpendPolicy":      jsFunc(addressFromSpendPolicy),
 			"encodeTransaction":           jsFunc(encodeTransaction),
+			"encodeV2Transaction":         jsFunc(encodeV2Transaction),
 			"transactionId":               jsFunc(transactionID),
 			"signTransactionV1":           jsFunc(signTransactionV1),
 			"v2TransactionInputSigHash":   jsFunc(v2TransactionInputSigHash),
