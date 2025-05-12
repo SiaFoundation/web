@@ -77,11 +77,24 @@ export function EntityListItem(entity: EntityListItemProps) {
               </Text>
             )}
             {title ? (
-              <Tooltip content={title}>
-                <Text ellipsis weight="medium">
-                  {title}
-                </Text>
-              </Tooltip>
+              entity.href ? (
+                <Tooltip content={title}>
+                  <Link
+                    ellipsis
+                    weight="medium"
+                    underline="none"
+                    href={entity.href}
+                  >
+                    {title}
+                  </Link>
+                </Tooltip>
+              ) : (
+                <Tooltip content={title}>
+                  <Text ellipsis weight="medium">
+                    {title}
+                  </Text>
+                </Tooltip>
+              )
             ) : (
               <Text ellipsis weight="medium">
                 {truncHashEl}
