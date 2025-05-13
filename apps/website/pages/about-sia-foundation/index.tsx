@@ -92,9 +92,9 @@ function Foundation({ team, featured, reports }: Props) {
                   our documentation
                 </Link>
                 . For general inquiries email{' '}
-                <Link href={`mailto:${webLinks.email}`}>info@sia.tech</Link>. If
-                you are interested in a career at The Sia Foundation please see
-                our{' '}
+                <Link href={`mailto:${webLinks.email}`}>{webLinks.email}</Link>.
+                If you are interested in a career at The Sia Foundation please
+                see our{' '}
                 <Link href={webLinks.jobs} target="_blank">
                   openings
                 </Link>
