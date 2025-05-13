@@ -3,7 +3,13 @@
 import { Text } from '../core/Text'
 import { Button } from '../core/Button'
 import { Link } from '../core/Link'
-import { CaretDown16, Copy16, Launch16 } from '@siafoundation/react-icons'
+import {
+  ArrowLeft16,
+  ArrowRight16,
+  CaretDown16,
+  Copy16,
+  Launch16,
+} from '@siafoundation/react-icons'
 import { copyToClipboard } from '../lib/clipboard'
 import { stripPrefix } from '../lib/utils'
 import {
@@ -22,6 +28,8 @@ import {
   DropdownMenuLeftSlot,
 } from '../core/DropdownMenu'
 
+import { useState } from 'react'
+
 type Props = {
   labeledBy?: string
   testId?: string
@@ -39,6 +47,7 @@ type Props = {
   className?: string
   siascanUrl?: string
   contextMenu?: React.ReactNode
+  expandable?: boolean
 }
 
 export function ValueCopyable({
@@ -58,14 +67,18 @@ export function ValueCopyable({
   className,
   siascanUrl,
   contextMenu,
+  expandable = false,
 }: Props) {
+  const [expanded, setExpanded] = useState(false)
+
   const label = customLabel || getEntityTypeCopyLabel(type)
-  const maxLength = customMaxLength || getEntityDisplayLength(type)
+  const maxLength = expanded
+    ? undefined
+    : customMaxLength || (type ? getEntityDisplayLength(type) : 20)
   const cleanValue = stripPrefix(value)
-  // If we pass a defaultValue, use it. An entityType? Format it.
   const renderValue =
-    displayValue || (type && formatEntityValue(type, cleanValue, maxLength))
-  // If we don't yet have a renderValue, apply some general formatting.
+    displayValue ||
+    (type ? formatEntityValue(type, cleanValue, maxLength) : cleanValue)
   const text = renderValue || defaultFormatValue(cleanValue, maxLength)
 
   return (
@@ -80,7 +93,7 @@ export function ValueCopyable({
           color={color}
           weight={weight}
           font={font}
-          ellipsis
+          ellipsis={!expanded}
           onDoubleClick={(e) => {
             e.preventDefault()
             copyToClipboard(cleanValue, label)
@@ -96,7 +109,7 @@ export function ValueCopyable({
           color={color}
           weight={weight}
           font={font}
-          ellipsis
+          ellipsis={!expanded}
           onDoubleClick={() => {
             copyToClipboard(cleanValue, label)
           }}
@@ -112,6 +125,14 @@ export function ValueCopyable({
             size={size}
             siascanUrl={siascanUrl}
             type={type}
+            expandable={
+              expandable
+                ? {
+                    expanded,
+                    onExpand: () => setExpanded((expanded) => !expanded),
+                  }
+                : undefined
+            }
           />
         )}
       </div>
@@ -125,12 +146,17 @@ export function ValueContextMenu({
   label,
   siascanUrl,
   type,
+  expandable,
 }: {
   cleanValue: string
   type?: EntityType
   label?: string
   size?: React.ComponentProps<typeof Text>['size']
   siascanUrl?: string
+  expandable?: {
+    expanded?: boolean
+    onExpand?: () => void
+  }
 }) {
   return (
     <DropdownMenu
@@ -154,6 +180,14 @@ export function ValueContextMenu({
         </DropdownMenuLeftSlot>
         Copy to clipboard
       </DropdownMenuItem>
+      {expandable && (
+        <DropdownMenuItem onClick={expandable.onExpand}>
+          <DropdownMenuLeftSlot>
+            {expandable.expanded ? <ArrowLeft16 /> : <ArrowRight16 />}
+          </DropdownMenuLeftSlot>
+          {expandable.expanded ? 'Collapse' : 'Expand'}
+        </DropdownMenuItem>
+      )}
       {siascanUrl && type && doesEntityHaveSiascanUrl(type) && (
         <Link
           target="_blank"

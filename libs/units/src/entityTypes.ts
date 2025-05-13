@@ -79,7 +79,8 @@ export function getEntitySiascanUrl(
   }
 }
 
-export function defaultFormatValue(text: string, maxLength: number) {
+export function defaultFormatValue(text: string, maxLength?: number) {
+  if (!maxLength) return text
   return `${text?.slice(0, maxLength)}${
     (text?.length || 0) > maxLength ? '...' : ''
   }`
@@ -88,8 +89,9 @@ export function defaultFormatValue(text: string, maxLength: number) {
 export function formatEntityValue(
   type: EntityType,
   text: string,
-  maxLength: number
+  maxLength?: number
 ) {
+  if (!maxLength) return text
   switch (type) {
     case 'blockHash': {
       const halfMax = maxLength / 2
