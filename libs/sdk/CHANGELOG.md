@@ -1,5 +1,11 @@
 # @siafoundation/sdk
 
+## 0.4.0-beta.6
+
+### Minor Changes
+
+- 3740d416: Updated sdk core deps.
+
 ## 0.4.0-beta.5
 
 ### Patch Changes
