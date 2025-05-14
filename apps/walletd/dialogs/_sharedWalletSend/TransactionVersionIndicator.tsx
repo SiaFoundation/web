@@ -1,15 +1,6 @@
 import { Text } from '@siafoundation/design-system'
-import {
-  useConsensusNetwork,
-  useConsensusTip,
-} from '@siafoundation/walletd-react'
-import {
-  isPastV2AllowHeight,
-  isPastV2RequireHeight,
-  getHardforkV2RequireHeight,
-  getHardforkV2AllowHeight,
-  getNetwork,
-} from './hardforkV2'
+import { useConsensusNetwork } from '@siafoundation/walletd-react'
+import { useIsPastV2AllowHeight, useIsPastV2RequireHeight } from './hardforkV2'
 
 export function TransactionVersionIndicator({
   type,
@@ -17,22 +8,11 @@ export function TransactionVersionIndicator({
   type: 'seed' | 'ledger'
 }) {
   const n = useConsensusNetwork()
-  const ct = useConsensusTip()
-  const height = ct.data?.height || 0
-  const network = getNetwork(n.data?.name)
-
-  const requireHeight = getHardforkV2RequireHeight(network).toLocaleString()
-  const allowHeight = getHardforkV2AllowHeight(network).toLocaleString()
-
-  const isV2Allowed = isPastV2AllowHeight({
-    network,
-    height,
-  })
-
-  const isV2Required = isPastV2RequireHeight({
-    network,
-    height,
-  })
+  const network = n.data?.name
+  const requireHeight = n.data?.hardforkV2.requireHeight.toLocaleString()
+  const allowHeight = n.data?.hardforkV2.allowHeight.toLocaleString()
+  const isV2Allowed = useIsPastV2AllowHeight()
+  const isV2Required = useIsPastV2RequireHeight()
 
   if (type === 'ledger') {
     let text = ''
