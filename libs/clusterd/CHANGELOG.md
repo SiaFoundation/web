@@ -1,5 +1,15 @@
 # @siafoundation/clusterd
 
+## 0.2.5-beta.4
+
+### Patch Changes
+
+- Updated dependencies [d610b0f7]
+- Updated dependencies [d610b0f7]
+- Updated dependencies [d610b0f7]
+  - @siafoundation/types@0.11.0-beta.4
+  - @siafoundation/units@3.4.2-beta.4
+
 ## 0.2.5-beta.3
 
 ### Patch Changes

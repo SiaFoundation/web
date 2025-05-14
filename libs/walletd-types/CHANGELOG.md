@@ -1,5 +1,18 @@
 # @siafoundation/walletd-types
 
+## 0.7.0-beta.3
+
+### Minor Changes
+
+- 4a348ef4: The transaction pool broadcast API now returns the full transaction set.
+
+### Patch Changes
+
+- Updated dependencies [d610b0f7]
+- Updated dependencies [d610b0f7]
+- Updated dependencies [d610b0f7]
+  - @siafoundation/types@0.11.0-beta.4
+
 ## 0.7.0-beta.2
 
 ### Minor Changes

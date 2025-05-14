@@ -1,5 +1,11 @@
 # @siafoundation/e2e
 
+## 0.6.4-beta.4
+
+### Patch Changes
+
+- @siafoundation/react-core@5.0.0-beta.4
+
 ## 0.6.4-beta.3
 
 ### Patch Changes

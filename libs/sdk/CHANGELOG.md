@@ -1,5 +1,14 @@
 # @siafoundation/sdk
 
+## 0.4.0-beta.5
+
+### Patch Changes
+
+- Updated dependencies [d610b0f7]
+- Updated dependencies [d610b0f7]
+- Updated dependencies [d610b0f7]
+  - @siafoundation/types@0.11.0-beta.4
+
 ## 0.4.0-beta.4
 
 ### Minor Changes

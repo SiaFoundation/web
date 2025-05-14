@@ -1,5 +1,13 @@
 # @siafoundation/types
 
+## 0.11.0-beta.4
+
+### Minor Changes
+
+- d610b0f7: v1 siacoin and siafund inputs now have an address field.
+- d610b0f7: Both v1 and v2 (same type) siacoin and siafund outputs now have an id field.
+- d610b0f7: v1 and v2 transactions now both have an id field.
+
 ## 0.11.0-beta.3
 
 ### Minor Changes

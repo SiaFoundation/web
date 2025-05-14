@@ -1,5 +1,18 @@
 # @siafoundation/walletd-react
 
+## 4.5.0-beta.5
+
+### Minor Changes
+
+- 4a348ef4: The transaction pool broadcast API now returns the full transaction set.
+
+### Patch Changes
+
+- Updated dependencies [4a348ef4]
+  - @siafoundation/walletd-types@0.7.0-beta.3
+  - @siafoundation/react-core@5.0.0-beta.4
+  - @siafoundation/units@3.4.2-beta.4
+
 ## 4.5.0-beta.4
 
 ### Minor Changes
