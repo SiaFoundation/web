@@ -1,5 +1,14 @@
 # explorer
 
+## 0.31.0
+
+### Minor Changes
+
+- c649f08e: Added renewedTo and renewedFrom buttons to the v2 contract pages.
+- 0a20417c: Added title links to entity lists, improving navigation.
+- 8a48af34: Added search support for v2 contracts and transactions.
+- 25ff321d: Added infinite scroll to address page.
+
 ## 0.30.0
 
 ### Minor Changes
