@@ -5,6 +5,7 @@ import {
   getConsensusNetwork,
   getConsensusState,
   getTransaction,
+  getV2Transaction,
   mockPhrase,
 } from './wallet.mock'
 
@@ -164,6 +165,16 @@ describe('wallet', () => {
       const { id } = expectResult(sdk.wallet.transactionId(txn))
       expect(id).toEqual(
         '21cedbd4948a11132d54b278a9d0a51e23dbf03a727e01fe08875b7073ae9912'
+      )
+    })
+  })
+  describe('v2TransactionId', () => {
+    it('valid', async () => {
+      const sdk = await initSDKTest()
+      const txn = getV2Transaction()
+      const { id } = expectResult(sdk.wallet.v2TransactionId(txn))
+      expect(id).toEqual(
+        'bbd188c5826bc777738db3537ab112a9cffc3cdb73f5804744893b57e61f4a05'
       )
     })
   })

@@ -1,4 +1,4 @@
-import { Transaction } from '@siafoundation/types'
+import { Transaction, V2Transaction } from '@siafoundation/types'
 
 export const mockPhrase =
   'print fragile winter vote coach pledge deal lazy soap crystal easy amount'
@@ -65,6 +65,86 @@ export function getTransaction(): Transaction {
       },
     ],
     minerFees: ['3930000000000000000000'],
+  }
+}
+
+export function getV2Transaction(): V2Transaction {
+  return {
+    siacoinInputs: [
+      {
+        parent: {
+          id: 'aa3e781330c9b3991e0141807df1327fadf114ca6c37acb9e58004f942d91dfb',
+          maturityHeight: 0,
+          siacoinOutput: {
+            value: '1000000000000000000000000',
+            address:
+              '90c6057cdd2463eca61f83796e83152dbba28b6cb9a74831a043833051ec9f422726bfff2ee8',
+          },
+          stateElement: {
+            leafIndex: 304248,
+            merkleProof: [
+              '0a7a4c392f78899e3c38c5cd9e6a673b2c7afec97930af539af9c8e20209aa78',
+              'a1e074dc48634a234b7366a0d7ab19cd05e3e698e1d44bf07e24d75ae0c65b3c',
+            ],
+          },
+        },
+        satisfiedPolicy: {
+          policy: {
+            type: 'uc',
+            policy: {
+              timelock: 0,
+              publicKeys: [
+                'ed25519:ee122b2169bdae5776b55609e384e0c58372cd5c529d4edc9b9918b26f8e5535',
+              ],
+              signaturesRequired: 1,
+            },
+          },
+        },
+      },
+      {
+        parent: {
+          id: '32e430158591b4073a6834e9f4c4b67162e348844f569f4e472896bb72efb724',
+          maturityHeight: 0,
+          siacoinOutput: {
+            value: '97984280000000000000000000',
+            address:
+              'f2dbf56b5b0c698d7fbf43f646c76169d84e597e8b37fada97348beeecaa812d400ac4ce7981',
+          },
+          stateElement: {
+            leafIndex: 305723,
+            merkleProof: [
+              '8c02aeec48de589ce497ebe72fb8b527cfe022ef513fcfdc56745c84832f00ec',
+              '1bf63b9959e60272fd7a48a8cecd4120a852c0e14557ea27ccad6ea2071e70b3',
+            ],
+          },
+        },
+        satisfiedPolicy: {
+          policy: {
+            type: 'uc',
+            policy: {
+              timelock: 0,
+              publicKeys: [
+                'ed25519:ee122b2169bdae5776b55609e384e0c58372cd5c529d4edc9b9918b26f8e5535',
+              ],
+              signaturesRequired: 1,
+            },
+          },
+        },
+      },
+    ],
+    siacoinOutputs: [
+      {
+        value: '1000000000000000000000000',
+        address:
+          '90c6057cdd2463eca61f83796e83152dbba28b6cb9a74831a043833051ec9f422726bfff2ee8',
+      },
+      {
+        value: '97984280000000000000000000',
+        address:
+          'f2dbf56b5b0c698d7fbf43f646c76169d84e597e8b37fada97348beeecaa812d400ac4ce7981',
+      },
+    ],
+    minerFee: '3930000000000000000000',
   }
 }
 
