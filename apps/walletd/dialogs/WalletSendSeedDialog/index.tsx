@@ -1,10 +1,6 @@
-import {
-  useConsensusNetwork,
-  useConsensusTip,
-} from '@siafoundation/walletd-react'
 import { WalletSendSeedDialogV2 } from './WalletSendSeedDialogV2'
 import { WalletSendSeedDialogV1 } from './WalletSendSeedDialogV1'
-import { isPastV2AllowHeight } from '../_sharedWalletSend/hardforkV2'
+import { useIsPastV2AllowHeight } from '../_sharedWalletSend/hardforkV2'
 
 export type WalletSendSeedDialogParams = {
   walletId: string
@@ -23,13 +19,7 @@ export function WalletSendSeedDialog({
   open,
   onOpenChange,
 }: Props) {
-  const n = useConsensusNetwork()
-  const ct = useConsensusTip()
-
-  const isV2Allowed = isPastV2AllowHeight({
-    network: n.data?.name || 'mainnet',
-    height: ct.data?.height || 0,
-  })
+  const isV2Allowed = useIsPastV2AllowHeight()
 
   if (isV2Allowed) {
     return (

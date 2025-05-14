@@ -97,6 +97,7 @@ func main() {
 
 	// use modified Zen testnet
 	n, genesis := chain.TestnetZen()
+	n.Name = "testCluster"
 	n.InitialTarget = types.BlockID{0xFF}
 	n.HardforkDevAddr.Height = 1
 	n.HardforkTax.Height = 1

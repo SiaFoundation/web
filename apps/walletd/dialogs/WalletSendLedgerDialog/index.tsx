@@ -1,10 +1,6 @@
-import {
-  useConsensusNetwork,
-  useConsensusTip,
-} from '@siafoundation/walletd-react'
 import { WalletSendLedgerDialogV2 } from './WalletSendLedgerDialogV2'
 import { WalletSendLedgerDialogV1 } from './WalletSendLedgerDialogV1'
-import { isPastV2RequireHeight } from '../_sharedWalletSend/hardforkV2'
+import { useIsPastV2RequireHeight } from '../_sharedWalletSend/hardforkV2'
 
 export type WalletSendLedgerDialogParams = {
   walletId: string
@@ -23,13 +19,7 @@ export function WalletSendLedgerDialog({
   open,
   onOpenChange,
 }: Props) {
-  const n = useConsensusNetwork()
-  const ct = useConsensusTip()
-
-  const isV2Required = isPastV2RequireHeight({
-    network: n.data?.name || 'mainnet',
-    height: ct.data?.height || 0,
-  })
+  const isV2Required = useIsPastV2RequireHeight()
 
   if (isV2Required) {
     return (
