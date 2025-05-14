@@ -102,7 +102,11 @@ export type TxPoolBroadcastPayload = {
   transactions: Transaction[]
   v2transactions: V2Transaction[]
 }
-export type TxPoolBroadcastResponse = unknown
+export type TxPoolBroadcastResponse = {
+  basis: ChainIndex
+  transactions: Transaction[]
+  v2transactions: V2Transaction[]
+}
 
 // rescan
 
