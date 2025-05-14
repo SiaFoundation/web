@@ -49,11 +49,13 @@ export type TransactionSignature = {
 }
 
 export type SiacoinInput = {
+  address?: Address
   parentID: string
   unlockConditions: UnlockConditions
 }
 
 export type SiacoinOutput = {
+  id?: SiacoinOutputID
   value: Currency
   address: string
 }
@@ -65,10 +67,24 @@ export type SiacoinElement = {
   stateElement: StateElement
 }
 
+export type ParentSiacoinElement = {
+  id: string
+  maturityHeight: number
+  siacoinOutput: Omit<SiacoinOutput, 'id'>
+  stateElement: StateElement
+}
+
 export type SiafundElement = {
   id: string
   maturityHeight: number
   siafundOutput: SiafundOutput
+  stateElement: StateElement
+}
+
+export type ParentSiafundElement = {
+  id: string
+  maturityHeight: number
+  siafundOutput: Omit<SiafundOutput, 'id'>
   stateElement: StateElement
 }
 
@@ -111,17 +127,20 @@ export type StorageProof = {
 }
 
 export type SiafundInput = {
+  address?: Address
   parentID: string
   unlockConditions: UnlockConditions
   claimAddress: string
 }
 
 export type SiafundOutput = {
+  id?: SiafundOutputID
   value: number
   address: string
 }
 
 export type Transaction = {
+  id?: TransactionID
   siacoinInputs?: SiacoinInput[]
   siacoinOutputs?: SiacoinOutput[]
   fileContracts?: FileContract[]
