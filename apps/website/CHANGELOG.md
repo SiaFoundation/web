@@ -1,5 +1,11 @@
 # website
 
+## 0.58.0
+
+### Minor Changes
+
+- 84028bd2: The correct email is now shown on the site.
+
 ## 0.57.1
 
 ### Patch Changes

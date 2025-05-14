@@ -1,5 +1,11 @@
 # @siafoundation/hostd-js
 
+## 0.5.3
+
+### Patch Changes
+
+- @siafoundation/hostd-types@0.8.1
+
 ## 0.5.2
 
 ### Patch Changes
