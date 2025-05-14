@@ -12,8 +12,11 @@ export const mockKeyPair0 = {
 
 export function getTransaction(): Transaction {
   return {
+    id: 'b222428602c8382b67a769d17e1cdc0952f37f2441a872b92671a6ed76cf22f5',
     siacoinInputs: [
       {
+        address:
+          '934b885229a9f98153401d7a647a1862aede399c656f33ec8492dfffca557ca907a3d22089c8',
         parentID:
           'b222428602c8382b67a769d17e1cdc0952f37f2441a872b92671a6ed76cf22f5',
         unlockConditions: {
@@ -25,6 +28,7 @@ export function getTransaction(): Transaction {
     ],
     siacoinOutputs: [
       {
+        id: '31cf3ddc946d71d219fb1fbe9a11804e607b6d5ad1b4bf7b3678a2faa701a42e',
         value: '95408980544305197274920800',
         address:
           '934b885229a9f98153401d7a647a1862aede399c656f33ec8492dfffca557ca907a3d22089c8',
@@ -32,6 +36,8 @@ export function getTransaction(): Transaction {
     ],
     siafundInputs: [
       {
+        address:
+          '934b885229a9f98153401d7a647a1862aede399c656f33ec8492dfffca557ca907a3d22089c8',
         parentID:
           'b53e88ce69f19f0bf1d3496479f20b72e1133c719e82278830ee6618bb582852',
         unlockConditions: {
@@ -47,6 +53,7 @@ export function getTransaction(): Transaction {
     ],
     siafundOutputs: [
       {
+        id: '425a60eee280854b7f3eb59b1613370bcc0ae3a02859f866f80e7b310475e1e8',
         value: 1,
         address:
           'eb2ee5169dd9aaab804b38f7e70043690ac21da1144990a4a28c1dcf66cd7ee9845aef03006f',
@@ -76,6 +83,7 @@ export function getV2Transaction(): V2Transaction {
           id: 'aa3e781330c9b3991e0141807df1327fadf114ca6c37acb9e58004f942d91dfb',
           maturityHeight: 0,
           siacoinOutput: {
+            id: '31cf3ddc946d71d219fb1fbe9a11804e607b6d5ad1b4bf7b3678a2faa701a42e',
             value: '1000000000000000000000000',
             address:
               '90c6057cdd2463eca61f83796e83152dbba28b6cb9a74831a043833051ec9f422726bfff2ee8',
@@ -106,6 +114,7 @@ export function getV2Transaction(): V2Transaction {
           id: '32e430158591b4073a6834e9f4c4b67162e348844f569f4e472896bb72efb724',
           maturityHeight: 0,
           siacoinOutput: {
+            id: 'f2dbf56b5b0c698d7fbf43f646c76169d84e597e8b37fada97348beeecaa812d400ac4ce7981',
             value: '97984280000000000000000000',
             address:
               'f2dbf56b5b0c698d7fbf43f646c76169d84e597e8b37fada97348beeecaa812d400ac4ce7981',
@@ -134,11 +143,13 @@ export function getV2Transaction(): V2Transaction {
     ],
     siacoinOutputs: [
       {
+        id: '31cf3ddc946d71d219fb1fbe9a11804e607b6d5ad1b4bf7b3678a2faa701a42e',
         value: '1000000000000000000000000',
         address:
           '90c6057cdd2463eca61f83796e83152dbba28b6cb9a74831a043833051ec9f422726bfff2ee8',
       },
       {
+        id: 'f2dbf56b5b0c698d7fbf43f646c76169d84e597e8b37fada97348beeecaa812d400ac4ce7981',
         value: '97984280000000000000000000',
         address:
           'f2dbf56b5b0c698d7fbf43f646c76169d84e597e8b37fada97348beeecaa812d400ac4ce7981',

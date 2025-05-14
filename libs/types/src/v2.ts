@@ -12,6 +12,7 @@ import {
   SiafundOutput,
   Signature,
   StateElement,
+  TransactionID,
   UnlockConditions,
 } from './core'
 
@@ -72,6 +73,7 @@ export type V2FileContractRenewal = {
 }
 
 export type V2Transaction = {
+  id?: TransactionID
   siacoinInputs?: V2SiacoinInput[]
   siacoinOutputs?: SiacoinOutput[]
   siafundInputs?: V2SiafundInput[]

@@ -49,11 +49,13 @@ export type TransactionSignature = {
 }
 
 export type SiacoinInput = {
+  address?: Address
   parentID: string
   unlockConditions: UnlockConditions
 }
 
 export type SiacoinOutput = {
+  id?: SiacoinOutputID
   value: Currency
   address: string
 }
@@ -111,17 +113,20 @@ export type StorageProof = {
 }
 
 export type SiafundInput = {
+  address?: Address
   parentID: string
   unlockConditions: UnlockConditions
   claimAddress: string
 }
 
 export type SiafundOutput = {
+  id?: SiafundOutputID
   value: number
   address: string
 }
 
 export type Transaction = {
+  id?: TransactionID
   siacoinInputs?: SiacoinInput[]
   siacoinOutputs?: SiacoinOutput[]
   fileContracts?: FileContract[]
