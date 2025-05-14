@@ -5,8 +5,8 @@ go 1.23.1
 toolchain go1.23.3
 
 require (
-	go.sia.tech/core v0.12.2
-	go.sia.tech/coreutils v0.13.3
+	go.sia.tech/core v0.12.3
+	go.sia.tech/coreutils v0.13.6
 )
 
 require (
