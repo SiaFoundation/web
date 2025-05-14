@@ -109,6 +109,8 @@ export function getMockScenarioSeedWallet() {
     transaction: {
       siacoinInputs: [
         {
+          address:
+            '7776057cdd2463eca61f83796e83152dbba28b6cb9a74831a043833051ec9f422726bfff2ee1',
           parentID:
             'aa3e781330c9b3991e0141807df1327fadf114ca6c37acb9e58004f942d91dfb',
           unlockConditions: {
@@ -118,6 +120,8 @@ export function getMockScenarioSeedWallet() {
           },
         },
         {
+          address:
+            '8886057cdd2463eca61f83796e83152dbba28b6cb9a74831a043833051ec9f422726bfff2ee1',
           parentID:
             '32e430158591b4073a6834e9f4c4b67162e348844f569f4e472896bb72efb724',
           unlockConditions: {

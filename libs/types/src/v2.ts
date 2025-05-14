@@ -5,13 +5,14 @@ import {
   Currency,
   Hash256,
   MerkleProof,
+  ParentSiacoinElement,
+  ParentSiafundElement,
   PublicKey,
-  SiacoinElement,
   SiacoinOutput,
-  SiafundElement,
   SiafundOutput,
   Signature,
   StateElement,
+  TransactionID,
   UnlockConditions,
 } from './core'
 
@@ -21,7 +22,7 @@ export type SpendPolicy = {
 }
 
 export type V2SiacoinInput = {
-  parent: SiacoinElement
+  parent: ParentSiacoinElement
   satisfiedPolicy: SatisfiedPolicy
 }
 
@@ -30,7 +31,7 @@ export interface V2TransactionInput {
 }
 
 export type V2SiafundInput = {
-  parent: SiafundElement
+  parent: ParentSiafundElement
   claimAddress: Address
   satisfiedPolicy: SatisfiedPolicy
 }
@@ -72,6 +73,7 @@ export type V2FileContractRenewal = {
 }
 
 export type V2Transaction = {
+  id?: TransactionID
   siacoinInputs?: V2SiacoinInput[]
   siacoinOutputs?: SiacoinOutput[]
   siafundInputs?: V2SiafundInput[]
