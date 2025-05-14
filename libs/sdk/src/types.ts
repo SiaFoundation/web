@@ -200,5 +200,8 @@ export type WasmApi = {
     transactionId: (txn: Transaction) => Result<{
       id: string
     }>
+    v2TransactionId: (txn: V2Transaction) => Result<{
+      id: string
+    }>
   }
 }
