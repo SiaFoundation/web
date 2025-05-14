@@ -203,6 +203,7 @@ function formatV1TransactionEntity(
     href: routes.transaction.view.replace(':id', transaction.id),
     height: v1Transaction.index.height,
     timestamp: new Date(v1Transaction.timestamp).getTime(),
+    type: 'transaction',
   }
 }
 
@@ -231,6 +232,7 @@ function formatV2TransactionEntity(
     href: routes.transaction.view.replace(':id', transaction.id),
     height: v2Transaction.index.height,
     timestamp: new Date(v2Transaction.timestamp).getTime(),
+    type: 'transaction',
   }
 }
 
@@ -246,6 +248,7 @@ function formatV1ContractResolutionEntity(
     href: routes.contract.view.replace(':id', parent.id),
     sc: new BigNumber(siacoinElement.siacoinOutput.value),
     timestamp: new Date(v1ContractResolution.timestamp).getTime(),
+    type: 'contract',
   }
 }
 
@@ -261,6 +264,7 @@ function formatV2ContractResolutionEntity(
     href: routes.contract.view.replace(':id', resolution.parent.id),
     sc: new BigNumber(siacoinElement.siacoinOutput.value),
     timestamp: new Date(v1ContractResolution.timestamp).getTime(),
+    type: 'contract',
   }
 }
 
@@ -276,6 +280,7 @@ function formatPayoutEntity(payout: ExplorerEvent): EntityListItemProps {
     height: payout.index.height,
     sc: new BigNumber(siacoinElement.siacoinOutput.value),
     timestamp: new Date(payout.timestamp).getTime(),
+    type: 'output',
   }
 }
 
@@ -288,6 +293,7 @@ function formatUnspentSiacoinOutputEntity(
     label: 'siacoin output',
     initials: 'SO',
     scVariant: 'value' as const,
+    type: 'output',
   }
 }
 

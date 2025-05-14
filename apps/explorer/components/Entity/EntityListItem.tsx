@@ -54,6 +54,7 @@ export function EntityListItem(entity: EntityListItemProps) {
       siascanUrl={entity.siascanUrl}
       href={entity.href}
       color="subtle"
+      expandable
     />
   )
   const label =
