@@ -1,5 +1,11 @@
 # @siafoundation/walletd-types
 
+## 0.7.0-beta.2
+
+### Minor Changes
+
+- abb8b3e5: The transaction pool broadcast API now returns the transaction IDs.
+
 ## 0.6.3-beta.1
 
 ### Patch Changes

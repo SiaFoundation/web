@@ -1,5 +1,16 @@
 # @siafoundation/walletd-react
 
+## 4.5.0-beta.4
+
+### Minor Changes
+
+- abb8b3e5: The transaction pool broadcast API now returns the transaction IDs.
+
+### Patch Changes
+
+- Updated dependencies [abb8b3e5]
+  - @siafoundation/walletd-types@0.7.0-beta.2
+
 ## 4.4.5-beta.3
 
 ### Patch Changes

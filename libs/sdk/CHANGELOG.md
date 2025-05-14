@@ -1,5 +1,11 @@
 # @siafoundation/sdk
 
+## 0.4.0-beta.4
+
+### Minor Changes
+
+- 575511dd: Added a v2TransactionId method.
+
 ## 0.3.4-beta.3
 
 ### Patch Changes
