@@ -147,6 +147,27 @@ func encodeTransaction(this js.Value, args []js.Value) result {
 	})
 }
 
+// encodeV2Transaction returns the V2TransactionSemantics encoding of a V2
+// transaction.
+func encodeV2Transaction(this js.Value, args []js.Value) result {
+	if err := checkArgs(args, js.TypeObject); err != nil {
+		return resultErr(err)
+	}
+
+	var txn types.V2Transaction
+	if err := unmarshalStruct(args[0], &txn); err != nil {
+		return resultErrStr(fmt.Sprintf("error decoding transaction: %s", err))
+	}
+
+	var buf bytes.Buffer
+	e := types.NewEncoder(&buf)
+	types.V2TransactionSemantics(txn).EncodeTo(e)
+	e.Flush()
+	return result(map[string]any{
+		"encodedTransaction": marshalUint8Array(buf.Bytes()),
+	})
+}
+
 // signTransactionV1 returns the signature of a transaction.
 func signTransactionV1(this js.Value, args []js.Value) result {
 	if err := checkArgs(args, js.TypeObject, js.TypeObject, js.TypeObject, js.TypeNumber, js.TypeString); err != nil {
