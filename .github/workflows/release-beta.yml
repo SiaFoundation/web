@@ -1,0 +1,65 @@
+name: Manually Release a Beta Tag to NPM and GitHub
+
+on:
+  push:
+    branches:
+      - beta
+
+# This is for .npmrc. Nx automatically creates an .npmrc before changesets runs
+# and creates one itself, so we need to explicitly have one.
+env:
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+concurrency: commits-to-beta
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout all commits
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup
+        uses: ./.github/actions/setup-all
+        with:
+          node_version: 20.10.0
+          go_version: 1.23.0
+      - name: Check for prerelease mode
+        id: check_pre
+        run: |
+          if [ -f .changeset/pre.json ]; then
+            echo "run=true"
+            echo "run=true" >> $GITHUB_OUTPUT
+          else
+            echo "run=false"
+            echo "run=false" >> $GITHUB_OUTPUT
+          fi
+      # The SDK is referenced via dist in the tsconfig.base.json
+      # because the next executor does not actually support
+      # buildLibsFromSource=false
+      # With this configuration NX does not build the SDK as expected
+      # when it is an app dependency
+      - name: Force build SDK
+        if: steps.check_pre.outputs.run == 'true'
+        shell: bash
+        run: npx nx run sdk:build
+      - name: Build for publishing
+        if: steps.check_pre.outputs.run == 'true'
+        shell: bash
+        run: npx nx run-many --target=build --configuration=production --all --parallel=5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          CCRI_TOKEN: ${{ secrets.CCRI_TOKEN }}
+      - name: Replace src code with dists for publishing
+        if: steps.check_pre.outputs.run == 'true'
+        run: ./scripts/replace-src-with-dists-for-publishing.sh
+      - name: Publish beta prerelease to NPM and GitHub
+        if: steps.check_pre.outputs.run == 'true'
+        uses: changesets/action@v1
+        with:
+          publish: npx changeset publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
