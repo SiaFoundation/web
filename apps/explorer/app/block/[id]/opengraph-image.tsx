@@ -2,6 +2,7 @@ import { humanDate } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
 import { truncate } from '@siafoundation/design-system'
 import { getExplored } from '../../../lib/explored'
+import { ExplorerPageProps } from '../../../lib/pageProps'
 
 export const revalidate = 0
 
@@ -25,15 +26,15 @@ const formatOGImage = (id: string) => {
   )
 }
 
-export default async function Image({ params }) {
+export default async function Image({ params }: ExplorerPageProps) {
   let id: string
 
   // Check if the incoming id is referencing height.
-  if (!isNaN(Number(params?.id))) {
+  if (!isNaN(Number(params.id))) {
     // If it is, we need the block ID at that height.
-    const { data: tipAtHeight } = await getExplored().consensusTipByHeight(
-      params?.id
-    )
+    const { data: tipAtHeight } = await getExplored().consensusTipByHeight({
+      params: { height: Number(params.id) },
+    })
     id = tipAtHeight.id
   } else {
     // If it is not the height, assume we're referencing ID. No call necessary.

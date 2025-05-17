@@ -46,11 +46,15 @@ export function Transaction({
         label: 'siacoin input',
         addressHref: routes.address.view.replace(
           ':id',
-          stripPrefix(o.address || o.parent.siacoinOutput.address)
+          stripPrefix(
+            'parent' in o ? o.parent.siacoinOutput.address : o.address
+          )
         ),
-        address: o.address || o.parent.siacoinOutput.address,
-        sc: new BigNumber(o.value || o.parent.siacoinOutput.value),
-        outputId: o.parentID || o.parent.id,
+        address: 'parent' in o ? o.parent.siacoinOutput.address : o.address,
+        sc: new BigNumber(
+          'parent' in o ? o.parent.siacoinOutput.value : o.value
+        ),
+        outputId: 'parent' in o ? o.parent.id : o.parentID,
       })
     })
     transaction.siafundInputs?.forEach((o) => {
@@ -58,11 +62,15 @@ export function Transaction({
         label: 'siafund input',
         addressHref: routes.address.view.replace(
           ':id',
-          stripPrefix(o.address || o.parent.siafundOutput.address)
+          stripPrefix(
+            'parent' in o ? o.parent.siafundOutput.address : o.address
+          )
         ),
-        address: o.address || o.parent.siafundOutput.address,
-        sc: new BigNumber(o.value || o.parent.siafundOutput.value),
-        outputId: o.parentID || o.parent.id,
+        address: 'parent' in o ? o.parent.siafundOutput.address : o.address,
+        sc: new BigNumber(
+          'parent' in o ? o.parent.siafundOutput.value : o.value
+        ),
+        outputId: 'parent' in o ? o.parent.id : o.parentID,
       })
     })
     return list
@@ -76,16 +84,22 @@ export function Transaction({
     transaction.siacoinOutputs?.forEach((o) => {
       list.push({
         label:
-          o.source === 'transaction'
-            ? 'siacoin output'
-            : o.source.replace(/_/g, ' '),
+          'source' in o
+            ? o.source === 'transaction'
+              ? 'siacoin output'
+              : o.source.replace(/_/g, ' ')
+            : 'siacoin output',
         addressHref: routes.address.view.replace(
           ':id',
-          stripPrefix(o.siacoinOutput.address)
+          stripPrefix(
+            'siacoinOutput' in o ? o.siacoinOutput.address : o.address
+          )
         ),
-        address: o.siacoinOutput.address,
-        sc: new BigNumber(o.siacoinOutput.value),
-        outputId: o.id,
+        address: 'siacoinOutput' in o ? o.siacoinOutput.address : o.address,
+        sc: new BigNumber(
+          'siacoinOutput' in o ? o.siacoinOutput.value : o.value
+        ),
+        outputId: 'id' in o && o.id ? o.id : '',
       })
     })
     transaction.siafundOutputs?.forEach((o) => {
@@ -93,11 +107,13 @@ export function Transaction({
         label: 'siafund output',
         addressHref: routes.address.view.replace(
           ':id',
-          stripPrefix(o.siafundOutput.address)
+          stripPrefix(
+            'siafundOutput' in o ? o.siafundOutput.address : o.address
+          )
         ),
-        address: o.siafundOutput.address,
-        sf: Number(o.siafundOutput.value),
-        outputId: o.id,
+        address: 'siafundOutput' in o ? o.siafundOutput.address : o.address,
+        sf: Number('siafundOutput' in o ? o.siafundOutput.value : o.value),
+        outputId: 'id' in o && o.id ? o.id : '',
       })
     })
     return list
@@ -109,12 +125,14 @@ export function Transaction({
     }
     const operations: EntityListItemProps[] = []
     transaction.fileContracts?.forEach((contract) => {
-      return operations.push({
-        label: 'contract formation',
-        type: 'contract',
-        href: routes.contract.view.replace(':id', stripPrefix(contract.id)),
-        hash: contract.id,
-      })
+      if ('id' in contract) {
+        return operations.push({
+          label: 'contract formation',
+          type: 'contract',
+          href: routes.contract.view.replace(':id', stripPrefix(contract.id)),
+          hash: contract.id,
+        })
+      }
     })
     transaction.fileContractRevisions?.forEach(
       (contract: ExplorerFileContractRevision | V2FileContractRevision) => {
@@ -141,7 +159,12 @@ export function Transaction({
       operations.push({
         label: 'host announcement',
         // type: 'host',
-        hash: host.netAddress,
+        hash:
+          'netAddress' in host
+            ? host.netAddress
+            : host.V2HostAnnouncement.filter(
+                (ha) => ha.protocol === 'siamux'
+              )[0].address,
       })
     })
     {

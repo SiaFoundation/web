@@ -4,9 +4,21 @@ import { siteName } from '../config'
 import { EntityType } from '@siafoundation/units'
 
 export function getHref(type: EntityType, value: string) {
-  // block accepts blockhash as a value.
+  // Block accepts blockhash as a value.
   const coercedType = type === 'blockHash' ? 'block' : type
-  return routes[coercedType].view.replace(':id', value)
+
+  switch (coercedType) {
+    case 'output':
+    case 'ip':
+    case 'hostIp':
+      return routes['home'].index
+
+    case 'hostPublicKey':
+      return routes['host'].view.replace(':id', value)
+
+    default:
+      return routes[coercedType]?.view.replace(':id', value) || ''
+  }
 }
 
 export function buildMetadata({
