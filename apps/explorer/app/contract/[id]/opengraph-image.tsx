@@ -10,6 +10,7 @@ import {
 } from '../../../lib/contracts'
 import BigNumber from 'bignumber.js'
 import { getExplored } from '../../../lib/explored'
+import { ExplorerPageProps } from '../../../lib/pageProps'
 
 export const revalidate = 0
 
@@ -25,7 +26,7 @@ const currencyOpt = currencyOptions.find(
   (c) => c.id === 'usd'
 ) as CurrencyOption
 
-export default async function Image({ params }) {
+export default async function Image({ params }: ExplorerPageProps) {
   const id = params?.id as string
 
   const { data: contractType } = await getExplored().searchResultType({

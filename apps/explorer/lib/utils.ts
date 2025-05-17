@@ -6,6 +6,14 @@ import { EntityType } from '@siafoundation/units'
 export function getHref(type: EntityType, value: string) {
   // block accepts blockhash as a value.
   const coercedType = type === 'blockHash' ? 'block' : type
+  if (
+    coercedType === 'output' ||
+    coercedType === 'ip' ||
+    coercedType === 'hostIp'
+  )
+    return routes['home'].index
+  if (coercedType === 'hostPublicKey')
+    return routes['host'].view.replace(':id', value)
   return routes[coercedType].view.replace(':id', value)
 }
 

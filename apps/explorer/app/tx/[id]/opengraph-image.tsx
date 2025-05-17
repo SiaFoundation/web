@@ -2,6 +2,7 @@ import { humanDate } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
 import { stripPrefix, truncate } from '@siafoundation/design-system'
 import { getExplored } from '../../../lib/explored'
+import { ExplorerPageProps } from '../../../lib/pageProps'
 
 export const revalidate = 0
 
@@ -24,7 +25,7 @@ const NotFoundImage = (id: string) =>
     size
   )
 
-export default async function Image({ params }) {
+export default async function Image({ params }: ExplorerPageProps) {
   const id = params?.id as string
 
   try {

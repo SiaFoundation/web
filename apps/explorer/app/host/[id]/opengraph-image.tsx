@@ -8,6 +8,7 @@ import { truncate } from '@siafoundation/design-system'
 import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
 import { getHostNetAddress } from '../../../lib/hostType'
 import { getExplored } from '../../../lib/explored'
+import { ExplorerPageProps } from '../../../lib/pageProps'
 
 export const revalidate = 0
 
@@ -21,7 +22,7 @@ const currency = currencyOptions.find((c) => c.id === 'usd') as CurrencyOption
 
 export const contentType = 'image/png'
 
-export default async function Image({ params }) {
+export default async function Image({ params }: ExplorerPageProps) {
   const id = params?.id as string
 
   try {

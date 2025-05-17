@@ -12,7 +12,7 @@ const weights = {
   usedStorage: 0.1,
 }
 
-function normalize(value, min, max, invert = false) {
+function normalize(value: number, min: number, max: number, invert = false) {
   if (max === min) return 0
   const normalized = (value - min) / (max - min)
   return invert ? 1 - normalized : normalized
@@ -20,18 +20,83 @@ function normalize(value, min, max, invert = false) {
 
 function rankHosts(hosts: ExplorerHost[] | undefined) {
   if (!hosts) return []
-  const minMax = (key) => ({
-    min: Math.min(...hosts.map((h) => h[key])),
-    max: Math.max(...hosts.map((h) => h[key])),
-  })
 
   const ranges = {
-    age: minMax('age'),
+    age: {
+      min: Math.min(
+        ...hosts.map((host) => new Date(host.knownSince).getTime())
+      ),
+      max: Math.max(
+        ...hosts.map((host) => new Date(host.knownSince).getTime())
+      ),
+    },
     uptime: { min: 0, max: 100 }, // Assuming uptime is in percentage
-    downloadPrice: minMax('downloadPrice'),
-    uploadPrice: minMax('uploadPrice'),
-    storagePrice: minMax('storagePrice'),
-    usedStorage: minMax('usedStorage'),
+    downloadPrice: {
+      min: Math.min(
+        ...hosts.map((host) =>
+          host.v2
+            ? Number(host.v2Settings.prices.egressPrice)
+            : Number(host.settings.downloadbandwidthprice)
+        )
+      ),
+      max: Math.max(
+        ...hosts.map((host) =>
+          host.v2
+            ? Number(host.v2Settings.prices.egressPrice)
+            : Number(host.settings.downloadbandwidthprice)
+        )
+      ),
+    },
+    uploadPrice: {
+      min: Math.min(
+        ...hosts.map((host) =>
+          host.v2
+            ? Number(host.v2Settings.prices.ingressPrice)
+            : Number(host.settings.uploadbandwidthprice)
+        )
+      ),
+      max: Math.max(
+        ...hosts.map((host) =>
+          host.v2
+            ? Number(host.v2Settings.prices.ingressPrice)
+            : Number(host.settings.uploadbandwidthprice)
+        )
+      ),
+    },
+    storagePrice: {
+      min: Math.min(
+        ...hosts.map((host) =>
+          host.v2
+            ? Number(host.v2Settings.prices.storagePrice)
+            : Number(host.settings.storageprice)
+        )
+      ),
+      max: Math.max(
+        ...hosts.map((host) =>
+          host.v2
+            ? Number(host.v2Settings.prices.storagePrice)
+            : Number(host.settings.storageprice)
+        )
+      ),
+    },
+    usedStorage: {
+      min: Math.min(
+        ...hosts.map((host) =>
+          host.v2
+            ? sectorsToBytes(host.v2Settings.totalStorage).toNumber() -
+              sectorsToBytes(host.v2Settings.remainingStorage).toNumber()
+            : host.settings.totalstorage - host.settings.remainingstorage
+        )
+      ),
+      max: Math.max(
+        ...hosts.map((host) =>
+          host.v2
+            ? sectorsToBytes(host.v2Settings.totalStorage).toNumber() -
+              sectorsToBytes(host.v2Settings.remainingStorage).toNumber()
+            : host.settings.totalstorage - host.settings.remainingstorage
+        )
+      ),
+    },
   }
 
   return hosts
@@ -39,7 +104,11 @@ function rankHosts(hosts: ExplorerHost[] | undefined) {
       host,
       score:
         weights.age *
-          normalize(host.knownSince, ranges.age.min, ranges.age.max) +
+          normalize(
+            new Date(host.knownSince).getTime(),
+            ranges.age.min,
+            ranges.age.max
+          ) +
         weights.uptime *
           normalize(
             host.totalScans === 0
@@ -51,8 +120,8 @@ function rankHosts(hosts: ExplorerHost[] | undefined) {
         weights.downloadPrice *
           normalize(
             host.v2
-              ? host.v2Settings.prices.egressPrice
-              : host.settings.downloadbandwidthprice,
+              ? Number(host.v2Settings.prices.egressPrice)
+              : Number(host.settings.downloadbandwidthprice),
             ranges.downloadPrice.min,
             ranges.downloadPrice.max,
             true
@@ -60,8 +129,8 @@ function rankHosts(hosts: ExplorerHost[] | undefined) {
         weights.uploadPrice *
           normalize(
             host.v2
-              ? host.v2Settings.prices.ingressPrice
-              : host.settings.uploadbandwidthprice,
+              ? Number(host.v2Settings.prices.ingressPrice)
+              : Number(host.settings.uploadbandwidthprice),
             ranges.uploadPrice.min,
             ranges.uploadPrice.max,
             true
@@ -69,20 +138,18 @@ function rankHosts(hosts: ExplorerHost[] | undefined) {
         weights.storagePrice *
           normalize(
             host.v2
-              ? host.v2Settings.prices.storagePrice
-              : host.settings.storageprice,
+              ? Number(host.v2Settings.prices.storagePrice)
+              : Number(host.settings.storageprice),
             ranges.storagePrice.min,
             ranges.storagePrice.max,
             true
           ) +
         weights.usedStorage *
           normalize(
-            (host.v2
-              ? sectorsToBytes(host.v2Settings.totalStorage).toNumber()
-              : host.settings.totalstorage) -
-              (host.v2
-                ? sectorsToBytes(host.v2Settings.remainingStorage).toNumber()
-                : host.settings.remainingstorage),
+            host.v2
+              ? sectorsToBytes(host.v2Settings.totalStorage).toNumber() -
+                  sectorsToBytes(host.v2Settings.remainingStorage).toNumber()
+              : host.settings.totalstorage - host.settings.remainingstorage,
             ranges.usedStorage.min,
             ranges.usedStorage.max
           ),
