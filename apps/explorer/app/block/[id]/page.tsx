@@ -6,8 +6,9 @@ import { buildMetadata } from '../../../lib/utils'
 import { getExplored } from '../../../lib/explored'
 import { to } from '@siafoundation/request'
 import { notFound } from 'next/navigation'
+import { ExplorerPageProps } from '../../../lib/pageProps'
 
-export function generateMetadata({ params }): Metadata {
+export function generateMetadata({ params }: ExplorerPageProps): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
   const height = Number(id || 0) as number
   if (isNaN(height)) {
@@ -32,14 +33,14 @@ export function generateMetadata({ params }): Metadata {
 
 export const revalidate = 0
 
-export default async function Page({ params }) {
+export default async function Page({ params }: ExplorerPageProps) {
   let id: string
 
   // Check if the incoming id is referencing height.
   if (!isNaN(Number(params?.id))) {
     // If it is, we need the block ID at that height.
     const { data: tipAtHeight } = await getExplored().consensusTipByHeight({
-      params: { height: params?.id },
+      params: { height: Number(params?.id) },
     })
     id = tipAtHeight.id
   } else {
