@@ -2,6 +2,7 @@ import { humanSiacoin, humanSiafund } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
 import { truncate } from '@siafoundation/design-system'
 import { getExplored } from '../../../lib/explored'
+import { ExplorerPageProps } from '../../../lib/pageProps'
 
 export const revalidate = 0
 
@@ -13,7 +14,7 @@ export const size = {
 
 export const contentType = 'image/png'
 
-export default async function Image({ params }) {
+export default async function Image({ params }: ExplorerPageProps) {
   const address = params?.id as string
 
   try {

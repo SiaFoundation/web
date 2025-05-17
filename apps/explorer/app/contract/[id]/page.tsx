@@ -7,8 +7,9 @@ import { stripPrefix, truncate } from '@siafoundation/design-system'
 import { normalizeContract } from '../../../lib/contracts'
 import { getExplored } from '../../../lib/explored'
 import { to } from '@siafoundation/request'
+import { ExplorerPageProps } from '../../../lib/pageProps'
 
-export function generateMetadata({ params }): Metadata {
+export function generateMetadata({ params }: ExplorerPageProps): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
   const title = `Contract ${truncate(id, 30)}`
   const description = `View details for Sia contract.`
@@ -22,7 +23,7 @@ export function generateMetadata({ params }): Metadata {
 
 export const revalidate = 0
 
-export default async function Page({ params }) {
+export default async function Page({ params }: ExplorerPageProps) {
   const id = params?.id
 
   const { data: searchResultType } = await getExplored().searchResultType({
