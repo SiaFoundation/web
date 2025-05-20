@@ -38,7 +38,7 @@ export type ClusterNode =
   | ClusterNodeWalletd
   | ClusterNodeExplored
 
-type NetworkVersion = 'v1' | 'v2' | 'transition'
+export type NetworkVersion = 'v1' | 'v2' | 'transition'
 
 export const clusterd = {
   process: undefined as child.ChildProcessWithoutNullStreams | undefined,
