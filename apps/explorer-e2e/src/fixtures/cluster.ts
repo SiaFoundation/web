@@ -2,7 +2,7 @@ import { Explored } from '@siafoundation/explored-js'
 import { Hostd } from '@siafoundation/hostd-js'
 import { Bus } from '@siafoundation/renterd-js'
 import { Walletd } from '@siafoundation/walletd-js'
-import { clusterd, setupCluster } from '@siafoundation/clusterd'
+import { clusterd, NetworkVersion, setupCluster } from '@siafoundation/clusterd'
 import { BrowserContext } from 'playwright'
 
 export type Cluster = Awaited<ReturnType<typeof startCluster>>
@@ -12,17 +12,20 @@ export async function startCluster({
   walletdCount = 1,
   hostdCount = 3,
   context,
+  networkVersion,
 }: {
   renterdCount?: number
   walletdCount?: number
   hostdCount?: number
   context: BrowserContext
+  networkVersion?: NetworkVersion
 }) {
   await setupCluster({
     exploredCount: 1,
     renterdCount,
     walletdCount,
     hostdCount,
+    networkVersion,
   })
   const explored = clusterd.nodes.find((n) => n.type === 'explored')
   const renterds = clusterd.nodes.filter((n) => n.type === 'renterd')
