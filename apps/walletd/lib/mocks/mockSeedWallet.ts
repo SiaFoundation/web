@@ -46,6 +46,7 @@ export function getMockScenarioSeedWallet() {
     },
     outputs: [
       {
+        confirmations: 8,
         id: 'aa3e781330c9b3991e0141807df1327fadf114ca6c37acb9e58004f942d91dfb',
         stateElement: {
           leafIndex: 304248,
@@ -71,6 +72,7 @@ export function getMockScenarioSeedWallet() {
         maturityHeight: 0,
       },
       {
+        confirmations: 8,
         id: '32e430158591b4073a6834e9f4c4b67162e348844f569f4e472896bb72efb724',
         stateElement: {
           leafIndex: 305723,
