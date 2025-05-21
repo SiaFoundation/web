@@ -1,4 +1,10 @@
 import {
+  WalletAddressOutputsSiacoinParams,
+  WalletAddressOutputsSiacoinPayload,
+  WalletAddressOutputsSiacoinResponse,
+  WalletAddressOutputsSiafundParams,
+  WalletAddressOutputsSiafundPayload,
+  WalletAddressOutputsSiafundResponse,
   ConsensusNetworkParams,
   ConsensusNetworkPayload,
   ConsensusNetworkResponse,
@@ -86,6 +92,8 @@ import {
   WalletsParams,
   WalletsPayload,
   WalletsResponse,
+  addressesAddrOutputsSiacoinRoute,
+  addressesAddrOutputsSiafundRoute,
   consensusNetworkRoute,
   consensusTipRoute,
   consensusTipStateRoute,
@@ -263,5 +271,15 @@ export function Walletd({ api, password }: { api: string; password?: string }) {
       WalletConstructV2TransactionPayload,
       WalletConstructV2TransactionResponse
     >(axios, 'post', walletsIdConstructV2TransactionRoute),
+    walletAddressOutputsSiacoin: buildRequestHandler<
+      WalletAddressOutputsSiacoinParams,
+      WalletAddressOutputsSiacoinPayload,
+      WalletAddressOutputsSiacoinResponse
+    >(axios, 'get', addressesAddrOutputsSiacoinRoute),
+    walletAddressOutputsSiafund: buildRequestHandler<
+      WalletAddressOutputsSiafundParams,
+      WalletAddressOutputsSiafundPayload,
+      WalletAddressOutputsSiafundResponse
+    >(axios, 'get', addressesAddrOutputsSiafundRoute),
   }
 }
