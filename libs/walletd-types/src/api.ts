@@ -50,6 +50,10 @@ export const walletsIdConstructTransactionRoute =
   '/wallets/:id/construct/transaction'
 export const walletsIdConstructV2TransactionRoute =
   '/wallets/:id/construct/v2/transaction'
+export const addressesAddrOutputsSiacoinRoute =
+  '/addresses/:addr/outputs/siacoin'
+export const addressesAddrOutputsSiafundRoute =
+  '/addresses/:addr/outputs/siafund'
 
 // state
 
@@ -276,4 +280,28 @@ export type WalletConstructV2TransactionResponse = {
   id: TransactionID
   transaction: V2Transaction
   estimatedFee: Currency
+}
+
+// address outputs
+
+export type WalletAddressOutputsSiacoinParams = {
+  addr: string
+  limit?: number
+  offset?: number
+}
+export type WalletAddressOutputsSiacoinPayload = void
+export type WalletAddressOutputsSiacoinResponse = {
+  basis: ChainIndex
+  outputs: SiacoinElementWithConfirmations[]
+}
+
+export type WalletAddressOutputsSiafundParams = {
+  addr: string
+  limit?: number
+  offset?: number
+}
+export type WalletAddressOutputsSiafundPayload = void
+export type WalletAddressOutputsSiafundResponse = {
+  basis: ChainIndex
+  outputs: SiafundElementWithConfirmations[]
 }
