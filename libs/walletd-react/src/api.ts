@@ -13,6 +13,10 @@ import {
   getTestnetZenBlockHeight,
 } from '@siafoundation/units'
 import {
+  WalletAddressOutputsSiacoinParams,
+  WalletAddressOutputsSiacoinResponse,
+  WalletAddressOutputsSiafundParams,
+  WalletAddressOutputsSiafundResponse,
   ConsensusNetworkParams,
   ConsensusNetworkResponse,
   ConsensusTipParams,
@@ -85,6 +89,8 @@ import {
   WalletUpdateResponse,
   WalletsParams,
   WalletsResponse,
+  addressesAddrOutputsSiacoinRoute,
+  addressesAddrOutputsSiafundRoute,
   consensusNetworkRoute,
   consensusTipRoute,
   consensusTipStateRoute,
@@ -487,4 +493,30 @@ export function useWalletConstructV2Transaction(
   >
 ) {
   return usePostFunc({ ...args, route: walletsIdConstructV2TransactionRoute })
+}
+
+// address outputs
+
+export function useWalletAddressOutputsSiacoin(
+  args: HookArgsSwr<
+    WalletAddressOutputsSiacoinParams,
+    WalletAddressOutputsSiacoinResponse
+  >
+) {
+  return useGetSwr({
+    ...args,
+    route: addressesAddrOutputsSiacoinRoute,
+  })
+}
+
+export function useWalletAddressOutputsSiafund(
+  args: HookArgsSwr<
+    WalletAddressOutputsSiafundParams,
+    WalletAddressOutputsSiafundResponse
+  >
+) {
+  return useGetSwr({
+    ...args,
+    route: addressesAddrOutputsSiafundRoute,
+  })
 }
