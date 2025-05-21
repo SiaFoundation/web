@@ -6,8 +6,6 @@ import {
   ChainIndex,
   SiacoinOutputID,
   SiafundOutputID,
-  SiacoinElement,
-  SiafundElement,
   Transaction,
   V2Transaction,
   WalletEvent,
@@ -16,7 +14,14 @@ import {
   SiafundOutput,
   TransactionID,
 } from '@siafoundation/types'
-import { GatewayPeer, Wallet, WalletAddress, WalletMetadata } from './types'
+import {
+  GatewayPeer,
+  Wallet,
+  WalletAddress,
+  WalletMetadata,
+  SiacoinElementWithConfirmations,
+  SiafundElementWithConfirmations,
+} from './types'
 
 export const stateRoute = '/state'
 export const consensusTipRoute = '/consensus/tip'
@@ -183,14 +188,14 @@ export type WalletOutputsSiacoinParams = { id: string }
 export type WalletOutputsSiacoinPayload = void
 export type WalletOutputsSiacoinResponse = {
   basis: ChainIndex
-  outputs: SiacoinElement[]
+  outputs: SiacoinElementWithConfirmations[]
 }
 
 export type WalletOutputsSiafundParams = { id: string }
 export type WalletOutputsSiafundPayload = void
 export type WalletOutputsSiafundResponse = {
   basis: ChainIndex
-  outputs: SiafundElement[]
+  outputs: SiafundElementWithConfirmations[]
 }
 
 export type WalletFundSiacoinParams = {
@@ -251,7 +256,6 @@ export type WalletConstructV1TransactionPayload = {
   siafunds?: SiafundOutput[]
   changeAddress: Address
 }
-
 export type WalletConstructV1TransactionResponse = {
   basis: ChainIndex
   id: TransactionID
