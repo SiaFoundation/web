@@ -5,10 +5,10 @@ go 1.23.2
 toolchain go1.23.4
 
 require (
-	go.sia.tech/cluster v0.1.3-0.20250514210539-a5655d2ea195
+	go.sia.tech/cluster v0.1.3-0.20250521145228-65cc905ebbf5
 	go.sia.tech/core v0.12.3
-	go.sia.tech/coreutils v0.13.6
-	go.sia.tech/explored v0.0.0-20250519101914-5dd39a4b9be1
+	go.sia.tech/coreutils v0.13.7-0.20250519232338-480bcda7534d
+	go.sia.tech/explored v0.0.0-20250520131210-f1ee42b6e349
 	go.uber.org/zap v1.27.0
 )
 
@@ -42,8 +42,8 @@ require (
 	go.sia.tech/hostd/v2 v2.1.1-0.20250518164712-0880ea6f06cd // indirect
 	go.sia.tech/jape v0.14.0 // indirect
 	go.sia.tech/mux v1.4.0 // indirect
-	go.sia.tech/renterd/v2 v2.1.1-0.20250519074544-4cfab9bd2974 // indirect
-	go.sia.tech/walletd/v2 v2.5.0 // indirect
+	go.sia.tech/renterd/v2 v2.1.1-0.20250521145058-8ba171496b36 // indirect
+	go.sia.tech/walletd/v2 v2.6.0 // indirect
 	go.uber.org/mock v0.5.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/crypto v0.38.0 // indirect
