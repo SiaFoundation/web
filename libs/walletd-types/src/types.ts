@@ -1,4 +1,8 @@
-import { SpendPolicy } from '@siafoundation/types'
+import {
+  SiacoinElement,
+  SiafundElement,
+  SpendPolicy,
+} from '@siafoundation/types'
 
 export type GatewayPeer = {
   address: string
@@ -40,4 +44,12 @@ export type WalletAddress = {
   description: string
   spendPolicy?: SpendPolicy
   metadata: WalletAddressMetadata
+}
+
+export type SiacoinElementWithConfirmations = SiacoinElement & {
+  confirmations: number
+}
+
+export type SiafundElementWithConfirmations = SiafundElement & {
+  confirmations: number
 }
