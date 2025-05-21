@@ -1,5 +1,21 @@
 # Changelog
 
+## 7.0.0
+
+### Patch Changes
+
+- Updated dependencies [ca620883]
+- Updated dependencies [8a0a34c0]
+- Updated dependencies [8a0a34c0]
+- Updated dependencies [8a0a34c0]
+- Updated dependencies [4f1fb6eb]
+- Updated dependencies [66ecafa1]
+  - @siafoundation/types@0.11.0
+  - @siafoundation/explored-types@0.17.0
+  - @siafoundation/react-core@5.0.0
+  - @siafoundation/units@3.4.2
+  - @siafoundation/explored-react@0.7.1
+
 ## 6.0.0
 
 ### Minor Changes

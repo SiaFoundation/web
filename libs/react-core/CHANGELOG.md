@@ -1,5 +1,16 @@
 # @siafoundation/react-core
 
+## 5.0.0
+
+### Patch Changes
+
+- Updated dependencies [ca620883]
+- Updated dependencies [8a0a34c0]
+- Updated dependencies [8a0a34c0]
+- Updated dependencies [8a0a34c0]
+- Updated dependencies [4f1fb6eb]
+  - @siafoundation/types@0.11.0
+
 ## 4.0.1
 
 ### Patch Changes

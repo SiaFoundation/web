@@ -1,5 +1,15 @@
 # @siafoundation/types
 
+## 0.11.0
+
+### Minor Changes
+
+- ca620883: The siafund and foundation fields on ConsensusState were renamed.
+- 8a0a34c0: v1 siacoin and siafund inputs now have an address field.
+- 8a0a34c0: Both v1 and v2 (same type) siacoin and siafund outputs now have an id field.
+- 8a0a34c0: v1 and v2 transactions now both have an id field.
+- 4f1fb6eb: The v2 element structure was changed.
+
 ## 0.10.0
 
 ### Minor Changes
