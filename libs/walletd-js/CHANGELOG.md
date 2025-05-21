@@ -1,5 +1,20 @@
 # @siafoundation/walletd-js
 
+## 0.4.0
+
+### Minor Changes
+
+- d4571173: Added the address output APIs.
+- 4aba20b2: Elements returned by unspent outputs endpoints now include the number of confirmations.
+- aeb95460: The transaction pool broadcast API now returns the full transaction set.
+
+### Patch Changes
+
+- Updated dependencies [d4571173]
+- Updated dependencies [4aba20b2]
+- Updated dependencies [aeb95460]
+  - @siafoundation/walletd-types@0.7.0
+
 ## 0.3.3
 
 ### Patch Changes

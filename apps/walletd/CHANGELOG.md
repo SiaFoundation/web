@@ -1,5 +1,11 @@
 # walletd
 
+## 0.29.3
+
+### Patch Changes
+
+- 4a7323f0: The wallet send features now use hardfork heights from the consensus network data instead of hardcoded heights.
+
 ## 0.29.2
 
 ### Patch Changes

@@ -1,5 +1,22 @@
 # @siafoundation/walletd-react
 
+## 4.5.0
+
+### Minor Changes
+
+- d4571173: Added the address output APIs.
+- 4aba20b2: Elements returned by unspent outputs endpoints now include the number of confirmations.
+- aeb95460: The transaction pool broadcast API now returns the full transaction set.
+
+### Patch Changes
+
+- Updated dependencies [d4571173]
+- Updated dependencies [4aba20b2]
+- Updated dependencies [aeb95460]
+  - @siafoundation/walletd-types@0.7.0
+  - @siafoundation/react-core@5.0.0
+  - @siafoundation/units@3.4.2
+
 ## 4.4.4
 
 ### Patch Changes
