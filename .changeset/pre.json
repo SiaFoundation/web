@@ -38,7 +38,9 @@
     "@siafoundation/walletd-types": "0.6.2"
   },
   "changesets": [
+    "hip-clocks-know",
     "kind-plants-sin",
+    "late-needles-wonder",
     "metal-horses-provide",
     "pretty-insects-rhyme",
     "red-dingos-cough",

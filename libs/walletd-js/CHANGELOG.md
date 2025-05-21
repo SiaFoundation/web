@@ -1,5 +1,18 @@
 # @siafoundation/walletd-js
 
+## 0.4.0-beta.4
+
+### Minor Changes
+
+- 61a12408: Added the address output APIs.
+- 85830ae9: Elements returned by unspent outputs endpoints now include the number of confirmations.
+
+### Patch Changes
+
+- Updated dependencies [61a12408]
+- Updated dependencies [85830ae9]
+  - @siafoundation/walletd-types@0.7.0-beta.4
+
 ## 0.4.0-beta.3
 
 ### Minor Changes
