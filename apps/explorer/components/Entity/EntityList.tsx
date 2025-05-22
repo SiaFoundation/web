@@ -122,7 +122,7 @@ export function EntityList({
             <EntityListSkeleton skeletonCount={skeletonCount} />
           )}
 
-          {!exhausted && (
+          {onScrollThroughMiddle && !exhausted && (
             <div ref={triggerRef} className="h-2" aria-hidden="true"></div>
           )}
 
