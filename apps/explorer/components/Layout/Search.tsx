@@ -92,13 +92,19 @@ export function Search() {
         return
       }
 
-      const [searchType, searchTypeError] = await to(
+      const [searchType, searchTypeError, searchTypeResponse] = await to(
         explored.searchResultType({
           params: { id: values.query.toLowerCase() },
         })
       )
 
-      if (!searchType || searchTypeError) {
+      if (!searchType || searchTypeResponse.status === 404) {
+        form.setError('query', { message: 'No element with that ID found.' })
+        triggerErrorToast({ title: 'No element with that ID found.' })
+        return
+      }
+
+      if (searchTypeError) {
         form.setError('query', { message: 'Request failed. Try again later.' })
         triggerErrorToast({ title: 'Request failed. Try again later.' })
         return
@@ -130,9 +136,9 @@ export function Search() {
           return
         default:
           form.setError('query', {
-            message: 'Not currently supported.',
+            message: 'Type not currently supported.',
           })
-          triggerErrorToast({ title: 'Not currently supported.' })
+          triggerErrorToast({ title: 'Type not currently supported.' })
           return
       }
 
