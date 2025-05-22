@@ -6,11 +6,16 @@ import {
   Skeleton,
   Text,
 } from '@siafoundation/design-system'
-import { humanNumber, getEntityTypeLabel } from '@siafoundation/units'
+import {
+  humanNumber,
+  getEntityTypeLabel,
+  humanDate,
+} from '@siafoundation/units'
 import { formatDistance } from 'date-fns'
 import { EntityAvatar } from './EntityAvatar'
 import { cx } from 'class-variance-authority'
 import { EntityListSkeleton } from './EntityListSkeleton'
+
 type BlockListItemProps = {
   miningPool?: string
   timestamp: string | number
@@ -80,36 +85,55 @@ export function BlockList({
                     href={block.href}
                     shape="square"
                   />
-                  <div className="flex flex-col gap-1 justify-center">
-                    <Text color="subtle">
-                      <Text weight="bold">
-                        <Link href={block.href} underline="none">
-                          {humanNumber(block.height)}
-                        </Link>
-                      </Text>
-                      {block.miningPool
-                        ? ' mined by '
-                        : i < dataset.length - 1
-                        ? ' mined '
-                        : ''}
-                      <Text weight="bold">{block.miningPool}</Text>
-                      {block.miningPool ? ' ' : ''}
-                      {i < dataset.length - 1
-                        ? `in ${formatDistance(
-                            new Date(block.timestamp),
-                            new Date(dataset[i + 1].timestamp)
-                          )}`
-                        : ''}
-                    </Text>
-                    <Text color="subtle">
-                      <ClientSideOnly
-                        fallback={<Skeleton className="w-[100px] h-[24px]" />}
+                  <div className="flex flex-col justify-between gap-1 w-full min-h-[52px]">
+                    <div className="flex justify-between items-center">
+                      <Link
+                        href={block.href}
+                        underline="none"
+                        className="text-subtle font-bold text-base"
                       >
-                        {formatDistance(new Date(block.timestamp), new Date(), {
-                          addSuffix: true,
-                        })}
+                        {humanNumber(block.height)}
+                      </Link>
+                      <ClientSideOnly
+                        fallback={<Skeleton className="w-[128px] h-[24px]" />}
+                      >
+                        <Text color="subtle" ellipsis>
+                          {humanDate(block.timestamp, {
+                            dateStyle: 'short',
+                            timeStyle: 'short',
+                          })}
+                        </Text>
                       </ClientSideOnly>
-                    </Text>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      {i < dataset.length - 1 && (
+                        <ClientSideOnly
+                          fallback={<Skeleton className="w-[128px] h-[16px]" />}
+                        >
+                          <Text color="subtle" size="12">
+                            {`mined in ${formatDistance(
+                              new Date(block.timestamp),
+                              new Date(dataset[i + 1].timestamp)
+                            )}`}
+                          </Text>
+                        </ClientSideOnly>
+                      )}
+                      <div className="flex flex-col items-end">
+                        <ClientSideOnly
+                          fallback={<Skeleton className="w-[128px] h-[16px]" />}
+                        >
+                          <Text color="subtle" size="12">
+                            {formatDistance(
+                              new Date(block.timestamp),
+                              new Date(),
+                              {
+                                addSuffix: true,
+                              }
+                            )}
+                          </Text>
+                        </ClientSideOnly>
+                      </div>
+                    </div>
                   </div>
                 </div>
               )
