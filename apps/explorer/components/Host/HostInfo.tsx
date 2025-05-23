@@ -21,10 +21,11 @@ type Props = {
 }
 
 export function HostInfo({ host }: Props) {
-  const estimatedUptime =
+  const estimatedUptime = (
     host.totalScans == 0
       ? 0
       : (host.successfulInteractions / host.totalScans) * 100
+  ).toFixed(2)
   return (
     <div className="flex flex-col">
       <ValueCopyable
