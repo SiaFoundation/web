@@ -249,4 +249,32 @@ export const dataFields: {
       )
     },
   },
+  current: {
+    render({ value }) {
+      return (
+        <div className="flex justify-between w-full gap-2">
+          <Text size="12" color="subtle" ellipsis>
+            current
+          </Text>
+          <Text size="12" color="contrast" ellipsis>
+            {value}
+          </Text>
+        </div>
+      )
+    },
+  },
+  latest: {
+    render({ value }) {
+      return (
+        <div className="flex justify-between w-full gap-2">
+          <Text size="12" color="subtle" ellipsis>
+            latest
+          </Text>
+          <Text size="12" color="contrast" ellipsis>
+            {value}
+          </Text>
+        </div>
+      )
+    },
+  },
 }

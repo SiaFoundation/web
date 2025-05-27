@@ -585,6 +585,10 @@ export type AlertData = {
   target?: number
 
   force?: boolean
+
+  // versioning
+  current?: string
+  latest?: string
 }
 
 export type Alert = {
