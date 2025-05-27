@@ -1,5 +1,20 @@
 # @siafoundation/hostd-types
 
+## 0.9.0
+
+### Minor Changes
+
+- cdf88680: Added versioning data to the alerts table.
+
+### Patch Changes
+
+- Updated dependencies [ca620883]
+- Updated dependencies [8a0a34c0]
+- Updated dependencies [8a0a34c0]
+- Updated dependencies [8a0a34c0]
+- Updated dependencies [4f1fb6eb]
+  - @siafoundation/types@0.11.0
+
 ## 0.8.0
 
 ### Minor Changes

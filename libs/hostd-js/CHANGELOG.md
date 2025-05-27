@@ -1,5 +1,12 @@
 # @siafoundation/hostd-js
 
+## 0.5.3
+
+### Patch Changes
+
+- Updated dependencies [cdf88680]
+  - @siafoundation/hostd-types@0.9.0
+
 ## 0.5.2
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @siafoundation/explored-react
 
+## 0.7.1
+
+### Patch Changes
+
+- Updated dependencies [66ecafa1]
+  - @siafoundation/explored-types@0.17.0
+  - @siafoundation/react-core@5.0.0
+
 ## 0.7.0
 
 ### Minor Changes

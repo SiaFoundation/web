@@ -1,5 +1,22 @@
 # @siafoundation/walletd-types
 
+## 0.7.0
+
+### Minor Changes
+
+- d4571173: Added the address output APIs.
+- 4aba20b2: Elements returned by unspent outputs endpoints now include the number of confirmations.
+- aeb95460: The transaction pool broadcast API now returns the full transaction set.
+
+### Patch Changes
+
+- Updated dependencies [ca620883]
+- Updated dependencies [8a0a34c0]
+- Updated dependencies [8a0a34c0]
+- Updated dependencies [8a0a34c0]
+- Updated dependencies [4f1fb6eb]
+  - @siafoundation/types@0.11.0
+
 ## 0.6.2
 
 ### Patch Changes

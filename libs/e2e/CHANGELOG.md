@@ -1,5 +1,13 @@
 # @siafoundation/e2e
 
+## 0.6.4
+
+### Patch Changes
+
+- Updated dependencies [66ecafa1]
+  - @siafoundation/explored-types@0.17.0
+  - @siafoundation/react-core@5.0.0
+
 ## 0.6.3
 
 ### Patch Changes
