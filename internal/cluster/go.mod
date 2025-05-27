@@ -1,14 +1,14 @@
 module go.sia.tech/web/cluster
 
-go 1.23.2
+go 1.24.2
 
-toolchain go1.23.4
+toolchain go1.24.3
 
 require (
-	go.sia.tech/cluster v0.1.3-0.20250521145228-65cc905ebbf5
-	go.sia.tech/core v0.12.3
-	go.sia.tech/coreutils v0.13.7-0.20250519232338-480bcda7534d
-	go.sia.tech/explored v0.0.0-20250520131210-f1ee42b6e349
+	go.sia.tech/cluster v0.1.3-0.20250527095014-158548d4d9ac
+	go.sia.tech/core v0.13.0
+	go.sia.tech/coreutils v0.15.0
+	go.sia.tech/explored v1.0.0-beta.1.0.20250526154359-a4bc004203d0
 	go.uber.org/zap v1.27.0
 )
 
@@ -32,18 +32,18 @@ require (
 	github.com/oschwald/geoip2-golang v1.11.0 // indirect
 	github.com/oschwald/maxminddb-golang v1.13.0 // indirect
 	github.com/quic-go/qpack v0.5.1 // indirect
-	github.com/quic-go/quic-go v0.51.0 // indirect
+	github.com/quic-go/quic-go v0.52.0 // indirect
 	github.com/quic-go/webtransport-go v0.8.1-0.20241018022711-4ac2c9250e66 // indirect
 	github.com/ryszard/goskiplist v0.0.0-20150312221310-2dfbae5fcf46 // indirect
 	github.com/shabbyrobe/gocovmerge v0.0.0-20230507112040-c3350d9342df // indirect
 	github.com/shopspring/decimal v1.4.0 // indirect
 	go.etcd.io/bbolt v1.4.0 // indirect
 	go.sia.tech/gofakes3 v0.0.5 // indirect
-	go.sia.tech/hostd/v2 v2.1.1-0.20250518164712-0880ea6f06cd // indirect
+	go.sia.tech/hostd/v2 v2.2.0 // indirect
 	go.sia.tech/jape v0.14.0 // indirect
 	go.sia.tech/mux v1.4.0 // indirect
-	go.sia.tech/renterd/v2 v2.1.1-0.20250521145058-8ba171496b36 // indirect
-	go.sia.tech/walletd/v2 v2.6.0 // indirect
+	go.sia.tech/renterd/v2 v2.1.1-0.20250527074103-b714877c4281 // indirect
+	go.sia.tech/walletd/v2 v2.8.0 // indirect
 	go.uber.org/mock v0.5.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/crypto v0.38.0 // indirect
