@@ -1,5 +1,20 @@
 # @siafoundation/explored-types
 
+## 0.17.0
+
+### Minor Changes
+
+- 66ecafa1: Added renewedFrom/To keys to the v2 contract type.
+
+### Patch Changes
+
+- Updated dependencies [ca620883]
+- Updated dependencies [8a0a34c0]
+- Updated dependencies [8a0a34c0]
+- Updated dependencies [8a0a34c0]
+- Updated dependencies [4f1fb6eb]
+  - @siafoundation/types@0.11.0
+
 ## 0.16.0
 
 ### Minor Changes

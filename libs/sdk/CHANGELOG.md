@@ -1,5 +1,20 @@
 # @siafoundation/sdk
 
+## 0.4.0
+
+### Minor Changes
+
+- 6774557b: Added a v2TransactionId method.
+
+### Patch Changes
+
+- Updated dependencies [ca620883]
+- Updated dependencies [8a0a34c0]
+- Updated dependencies [8a0a34c0]
+- Updated dependencies [8a0a34c0]
+- Updated dependencies [4f1fb6eb]
+  - @siafoundation/types@0.11.0
+
 ## 0.3.3
 
 ### Patch Changes

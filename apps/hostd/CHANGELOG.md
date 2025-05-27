@@ -1,5 +1,11 @@
 # hostd
 
+## 0.62.0
+
+### Minor Changes
+
+- cdf88680: Added versioning data to the alerts table.
+
 ## 0.61.0
 
 ### Minor Changes

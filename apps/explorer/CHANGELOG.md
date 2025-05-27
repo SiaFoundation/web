@@ -1,5 +1,19 @@
 # explorer
 
+## 0.31.0
+
+### Minor Changes
+
+- c649f08e: Added renewedTo and renewedFrom buttons to the v2 contract pages.
+- b366643e: Added more information to Latest Blocks list.
+- 733ac574: Improved top host ranking.
+- 0a20417c: Added title links to entity lists, improving navigation.
+- a452f370: Rounded host uptime percentage to the hundredths place.
+- 4ae41f28: Fixed minor visual bug in entity lists.
+- 8a48af34: Added search support for v2 contracts and transactions.
+- b77dc704: Clarified search response for IDs not found.
+- 25ff321d: Added infinite scroll to address page.
+
 ## 0.30.0
 
 ### Minor Changes
