@@ -114,6 +114,7 @@ export function normalizeContract(
       transactionID: contract.transactionID,
 
       resolutionIndex: contract.resolutionIndex,
+      resolutionTransactionID: contract.resolutionTransactionID,
     }
   }
   return {
@@ -134,7 +135,9 @@ export function normalizeContract(
     revisionNumber: contract.revisionNumber,
     status: determineV1ContractStatus(contract),
     transactionID: contract.transactionID,
+
     resolutionIndex: contract.proofIndex,
+    resolutionTransactionID: contract.proofTransactionID,
     unlockHash: contract.unlockHash,
   }
 }

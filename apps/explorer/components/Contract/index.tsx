@@ -82,8 +82,8 @@ export function Contract({
       },
       {
         label: 'proof confirmed',
-        copyable: false,
-        value: contract.resolutionTransactionID,
+        copyable: !!contract.resolutionTransactionID,
+        value: contract.resolutionTransactionID || '-',
       },
       {
         label: 'negotiation height',
