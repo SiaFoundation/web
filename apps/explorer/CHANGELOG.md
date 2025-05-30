@@ -1,5 +1,11 @@
 # explorer
 
+## 0.32.0
+
+### Minor Changes
+
+- b8caab8e: Fixed proof confirmed display on the contract page.
+
 ## 0.31.0
 
 ### Minor Changes
