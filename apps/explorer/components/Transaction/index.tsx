@@ -91,14 +91,11 @@ export function Transaction({
             : 'siacoin output',
         addressHref: routes.address.view.replace(
           ':id',
-          stripPrefix(
-            'siacoinOutput' in o ? o.siacoinOutput.address : o.address
-          )
+
+          o.siacoinOutput.address
         ),
-        address: 'siacoinOutput' in o ? o.siacoinOutput.address : o.address,
-        sc: new BigNumber(
-          'siacoinOutput' in o ? o.siacoinOutput.value : o.value
-        ),
+        address: o.siacoinOutput.address,
+        sc: new BigNumber(o.siacoinOutput.value),
         outputId: 'id' in o && o.id ? o.id : '',
       })
     })
@@ -107,12 +104,10 @@ export function Transaction({
         label: 'siafund output',
         addressHref: routes.address.view.replace(
           ':id',
-          stripPrefix(
-            'siafundOutput' in o ? o.siafundOutput.address : o.address
-          )
+          stripPrefix(o.siafundOutput.address)
         ),
-        address: 'siafundOutput' in o ? o.siafundOutput.address : o.address,
-        sf: Number('siafundOutput' in o ? o.siafundOutput.value : o.value),
+        address: o.siafundOutput.address,
+        sf: Number(o.siafundOutput.value),
         outputId: 'id' in o && o.id ? o.id : '',
       })
     })
