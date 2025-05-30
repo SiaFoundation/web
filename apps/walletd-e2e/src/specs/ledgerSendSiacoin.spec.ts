@@ -103,15 +103,15 @@ test('compose siacoin transaction with ledger wallet pre and post v2 fork allow 
   await mineToHeight(consensusNetwork.data.hardforkV2.requireHeight + 1)
   await page.reload()
 
-  // Verify can not compose v2 transaction.
-  await navigateToWallet(page, wallet1Name)
-  await page.getByLabel('send').click()
-  await expect(
-    page.getByText('Ledger wallets do not support sending v2 transactions')
-  ).toBeVisible()
-  await expect(
-    page.getByText(
-      'testCluster - constructing v2 transaction - switched to v2 at require height 500'
-    )
-  ).toBeVisible()
+  // Verify that we can compose v2 transaction.
+  await ledgerComposeSiacoin(page, {
+    walletName: wallet1Name,
+    receiveAddress: wallet2Address0,
+    changeAddress: wallet1Address0,
+    amount: amountV12,
+    // v2 fee is 0.020
+    expectedFee: 0.020,
+    transactionVersionIndicator:
+      'testCluster - constructing v2 transaction',
+  })
 })
