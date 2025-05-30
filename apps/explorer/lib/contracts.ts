@@ -23,15 +23,11 @@ type ContractStatus = ObjectValues<typeof CONTRACT_STATUS>
 export function determineV1ContractStatus({
   resolved,
   valid,
-  validProofOutputs,
-  missedProofOutputs,
 }: ExplorerFileContract): ContractStatus {
   if (!resolved) return 'in progress'
-
-  const successful =
-    valid || validProofOutputs?.[1].value === missedProofOutputs?.[1].value
-
-  return successful ? 'complete' : 'failed'
+  if (resolved && valid) return 'complete'
+  if (resolved && !valid) return 'failed'
+  return 'invalid'
 }
 
 export function determineV2ContractStatus(
