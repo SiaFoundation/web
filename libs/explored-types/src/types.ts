@@ -29,6 +29,10 @@ import type {
   V2FileContractElement,
   V2FileContractResolution,
   V2FileContractRevision,
+  V2SiacoinInput,
+  V2SiafundInput,
+  Attestation,
+  MerkleProof,
 } from '@siafoundation/types'
 
 // Unchanged Types - Re-exported for a more straight-forward DX like:
@@ -405,8 +409,68 @@ export type ExplorerV2HostAnnouncement = {
   V2HostAnnouncement: NetAddress[]
 }
 
-export type ExplorerV2Transaction = V2Transaction & {
-  id: string
+export type ExplorerV2FileContractResolutionType =
+  | 'invalid'
+  | 'expiration'
+  | 'renewal'
+  | 'storage_proof'
+
+type ExplorerV2FileContractResolutionBase = {
+  parent: ExplorerV2FileContract
+}
+
+export type ExplorerV2FileContractResolutionExpiration =
+  ExplorerV2FileContractResolutionBase & {
+    type: 'expiration'
+    resolution: Record<string, never>
+  }
+
+export type ExplorerV2FileContractResolutionRenewal =
+  ExplorerV2FileContractResolutionBase & {
+    type: 'renewal'
+    resolution: {
+      finalRevision: ExplorerV2FileContract
+      newContract: ExplorerV2FileContract
+      renterRollover: Currency
+      hostRollover: Currency
+      renterSignature: Signature
+      hostSignature: Signature
+    }
+  }
+
+export type ExplorerV2FileContractResolutionStorageProof =
+  ExplorerV2FileContractResolutionBase & {
+    type: 'storage_proof'
+    resolution: {
+      proofIndex: ChainIndex
+      leaf: string
+      proof: MerkleProof
+    }
+  }
+
+export type ExplorerV2FileContractResolution =
+  | ExplorerV2FileContractResolutionExpiration
+  | ExplorerV2FileContractResolutionRenewal
+  | ExplorerV2FileContractResolutionStorageProof
+
+export type ExplorerV2Transaction = {
+  id: TransactionID
+
+  siacoinInputs?: V2SiacoinInput[]
+  siacoinOutputs?: ExplorerSiacoinOutput[]
+  siafundInputs?: V2SiafundInput[]
+  siafundOutputs?: ExplorerSiafundOutput[]
+
+  fileContracts?: ExplorerV2FileContract[]
+  fileContractRevisions?: V2FileContractRevision[]
+  fileContractResolutions?: ExplorerV2FileContractResolution[]
+
+  attestations?: Attestation[]
+  arbitraryData?: Uint8Array
+
+  newFoundationAddress?: Address
+  minerFee: Currency
+
   hostAnnouncements?: ExplorerV2HostAnnouncement[]
 }
 
@@ -415,11 +479,6 @@ export type V2BlockData = {
   commitment: Hash256
   transactions: ExplorerV2Transaction[]
 }
-
-export type ExplorerV2FileContractResolutionType =
-  | 'renewal'
-  | 'storage_proof'
-  | 'expiration'
 
 export type ExplorerV2FileContract = V2FileContractElement & {
   transactionID: TransactionID

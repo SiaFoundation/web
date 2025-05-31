@@ -216,7 +216,7 @@ function formatV2TransactionEntity(
     sc: getTotal({
       address: id,
       inputs: transaction.siacoinInputs?.map((o) => o.parent.siacoinOutput),
-      outputs: transaction.siacoinOutputs,
+      outputs: transaction.siacoinOutputs?.map((o) => o.siacoinOutput),
     }),
     sf: getTotal({
       address: id,
@@ -224,7 +224,10 @@ function formatV2TransactionEntity(
         address: o.parent.siafundOutput.address,
         value: String(o.parent.siafundOutput.value),
       })),
-      outputs: transaction.siafundOutputs,
+      outputs: transaction.siafundOutputs?.map((o) => ({
+        address: o.siafundOutput.address,
+        value: String(o.siafundOutput.value),
+      })),
     }).toNumber(),
     label: 'Transaction',
     initials: 'TX',
