@@ -82,6 +82,8 @@ func setupV1Contracts(nm *nodes.Manager, w *swallet, cm *chain.Manager) error {
 
 	// prepare contract we let expire
 	fc1 := prepareContract(bh + 1)
+	fc1.ValidProofOutputs[0].Value = fc1.ValidProofOutputs[0].Value.Sub(types.Siacoins(1))
+	fc1.ValidProofOutputs[1].Value = fc1.ValidProofOutputs[1].Value.Add(types.Siacoins(1))
 	_, err := broadcastContract(fc1)
 	if err != nil {
 		return err
