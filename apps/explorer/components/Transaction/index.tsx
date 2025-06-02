@@ -15,6 +15,8 @@ import {
   ExplorerV2Transaction,
   V2FileContractRevision,
 } from '@siafoundation/explored-types'
+import { getTransactionSummary } from '../../lib/tx'
+import { EntityType } from '@siafoundation/units'
 
 type Props = {
   transactionHeaderData: TransactionHeaderData
@@ -67,9 +69,7 @@ export function Transaction({
           )
         ),
         address: 'parent' in o ? o.parent.siafundOutput.address : o.address,
-        sc: new BigNumber(
-          'parent' in o ? o.parent.siafundOutput.value : o.value
-        ),
+        sf: Number('parent' in o ? o.parent.siafundOutput.value : o.value),
         outputId: 'parent' in o ? o.parent.id : o.parentID,
       })
     })
@@ -174,6 +174,26 @@ export function Transaction({
     return operations
   }, [transaction])
 
+  const summary: EntityListItemProps[] = useMemo(() => {
+    const { sf, sc } = getTransactionSummary(transaction)
+
+    const sfItems = sf.map((item) => ({
+      type: 'address' as EntityType,
+      hash: item.address,
+      href: routes.address.view.replace(':id', item.address),
+      sf: item.sf,
+    }))
+
+    const scItems = sc.map((item) => ({
+      type: 'address' as EntityType,
+      hash: item.address,
+      href: routes.address.view.replace(':id', item.address),
+      sc: item.sc,
+    }))
+
+    return [...sfItems, ...scItems]
+  }, [transaction])
+
   return (
     <ContentLayout
       panel={
@@ -186,6 +206,11 @@ export function Transaction({
       }
     >
       <div className="flex flex-col gap-5">
+        <EntityList
+          title="Summary"
+          emptyMessage="No address activity recorded in this transaction"
+          dataset={summary}
+        />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-5">
           <div>
             <EntityList title={`Inputs (${inputs.length})`} dataset={inputs}>
