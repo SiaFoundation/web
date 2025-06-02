@@ -14,20 +14,13 @@ export function TransactionSkeleton() {
         </div>
       }
     >
-      <div className="grid grid-cols-1 gap-5">
-        <div className="grid grid-cols-2 gap-5">
-          <div>
-            <EntityList title="Inputs" isLoading skeletonCount={4} />
-          </div>
-          <div>
-            <EntityList title="Outputs" isLoading skeletonCount={4} />
-          </div>
+      <div className="flex flex-col gap-5">
+        <EntityList title="Summary" isLoading skeletonCount={2} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-5">
+          <EntityList title="Inputs" isLoading skeletonCount={2} />
+          <EntityList title="Outputs" isLoading skeletonCount={2} />
         </div>
-        {/* <EntityList
-          title="Related operations"
-          isLoading
-          skeletonCount={4}
-        /> */}
+        <EntityList title="Related Operations" isLoading skeletonCount={2} />
       </div>
     </ContentLayout>
   )

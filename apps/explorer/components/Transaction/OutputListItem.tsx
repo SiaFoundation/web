@@ -28,8 +28,8 @@ export function OutputListItem(props: Props) {
             {label}
           </Link>
           <div className="flex-1" />
-          {sc && <ValueSc variant="change" value={sc} />}
-          {sf && <ValueSf variant="change" value={sf} />}
+          {sc && <ValueSc variant="value" value={sc} />}
+          {sf && <ValueSf variant="value" value={sf} />}
         </div>
         <div className="flex gap-2 justify-between w-full @container">
           <ValueCopyable
