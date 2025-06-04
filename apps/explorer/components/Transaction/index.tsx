@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
-import { stripPrefix } from '@siafoundation/design-system'
+import { Panel, stripPrefix, Text } from '@siafoundation/design-system'
 import { EntityList } from '../Entity/EntityList'
 import { EntityListItemProps } from '../Entity/EntityListItem'
 import { routes } from '../../config/routes'
@@ -193,6 +193,30 @@ export function Transaction({
 
     return [...sfItems, ...scItems]
   }, [transaction])
+
+  // An "empty" transaction.
+  if (!inputs.length && !outputs.length && !operations.length) {
+    return (
+      <ContentLayout
+        panel={
+          <div className="flex flex-col gap-16">
+            <TransactionHeader
+              title={title}
+              transactionHeaderData={transactionHeaderData}
+            />
+          </div>
+        }
+      >
+        <Panel>
+          <div className="p-4 flex justify-center">
+            <Text size="16" color="subtle">
+              No activity
+            </Text>
+          </div>
+        </Panel>
+      </ContentLayout>
+    )
+  }
 
   return (
     <ContentLayout
