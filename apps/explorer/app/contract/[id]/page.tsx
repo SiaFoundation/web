@@ -75,6 +75,7 @@ export default async function Page({ params }: ExplorerPageProps) {
           blockHeight: formationTxnChainIndices[0].height,
           confirmations: currentTip.height - formationTxnChainIndices[0].height,
           timestamp: parentBlock.timestamp,
+          version: 'v1',
         }}
       />
     )
@@ -123,6 +124,7 @@ export default async function Page({ params }: ExplorerPageProps) {
           blockHeight: formationTxnChainIndices[0].height,
           confirmations: currentTip.height - formationTxnChainIndices[0].height,
           timestamp: parentBlock.timestamp,
+          version: 'v2',
         }}
       />
     )

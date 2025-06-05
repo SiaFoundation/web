@@ -63,6 +63,7 @@ export function determineContractStatusColor(status: ContractStatus) {
 }
 
 export type ContractData = {
+  version: 'v2' | 'v1'
   confirmationIndex: ChainIndex
   fileMerkleRoot: string
   filesize: number
@@ -90,6 +91,7 @@ export function normalizeContract(
 ): ContractData {
   if ('v2FileContract' in contract) {
     return {
+      version: 'v2',
       confirmationIndex: contract.confirmationIndex,
       fileMerkleRoot: contract.v2FileContract.fileMerkleRoot,
       filesize: contract.v2FileContract.filesize,
@@ -118,6 +120,7 @@ export function normalizeContract(
     }
   }
   return {
+    version: 'v1',
     confirmationIndex: contract.confirmationIndex,
     fileMerkleRoot: contract.fileMerkleRoot,
     filesize: contract.filesize,

@@ -59,6 +59,7 @@ export default async function Page({ params }: ExplorerPageProps) {
           confirmations:
             currentTip.height - transactionChainIndices[0].height + 1,
           timestamp: parentBlock.timestamp,
+          version: 'v1',
         }}
       />
     )
@@ -90,6 +91,7 @@ export default async function Page({ params }: ExplorerPageProps) {
           confirmations:
             currentTip.height - transactionChainIndices[0].height + 1,
           timestamp: parentBlock.timestamp,
+          version: 'v2',
         }}
       />
     )

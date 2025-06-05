@@ -4,6 +4,7 @@ import {
   LinkButton,
   stripPrefix,
   Text,
+  Tooltip,
 } from '@siafoundation/design-system'
 import { ArrowLeft16, ArrowRight16 } from '@siafoundation/react-icons'
 import { routes } from '../../config/routes'
@@ -63,6 +64,11 @@ export function ContractHeader({
           >
             {contract.status}
           </Badge>
+          <Tooltip content={'contract version'}>
+            <Badge variant="simple" data-testid="explorer-contract-version">
+              {contract.version}
+            </Badge>
+          </Tooltip>
         </div>
       </div>
       {currentHeight && (

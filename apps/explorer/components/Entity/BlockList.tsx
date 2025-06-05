@@ -21,6 +21,7 @@ type BlockListItemProps = {
   timestamp: string | number
   height: number
   href: string
+  version: 'v2' | 'v1'
 }
 
 type Props = {
@@ -129,7 +130,9 @@ export function BlockList({
                               {
                                 addSuffix: true,
                               }
-                            )}
+                            )}{' '}
+                            {' • '}
+                            {block.version}
                           </Text>
                         </ClientSideOnly>
                       </div>

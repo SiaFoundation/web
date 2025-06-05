@@ -271,6 +271,7 @@ export function Home({
               height: block.height,
               timestamp: block.timestamp,
               href: routes.block.view.replace(':id', String(block.height)),
+              version: 'v2' in block ? 'v2' : 'v1',
             }))}
           />
         </div>
