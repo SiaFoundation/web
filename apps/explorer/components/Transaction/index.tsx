@@ -17,6 +17,8 @@ import {
 } from '@siafoundation/explored-types'
 import { getTransactionSummary } from '../../lib/tx'
 import { EntityType } from '@siafoundation/units'
+import { ExplorerAccordion } from '../ExplorerAccordion'
+import { ExplorerTextarea } from '../ExplorerTextarea'
 
 type Props = {
   transactionHeaderData: TransactionHeaderData
@@ -194,6 +196,14 @@ export function Transaction({
     return [...sfItems, ...scItems]
   }, [transaction])
 
+  const JSONAccordion = (
+    <ExplorerAccordion title="JSON">
+      <div className="p-2">
+        <ExplorerTextarea value={JSON.stringify(transaction, null, 2)} />
+      </div>
+    </ExplorerAccordion>
+  )
+
   // An "empty" transaction.
   if (!inputs.length && !outputs.length && !operations.length) {
     return (
@@ -207,13 +217,14 @@ export function Transaction({
           </div>
         }
       >
-        <Panel>
-          <div className="p-4 flex justify-center">
+        <div className="flex flex-col gap-5">
+          <Panel className="p-4 flex justify-center">
             <Text size="16" color="subtle">
               No activity
             </Text>
-          </div>
-        </Panel>
+          </Panel>
+          {JSONAccordion}
+        </div>
       </ContentLayout>
     )
   }
@@ -257,6 +268,7 @@ export function Transaction({
             dataset={operations}
           />
         )}
+        {JSONAccordion}
       </div>
     </ContentLayout>
   )

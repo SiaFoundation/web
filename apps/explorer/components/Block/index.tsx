@@ -13,6 +13,8 @@ import { EntityHeading } from '../EntityHeading'
 import { ContentLayout } from '../ContentLayout'
 import { ExplorerBlock } from '@siafoundation/explored-types'
 import { ArrowLeft16, ArrowRight16 } from '@siafoundation/react-icons'
+import { ExplorerAccordion } from '../ExplorerAccordion'
+import { ExplorerTextarea } from '../ExplorerTextarea'
 
 type Props = {
   block: ExplorerBlock
@@ -154,6 +156,11 @@ export function Block({ block, blockID, currentHeight }: Props) {
             })}
           />
         )}
+        <ExplorerAccordion title="JSON">
+          <div className="p-2">
+            <ExplorerTextarea value={JSON.stringify(block, null, 2)} />
+          </div>
+        </ExplorerAccordion>
       </div>
     </ContentLayout>
   )
