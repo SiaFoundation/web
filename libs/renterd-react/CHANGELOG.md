@@ -1,5 +1,11 @@
 # @siafoundation/renterd-react
 
+## 4.15.5
+
+### Patch Changes
+
+- @siafoundation/units@3.4.3
+
 ## 4.15.4
 
 ### Patch Changes

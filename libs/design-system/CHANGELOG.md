@@ -1,5 +1,14 @@
 # Changelog
 
+## 8.0.0
+
+### Patch Changes
+
+- Updated dependencies [98c1eb3b]
+  - @siafoundation/explored-types@0.18.0
+  - @siafoundation/explored-react@0.7.2
+  - @siafoundation/units@3.4.3
+
 ## 7.0.0
 
 ### Patch Changes

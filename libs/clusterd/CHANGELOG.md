@@ -1,5 +1,15 @@
 # @siafoundation/clusterd
 
+## 0.3.0
+
+### Minor Changes
+
+- 8ce75907: Exported network version for use elsewhere.
+
+### Patch Changes
+
+- @siafoundation/units@3.4.3
+
 ## 0.2.5
 
 ### Patch Changes

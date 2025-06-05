@@ -1,5 +1,15 @@
 # explorer
 
+## 0.32.0
+
+### Minor Changes
+
+- a8954b64: Added address-level summary of siacoin and siafund changes to the transaction page.
+- 82f8f9b1: The explorer now redirects requests with uppercase IDs to their lowercase equivalents.
+- 898bc649: Fixed block transaction list labeling and spacing during the allow height.
+- 7ea4f555: Added a hardfork version badge to the block, contract, and transaction pages.
+- b8caab8e: Fixed proof confirmed display on the contract page.
+
 ## 0.31.0
 
 ### Minor Changes
