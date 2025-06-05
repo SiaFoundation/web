@@ -123,6 +123,17 @@ test.describe('v2', () => {
       page.getByTestId('entity-heading').getByText(transaction.id.slice(0, 5))
     ).toBeVisible()
   })
+
+  test('block displays the correct version', async ({ page }) => {
+    const { data } = await cluster.daemons.hostds[0].api.consensusTip()
+    const height = String(data.height - 1)
+
+    await explorerApp.goTo('/block/' + height)
+
+    await expect(
+      page.getByTestId('explorer-block-version').getByText('v2')
+    ).toBeVisible()
+  })
 })
 
 // V1
@@ -236,6 +247,17 @@ test.describe('v1', () => {
 
     await expect(
       page.getByTestId('entity-heading').getByText(transaction.id.slice(0, 5))
+    ).toBeVisible()
+  })
+
+  test('block displays the correct version', async ({ page }) => {
+    const { data } = await cluster.daemons.hostds[0].api.consensusTip()
+    const height = String(data.height - 1)
+
+    await explorerApp.goTo('/block/' + height)
+
+    await expect(
+      page.getByTestId('explorer-block-version').getByText('v1')
     ).toBeVisible()
   })
 })

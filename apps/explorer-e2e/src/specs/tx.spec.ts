@@ -84,6 +84,19 @@ test.describe('v2', () => {
       page.getByTestId('entity-heading').getByText('Address')
     ).toBeVisible()
   })
+
+  test('transaction displays the correct version', async ({ page }) => {
+    const events = await cluster.daemons.renterds[0].api.walletEvents({
+      params: { limit: 1, offset: 0 },
+    })
+    const transactionID = events.data[0].id
+
+    await explorerApp.goTo('/tx/' + transactionID)
+
+    await expect(
+      page.getByTestId('explorer-transaction-version').getByText('v2')
+    ).toBeVisible()
+  })
 })
 
 // V1
@@ -158,6 +171,19 @@ test.describe('v1', () => {
 
     await expect(
       page.getByTestId('entity-heading').getByText('Address')
+    ).toBeVisible()
+  })
+
+  test('transaction displays the correct version', async ({ page }) => {
+    const events = await cluster.daemons.renterds[0].api.walletEvents({
+      params: { limit: 1, offset: 0 },
+    })
+    const transactionID = events.data[0].id
+
+    await explorerApp.goTo('/tx/' + transactionID)
+
+    await expect(
+      page.getByTestId('explorer-transaction-version').getByText('v1')
     ).toBeVisible()
   })
 })

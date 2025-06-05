@@ -3,7 +3,6 @@ import {
   Tooltip,
   stripPrefix,
   LinkButton,
-  Text,
 } from '@siafoundation/design-system'
 import { EntityList } from '../Entity/EntityList'
 import { humanNumber } from '@siafoundation/units'
@@ -99,6 +98,11 @@ export function Block({ block, blockID, currentHeight }: Props) {
                   transactions
                 </Badge>
               </Tooltip>
+              <Tooltip content={'block version'}>
+                <Badge variant="simple" data-testid="explorer-block-version">
+                  {'v2' in block ? 'v2' : 'v1'}
+                </Badge>
+              </Tooltip>
             </div>
           </div>
           <div className="flex flex-col gap-y-2 md:gap-y-4">
@@ -114,9 +118,11 @@ export function Block({ block, blockID, currentHeight }: Props) {
           <EntityList
             title={`Transactions (${block.v2.transactions.length || 0})`}
             actions={
-              <Text size="14" color="subtle">
-                v2
-              </Text>
+              <Tooltip content={'transactions version'}>
+                <Badge variant="simple" data-testid="explorer-block-version">
+                  v2
+                </Badge>
+              </Tooltip>
             }
             dataset={block.v2.transactions.map((tx) => {
               const txID = stripPrefix(tx.id)
@@ -134,9 +140,11 @@ export function Block({ block, blockID, currentHeight }: Props) {
           <EntityList
             title={`Transactions (${block.transactions?.length || 0})`}
             actions={
-              <Text size="14" color="subtle">
-                v1
-              </Text>
+              <Tooltip content={'transactions version'}>
+                <Badge variant="simple" data-testid="explorer-block-version">
+                  v1
+                </Badge>
+              </Tooltip>
             }
             dataset={block.transactions?.map((tx) => {
               const txID = stripPrefix(tx.id)

@@ -109,6 +109,19 @@ test.describe('v2', () => {
       page.getByText(renewedContract?.id.slice(0, 6) || 'TEST FAIL').first()
     ).toBeVisible()
   })
+
+  test('contract displays the correct version', async ({ page }) => {
+    const hostContracts = await cluster.daemons.hostds[0].api.contractsV2({
+      data: { statuses: ['active'] },
+    })
+    const contractID = hostContracts.data.contracts[0].id
+
+    await explorerApp.goTo('/contract/' + contractID)
+
+    await expect(
+      page.getByTestId('explorer-contract-version').getByText('v2')
+    ).toBeVisible()
+  })
 })
 
 // V1
@@ -190,5 +203,18 @@ test.describe('v1', () => {
     await explorerApp.goTo('/contract/' + inProgressContract?.id)
 
     await expect(page.getByText('in progress')).toBeVisible()
+  })
+
+  test('contract displays the correct version', async ({ page }) => {
+    const hostContracts = await cluster.daemons.hostds[0].api.contracts({
+      data: { statuses: ['active'] },
+    })
+    const contractID = hostContracts.data.contracts[0].revision.parentID
+
+    await explorerApp.goTo('/contract/' + contractID)
+
+    await expect(
+      page.getByTestId('explorer-contract-version').getByText('v1')
+    ).toBeVisible()
   })
 })

@@ -9,6 +9,7 @@ export type TransactionHeaderData = {
   blockHeight: number
   confirmations: number
   timestamp: string
+  version: 'v1' | 'v2'
 }
 
 type Props = {
@@ -17,7 +18,8 @@ type Props = {
 }
 
 export function TransactionHeader({ title, transactionHeaderData }: Props) {
-  const { id, timestamp, blockHeight, confirmations } = transactionHeaderData
+  const { id, timestamp, blockHeight, confirmations, version } =
+    transactionHeaderData
   return (
     <div className="flex flex-wrap gap-y-4 items-center justify-between">
       <EntityHeading
@@ -52,6 +54,11 @@ export function TransactionHeader({ title, transactionHeaderData }: Props) {
             </div>
           </Badge>
         )}
+        <Tooltip content={'transaction version'}>
+          <Badge variant="simple" data-testid="explorer-transaction-version">
+            {version}
+          </Badge>
+        </Tooltip>
       </div>
     </div>
   )
