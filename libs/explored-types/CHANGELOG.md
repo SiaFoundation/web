@@ -1,5 +1,11 @@
 # @siafoundation/explored-types
 
+## 0.18.0
+
+### Minor Changes
+
+- 98c1eb3b: Refactored ExplorerV2Transaction to match explored implementation.
+
 ## 0.17.0
 
 ### Minor Changes
