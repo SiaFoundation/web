@@ -3,6 +3,7 @@ import {
   Tooltip,
   stripPrefix,
   LinkButton,
+  Text,
 } from '@siafoundation/design-system'
 import { EntityList } from '../Entity/EntityList'
 import { humanNumber } from '@siafoundation/units'
@@ -108,36 +109,48 @@ export function Block({ block, blockID, currentHeight }: Props) {
         </div>
       }
     >
-      {block.v2?.transactions && (
-        <EntityList
-          title={`Transactions (${block.v2.transactions.length || 0})`}
-          dataset={block.v2.transactions.map((tx) => {
-            const txID = stripPrefix(tx.id)
-            return {
-              type: 'transaction',
-              hash: txID,
-              label: 'transaction',
-              initials: 'T',
-              href: routes.transaction.view.replace(':id', txID),
+      <div className="flex flex-col gap-5">
+        {block.v2?.transactions && (
+          <EntityList
+            title={`Transactions (${block.v2.transactions.length || 0})`}
+            actions={
+              <Text size="14" color="subtle">
+                v2
+              </Text>
             }
-          })}
-        />
-      )}
-      {block.transactions && (
-        <EntityList
-          title={`Transactions (${block.transactions?.length || 0})`}
-          dataset={block.transactions?.map((tx) => {
-            const txID = stripPrefix(tx.id)
-            return {
-              type: 'transaction',
-              hash: txID,
-              label: 'transaction',
-              initials: 'T',
-              href: routes.transaction.view.replace(':id', txID),
+            dataset={block.v2.transactions.map((tx) => {
+              const txID = stripPrefix(tx.id)
+              return {
+                type: 'transaction',
+                hash: txID,
+                label: 'transaction',
+                initials: 'T',
+                href: routes.transaction.view.replace(':id', txID),
+              }
+            })}
+          />
+        )}
+        {block.transactions && (
+          <EntityList
+            title={`Transactions (${block.transactions?.length || 0})`}
+            actions={
+              <Text size="14" color="subtle">
+                v1
+              </Text>
             }
-          })}
-        />
-      )}
+            dataset={block.transactions?.map((tx) => {
+              const txID = stripPrefix(tx.id)
+              return {
+                type: 'transaction',
+                hash: txID,
+                label: 'transaction',
+                initials: 'T',
+                href: routes.transaction.view.replace(':id', txID),
+              }
+            })}
+          />
+        )}
+      </div>
     </ContentLayout>
   )
 }
