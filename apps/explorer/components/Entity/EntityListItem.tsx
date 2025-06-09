@@ -1,6 +1,9 @@
-'use client'
+import BigNumber from 'bignumber.js'
+import { formatDistance } from 'date-fns'
+import { upperFirst } from '@technically/lodash'
 
 import {
+  Badge,
   Link,
   Text,
   Tooltip,
@@ -8,19 +11,26 @@ import {
   ValueScFiat,
   ValueSf,
 } from '@siafoundation/design-system'
+import { DotMark16 } from '@siafoundation/react-icons'
 import {
   EntityType,
   getEntityTypeLabel,
+  getTransactionType,
   getTxTypeLabel,
+  getV2TransactionType,
+  humanNumber,
   TxType,
 } from '@siafoundation/units'
-import { humanNumber } from '@siafoundation/units'
-import { formatDistance } from 'date-fns'
-import { upperFirst } from '@technically/lodash'
-import BigNumber from 'bignumber.js'
-import { DotMark16 } from '@siafoundation/react-icons'
-import { EntityListItemLayout } from './EntityListItemLayout'
+
 import LoadingTimestamp from '../LoadingTimestamp'
+
+import { EntityListItemLayout } from './EntityListItemLayout'
+import {
+  ExplorerTransaction,
+  ExplorerV2Transaction,
+  Transaction,
+  V2Transaction,
+} from '@siafoundation/explored-types'
 
 export type EntityListItemProps = {
   label?: string
@@ -41,6 +51,7 @@ export type EntityListItemProps = {
   siascanUrl?: string
   avatarShape?: 'square' | 'circle'
   avatar?: string
+  txPreviewBadge?: React.ReactNode
 }
 
 export function EntityListItem(entity: EntityListItemProps) {
@@ -102,10 +113,13 @@ export function EntityListItem(entity: EntityListItemProps) {
             )}
           </div>
           <div className="flex-1" />
-          <div className="flex items-center">
-            {!!sc && <ValueScFiat variant={entity.scVariant} value={sc} />}
-            {!!sf && <ValueSf variant={entity.sfVariant} value={sf} />}
-          </div>
+          <div className="flex gap-1">{entity.txPreviewBadge}</div>
+          {(sc || sf) && (
+            <div className="flex items-center">
+              {!!sc && <ValueScFiat variant={entity.scVariant} value={sc} />}
+              {!!sf && <ValueSf variant={entity.sfVariant} value={sf} />}
+            </div>
+          )}
         </div>
         <div className="flex justify-between w-full">
           <div className="flex gap-1">{!!title && truncHashEl}</div>
@@ -146,4 +160,57 @@ function isValidUrl(url?: string) {
   } catch {
     return false
   }
+}
+
+export function getExplorerV2TxPreviewBadge(
+  tx: ExplorerV2Transaction
+): React.ReactNode {
+  // This won't work for resolution types, returning undefined.
+  let txType = getV2TransactionType(tx as V2Transaction)
+
+  // Handle the above comment.
+  if (!txType) {
+    if (tx.fileContractResolutions?.[0]) {
+      txType =
+        tx.fileContractResolutions?.[0].type === 'expiration'
+          ? 'contractExpiration'
+          : tx.fileContractResolutions?.[0].type === 'renewal'
+          ? 'contractRenewal'
+          : 'storageProof'
+    }
+  }
+
+  if (txType === 'unknown') {
+    if (tx.arbitraryData?.length)
+      return <Badge variant="simple">arbitrary data</Badge>
+  }
+
+  if (txType === 'siacoin' || txType === 'siafund')
+    return (
+      <Badge variant="gray">
+        <Text color="none">{getTxTypeLabel(txType)}</Text>
+      </Badge>
+    )
+
+  return <Badge variant="accent">{getTxTypeLabel(txType)}</Badge>
+}
+
+export function getExplorerV1TxPreviewBadge(
+  tx: ExplorerTransaction
+): React.ReactNode {
+  const txType = getTransactionType(tx as Transaction)
+
+  if (txType === 'unknown') {
+    if (tx.arbitraryData?.length)
+      return <Badge variant="simple">arbitrary data</Badge>
+  }
+
+  if (txType === 'siacoin' || txType === 'siafund')
+    return (
+      <Badge variant="gray">
+        <Text color="subtle">{getTxTypeLabel(txType)}</Text>
+      </Badge>
+    )
+
+  return <Badge variant="accent">{getTxTypeLabel(txType)}</Badge>
 }

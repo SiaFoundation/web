@@ -1,20 +1,28 @@
+import { useMemo } from 'react'
+
 import {
   Badge,
   Tooltip,
   stripPrefix,
   LinkButton,
 } from '@siafoundation/design-system'
-import { EntityList } from '../Entity/EntityList'
+import { ExplorerBlock } from '@siafoundation/explored-types'
 import { humanNumber } from '@siafoundation/units'
-import { ExplorerDatum, DatumProps } from '../ExplorerDatum'
-import { useMemo } from 'react'
+import { ArrowLeft16, ArrowRight16 } from '@siafoundation/react-icons'
+
 import { routes } from '../../config/routes'
+
+import { EntityList } from '../Entity/EntityList'
+
+import { ExplorerDatum, DatumProps } from '../ExplorerDatum'
 import { EntityHeading } from '../EntityHeading'
 import { ContentLayout } from '../ContentLayout'
-import { ExplorerBlock } from '@siafoundation/explored-types'
-import { ArrowLeft16, ArrowRight16 } from '@siafoundation/react-icons'
 import { ExplorerAccordion } from '../ExplorerAccordion'
 import { ExplorerTextarea } from '../ExplorerTextarea'
+import {
+  getExplorerV1TxPreviewBadge,
+  getExplorerV2TxPreviewBadge,
+} from '../Entity/EntityListItem'
 
 type Props = {
   block: ExplorerBlock
@@ -132,6 +140,7 @@ export function Block({ block, blockID, currentHeight }: Props) {
                 label: 'transaction',
                 initials: 'T',
                 href: routes.transaction.view.replace(':id', txID),
+                txPreviewBadge: getExplorerV2TxPreviewBadge(tx),
               }
             })}
           />
@@ -152,6 +161,7 @@ export function Block({ block, blockID, currentHeight }: Props) {
                 label: 'transaction',
                 initials: 'T',
                 href: routes.transaction.view.replace(':id', txID),
+                txPreviewBadge: getExplorerV1TxPreviewBadge(tx),
               }
             })}
           />
