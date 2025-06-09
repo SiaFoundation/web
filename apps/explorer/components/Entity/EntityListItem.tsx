@@ -1,6 +1,9 @@
-'use client'
+import BigNumber from 'bignumber.js'
+import { formatDistance } from 'date-fns'
+import { upperFirst } from '@technically/lodash'
 
 import {
+  Badge,
   Link,
   Text,
   Tooltip,
@@ -9,18 +12,60 @@ import {
   ValueSf,
 } from '@siafoundation/design-system'
 import {
+  ExplorerTransaction,
+  ExplorerV2Transaction,
+} from '@siafoundation/explored-types'
+import {
+  ArrowLeft16,
+  ArrowRight16,
+  DotMark16,
+} from '@siafoundation/react-icons'
+import {
   EntityType,
   getEntityTypeLabel,
   getTxTypeLabel,
+  humanNumber,
   TxType,
 } from '@siafoundation/units'
-import { humanNumber } from '@siafoundation/units'
-import { formatDistance } from 'date-fns'
-import { upperFirst } from '@technically/lodash'
-import BigNumber from 'bignumber.js'
-import { DotMark16 } from '@siafoundation/react-icons'
-import { EntityListItemLayout } from './EntityListItemLayout'
+
+import { getTransactionSummary } from '../../lib/tx'
+
 import LoadingTimestamp from '../LoadingTimestamp'
+
+import { EntityListItemLayout } from './EntityListItemLayout'
+
+export type TxPreviewBadgeConfig = {
+  arbitraryData: boolean
+  contractFormation: boolean
+  contractResolution: boolean
+  contractRevision: boolean
+  hostAnnouncement: boolean
+  spend: boolean
+}
+
+export function generateTxPreviewBadgeConfig(
+  tx: ExplorerV2Transaction | ExplorerTransaction
+): TxPreviewBadgeConfig {
+  const summary = getTransactionSummary(tx)
+  return {
+    arbitraryData: !!tx.arbitraryData?.length,
+    contractFormation: !!tx.fileContracts?.length,
+    contractResolution:
+      ('fileContractResolutions' in tx &&
+        !!tx.fileContractResolutions?.length) ||
+      ('storageProofs' in tx && !!tx.storageProofs?.length),
+    contractRevision: !!tx.fileContractRevisions?.length,
+    hostAnnouncement: !!tx.hostAnnouncements?.length,
+    spend:
+      (!!summary.sc.length || !!summary.sf.length) &&
+      !tx.fileContracts?.length &&
+      !tx.fileContractRevisions?.length &&
+      !tx.hostAnnouncements?.length &&
+      (!('fileContractResolutions' in tx) ||
+        !tx.fileContractResolutions?.length) &&
+      (!('storageProofs' in tx) || !tx.storageProofs?.length),
+  }
+}
 
 export type EntityListItemProps = {
   label?: string
@@ -41,6 +86,7 @@ export type EntityListItemProps = {
   siascanUrl?: string
   avatarShape?: 'square' | 'circle'
   avatar?: string
+  txPreviewBadgeConfig?: TxPreviewBadgeConfig
 }
 
 export function EntityListItem(entity: EntityListItemProps) {
@@ -102,10 +148,34 @@ export function EntityListItem(entity: EntityListItemProps) {
             )}
           </div>
           <div className="flex-1" />
-          <div className="flex items-center">
-            {!!sc && <ValueScFiat variant={entity.scVariant} value={sc} />}
-            {!!sf && <ValueSf variant={entity.sfVariant} value={sf} />}
+          <div className="flex gap-1">
+            {entity.txPreviewBadgeConfig?.contractRevision && (
+              <Badge variant="accent">Contract Revision</Badge>
+            )}
+            {entity.txPreviewBadgeConfig?.contractFormation && (
+              <Badge variant="accent">Contract Formation</Badge>
+            )}
+            {entity.txPreviewBadgeConfig?.contractResolution && (
+              <Badge variant="accent">Contract Resolution</Badge>
+            )}
+            {entity.txPreviewBadgeConfig?.hostAnnouncement && (
+              <Badge variant="accent">Host Announcement</Badge>
+            )}
+            {entity.txPreviewBadgeConfig?.spend && (
+              <Badge variant="gray" className="flex gap-1">
+                <ArrowLeft16 /> Spend <ArrowRight16 />
+              </Badge>
+            )}
+            {entity.txPreviewBadgeConfig?.arbitraryData && (
+              <Badge variant="inactive">Arbitrary Data</Badge>
+            )}
           </div>
+          {(sc || sf) && (
+            <div className="flex items-center">
+              {!!sc && <ValueScFiat variant={entity.scVariant} value={sc} />}
+              {!!sf && <ValueSf variant={entity.sfVariant} value={sf} />}
+            </div>
+          )}
         </div>
         <div className="flex justify-between w-full">
           <div className="flex gap-1">{!!title && truncHashEl}</div>
