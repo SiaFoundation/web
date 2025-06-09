@@ -6,7 +6,7 @@ export function Background() {
       <img
         tw="absolute w-full h-full opacity-10"
         alt="bg"
-        src="https://sia.tech/assets/previews/leaves.png"
+        src="https://sia.tech/siascan/preview/pattern.png"
       />
     </div>
   )

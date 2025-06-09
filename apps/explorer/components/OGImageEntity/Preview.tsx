@@ -59,7 +59,7 @@ export function Preview({
           }}
         >
           <img
-            src="https://sia.tech/assets/Sia_Logo.svg"
+            src="https://sia.tech/siascan/preview/logo.png"
             height="40px"
             width="40px"
             alt="logo"
@@ -68,7 +68,7 @@ export function Preview({
             siascan
           </span>
         </div>
-        {values &&
+        {values && (
           <div tw="flex bg-black/50 border-t-2 border-gray-400/10">
             <div
               tw="flex justify-between w-full pt-10 px-10 pb-14"
@@ -90,7 +90,8 @@ export function Preview({
                 </div>
               ))}
             </div>
-          </div>}
+          </div>
+        )}
       </div>
       <div
         tw={cx(
