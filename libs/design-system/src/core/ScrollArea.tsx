@@ -28,7 +28,7 @@ export const ScrollArea = React.forwardRef<
       // Part 2: After updating radix there was an issues where the scroll area
       // would adopt its contents width. The following fixed that:
       // https://github.com/radix-ui/primitives/issues/3129
-      className="w-full h-full [&>div]:!min-w-0 [&>div]:!h-full"
+      className="w-full h-full [&>div]:!min-w-0 [&>div]:!block [&>div]:!h-full"
     >
       {children}
     </ScrollAreaPrimitive.Viewport>
