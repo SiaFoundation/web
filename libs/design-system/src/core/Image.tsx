@@ -3,11 +3,20 @@ import { cva } from 'class-variance-authority'
 import React from 'react'
 import { VariantProps } from '../types'
 
-const styles = cva(['rounded'])
+const styles = cva([], {
+  variants: {
+    rounded: {
+      true: 'rounded',
+    },
+  },
+  defaultVariants: {
+    rounded: true,
+  },
+})
 
 type Props = VariantProps<typeof styles> &
   React.ComponentProps<typeof NextImage>
 
-export function Image({ className, ...props }: Props) {
-  return <NextImage className={styles({ className })} {...props} />
+export function Image({ className, rounded, ...props }: Props) {
+  return <NextImage className={styles({ className, rounded })} {...props} />
 }

@@ -14,8 +14,8 @@ export function Footer() {
     <Container className="pt-16 pb-20 sm:pb-0">
       <div className="py-4 border-t border-gray-200 dark:border-graydark-100">
         <div className="flex flex-wrap gap-4 items-center">
-          <div className="flex gap-2 items-center">
-            <Logo size={20} />
+          <div className="flex gap-1.5 items-center">
+            <Logo size={12} />
             <Link
               size="12"
               color="contrast"
