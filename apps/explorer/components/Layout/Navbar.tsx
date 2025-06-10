@@ -32,10 +32,10 @@ export function Navbar({ appName, network, homeHref, children }: Props) {
           <div className="relative z-10 flex">
             <Link href={homeHref} underline="none">
               <div
-                className="flex items-center gap-1.5 mr-2"
+                className="flex items-center gap-2 mr-2"
                 data-testid="explorer-identity"
               >
-                <Logo size={35} />
+                <Logo size={18} />
                 {appName && (
                   <Heading
                     font="mono"

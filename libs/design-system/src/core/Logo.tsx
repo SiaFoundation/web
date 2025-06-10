@@ -1,4 +1,4 @@
-import logo from '../assets/logo.png'
+import logo from '../assets/shard.png'
 import { Image } from './Image'
 
 const props = typeof logo === 'string' ? { src: logo } : logo
@@ -8,7 +8,7 @@ type Props = {
   className?: string
 }
 
-export function Logo({ size = 30, className }: Props) {
+export function Logo({ size = 24, className }: Props) {
   return (
     <Image
       priority
@@ -16,6 +16,7 @@ export function Logo({ size = 30, className }: Props) {
       alt="Logo"
       width={size}
       height={size}
+      rounded={false}
       className={className}
     />
   )
