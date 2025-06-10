@@ -46,13 +46,14 @@ export const columns: AlertsTableColumn[] = [
     id: 'overview',
     label: 'overview',
     category: 'general',
-    contentClassName: 'min-w-[200px] max-w-[500px]',
+    contentClassName: 'min-w-[200px] max-w-[800px]',
     rowCellClassName: 'align-top pt-[5px]',
     render: ({ data: { message, severity, data } }) => {
       return (
         <div className="flex flex-col gap-1 py-4">
-          <div className="flex gap-1 items-center">
+          <div className="flex gap-1 items-start">
             <Badge
+              className="relative top-[2px]"
               variant={
                 severity === 'error' || severity === 'critical'
                   ? 'red'
@@ -64,9 +65,7 @@ export const columns: AlertsTableColumn[] = [
             >
               {severity}
             </Badge>
-            <Text weight="medium" noWrap>
-              {message}
-            </Text>
+            <Text weight="medium">{message}</Text>
           </div>
           {data['hint'] ? (
             <Text size="12" color="subtle">
@@ -110,6 +109,15 @@ export const columns: AlertsTableColumn[] = [
             .filter((data) => data) as { key: string; value: any }[],
         [data]
       )
+      if (datums.length === 0) {
+        return (
+          <div className="py-4 w-full">
+            <Text size="12" color="subtle">
+              No data
+            </Text>
+          </div>
+        )
+      }
       return (
         <div className="py-4 w-full">
           <Panel color="subtle" className="flex flex-col gap-1 w-full py-1">
