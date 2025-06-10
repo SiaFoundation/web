@@ -231,7 +231,7 @@ export function OnboardingBar() {
           size="large"
           className="flex gap-3 !px-3"
         >
-          <Text size="14" className="flex items-center gap-1">
+          <Text size="14" className="flex items-center gap-2">
             <Logo />
             Setup: {completedSteps}/{totalSteps} steps complete
           </Text>

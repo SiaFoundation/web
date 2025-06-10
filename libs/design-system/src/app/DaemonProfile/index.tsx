@@ -54,7 +54,7 @@ export function DaemonProfile({
               </Text>
             </div>
           )}
-          <Logo size={30} />
+          <Logo size={24} />
         </div>
       }
     >
