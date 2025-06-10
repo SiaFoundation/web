@@ -33,7 +33,7 @@ func (w *swallet) Sync() error {
 
 func newWallet(cm *chain.Manager, pk types.PrivateKey) (*swallet, error) {
 	ws := testutil.NewEphemeralWalletStore()
-	sw, err := wallet.NewSingleAddressWallet(pk, cm, ws)
+	sw, err := wallet.NewSingleAddressWallet(pk, cm, ws, &testutil.MockSyncer{})
 	if err != nil {
 		return nil, fmt.Errorf("failed to create wallet: %w", err)
 	}
