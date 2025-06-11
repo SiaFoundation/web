@@ -1,5 +1,16 @@
 # Changelog
 
+## 8.1.0
+
+### Minor Changes
+
+- 98595836: Removed outdated assets.
+- 43f7a8e2: Replaced shared logo for rebrand.
+
+### Patch Changes
+
+- 29be305e: Fixed a width display issue in ScrollArea.
+
 ## 8.0.0
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # explorer
 
+## 0.33.0
+
+### Minor Changes
+
+- 43f7a8e2: Updated icons and opengraph images for rebrand.
+
 ## 0.32.0
 
 ### Minor Changes
