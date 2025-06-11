@@ -1,5 +1,15 @@
 # hostd
 
+## 0.63.0
+
+### Minor Changes
+
+- 98595836: The logo icons have been updated.
+
+### Patch Changes
+
+- 64fdb993: Fixed an issue where long alert messages overflow. Fixes https://github.com/SiaFoundation/hostd/issues/725
+
 ## 0.62.0
 
 ### Minor Changes

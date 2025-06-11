@@ -1,5 +1,11 @@
 # walletd
 
+## 0.30.0
+
+### Minor Changes
+
+- 98595836: The logo icons have been updated.
+
 ## 0.29.3
 
 ### Patch Changes
