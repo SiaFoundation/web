@@ -119,9 +119,7 @@ export function Block({ block, blockID, currentHeight }: Props) {
             title={`Transactions (${block.v2.transactions.length || 0})`}
             actions={
               <Tooltip content={'transactions version'}>
-                <Badge variant="simple" data-testid="explorer-block-version">
-                  v2
-                </Badge>
+                <Badge variant="simple">v2</Badge>
               </Tooltip>
             }
             dataset={block.v2.transactions.map((tx) => {
@@ -141,9 +139,7 @@ export function Block({ block, blockID, currentHeight }: Props) {
             title={`Transactions (${block.transactions?.length || 0})`}
             actions={
               <Tooltip content={'transactions version'}>
-                <Badge variant="simple" data-testid="explorer-block-version">
-                  v1
-                </Badge>
+                <Badge variant="simple">v1</Badge>
               </Tooltip>
             }
             dataset={block.transactions?.map((tx) => {
