@@ -2,23 +2,28 @@
 
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
+
 import { Panel, stripPrefix, Text } from '@siafoundation/design-system'
-import { EntityList } from '../Entity/EntityList'
-import { EntityListItemProps } from '../Entity/EntityListItem'
-import { routes } from '../../config/routes'
-import { ContentLayout } from '../ContentLayout'
-import { TransactionHeader, TransactionHeaderData } from './TransactionHeader'
-import { OutputListItem } from './OutputListItem'
 import {
   ExplorerFileContractRevision,
   ExplorerTransaction,
   ExplorerV2Transaction,
   V2FileContractRevision,
 } from '@siafoundation/explored-types'
-import { getTransactionSummary } from '../../lib/tx'
 import { EntityType } from '@siafoundation/units'
+
+import { routes } from '../../config/routes'
+import { contractResolutionLabels } from '../../lib/contracts'
+import { getTransactionSummary } from '../../lib/tx'
+
+import { ContentLayout } from '../ContentLayout'
+import { EntityList } from '../Entity/EntityList'
+import { EntityListItemProps } from '../Entity/EntityListItem'
 import { ExplorerAccordion } from '../ExplorerAccordion'
 import { ExplorerTextarea } from '../ExplorerTextarea'
+
+import { TransactionHeader, TransactionHeaderData } from './TransactionHeader'
+import { OutputListItem } from './OutputListItem'
 
 type Props = {
   transactionHeaderData: TransactionHeaderData
@@ -152,10 +157,24 @@ export function Transaction({
         })
       }
     )
+    {
+      'fileContractResolutions' in transaction &&
+        transaction.fileContractResolutions?.forEach((resolution) => {
+          return operations.push({
+            label: contractResolutionLabels[resolution.type],
+            type: 'contract',
+            href: routes.contract.view.replace(
+              ':id',
+              stripPrefix(resolution.parent.id)
+            ),
+            hash: resolution.parent.id,
+          })
+        })
+    }
     transaction.hostAnnouncements?.forEach((host) => {
-      operations.push({
+      return operations.push({
         label: 'host announcement',
-        // type: 'host',
+        type: 'ip',
         hash:
           'netAddress' in host
             ? host.netAddress
@@ -167,7 +186,7 @@ export function Transaction({
     {
       'storageProofs' in transaction &&
         transaction.storageProofs?.forEach((proof) => {
-          operations.push({
+          return operations.push({
             label: 'storage proof',
             hash: proof.parentID,
           })
