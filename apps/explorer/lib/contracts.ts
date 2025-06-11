@@ -144,3 +144,9 @@ export function normalizeContract(
     unlockHash: contract.unlockHash,
   }
 }
+
+export const contractResolutionLabels = {
+  storage_proof: 'Storage Proof',
+  expiration: 'Contract Expiration',
+  renewal: 'Contract Renewal',
+}
