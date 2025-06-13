@@ -248,6 +248,8 @@ export type V2ContractsPayload = {
 }
 
 export type V2ContractsResponse = {
+  id(id: any): unknown
+  height: any
   contracts: V2Contract[]
   count: number
 }
