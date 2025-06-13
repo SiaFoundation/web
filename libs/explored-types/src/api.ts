@@ -202,16 +202,16 @@ export type AddressBalanceResponse = AddressBalance
 
 // Output
 // Returns the specified siacoin output.
-export const outputSiacoinRoute = '/outputs/siacoin/:siacoinoutputid'
-export type OutputSiacoinParams = { siacoinOutputID: SiacoinOutputID }
+export const outputSiacoinRoute = '/outputs/siacoin/:id'
+export type OutputSiacoinParams = { id: SiacoinOutputID }
 export type OutputSiacoinPayload = void
 export type OutputSiacoinResponse = ExplorerSiacoinOutput
 
 // Returns the specified address' events.
-export const outputSiafundeRoute = '/outputs/siafund/:siafundoutputid'
-export type OutputSiafundeParams = { address: SiafundOutputID }
-export type OutputSiafundePayload = void
-export type OutputSiafundeResponse = ExplorerSiafundOutput
+export const outputSiafundRoute = '/outputs/siafund/:id'
+export type OutputSiafundParams = { id: SiafundOutputID }
+export type OutputSiafundPayload = void
+export type OutputSiafundResponse = ExplorerSiafundOutput
 
 // Contract
 
