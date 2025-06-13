@@ -78,10 +78,24 @@ test.describe('v2', () => {
     const transactionID = events.data[0].id
 
     await explorerApp.goTo('/tx/' + transactionID)
-    await page.getByRole('link', { name: 'SO', exact: true }).first().click()
+    await page.getByText('Address').first().click()
 
     await expect(
       page.getByTestId('entity-heading').getByText('Address')
+    ).toBeVisible()
+  })
+
+  test('transaction can click through to an output', async ({ page }) => {
+    const events = await cluster.daemons.renterds[0].api.walletEvents({
+      params: { limit: 1, offset: 0 },
+    })
+    const transactionID = events.data[0].id
+
+    await explorerApp.goTo('/tx/' + transactionID)
+    await page.getByRole('link', { name: 'SO', exact: true }).first().click()
+
+    await expect(
+      page.getByTestId('entity-heading').getByText('Output')
     ).toBeVisible()
   })
 
@@ -167,10 +181,24 @@ test.describe('v1', () => {
     const transactionID = events.data[0].id
 
     await explorerApp.goTo('/tx/' + transactionID)
-    await page.getByRole('link', { name: 'SO', exact: true }).first().click()
+    await page.getByText('Address').first().click()
 
     await expect(
       page.getByTestId('entity-heading').getByText('Address')
+    ).toBeVisible()
+  })
+
+  test('transaction can click through to an output', async ({ page }) => {
+    const events = await cluster.daemons.renterds[0].api.walletEvents({
+      params: { limit: 1, offset: 0 },
+    })
+    const transactionID = events.data[0].id
+
+    await explorerApp.goTo('/tx/' + transactionID)
+    await page.getByRole('link', { name: 'SO', exact: true }).first().click()
+
+    await expect(
+      page.getByTestId('entity-heading').getByText('Output')
     ).toBeVisible()
   })
 
