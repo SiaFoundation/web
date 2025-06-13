@@ -1,5 +1,10 @@
 'use client'
 
+import { useCallback } from 'react'
+import { useRouter } from 'next/navigation'
+
+import { useForm } from 'react-hook-form'
+
 import {
   Button,
   ConfigFields,
@@ -8,11 +13,9 @@ import {
   triggerErrorToast,
 } from '@siafoundation/design-system'
 import { Search16 } from '@siafoundation/react-icons'
-import React, { useCallback } from 'react'
-import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
-import { routes } from '../../config/routes'
 import { to } from '@siafoundation/request'
+
+import { routes } from '../../config/routes'
 import { useExplored } from '../../hooks/useExplored'
 
 const defaultValues = {
@@ -127,6 +130,10 @@ export function Search() {
         case 'transaction':
         case 'v2Transaction':
           router.push(routes.transaction.view.replace(':id', values.query))
+          break
+        case 'siacoinElement':
+        case 'siafundElement':
+          router.push(routes.output.view.replace(':id', values.query))
           break
         case 'invalid':
           form.setError('query', {
