@@ -1,26 +1,29 @@
 export const routes = {
-  home: {
-    index: '/',
-  },
-  contract: {
-    view: '/contract/:id',
-  },
-  transaction: {
-    view: '/tx/:id',
+  address: {
+    view: '/address/:id',
   },
   block: {
     view: '/block/:id',
   },
-  address: {
-    view: '/address/:id',
-  },
-  host: {
-    view: '/host/:id',
+  contract: {
+    view: '/contract/:id',
   },
   faucet: {
     index: '/faucet',
   },
+  home: {
+    index: '/',
+  },
   hostRevenueCalculator: {
     index: '/host-revenue-calculator',
+  },
+  host: {
+    view: '/host/:id',
+  },
+  output: {
+    view: '/output/:id',
+  },
+  transaction: {
+    view: '/tx/:id',
   },
 }
