@@ -61,9 +61,9 @@ import {
   OutputSiacoinParams,
   OutputSiacoinResponse,
   outputSiacoinRoute,
-  OutputSiafundeParams,
-  OutputSiafundeResponse,
-  outputSiafundeRoute,
+  OutputSiafundParams,
+  OutputSiafundResponse,
+  outputSiafundRoute,
   SearchResultTypeParams,
   SearchResultTypeResponse,
   searchResultTypeRoute,
@@ -372,11 +372,11 @@ export function useOutputSiacoin(
 }
 
 export function useOutputSiafund(
-  args: HookArgsSwr<OutputSiafundeParams, OutputSiafundeResponse>
+  args: HookArgsSwr<OutputSiafundParams, OutputSiafundResponse>
 ) {
   return useGetSwr({
     ...args,
-    route: outputSiafundeRoute,
+    route: outputSiafundRoute,
   })
 }
 

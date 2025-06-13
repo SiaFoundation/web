@@ -1,4 +1,3 @@
-import { buildRequestHandler, initAxios } from '@siafoundation/request'
 import {
   addressBalanceRoute,
   AddressBalanceParams,
@@ -84,10 +83,10 @@ import {
   OutputSiacoinPayload,
   OutputSiacoinResponse,
   outputSiacoinRoute,
-  OutputSiafundeParams,
-  OutputSiafundePayload,
-  OutputSiafundeResponse,
-  outputSiafundeRoute,
+  OutputSiafundParams,
+  OutputSiafundPayload,
+  OutputSiafundResponse,
+  outputSiafundRoute,
   searchResultTypeRoute,
   SearchResultTypeParams,
   SearchResultTypePayload,
@@ -161,6 +160,7 @@ import {
   AddressUnconfirmedEventsPayload,
   AddressUnconfirmedEventsResponse,
 } from '@siafoundation/explored-types'
+import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
 export function Explored({
   api,
@@ -295,10 +295,10 @@ export function Explored({
       OutputSiacoinResponse
     >(axios, 'get', outputSiacoinRoute),
     outputSiafund: buildRequestHandler<
-      OutputSiafundeParams,
-      OutputSiafundePayload,
-      OutputSiafundeResponse
-    >(axios, 'get', outputSiafundeRoute),
+      OutputSiafundParams,
+      OutputSiafundPayload,
+      OutputSiafundResponse
+    >(axios, 'get', outputSiafundRoute),
     // Contract
     contractByID: buildRequestHandler<
       ContractByIDParams,
