@@ -2,7 +2,6 @@ import { LockIcon, DiceIcon, GearIcon } from '@siafoundation/react-icons'
 import { Panel } from '../../core/Panel'
 import { Separator } from '../../core/Separator'
 import { Logo } from '../../core/Logo'
-import { navbarAppHeight } from '../AppNavbar'
 import { SidenavItemWallet } from './SidenavItemWallet'
 import { SidenavItem } from './SidenavItem'
 import BigNumber from 'bignumber.js'
@@ -48,12 +47,7 @@ export function Sidenav({
       className="relative overflow-hidden z-10 h-full w-[75px] rounded-none border-y-0"
     >
       <div className="flex flex-col items-center h-full">
-        <div
-          className="flex items-center justify-center"
-          style={{
-            height: `${navbarAppHeight}px`,
-          }}
-        >
+        <div className="flex-none flex items-center justify-center h-[49px]">
           {profile || <Logo size={30} />}
         </div>
         <div className="flex flex-col gap-6 items-center pt-4 pb-6 h-full">
