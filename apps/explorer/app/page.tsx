@@ -7,6 +7,7 @@ import { getTopHosts } from '../lib/hosts'
 import { getExplored, getExploredAddress } from '../lib/explored'
 import { unstable_cache } from 'next/cache'
 import { getNetworkVersion } from '../lib/networkVersion'
+import { AutoRefresh } from '../components/AutoRefresh'
 
 export function generateMetadata(): Metadata {
   const title = 'siascan'
@@ -54,13 +55,15 @@ export default async function HomePage() {
   }
 
   return (
-    <Home
-      version={version}
-      metrics={hostMetrics}
-      blockHeight={latestHeight}
-      blocks={latestBlocks || []}
-      hosts={selectedTopHosts || []}
-      totalHosts={blockMetrics?.totalHosts}
-    />
+    <AutoRefresh interval={30000}>
+      <Home
+        version={version}
+        metrics={hostMetrics}
+        blockHeight={latestHeight}
+        blocks={latestBlocks || []}
+        hosts={selectedTopHosts || []}
+        totalHosts={blockMetrics?.totalHosts}
+      />
+    </AutoRefresh>
   )
 }
