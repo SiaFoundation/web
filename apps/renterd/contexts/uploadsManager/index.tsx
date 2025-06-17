@@ -71,7 +71,7 @@ function useUploadsManagerMain() {
         current[id] = {
           ...current[id],
           multipartId,
-          uploadStatus: 'uploading',
+          uploadStatus: 'uploading to daemon',
           loaded: 0,
         }
         return current
@@ -91,7 +91,10 @@ function useUploadsManagerMain() {
         current[obj.id] = {
           ...upload,
           loaded: obj.loaded,
-          uploadStatus: obj.loaded === obj.size ? 'processing' : 'uploading',
+          uploadStatus:
+            obj.loaded === obj.size
+              ? 'uploading to hosts'
+              : 'uploading to daemon',
           size: obj.size,
         }
         return current
@@ -234,8 +237,11 @@ function useUploadsManagerMain() {
     () =>
       throttle('checkAndStartUploads', checkAndStartUploadsInterval, () => {
         const uploadsListRef = Object.values(uploadsMapRef)
+        // Active uploads should include uploads that are in either uploading state.
         const activeUploads = uploadsListRef.filter(
-          (upload) => upload.uploadStatus === 'uploading'
+          (upload) =>
+            upload.uploadStatus === 'uploading to daemon' ||
+            upload.uploadStatus === 'uploading to hosts'
         )
         const queuedUploads = uploadsListRef.filter(
           (upload) => upload.uploadStatus === 'queued'
