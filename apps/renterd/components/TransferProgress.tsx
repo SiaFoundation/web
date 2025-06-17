@@ -1,4 +1,4 @@
-import { ProgressBar, Text } from '@siafoundation/design-system'
+import { LoadingDots, ProgressBar, Text } from '@siafoundation/design-system'
 import { useMemo } from 'react'
 import { upperFirst } from '@technically/lodash'
 
@@ -28,9 +28,13 @@ export function TransferProgress({ loaded, size, status }: Props) {
         <Text size="12" color="subtle">
           {upperFirst(status)}
         </Text>
-        <Text size="12" color="subtle">
-          {(progress * 100).toFixed(0)}%
-        </Text>
+        {status === 'uploading to hosts' ? (
+          <LoadingDots />
+        ) : (
+          <Text size="12" color="subtle">
+            {(progress * 100).toFixed(0)}%
+          </Text>
+        )}
       </div>
     </div>
   )

@@ -79,7 +79,7 @@ export function useRemoteUploads() {
         loaded: 1,
         multipartId: upload.uploadID,
         isUploading: true,
-        uploadStatus: 'uploading',
+        uploadStatus: 'uploading to hosts',
         createdAt: upload.createdAt,
         remote: true,
         type: 'file',
