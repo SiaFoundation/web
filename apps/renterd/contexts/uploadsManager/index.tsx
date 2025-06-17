@@ -261,6 +261,14 @@ function useUploadsManagerMain() {
   const uploadFiles = useCallback(
     (files: File[]) => {
       files.forEach((file) => {
+        // When uploading a file vs directory File.path is:
+        // File:
+        // - chrome eg: `./test.txt`
+        // - firefox eg: `/test.txt`
+        // File in a directory:
+        // - chrome eg: `/dir/test.txt`
+        // - firefox eg: `/dir/test.txt`
+
         // @ts-expect-error: https://developer.mozilla.org/en-US/docs/Web/API/File
         // Documentation does not include `path` but all browsers populate it
         // with the relative path of the file. Whereas webkitRelativePath is
