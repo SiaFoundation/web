@@ -6,7 +6,11 @@ export type KeyPath = string
 
 export function join(a: string, b: string): FullPath {
   const _a = a.endsWith('/') ? a.slice(0, -1) : a
-  const _b = b.startsWith('/') ? b.slice(1) : b
+  const _b = b.startsWith('/')
+    ? b.slice(1)
+    : b.startsWith('./')
+    ? b.slice(2)
+    : b
   return `${_a}/${_b}`
 }
 

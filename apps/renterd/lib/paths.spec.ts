@@ -16,8 +16,21 @@ describe('paths', () => {
     it('b', () => {
       expect(join('bucket/dir/', '')).toEqual('bucket/dir/')
     })
-    it('b', () => {
+    it('c', () => {
       expect(join('bucket/dir/', '/')).toEqual('bucket/dir/')
+    })
+    it('d', () => {
+      expect(join('bucket/dir/', './path/to/file.txt')).toEqual(
+        'bucket/dir/path/to/file.txt'
+      )
+    })
+    it('e', () => {
+      expect(join('/bucket/dir/', './path/to/file.txt')).toEqual(
+        '/bucket/dir/path/to/file.txt'
+      )
+    })
+    it('f', () => {
+      expect(join('', '/path/to/file.txt')).toEqual('/path/to/file.txt')
     })
   })
 
