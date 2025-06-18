@@ -1,20 +1,19 @@
 import { Skeleton, DatumSkeleton } from '@siafoundation/design-system'
 import { EntityList } from '../Entity/EntityList'
-import { times } from '@technically/lodash'
 import { ContentLayout } from '../ContentLayout'
 
 export function BlockSkeleton() {
   return (
     <ContentLayout
       panel={
-        <div className="flex flex-col gap-16">
+        <div className="flex flex-col gap-10">
           <div className="flex flex-wrap gap-6 justify-between">
-            <Skeleton className="h=[40px] w-[250px]" />
-            <Skeleton className="h=[40px] w-[200px]" />
+            <Skeleton className="h-10 w-[250px]" />
+            <Skeleton className="h-10 w-[200px]" />
           </div>
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-y-6">
-              {times(2, (i) => (
+              {[...Array(3)].map((_, i) => (
                 <DatumSkeleton key={i} />
               ))}
             </div>

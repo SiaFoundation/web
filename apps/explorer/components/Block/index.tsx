@@ -5,9 +5,10 @@ import {
   Tooltip,
   stripPrefix,
   LinkButton,
+  Text,
 } from '@siafoundation/design-system'
 import { ExplorerBlock } from '@siafoundation/explored-types'
-import { humanNumber } from '@siafoundation/units'
+import { humanDate, humanNumber } from '@siafoundation/units'
 import { ArrowLeft16, ArrowRight16 } from '@siafoundation/react-icons'
 
 import { routes } from '../../config/routes'
@@ -23,6 +24,7 @@ import {
   getExplorerV1TxPreviewBadge,
   getExplorerV2TxPreviewBadge,
 } from '../Entity/EntityListItem'
+import LoadingTimestamp from '../LoadingTimestamp'
 
 type Props = {
   block: ExplorerBlock
@@ -40,6 +42,22 @@ export function Block({ block, blockID, currentHeight }: Props) {
     const strippedBlockID = stripPrefix(blockID)
 
     return [
+      {
+        label: 'Mined on',
+        value: (
+          <LoadingTimestamp>
+            <Tooltip content={block.timestamp}>
+              <Text ellipsis className="cursor-pointer">
+                {humanDate(block.timestamp, {
+                  dateStyle: 'medium',
+                  timeStyle: 'short',
+                })}
+              </Text>
+            </Tooltip>
+          </LoadingTimestamp>
+        ),
+        copyable: false,
+      },
       {
         label: 'Block hash',
         entityType: 'blockHash',
