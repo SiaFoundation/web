@@ -29,10 +29,12 @@ export default async function Page({ params }: ExplorerPageProps) {
     [balance, balanceError, balanceResponse],
     { data: unconfirmedEvents },
     { data: unspentOutputs },
+    { data: explorerTip },
   ] = await Promise.all([
     to(getExplored().addressBalance({ params: { address } })),
     getExplored().addressUnconfirmedEvents({ params: { address } }),
     getExplored().addressSiacoinUTXOs({ params: { address } }),
+    getExplored().explorerTip(),
   ])
 
   if (balanceError) {
@@ -43,6 +45,7 @@ export default async function Page({ params }: ExplorerPageProps) {
   return (
     <Address
       id={address}
+      networkHeight={explorerTip.height}
       addressInfo={{
         balance,
         unconfirmedEvents,
