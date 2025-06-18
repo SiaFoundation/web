@@ -52,7 +52,7 @@ export function Transaction({
     const list: OutputItem[] = []
     transaction.siacoinInputs?.forEach((o) => {
       list.push({
-        label: 'siacoin input',
+        label: 'siacoin output',
         addressHref: routes.address.view.replace(
           ':id',
           stripPrefix(
@@ -68,7 +68,7 @@ export function Transaction({
     })
     transaction.siafundInputs?.forEach((o) => {
       list.push({
-        label: 'siafund input',
+        label: 'siafund output',
         addressHref: routes.address.view.replace(
           ':id',
           stripPrefix(
