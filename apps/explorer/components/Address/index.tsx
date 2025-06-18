@@ -31,6 +31,7 @@ type Tab = 'events' | 'utxos'
 
 type Props = {
   id: string
+  currentHeight: number
   addressInfo: {
     balance: AddressBalance
     unconfirmedEvents: ExplorerEvent[]
@@ -40,6 +41,7 @@ type Props = {
 
 export function Address({
   id,
+  currentHeight,
   addressInfo: {
     balance: { unspentSiacoins, unspentSiafunds },
     unconfirmedEvents,
@@ -77,14 +79,18 @@ export function Address({
 
   const eventEntities = useMemo(() => {
     return [
-      ...unconfirmedEvents.map((event) => formatEvent(id, event, true)),
-      ...confirmedEvents.map((event) => formatEvent(id, event, false)),
+      ...unconfirmedEvents.map((event) =>
+        formatEvent(id, currentHeight, event, true)
+      ),
+      ...confirmedEvents.map((event) =>
+        formatEvent(id, currentHeight, event, false)
+      ),
     ].sort(
       (a, b) =>
         new Date(b.timestamp || 0).getTime() -
         new Date(a.timestamp || 0).getTime()
     )
-  }, [id, confirmedEvents, unconfirmedEvents])
+  }, [id, currentHeight, confirmedEvents, unconfirmedEvents])
 
   const fetchMoreEvents = () => {
     if (isValidating || exhausted) return
@@ -109,9 +115,9 @@ export function Address({
 
   const utxos = useMemo(() => {
     return unspentOutputs.map((output) =>
-      formatUnspentSiacoinOutputEntity(output)
+      formatUnspentSiacoinOutputEntity(output, currentHeight)
     )
-  }, [unspentOutputs])
+  }, [unspentOutputs, currentHeight])
 
   return (
     <ContentLayout
@@ -183,7 +189,8 @@ function getTotal({
 
 function formatV1TransactionEntity(
   id: string,
-  v1Transaction: ExplorerEvent
+  v1Transaction: ExplorerEvent,
+  currentHeight: number
 ): EntityListItemProps {
   const { transaction } = v1Transaction.data as EventV1Transaction
   return {
@@ -203,12 +210,17 @@ function formatV1TransactionEntity(
     href: routes.transaction.view.replace(':id', transaction.id),
     height: v1Transaction.index.height,
     timestamp: new Date(v1Transaction.timestamp).getTime(),
+    maturityData: {
+      currentHeight,
+      maturityHeight: v1Transaction.maturityHeight,
+    },
   }
 }
 
 function formatV2TransactionEntity(
   id: string,
-  v2Transaction: ExplorerEvent
+  v2Transaction: ExplorerEvent,
+  currentHeight: number
 ): EntityListItemProps {
   const transaction = v2Transaction.data as ExplorerV2Transaction
   return {
@@ -234,11 +246,16 @@ function formatV2TransactionEntity(
     href: routes.transaction.view.replace(':id', transaction.id),
     height: v2Transaction.index.height,
     timestamp: new Date(v2Transaction.timestamp).getTime(),
+    maturityData: {
+      currentHeight,
+      maturityHeight: v2Transaction.maturityHeight,
+    },
   }
 }
 
 function formatV1ContractResolutionEntity(
-  v1ContractResolution: ExplorerEvent
+  v1ContractResolution: ExplorerEvent,
+  currentHeight: number
 ): EntityListItemProps {
   const { parent, siacoinElement } =
     v1ContractResolution.data as EventV1ContractResolution
@@ -249,11 +266,16 @@ function formatV1ContractResolutionEntity(
     href: routes.contract.view.replace(':id', parent.id),
     sc: new BigNumber(siacoinElement.siacoinOutput.value),
     timestamp: new Date(v1ContractResolution.timestamp).getTime(),
+    maturityData: {
+      currentHeight,
+      maturityHeight: v1ContractResolution.maturityHeight,
+    },
   }
 }
 
 function formatV2ContractResolutionEntity(
-  v1ContractResolution: ExplorerEvent
+  v1ContractResolution: ExplorerEvent,
+  currentHeight: number
 ): EntityListItemProps {
   const { resolution, siacoinElement } =
     v1ContractResolution.data as EventV2ContractResolution
@@ -264,10 +286,17 @@ function formatV2ContractResolutionEntity(
     href: routes.contract.view.replace(':id', resolution.parent.id),
     sc: new BigNumber(siacoinElement.siacoinOutput.value),
     timestamp: new Date(v1ContractResolution.timestamp).getTime(),
+    maturityData: {
+      currentHeight,
+      maturityHeight: v1ContractResolution.maturityHeight,
+    },
   }
 }
 
-function formatPayoutEntity(payout: ExplorerEvent): EntityListItemProps {
+function formatPayoutEntity(
+  payout: ExplorerEvent,
+  currentHeight: number
+): EntityListItemProps {
   const { siacoinElement } = payout.data as EventPayout
   const capitalizedType =
     payout.type.slice(0, 1).toUpperCase() + payout.type.slice(1)
@@ -279,11 +308,16 @@ function formatPayoutEntity(payout: ExplorerEvent): EntityListItemProps {
     height: payout.index.height,
     sc: new BigNumber(siacoinElement.siacoinOutput.value),
     timestamp: new Date(payout.timestamp).getTime(),
+    maturityData: {
+      currentHeight,
+      maturityHeight: siacoinElement.maturityHeight,
+    },
   }
 }
 
 function formatUnspentSiacoinOutputEntity(
-  siacoinOutput: ExplorerSiacoinOutput
+  siacoinOutput: ExplorerSiacoinOutput,
+  currentHeight: number
 ): EntityListItemProps {
   return {
     hash: siacoinOutput.id,
@@ -291,11 +325,16 @@ function formatUnspentSiacoinOutputEntity(
     label: 'siacoin output',
     initials: 'SO',
     scVariant: 'value' as const,
+    maturityData: {
+      currentHeight,
+      maturityHeight: siacoinOutput.maturityHeight,
+    },
   }
 }
 
 const formatEvent = (
   id: string,
+  currentHeight: number,
   event: ExplorerEvent,
   isUnconfirmed = false
 ): EntityListItemProps => {
@@ -303,21 +342,21 @@ const formatEvent = (
 
   switch (event.type) {
     case 'v1Transaction':
-      baseEntity = formatV1TransactionEntity(id, event)
+      baseEntity = formatV1TransactionEntity(id, event, currentHeight)
       break
     case 'v2Transaction':
-      baseEntity = formatV2TransactionEntity(id, event)
+      baseEntity = formatV2TransactionEntity(id, event, currentHeight)
       break
     case 'v1ContractResolution':
-      baseEntity = formatV1ContractResolutionEntity(event)
+      baseEntity = formatV1ContractResolutionEntity(event, currentHeight)
       break
     case 'v2ContractResolution':
-      baseEntity = formatV2ContractResolutionEntity(event)
+      baseEntity = formatV2ContractResolutionEntity(event, currentHeight)
       break
     case 'miner':
     case 'foundation':
     case 'siafundClaim':
-      baseEntity = formatPayoutEntity(event)
+      baseEntity = formatPayoutEntity(event, currentHeight)
       break
   }
 
