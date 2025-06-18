@@ -31,12 +31,34 @@ import {
   getKeyFromPath,
   join,
 } from '../../lib/paths'
-import { ObjectUploadData, UploadsMap } from './types'
+import { ObjectUploadData, UploadsMap, UploadStatus } from './types'
 import { useWarnActiveUploadsOnClose } from './useWarnActiveUploadsOnClose'
 import { useFilesManager } from '../filesManager'
 
-const maxConcurrentUploads = 5
-const maxConcurrentPartsPerUpload = 5
+function getLikelyHttpVersion() {
+  // If the browser is using https, it is likely using http/2.
+  // This is not a guarantee, but it is a good enough guess.
+  // - http (100%): always correctly categorized as http/1.1
+  // - https (99%): Modern caddy, traefik, tailscale, nginx, etc setups
+  //   with https configured will almost always have http/2 enabled.
+  return window.location.href.startsWith('https://') ? '2' : '1.1'
+}
+
+const maxMultipartUploads = 5
+
+// This value is used to limit the number of concurrent part uploads to the daemon.
+function getMaxConcurrentRequests(): number {
+  const httpVersion = getLikelyHttpVersion()
+  if (httpVersion === '2') {
+    // Set a reasonable limit. This value is not based on a hard http limit.
+    // For minShards=10 this would mean 25*40MiB = 1GiB of parts.
+    return 25
+  }
+  // The max concurrent requests for http/1.1 is 6.
+  // Ensure we do not block all the request slots and stall other app requests.
+  return 5
+}
+
 const getMultipartUploadPartSize = (minShards: number) =>
   MiBToBytes(4).times(minShards)
 const checkAndStartUploadsInterval = 500
@@ -65,14 +87,24 @@ function useUploadsManagerMain() {
 
   const hasUploads = uploadsList.length > 0
 
-  const updateStatusToUploading = useCallback(
-    ({ id, multipartId }: { id: string; multipartId: string }) => {
+  const updateStatus = useCallback(
+    ({
+      id,
+      uploadStatus,
+      multipartId,
+      loaded,
+    }: {
+      id: string
+      uploadStatus: UploadStatus
+      multipartId?: string
+      loaded?: number
+    }) => {
       setUploadsMapRef((current) => {
         current[id] = {
           ...current[id],
           multipartId,
-          uploadStatus: 'uploading to daemon',
-          loaded: 0,
+          uploadStatus,
+          loaded,
         }
         return current
       })
@@ -126,6 +158,7 @@ function useUploadsManagerMain() {
       uploadFile: File
     }) => {
       const key = getKeyFromPath(path)
+      MultipartUpload.setGlobalMaxConcurrentParts(getMaxConcurrentRequests())
       const multipartUpload = new MultipartUpload({
         file: uploadFile,
         key,
@@ -134,7 +167,6 @@ function useUploadsManagerMain() {
         partSize: getMultipartUploadPartSize(
           uploadSettings.data?.redundancy.minShards || 1
         ).toNumber(),
-        maxConcurrentParts: maxConcurrentPartsPerUpload,
       })
 
       multipartUpload.setOnError((error) => {
@@ -216,21 +248,36 @@ function useUploadsManagerMain() {
 
   const startMultipartUpload = useCallback(
     async ({ id, upload }: { id: string; upload: MultipartUpload }) => {
+      // Mark as uploading right away to avoid race conditions where the queued
+      // upload is selected again.
+      updateStatus({
+        id,
+        uploadStatus: 'uploading to daemon',
+        loaded: 0,
+      })
       const multipartId = await upload.create()
       if (!multipartId) {
         triggerErrorToast({
           title: 'Error creating upload',
           body: 'Failed to create upload',
         })
+        updateStatus({
+          id,
+          uploadStatus: 'queued',
+          loaded: 0,
+        })
         return
       }
-      updateStatusToUploading({
+      // Update status again with the now available multipartId.
+      updateStatus({
         id,
+        uploadStatus: 'uploading to daemon',
         multipartId,
+        loaded: 0,
       })
       await upload.start()
     },
-    [updateStatusToUploading]
+    [updateStatus]
   )
 
   const checkAndStartUploads = useCallback(
@@ -248,7 +295,7 @@ function useUploadsManagerMain() {
         )
 
         const availableSlots = Math.max(
-          maxConcurrentUploads - activeUploads.length,
+          maxMultipartUploads - activeUploads.length,
           0
         )
         queuedUploads.slice(0, availableSlots).forEach((upload) => {
@@ -322,7 +369,7 @@ function useUploadsManagerMain() {
     busUploadAbort,
     removeUpload,
     updateUploadProgress,
-    updateStatusToUploading,
+    updateStatusToUploading: updateStatus,
     mutate,
   })
 
@@ -336,7 +383,7 @@ function useUploadsManagerMain() {
       mutate,
       removeUpload,
       updateUploadProgress,
-      updateStatusToUploading,
+      updateStatusToUploading: updateStatus,
     }
   }, [
     checkAndStartUploads,
@@ -347,7 +394,7 @@ function useUploadsManagerMain() {
     mutate,
     removeUpload,
     updateUploadProgress,
-    updateStatusToUploading,
+    updateStatus,
   ])
 
   useEffect(() => {

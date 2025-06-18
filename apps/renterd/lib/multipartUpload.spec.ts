@@ -8,13 +8,13 @@ import { AxiosResponseHeaders } from 'axios'
 
 describe('MultipartUpload', () => {
   it('should report progress and complete with serial parts', async () => {
-    // note that the upload mock is configured to report progress 2 times per part
+    MultipartUpload.setGlobalMaxConcurrentParts(1)
+    const file = new File(['01234567890123456789'], 'test.txt', {
+      type: 'text/plain',
+    })
     const params = getMockedParams({
-      file: new File(['01234567890123456789'], 'test.txt', {
-        type: 'text/plain',
-      }),
+      file,
       partSize: 2,
-      maxConcurrentParts: 1,
     })
     const multipartUpload = new MultipartUpload(params)
     await multipartUpload.create()
@@ -29,26 +29,27 @@ describe('MultipartUpload', () => {
         ]
       )
     ).toEqual([
-      [1, 20, 5],
-      [2, 20, 10],
-      [3, 20, 15],
-      [4, 20, 20],
-      [5, 20, 25],
-      [6, 20, 30],
-      [7, 20, 35],
-      [8, 20, 40],
-      [9, 20, 45],
-      [10, 20, 50],
-      [11, 20, 55],
-      [12, 20, 60],
-      [13, 20, 65],
-      [14, 20, 70],
-      [15, 20, 75],
-      [16, 20, 80],
-      [17, 20, 85],
-      [18, 20, 90],
-      [19, 20, 95],
-      [20, 20, 100],
+      // The upload mock is configured to report progress 2 times per part.
+      [1, 20, 5], // attempt 0 progress 0
+      [2, 20, 10], // attempt 0 progress 1
+      [3, 20, 15], // attempt 1 progress 0
+      [4, 20, 20], // attempt 1 progress 1
+      [5, 20, 25], // attempt 2 progress 0
+      [6, 20, 30], // attempt 2 progress 1
+      [7, 20, 35], // attempt 3 progress 0
+      [8, 20, 40], // attempt 3 progress 1
+      [9, 20, 45], // attempt 4 progress 0
+      [10, 20, 50], // attempt 4 progress 1
+      [11, 20, 55], // attempt 5 progress 0
+      [12, 20, 60], // attempt 5 progress 1
+      [13, 20, 65], // attempt 6 progress 0
+      [14, 20, 70], // attempt 6 progress 1
+      [15, 20, 75], // attempt 7 progress 0
+      [16, 20, 80], // attempt 7 progress 1
+      [17, 20, 85], // attempt 8 progress 0
+      [18, 20, 90], // attempt 8 progress 1
+      [19, 20, 95], // attempt 9 progress 0
+      [20, 20, 100], // attempt 9 progress 1
     ])
     expect(params.api.busUploadComplete.post).toHaveBeenCalledWith({
       payload: {
@@ -74,13 +75,13 @@ describe('MultipartUpload', () => {
   })
 
   it('should report progress and complete with concurrent parts', async () => {
-    // note that the upload mock is configured to report progress 2 times per part
+    MultipartUpload.setGlobalMaxConcurrentParts(5)
+    const file = new File(['01234567890123456789'], 'test.txt', {
+      type: 'text/plain',
+    })
     const params = getMockedParams({
-      file: new File(['01234567890123456789'], 'test.txt', {
-        type: 'text/plain',
-      }),
+      file,
       partSize: 2,
-      maxConcurrentParts: 5,
     })
     const multipartUpload = new MultipartUpload(params)
     await multipartUpload.create()
@@ -95,26 +96,27 @@ describe('MultipartUpload', () => {
         ]
       )
     ).toEqual([
-      [1, 20, 5],
-      [2, 20, 10],
-      [3, 20, 15],
-      [4, 20, 20],
-      [5, 20, 25],
-      [6, 20, 30],
-      [7, 20, 35],
-      [8, 20, 40],
-      [9, 20, 45],
-      [10, 20, 50],
-      [11, 20, 55],
-      [12, 20, 60],
-      [13, 20, 65],
-      [14, 20, 70],
-      [15, 20, 75],
-      [16, 20, 80],
-      [17, 20, 85],
-      [18, 20, 90],
-      [19, 20, 95],
-      [20, 20, 100],
+      // The upload mock is configured to report progress 2 times per part.
+      [1, 20, 5], // attempt 0 progress 0
+      [2, 20, 10], // attempt 0 progress 1
+      [3, 20, 15], // attempt 1 progress 0
+      [4, 20, 20], // attempt 1 progress 1
+      [5, 20, 25], // attempt 2 progress 0
+      [6, 20, 30], // attempt 2 progress 1
+      [7, 20, 35], // attempt 3 progress 0
+      [8, 20, 40], // attempt 3 progress 1
+      [9, 20, 45], // attempt 4 progress 0
+      [10, 20, 50], // attempt 4 progress 1
+      [11, 20, 55], // attempt 5 progress 0
+      [12, 20, 60], // attempt 5 progress 1
+      [13, 20, 65], // attempt 6 progress 0
+      [14, 20, 70], // attempt 6 progress 1
+      [15, 20, 75], // attempt 7 progress 0
+      [16, 20, 80], // attempt 7 progress 1
+      [17, 20, 85], // attempt 8 progress 0
+      [18, 20, 90], // attempt 8 progress 1
+      [19, 20, 95], // attempt 9 progress 0
+      [20, 20, 100], // attempt 9 progress 1
     ])
     expect(params.api.busUploadComplete.post).toHaveBeenCalledWith({
       payload: {
@@ -140,23 +142,24 @@ describe('MultipartUpload', () => {
   })
 
   it('should backoff and recover from a failed part upload', async () => {
-    // note that the upload mock is configured to report progress 2 times per part
+    MultipartUpload.setGlobalMaxConcurrentParts(1)
     const startTime = Date.now()
     const partSize = 2
+    const file = new File(['012456'], 'test.txt', { type: 'text/plain' })
     const params = getMockedParams({
-      file: new File(['012456'], 'test.txt', { type: 'text/plain' }),
+      file,
       partSize,
       api: {
         workerUploadPart: buildMockApiWorkerUploadPart({
+          filename: file.name,
           partSize,
           failures: [
-            { failCallIndex: 1, failPartIndex: 1 },
-            { failCallIndex: 2, failPartIndex: 1 },
-            { failCallIndex: 3, failPartIndex: 0 },
+            { failPartAttemptIndex: 1, failPartProgressIndex: 1 },
+            { failPartAttemptIndex: 2, failPartProgressIndex: 1 },
+            { failPartAttemptIndex: 3, failPartProgressIndex: 0 },
           ],
         }),
       },
-      maxConcurrentParts: 1,
     })
     const multipartUpload = new MultipartUpload(params)
     await multipartUpload.create()
@@ -171,17 +174,18 @@ describe('MultipartUpload', () => {
         ]
       )
     ).toEqual([
-      [1, 6, 17], // call 0
-      [2, 6, 33],
-      [3, 6, 50], // call 1
-      [4, 6, 67], // fail
-      [3, 6, 50], // call 2
-      [4, 6, 67], // fail
-      [3, 6, 50], // call 3 fail
-      [3, 6, 50], // call 4
-      [4, 6, 67],
-      [5, 6, 83], // call 5
-      [6, 6, 100],
+      // The upload mock is configured to report progress 2 times per part.
+      [1, 6, 17], // attempt 0 progress 0
+      [2, 6, 33], // attempt 0 progress 1
+      [3, 6, 50], // attempt 1 progress 0
+      [4, 6, 67], // attempt 1 progress 1 fails
+      [3, 6, 50], // attempt 2 progress 0
+      [4, 6, 67], // attempt 2 progress 1 fails
+      [3, 6, 50], // attempt 3 progress 0 fails
+      [3, 6, 50], // attempt 4 progress 0
+      [4, 6, 67], // attempt 4 progress 1
+      [5, 6, 83], // attempt 5 progress 0
+      [6, 6, 100], // attempt 5 progress 1
     ])
     expect(params.api.busUploadComplete.post).toHaveBeenCalledWith({
       payload: {
@@ -204,20 +208,25 @@ describe('MultipartUpload', () => {
   }, 10_000)
 
   it('should abort the entire upload and error if a part is missing an etag', async () => {
-    // note that the upload mock is configured to report progress 2 times per part
+    MultipartUpload.setGlobalMaxConcurrentParts(1)
     const partSize = 2
+    const file = new File(['012456'], 'test.txt', { type: 'text/plain' })
     const params = getMockedParams({
-      file: new File(['012456'], 'test.txt', { type: 'text/plain' }),
+      file,
       partSize,
       api: {
         workerUploadPart: buildMockApiWorkerUploadPart({
+          filename: file.name,
           partSize,
           failures: [
-            { failCallIndex: 1, failPartIndex: 1, type: 'missingEtag' },
+            {
+              failPartAttemptIndex: 1,
+              failPartProgressIndex: 1,
+              type: 'missingEtag',
+            },
           ],
         }),
       },
-      maxConcurrentParts: 1,
     })
     const multipartUpload = new MultipartUpload(params)
     await multipartUpload.create()
@@ -232,10 +241,11 @@ describe('MultipartUpload', () => {
         ]
       )
     ).toEqual([
-      [1, 6, 17], // call 0
-      [2, 6, 33],
-      [3, 6, 50], // call 1
-      [4, 6, 67], // fail
+      // The upload mock is configured to report progress 2 times per part.
+      [1, 6, 17], // attempt 0 progress 0
+      [2, 6, 33], // attempt 0 progress 1
+      [3, 6, 50], // attempt 1 progress 0
+      [4, 6, 67], // attempt 1 progress 1 fails
     ])
     expect(params.api.busUploadComplete.post).not.toHaveBeenCalled()
     expect(params.onComplete).not.toHaveBeenCalled()
@@ -265,7 +275,7 @@ describe('MultipartUpload', () => {
     const multipartUpload = new MultipartUpload(params)
     await multipartUpload.create()
     multipartUpload.start()
-    // allow the upload to get created and begin
+    // Allow the upload to get created and begin.
     await delay(10)
     await multipartUpload.abort()
     expect(params.api.busUploadAbort.post).toHaveBeenCalledWith({
@@ -274,28 +284,74 @@ describe('MultipartUpload', () => {
     expect(params.onComplete).not.toHaveBeenCalled()
     expect(params.onError).not.toHaveBeenCalled()
   })
+
+  it('can handle multiple parallel uploads with slot priority', async () => {
+    MultipartUpload.setGlobalMaxConcurrentParts(5)
+
+    const file1 = new File(['0123456789'], 'uploadA.txt', {
+      type: 'text/plain',
+    })
+    const file2 = new File(['0123456789'], 'uploadB.txt', {
+      type: 'text/plain',
+    })
+    const partLog: string[] = []
+
+    const params1 = getMockedParams({
+      file: file1,
+      partLog,
+    })
+    const params2 = getMockedParams({
+      file: file2,
+      partLog,
+    })
+
+    const p1 = new MultipartUpload(params1)
+    const p2 = new MultipartUpload(params2)
+    await Promise.all([p1.create(), p2.create()])
+    await Promise.all([p1.start(), p2.start()])
+
+    expect(params1.onComplete).toHaveBeenCalled()
+    expect(params2.onComplete).toHaveBeenCalled()
+
+    await delay(500)
+    expect(MultipartUpload.activeSlots).toBe(0)
+
+    // Assert that the partLog is in the correct order with all file1 parts
+    // first and then all file2 parts.
+    expect(partLog).toEqual(
+      Array(10).fill(file1.name).concat(Array(10).fill(file2.name))
+    )
+  })
 })
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getMockedParams(params?: Partial<Record<keyof MultipartParams, any>>) {
+function getMockedParams(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  params?: Partial<Record<keyof MultipartParams, any>> & { partLog?: string[] }
+) {
   const {
     partSize: paramsPartSize,
     file: paramsFile,
     api: paramsApi,
+    partLog,
     ...paramsRest
   } = params || {}
   const file =
     paramsFile ||
     new File(['0123456789'], 'test-file.txt', { type: 'text/plain' })
   const partSize = paramsPartSize || 1
+
   return {
     bucket: 'test-bucket',
     key: 'test-path',
     partSize,
-    maxConcurrentParts: 1,
+    maxConcurrentRequests: 1,
     file,
     api: {
-      workerUploadPart: buildMockApiWorkerUploadPart({ partSize }),
+      workerUploadPart: buildMockApiWorkerUploadPart({
+        partSize,
+        filename: file.name,
+        partLog,
+      }),
       busUploadComplete: { post: jest.fn() },
       busUploadCreate: {
         post: jest.fn(() =>
@@ -317,31 +373,38 @@ function getMockedParams(params?: Partial<Record<keyof MultipartParams, any>>) {
 }
 
 type Failure = {
-  failCallIndex: number
-  failPartIndex: number
+  failPartAttemptIndex: number
+  failPartProgressIndex: number
   type?: 'partFailed' | 'missingEtag'
 }
 
 function buildMockApiWorkerUploadPart({
   partSize,
   failures = [],
+  filename,
+  partLog,
 }: {
+  filename: string
   failures?: Failure[]
   partSize: number
+  partLog?: string[]
 }) {
-  let currentCallIndex = -1
+  let currentPartAttemptIndex = -1
   return {
     put: jest.fn((args) => {
-      const callIndex = ++currentCallIndex
+      currentPartAttemptIndex++
+
+      partLog?.push(filename)
+
       return new Promise<Response<void>>((resolve, reject) => {
         const onUploadProgress = args.config.axios.onUploadProgress
 
-        // Simulate a series of progress events
+        // Simulate a series of progress events.
         const eventCount = 2
         const progressPartSize = partSize / eventCount
         const total = partSize
         let loaded = 0
-        let partIndex = 0
+        let progressIndex = 0
         const eTag = `etag-${args.params.partnumber}`
         const intervalId = setInterval(() => {
           if (args.config.axios.signal?.aborted) {
@@ -351,8 +414,8 @@ function buildMockApiWorkerUploadPart({
           }
           const failure = failures.find(
             (failure) =>
-              callIndex === failure.failCallIndex &&
-              partIndex === failure.failPartIndex
+              currentPartAttemptIndex === failure.failPartAttemptIndex &&
+              progressIndex === failure.failPartProgressIndex
           )
           loaded += progressPartSize
           onUploadProgress({ type: 'progress', loaded, total })
@@ -374,7 +437,7 @@ function buildMockApiWorkerUploadPart({
                 headers,
               })
             }
-            partIndex++
+            progressIndex++
           }
         }, 1)
       })

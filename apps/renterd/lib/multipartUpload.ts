@@ -28,7 +28,6 @@ export type MultipartParams = {
     busUploadAbort: ApiBusUploadAbort
   }
   partSize?: number
-  maxConcurrentParts?: number
   onProgress?: (event: {
     sent: number
     total: number
@@ -44,12 +43,51 @@ type UploadedPart = {
 }
 
 export class MultipartUpload {
+  // Static properties for global control
+  static #globalMaxConcurrentParts = 5
+  static #activeSlots = 0
+  static #slotQueue: Array<() => void> = []
+
+  static get activeSlots(): number {
+    return MultipartUpload.#activeSlots
+  }
+
+  static setGlobalMaxConcurrentParts(max: number): void {
+    if (max < 1) {
+      throw new Error('globalMaxConcurrentParts must be at least 1.')
+    }
+    MultipartUpload.#globalMaxConcurrentParts = max
+  }
+
+  private static async acquireSlot(): Promise<void> {
+    if (
+      MultipartUpload.activeSlots < MultipartUpload.#globalMaxConcurrentParts
+    ) {
+      MultipartUpload.#activeSlots++
+      return
+    }
+
+    // Wait for a slot to become available
+    return new Promise<void>((resolve) => {
+      MultipartUpload.#slotQueue.push(resolve)
+    })
+  }
+
+  private static releaseSlot(): void {
+    MultipartUpload.#activeSlots = Math.max(MultipartUpload.#activeSlots - 1, 0)
+
+    const nextUpload = MultipartUpload.#slotQueue.shift()
+    if (nextUpload) {
+      MultipartUpload.#activeSlots++
+      nextUpload()
+    }
+  }
+
   // params
   #bucket: string
   #key: string
   #file: File
   #partSize: number
-  #maxConcurrentParts: number
   #api: {
     workerUploadPart: ApiWorkerUploadPart
     busUploadComplete: ApiBusUploadComplete
@@ -72,6 +110,7 @@ export class MultipartUpload {
   #uploadedParts: UploadedPart[]
   #uploadId?: string
   #aborted: boolean
+  #completed: boolean
   // error retry backoff
   #initialDelay = 500 // 1/2 second
   #maxDelay = 60_000 // 1 minute
@@ -82,7 +121,6 @@ export class MultipartUpload {
     this.#bucket = options.bucket
     this.#key = options.key
     this.#partSize = options.partSize || 1024 * 1024 * 5
-    this.#maxConcurrentParts = Math.min(options.maxConcurrentParts || 5, 15)
     this.#file = options.file
     this.#api = options.api
     this.#onProgress = options.onProgress || (() => null)
@@ -96,6 +134,7 @@ export class MultipartUpload {
     this.#uploadedParts = []
     this.#uploadId = undefined
     this.#aborted = false
+    this.#completed = false
   }
 
   public async create() {
@@ -107,24 +146,38 @@ export class MultipartUpload {
       payload: createPayload,
     })
 
-    if (response.data?.uploadID) {
-      this.#uploadId = response.data.uploadID
-
-      const partCount = Math.ceil(this.#file.size / this.#partSize)
-      this.#pendingPartNumbers = Array.from(
-        { length: partCount },
-        (_, i) => i + 1
-      )
-      return this.#uploadId
+    if (!response.data?.uploadID) {
+      return undefined
     }
-    return undefined
+
+    this.#uploadId = response.data.uploadID
+
+    const partCount = Math.ceil(this.#file.size / this.#partSize)
+    this.#pendingPartNumbers = Array.from(
+      { length: partCount },
+      (_, i) => i + 1
+    )
+    return this.#uploadId
   }
 
   public async start() {
     const promise = new Promise<void>((resolve) => {
       this.#resolve = resolve
     })
-    this.#sendNext()
+
+    const workers = Math.min(
+      MultipartUpload.#globalMaxConcurrentParts,
+      Math.ceil(this.#file.size / this.#partSize)
+    )
+
+    // Run enough workers per multipart upload to saturate the global
+    // concurrency limit. If the specific multipart upload has less parts than
+    // the global limit, the workers will exit early and the slots will be used
+    // by other uploads.
+    for (let i = 0; i < workers; i++) {
+      void this.#runWorker(i)
+    }
+
     await promise
   }
 
@@ -173,66 +226,71 @@ export class MultipartUpload {
     this.#onComplete = onComplete
   }
 
-  async #sendNext() {
-    if (this.#aborted) {
-      return
-    }
-
-    const activeConnections = Object.keys(this.#activeConnections).length
-
-    if (activeConnections >= this.#maxConcurrentParts) {
-      return
-    }
-
-    if (!this.#pendingPartNumbers.length) {
-      if (!activeConnections) {
-        this.#complete()
-      }
-
-      return
-    }
-
-    const partNumber = this.#pendingPartNumbers.pop()
-    if (!partNumber) {
-      return
-    }
-    const partIndex = partNumber - 1
-    const partOffset = partIndex * this.#partSize
-    const partData = this.#file.slice(partOffset, partOffset + this.#partSize)
-
-    // Callback to start another upload after the current one is added to the
-    // active connections.
-    // This will boot up the max concurrent uploads.
-    const tryStartingAnother = () => {
-      this.#sendNext()
-    }
+  /**
+   * Worker loop. Fetches the next part (if any) and uploads it. Exits when there
+   * are no remaining parts or the upload has been aborted/completed.
+   */
+  async #runWorker(workerId: number): Promise<void> {
+    // Acquire a slot once for the lifetime of this worker. This guarantees that
+    // slots stay with the earliest upload, giving it priority until its queue
+    // of parts is empty.
+    console.log('runWorker', 'queue', workerId, this.#key)
+    await MultipartUpload.acquireSlot()
+    console.log('runWorker', 'acquired', workerId, this.#key)
 
     try {
-      await this.#upload(partNumber, partData, partOffset, tryStartingAnother)
-      // On successful upload, reset the delay
-      this.#resetDelay()
-    } catch (error) {
-      // if the upload was canceled, don't retry
-      if (error instanceof ErrorCanceledRequest) {
-        return
-      }
-      // if the upload failed due to a missing ETag, abort the entire upload
-      // and report the error
-      if (error instanceof ErrorNoETag) {
-        await this.abort()
-        this.#onError(error)
-        return
-      }
+      while (!this.#aborted && !this.#completed) {
+        const partNumber = this.#getNextPart()
 
-      // TODO: catch 400 errors and abort the upload, 400 means that the multipart upload does not exist anymore.
-      // Additionally renterd itself should abort these active uploads.
+        // All parts processed, shutdown worker.
+        if (!partNumber) {
+          break
+        }
 
-      // Besides the above, allow network errors to retry...
-      this.#pendingPartNumbers.push(partNumber)
-      await this.#waitToRetry()
+        try {
+          const partOffset = (partNumber - 1) * this.#partSize
+          const partData = this.#file.slice(
+            partOffset,
+            partOffset + this.#partSize
+          )
+          await this.#upload(partNumber, partData, partOffset)
+          this.#resetDelay()
+        } catch (error) {
+          if (error instanceof ErrorCanceledRequest) {
+            // Ignore canceled.
+          } else if (error instanceof ErrorNoETag) {
+            await this.abort()
+            this.#onError(error)
+            break
+          } else {
+            // Transient/network error, put back and retry after backoff.
+            this.#addPartBackToQueue(partNumber)
+            await this.#waitToRetry()
+          }
+        }
+      }
+    } finally {
+      // Free the slot when the worker finishes.
+      MultipartUpload.releaseSlot()
+      // Check if job is complete after releasing.
+      this.#completeIfReady()
     }
-    // try again after a part error, but not other specific errors
-    this.#sendNext()
+  }
+
+  /**
+   * Pops the next part number.
+   * Returns undefined if none remain.
+   */
+  #getNextPart(): number | undefined {
+    return this.#pendingPartNumbers.pop()
+  }
+
+  /**
+   * Add a part number back to the queue.
+   * This is used to retry failed uploads.
+   */
+  #addPartBackToQueue(partNumber: number) {
+    this.#pendingPartNumbers.push(partNumber)
   }
 
   #resetDelay() {
@@ -240,28 +298,42 @@ export class MultipartUpload {
   }
 
   async #waitToRetry() {
-    // Increase the delay for the next retry, capped at the maximum delay
+    // Increase the delay for the next retry, capped at the maximum delay.
     const backoff = delay(this.#currentDelay)
     this.#currentDelay = Math.min(this.#currentDelay * 2, this.#maxDelay)
     await backoff
   }
 
-  async #complete() {
-    try {
-      const payload = {
-        bucket: this.#bucket,
-        key: this.#key,
-        uploadID: this.#uploadId,
-        parts: this.#uploadedParts.sort((a, b) => a.partNumber - b.partNumber),
-      } as MultipartUploadCompletePayload
-      await this.#api.busUploadComplete.post({
-        payload: payload,
-      })
-      this.#onComplete()
-    } catch (error) {
-      this.#onError(error as Error)
+  /**
+   * If there are no more active connections or pending parts, finalise.
+   */
+  async #completeIfReady() {
+    if (
+      !this.#completed &&
+      !this.#aborted &&
+      !this.#pendingPartNumbers.length &&
+      !Object.keys(this.#activeConnections).length
+    ) {
+      this.#completed = true
+
+      try {
+        const payload = {
+          bucket: this.#bucket,
+          key: this.#key,
+          uploadID: this.#uploadId,
+          parts: this.#uploadedParts.sort(
+            (a, b) => a.partNumber - b.partNumber
+          ),
+        } as MultipartUploadCompletePayload
+        await this.#api.busUploadComplete.post({
+          payload: payload,
+        })
+        this.#onComplete()
+      } catch (error) {
+        this.#onError(error as Error)
+      }
+      this.#resolve()
     }
-    this.#resolve()
   }
 
   #handleProgress(partNumber: number, event: ProgressEvent) {
@@ -286,12 +358,11 @@ export class MultipartUpload {
   async #upload(
     partNumber: number,
     partData: Blob,
-    partOffset: number,
-    afterConnectionIsAdded: () => void
+    partOffset: number
   ): Promise<void> {
     const controller = new AbortController()
     this.#activeConnections[partNumber] = controller
-    afterConnectionIsAdded()
+
     try {
       const response = await this.#api.workerUploadPart.put({
         params: {
@@ -310,7 +381,7 @@ export class MultipartUpload {
         },
       })
 
-      // errors such as aborted/canceled request
+      // Errors such as aborted/canceled requests.
       if (response.error) {
         if (response.error === 'canceled') {
           throw new ErrorCanceledRequest()
@@ -325,7 +396,7 @@ export class MultipartUpload {
 
       const uploadedPart = {
         partNumber: partNumber,
-        // removing the " enclosing characters from the raw ETag
+        // Remove the " enclosing characters from the raw ETag.
         eTag: eTag.replace(/"/g, ''),
       }
 
