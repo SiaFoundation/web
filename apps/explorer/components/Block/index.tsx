@@ -5,9 +5,10 @@ import {
   Tooltip,
   stripPrefix,
   LinkButton,
+  Text,
 } from '@siafoundation/design-system'
 import { ExplorerBlock } from '@siafoundation/explored-types'
-import { humanNumber } from '@siafoundation/units'
+import { humanDate, humanNumber } from '@siafoundation/units'
 import { ArrowLeft16, ArrowRight16 } from '@siafoundation/react-icons'
 
 import { routes } from '../../config/routes'
@@ -23,6 +24,7 @@ import {
   getExplorerV1TxPreviewBadge,
   getExplorerV2TxPreviewBadge,
 } from '../Entity/EntityListItem'
+import LoadingTimestamp from '../LoadingTimestamp'
 
 type Props = {
   block: ExplorerBlock
@@ -40,6 +42,22 @@ export function Block({ block, blockID, currentHeight }: Props) {
     const strippedBlockID = stripPrefix(blockID)
 
     return [
+      {
+        label: 'Mined on',
+        value: (
+          <LoadingTimestamp>
+            <Tooltip content={block.timestamp}>
+              <Text ellipsis className="cursor-pointer">
+                {humanDate(block.timestamp, {
+                  dateStyle: 'medium',
+                  timeStyle: 'short',
+                })}
+              </Text>
+            </Tooltip>
+          </LoadingTimestamp>
+        ),
+        copyable: false,
+      },
       {
         label: 'Block hash',
         entityType: 'blockHash',
@@ -124,7 +142,7 @@ export function Block({ block, blockID, currentHeight }: Props) {
       }
     >
       <div className="flex flex-col gap-5">
-        {block.v2?.transactions && (
+        {block.v2?.transactions && block.v2?.transactions.length ? (
           <EntityList
             title={`Transactions (${block.v2.transactions.length || 0})`}
             actions={
@@ -144,8 +162,8 @@ export function Block({ block, blockID, currentHeight }: Props) {
               }
             })}
           />
-        )}
-        {block.transactions && (
+        ) : null}
+        {block.transactions && block.transactions.length ? (
           <EntityList
             title={`Transactions (${block.transactions?.length || 0})`}
             actions={
@@ -165,7 +183,7 @@ export function Block({ block, blockID, currentHeight }: Props) {
               }
             })}
           />
-        )}
+        ) : null}
         <ExplorerAccordion title="JSON">
           <div className="p-2">
             <ExplorerTextarea value={JSON.stringify(block, null, 2)} />
