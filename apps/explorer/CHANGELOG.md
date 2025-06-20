@@ -1,5 +1,14 @@
 # explorer
 
+## 0.34.0
+
+### Minor Changes
+
+- 01259d80: Fixed contract resolution display on transaction page. Closes https://github.com/SiaFoundation/web/issues/1095.
+- ffca2a0e: Refined transaction page display when there are no inputs, outputs, and contract operations.
+- f2254027: Added a dropdown to view the JSON for transaction and block pages.
+- 06dd6ab3: The home page now autorefreshes every 30 seconds.
+
 ## 0.33.0
 
 ### Minor Changes

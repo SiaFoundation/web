@@ -1,5 +1,20 @@
 # renterd
 
+## 0.81.0
+
+### Minor Changes
+
+- 676df05e: Upload statuses now more clearly show when data is being uploaded to the daemon or from the daemon to the network.
+- 63912200: The app is now more stable and responsive when uploading files especially on localhost or http/1.1 and Firefox-based browsers.
+- 70256e68: The transfers bar now lists all buckets with active uploads.
+- 70256e68: The transfers bar now shows the total count across all buckets.
+
+### Patch Changes
+
+- 8a66ed2f: Fixed an issue where files uploaded without a containing directory in Chrome would be uploaded inside a directory named "./".
+- 676df05e: The max number of active uploads has been corrected to include both upload states.
+- 70256e68: Fixed an issue where the transfers bar active uploads button did not always work.
+
 ## 0.80.0
 
 ### Minor Changes
