@@ -122,20 +122,21 @@ function useFilesManagerMain() {
     ]
   )
 
-  const uploadsRoute = routes.buckets.uploads.replace(
+  const activeBucketUploadsRoute = routes.buckets.uploads.replace(
     '[bucket]',
     activeBucketName || ''
   )
 
-  const navigateToUploads = useCallback(() => {
+  const navigateToActiveBucketUploads = useCallback(() => {
     if (!activeBucket) {
       return
     }
-    router.push(uploadsRoute)
-  }, [activeBucket, uploadsRoute, router])
+    router.push(activeBucketUploadsRoute)
+  }, [activeBucket, activeBucketUploadsRoute, router])
 
   const pathname = usePathname()
-  const isViewingUploads = activeBucketName && pathname.startsWith(uploadsRoute)
+  const isViewingUploads =
+    activeBucketName && pathname.startsWith(activeBucketUploadsRoute)
 
   const setExplorerModeDirectory = useCallback(async () => {
     if (!isViewingUploads && activeExplorerMode === 'directory') {
@@ -184,7 +185,7 @@ function useFilesManagerMain() {
     activeBucket,
     activeBucketName,
     activeDirectory,
-    navigateToUploads,
+    navigateToActiveBucketUploads,
     setActiveDirectory,
     setActiveDirectoryAndFileNamePrefix,
     activeDirectoryPath,

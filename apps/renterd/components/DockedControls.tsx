@@ -5,7 +5,7 @@ import { EnabledBar } from './EnabledBar'
 
 export function DockedControls({ children }: { children?: React.ReactNode }) {
   return (
-    <div className="flex flex-col gap-2">
+    <div data-testid="docked-controls" className="flex flex-col gap-2">
       {children}
       <TransfersBar />
       <OnboardingBar />

@@ -234,9 +234,7 @@ export class MultipartUpload {
     // Acquire a slot once for the lifetime of this worker. This guarantees that
     // slots stay with the earliest upload, giving it priority until its queue
     // of parts is empty.
-    console.log('runWorker', 'queue', workerId, this.#key)
     await MultipartUpload.acquireSlot()
-    console.log('runWorker', 'acquired', workerId, this.#key)
 
     try {
       while (!this.#aborted && !this.#completed) {
