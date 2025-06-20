@@ -1,5 +1,11 @@
 # Changelog
 
+## 8.1.1
+
+### Patch Changes
+
+- ed0059fa: Sidenav Logo is now properly positioned on Firefox browsers.
+
 ## 8.1.0
 
 ### Minor Changes
