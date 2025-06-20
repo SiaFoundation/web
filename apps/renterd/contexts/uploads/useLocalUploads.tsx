@@ -9,16 +9,20 @@ import { columns } from './columns'
 import { ObjectUploadData } from '../uploadsManager/types'
 import { Maybe } from '@siafoundation/types'
 import { useUploadsManager } from '../uploadsManager'
+import { useFilesManager } from '../filesManager'
 
 const defaultLimit = 50
 
 export function useLocalUploads() {
   const { uploadsList } = useUploadsManager()
   const { limit, offset } = usePaginationOffset(defaultLimit)
+  const { activeBucket } = useFilesManager()
 
   const datasetPage = useMemo<Maybe<ObjectUploadData[]>>(() => {
-    return uploadsList.slice(offset, offset + limit)
-  }, [uploadsList, offset, limit])
+    return uploadsList
+      .filter((upload) => upload.bucket.name === activeBucket?.name)
+      .slice(offset, offset + limit)
+  }, [uploadsList, offset, limit, activeBucket?.name])
 
   const datasetState = useDatasetState({
     datasetPage,

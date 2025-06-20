@@ -13,7 +13,7 @@ export function FilesExplorerModeContextMenu() {
     setExplorerModeDirectory,
     setExplorerModeFlat,
     isViewingUploads,
-    navigateToUploads,
+    navigateToActiveBucketUploads,
   } = useFilesManager()
 
   return (
@@ -57,7 +57,7 @@ export function FilesExplorerModeContextMenu() {
         </DropdownMenuLeftSlot>
         All files
       </DropdownMenuItem>
-      <DropdownMenuItem onSelect={navigateToUploads}>
+      <DropdownMenuItem onSelect={navigateToActiveBucketUploads}>
         <DropdownMenuLeftSlot>
           <CloudUpload16 />
         </DropdownMenuLeftSlot>

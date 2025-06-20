@@ -409,10 +409,15 @@ function useUploadsManagerMain() {
   // Abort local uploads when the browser tab is closed.
   useWarnActiveUploadsOnClose({ uploadsList })
 
+  const bucketsWithUploads = useMemo(() => {
+    return [...new Set(uploadsList.map((upload) => upload.bucket))]
+  }, [uploadsList])
+
   return {
     uploadFiles,
     uploadsMap,
     uploadsList,
+    bucketsWithUploads,
   }
 }
 

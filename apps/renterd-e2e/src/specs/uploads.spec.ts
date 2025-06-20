@@ -34,7 +34,10 @@ test('uploads are shown in the local and all uploads lists', async ({
     'file6.txt': 10,
   })
   await expect(
-    page.getByRole('button', { name: 'Active uploads' })
+    page.getByTestId('docked-controls').getByText('Active uploads')
+  ).toBeVisible()
+  await expect(
+    page.getByTestId('docked-controls').getByText('bucket1')
   ).toBeVisible()
   await changeExplorerMode(page, 'uploads')
   await expect(getUploadRows(page)).toHaveCount(6)
