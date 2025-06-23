@@ -46,3 +46,34 @@ export function Layout({ children }: Props) {
     </div>
   )
 }
+
+export function LayoutFullscreen({ children }: Props) {
+  return (
+    <div className="relative h-full bg-gray-100 dark:bg-graydark-50 overflow-hidden">
+      <div className="relative z-10 h-full flex flex-col">
+        <SyncWarning />
+        <HardforkCountdown network={network} />
+        <Navbar
+          appName={appName}
+          homeHref={routes.home.index}
+          network={network}
+        >
+          <Search />
+          {!isMainnet && (
+            <Tooltip content={`${networkName} Faucet`}>
+              <LinkButton
+                size="medium"
+                href={routes.faucet.index}
+                className="hidden md:flex"
+              >
+                <FaucetIcon />
+              </LinkButton>
+            </Tooltip>
+          )}
+          <NavDropdownMenu />
+        </Navbar>
+        <div className="flex-1">{children}</div>
+      </div>
+    </div>
+  )
+}

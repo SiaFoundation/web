@@ -14,9 +14,6 @@ export const routes = {
   home: {
     index: '/',
   },
-  hostRevenueCalculator: {
-    index: '/host-revenue-calculator',
-  },
   host: {
     view: '/host/:id',
   },
@@ -25,5 +22,11 @@ export const routes = {
   },
   transaction: {
     view: '/tx/:id',
+  },
+  hostRevenueCalculator: {
+    index: '/host-revenue-calculator',
+  },
+  map: {
+    index: '/map',
   },
 }
