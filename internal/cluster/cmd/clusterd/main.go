@@ -174,6 +174,61 @@ func main() {
 	go server.Serve(apiListener)
 
 	var wg sync.WaitGroup
+	pk := types.GeneratePrivateKey()
+	for i := 0; i < exploredCount; i++ {
+		wg.Add(1)
+		ready := make(chan struct{}, 1)
+		go func() {
+			defer wg.Done()
+			if err := nm.StartExplored(ctx, ready, "sia is cool"); err != nil {
+				cancel()
+				log.Error("explored failed to start", zap.Error(err))
+			}
+		}()
+		<-ready
+
+		if err := nm.MineBlocks(context.Background(), 1, types.StandardUnlockHash(pk.PublicKey())); err != nil {
+			log.Panic("failed to mine funding block", zap.Error(err))
+		}
+	}
+	// wait for miner output to mature
+	if err := nm.MineBlocks(context.Background(), 144, types.VoidAddress); err != nil {
+		log.Panic("failed to mine blocks", zap.Error(err))
+	}
+	if exploredCount > 0 {
+		w, err := newWallet(cm, pk)
+		if err != nil {
+			log.Panic("Failed to setup wallet", zap.Error(err))
+		}
+		defer w.Close()
+
+		var e *eapi.Client
+		for _, n := range nm.Nodes() {
+			if n.Type == nodes.NodeTypeExplored {
+				e = eapi.NewClient(n.APIAddress+"/api", n.Password)
+			}
+		}
+		if e == nil {
+			log.Panic("Failed to find explored node")
+		}
+
+		switch network {
+		case "v1":
+			err = setupV1Contracts(nm, w, cm)
+			log.Info("Set up v1 contracts")
+		case "v2":
+			err = setupV2Contracts(nm, e, w, cm)
+			log.Info("Set up v2 contracts")
+		case "transition":
+			log.Info("Not forming contracts because transition network selected")
+		default:
+			err = fmt.Errorf("invalid network provided: %s", network)
+		}
+		if err != nil {
+			log.Panic("Failed to set up contracts", zap.Error(err))
+		}
+	}
+
 	for i := 0; i < hostdCount; i++ {
 		wg.Add(1)
 		ready := make(chan struct{}, 1)
@@ -208,62 +263,6 @@ func main() {
 			}
 		}()
 		<-ready
-	}
-
-	pk := types.GeneratePrivateKey()
-	for i := 0; i < exploredCount; i++ {
-		wg.Add(1)
-		ready := make(chan struct{}, 1)
-		go func() {
-			defer wg.Done()
-			if err := nm.StartExplored(ctx, ready, "sia is cool"); err != nil {
-				cancel()
-				log.Error("explored failed to start", zap.Error(err))
-			}
-		}()
-		<-ready
-
-		if err := nm.MineBlocks(context.Background(), 1, types.StandardUnlockHash(pk.PublicKey())); err != nil {
-			log.Panic("failed to mine funding block", zap.Error(err))
-		}
-	}
-
-	if err := nm.MineBlocks(context.Background(), 144, types.VoidAddress); err != nil {
-		log.Panic("failed to mine blocks", zap.Error(err))
-	}
-
-	if exploredCount > 0 {
-		w, err := newWallet(cm, pk)
-		if err != nil {
-			log.Panic("Failed to setup wallet", zap.Error(err))
-		}
-		defer w.Close()
-
-		var e *eapi.Client
-		for _, n := range nm.Nodes() {
-			if n.Type == nodes.NodeTypeExplored {
-				e = eapi.NewClient(n.APIAddress+"/api", n.Password)
-			}
-		}
-		if e == nil {
-			log.Panic("Failed to find explored node")
-		}
-
-		switch network {
-		case "v1":
-			err = setupV1Contracts(nm, w, cm)
-			log.Info("Set up v1 contracts")
-		case "v2":
-			err = setupV2Contracts(nm, e, w, cm)
-			log.Info("Set up v2 contracts")
-		case "transition":
-			log.Info("Not forming contracts because transition network selected")
-		default:
-			err = fmt.Errorf("invalid network provided: %s", network)
-		}
-		if err != nil {
-			log.Panic("Failed to set up contracts", zap.Error(err))
-		}
 	}
 
 	<-ctx.Done()
