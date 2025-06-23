@@ -51,8 +51,8 @@ export function NavDropdownMenu({ trigger, children, ...props }: Props) {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem className="p-2">
-          <Link href={routes.hostRevenueCalculator.index} underline="none">
-            Host Revenue Calculator
+          <Link href={routes.map.index} underline="none">
+            Host Map
           </Link>
         </DropdownMenuItem>
       </DropdownMenuGroup>

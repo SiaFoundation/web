@@ -1,4 +1,3 @@
-import { Layout } from '../components/Layout'
 import '../config/style.css'
 import { NextAppSsrAppRouter } from '@siafoundation/design-system'
 import { appLink } from '../config'
@@ -7,7 +6,7 @@ import { rootFontClasses } from '@siafoundation/fonts'
 import { cookies } from 'next/headers'
 import { CurrencyID } from '@siafoundation/explored-types'
 import { buildFallbackDataDefaultCurrencyId } from '@siafoundation/react-core'
-import { buildFallbackDataExchangeRate } from './fallback'
+import { buildFallbackDataExchangeRate } from '../lib/fallback'
 import { buildFallbackDataExploredAddress } from '../lib/explored'
 
 export const metadata = {
@@ -49,7 +48,7 @@ export default async function RootLayout({
             ...buildFallbackDataExploredAddress(),
           }}
         >
-          <Layout>{children}</Layout>
+          {children}
         </NextAppSsrAppRouter>
       </body>
       <Script
