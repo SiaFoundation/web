@@ -34,7 +34,7 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 - [@siafoundation/explored-js](libs/explored-js) - SDK for interacting with `explored`.
 - [@siafoundation/explored-react](libs/explored-react) - React hooks for interacting with `explored`.
 - [@siafoundation/explored-types](libs/explored-types) - Types for `explored`.
-- [@siafoundation/design-system](libs/design-system) - React-based design system used across Sia apps and websites.
+- [@siafoundation/design-system](libs/design-system) - React-based design system used across Sia apps.
 - [@siafoundation/units](libs/units) - Methods and types for converting and displaying units.
 - [@siafoundation/types](libs/types) - Core Sia types and library methods.
 - [@siafoundation/react-core](libs/react-core) - Core library for building React hooks for interacting with a Sia daemon.
@@ -49,17 +49,11 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 
 ## Internal
 
-### Apps
-
-- [website](apps/website) - The main [sia.tech](https://sia.tech) website with information on the Sia project and the Sia Foundation.
-- [assets](apps/assets) - Powers [api.sia.tech](https://api.sia.tech) and all downloadable assets on [sia.tech](https://sia.tech) such as the Sia software releases.
-- [crons](apps/crons) - Background tasks for [api.sia.tech](https://api.sia.tech) and [sia.tech](https://sia.tech).
-
 ### Libraries
 
 - [@siafoundation/request](libs/request) - Core library for building request APIs.
-- [@siafoundation/react-icons](libs/react-icons) - React-based icons used across Sia apps and websites.
-- [@siafoundation/data-sources](libs/data-sources) - Data sources used for stats on the website.
+- [@siafoundation/react-icons](libs/react-icons) - React-based icons used across Sia apps.
+- [@siafoundation/data-sources](libs/data-sources) - Data sources used for stats in Sia apps.
 - [@siafoundation/fonts](libs/fonts) - Next font configuration for use across apps.
 
 ### Testing
