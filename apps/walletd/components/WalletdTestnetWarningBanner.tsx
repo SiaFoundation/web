@@ -14,8 +14,5 @@ export function WalletdTestnetWarningBanner() {
     return null
   }
 
-  const testnetName =
-    network.data.name === 'zen' ? 'Zen Testnet' : network.data.name
-
-  return <TestnetWarningBanner testnetName={testnetName} />
+  return <TestnetWarningBanner testnetName={network.data.name} />
 }

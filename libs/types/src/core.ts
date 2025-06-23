@@ -167,7 +167,7 @@ export type ChainIndex = {
 }
 
 export type ConsensusNetwork = {
-  name: 'mainnet' | 'zen'
+  name: 'mainnet' | 'zen' | 'anagami'
   initialCoinbase: Currency
   minimumCoinbase: Currency
   initialTarget: string
