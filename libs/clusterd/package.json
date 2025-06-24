@@ -10,7 +10,9 @@
     "@siafoundation/renterd-js": "0.14.4",
     "@siafoundation/units": "3.4.3",
     "@siafoundation/hostd-js": "0.5.3",
-    "@siafoundation/types": "0.11.0"
+    "@siafoundation/types": "0.11.0",
+    "@siafoundation/explored-js": "0.7.2",
+    "@siafoundation/walletd-js": "0.4.0"
   },
   "types": "./src/index.d.ts"
 }
