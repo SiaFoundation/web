@@ -5,6 +5,8 @@ import { Bus } from '@siafoundation/renterd-js'
 import { pluralize } from '@siafoundation/units'
 import { Hostd } from '@siafoundation/hostd-js'
 import { Maybe } from '@siafoundation/types'
+import { Explored } from '@siafoundation/explored-js'
+import { Walletd } from '@siafoundation/walletd-js'
 
 export type ClusterNodeRenterd = {
   type: 'renterd'
@@ -51,6 +53,8 @@ const maxTimeWaitingForContractsToForm = 60_000
 
 const randomAddress =
   '0373a398eae5a7a682ff516d44cf122613c45aae75eac98fc094e3a5979d496088e656bcf925'
+
+export type Cluster = Awaited<ReturnType<typeof setupCluster>>
 
 export async function setupCluster({
   renterdCount = 0,
@@ -131,6 +135,54 @@ export async function setupCluster({
   console.log(
     `started: ${renterdCount} renterd, ${hostdCount} hostd, ${walletdCount} walletd, and ${exploredCount} explored nodes`
   )
+
+  const explored = clusterd.nodes.filter((n) => n.type === 'explored')
+  const renterds = clusterd.nodes.filter((n) => n.type === 'renterd')
+  const hostds = clusterd.nodes.filter((n) => n.type === 'hostd')
+  const walletds = clusterd.nodes.filter((n) => n.type === 'walletd')
+
+  const daemons = {
+    exploreds: explored.map((e) => ({
+      node: e,
+      api: Explored({
+        api: `${e.apiAddress}/api`,
+        password: e.password,
+      }),
+    })),
+    renterds: renterds.map((r) => ({
+      node: r,
+      api: Bus({
+        api: `${r.apiAddress}/api`,
+        password: r.password,
+      }),
+    })),
+    hostds: hostds.map((h) => ({
+      node: h,
+      api: Hostd({
+        api: `${h.apiAddress}/api`,
+        password: h.password,
+      }),
+    })),
+    walletds: walletds.map((w) => ({
+      node: w,
+      api: Walletd({
+        api: `${w.apiAddress}/api`,
+        password: w.password,
+      }),
+    })),
+  }
+  console.log(`
+    clusterd: http://localhost:${clusterd.managementPort}
+    exploreds: ${daemons.exploreds.map((e) => e.node.apiAddress)}
+    renterds: ${daemons.renterds.map((r) => r.node.apiAddress)}
+    hostds: ${daemons.hostds.map((h) => h.node.apiAddress)}
+    walletds: ${daemons.walletds.map((w) => w.node.apiAddress)}
+  `)
+
+  return {
+    clusterd,
+    daemons,
+  }
 }
 
 export async function renterdWaitForContracts({

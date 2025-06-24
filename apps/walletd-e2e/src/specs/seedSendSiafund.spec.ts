@@ -14,7 +14,7 @@ import {
   fillSelectInputByName,
   expectTextInputByName,
 } from '@siafoundation/e2e'
-import { mine } from '@siafoundation/clusterd'
+import { Cluster, mine, mineToHeight } from '@siafoundation/clusterd'
 import { sendSiafundWithSeedWallet } from '../fixtures/seedSendSiafund'
 
 // First wallet - sender
@@ -29,8 +29,10 @@ const wallet2Mnemonic =
 const wallet2Address0 =
   '4e7e288504d86ae2234ffc6989aa96e70eb555ace205eb2d0afaaca650536fd1de3b5ff8f90c'
 
+let cluster: Cluster
+
 test.beforeEach(async ({ page }) => {
-  await beforeTest(page, {
+  cluster = await beforeTest(page, {
     siafundAddr: wallet1Address0,
   })
 })
@@ -94,7 +96,9 @@ test('send siafund between wallets pre and post v2 fork allow height', async ({
   )
 
   // Mine blocks to pass v2 fork height.
-  await mine(100)
+  const consensusNetwork =
+    await cluster.daemons.walletds[0].api.consensusNetwork()
+  await mineToHeight(consensusNetwork.data.hardforkV2.allowHeight + 1)
   await page.reload()
 
   // Switch back to wallet1 for v2 transaction.

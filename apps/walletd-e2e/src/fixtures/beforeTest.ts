@@ -19,7 +19,7 @@ export async function beforeTest(
 ) {
   await mockApiSiaScanExchangeRates({ page })
   await mockApiSiaScanHostMetrics({ page })
-  await setupCluster({
+  const cluster = await setupCluster({
     walletdCount: 1,
     renterdCount: 1,
     networkVersion: 'transition',
@@ -35,6 +35,8 @@ export async function beforeTest(
 
   // Reset state.
   await setCurrencyDisplay(page, 'bothPreferSc')
+
+  return cluster
 }
 
 // Helper that assumes a single renterd node is being used to test sending funds.
