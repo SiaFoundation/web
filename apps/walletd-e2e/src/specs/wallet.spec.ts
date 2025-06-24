@@ -60,6 +60,7 @@ test('recover wallet and see existing transactions', async ({
     rescan: true,
     rescanStartHeight: 0,
   })
+  await page.reload()
   await navigateToWallet(page, name)
   const row1 = await getEventRowByIndex(page, 0, true)
   const row2 = await getEventRowByIndex(page, 1, true)
