@@ -16,7 +16,7 @@ import {
 export async function beforeTest(page: Page, { hostdCount = 0 } = {}) {
   await mockApiSiaScanExchangeRates({ page })
   await mockApiSiaScanHostMetrics({ page })
-  await setupCluster({ renterdCount: 1, hostdCount })
+  const cluster = await setupCluster({ renterdCount: 1, hostdCount })
   const renterdNode = clusterd.nodes.find((n) => n.type === 'renterd')
   await renterdWaitForContracts({ renterdNode, hostdCount })
   await login({
@@ -28,6 +28,8 @@ export async function beforeTest(page: Page, { hostdCount = 0 } = {}) {
   // Reset state.
   await setCurrencyDisplay(page, 'bothPreferSc')
   await clickIf(page.getByLabel('minimize onboarding wizard'), 'isVisible')
+
+  return cluster
 }
 
 export async function afterTest() {

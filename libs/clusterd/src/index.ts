@@ -132,6 +132,11 @@ export async function setupCluster({
   )
   console.timeEnd('waiting for nodes to start')
 
+  // Mine a few blocks to make sure daemon wallet balances are spendable.
+  // For some reason this is necessary even though each daemon start method
+  // already mines maturityHeight+20 worth of blocks.
+  await mine(10)
+
   console.log(
     `started: ${renterdCount} renterd, ${hostdCount} hostd, ${walletdCount} walletd, and ${exploredCount} explored nodes`
   )
