@@ -12,6 +12,7 @@ import {
   mockApiSiaScanExchangeRates,
   mockApiSiaScanHostMetrics,
 } from '@siafoundation/e2e'
+import { retryOperation } from './retryOperation'
 
 export async function beforeTest(
   page: Page,
@@ -49,12 +50,15 @@ export async function sendSiacoinFromRenterd(address: string, amount: string) {
 
   try {
     // Send some funds to the wallet.
-    await bus.walletSend({
-      data: {
-        address,
-        amount,
-        subtractMinerFee: false,
-      },
+    await retryOperation(async () => {
+      await mine(1)
+      await bus.walletSend({
+        data: {
+          address,
+          amount,
+          subtractMinerFee: false,
+        },
+      })
     })
     await mine(1)
   } catch (e) {

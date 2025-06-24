@@ -56,6 +56,7 @@ test('send siafund between wallets pre and post v2 fork allow height', async ({
     wallet1Address0,
     toHastings(1_000_000).toString()
   )
+  await page.reload()
 
   // Recover both wallets.
   await recoverWallet(page, wallet1Name, wallet1Mnemonic)
@@ -145,6 +146,7 @@ test('switching between siacoin and siafund modes resets amount fields', async (
     wallet1Address0,
     toHastings(1_000_000).toString()
   )
+  await page.reload()
 
   // Navigate to wallet and verify initial balance.
   await navigateToWallet(page, wallet1Name)

@@ -49,6 +49,7 @@ test('send siacoin between wallets pre and post v2 fork allow height', async ({
     wallet1Address0,
     toHastings(1_000_000).toString()
   )
+  await page.reload()
 
   // Recover both wallets.
   await recoverWallet(page, wallet1Name, wallet1Mnemonic)
