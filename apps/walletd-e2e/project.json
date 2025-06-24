@@ -3,7 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/walletd-e2e/src",
   "projectType": "application",
-  "implicitDependencies": ["walletd"],
+  "implicitDependencies": ["walletd", "cluster"],
   "targets": {
     "build-cluster": {
       "executor": "nx:run-commands",

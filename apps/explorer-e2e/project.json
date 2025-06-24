@@ -3,7 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/explorer-e2e/src",
   "projectType": "application",
-  "implicitDependencies": ["explorer"],
+  "implicitDependencies": ["explorer", "cluster"],
   "targets": {
     "build-cluster": {
       "executor": "nx:run-commands",

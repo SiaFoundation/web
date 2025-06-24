@@ -1,0 +1,7 @@
+{
+  "name": "cluster",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "internal/cluster",
+  "projectType": "library",
+  "targets": {}
+}

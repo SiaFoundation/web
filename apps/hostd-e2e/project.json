@@ -3,7 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/hostd-e2e/src",
   "projectType": "application",
-  "implicitDependencies": ["hostd"],
+  "implicitDependencies": ["hostd", "cluster"],
   "targets": {
     "build-cluster": {
       "executor": "nx:run-commands",
