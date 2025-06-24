@@ -105,6 +105,7 @@ func main() {
 	n.HardforkOak.Height = 1
 	n.HardforkASIC.Height = 1
 	n.HardforkFoundation.Height = 1
+	n.MaturityDelay = 10
 
 	if siafundAddr != "" {
 		// if the siafund address is set, send the siafunds to it
@@ -192,7 +193,7 @@ func main() {
 		}
 	}
 	// wait for miner outputs to mature
-	if err := nm.MineBlocks(context.Background(), 144, types.VoidAddress); err != nil {
+	if err := nm.MineBlocks(context.Background(), int(n.MaturityDelay), types.VoidAddress); err != nil {
 		log.Panic("failed to mine blocks", zap.Error(err))
 	}
 	if exploredCount > 0 {
@@ -266,7 +267,7 @@ func main() {
 	}
 
 	// wait for miner outputs to mature
-	if err := nm.MineBlocks(context.Background(), 144, types.VoidAddress); err != nil {
+	if err := nm.MineBlocks(context.Background(), int(n.MaturityDelay), types.VoidAddress); err != nil {
 		log.Panic("failed to mine blocks", zap.Error(err))
 	}
 
