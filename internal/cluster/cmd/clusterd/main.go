@@ -191,7 +191,7 @@ func main() {
 			log.Panic("failed to mine funding block", zap.Error(err))
 		}
 	}
-	// wait for miner output to mature
+	// wait for miner outputs to mature
 	if err := nm.MineBlocks(context.Background(), 144, types.VoidAddress); err != nil {
 		log.Panic("failed to mine blocks", zap.Error(err))
 	}
@@ -263,6 +263,11 @@ func main() {
 			}
 		}()
 		<-ready
+	}
+
+	// wait for miner outputs to mature
+	if err := nm.MineBlocks(context.Background(), 144, types.VoidAddress); err != nil {
+		log.Panic("failed to mine blocks", zap.Error(err))
 	}
 
 	<-ctx.Done()
