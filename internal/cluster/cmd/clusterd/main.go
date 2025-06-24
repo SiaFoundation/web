@@ -228,10 +228,6 @@ func main() {
 		}
 	}
 
-	if err := nm.MineBlocks(context.Background(), 144, types.VoidAddress); err != nil {
-		log.Panic("failed to mine blocks", zap.Error(err))
-	}
-
 	if exploredCount > 0 {
 		w, err := newWallet(cm, pk)
 		if err != nil {
@@ -264,6 +260,10 @@ func main() {
 		if err != nil {
 			log.Panic("Failed to set up contracts", zap.Error(err))
 		}
+	}
+
+	if err := nm.MineBlocks(context.Background(), 144, types.VoidAddress); err != nil {
+		log.Panic("failed to mine blocks", zap.Error(err))
 	}
 
 	<-ctx.Done()
