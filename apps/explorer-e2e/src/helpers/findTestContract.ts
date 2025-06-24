@@ -9,13 +9,9 @@ export async function findV2TestContractWithResolutionType(
   cluster: Cluster,
   resolutionType: ExplorerV2FileContractResolutionType
 ) {
-  const {
-    data: { height },
-  } = await cluster.daemons.explored.api.consensusTip()
-
   const foundContracts: ExplorerV2FileContract[] = []
 
-  for (let i = height; i >= height - 10; i--) {
+  for (let i = 10; i <= 20; i++) {
     // Get the block ID.
     const {
       data: { id: blockID },
@@ -48,13 +44,9 @@ export async function findV1TestContractWithResolutionType(
   cluster: Cluster,
   resolutionType: 'complete' | 'failed' | 'in progress' | 'invalid'
 ) {
-  const {
-    data: { height },
-  } = await cluster.daemons.explored.api.consensusTip()
-
   const foundContracts: ExplorerFileContract[] = []
 
-  for (let i = height; i >= height - 50; i--) {
+  for (let i = 10; i <= 20; i++) {
     // Get the block ID.
     const {
       data: { id: blockID },
