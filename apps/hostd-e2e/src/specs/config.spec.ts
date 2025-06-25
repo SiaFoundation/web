@@ -30,7 +30,7 @@ test('basic field change and save behaviour', async ({ page }) => {
   await setSwitchByLabel(page, 'acceptingContracts', true)
   await fillTextInputByName(page, 'netAddress', 'foobar1.com')
   await fillTextInputByName(page, 'maxContractDuration', '7')
-  await fillSelectInputByName(page, 'pinnedCurrency', 'AUD')
+  await fillSelectInputByName(page, 'pinnedCurrency', 'BTC')
   await fillTextInputByName(page, 'pinnedThreshold', '7')
   await setSwitchByLabel(page, 'shouldPinStoragePrice', true)
   await fillTextInputByName(page, 'storagePricePinned', '77')
