@@ -23,138 +23,151 @@ function rankHosts(hosts: ExplorerHost[] | undefined) {
 
   const ranges = {
     age: {
-      min: Math.min(
-        ...hosts.map((host) => new Date(host.knownSince).getTime())
-      ),
-      max: Math.max(
-        ...hosts.map((host) => new Date(host.knownSince).getTime())
-      ),
+      min: Math.min(...hosts.map((h) => new Date(h.knownSince).getTime())),
+      max: Math.max(...hosts.map((h) => new Date(h.knownSince).getTime())),
     },
-    uptime: { min: 0, max: 100 }, // Assuming uptime is in percentage
+    uptime: { min: 0, max: 100 },
     downloadPrice: {
       min: Math.min(
-        ...hosts.map((host) =>
-          host.v2
-            ? Number(host.v2Settings.prices.egressPrice)
-            : Number(host.settings.downloadbandwidthprice)
+        ...hosts.map((h) =>
+          h.v2
+            ? Number(h.v2Settings.prices.egressPrice)
+            : Number(h.settings.downloadbandwidthprice)
         )
       ),
       max: Math.max(
-        ...hosts.map((host) =>
-          host.v2
-            ? Number(host.v2Settings.prices.egressPrice)
-            : Number(host.settings.downloadbandwidthprice)
+        ...hosts.map((h) =>
+          h.v2
+            ? Number(h.v2Settings.prices.egressPrice)
+            : Number(h.settings.downloadbandwidthprice)
         )
       ),
     },
     uploadPrice: {
       min: Math.min(
-        ...hosts.map((host) =>
-          host.v2
-            ? Number(host.v2Settings.prices.ingressPrice)
-            : Number(host.settings.uploadbandwidthprice)
+        ...hosts.map((h) =>
+          h.v2
+            ? Number(h.v2Settings.prices.ingressPrice)
+            : Number(h.settings.uploadbandwidthprice)
         )
       ),
       max: Math.max(
-        ...hosts.map((host) =>
-          host.v2
-            ? Number(host.v2Settings.prices.ingressPrice)
-            : Number(host.settings.uploadbandwidthprice)
+        ...hosts.map((h) =>
+          h.v2
+            ? Number(h.v2Settings.prices.ingressPrice)
+            : Number(h.settings.uploadbandwidthprice)
         )
       ),
     },
     storagePrice: {
       min: Math.min(
-        ...hosts.map((host) =>
-          host.v2
-            ? Number(host.v2Settings.prices.storagePrice)
-            : Number(host.settings.storageprice)
+        ...hosts.map((h) =>
+          h.v2
+            ? Number(h.v2Settings.prices.storagePrice)
+            : Number(h.settings.storageprice)
         )
       ),
       max: Math.max(
-        ...hosts.map((host) =>
-          host.v2
-            ? Number(host.v2Settings.prices.storagePrice)
-            : Number(host.settings.storageprice)
+        ...hosts.map((h) =>
+          h.v2
+            ? Number(h.v2Settings.prices.storagePrice)
+            : Number(h.settings.storageprice)
         )
       ),
     },
     usedStorage: {
       min: Math.min(
-        ...hosts.map((host) =>
-          host.v2
-            ? sectorsToBytes(host.v2Settings.totalStorage).toNumber() -
-              sectorsToBytes(host.v2Settings.remainingStorage).toNumber()
-            : host.settings.totalstorage - host.settings.remainingstorage
-        )
+        ...hosts.map((h) => {
+          return h.v2
+            ? sectorsToBytes(h.v2Settings.totalStorage)
+                .minus(sectorsToBytes(h.v2Settings.remainingStorage))
+                .toNumber()
+            : sectorsToBytes(h.settings.totalstorage)
+                .minus(sectorsToBytes(h.settings.remainingstorage))
+                .toNumber()
+        })
       ),
       max: Math.max(
-        ...hosts.map((host) =>
-          host.v2
-            ? sectorsToBytes(host.v2Settings.totalStorage).toNumber() -
-              sectorsToBytes(host.v2Settings.remainingStorage).toNumber()
-            : host.settings.totalstorage - host.settings.remainingstorage
-        )
+        ...hosts.map((h) => {
+          return h.v2
+            ? sectorsToBytes(h.v2Settings.totalStorage)
+                .minus(sectorsToBytes(h.v2Settings.remainingStorage))
+                .toNumber()
+            : sectorsToBytes(h.settings.totalstorage)
+                .minus(sectorsToBytes(h.settings.remainingstorage))
+                .toNumber()
+        })
       ),
     },
   }
 
   return hosts
-    .map((host) => ({
-      host,
-      score:
-        weights.age *
-          normalize(
-            new Date(host.knownSince).getTime(),
-            ranges.age.min,
-            ranges.age.max
-          ) +
+    .map((host) => {
+      const ageScore = normalize(
+        new Date(host.knownSince).getTime(),
+        ranges.age.min,
+        ranges.age.max,
+        true
+      )
+
+      const uptimePct =
+        host.totalScans === 0
+          ? 0
+          : (host.successfulInteractions / host.totalScans) * 100
+      const uptimeConfidence = Math.min(1, host.totalScans / 10)
+
+      const downloadPrice = host.v2
+        ? Number(host.v2Settings.prices.egressPrice)
+        : Number(host.settings.downloadbandwidthprice)
+
+      const uploadPrice = host.v2
+        ? Number(host.v2Settings.prices.ingressPrice)
+        : Number(host.settings.uploadbandwidthprice)
+
+      const storagePrice = host.v2
+        ? Number(host.v2Settings.prices.storagePrice)
+        : Number(host.settings.storageprice)
+
+      const usedStorage = host.v2
+        ? sectorsToBytes(host.v2Settings.totalStorage)
+            .minus(sectorsToBytes(host.v2Settings.remainingStorage))
+            .toNumber()
+        : sectorsToBytes(host.settings.totalstorage)
+            .minus(sectorsToBytes(host.settings.remainingstorage))
+            .toNumber()
+
+      const score =
+        weights.age * ageScore +
         weights.uptime *
-          normalize(
-            host.totalScans === 0
-              ? 0
-              : (host.successfulInteractions / host.totalScans) * 100,
-            ranges.uptime.min,
-            ranges.uptime.max
-          ) +
+          uptimeConfidence *
+          normalize(uptimePct, ranges.uptime.min, ranges.uptime.max) +
         weights.downloadPrice *
           normalize(
-            host.v2
-              ? Number(host.v2Settings.prices.egressPrice)
-              : Number(host.settings.downloadbandwidthprice),
+            downloadPrice,
             ranges.downloadPrice.min,
             ranges.downloadPrice.max,
             true
           ) +
         weights.uploadPrice *
           normalize(
-            host.v2
-              ? Number(host.v2Settings.prices.ingressPrice)
-              : Number(host.settings.uploadbandwidthprice),
+            uploadPrice,
             ranges.uploadPrice.min,
             ranges.uploadPrice.max,
             true
           ) +
         weights.storagePrice *
           normalize(
-            host.v2
-              ? Number(host.v2Settings.prices.storagePrice)
-              : Number(host.settings.storageprice),
+            storagePrice,
             ranges.storagePrice.min,
             ranges.storagePrice.max,
             true
           ) +
         weights.usedStorage *
-          normalize(
-            host.v2
-              ? sectorsToBytes(host.v2Settings.totalStorage).toNumber() -
-                  sectorsToBytes(host.v2Settings.remainingStorage).toNumber()
-              : host.settings.totalstorage - host.settings.remainingstorage,
-            ranges.usedStorage.min,
-            ranges.usedStorage.max
-          ),
-    }))
-    .sort((a, b) => b.score - a.score) // Sort descending
+          normalize(usedStorage, ranges.usedStorage.min, ranges.usedStorage.max)
+
+      return { host, score }
+    })
+    .sort((a, b) => b.score - a.score)
 }
 
 export async function getTopHosts(exploredAddress: string) {
@@ -166,17 +179,16 @@ export async function getTopHosts(exploredAddress: string) {
   )
   if (hostsError)
     throw new Error(
-      'Error from getCachedTopHostsFunc /hosts request:' + hostsError.message
+      'Error from getTopHosts /hosts request: ' + hostsError.message
     )
-  if (!hosts)
-    throw new Error('No hosts found from getCachedTopHostsFunc /hosts request')
+  if (!hosts) throw new Error('No hosts found from getTopHosts /hosts request')
 
   const rankedHosts = rankHosts(hosts)
-    .slice(0, 5) // Select the top 5.
-    .map((result) => result.host) // Strip score key.
+    .slice(0, 5) // Top 5
+    .map((r) => r.host)
 
-  if (!rankedHosts || rankedHosts.length === 0)
-    throw new Error('No hosts from getCachedTopHostsFunc rankHosts call')
+  if (!rankedHosts.length)
+    throw new Error('No ranked hosts returned from rankHosts')
 
   return rankedHosts
 }
