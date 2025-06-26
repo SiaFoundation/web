@@ -22,3 +22,11 @@ export const RENEWED_TO_BUTTON = 'explorer-contract-renewedTo'
 
 // Host page
 export const HOST_PRICING = 'explorer-hostPricing'
+
+// Troubleshooter
+export const TROUBLESHOOTER_FORM = 'explorer-troubleshooter-form'
+export const TROUBLESHOOTER_RESULTS = 'explorer-troubleshooter-results'
+export const TROUBLESHOOTER_FORM_SUBMIT = 'explorer-troubleshooter-submit'
+
+export const foundationHostKey =
+  'ed25519:33a33fd5e5dc87892dff53673f9a59dd8b85d2fc76d8e002fa1db2b141dedd84'

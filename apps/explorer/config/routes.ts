@@ -29,4 +29,8 @@ export const routes = {
   map: {
     index: '/map',
   },
+  troubleshoot: {
+    index: '/troubleshoot/',
+    view: '/troubleshoot/:id',
+  },
 }
