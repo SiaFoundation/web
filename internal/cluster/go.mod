@@ -6,9 +6,9 @@ toolchain go1.24.3
 
 require (
 	go.sia.tech/cluster v0.1.3-0.20250610130308-2ed3922110c8
-	go.sia.tech/core v0.14.0
+	go.sia.tech/core v0.14.1
 	go.sia.tech/coreutils v0.16.3
-	go.sia.tech/explored v1.0.0-beta.1.0.20250623113435-be192ac56f38
+	go.sia.tech/explored v1.0.0-beta.1.0.20250626123129-41f0e2946e9c
 	go.uber.org/zap v1.27.0
 )
 
@@ -39,11 +39,11 @@ require (
 	github.com/shopspring/decimal v1.4.0 // indirect
 	go.etcd.io/bbolt v1.4.1 // indirect
 	go.sia.tech/gofakes3 v0.0.5 // indirect
-	go.sia.tech/hostd/v2 v2.3.3 // indirect
+	go.sia.tech/hostd/v2 v2.3.5-0.20250626122151-7137f3d8145c // indirect
 	go.sia.tech/jape v0.14.0 // indirect
 	go.sia.tech/mux v1.4.0 // indirect
-	go.sia.tech/renterd/v2 v2.3.2 // indirect
-	go.sia.tech/walletd/v2 v2.10.3 // indirect
+	go.sia.tech/renterd/v2 v2.3.3 // indirect
+	go.sia.tech/walletd/v2 v2.10.4-0.20250626124643-654169654c66 // indirect
 	go.uber.org/automaxprocs v1.6.0 // indirect
 	go.uber.org/mock v0.5.2 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
