@@ -15,9 +15,11 @@ export function getContractsTimeRangeBlockHeight(
     (acc, item) => {
       let accStartHeight = acc.startHeight
       let accEndHeight = acc.endHeight
-      // let end = acc.end
 
-      if (item.contractHeightStart < accStartHeight) {
+      if (
+        item.contractHeightStart > 0 &&
+        item.contractHeightStart < accStartHeight
+      ) {
         accStartHeight = item.contractHeightStart
       }
       if (item.contractHeightEnd > accEndHeight) {
@@ -34,11 +36,11 @@ export function getContractsTimeRangeBlockHeight(
     }
   )
 
-  // pad it out, also gives space for 1 day proof window
+  // Pad it out, also gives space for 1 day proof window.
   range.endHeight = Math.max(range.endHeight, currentHeight) + daysToBlocks(5)
   range.startHeight = range.startHeight - daysToBlocks(5)
 
-  // calculate points with timestamps for graphing
+  // Calculate points with timestamps for graphing.
   const allDates: number[] = []
 
   let current = range.startHeight
