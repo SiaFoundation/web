@@ -25,7 +25,11 @@ export function AppPageHead({ appName, title, children }: Props) {
         href="/apple-touch-icon.png"
       />
       <meta name="apple-mobile-web-app-title" content={appName} />
-      <link rel="manifest" href="/site.webmanifest" />
+      <link
+        rel="manifest"
+        href="/manifest.webmanifest"
+        crossOrigin="use-credentials"
+      />
       {children}
       <title>{fullTitle}</title>
     </Head>
