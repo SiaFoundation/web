@@ -181,7 +181,7 @@
     "playwright": "^1.49.1",
     "postcss": "8.4.21",
     "prettier": "2.7.1",
-    "react-refresh": "^0.10.0",
+    "react-refresh": "^0.17.0",
     "rollup-plugin-preserve-directives": "^0.2.0",
     "style-loader": "^3.3.0",
     "stylus": "0.59.0",
