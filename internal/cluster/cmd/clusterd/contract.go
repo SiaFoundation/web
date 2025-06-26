@@ -247,6 +247,7 @@ func setupV2Contracts(nm *nodes.Manager, e *api.Client, w *swallet, cm *chain.Ma
 
 	// this contract will expire
 	fc1 := prepareContract(height + 1)
+	fc1.MissedHostValue = fc1.MissedHostValue.Sub(types.Siacoins(1))
 	fc1ID, err := broadcastContract(fc1)
 	if err != nil {
 		return err
