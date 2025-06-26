@@ -1,6 +1,6 @@
 'use client'
 
-import { StateError } from '../../../components/StateError'
+import { StateError } from '../../../../components/StateError'
 
 export default function Page({ error }: { error: Error }) {
   console.error(error)

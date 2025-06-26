@@ -3,11 +3,11 @@ import { notFound } from 'next/navigation'
 
 import { to } from '@siafoundation/request'
 
-import { Output } from '../../../components/Output'
-import { routes } from '../../../config/routes'
-import { getExplored } from '../../../lib/explored'
-import { ExplorerPageProps } from '../../../lib/pageProps'
-import { buildMetadata } from '../../../lib/utils'
+import { Output } from '../../../../components/Output'
+import { routes } from '../../../../config/routes'
+import { getExplored } from '../../../../lib/explored'
+import { ExplorerPageProps } from '../../../../lib/pageProps'
+import { buildMetadata } from '../../../../lib/utils'
 
 export function generateMetadata({ params }: ExplorerPageProps): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
