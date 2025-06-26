@@ -2,7 +2,6 @@ import {
   ChainIndex,
   ExplorerFileContract,
   ExplorerV2FileContract,
-  ExplorerV2FileContractResolutionType,
   FileContractID,
   SiacoinOutput,
 } from '@siafoundation/explored-types'
@@ -35,18 +34,23 @@ export function determineV1ContractStatus({
 }
 
 export function determineV2ContractStatus(
-  status?: ExplorerV2FileContractResolutionType | 'invalid'
+  contract: ExplorerV2FileContract,
+  currentHeight: number
 ): ContractStatus {
-  if (!status) return 'in progress'
-  switch (status) {
-    case 'expiration':
-      return 'failed'
+  const {
+    resolutionType,
+    v2FileContract: { expirationHeight, hostOutput, missedHostValue },
+  } = contract
+
+  if (expirationHeight > currentHeight) return 'in progress'
+
+  switch (resolutionType) {
     case 'storage_proof':
       return 'complete'
     case 'renewal':
       return 'renewed'
-    case 'invalid':
-      return 'invalid'
+    default:
+      return hostOutput.value === missedHostValue ? 'complete' : 'failed'
   }
 }
 
@@ -87,7 +91,8 @@ export type ContractData = {
 }
 
 export function normalizeContract(
-  contract: ExplorerFileContract | ExplorerV2FileContract
+  contract: ExplorerFileContract | ExplorerV2FileContract,
+  currentHeight: number
 ): ContractData {
   if ('v2FileContract' in contract) {
     return {
@@ -112,7 +117,7 @@ export function normalizeContract(
       resolutionWindowStart: contract.v2FileContract.proofHeight,
       resolutionWindowEnd: contract.v2FileContract.expirationHeight,
       revisionNumber: contract.v2FileContract.revisionNumber,
-      status: determineV2ContractStatus(contract.resolutionType),
+      status: determineV2ContractStatus(contract, currentHeight),
       transactionID: contract.transactionID,
 
       resolutionIndex: contract.resolutionIndex,
