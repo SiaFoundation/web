@@ -333,7 +333,7 @@ export type ExplorerTransaction = {
   fileContractRevisions?: ExplorerFileContractRevision[]
   storageProofs?: StorageProof[]
   minerFees?: Currency
-  arbitraryData?: string[][]
+  arbitraryData?: string[]
   signatures?: TransactionSignature[]
   hostAnnouncements?: HostAnnouncement[]
 }

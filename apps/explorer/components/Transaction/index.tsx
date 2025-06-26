@@ -10,7 +10,7 @@ import {
   ExplorerV2Transaction,
   V2FileContractRevision,
 } from '@siafoundation/explored-types'
-import { EntityType } from '@siafoundation/units'
+import { EntityType, TxType } from '@siafoundation/units'
 
 import { routes } from '../../config/routes'
 import { contractResolutionLabels } from '../../lib/contracts'
@@ -28,7 +28,7 @@ import { OutputListItem } from './OutputListItem'
 type Props = {
   transactionHeaderData: TransactionHeaderData
   transaction: ExplorerTransaction | ExplorerV2Transaction
-  title?: string
+  txType?: TxType
 }
 
 type OutputItem = {
@@ -41,8 +41,8 @@ type OutputItem = {
 }
 
 export function Transaction({
-  title,
   transaction,
+  txType,
   transactionHeaderData,
 }: Props) {
   const inputs = useMemo(() => {
@@ -229,10 +229,7 @@ export function Transaction({
       <ContentLayout
         panel={
           <div className="flex flex-col gap-16">
-            <TransactionHeader
-              title={title}
-              transactionHeaderData={transactionHeaderData}
-            />
+            <TransactionHeader transactionHeaderData={transactionHeaderData} />
           </div>
         }
       >
@@ -253,7 +250,7 @@ export function Transaction({
       panel={
         <div className="flex flex-col gap-16">
           <TransactionHeader
-            title={title}
+            txType={txType}
             transactionHeaderData={transactionHeaderData}
           />
         </div>
