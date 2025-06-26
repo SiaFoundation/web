@@ -7,6 +7,11 @@ import { stripPrefix, truncate } from '@siafoundation/design-system'
 import { getExplored } from '../../../../lib/explored'
 import { to } from '@siafoundation/request'
 import { ExplorerPageProps } from '../../../../lib/pageProps'
+import {
+  getV1TransactionType,
+  getV2TransactionType,
+} from '@siafoundation/units'
+import { explorerV2TransactionToGetV2TransactionTypeParam } from '../../../../lib/tx'
 
 export function generateMetadata({ params }: ExplorerPageProps): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
@@ -52,6 +57,7 @@ export default async function Page({ params }: ExplorerPageProps) {
     })
     return (
       <Transaction
+        txType={getV1TransactionType(transaction)}
         transaction={transaction}
         transactionHeaderData={{
           id: stripPrefix(transaction.id),
@@ -84,6 +90,9 @@ export default async function Page({ params }: ExplorerPageProps) {
     })
     return (
       <Transaction
+        txType={getV2TransactionType(
+          explorerV2TransactionToGetV2TransactionTypeParam(transaction)
+        )}
         transaction={transaction}
         transactionHeaderData={{
           id: stripPrefix(transaction.id),

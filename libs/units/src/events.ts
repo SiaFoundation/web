@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 import { WalletEvent } from '@siafoundation/types'
 import {
   TxType,
-  getTransactionType,
+  getV1TransactionType,
   getV2TransactionType,
 } from './transactionTypes'
 
@@ -28,7 +28,7 @@ export function getEventContractId(e: WalletEvent) {
 export function getEventTxType(e: WalletEvent): TxType {
   const eventType = e.type
   if (eventType === 'v1Transaction') {
-    return getTransactionType(e.data.transaction)
+    return getV1TransactionType(e.data.transaction)
   }
   if (eventType === 'v2Transaction') {
     return getV2TransactionType(e.data)

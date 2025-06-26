@@ -1,7 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { formatDistance } from 'date-fns'
 import { upperFirst } from '@technically/lodash'
-
 import {
   Badge,
   Link,
@@ -11,23 +10,14 @@ import {
   ValueScFiat,
   ValueSf,
 } from '@siafoundation/design-system'
-import {
-  ExplorerTransaction,
-  ExplorerV2Transaction,
-  Transaction,
-  V2Transaction,
-} from '@siafoundation/explored-types'
 import { DotMark16, Locked16, Unlocked16 } from '@siafoundation/react-icons'
 import {
   EntityType,
   getEntityTypeLabel,
-  getTransactionType,
   getTxTypeLabel,
-  getV2TransactionType,
   humanNumber,
   TxType,
 } from '@siafoundation/units'
-
 import LoadingTimestamp from '../LoadingTimestamp'
 import { EntityListItemLayout } from './EntityListItemLayout'
 
@@ -50,7 +40,6 @@ export type EntityListItemProps = {
   siascanUrl?: string
   avatarShape?: 'square' | 'circle'
   avatar?: string
-  txPreviewBadge?: React.ReactNode
   maturityHeight?: number
   networkHeight?: number
 }
@@ -117,9 +106,13 @@ export function EntityListItem(entity: EntityListItemProps) {
         </div>
         <div className="flex flex-row gap-4 items-center">
           <div className="flex flex-col gap-2 items-end">
-            {(sc || sf || entity.txPreviewBadge) && (
+            {(sc || sf || entity.txType) && (
               <div className="flex items-center gap-2">
-                {entity.txPreviewBadge}
+                {entity.txType && (
+                  <Badge variant={getExplorerTxTypeBadgeVariant(entity.txType)}>
+                    {getTxTypeLabel(entity.txType)}
+                  </Badge>
+                )}
                 {!!sc && <ValueScFiat variant={entity.scVariant} value={sc} />}
                 {!!sf && <ValueSf variant={entity.sfVariant} value={sf} />}
               </div>
@@ -196,55 +189,14 @@ function isValidUrl(url?: string) {
   }
 }
 
-export function getExplorerV2TxPreviewBadge(
-  tx: ExplorerV2Transaction
-): React.ReactNode {
-  // This won't work for resolution types, returning undefined.
-  let txType = getV2TransactionType(tx as V2Transaction)
-
-  // Handle the above comment.
-  if (!txType) {
-    if (tx.fileContractResolutions?.[0]) {
-      txType =
-        tx.fileContractResolutions?.[0].type === 'expiration'
-          ? 'contractExpiration'
-          : tx.fileContractResolutions?.[0].type === 'renewal'
-          ? 'contractRenewal'
-          : 'storageProof'
-    }
+export function getExplorerTxTypeBadgeVariant(txType: TxType) {
+  if (txType === 'arbitraryData') {
+    return 'simple'
   }
 
-  if (txType === 'unknown') {
-    if (tx.arbitraryData?.length)
-      return <Badge variant="simple">arbitrary data</Badge>
+  if (txType === 'siacoin' || txType === 'siafund') {
+    return 'gray'
   }
 
-  if (txType === 'siacoin' || txType === 'siafund')
-    return (
-      <Badge variant="gray">
-        <Text color="none">{getTxTypeLabel(txType)}</Text>
-      </Badge>
-    )
-
-  return <Badge variant="accent">{getTxTypeLabel(txType)}</Badge>
-}
-
-export function getExplorerV1TxPreviewBadge(
-  tx: ExplorerTransaction
-): React.ReactNode {
-  const txType = getTransactionType(tx as Transaction)
-
-  if (txType === 'unknown') {
-    if (tx.arbitraryData?.length)
-      return <Badge variant="simple">arbitrary data</Badge>
-  }
-
-  if (txType === 'siacoin' || txType === 'siafund')
-    return (
-      <Badge variant="gray">
-        <Text color="subtle">{getTxTypeLabel(txType)}</Text>
-      </Badge>
-    )
-
-  return <Badge variant="accent">{getTxTypeLabel(txType)}</Badge>
+  return 'accent'
 }

@@ -1,8 +1,4 @@
-import {
-  Transaction,
-  V2FileContractResolutionType,
-  V2Transaction,
-} from '@siafoundation/types'
+import { V2FileContractResolution } from '@siafoundation/types'
 
 export type TxType =
   | 'siacoin'
@@ -11,6 +7,7 @@ export type TxType =
   | 'contractFormation'
   | 'contractRevision'
   | 'contractRenewal'
+  | 'contractRefresh'
   | 'contractExpiration'
   | 'contractFinalization'
   | 'contractPayout'
@@ -18,9 +15,19 @@ export type TxType =
   | 'siafundClaim'
   | 'foundationSubsidy'
   | 'hostAnnouncement'
+  | 'arbitraryData'
   | 'unknown'
 
-export function getTransactionType(txn: Transaction): TxType {
+export function getV1TransactionType(txn: {
+  storageProofs?: unknown[]
+  fileContracts?: unknown[]
+  fileContractRevisions?: unknown[]
+  siacoinInputs?: unknown[]
+  siafundInputs?: unknown[]
+  siacoinOutputs?: unknown[]
+  siafundOutputs?: unknown[]
+  arbitraryData?: string[]
+}): TxType {
   if (txn.storageProofs && txn.storageProofs.length > 0) {
     return 'storageProof'
   }
@@ -55,15 +62,64 @@ export function getTransactionType(txn: Transaction): TxType {
   return 'unknown'
 }
 
-export function getV2TransactionType(txn: V2Transaction): TxType {
+export function getV2TransactionType(txn: {
+  siafundOutputs?: unknown[]
+  siacoinOutputs?: unknown[]
+  fileContracts?: unknown[]
+  arbitraryData?: Uint8Array
+  fileContractResolutions?:
+    | (
+        | {
+            type: 'renewal'
+            parent: {
+              v2FileContract: {
+                proofHeight: number
+                expirationHeight: number
+              }
+            }
+            resolution: {
+              newContract: {
+                proofHeight: number
+                expirationHeight: number
+              }
+            }
+          }
+        | {
+            type: 'expiration' | 'finalization' | 'storageProof'
+          }
+      )[]
+  fileContractRevisions?: {
+    parent: {
+      v2FileContract: {
+        proofHeight: number
+        expirationHeight: number
+      }
+    }
+    revision: {
+      proofHeight: number
+      expirationHeight: number
+    }
+  }[]
+  attestations?: {
+    key: string
+  }[]
+}): TxType {
   if (txn.fileContractResolutions && txn.fileContractResolutions.length > 0) {
-    const mapping: Record<V2FileContractResolutionType['type'], TxType> = {
+    const mapping: Record<V2FileContractResolution['type'], TxType> = {
       expiration: 'contractExpiration',
       finalization: 'contractFinalization',
       renewal: 'contractRenewal',
-      'storage proof': 'storageProof',
+      storageProof: 'storageProof',
     }
-    return mapping[txn.fileContractResolutions[0].resolution.type]
+    if (txn.fileContractResolutions[0].type === 'renewal') {
+      const oldContract = txn.fileContractResolutions[0].parent.v2FileContract
+      const newContract = txn.fileContractResolutions[0].resolution.newContract
+      return oldContract.proofHeight === newContract.proofHeight &&
+        oldContract.expirationHeight === newContract.expirationHeight
+        ? 'contractRefresh'
+        : 'contractRenewal'
+    }
+    return mapping[txn.fileContractResolutions[0].type]
   }
   if (txn.fileContractRevisions && txn.fileContractRevisions.length > 0) {
     return 'contractRevision'
@@ -81,6 +137,9 @@ export function getV2TransactionType(txn: V2Transaction): TxType {
   if (txn.siacoinOutputs && txn.siacoinOutputs.length > 0) {
     return 'siacoin'
   }
+  if (txn.arbitraryData && txn.arbitraryData.length > 0) {
+    return 'arbitraryData'
+  }
 
   return 'unknown'
 }
@@ -90,6 +149,7 @@ const txTypeMap: Record<TxType, string> = {
   siafund: 'siafund transfer',
   contractFormation: 'contract formation',
   contractRenewal: 'contract renewal',
+  contractRefresh: 'contract refresh',
   contractRevision: 'contract revision',
   contractExpiration: 'contract expiration',
   contractFinalization: 'contract finalization',
@@ -99,6 +159,7 @@ const txTypeMap: Record<TxType, string> = {
   siafundClaim: 'siafund claim',
   foundationSubsidy: 'foundation subsidy',
   hostAnnouncement: 'host announcement',
+  arbitraryData: 'arbitrary data',
   unknown: 'unknown transaction type',
 }
 export function getTxTypeLabel(type?: TxType): string | undefined {

@@ -44,7 +44,7 @@ export function ContractView({
       </Container>
       {formationTransaction && formationTransactionHeaderData ? (
         <Transaction
-          title="Formation"
+          txType="contractFormation"
           transaction={formationTransaction}
           transactionHeaderData={formationTransactionHeaderData}
         />

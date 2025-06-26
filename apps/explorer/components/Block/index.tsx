@@ -8,7 +8,12 @@ import {
   Text,
 } from '@siafoundation/design-system'
 import { ExplorerBlock } from '@siafoundation/explored-types'
-import { humanDate, humanNumber } from '@siafoundation/units'
+import {
+  getV1TransactionType,
+  getV2TransactionType,
+  humanDate,
+  humanNumber,
+} from '@siafoundation/units'
 import { ArrowLeft16, ArrowRight16 } from '@siafoundation/react-icons'
 
 import { routes } from '../../config/routes'
@@ -20,11 +25,8 @@ import { EntityHeading } from '../EntityHeading'
 import { ContentLayout } from '../ContentLayout'
 import { ExplorerAccordion } from '../ExplorerAccordion'
 import { ExplorerTextarea } from '../ExplorerTextarea'
-import {
-  getExplorerV1TxPreviewBadge,
-  getExplorerV2TxPreviewBadge,
-} from '../Entity/EntityListItem'
 import LoadingTimestamp from '../LoadingTimestamp'
+import { explorerV2TransactionToGetV2TransactionTypeParam } from '../../lib/tx'
 
 type Props = {
   block: ExplorerBlock
@@ -158,7 +160,9 @@ export function Block({ block, blockID, currentHeight }: Props) {
                 label: 'transaction',
                 initials: 'T',
                 href: routes.transaction.view.replace(':id', txID),
-                txPreviewBadge: getExplorerV2TxPreviewBadge(tx),
+                txType: getV2TransactionType(
+                  explorerV2TransactionToGetV2TransactionTypeParam(tx)
+                ),
               }
             })}
           />
@@ -179,7 +183,7 @@ export function Block({ block, blockID, currentHeight }: Props) {
                 label: 'transaction',
                 initials: 'T',
                 href: routes.transaction.view.replace(':id', txID),
-                txPreviewBadge: getExplorerV1TxPreviewBadge(tx),
+                txType: getV1TransactionType(tx),
               }
             })}
           />

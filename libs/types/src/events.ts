@@ -7,7 +7,7 @@ import {
   Hash256,
   Address,
 } from './core'
-import { V2Transaction, V2FileContractResolutionType } from './v2'
+import { V2Transaction, V2FileContractResolution } from './v2'
 
 export type UnconfirmedChainIndex = {
   height: number
@@ -47,7 +47,7 @@ export type WalletEventContractResolutionV1 = WalletEventBase & {
 export type WalletEventContractResolutionV2 = WalletEventBase & {
   type: 'v2ContractResolution'
   data: {
-    resolution: V2FileContractResolutionType
+    resolution: V2FileContractResolution
     siacoinElement: SiacoinElement
     missed: boolean
   }
