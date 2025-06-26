@@ -26,9 +26,17 @@ export const revalidate = 0
 export default async function Page({ params }: ExplorerPageProps) {
   const id = params?.id
 
-  const { data: searchResultType } = await getExplored().searchResultType({
-    params: { id },
-  })
+  const [
+    { data: searchResultType },
+    {
+      data: { height: currentHeight },
+    },
+  ] = await Promise.all([
+    getExplored().searchResultType({
+      params: { id },
+    }),
+    getExplored().consensusTip(),
+  ])
 
   if (searchResultType === 'contract') {
     const [c, contractError, contractResponse] = await to(
@@ -40,7 +48,7 @@ export default async function Page({ params }: ExplorerPageProps) {
       throw contractError
     }
 
-    const contract = normalizeContract(c)
+    const contract = normalizeContract(c, currentHeight)
     const { data: contractRevisions } = await getExplored().contractRevisions({
       params: { id },
     })
@@ -56,24 +64,21 @@ export default async function Page({ params }: ExplorerPageProps) {
         params: { id: formationTxnID },
       })
 
-    const [{ data: parentBlock }, { data: currentTip }] = await Promise.all([
-      getExplored().blockByID({
-        params: { id: formationTxnChainIndices[0].id },
-      }),
-      getExplored().consensusTip(),
-    ])
+    const { data: parentBlock } = await getExplored().blockByID({
+      params: { id: formationTxnChainIndices[0].id },
+    })
 
     return (
       <ContractView
         contractRevisions={contractRevisions}
-        currentHeight={currentTip.height}
+        currentHeight={currentHeight}
         contract={contract}
         formationTransaction={formationTransaction}
         formationTxnChainIndex={formationTxnChainIndices}
         formationTransactionHeaderData={{
           id: stripPrefix(formationTransaction.id),
           blockHeight: formationTxnChainIndices[0].height,
-          confirmations: currentTip.height - formationTxnChainIndices[0].height,
+          confirmations: currentHeight - formationTxnChainIndices[0].height,
           timestamp: parentBlock.timestamp,
           version: 'v1',
         }}
@@ -89,7 +94,7 @@ export default async function Page({ params }: ExplorerPageProps) {
       throw contractError
     }
 
-    const contract = normalizeContract(c)
+    const contract = normalizeContract(c, currentHeight)
     const { data: contractRevisions } =
       await getExplored().v2ContractRevisionsByID({ params: { id } })
 
@@ -105,24 +110,21 @@ export default async function Page({ params }: ExplorerPageProps) {
         params: { id: formationTxnID },
       })
 
-    const [{ data: parentBlock }, { data: currentTip }] = await Promise.all([
-      getExplored().blockByID({
-        params: { id: formationTxnChainIndices[0].id },
-      }),
-      getExplored().consensusTip(),
-    ])
+    const { data: parentBlock } = await getExplored().blockByID({
+      params: { id: formationTxnChainIndices[0].id },
+    })
 
     return (
       <ContractView
         contractRevisions={contractRevisions}
-        currentHeight={currentTip.height}
+        currentHeight={currentHeight}
         contract={contract}
         formationTransaction={formationTransaction}
         formationTxnChainIndex={formationTxnChainIndices}
         formationTransactionHeaderData={{
           id: stripPrefix(formationTransaction.id),
           blockHeight: formationTxnChainIndices[0].height,
-          confirmations: currentTip.height - formationTxnChainIndices[0].height,
+          confirmations: currentHeight - formationTxnChainIndices[0].height,
           timestamp: parentBlock.timestamp,
           version: 'v2',
         }}

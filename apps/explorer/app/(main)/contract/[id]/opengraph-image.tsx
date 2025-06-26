@@ -29,9 +29,17 @@ const currencyOpt = currencyOptions.find(
 export default async function Image({ params }: ExplorerPageProps) {
   const id = params?.id as string
 
-  const { data: contractType } = await getExplored().searchResultType({
-    params: { id },
-  })
+  const [
+    { data: contractType },
+    {
+      data: { height: currentHeight },
+    },
+  ] = await Promise.all([
+    getExplored().searchResultType({
+      params: { id },
+    }),
+    getExplored().consensusTip(),
+  ])
 
   try {
     const { data: c } =
@@ -39,7 +47,7 @@ export default async function Image({ params }: ExplorerPageProps) {
         ? await getExplored().v2ContractByID({ params: { id } })
         : await getExplored().contractByID({ params: { id } })
 
-    const nContract = normalizeContract(c)
+    const nContract = normalizeContract(c, currentHeight)
     const { data: currentTip } = await getExplored().consensusTip()
     const { data: rate } = await getExplored().exchangeRate({
       params: { currency: 'usd' },
