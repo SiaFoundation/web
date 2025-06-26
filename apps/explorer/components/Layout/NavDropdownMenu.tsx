@@ -59,6 +59,11 @@ export function NavDropdownMenu({ trigger, children, ...props }: Props) {
             Host Revenue Calculator
           </Link>
         </DropdownMenuItem>
+        <DropdownMenuItem className="p-2">
+          <Link href={routes.troubleshoot.index} underline="none">
+            Host Troubleshooter
+          </Link>
+        </DropdownMenuItem>
       </DropdownMenuGroup>
       <DropdownMenuGroup className="py-1 px-1">
         <DropdownMenuLabel className="px-1">Settings</DropdownMenuLabel>
