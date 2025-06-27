@@ -6,7 +6,7 @@
   "private": true,
   "dependencies": {
     "@technically/lodash": "^4.17.0",
-    "axios": "^0.27.2",
+    "axios": "^1.10.0",
     "@siafoundation/renterd-js": "0.14.4",
     "@siafoundation/units": "3.4.3",
     "@siafoundation/hostd-js": "0.5.3",
