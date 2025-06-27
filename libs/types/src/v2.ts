@@ -58,11 +58,6 @@ export type V2FileContract = {
   hostSignature?: Signature
 }
 
-export type V2FileContractResolution = {
-  parent: V2FileContractElement
-  resolution: V2FileContractResolutionType
-}
-
 export type V2FileContractRenewal = {
   finalRevision: V2FileContract
   initialRevision: V2FileContract
@@ -118,37 +113,36 @@ export type ChainIndexElement = {
   chainIndex: ChainIndex
 }
 
-type V2FileContractResolutionTypeBase = {
+type V2FileContractResolutionBase = {
   parent: V2FileContractElement
 }
 
-export type V2FileContractResolutionTypeExpiration =
-  V2FileContractResolutionTypeBase & {
+export type V2FileContractResolutionExpiration =
+  V2FileContractResolutionBase & {
     type: 'expiration'
     resolution: Record<string, never> // is this always empty for expiration type?
   }
-export type V2FileContractResolutionTypeFinalization =
-  V2FileContractResolutionTypeBase & {
+export type V2FileContractResolutionFinalization =
+  V2FileContractResolutionBase & {
     type: 'finalization'
     resolution: V2FileContract
   }
 
-export type V2FileContractResolutionTypeRenewal =
-  V2FileContractResolutionTypeBase & {
-    type: 'renewal'
-    resolution: {
-      finalRevision: V2FileContract
-      newContract: V2FileContract
-      renterRollover: Currency
-      hostRollover: Currency
-      renterSignature: Signature
-      hostSignature: Signature
-    }
+export type V2FileContractResolutionRenewal = V2FileContractResolutionBase & {
+  type: 'renewal'
+  resolution: {
+    finalRevision: V2FileContract
+    newContract: V2FileContract
+    renterRollover: Currency
+    hostRollover: Currency
+    renterSignature: Signature
+    hostSignature: Signature
   }
+}
 
 export type V2FileContractResolutionDataStorageProof =
-  V2FileContractResolutionTypeBase & {
-    type: 'storage proof'
+  V2FileContractResolutionBase & {
+    type: 'storageProof'
     resolution: {
       proofIndex: ChainIndexElement
       leaf: string
@@ -156,8 +150,8 @@ export type V2FileContractResolutionDataStorageProof =
     }
   }
 
-export type V2FileContractResolutionType =
-  | V2FileContractResolutionTypeExpiration
-  | V2FileContractResolutionTypeFinalization
-  | V2FileContractResolutionTypeRenewal
+export type V2FileContractResolution =
+  | V2FileContractResolutionExpiration
+  | V2FileContractResolutionFinalization
+  | V2FileContractResolutionRenewal
   | V2FileContractResolutionDataStorageProof

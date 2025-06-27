@@ -3,6 +3,7 @@ import {
   ExplorerTransaction,
   ExplorerV2Transaction,
 } from '@siafoundation/explored-types'
+import { getV2TransactionType } from '@siafoundation/units'
 
 export type AddressSummary = {
   address: string
@@ -79,4 +80,51 @@ export function getTransactionSummary(
     .sort((a, b) => (b.sf ?? 0) - (a.sf ?? 0))
 
   return { sc, sf }
+}
+
+export function explorerV2TransactionToGetV2TransactionTypeParam(
+  tx: ExplorerV2Transaction
+): Parameters<typeof getV2TransactionType>[0] {
+  return {
+    ...tx,
+    fileContractResolutions: tx.fileContractResolutions?.map((r) => {
+      if (r.type === 'renewal') {
+        return {
+          ...r,
+          parent: {
+            v2FileContract: {
+              proofHeight: r.parent.v2FileContract.proofHeight,
+              expirationHeight: r.parent.v2FileContract.expirationHeight,
+            },
+          },
+          resolution: {
+            newContract: {
+              proofHeight: r.resolution.newContract.v2FileContract.proofHeight,
+              expirationHeight:
+                r.resolution.newContract.v2FileContract.expirationHeight,
+            },
+          },
+        }
+      }
+      if (r.type === 'storage_proof') {
+        return {
+          type: 'storageProof',
+        }
+      }
+      return r
+    }),
+    fileContractRevisions: tx.fileContractRevisions?.map((r) => ({
+      ...r,
+      parent: {
+        v2FileContract: {
+          proofHeight: r.parent.v2FileContract.proofHeight,
+          expirationHeight: r.parent.v2FileContract.expirationHeight,
+        },
+      },
+      revision: {
+        proofHeight: r.revision.proofHeight,
+        expirationHeight: r.revision.expirationHeight,
+      },
+    })),
+  }
 }
