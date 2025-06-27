@@ -300,7 +300,7 @@ export async function teardownCluster() {
   clusterd.process?.kill()
 }
 
-function waitFor(
+export function waitFor(
   condition: () => Promise<boolean>,
   {
     timeout = 1000,
