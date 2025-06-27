@@ -10,7 +10,7 @@ inputs:
   go_version:
     description: Go version
     required: false
-    default: '1.23.0'
+    default: 1.24.3
   base_ref:
     description: Determines which base SHA to use ('base' for a specific SHA/branch, 'last_successful' for the last successful workflow)
     required: false

@@ -21,7 +21,7 @@ jobs:
         uses: ./.github/actions/setup-all
         with:
           node_version: 20.10.0
-          go_version: 1.23.0
+          go_version: 1.24.3
       - name: Release
         run: ./scripts/release-go.sh
       - name: Commit
