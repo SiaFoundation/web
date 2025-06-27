@@ -1,5 +1,17 @@
 # @siafoundation/explored-react
 
+## 0.8.0
+
+### Minor Changes
+
+- 6f8085ed: Fixed typings around SiacoinOutput and SiafundOutput routes.
+
+### Patch Changes
+
+- Updated dependencies [6f8085ed]
+  - @siafoundation/explored-types@0.19.0
+  - @siafoundation/react-core@6.0.0
+
 ## 0.7.2
 
 ### Patch Changes

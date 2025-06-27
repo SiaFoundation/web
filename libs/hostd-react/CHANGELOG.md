@@ -1,5 +1,13 @@
 # @siafoundation/hostd-react
 
+## 4.6.5
+
+### Patch Changes
+
+- @siafoundation/units@3.4.4
+- @siafoundation/hostd-types@0.9.1
+- @siafoundation/react-core@6.0.0
+
 ## 4.6.4
 
 ### Patch Changes

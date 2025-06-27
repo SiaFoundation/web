@@ -1,5 +1,14 @@
 # @siafoundation/walletd-mock
 
+## 0.2.6
+
+### Patch Changes
+
+- Updated dependencies [b57aee94]
+  - @siafoundation/types@0.12.0
+  - @siafoundation/units@3.4.4
+  - @siafoundation/walletd-types@0.7.1
+
 ## 0.2.5
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @siafoundation/types
 
+## 0.12.0
+
+### Minor Changes
+
+- b57aee94: Added anagami to ConsensusNetwork name.
+
 ## 0.11.0
 
 ### Minor Changes

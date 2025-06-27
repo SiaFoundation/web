@@ -1,5 +1,14 @@
 # @siafoundation/units
 
+## 3.4.4
+
+### Patch Changes
+
+- Updated dependencies [6f8085ed]
+- Updated dependencies [b57aee94]
+  - @siafoundation/explored-types@0.19.0
+  - @siafoundation/types@0.12.0
+
 ## 3.4.3
 
 ### Patch Changes

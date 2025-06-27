@@ -1,5 +1,22 @@
 # @siafoundation/clusterd
 
+## 0.4.0
+
+### Minor Changes
+
+- 8c3d8d67: setupCluster now returns daemon SDKs.
+
+### Patch Changes
+
+- Updated dependencies [6f8085ed]
+- Updated dependencies [b57aee94]
+  - @siafoundation/explored-js@0.8.0
+  - @siafoundation/types@0.12.0
+  - @siafoundation/units@3.4.4
+  - @siafoundation/hostd-js@0.5.4
+  - @siafoundation/renterd-js@0.14.5
+  - @siafoundation/walletd-js@0.4.1
+
 ## 0.3.0
 
 ### Minor Changes
