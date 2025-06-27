@@ -16,6 +16,7 @@
         "compiler": "tsc",
         "outputFileName": "index.js",
         "rollupConfig": "libs/data-sources/rollup.config.js",
+        "format": ["esm", "cjs"],
         "assets": [
           {
             "glob": "libs/data-sources/*.md",

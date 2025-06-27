@@ -17,6 +17,7 @@
         "compiler": "tsc",
         "outputFileName": "index.js",
         "rollupConfig": "libs/explored-react/rollup.config.js",
+        "format": ["esm", "cjs"],
         "assets": [
           {
             "glob": "libs/explored-react/*.md",
