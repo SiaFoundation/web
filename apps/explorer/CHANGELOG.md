@@ -1,5 +1,18 @@
 # explorer
 
+## 0.35.0
+
+### Minor Changes
+
+- a2b04f77: Added support for output search and display.
+- 533c617c: Added date and time to the block page.
+- d4632918: Fixed errors in top hosts ranking.
+- 8259df3f: The explorer now has an interactive host map. This was moved over from sia.tech/map.
+- 5580ca21: Added maturity height indicator to address page events.
+- 235f1f29: Added preview badges to the block page transasction lists.
+- 8259df3f: The nav dropdown menu now includes the host map.
+- 8259df3f: The nav dropdown menu no longer includes the host revenue calculator.
+
 ## 0.34.0
 
 ### Minor Changes

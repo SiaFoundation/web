@@ -1,5 +1,13 @@
 # @siafoundation/walletd-react
 
+## 4.5.2
+
+### Patch Changes
+
+- @siafoundation/units@3.4.4
+- @siafoundation/react-core@6.0.0
+- @siafoundation/walletd-types@0.7.1
+
 ## 4.5.1
 
 ### Patch Changes

@@ -1,5 +1,16 @@
 # @siafoundation/explored-types
 
+## 0.19.0
+
+### Minor Changes
+
+- 6f8085ed: Fixed typings around SiacoinOutput and SiafundOutput routes.
+
+### Patch Changes
+
+- Updated dependencies [b57aee94]
+  - @siafoundation/types@0.12.0
+
 ## 0.18.0
 
 ### Minor Changes
