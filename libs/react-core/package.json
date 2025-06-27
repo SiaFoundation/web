@@ -17,7 +17,7 @@
     "detect-gpu": "^5.0.34"
   },
   "devDependencies": {
-    "undici": "5.28.3"
+    "undici": "7.11.0"
   },
   "types": "./src/index.d.ts"
 }
