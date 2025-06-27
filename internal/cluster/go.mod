@@ -1,8 +1,6 @@
 module go.sia.tech/web/cluster
 
-go 1.24.2
-
-toolchain go1.24.3
+go 1.24.3
 
 require (
 	go.sia.tech/cluster v0.1.3-0.20250610130308-2ed3922110c8

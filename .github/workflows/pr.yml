@@ -23,7 +23,7 @@ jobs:
         uses: ./.github/actions/setup-all
         with:
           node_version: 20.10.0
-          go_version: 1.23.0
+          go_version: 1.24.3
       - name: Commit lint
         shell: bash
         run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}
@@ -77,7 +77,7 @@ jobs:
       - name: Setup Go
         uses: ./.github/actions/setup-go
         with:
-          go_version: 1.23.0
+          go_version: 1.24.3
       - name: Lint Go
         uses: golangci/golangci-lint-action@v4
         with:

@@ -14,7 +14,7 @@
       "cache": true,
       "options": {
         "commands": [
-          "cp $(go env GOROOT)/misc/wasm/wasm_exec.js libs/sdk/src/utils/wasm_exec.js",
+          "cp $(go env GOROOT)/lib/wasm/wasm_exec.js libs/sdk/src/utils/wasm_exec.js",
           "cd sdk && GOOS=js GOARCH=wasm go build -o ../libs/sdk/src/resources/sdk.wasm ."
         ]
       }
