@@ -4,10 +4,31 @@ import { random } from '@technically/lodash'
 import { beforeTest } from '../fixtures/beforeTest'
 import BigNumber from 'bignumber.js'
 import { setSwitchByLabel, fillTextInputByName } from '@siafoundation/e2e'
+import { Cluster, mine, waitFor } from '@siafoundation/clusterd'
+
+let cluster: Cluster
 
 test.beforeEach(async ({ page }) => {
-  await beforeTest(page)
+  cluster = await beforeTest(page)
+  await waitUntilWalletBalanceIsSpendable()
+  await page.reload()
 })
+
+// Sometimes the wallet balance is confirmed but not spendable immediately after
+// the cluster is started. This function mines and waits until it is spendable.
+async function waitUntilWalletBalanceIsSpendable() {
+  await waitFor(
+    async () => {
+      await mine(1)
+      const wallet = await cluster.daemons.renterds[0].api.wallet()
+      return new BigNumber(wallet.data?.spendable || 0).gt(0)
+    },
+    {
+      timeout: 20_000,
+      interval: 500,
+    }
+  )
+}
 
 test('send siacoin with include fee off', async ({ page }) => {
   const receiveAddress =
