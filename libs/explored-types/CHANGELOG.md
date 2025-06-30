@@ -1,5 +1,19 @@
 # @siafoundation/explored-types
 
+## 0.19.0
+
+### Minor Changes
+
+- 6f8085ed: Fixed typings around SiacoinOutput and SiafundOutput routes.
+
+### Patch Changes
+
+- 3571359f: Fixed v1 ExplorerTransaction arbitraryData type.
+- Updated dependencies [3571359f]
+- Updated dependencies [b57aee94]
+- Updated dependencies [3571359f]
+  - @siafoundation/types@0.12.0
+
 ## 0.18.0
 
 ### Minor Changes

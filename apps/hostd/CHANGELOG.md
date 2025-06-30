@@ -1,5 +1,17 @@
 # hostd
 
+## 0.64.0
+
+### Minor Changes
+
+- 3571359f: Added support for the contract refresh event type. Closes https://github.com/SiaFoundation/hostd/issues/759
+
+### Patch Changes
+
+- 16b6692a: Updated the app manifest file name to match spec.
+- f477cfe1: Fixed an issue where contract timelines would start from 0 when the dataset included a rejected contract. Closes https://github.com/SiaFoundation/hostd/issues/717
+- 16b6692a: Fixed an issue where the app manifest would sometimes 401 when behind a proxy.
+
 ## 0.63.0
 
 ### Minor Changes
