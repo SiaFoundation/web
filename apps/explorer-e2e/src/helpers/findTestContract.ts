@@ -40,9 +40,9 @@ export async function findV2TestContractWithResolutionType(
   )
 }
 
-export async function findV1TestContractWithResolutionType(
+export async function findV1TestContractWithStatus(
   cluster: Cluster,
-  resolutionType: 'complete' | 'failed' | 'in progress' | 'invalid'
+  status: 'complete' | 'failed' | 'active' | 'invalid'
 ) {
   const foundContracts: ExplorerFileContract[] = []
 
@@ -69,7 +69,7 @@ export async function findV1TestContractWithResolutionType(
     }
   }
 
-  switch (resolutionType) {
+  switch (status) {
     case 'complete':
       return foundContracts.find(
         (contract) => contract.valid && contract.resolved
@@ -78,7 +78,7 @@ export async function findV1TestContractWithResolutionType(
       return foundContracts.find(
         (contract) => !contract.valid && contract.resolved
       )
-    case 'in progress':
+    case 'active':
       return foundContracts.find((contract) => !contract.resolved)
   }
 }

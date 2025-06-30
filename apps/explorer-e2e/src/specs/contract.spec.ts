@@ -7,7 +7,7 @@ import {
 } from '@siafoundation/clusterd'
 import { exploredStabilization } from '../helpers/exploredStabilization'
 import {
-  findV1TestContractWithResolutionType,
+  findV1TestContractWithStatus,
   findV2TestContractWithResolutionType,
 } from '../helpers/findTestContract'
 import { RENEWED_FROM_BUTTON, RENEWED_TO_BUTTON } from '../fixtures/constants'
@@ -90,7 +90,7 @@ test.describe('v2', () => {
       'renewal'
     )
     await explorerApp.goTo('/contract/' + renewedContract?.renewedTo)
-    await expect(page.getByText('in progress')).toBeVisible()
+    await expect(page.getByText('active')).toBeVisible()
   })
 
   test('contract navigate to and from a renewed contract', async ({ page }) => {
@@ -172,7 +172,7 @@ test.describe('v1', () => {
   })
 
   test('contract correctly displays a completed contract', async ({ page }) => {
-    const completedContract = await findV1TestContractWithResolutionType(
+    const completedContract = await findV1TestContractWithStatus(
       cluster,
       'complete'
     )
@@ -182,27 +182,19 @@ test.describe('v1', () => {
   })
 
   test('contract correctly displays a failed contract', async ({ page }) => {
-    const failedContract = await findV1TestContractWithResolutionType(
-      cluster,
-      'failed'
-    )
+    const failedContract = await findV1TestContractWithStatus(cluster, 'failed')
 
     await explorerApp.goTo('/contract/' + failedContract?.id)
 
     await expect(page.getByText('failed')).toBeVisible()
   })
 
-  test('contract correctly displays a contract in progress', async ({
-    page,
-  }) => {
-    const inProgressContract = await findV1TestContractWithResolutionType(
-      cluster,
-      'in progress'
-    )
+  test('contract correctly displays an active contract', async ({ page }) => {
+    const activeContract = await findV1TestContractWithStatus(cluster, 'active')
 
-    await explorerApp.goTo('/contract/' + inProgressContract?.id)
+    await explorerApp.goTo('/contract/' + activeContract?.id)
 
-    await expect(page.getByText('in progress')).toBeVisible()
+    await expect(page.getByText('active')).toBeVisible()
   })
 
   test('contract displays the correct version', async ({ page }) => {
