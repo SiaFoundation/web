@@ -105,7 +105,6 @@ type FormSubmitProps = {
   variant?: React.ComponentProps<typeof Button>['variant']
   children: React.ReactNode
   className?: string
-  withStatusError?: boolean
 }
 
 export function FormSubmitButton({

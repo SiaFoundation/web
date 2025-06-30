@@ -51,7 +51,7 @@
     "@radix-ui/react-tooltip": "1.0.0",
     "@radix-ui/react-visually-hidden": "^1.1.0",
     "@react-spring/web": "^9.7.3",
-    "@siacentral/ledgerjs-sia": "^1.1.1",
+    "@siacentral/ledgerjs-sia": "^1.2.9",
     "@tailwindcss/container-queries": "^0.1.1",
     "@technically/lodash": "^4.17.0",
     "@visx/axis": "^2.18.0",

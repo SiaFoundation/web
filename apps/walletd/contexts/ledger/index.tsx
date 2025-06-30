@@ -97,6 +97,7 @@ function useLedgerMain() {
   }, [device?.transport])
 
   return {
+    isConnected: !!device,
     connect,
     verify,
     disconnect,
