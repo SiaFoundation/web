@@ -5,6 +5,9 @@ import {
   ConfigFields,
   FieldError,
   FieldLabel,
+  FieldSwitch,
+  InfoTip,
+  Text,
   triggerErrorToast,
   useOnInvalid,
 } from '@siafoundation/design-system'
@@ -17,9 +20,14 @@ import { SendParamsV2, SendStep } from '../../_sharedWalletSendV2/typesV2'
 import { useBroadcastV2 } from '../../_sharedWalletSendV2/useBroadcastV2'
 import { useCancelV2 } from '../../_sharedWalletSendV2/useCancelV2'
 
-const defaultValues = {
-  isConnected: false,
-  isSigned: false,
+type Values = ReturnType<typeof getDefaultValues>
+
+function getDefaultValues({ isConnected }: { isConnected: boolean }) {
+  return {
+    isConnected,
+    isSigned: false,
+    isBlindSign: false,
+  }
 }
 
 type Props = {
@@ -29,7 +37,7 @@ type Props = {
   onConfirm: (params: { transactionId?: string }) => void
 }
 
-function getFields(): ConfigFields<typeof defaultValues, never> {
+function getFields(): ConfigFields<Values, never> {
   return {
     isConnected: {
       type: 'boolean',
@@ -39,6 +47,11 @@ function getFields(): ConfigFields<typeof defaultValues, never> {
           isConnected: (value: boolean) => value || 'Ledger must be connected',
         },
       },
+    },
+    isBlindSign: {
+      type: 'boolean',
+      title: 'Signature type',
+      validation: {},
     },
     isSigned: {
       type: 'boolean',
@@ -53,12 +66,15 @@ function getFields(): ConfigFields<typeof defaultValues, never> {
 }
 
 export function useSendFormV2({ params, step, onConfirm }: Props) {
+  const { isConnected: isLedgerConnected } = useLedger()
+  const defaultValues = getDefaultValues({ isConnected: isLedgerConnected })
   const form = useForm({
     mode: 'all',
     defaultValues,
   })
   const isConnected = form.watch('isConnected')
   const isSigned = form.watch('isSigned')
+  const isBlind = form.watch('isBlindSign')
   const { device, error: ledgerError } = useLedger()
   const cancel = useCancelV2()
   const broadcast = useBroadcastV2()
@@ -101,11 +117,30 @@ export function useSendFormV2({ params, step, onConfirm }: Props) {
     }
   }, [form, txn])
 
+  // If the blind sign is changed, reset the signed state
+  useEffect(() => {
+    form.setValue('isSigned', false)
+  }, [form, isBlind])
+
   const fields = useMemo(() => getFields(), [])
 
   const onValid = useCallback(
-    async (values: typeof defaultValues) => {
+    async (values: Values) => {
       if (!values.isConnected) {
+        triggerErrorToast({ title: 'Ledger must be connected' })
+        return
+      }
+
+      if (!values.isBlindSign) {
+        triggerErrorToast({
+          title:
+            'Blind signing is temporarily required until Ledger supports V2 transactions',
+        })
+        return
+      }
+
+      if (!values.isSigned) {
+        triggerErrorToast({ title: 'Transaction must be signed' })
         return
       }
 
@@ -146,7 +181,7 @@ export function useSendFormV2({ params, step, onConfirm }: Props) {
 
   const runFundAndSign = useCallback(async () => {
     setWaitingForUser(true)
-    const result = await fundAndSign(params)
+    const result = await fundAndSign(params, isBlind)
     if ('error' in result) {
       triggerErrorToast({ title: result.error })
     } else {
@@ -156,7 +191,7 @@ export function useSendFormV2({ params, step, onConfirm }: Props) {
       form.setValue('isSigned', true)
     }
     setWaitingForUser(false)
-  }, [form, fundAndSign, params])
+  }, [form, fundAndSign, params, isBlind])
 
   const el = (
     <div className="flex flex-col gap-4">
@@ -166,6 +201,19 @@ export function useSendFormV2({ params, step, onConfirm }: Props) {
           <FieldError name="isConnected" form={form} />
           <DeviceConnectForm />
         </div>
+        <FieldSwitch
+          size="small"
+          name="isBlindSign"
+          form={form}
+          fields={fields}
+        >
+          <Text>Use blind signing</Text>
+          <InfoTip>
+            {`Blind signing is temporarily required until Ledger supports V2
+            transactions. Make sure to "Enable blind signing" on your Ledger
+            device in the Sia app settings.`}
+          </InfoTip>
+        </FieldSwitch>
         <div className="flex flex-col gap-1">
           <FieldLabel title="Signature" name="isSigned" />
           <FieldError name="isSigned" form={form} />
@@ -190,6 +238,8 @@ export function useSendFormV2({ params, step, onConfirm }: Props) {
         cancel(txn)
       }
     },
-    reset: () => form.reset(defaultValues),
+    reset: () => {
+      form.reset(defaultValues)
+    },
   }
 }

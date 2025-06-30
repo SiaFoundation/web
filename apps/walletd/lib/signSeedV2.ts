@@ -24,6 +24,9 @@ export function signTransactionSeedV2({
   if (!consensusState) {
     return { error: 'No consensus state' }
   }
+  if (!consensusNetwork) {
+    return { error: 'No consensus network' }
+  }
   if (!addresses) {
     return { error: 'No addresses' }
   }
@@ -43,10 +46,9 @@ export function signTransactionSeedV2({
   for (const input of transaction.siacoinInputs ?? []) {
     // Find the index of the address in the list of addresses.
     const indexResponse = getAddressKeyIndex({
-        address: input.parent.siacoinOutput.address,
-        addresses,
-      }
-    );
+      address: input.parent.siacoinOutput.address,
+      addresses,
+    })
     if ('error' in indexResponse) {
       return { error: indexResponse.error }
     }
@@ -67,8 +69,7 @@ export function signTransactionSeedV2({
     const indexResponse = getAddressKeyIndex({
       address: input.parent.siafundOutput.address,
       addresses,
-    }
-    );
+    })
     if ('error' in indexResponse) {
       return { error: indexResponse.error }
     }

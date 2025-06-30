@@ -1,26 +1,48 @@
-import { Result, V2Transaction } from '@siafoundation/types'
+import {
+  ConsensusNetwork,
+  ConsensusState,
+  Result,
+  V2Transaction,
+} from '@siafoundation/types'
 import { LedgerDevice } from '../contexts/ledger/types'
 import { AddressData } from '../contexts/addresses/types'
 import { getSDK } from '@siafoundation/sdk'
 import { getAddressKeyIndex } from './signV2'
 
-export async function signTransactionLedgerV2({
+export async function signTransactionLedgerV2Blind({
   device,
   transaction,
   addresses,
+  consensusState,
+  consensusNetwork,
 }: {
   device: LedgerDevice
   transaction: V2Transaction
+  consensusState: ConsensusState
+  consensusNetwork: ConsensusNetwork
   addresses: AddressData[]
 }): Promise<Result<{ transaction: V2Transaction }>> {
+  if (!consensusState) {
+    return { error: 'No consensus state' }
+  }
+  if (!consensusNetwork) {
+    return { error: 'No consensus network' }
+  }
   if (!addresses) {
     return { error: 'No addresses' }
   }
 
-  const base64ToHex = (data: string): string => {
-    const buffer: Buffer = Buffer.from(data, 'base64')
-    return buffer.toString('hex').slice(0, 128)
+  const sigHashResult = getSDK().wallet.v2TransactionInputSigHash(
+    consensusState,
+    consensusNetwork,
+    transaction
+  )
+
+  if ('error' in sigHashResult) {
+    return { error: sigHashResult.error }
   }
+
+  const sigHash: string = sigHashResult.sigHash
 
   const signatures = new Map<number, string>()
   for (const input of transaction.siacoinInputs ?? []) {
@@ -35,16 +57,16 @@ export async function signTransactionLedgerV2({
 
     const { index } = indexResponse
     if (!signatures.has(index)) {
-      const signResult = await signTransactionIndex({
+      const signResult = await blindSignTransactionIndex({
         device,
-        transaction,
+        sigHash,
         keyIndex: index,
       })
 
       if ('error' in signResult) {
         return { error: signResult.error }
       }
-      signatures.set(index, base64ToHex(signResult.signature))
+      signatures.set(index, signResult.signature)
     }
 
     input.satisfiedPolicy.signatures = [signatures.get(index)]
@@ -62,16 +84,16 @@ export async function signTransactionLedgerV2({
 
     const { index } = indexResponse
     if (!signatures.has(index)) {
-      const signResult = await signTransactionIndex({
+      const signResult = await blindSignTransactionIndex({
         device,
-        transaction,
+        sigHash,
         keyIndex: index,
       })
 
       if ('error' in signResult) {
         return { error: signResult.error }
       }
-      signatures.set(index, base64ToHex(signResult.signature))
+      signatures.set(index, signResult.signature)
     }
 
     input.satisfiedPolicy.signatures = [signatures.get(index)]
@@ -80,29 +102,18 @@ export async function signTransactionLedgerV2({
   return { transaction }
 }
 
-async function signTransactionIndex({
+async function blindSignTransactionIndex({
   device,
-  transaction,
+  sigHash,
   keyIndex,
 }: {
   device: LedgerDevice
-  transaction: V2Transaction
+  sigHash: string
   keyIndex: number
 }): Promise<Result<{ signature: string }>> {
-  const { encodedTransaction, error } =
-    getSDK().wallet.encodeV2Transaction(transaction)
-  if (error) {
-    return { error }
-  }
-  const encodedTransactionBuffer = Buffer.from(encodedTransaction, 'utf-8')
-
+  const sigHashBuffer = Buffer.from(sigHash, 'hex')
   try {
-    const signature = await device.sia.signV2Transaction(
-      encodedTransactionBuffer,
-      0,
-      keyIndex,
-      0
-    )
+    const signature = await device.sia.blindSign(sigHashBuffer, keyIndex)
     return { signature }
   } catch (e) {
     return { error: e.message }

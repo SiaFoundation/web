@@ -11,7 +11,8 @@ export function useFundAndSignV2() {
   const construct = useConstructV2()
   const fundAndSign = useCallback(
     async (
-      params: SendParamsV2
+      params: SendParamsV2,
+      isBlind: boolean
     ): Promise<
       Result<{
         id: string
@@ -19,6 +20,13 @@ export function useFundAndSignV2() {
         signedTransaction: V2Transaction
       }>
     > => {
+      // Temporary
+      if (!isBlind) {
+        return {
+          error:
+            'Blind signing is temporarily required until Ledger supports V2 transactions.',
+        }
+      }
       const constructResult = await construct(params)
       if ('error' in constructResult) {
         return {
@@ -28,6 +36,7 @@ export function useFundAndSignV2() {
       const { fundedTransaction, basis } = constructResult
       const signResult = await sign({
         fundedTransaction,
+        isBlind,
       })
       if ('error' in signResult) {
         cancel(fundedTransaction)

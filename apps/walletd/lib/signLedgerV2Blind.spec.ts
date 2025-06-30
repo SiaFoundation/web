@@ -1,21 +1,23 @@
 import { initSDK } from '@siafoundation/sdk'
-import { signTransactionLedgerV2 } from './signLedgerV2'
 import { getMockAddresses, getMockDevice } from './testMocks'
 import { getMockScenarioSeedWallet } from './mocks/mockSeedWallet'
+import { signTransactionLedgerV2Blind } from './signLedgerV2Blind'
 
 beforeEach(async () => {
   await initSDK()
 })
 
-describe('signLedgerV2', () => {
+describe('signLedgerV2Blind', () => {
   describe('siacoin', () => {
     it('builds and signs valid transaction', async () => {
       const device = getMockDevice()
       const mocks = getMockScenarioSeedWallet()
       expect(
-        await signTransactionLedgerV2({
+        await signTransactionLedgerV2Blind({
           device,
           transaction: mocks.walletConstructV2Response.transaction,
+          consensusState: mocks.consensusState,
+          consensusNetwork: mocks.consensusNetwork,
           addresses: getMockAddresses(mocks),
         })
       ).toMatchSnapshot()
@@ -25,9 +27,11 @@ describe('signLedgerV2', () => {
       const device = getMockDevice()
       const mocks = getMockScenarioSeedWallet()
       expect(
-        await signTransactionLedgerV2({
+        await signTransactionLedgerV2Blind({
           device,
           transaction: mocks.walletConstructV2Response.transaction,
+          consensusState: mocks.consensusState,
+          consensusNetwork: mocks.consensusNetwork,
           addresses: [
             {
               id: 'id',
@@ -49,9 +53,11 @@ describe('signLedgerV2', () => {
       const device = getMockDevice()
       const mocks = getMockScenarioSeedWallet()
       expect(
-        await signTransactionLedgerV2({
+        await signTransactionLedgerV2Blind({
           device,
           transaction: mocks.walletConstructV2Response.transaction,
+          consensusState: mocks.consensusState,
+          consensusNetwork: mocks.consensusNetwork,
           addresses: [
             {
               id: 'id',

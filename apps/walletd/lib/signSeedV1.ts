@@ -34,6 +34,9 @@ export function signTransactionSeedV1({
   if (!consensusState) {
     return { error: 'No consensus state' }
   }
+  if (!consensusNetwork) {
+    return { error: 'No consensus network' }
+  }
   if (!addresses) {
     return { error: 'No addresses' }
   }

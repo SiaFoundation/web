@@ -25,6 +25,14 @@ export function getMockDevice() {
         .mockReturnValueOnce(
           'fvmSaRzlO/n2L5tsT32e82kWqHnIjQJ8cqjWOc37TtlK6p/vIiOG+TO98HfvbgObTOYVqlKMtUyxTOjGb3bfCpAA'
         ),
+      blindSign: jest
+        .fn()
+        .mockReturnValueOnce(
+          'Xt1EJckLmWXU+7HHHDN9bRV5KRuLdC4YY01LzaAMF269QH4hWV8zFkY3kCWs65svhb9HhA1Ix1MRGvhN9orBDpAA'
+        )
+        .mockReturnValueOnce(
+          'fvmSaRzlO/n2L5tsT32e82kWqHnIjQJ8cqjWOc37TtlK6p/vIiOG+TO98HfvbgObTOYVqlKMtUyxTOjGb3bfCpAA'
+        ),
     } as unknown as Sia,
     transport: {
       forget: jest.fn(),
