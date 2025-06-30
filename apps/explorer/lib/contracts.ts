@@ -7,17 +7,7 @@ import {
 } from '@siafoundation/explored-types'
 import BigNumber from 'bignumber.js'
 
-export const CONTRACT_STATUS = {
-  IN_PROGRESS: 'in progress',
-  COMPLETE: 'complete',
-  FAILED: 'failed',
-  RENEWED: 'renewed',
-  INVALID: 'invalid',
-} as const
-
-type ObjectValues<T> = T[keyof T]
-
-type ContractStatus = ObjectValues<typeof CONTRACT_STATUS>
+type ContractStatus = 'active' | 'complete' | 'failed' | 'renewed' | 'invalid'
 
 export function determineV1ContractStatus({
   resolved,
@@ -25,7 +15,7 @@ export function determineV1ContractStatus({
   validProofOutputs,
   missedProofOutputs,
 }: ExplorerFileContract): ContractStatus {
-  if (!resolved) return 'in progress'
+  if (!resolved) return 'active'
 
   const successful =
     valid || validProofOutputs?.[1].value === missedProofOutputs?.[1].value
@@ -48,7 +38,7 @@ export function determineV2ContractStatus(
     case 'renewal':
       return 'renewed'
     default:
-      if (expirationHeight > currentHeight) return 'in progress'
+      if (expirationHeight > currentHeight) return 'active'
       return hostOutput.value === missedHostValue ? 'complete' : 'failed'
   }
 }
@@ -57,7 +47,7 @@ export function determineContractStatusColor(status: ContractStatus) {
   switch (status) {
     case 'complete':
     case 'renewed':
-    case 'in progress':
+    case 'active':
       return 'green'
     case 'failed':
     case 'invalid':
