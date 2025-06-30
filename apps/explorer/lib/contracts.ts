@@ -42,14 +42,13 @@ export function determineV2ContractStatus(
     v2FileContract: { expirationHeight, hostOutput, missedHostValue },
   } = contract
 
-  if (expirationHeight > currentHeight) return 'in progress'
-
   switch (resolutionType) {
     case 'storage_proof':
       return 'complete'
     case 'renewal':
       return 'renewed'
     default:
+      if (expirationHeight > currentHeight) return 'in progress'
       return hostOutput.value === missedHostValue ? 'complete' : 'failed'
   }
 }
