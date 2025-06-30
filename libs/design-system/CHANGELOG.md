@@ -1,5 +1,26 @@
 # Changelog
 
+## 9.0.0
+
+### Minor Changes
+
+- f477cfe1: getContractsTimeRangeBlockHeight now ignores start heights of 0.
+
+### Patch Changes
+
+- Updated dependencies [3571359f]
+- Updated dependencies [6f8085ed]
+- Updated dependencies [3571359f]
+- Updated dependencies [b57aee94]
+- Updated dependencies [3571359f]
+- Updated dependencies [3571359f]
+- Updated dependencies [3571359f]
+  - @siafoundation/types@0.12.0
+  - @siafoundation/explored-react@0.8.0
+  - @siafoundation/explored-types@0.19.0
+  - @siafoundation/units@3.5.0
+  - @siafoundation/react-core@6.0.0
+
 ## 8.1.1
 
 ### Patch Changes

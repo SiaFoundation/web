@@ -1,5 +1,16 @@
 # @siafoundation/types
 
+## 0.12.0
+
+### Minor Changes
+
+- 3571359f: Refined naming of V2FileContractResolution types.
+- b57aee94: Added anagami to ConsensusNetwork name.
+
+### Patch Changes
+
+- 3571359f: Fixed an issue with the ContractResolution type.
+
 ## 0.11.0
 
 ### Minor Changes

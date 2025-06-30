@@ -1,5 +1,22 @@
 # @siafoundation/units
 
+## 3.5.0
+
+### Minor Changes
+
+- 3571359f: Added support for the arbitrary data event type.
+- 3571359f: Added support for the contract refresh event type. Closes https://github.com/SiaFoundation/hostd/issues/759
+
+### Patch Changes
+
+- Updated dependencies [3571359f]
+- Updated dependencies [6f8085ed]
+- Updated dependencies [b57aee94]
+- Updated dependencies [3571359f]
+- Updated dependencies [3571359f]
+  - @siafoundation/types@0.12.0
+  - @siafoundation/explored-types@0.19.0
+
 ## 3.4.3
 
 ### Patch Changes

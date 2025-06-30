@@ -1,5 +1,17 @@
 # walletd
 
+## 0.31.0
+
+### Minor Changes
+
+- 3571359f: Added support for the contract refresh event type. Closes https://github.com/SiaFoundation/hostd/issues/759
+
+### Patch Changes
+
+- 16b6692a: Updated the app manifest file name to match spec.
+- b57aee94: Fixed an issue where the testnet warning banner said 'testnet' twice. Closes https://github.com/SiaFoundation/walletd/issues/323
+- 16b6692a: Fixed an issue where the app manifest would sometimes 401 when behind a proxy.
+
 ## 0.30.0
 
 ### Minor Changes
