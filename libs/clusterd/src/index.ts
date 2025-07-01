@@ -7,6 +7,7 @@ import { Hostd } from '@siafoundation/hostd-js'
 import { Maybe } from '@siafoundation/types'
 import { Explored } from '@siafoundation/explored-js'
 import { Walletd } from '@siafoundation/walletd-js'
+import BigNumber from 'bignumber.js'
 
 export type ClusterNodeRenterd = {
   type: 'renterd'
@@ -40,7 +41,7 @@ export type ClusterNode =
   | ClusterNodeWalletd
   | ClusterNodeExplored
 
-export type NetworkVersion = 'v1' | 'v2' | 'transition'
+export type NetworkVersion = 'v1' | 'v2'
 
 export const clusterd = {
   process: undefined as child.ChildProcessWithoutNullStreams | undefined,
@@ -61,7 +62,7 @@ export async function setupCluster({
   hostdCount = 0,
   walletdCount = 0,
   exploredCount = 0,
-  networkVersion = 'v1',
+  networkVersion = 'v2',
   siafundAddr = randomAddress,
 }: {
   renterdCount?: number
@@ -95,8 +96,10 @@ export async function setupCluster({
     )
   })
 
-  console.time('waiting for nodes to start')
+  const waitingForNodesToStartTimer = 'Waiting for nodes to start'
+  console.time(waitingForNodesToStartTimer)
   await waitFor(
+    waitingForNodesToStartTimer,
     async () => {
       const addr = `http://localhost:${clusterd.managementPort}/nodes`
       try {
@@ -118,7 +121,7 @@ export async function setupCluster({
           })
           return true
         }
-        console.log(`waiting for nodes (${runningCount}/${totalCount})...`)
+        console.log(`Waiting for nodes (${runningCount}/${totalCount})...`)
         return false
       } catch (e) {
         console.log(`Error fetching nodes: ${addr}`)
@@ -130,7 +133,7 @@ export async function setupCluster({
       interval: 1_000,
     }
   )
-  console.timeEnd('waiting for nodes to start')
+  console.timeEnd(waitingForNodesToStartTimer)
 
   // Mine a few blocks to make sure daemon wallet balances are spendable.
   // For some reason this is necessary even though each daemon start method
@@ -207,8 +210,10 @@ export async function renterdWaitForContracts({
     return
   }
 
-  console.time('waiting for contracts to form')
+  const waitingForContractsToFormTimer = 'Waiting for contracts to form'
+  console.time(waitingForContractsToFormTimer)
   await waitFor(
+    waitingForContractsToFormTimer,
     async () => {
       await mine(1)
       const hosts = await bus.hosts({
@@ -234,15 +239,17 @@ export async function renterdWaitForContracts({
       interval: 2_000,
     }
   )
-  console.timeEnd('waiting for contracts to form')
+  console.timeEnd(waitingForContractsToFormTimer)
 }
 
 export async function hostdWaitForContracts({
   hostdNode,
   renterdCount,
+  networkVersion,
 }: {
   hostdNode: ClusterNodeHostd
   renterdCount: number
+  networkVersion: NetworkVersion
 }) {
   const hostdApi = `${hostdNode.apiAddress}/api`
   const hostd = Hostd({
@@ -254,15 +261,24 @@ export async function hostdWaitForContracts({
     return
   }
 
-  console.time('waiting for contracts to form')
+  const waitingForContractsToFormTimer = 'Waiting for contracts to form'
+  console.time(waitingForContractsToFormTimer)
   await waitFor(
+    waitingForContractsToFormTimer,
     async () => {
       await mine(1)
-      const contracts = await hostd.contracts({
-        data: {
-          limit: renterdCount,
-        },
-      })
+      const contracts =
+        networkVersion === 'v2'
+          ? await hostd.contractsV2({
+              data: {
+                limit: renterdCount,
+              },
+            })
+          : await hostd.contracts({
+              data: {
+                limit: renterdCount,
+              },
+            })
       console.log(`contracts: ${contracts.data.count}/${renterdCount}`)
       return contracts.data.count >= renterdCount
     },
@@ -271,7 +287,26 @@ export async function hostdWaitForContracts({
       interval: 2_000,
     }
   )
-  console.timeEnd('waiting for contracts to form')
+  console.timeEnd(waitingForContractsToFormTimer)
+}
+
+// Sometimes the wallet balance is confirmed but not spendable immediately
+// after the cluster is started. This function waits until it is spendable.
+export async function waitUntilRenterdWalletBalanceIsSpendable(
+  renterd: ReturnType<typeof Bus>
+) {
+  await waitFor(
+    'Waiting for wallet balance to be spendable',
+    async () => {
+      console.log('Waiting for wallet balance to be spendable...')
+      const wallet = await renterd.wallet()
+      return new BigNumber(wallet.data?.spendable || 0).gt(0)
+    },
+    {
+      timeout: 20_000,
+      interval: 500,
+    }
+  )
 }
 
 export async function mine(blocks: number) {
@@ -301,9 +336,10 @@ export async function teardownCluster() {
 }
 
 export function waitFor(
+  description: string,
   condition: () => Promise<boolean>,
   {
-    timeout = 1000,
+    timeout = 5_000,
     interval = 500,
   }: { timeout?: number; interval?: number } = {}
 ) {
@@ -320,7 +356,7 @@ export function waitFor(
 
         // Check if we've exceeded the timeout.
         if (Date.now() - startTime >= timeout) {
-          reject(new Error('Timeout'))
+          reject(new Error(`Timeout: ${description}`))
           return
         }
 
@@ -334,4 +370,33 @@ export function waitFor(
     // Start the first check.
     checkCondition()
   })
+}
+
+export async function waitForData<T>(
+  dataFetcher: () => Promise<T>,
+  assertion: (data: T) => boolean | Promise<boolean>,
+  timeoutMs = 10_000,
+  retryIntervalMs = 1_000
+): Promise<T> {
+  const startTime = Date.now()
+
+  while (Date.now() - startTime < timeoutMs) {
+    try {
+      const data = await dataFetcher()
+      const assertionResult = await assertion(data)
+
+      if (assertionResult) {
+        return data // Success, assertion passed
+      }
+    } catch (error) {
+      // Continue retrying on error
+    }
+
+    // Wait before next retry
+    await new Promise((resolve) => setTimeout(resolve, retryIntervalMs))
+  }
+
+  throw new Error(
+    `Timeout waiting for data assertion to pass after ${timeoutMs}ms.`
+  )
 }

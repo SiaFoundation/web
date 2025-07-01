@@ -25,14 +25,21 @@ test('uploads are shown in the local and all uploads lists', async ({
   await navigateToBuckets({ page })
   await createBucket(page, bucketName)
   await openBucket(page, bucketName)
-  await createFilesMap(page, bucketName, {
-    'file1.txt': 10,
-    'file2.txt': 10,
-    'file3.txt': 10,
-    'file4.txt': 10,
-    'file5.txt': 10,
-    'file6.txt': 10,
-  })
+  await createFilesMap(
+    page,
+    bucketName,
+    {
+      'file1.txt': 10,
+      'file2.txt': 10,
+      'file3.txt': 10,
+      'file4.txt': 10,
+      'file5.txt': 10,
+      'file6.txt': 10,
+    },
+    {
+      waitForEachUploadToFinish: false,
+    }
+  )
   await expect(
     page.getByTestId('docked-controls').getByText('Active uploads')
   ).toBeVisible()

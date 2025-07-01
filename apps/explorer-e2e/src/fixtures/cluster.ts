@@ -6,7 +6,7 @@ export type Cluster = Awaited<ReturnType<typeof startCluster>>
 export async function startCluster({
   renterdCount = 1,
   walletdCount = 1,
-  hostdCount = 3,
+  hostdCount = 1,
   context,
   networkVersion,
 }: {

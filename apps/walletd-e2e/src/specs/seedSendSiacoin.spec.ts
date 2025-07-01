@@ -10,7 +10,7 @@ import {
 import { toHastings } from '@siafoundation/units'
 import { testRequiresClipboardPermissions } from '@siafoundation/e2e'
 import { sendSiacoinWithSeedWallet } from '../fixtures/seedSendSiacoin'
-import { Cluster, mine, mineToHeight } from '@siafoundation/clusterd'
+import { mine } from '@siafoundation/clusterd'
 
 // First wallet - sender
 const wallet1Mnemonic =
@@ -24,20 +24,15 @@ const wallet2Mnemonic =
 const wallet2Address0 =
   '4e7e288504d86ae2234ffc6989aa96e70eb555ace205eb2d0afaaca650536fd1de3b5ff8f90c'
 
-let cluster: Cluster
-
 test.beforeEach(async ({ page }) => {
-  cluster = await beforeTest(page)
+  await beforeTest(page)
 })
 
 test.afterEach(async () => {
   await afterTest()
 })
 
-test('send siacoin between wallets pre and post v2 fork allow height', async ({
-  page,
-  browserName,
-}) => {
+test('send siacoin between wallets', async ({ page, browserName }) => {
   testRequiresClipboardPermissions(browserName)
 
   // Setup both wallets.
@@ -63,58 +58,25 @@ test('send siacoin between wallets pre and post v2 fork allow height', async ({
   const navbar = page.getByTestId('navbar')
   await expect(navbar.getByText('1.000 MS')).toBeVisible({ timeout: 20_000 })
 
-  // Send v1 transaction.
-  const amountV1 = random(1, 20)
-  await sendSiacoinWithSeedWallet(page, {
-    walletName: wallet1Name,
-    mnemonic: wallet1Mnemonic,
-    receiveAddress: wallet2Address0,
-    changeAddress: wallet1Address0,
-    amount: amountV1,
-    expectedFee: 0.004,
-    expectedVersion: 'v1',
-    transactionVersionIndicator:
-      'testCluster - constructing v1 transaction - switching to v2 at allow height 400',
-  })
-
-  await mine(1)
-
-  // Verify v1 transaction in wallet2.
-  await navigateToWallet(page, wallet2Name)
-  await expect(navbar.getByText(`${amountV1.toFixed(3)} SC`)).toBeVisible({
-    timeout: 20_000,
-  })
-
-  // Mine blocks to pass v2 fork height.
-  const consensusNetwork =
-    await cluster.daemons.walletds[0].api.consensusNetwork()
-  await mineToHeight(consensusNetwork.data.hardforkV2.allowHeight + 1)
-  await page.reload()
-
-  // Switch back to wallet1 for v2 transaction.
-  await navigateToWallet(page, wallet1Name)
-
   // Send v2 transaction.
-  const amountV2 = random(21, 40)
+  const amount = random(21, 40)
   await sendSiacoinWithSeedWallet(page, {
     walletName: wallet1Name,
     mnemonic: wallet1Mnemonic,
     receiveAddress: wallet2Address0,
     changeAddress: wallet1Address0,
-    amount: amountV2,
+    amount: amount,
     expectedFee: 0.02,
     expectedVersion: 'v2',
     transactionVersionIndicator:
-      'testCluster - constructing v2 transaction - switched to v2 at allow height 400',
+      'testCluster - constructing v2 transaction - switched to v2 at allow height 2',
   })
 
   await mine(1)
 
   // Verify v2 transaction in wallet2.
   await navigateToWallet(page, wallet2Name)
-  await expect(
-    navbar.getByText(`${(amountV1 + amountV2).toFixed(3)} SC`)
-  ).toBeVisible({
+  await expect(navbar.getByText(`${amount.toFixed(3)} SC`)).toBeVisible({
     timeout: 20_000,
   })
 })

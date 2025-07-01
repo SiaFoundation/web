@@ -23,7 +23,6 @@ export async function beforeTest(
   const cluster = await setupCluster({
     walletdCount: 1,
     renterdCount: 1,
-    networkVersion: 'transition',
     siafundAddr,
   })
   const walletdNode = clusterd.nodes.find((n) => n.type === 'walletd')

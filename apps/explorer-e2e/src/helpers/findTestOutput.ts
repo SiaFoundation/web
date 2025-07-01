@@ -4,10 +4,9 @@ import { Cluster } from '../fixtures/cluster'
 export async function findTestOutput(cluster: Cluster, version: 'v1' | 'v2') {
   let foundOutput: ExplorerSiacoinOutput | undefined
   const tip = await cluster.daemons.explored.api.consensusTip()
-  let currentHeight = tip.data.height
+  let currentHeight = 1
 
-  // Hopefully, 50 blocks should be enough. We stop on find.
-  for (let i = 0; i < 50; i++) {
+  while (currentHeight <= tip.data.height) {
     const { data: blockIndex } =
       await cluster.daemons.explored.api.consensusTipByHeight({
         params: { height: currentHeight },
@@ -38,11 +37,11 @@ export async function findTestOutput(cluster: Cluster, version: 'v1' | 'v2') {
     }
 
     if (foundOutput) break
-    currentHeight--
+    currentHeight++
   }
 
   if (!foundOutput) {
-    throw new Error('Output ID not found in 50 blocks')
+    throw new Error('Output ID not found')
   }
 
   return foundOutput

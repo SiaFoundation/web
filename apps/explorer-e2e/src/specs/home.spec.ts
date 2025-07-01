@@ -35,17 +35,15 @@ test.describe('v2', () => {
   })
 
   test('home displays metrics', async ({ page }) => {
-    expect((await page.getByTestId(METRICS_ITEM).count()) > 0).toBeTruthy()
+    await expect(page.getByTestId(METRICS_ITEM)).toHaveCount(6)
   })
 
   test('home displays latest blocks', async ({ page }) => {
-    expect(
-      (await page.getByTestId(LATEST_BLOCKS_ITEM).count()) > 0
-    ).toBeTruthy()
+    await expect(page.getByTestId(LATEST_BLOCKS_ITEM)).toHaveCount(5)
   })
 
   test('home displays top hosts', async ({ page }) => {
-    expect((await page.getByTestId(TOP_HOSTS_ITEMS).count()) > 0).toBeTruthy()
+    await expect(page.getByTestId(TOP_HOSTS_ITEMS)).toHaveCount(1)
   })
 
   test('home displays accurate network information', async ({ page }) => {
@@ -80,17 +78,15 @@ test.describe('v1', () => {
   })
 
   test('home displays metrics', async ({ page }) => {
-    expect((await page.getByTestId(METRICS_ITEM).count()) > 0).toBeTruthy()
+    await expect(page.getByTestId(METRICS_ITEM)).toHaveCount(6)
   })
 
   test('home displays latest blocks', async ({ page }) => {
-    expect(
-      (await page.getByTestId(LATEST_BLOCKS_ITEM).count()) > 0
-    ).toBeTruthy()
+    await expect(page.getByTestId(LATEST_BLOCKS_ITEM)).toHaveCount(5)
   })
 
   test('home displays top hosts', async ({ page }) => {
-    expect((await page.getByTestId(TOP_HOSTS_ITEMS).count()) > 0).toBeTruthy()
+    await expect(page.getByTestId(TOP_HOSTS_ITEMS)).toHaveCount(1)
   })
 
   test('home displays accurate network information', async ({ page }) => {

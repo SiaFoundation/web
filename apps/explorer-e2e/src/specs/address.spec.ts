@@ -1,14 +1,10 @@
 import { test, expect } from '@playwright/test'
 import { ExplorerApp } from '../fixtures/ExplorerApp'
 import { startCluster, Cluster } from '../fixtures/cluster'
-import {
-  mine,
-  renterdWaitForContracts,
-  teardownCluster,
-} from '@siafoundation/clusterd'
-import { addWalletToWalletd, sendSiacoinFromRenterd } from '../fixtures/walletd'
-import { toHastings } from '@siafoundation/units'
+import { teardownCluster } from '@siafoundation/clusterd'
 import { exploredStabilization } from '../helpers/exploredStabilization'
+import { expectThenClick } from '@siafoundation/e2e'
+import { findTestOutput } from '../helpers/findTestOutput'
 
 let explorerApp: ExplorerApp
 let cluster: Cluster
@@ -17,10 +13,6 @@ let cluster: Cluster
 test.describe('v2', () => {
   test.beforeEach(async ({ page, context }) => {
     cluster = await startCluster({ context, networkVersion: 'v2' })
-    await renterdWaitForContracts({
-      renterdNode: cluster.daemons.renterds[0].node,
-      hostdCount: cluster.daemons.hostds.length,
-    })
     await exploredStabilization(cluster)
     explorerApp = new ExplorerApp(page)
   })
@@ -51,33 +43,28 @@ test.describe('v2', () => {
   })
 
   test('address displays the intended data', async ({ page }) => {
-    const walletd = cluster.daemons.walletds[0]
-    const { wallet, address } = await addWalletToWalletd(walletd.api)
-    await sendSiacoinFromRenterd(
-      cluster.daemons.renterds[0],
-      address,
-      toHastings(1_000_000).toString()
-    )
-    await mine(10)
-
-    const events = await walletd.api.walletEvents({
-      params: { id: wallet.id, limit: 1_000, offset: 0 },
-    })
-    const outputs = await walletd.api.walletOutputsSiacoin({
-      params: { id: wallet.id },
+    const { siacoinOutput } = await findTestOutput(cluster, 'v2')
+    const events = await cluster.daemons.explored.api.addressEvents({
+      params: { address: siacoinOutput.address },
     })
 
-    await explorerApp.goTo('/address/' + address)
-    await expect(page.getByText(`Address ${address.slice(0, 5)}`)).toBeVisible()
+    await explorerApp.goTo('/address/' + siacoinOutput.address)
+    await expect(
+      page.getByText(`Address ${siacoinOutput.address.slice(0, 5)}`)
+    ).toBeVisible()
     await expect(page.getByText(events.data[0].id.slice(0, 5))).toBeVisible()
     await expect(page.getByTestId('entity-link')).toHaveCount(
       events.data.length
     )
-    await page.getByRole('tab').getByText('Unspent outputs').click()
+
+    // The test output is missing the ID, so we need to get an output from
+    // explored.
+    const outputs = await cluster.daemons.explored.api.addressSiacoinUTXOs({
+      params: { address: siacoinOutput.address },
+    })
+    await expectThenClick(page.getByRole('tab').getByText('Unspent outputs'))
     await expect(page.getByText('Siacoin output').first()).toBeVisible()
-    await expect(
-      page.getByText(outputs.data.outputs[0].id.slice(0, 5))
-    ).toBeVisible()
+    await expect(page.getByText(outputs.data[0].id.slice(0, 5))).toBeVisible()
   })
 })
 
@@ -85,10 +72,6 @@ test.describe('v2', () => {
 test.describe('v1', () => {
   test.beforeEach(async ({ page, context }) => {
     cluster = await startCluster({ context, networkVersion: 'v1' })
-    await renterdWaitForContracts({
-      renterdNode: cluster.daemons.renterds[0].node,
-      hostdCount: cluster.daemons.hostds.length,
-    })
     await exploredStabilization(cluster)
     explorerApp = new ExplorerApp(page)
   })
@@ -119,32 +102,27 @@ test.describe('v1', () => {
   })
 
   test('address displays the intended data', async ({ page }) => {
-    const walletd = cluster.daemons.walletds[0]
-    const { wallet, address } = await addWalletToWalletd(walletd.api)
-    await sendSiacoinFromRenterd(
-      cluster.daemons.renterds[0],
-      address,
-      toHastings(1_000_000).toString()
-    )
-    await mine(10)
-
-    const events = await walletd.api.walletEvents({
-      params: { id: wallet.id, limit: 1_000, offset: 0 },
-    })
-    const outputs = await walletd.api.walletOutputsSiacoin({
-      params: { id: wallet.id },
+    const { siacoinOutput } = await findTestOutput(cluster, 'v1')
+    const events = await cluster.daemons.explored.api.addressEvents({
+      params: { address: siacoinOutput.address },
     })
 
-    await explorerApp.goTo('/address/' + address)
-    await expect(page.getByText(`Address ${address.slice(0, 5)}`)).toBeVisible()
+    await explorerApp.goTo('/address/' + siacoinOutput.address)
+    await expect(
+      page.getByText(`Address ${siacoinOutput.address.slice(0, 5)}`)
+    ).toBeVisible()
     await expect(page.getByText(events.data[0].id.slice(0, 5))).toBeVisible()
     await expect(page.getByTestId('entity-link')).toHaveCount(
       events.data.length
     )
-    await page.getByRole('tab').getByText('Unspent outputs').click()
+
+    // The test output is missing the ID, so we need to get an output from
+    // explored.
+    const outputs = await cluster.daemons.explored.api.addressSiacoinUTXOs({
+      params: { address: siacoinOutput.address },
+    })
+    await expectThenClick(page.getByRole('tab').getByText('Unspent outputs'))
     await expect(page.getByText('Siacoin output').first()).toBeVisible()
-    await expect(
-      page.getByText(outputs.data.outputs[0].id.slice(0, 5))
-    ).toBeVisible()
+    await expect(page.getByText(outputs.data[0].id.slice(0, 5))).toBeVisible()
   })
 })
