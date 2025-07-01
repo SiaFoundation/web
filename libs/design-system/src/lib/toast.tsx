@@ -119,7 +119,6 @@ export function buildToastOptions({
       '!max-w-[800px]',
       '[&>div]:overflow-hidden',
       '!p-0',
-      'z-50',
       className
     ),
     success: {
@@ -145,7 +144,7 @@ export function Toaster() {
     <RToaster
       toastOptions={buildToastOptions()}
       containerStyle={{
-        zIndex: 20,
+        zIndex: 30,
       }}
     />
   )
