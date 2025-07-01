@@ -6,7 +6,7 @@ import {
 } from '@siafoundation/types'
 import { AddressData } from '../contexts/addresses/types'
 import { getSDK } from '@siafoundation/sdk'
-import { addSignaturesV2, getAddressKeyIndex } from './signV2'
+import { getAddressKeyIndex } from './signV2'
 
 export function signTransactionSeedV2({
   mnemonic,
@@ -43,8 +43,9 @@ export function signTransactionSeedV2({
 
   const { sigHash } = sigHashResult
 
+  const signatures = new Map<number, string>()
+
   for (const input of transaction.siacoinInputs ?? []) {
-    // Find the index of the address in the list of addresses.
     const indexResponse = getAddressKeyIndex({
       address: input.parent.siacoinOutput.address,
       addresses,
@@ -53,19 +54,21 @@ export function signTransactionSeedV2({
       return { error: indexResponse.error }
     }
     const { index } = indexResponse
-    const signResult = addSignaturesV2({
-      mnemonic,
-      input,
-      sigHash,
-      index,
-    })
-    if ('error' in signResult) {
-      return { error: signResult.error }
+    if (!signatures.has(index)) {
+      const signResult = signTransactionIndex({
+        mnemonic,
+        sigHash,
+        keyIndex: index,
+      })
+      if ('error' in signResult) {
+        return { error: signResult.error }
+      }
+      signatures.set(index, signResult.signature)
     }
+    input.satisfiedPolicy.signatures = [signatures.get(index)]
   }
 
   for (const input of transaction.siafundInputs ?? []) {
-    // Find the index of the address in the list of addresses.
     const indexResponse = getAddressKeyIndex({
       address: input.parent.siafundOutput.address,
       addresses,
@@ -74,18 +77,48 @@ export function signTransactionSeedV2({
       return { error: indexResponse.error }
     }
     const { index } = indexResponse
-    const signResult = addSignaturesV2({
-      mnemonic,
-      input,
-      sigHash,
-      index,
-    })
-    if ('error' in signResult) {
-      return { error: signResult.error }
+    if (!signatures.has(index)) {
+      const signResult = signTransactionIndex({
+        mnemonic,
+        sigHash,
+        keyIndex: index,
+      })
+      if ('error' in signResult) {
+        return { error: signResult.error }
+      }
+      signatures.set(index, signResult.signature)
     }
+    input.satisfiedPolicy.signatures = [signatures.get(index)]
   }
 
   return {
     signedTransaction: transaction,
   }
+}
+
+function signTransactionIndex({
+  mnemonic,
+  sigHash,
+  keyIndex,
+}: {
+  mnemonic: string
+  sigHash: string
+  keyIndex: number
+}): Result<{ signature: string }> {
+  const pkResponse = getSDK().wallet.keyPairFromSeedPhrase(mnemonic, keyIndex)
+
+  if ('error' in pkResponse) {
+    return { error: pkResponse.error }
+  }
+
+  const signHashResponse = getSDK().wallet.signHash(
+    pkResponse.privateKey,
+    sigHash
+  )
+
+  if ('error' in signHashResponse) {
+    return { error: signHashResponse.error }
+  }
+
+  return { signature: signHashResponse.signature }
 }

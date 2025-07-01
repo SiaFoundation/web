@@ -1,35 +1,5 @@
-import { Result, V2TransactionInput } from '@siafoundation/types'
+import { Result } from '@siafoundation/types'
 import { AddressData } from '../contexts/addresses/types'
-import { getSDK } from '@siafoundation/sdk'
-
-export function addSignaturesV2({
-  mnemonic,
-  input,
-  sigHash,
-  index,
-}: {
-  mnemonic: string
-  input: V2TransactionInput
-  sigHash: string
-  index: number
-}): Result<{ error?: string }> {
-  const pkResponse = getSDK().wallet.keyPairFromSeedPhrase(mnemonic, index)
-
-  if ('error' in pkResponse) {
-    return { error: pkResponse.error }
-  }
-
-  const signHashResponse = getSDK().wallet.signHash(
-    pkResponse.privateKey,
-    sigHash
-  )
-
-  if ('error' in signHashResponse) {
-    return { error: signHashResponse.error }
-  }
-  input.satisfiedPolicy.signatures = [signHashResponse.signature]
-  return {}
-}
 
 export function getAddressKeyIndex({
   address,
