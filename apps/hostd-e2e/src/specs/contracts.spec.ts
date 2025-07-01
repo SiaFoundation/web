@@ -5,7 +5,6 @@ import {
   expectContractRowByIndex,
   getContractRowById,
   getContractRows,
-  getContractRowsAll,
   setVersionMode,
   expectVersionMode,
 } from '../fixtures/contracts'
@@ -21,25 +20,24 @@ test.afterEach(async () => {
   await afterTest()
 })
 
-test('contracts bulk integrity check', async ({ page }) => {
-  await beforeTest(page, {
-    renterdCount: 3,
-  })
-  await navigateToContracts(page)
-  await setVersionMode(page, 'v1')
-  await expectVersionMode(page, 'v1')
-  const rows = await getContractRowsAll(page)
-  await rows.at(0).click({ position: { x: 5, y: 5 } })
-  await rows.at(2).click({ modifiers: ['Shift'] })
+// TODO: re-enable once support for v2 integrity checks is added.
+// test('contracts bulk integrity check', async ({ page }) => {
+//   await beforeTest(page, {
+//     renterdCount: 3,
+//   })
+//   await navigateToContracts(page)
+//   const rows = await getContractRowsAll(page)
+//   await rows.at(0).click({ position: { x: 50, y: 5 } })
+//   await rows.at(2).click({ modifiers: ['Shift'] })
 
-  const menu = page.getByLabel('contract multi-select menu')
+//   const menu = page.getByLabel('contract multi-select menu')
 
-  // Run check for each contract.
-  await menu.getByLabel('run integrity check for each contract').click()
-  await expect(
-    page.getByText('Integrity checks started for 3 contracts')
-  ).toBeVisible()
-})
+//   // Run check for each contract.
+//   await menu.getByLabel('run integrity check for each contract').click()
+//   await expect(
+//     page.getByText('Integrity checks started for 3 contracts')
+//   ).toBeVisible()
+// })
 
 test('new contracts do not show a renewed from or to contract', async ({
   page,
@@ -48,8 +46,6 @@ test('new contracts do not show a renewed from or to contract', async ({
     renterdCount: 3,
   })
   await navigateToContracts(page)
-  await setVersionMode(page, 'v1')
-  await expectVersionMode(page, 'v1')
   await expect(getContractRows(page).getByTestId('renewedFrom')).toBeHidden()
   await expect(getContractRows(page).getByTestId('renewedTo')).toBeHidden()
 })
@@ -61,8 +57,6 @@ test('viewing a page with no data shows the correct empty state', async ({
     renterdCount: 3,
   })
   await navigateToContracts(page)
-  await setVersionMode(page, 'v1')
-  await expectVersionMode(page, 'v1')
   await page.goto('/contracts?offset=100')
   // Check that the empty state is correct.
   await expect(
@@ -82,8 +76,6 @@ test('paginating contracts with known total and client side pagination', async (
   })
   await interceptApiContactsAndEnsure3Results(page)
   await navigateToContracts(page)
-  await setVersionMode(page, 'v1')
-  await expectVersionMode(page, 'v1')
   const url = page.url()
   await page.goto(url + '?limit=1')
 
@@ -112,7 +104,7 @@ test('paginating contracts with known total and client side pagination', async (
 })
 
 async function interceptApiContactsAndEnsure3Results(page: Page) {
-  await page.route(`**/api${contractsRoute}*`, async (route) => {
+  await page.route(`**/api${v2ContractsRoute}*`, async (route) => {
     console.log('Intercepted contracts API request')
     // Fetch the original response.
     const response = await route.fetch()

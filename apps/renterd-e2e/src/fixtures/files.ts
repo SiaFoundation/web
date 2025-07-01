@@ -205,6 +205,15 @@ export const expectFileRowById = step(
   }
 )
 
+export const fileInListAndDoneUploading = step(
+  'expect file in list and done uploading',
+  async (page: Page, path: string) => {
+    await expect(
+      page.getByTestId('filesTable').getByTestId(path).getByText('100%')
+    ).toBeVisible()
+  }
+)
+
 export const changeExplorerMode = step(
   'change explorer mode',
   async (page: Page, mode: 'directory' | 'all files' | 'uploads') => {
@@ -290,7 +299,14 @@ export type FileMap = {
 // Iterate through the file map and create files/directories.
 export const createFilesMap = step(
   'create files map',
-  async (page: Page, bucketName: string, map: FileMap) => {
+  async (
+    page: Page,
+    bucketName: string,
+    map: FileMap,
+    {
+      waitForEachUploadToFinish = true,
+    }: { waitForEachUploadToFinish?: boolean } = {}
+  ) => {
     const create = async (map: FileMap, stack: string[]) => {
       for (const name in map) {
         await openDirectoryFromAnywhere(page, stack.join('/'))
@@ -298,12 +314,20 @@ export const createFilesMap = step(
         const path = `${currentDirPath}/${name}`
         if (!!map[name] && typeof map[name] === 'object') {
           await createDirectory(page, name)
-          await fileInList(page, path + '/')
+          if (waitForEachUploadToFinish) {
+            await fileInListAndDoneUploading(page, path + '/')
+          } else {
+            await fileInList(page, path + '/')
+          }
           await create(map[name] as FileMap, stack.concat(name))
         } else {
           const size = (map[name] as number) || 10
           await dragAndDropFileFromSystem(page, name, size)
-          await fileInList(page, path)
+          if (waitForEachUploadToFinish) {
+            await fileInListAndDoneUploading(page, path)
+          } else {
+            await fileInList(page, path)
+          }
         }
       }
     }

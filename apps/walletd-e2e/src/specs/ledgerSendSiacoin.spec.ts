@@ -11,7 +11,7 @@ import {
   testOnlyWorksOn,
   testRequiresClipboardPermissions,
 } from '@siafoundation/e2e'
-import { Cluster, clusterd, mineToHeight } from '@siafoundation/clusterd'
+import { clusterd } from '@siafoundation/clusterd'
 import { createLedgerWalletWithApi } from '../fixtures/ledger'
 import { rescanWallets } from '../fixtures/wallet'
 import { ledgerComposeSiacoin } from '../fixtures/ledgerComposeSiacoin'
@@ -27,10 +27,8 @@ const wallet1PublicKey0 =
 const wallet2Address0 =
   '4e7e288504d86ae2234ffc6989aa96e70eb555ace205eb2d0afaaca650536fd1de3b5ff8f90c'
 
-let cluster: Cluster
-
 test.beforeEach(async ({ page }) => {
-  cluster = await beforeTest(page)
+  await beforeTest(page)
   const walletdNode = clusterd.nodes.find((n) => n.type === 'walletd')
   if (!walletdNode) {
     throw new Error('Walletd node not found')
@@ -53,7 +51,7 @@ test.afterEach(async () => {
   await afterTest()
 })
 
-test('compose siacoin transaction with ledger wallet pre and post v2 fork allow height', async ({
+test('compose siacoin transaction with ledger wallet', async ({
   page,
   browserName,
 }) => {
@@ -67,51 +65,14 @@ test('compose siacoin transaction with ledger wallet pre and post v2 fork allow 
   const navbar = page.getByTestId('navbar')
   await expect(navbar.getByText('1.000 MS')).toBeVisible({ timeout: 20_000 })
 
-  // Verify can compose v1 transaction.
-  const amountV1 = random(1, 20)
-  await ledgerComposeSiacoin(page, {
-    walletName: wallet1Name,
-    receiveAddress: wallet2Address0,
-    changeAddress: wallet1Address0,
-    amount: amountV1,
-    // v1 fee is 0.004
-    expectedFee: 0.004,
-    transactionVersionIndicator:
-      'testCluster - constructing v1 transaction - switching to v2 at require height 500',
-  })
-
-  // Mine blocks to pass v2 fork allow height.
-  const consensusNetwork =
-    await cluster.daemons.walletds[0].api.consensusNetwork()
-  await mineToHeight(consensusNetwork.data.hardforkV2.allowHeight + 1)
-  await page.reload()
-
-  // Verify still composes v1 transaction.
-  const amountV12 = random(1, 20)
-  await ledgerComposeSiacoin(page, {
-    walletName: wallet1Name,
-    receiveAddress: wallet2Address0,
-    changeAddress: wallet1Address0,
-    amount: amountV12,
-    // v1 fee is 0.004
-    expectedFee: 0.004,
-    transactionVersionIndicator:
-      'testCluster - constructing v1 transaction - switching to v2 at require height 500',
-  })
-
-  // Mine blocks to pass v2 fork require height.
-  await mineToHeight(consensusNetwork.data.hardforkV2.requireHeight + 1)
-  await page.reload()
-
   // Verify that we can compose v2 transaction.
   await ledgerComposeSiacoin(page, {
     walletName: wallet1Name,
     receiveAddress: wallet2Address0,
     changeAddress: wallet1Address0,
-    amount: amountV12,
+    amount: random(1, 20),
     // v2 fee is 0.020
-    expectedFee: 0.020,
-    transactionVersionIndicator:
-      'testCluster - constructing v2 transaction',
+    expectedFee: 0.02,
+    transactionVersionIndicator: 'testCluster - constructing v2 transaction',
   })
 })

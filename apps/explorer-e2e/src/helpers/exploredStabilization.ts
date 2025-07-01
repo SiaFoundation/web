@@ -4,7 +4,7 @@ export async function exploredStabilization(
   api: Cluster,
   maxRetries = 20,
   delayMs = 500,
-  stabilizationMs = 2000
+  stabilizationMs = 5000
 ) {
   for (let i = 0; i < maxRetries; i++) {
     const tip = await api.daemons.explored.api.explorerTip()

@@ -58,7 +58,7 @@ dist
 # assets
 /assets
 
-.nx/cache
+.nx/
 
 bin/
 
