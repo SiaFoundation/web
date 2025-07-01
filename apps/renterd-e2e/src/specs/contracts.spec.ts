@@ -67,7 +67,7 @@ test('contracts prunable size', async ({ page }) => {
 test('contracts bulk delete', async ({ page }) => {
   await navigateToContracts({ page })
   const rows = await getContractRowsAll(page)
-  await rows.at(0).click({ position: { x: 5, y: 5 } })
+  await rows.at(0).click({ position: { x: 50, y: 5 } })
   await rows.at(-1).click({ modifiers: ['Shift'] })
 
   // Delete selected contracts.
@@ -82,7 +82,7 @@ test('contracts bulk delete', async ({ page }) => {
 test('contracts bulk rescan', async ({ page }) => {
   await navigateToContracts({ page })
   const rows = await getContractRowsAll(page)
-  await rows.at(0).click({ position: { x: 5, y: 5 } })
+  await rows.at(0).click({ position: { x: 50, y: 5 } })
   await rows.at(-1).click({ modifiers: ['Shift'] })
 
   // Rescan selected hosts.
@@ -94,7 +94,7 @@ test('contracts bulk rescan', async ({ page }) => {
 test('contracts bulk allowlist', async ({ page }) => {
   await navigateToContracts({ page })
   const rows = await getContractRowsAll(page)
-  await rows.at(0).click({ position: { x: 5, y: 5 } })
+  await rows.at(0).click({ position: { x: 50, y: 5 } })
   await rows.at(-1).click({ modifiers: ['Shift'] })
 
   const menu = page.getByLabel('contract multi-select menu')
@@ -112,7 +112,7 @@ test('contracts bulk allowlist', async ({ page }) => {
   ).toHaveCount(3)
   await dialog.getByLabel('close').click()
 
-  await rows.at(0).click({ position: { x: 5, y: 5 } })
+  await rows.at(0).click({ position: { x: 50, y: 5 } })
   await rows.at(-1).click({ modifiers: ['Shift'] })
 
   // Remove selected contract hosts from the allowlist.

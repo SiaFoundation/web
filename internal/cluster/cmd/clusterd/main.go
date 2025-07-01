@@ -46,7 +46,7 @@ func main() {
 	flag.StringVar(&dir, "dir", "", "directory to store renter data")
 	flag.StringVar(&apiAddr, "api", ":3001", "API address")
 	flag.StringVar(&logLevel, "log", "info", "logging level")
-	flag.StringVar(&network, "network", "v1", "network to use (v1, v2 or transition)")
+	flag.StringVar(&network, "network", "v2", "network to use (v1, v2)")
 	flag.StringVar(&siafundAddr, "siafund", "", "address to send siafunds to")
 
 	flag.IntVar(&renterdCount, "renterd", 0, "number of renter daemons to run")
@@ -123,9 +123,6 @@ func main() {
 	case "v2":
 		n.HardforkV2.AllowHeight = 2
 		n.HardforkV2.RequireHeight = 3
-	case "transition":
-		n.HardforkV2.AllowHeight = 400
-		n.HardforkV2.RequireHeight = 500
 	default:
 		log.Fatal("invalid network", zap.String("network", network))
 	}
@@ -220,8 +217,6 @@ func main() {
 		case "v2":
 			err = setupV2Contracts(nm, e, w, cm)
 			log.Info("Set up v2 contracts")
-		case "transition":
-			log.Info("Not forming contracts because transition network selected")
 		default:
 			err = fmt.Errorf("invalid network provided: %s", network)
 		}

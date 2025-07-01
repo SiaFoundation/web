@@ -2,7 +2,10 @@ import { Walletd } from '@siafoundation/walletd-js'
 import { blake2bHex } from 'blakejs'
 import { WalletAddressMetadata } from '@siafoundation/walletd-types'
 import { to } from '@siafoundation/request'
-import { mine } from '@siafoundation/clusterd'
+import {
+  mine,
+  waitUntilRenterdWalletBalanceIsSpendable,
+} from '@siafoundation/clusterd'
 import { humanSiacoin } from '@siafoundation/units'
 import { Cluster } from './cluster'
 
@@ -67,6 +70,10 @@ export async function sendSiacoinFromRenterd(
 ) {
   console.log(`Sending ${humanSiacoin(amount)} from renterd to:`, address)
   try {
+    // For some reason the balance never becomes spendable unless we first mine
+    // a block. It does not matter what maturity delay we use.
+    await mine(1)
+    await waitUntilRenterdWalletBalanceIsSpendable(renterd.api)
     // Send some funds to the wallet.
     await renterd.api.walletSend({
       data: {

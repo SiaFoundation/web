@@ -4,7 +4,11 @@ import { random } from '@technically/lodash'
 import { beforeTest } from '../fixtures/beforeTest'
 import BigNumber from 'bignumber.js'
 import { setSwitchByLabel, fillTextInputByName } from '@siafoundation/e2e'
-import { Cluster, mine, waitFor } from '@siafoundation/clusterd'
+import {
+  Cluster,
+  mine,
+  waitUntilRenterdWalletBalanceIsSpendable,
+} from '@siafoundation/clusterd'
 
 let cluster: Cluster
 
@@ -13,25 +17,11 @@ test.beforeEach(async ({ page }) => {
   // For some reason the balance never becomes spendable unless we first mine
   // a block. It does not matter what maturity delay we use.
   await mine(1)
-  await waitUntilWalletBalanceIsSpendable()
+  await waitUntilRenterdWalletBalanceIsSpendable(
+    cluster.daemons.renterds[0].api
+  )
   await page.reload()
 })
-
-// Sometimes the wallet balance is confirmed but not spendable immediately
-// after the cluster is started. This function waits until it is spendable.
-async function waitUntilWalletBalanceIsSpendable() {
-  await waitFor(
-    async () => {
-      console.log('Waiting for wallet balance to be spendable...')
-      const wallet = await cluster.daemons.renterds[0].api.wallet()
-      return new BigNumber(wallet.data?.spendable || 0).gt(0)
-    },
-    {
-      timeout: 20_000,
-      interval: 500,
-    }
-  )
-}
 
 test('send siacoin with include fee off', async ({ page }) => {
   const receiveAddress =

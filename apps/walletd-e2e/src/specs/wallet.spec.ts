@@ -65,7 +65,9 @@ test('recover wallet and see existing transactions', async ({
   const row1 = await getEventRowByIndex(page, 0, true)
   const row2 = await getEventRowByIndex(page, 1, true)
   const row3 = await getEventRowByIndex(page, 2, true)
-  const today = humanDate(new Date(), { timeStyle: 'short' })
+  // Match without time since it can change during test.
+  // 7/3/25, 5:02 PM => 7/3/25
+  const today = humanDate(new Date(), { timeStyle: 'short' }).split(', ')[0]
   await expect(row1.getByText(today)).toBeVisible()
   await expect(row1.getByText('siacoin transfer')).toBeVisible()
   await expect(row1.getByText('+800.000 SC')).toBeVisible()

@@ -12,7 +12,8 @@
     "@siafoundation/hostd-js": "0.5.4",
     "@siafoundation/types": "0.12.0",
     "@siafoundation/explored-js": "0.8.0",
-    "@siafoundation/walletd-js": "0.4.1"
+    "@siafoundation/walletd-js": "0.4.1",
+    "bignumber.js": "^9.0.2"
   },
   "types": "./src/index.d.ts"
 }

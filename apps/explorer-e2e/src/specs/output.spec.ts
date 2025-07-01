@@ -1,13 +1,11 @@
 import { test, expect } from '@playwright/test'
 import { ExplorerApp } from '../fixtures/ExplorerApp'
 import { Cluster, startCluster } from '../fixtures/cluster'
-import {
-  renterdWaitForContracts,
-  teardownCluster,
-} from '@siafoundation/clusterd'
+import { teardownCluster } from '@siafoundation/clusterd'
 import { exploredStabilization } from '../helpers/exploredStabilization'
 import { findTestOutput } from '../helpers/findTestOutput'
 import { humanSiacoin } from '@siafoundation/units'
+import { expectThenClick } from '@siafoundation/e2e'
 
 let explorerApp: ExplorerApp
 let cluster: Cluster
@@ -16,10 +14,6 @@ let cluster: Cluster
 test.describe('v2', () => {
   test.beforeEach(async ({ page, context }) => {
     cluster = await startCluster({ context, networkVersion: 'v2' })
-    await renterdWaitForContracts({
-      renterdNode: cluster.daemons.renterds[0].node,
-      hostdCount: cluster.daemons.hostds.length,
-    })
     await exploredStabilization(cluster)
     explorerApp = new ExplorerApp(page)
   })
@@ -71,7 +65,9 @@ test.describe('v2', () => {
 
     await explorerApp.goTo('/output/' + output.id)
 
-    await page.getByText(output.siacoinOutput.address.slice(0, 6)).click()
+    await expectThenClick(
+      page.getByText(output.siacoinOutput.address.slice(0, 6))
+    )
 
     await expect(
       page
@@ -85,10 +81,6 @@ test.describe('v2', () => {
 test.describe('v1', () => {
   test.beforeEach(async ({ page, context }) => {
     cluster = await startCluster({ context, networkVersion: 'v1' })
-    await renterdWaitForContracts({
-      renterdNode: cluster.daemons.renterds[0].node,
-      hostdCount: cluster.daemons.hostds.length,
-    })
     await exploredStabilization(cluster)
     explorerApp = new ExplorerApp(page)
   })
@@ -140,7 +132,9 @@ test.describe('v1', () => {
 
     await explorerApp.goTo('/output/' + output.id)
 
-    await page.getByText(output.siacoinOutput.address.slice(0, 6)).click()
+    await expectThenClick(
+      page.getByText(output.siacoinOutput.address.slice(0, 6))
+    )
 
     await expect(
       page
