@@ -17,11 +17,6 @@ export async function signTransactionLedgerV2({
     return { error: 'No addresses' }
   }
 
-  const base64ToHex = (data: string): string => {
-    const buffer: Buffer = Buffer.from(data, 'base64')
-    return buffer.toString('hex').slice(0, 128)
-  }
-
   const signatures = new Map<number, string>()
   for (const input of transaction.siacoinInputs ?? []) {
     const indexResponse = getAddressKeyIndex({
@@ -44,7 +39,7 @@ export async function signTransactionLedgerV2({
       if ('error' in signResult) {
         return { error: signResult.error }
       }
-      signatures.set(index, base64ToHex(signResult.signature))
+      signatures.set(index, signResult.signature)
     }
 
     input.satisfiedPolicy.signatures = [signatures.get(index)]
@@ -71,7 +66,7 @@ export async function signTransactionLedgerV2({
       if ('error' in signResult) {
         return { error: signResult.error }
       }
-      signatures.set(index, base64ToHex(signResult.signature))
+      signatures.set(index, signResult.signature)
     }
 
     input.satisfiedPolicy.signatures = [signatures.get(index)]
