@@ -21,6 +21,7 @@ test.beforeEach(async ({ page }) => {
 // after the cluster is started. This function waits until it is spendable.
 async function waitUntilWalletBalanceIsSpendable() {
   await waitFor(
+    'Waiting for wallet balance to be spendable',
     async () => {
       console.log('Waiting for wallet balance to be spendable...')
       const wallet = await cluster.daemons.renterds[0].api.wallet()

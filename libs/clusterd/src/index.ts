@@ -61,7 +61,7 @@ export async function setupCluster({
   hostdCount = 0,
   walletdCount = 0,
   exploredCount = 0,
-  networkVersion = 'v1',
+  networkVersion = 'v2',
   siafundAddr = randomAddress,
 }: {
   renterdCount?: number
@@ -95,8 +95,10 @@ export async function setupCluster({
     )
   })
 
-  console.time('waiting for nodes to start')
+  const waitingForNodesToStartTimer = 'Waiting for nodes to start'
+  console.time(waitingForNodesToStartTimer)
   await waitFor(
+    waitingForNodesToStartTimer,
     async () => {
       const addr = `http://localhost:${clusterd.managementPort}/nodes`
       try {
@@ -118,7 +120,7 @@ export async function setupCluster({
           })
           return true
         }
-        console.log(`waiting for nodes (${runningCount}/${totalCount})...`)
+        console.log(`Waiting for nodes (${runningCount}/${totalCount})...`)
         return false
       } catch (e) {
         console.log(`Error fetching nodes: ${addr}`)
@@ -130,7 +132,7 @@ export async function setupCluster({
       interval: 1_000,
     }
   )
-  console.timeEnd('waiting for nodes to start')
+  console.timeEnd(waitingForNodesToStartTimer)
 
   // Mine a few blocks to make sure daemon wallet balances are spendable.
   // For some reason this is necessary even though each daemon start method
@@ -207,8 +209,10 @@ export async function renterdWaitForContracts({
     return
   }
 
-  console.time('waiting for contracts to form')
+  const waitingForContractsToFormTimer = 'Waiting for contracts to form'
+  console.time(waitingForContractsToFormTimer)
   await waitFor(
+    waitingForContractsToFormTimer,
     async () => {
       await mine(1)
       const hosts = await bus.hosts({
@@ -234,15 +238,17 @@ export async function renterdWaitForContracts({
       interval: 2_000,
     }
   )
-  console.timeEnd('waiting for contracts to form')
+  console.timeEnd(waitingForContractsToFormTimer)
 }
 
 export async function hostdWaitForContracts({
   hostdNode,
   renterdCount,
+  networkVersion,
 }: {
   hostdNode: ClusterNodeHostd
   renterdCount: number
+  networkVersion: NetworkVersion
 }) {
   const hostdApi = `${hostdNode.apiAddress}/api`
   const hostd = Hostd({
@@ -254,15 +260,24 @@ export async function hostdWaitForContracts({
     return
   }
 
-  console.time('waiting for contracts to form')
+  const waitingForContractsToFormTimer = 'Waiting for contracts to form'
+  console.time(waitingForContractsToFormTimer)
   await waitFor(
+    waitingForContractsToFormTimer,
     async () => {
       await mine(1)
-      const contracts = await hostd.contracts({
-        data: {
-          limit: renterdCount,
-        },
-      })
+      const contracts =
+        networkVersion === 'v2'
+          ? await hostd.contractsV2({
+              data: {
+                limit: renterdCount,
+              },
+            })
+          : await hostd.contracts({
+              data: {
+                limit: renterdCount,
+              },
+            })
       console.log(`contracts: ${contracts.data.count}/${renterdCount}`)
       return contracts.data.count >= renterdCount
     },
@@ -271,7 +286,7 @@ export async function hostdWaitForContracts({
       interval: 2_000,
     }
   )
-  console.timeEnd('waiting for contracts to form')
+  console.timeEnd(waitingForContractsToFormTimer)
 }
 
 export async function mine(blocks: number) {
@@ -301,6 +316,7 @@ export async function teardownCluster() {
 }
 
 export function waitFor(
+  description: string,
   condition: () => Promise<boolean>,
   {
     timeout = 1000,
@@ -320,7 +336,7 @@ export function waitFor(
 
         // Check if we've exceeded the timeout.
         if (Date.now() - startTime >= timeout) {
-          reject(new Error('Timeout'))
+          reject(new Error(`Timeout: ${description}`))
           return
         }
 

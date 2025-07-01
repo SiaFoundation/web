@@ -3,6 +3,7 @@ import { Page } from 'playwright'
 import {
   clusterd,
   hostdWaitForContracts,
+  NetworkVersion,
   setupCluster,
   teardownCluster,
 } from '@siafoundation/clusterd'
@@ -13,12 +14,21 @@ import {
   mockApiSiaScanHostMetrics,
 } from '@siafoundation/e2e'
 
-export async function beforeTest(page: Page, { renterdCount = 0 } = {}) {
+export async function beforeTest(
+  page: Page,
+  {
+    renterdCount = 0,
+    networkVersion = 'v2',
+  }: {
+    renterdCount?: number
+    networkVersion?: NetworkVersion
+  } = {}
+) {
   await mockApiSiaScanExchangeRates({ page })
   await mockApiSiaScanHostMetrics({ page })
-  await setupCluster({ hostdCount: 1, renterdCount })
+  await setupCluster({ hostdCount: 1, renterdCount, networkVersion })
   const hostdNode = clusterd.nodes.find((n) => n.type === 'hostd')
-  await hostdWaitForContracts({ hostdNode, renterdCount })
+  await hostdWaitForContracts({ hostdNode, renterdCount, networkVersion })
   await login({
     page,
     address: hostdNode.apiAddress,
