@@ -193,7 +193,7 @@
     "ts-node": "10.9.1",
     "tslib": "^2.8.1",
     "typescript": "5.6.2",
-    "undici": "5.28.3",
+    "undici": "7.11.0",
     "url-loader": "^4.1.1",
     "webpack": "5.88.2",
     "webpack-merge": "^5.8.0"
