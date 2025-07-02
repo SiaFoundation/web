@@ -22,6 +22,7 @@ import { CaretDown16 } from '@siafoundation/react-icons'
 import { ChurnEventsField } from './ChurnEventsField'
 import { AlertData } from '@siafoundation/renterd-types'
 import { getFileHealth } from '../../lib/fileHealth'
+import { getHostAddress } from '../../lib/host'
 
 export const dataFields: {
   [K in keyof AlertData]: {
@@ -101,6 +102,7 @@ export const dataFields: {
       if (!host.data) {
         return null
       }
+      const address = getHostAddress(host.data)
       return (
         <div className="flex justify-between w-full gap-2">
           <Text size="12" color="subtle" ellipsis>
@@ -112,7 +114,7 @@ export const dataFields: {
             menu={
               <HostContextMenu
                 publicKey={host.data.publicKey}
-                address={host.data.netAddress}
+                address={address}
                 contentProps={{
                   align: 'end',
                 }}

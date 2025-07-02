@@ -64,7 +64,7 @@ export const columns: HostsTableColumn[] = (
         />
       ),
       render: ({ data }) => (
-        <HostContextMenu address={data.netAddress} publicKey={data.publicKey} />
+        <HostContextMenu address={data.address} publicKey={data.publicKey} />
       ),
     },
     {
@@ -309,16 +309,16 @@ export const columns: HostsTableColumn[] = (
       },
     },
     {
-      id: 'netAddress',
+      id: 'address',
       label: 'address',
       category: 'general',
       render: ({ data, context }) => {
-        if (!data.netAddress) {
+        if (!data.address) {
           return <Text color="subtle">-</Text>
         }
         return (
           <ValueCopyable
-            value={data.netAddress}
+            value={data.address}
             size="12"
             type="hostIp"
             siascanUrl={context.siascanUrl}

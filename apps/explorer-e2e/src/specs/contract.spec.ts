@@ -98,7 +98,6 @@ test.describe('v2', () => {
       cluster,
       'renewal'
     )
-    console.log(renewedContract?.id)
     await explorerApp.goTo('/contract/' + renewedContract?.id)
     await page.getByTestId(RENEWED_TO_BUTTON).click()
     await expect(
