@@ -4,6 +4,7 @@ import { Cluster, startCluster } from '../fixtures/cluster'
 import { teardownCluster } from '@siafoundation/clusterd'
 import { exploredStabilization } from '../helpers/exploredStabilization'
 import { findV1TestContractWithStatus } from '../helpers/findTestContract'
+import { expectThenClick } from '@siafoundation/e2e'
 
 let explorerApp: ExplorerApp
 let cluster: Cluster
@@ -58,7 +59,7 @@ test.describe('v2', () => {
     const transactionID = events.data[0].id
 
     await explorerApp.goTo('/tx/' + transactionID)
-    await page.getByRole('link', { name: 'C', exact: true }).click()
+    await expectThenClick(page.getByRole('link', { name: 'C', exact: true }))
 
     await expect(
       page.getByTestId('entity-heading').getByText('Contract')
@@ -72,7 +73,7 @@ test.describe('v2', () => {
     const transactionID = events.data[0].id
 
     await explorerApp.goTo('/tx/' + transactionID)
-    await page.getByText('Address').first().click()
+    await expectThenClick(page.getByText('Address').first())
 
     await expect(
       page.getByTestId('entity-heading').getByText('Address')
@@ -86,7 +87,7 @@ test.describe('v2', () => {
     const transactionID = events.data[0].id
 
     await explorerApp.goTo('/tx/' + transactionID)
-    await page.getByRole('link', { name: 'SO', exact: true }).first().click()
+    await expectThenClick(page.getByRole('link', { name: 'SO', exact: true }))
 
     await expect(
       page.getByTestId('entity-heading').getByText('Output')
@@ -157,7 +158,7 @@ test.describe('v1', () => {
     const transactionID = testContract?.confirmationTransactionID || 'invalid'
 
     await explorerApp.goTo('/tx/' + transactionID)
-    await page.getByRole('link', { name: 'C', exact: true }).click()
+    await expectThenClick(page.getByRole('link', { name: 'C', exact: true }))
 
     await expect(
       page.getByTestId('entity-heading').getByText('Contract')
@@ -171,7 +172,7 @@ test.describe('v1', () => {
     const transactionID = testContract?.confirmationTransactionID || 'invalid'
 
     await explorerApp.goTo('/tx/' + transactionID)
-    await page.getByText('Address').first().click()
+    await expectThenClick(page.getByText('Address').first())
 
     await expect(
       page.getByTestId('entity-heading').getByText('Address')
@@ -185,7 +186,7 @@ test.describe('v1', () => {
     const transactionID = testContract?.confirmationTransactionID || 'invalid'
 
     await explorerApp.goTo('/tx/' + transactionID)
-    await page.getByRole('link', { name: 'SO', exact: true }).first().click()
+    await expectThenClick(page.getByRole('link', { name: 'SO', exact: true }))
 
     await expect(
       page.getByTestId('entity-heading').getByText('Output')

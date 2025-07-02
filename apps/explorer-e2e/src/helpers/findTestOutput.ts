@@ -6,8 +6,7 @@ export async function findTestOutput(cluster: Cluster, version: 'v1' | 'v2') {
   const tip = await cluster.daemons.explored.api.consensusTip()
   let currentHeight = tip.data.height
 
-  // Hopefully, 50 blocks should be enough. We stop on find.
-  for (let i = 0; i < 50; i++) {
+  while (currentHeight > 0) {
     const { data: blockIndex } =
       await cluster.daemons.explored.api.consensusTipByHeight({
         params: { height: currentHeight },

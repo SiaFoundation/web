@@ -8,6 +8,7 @@ import {
   findV2TestContractWithResolutionType,
 } from '../helpers/findTestContract'
 import { RENEWED_FROM_BUTTON, RENEWED_TO_BUTTON } from '../fixtures/constants'
+import { expectThenClick } from '@siafoundation/e2e'
 
 let explorerApp: ExplorerApp
 let cluster: Cluster
@@ -96,11 +97,11 @@ test.describe('v2', () => {
       'renewal'
     )
     await explorerApp.goTo('/contract/' + renewedContract?.id)
-    await page.getByTestId(RENEWED_TO_BUTTON).click()
+    await expectThenClick(page.getByTestId(RENEWED_TO_BUTTON))
     await expect(
       page.getByText(renewedContract?.renewedTo?.slice(0, 6) || 'TEST FAIL')
     ).toBeVisible()
-    await page.getByTestId(RENEWED_FROM_BUTTON).click()
+    await expectThenClick(page.getByTestId(RENEWED_FROM_BUTTON))
     await expect(
       page.getByText(renewedContract?.id.slice(0, 6) || 'TEST FAIL').first()
     ).toBeVisible()

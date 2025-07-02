@@ -3,6 +3,7 @@ import { ExplorerApp } from '../fixtures/ExplorerApp'
 import { Cluster, startCluster } from '../fixtures/cluster'
 import { teardownCluster } from '@siafoundation/clusterd'
 import { exploredStabilization } from '../helpers/exploredStabilization'
+import { expectThenClick } from '@siafoundation/e2e'
 
 let explorerApp: ExplorerApp
 let cluster: Cluster
@@ -78,7 +79,7 @@ test.describe('v2', () => {
     const height = String(data.height - 1)
 
     await explorerApp.goTo('/block/' + height)
-    await page.getByTestId('explorer-block-prevBlock').click()
+    await expectThenClick(page.getByTestId('explorer-block-prevBlock'))
 
     await expect(
       page
@@ -92,7 +93,7 @@ test.describe('v2', () => {
     const height = String(data.height - 1)
 
     await explorerApp.goTo('/block/' + height)
-    await page.getByTestId('explorer-block-nextBlock').click()
+    await expectThenClick(page.getByTestId('explorer-block-nextBlock'))
 
     await expect(
       page
@@ -108,9 +109,9 @@ test.describe('v2', () => {
     const transaction = events.data[0]
 
     await explorerApp.goTo('/block/' + transaction.maturityHeight)
-    await page
-      .locator(`a[data-testid="entity-link"][href*="${transaction.id}"]`)
-      .click()
+    await expectThenClick(
+      page.locator(`a[data-testid="entity-link"][href*="${transaction.id}"]`)
+    )
 
     await expect(
       page.getByTestId('entity-heading').getByText(transaction.id.slice(0, 5))
@@ -200,7 +201,7 @@ test.describe('v1', () => {
     const height = String(data.height - 1)
 
     await explorerApp.goTo('/block/' + height)
-    await page.getByTestId('explorer-block-prevBlock').click()
+    await expectThenClick(page.getByTestId('explorer-block-prevBlock'))
 
     await expect(
       page
@@ -214,7 +215,7 @@ test.describe('v1', () => {
     const height = String(data.height - 1)
 
     await explorerApp.goTo('/block/' + height)
-    await page.getByTestId('explorer-block-nextBlock').click()
+    await expectThenClick(page.getByTestId('explorer-block-nextBlock'))
 
     await expect(
       page
@@ -230,9 +231,9 @@ test.describe('v1', () => {
     const transaction = events.data[0]
 
     await explorerApp.goTo('/block/' + transaction.maturityHeight)
-    await page
-      .locator(`a[data-testid="entity-link"][href*="${transaction.id}"]`)
-      .click()
+    await expectThenClick(
+      page.locator(`a[data-testid="entity-link"][href*="${transaction.id}"]`)
+    )
 
     await expect(
       page.getByTestId('entity-heading').getByText(transaction.id.slice(0, 5))

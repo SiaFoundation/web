@@ -5,6 +5,7 @@ import { teardownCluster } from '@siafoundation/clusterd'
 import { exploredStabilization } from '../helpers/exploredStabilization'
 import { findTestOutput } from '../helpers/findTestOutput'
 import { humanSiacoin } from '@siafoundation/units'
+import { expectThenClick } from '@siafoundation/e2e'
 
 let explorerApp: ExplorerApp
 let cluster: Cluster
@@ -64,7 +65,9 @@ test.describe('v2', () => {
 
     await explorerApp.goTo('/output/' + output.id)
 
-    await page.getByText(output.siacoinOutput.address.slice(0, 6)).click()
+    await expectThenClick(
+      page.getByText(output.siacoinOutput.address.slice(0, 6))
+    )
 
     await expect(
       page
@@ -129,7 +132,9 @@ test.describe('v1', () => {
 
     await explorerApp.goTo('/output/' + output.id)
 
-    await page.getByText(output.siacoinOutput.address.slice(0, 6)).click()
+    await expectThenClick(
+      page.getByText(output.siacoinOutput.address.slice(0, 6))
+    )
 
     await expect(
       page
