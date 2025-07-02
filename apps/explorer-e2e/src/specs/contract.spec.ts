@@ -1,16 +1,14 @@
 import { test, expect } from '@playwright/test'
 import { ExplorerApp } from '../fixtures/ExplorerApp'
 import { Cluster, startCluster } from '../fixtures/cluster'
-import {
-  renterdWaitForContracts,
-  teardownCluster,
-} from '@siafoundation/clusterd'
+import { teardownCluster } from '@siafoundation/clusterd'
 import { exploredStabilization } from '../helpers/exploredStabilization'
 import {
   findV1TestContractWithStatus,
   findV2TestContractWithResolutionType,
 } from '../helpers/findTestContract'
 import { RENEWED_FROM_BUTTON, RENEWED_TO_BUTTON } from '../fixtures/constants'
+import { expectThenClick } from '@siafoundation/e2e'
 
 let explorerApp: ExplorerApp
 let cluster: Cluster
@@ -19,10 +17,6 @@ let cluster: Cluster
 test.describe('v2', () => {
   test.beforeEach(async ({ page, context }) => {
     cluster = await startCluster({ context, networkVersion: 'v2' })
-    await renterdWaitForContracts({
-      renterdNode: cluster.daemons.renterds[0].node,
-      hostdCount: cluster.daemons.hostds.length,
-    })
     await exploredStabilization(cluster)
     explorerApp = new ExplorerApp(page)
   })
@@ -32,10 +26,12 @@ test.describe('v2', () => {
   })
 
   test('contract can be searched by id', async ({ page }) => {
-    const hostContracts = await cluster.daemons.hostds[0].api.contractsV2({
-      data: { statuses: ['active'] },
-    })
-    const contractID = hostContracts.data.contracts[0].id
+    const activeContract = await findV2TestContractWithResolutionType(
+      cluster,
+      'renewal'
+    )
+    // eslint-disable-next-line playwright/no-conditional-in-test
+    const contractID = activeContract?.id || 'invalid'
 
     await explorerApp.goTo('/')
     await explorerApp.navigateBySearchBar(contractID)
@@ -48,10 +44,12 @@ test.describe('v2', () => {
   })
 
   test('contract can be directly navigated to', async ({ page }) => {
-    const hostContracts = await cluster.daemons.hostds[0].api.contractsV2({
-      data: { statuses: ['active'] },
-    })
-    const contractID = hostContracts.data.contracts[0].id
+    const activeContract = await findV2TestContractWithResolutionType(
+      cluster,
+      'renewal'
+    )
+    // eslint-disable-next-line playwright/no-conditional-in-test
+    const contractID = activeContract?.id || 'invalid'
 
     await explorerApp.goTo('/contract/' + contractID)
 
@@ -99,21 +97,23 @@ test.describe('v2', () => {
       'renewal'
     )
     await explorerApp.goTo('/contract/' + renewedContract?.id)
-    await page.getByTestId(RENEWED_TO_BUTTON).click()
+    await expectThenClick(page.getByTestId(RENEWED_TO_BUTTON))
     await expect(
       page.getByText(renewedContract?.renewedTo?.slice(0, 6) || 'TEST FAIL')
     ).toBeVisible()
-    await page.getByTestId(RENEWED_FROM_BUTTON).click()
+    await expectThenClick(page.getByTestId(RENEWED_FROM_BUTTON))
     await expect(
       page.getByText(renewedContract?.id.slice(0, 6) || 'TEST FAIL').first()
     ).toBeVisible()
   })
 
   test('contract displays the correct version', async ({ page }) => {
-    const hostContracts = await cluster.daemons.hostds[0].api.contractsV2({
-      data: { statuses: ['active'] },
-    })
-    const contractID = hostContracts.data.contracts[0].id
+    const contract = await findV2TestContractWithResolutionType(
+      cluster,
+      'renewal'
+    )
+    // eslint-disable-next-line playwright/no-conditional-in-test
+    const contractID = contract?.id || 'invalid'
 
     await explorerApp.goTo('/contract/' + contractID)
 
@@ -127,10 +127,6 @@ test.describe('v2', () => {
 test.describe('v1', () => {
   test.beforeEach(async ({ page, context }) => {
     cluster = await startCluster({ context, networkVersion: 'v1' })
-    await renterdWaitForContracts({
-      renterdNode: cluster.daemons.renterds[0].node,
-      hostdCount: cluster.daemons.hostds.length,
-    })
     await exploredStabilization(cluster)
     explorerApp = new ExplorerApp(page)
   })
@@ -140,10 +136,12 @@ test.describe('v1', () => {
   })
 
   test('contract can be searched by id', async ({ page }) => {
-    const hostContracts = await cluster.daemons.hostds[0].api.contracts({
-      data: { statuses: ['active'] },
-    })
-    const contractID = hostContracts.data.contracts[0].revision.parentID
+    const completedContract = await findV1TestContractWithStatus(
+      cluster,
+      'active'
+    )
+    // eslint-disable-next-line playwright/no-conditional-in-test
+    const contractID = completedContract?.id || 'invalid'
 
     await explorerApp.goTo('/')
     await explorerApp.navigateBySearchBar(contractID)
@@ -156,10 +154,10 @@ test.describe('v1', () => {
   })
 
   test('contract can be directly navigated to', async ({ page }) => {
-    const hostContracts = await cluster.daemons.hostds[0].api.contracts({
-      data: { statuses: ['active'] },
-    })
-    const contractID = hostContracts.data.contracts[0].revision.parentID
+    const activeContract = await findV1TestContractWithStatus(cluster, 'active')
+
+    // eslint-disable-next-line playwright/no-conditional-in-test
+    const contractID = activeContract?.id || 'invalid'
 
     await explorerApp.goTo('/contract/' + contractID)
 
@@ -197,10 +195,10 @@ test.describe('v1', () => {
   })
 
   test('contract displays the correct version', async ({ page }) => {
-    const hostContracts = await cluster.daemons.hostds[0].api.contracts({
-      data: { statuses: ['active'] },
-    })
-    const contractID = hostContracts.data.contracts[0].revision.parentID
+    const activeContract = await findV1TestContractWithStatus(cluster, 'active')
+
+    // eslint-disable-next-line playwright/no-conditional-in-test
+    const contractID = activeContract?.id || 'invalid'
 
     await explorerApp.goTo('/contract/' + contractID)
 

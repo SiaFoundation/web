@@ -11,6 +11,8 @@ const baseURL = process.env['BASE_URL'] || 'http://localhost:3005'
  */
 // require('dotenv').config();
 
+const operationTimeout = 60_000
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -23,13 +25,14 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     video: 'on-first-retry',
+    actionTimeout: operationTimeout,
   },
   // Timeout per test. The cluster takes up to 30 seconds to start and form contracts.
   timeout: 180_000,
   expect: {
     // Raise the timeout because it is running against next dev mode
     // which requires compilation the first to a page is visited.
-    timeout: 25_000,
+    timeout: operationTimeout,
   },
   outputDir: 'output',
   /* Run your local dev server before starting the tests */

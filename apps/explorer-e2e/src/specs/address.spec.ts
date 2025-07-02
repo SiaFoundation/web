@@ -1,14 +1,11 @@
 import { test, expect } from '@playwright/test'
 import { ExplorerApp } from '../fixtures/ExplorerApp'
 import { startCluster, Cluster } from '../fixtures/cluster'
-import {
-  mine,
-  renterdWaitForContracts,
-  teardownCluster,
-} from '@siafoundation/clusterd'
+import { mine, teardownCluster } from '@siafoundation/clusterd'
 import { addWalletToWalletd, sendSiacoinFromRenterd } from '../fixtures/walletd'
 import { toHastings } from '@siafoundation/units'
 import { exploredStabilization } from '../helpers/exploredStabilization'
+import { expectThenClick } from '@siafoundation/e2e'
 
 let explorerApp: ExplorerApp
 let cluster: Cluster
@@ -17,10 +14,6 @@ let cluster: Cluster
 test.describe('v2', () => {
   test.beforeEach(async ({ page, context }) => {
     cluster = await startCluster({ context, networkVersion: 'v2' })
-    await renterdWaitForContracts({
-      renterdNode: cluster.daemons.renterds[0].node,
-      hostdCount: cluster.daemons.hostds.length,
-    })
     await exploredStabilization(cluster)
     explorerApp = new ExplorerApp(page)
   })
@@ -73,7 +66,7 @@ test.describe('v2', () => {
     await expect(page.getByTestId('entity-link')).toHaveCount(
       events.data.length
     )
-    await page.getByRole('tab').getByText('Unspent outputs').click()
+    await expectThenClick(page.getByRole('tab').getByText('Unspent outputs'))
     await expect(page.getByText('Siacoin output').first()).toBeVisible()
     await expect(
       page.getByText(outputs.data.outputs[0].id.slice(0, 5))
@@ -85,10 +78,6 @@ test.describe('v2', () => {
 test.describe('v1', () => {
   test.beforeEach(async ({ page, context }) => {
     cluster = await startCluster({ context, networkVersion: 'v1' })
-    await renterdWaitForContracts({
-      renterdNode: cluster.daemons.renterds[0].node,
-      hostdCount: cluster.daemons.hostds.length,
-    })
     await exploredStabilization(cluster)
     explorerApp = new ExplorerApp(page)
   })
@@ -141,7 +130,7 @@ test.describe('v1', () => {
     await expect(page.getByTestId('entity-link')).toHaveCount(
       events.data.length
     )
-    await page.getByRole('tab').getByText('Unspent outputs').click()
+    await expectThenClick(page.getByRole('tab').getByText('Unspent outputs'))
     await expect(page.getByText('Siacoin output').first()).toBeVisible()
     await expect(
       page.getByText(outputs.data.outputs[0].id.slice(0, 5))
