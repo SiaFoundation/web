@@ -70,7 +70,10 @@ function useWalletsMain() {
         description,
         createdAt: new Date(dateCreated).getTime() || 0,
         updatedAt: new Date(lastUpdated).getTime() || 0,
-        metadata: (metadata || {}) as WalletMetadata,
+        metadata: {
+          type: 'watch',
+          ...metadata,
+        } as WalletMetadata,
         // Copy of the original data for merging into PUT updates
         raw: wallet,
         // State is data that is not persisted in the database,

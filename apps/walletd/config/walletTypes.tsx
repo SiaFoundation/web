@@ -1,5 +1,6 @@
 import { Code } from '@siafoundation/design-system'
 import { Sprout16, Usb16, View16 } from '@siafoundation/react-icons'
+import { WalletType } from '@siafoundation/walletd-types'
 
 export const walletAddTypes = {
   walletAddNew: {
@@ -37,17 +38,26 @@ export const walletAddTypes = {
   },
 }
 
-export const walletTypes = {
+export const walletTypes: Record<
+  WalletType,
+  {
+    icon: React.ReactNode
+    tip: string
+    sendDisabledTip?: string
+  }
+> = {
   seed: {
-    title: 'Seed-based wallet',
     icon: <Sprout16 />,
+    tip: 'This is a seed-based wallet. Transactions are signed in the browser and your seed is never sent to the walletd server.',
   },
   watch: {
-    title: 'Watch-only wallet',
     icon: <View16 />,
+    tip: 'This is a watch-only wallet. Watch-only wallets do not support sending transactions.',
+    sendDisabledTip:
+      'Watch-only wallets do not support sending transactions through the walletd user interface.',
   },
   ledger: {
-    title: 'Ledger hardware wallet',
     icon: <Usb16 />,
+    tip: 'This is a Ledger hardware wallet. Transactions are signed with your hardware device.',
   },
 }
