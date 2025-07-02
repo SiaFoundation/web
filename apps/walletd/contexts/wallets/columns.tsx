@@ -111,7 +111,7 @@ export const columns: WalletsTableColumn[] = [
       },
     }) => {
       return (
-        <Tooltip content={walletTypes[type]?.title}>
+        <Tooltip content={walletTypes[type]?.tip}>
           <Badge interactive={false} className="flex gap-0.5 items-center">
             <Text color="subtle" className="scale-75 relative top-px">
               {walletTypes[type]?.icon}

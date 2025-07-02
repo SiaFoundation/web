@@ -17,7 +17,7 @@ export function WalletNavMenu() {
           })
         }
         className="!p-0"
-        tip={walletTypes[wallet?.metadata.type]?.title}
+        tip={walletTypes[wallet?.metadata.type]?.tip}
       >
         {walletTypes[wallet?.metadata.type]?.icon}
       </Button>

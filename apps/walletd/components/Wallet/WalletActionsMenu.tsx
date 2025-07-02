@@ -1,4 +1,4 @@
-import { Button } from '@siafoundation/design-system'
+import { Button, Tooltip } from '@siafoundation/design-system'
 import {
   ArrowDownLeft16,
   ArrowUpRight16,
@@ -16,6 +16,7 @@ import { WalletContextMenu } from '../WalletContextMenu'
 import { WalletBalanceWithSf } from './WalletBalanceWithSf'
 import { useAddresses } from '../../contexts/addresses'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { walletTypes } from '../../config/walletTypes'
 
 export function WalletActionsMenu() {
   const status = useSyncStatus()
@@ -35,6 +36,9 @@ export function WalletActionsMenu() {
   })
   const { wallet } = useWallets()
   const { dataset } = useAddresses()
+
+  const isSendDisabled = wallet?.metadata.type === 'watch'
+
   return (
     <div className="flex gap-2">
       <WalletBalanceWithSf
@@ -43,12 +47,20 @@ export function WalletActionsMenu() {
         isSynced={status.isSynced}
       />
       <AddressesButton />
-      {wallet?.metadata.type !== 'watch' && (
-        <>
+      <Tooltip
+        content={
+          isSendDisabled
+            ? walletTypes[wallet?.metadata.type]?.sendDisabledTip
+            : undefined
+        }
+        side="bottom"
+      >
+        <div>
           <Button
             aria-label="receive"
             size="small"
             variant="accent"
+            disabled={isSendDisabled}
             onClick={() => {
               const addressLowestIndex = dataset?.sort((a, b) =>
                 a.metadata.index > b.metadata.index ? 1 : -1
@@ -62,10 +74,22 @@ export function WalletActionsMenu() {
             <ArrowDownLeft16 />
             Receive
           </Button>
+        </div>
+      </Tooltip>
+      <Tooltip
+        content={
+          isSendDisabled
+            ? walletTypes[wallet?.metadata.type]?.sendDisabledTip
+            : undefined
+        }
+        side="bottom"
+      >
+        <div>
           <Button
             aria-label="send"
             size="small"
             variant="accent"
+            disabled={isSendDisabled}
             onClick={() => {
               if (wallet?.metadata.type === 'seed') {
                 openDialog('walletSendSeed', {
@@ -81,8 +105,8 @@ export function WalletActionsMenu() {
             <ArrowUpRight16 />
             Send
           </Button>
-        </>
-      )}
+        </div>
+      </Tooltip>
       <EventsViewDropdownMenu />
       {wallet && (
         <WalletContextMenu

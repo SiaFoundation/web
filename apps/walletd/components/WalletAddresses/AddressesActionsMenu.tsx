@@ -19,12 +19,12 @@ export function AddressesActionsMenu() {
             openDialog('walletAddressesGenerate', { walletId: id })
             return
           }
-          if (wallet?.metadata.type === 'watch') {
-            openDialog('walletAddressesAdd', { walletId: id })
-            return
-          }
           if (wallet?.metadata.type === 'ledger') {
             openDialog('walletLedgerAddressGenerate', { walletId: id })
+            return
+          }
+          if (wallet?.metadata.type === 'watch') {
+            openDialog('walletAddressesAdd', { walletId: id })
             return
           }
         }}
