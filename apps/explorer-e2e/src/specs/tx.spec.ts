@@ -1,11 +1,9 @@
 import { test, expect } from '@playwright/test'
 import { ExplorerApp } from '../fixtures/ExplorerApp'
 import { Cluster, startCluster } from '../fixtures/cluster'
-import {
-  renterdWaitForContracts,
-  teardownCluster,
-} from '@siafoundation/clusterd'
+import { teardownCluster } from '@siafoundation/clusterd'
 import { exploredStabilization } from '../helpers/exploredStabilization'
+import { findV1TestContractWithStatus } from '../helpers/findTestContract'
 
 let explorerApp: ExplorerApp
 let cluster: Cluster
@@ -14,10 +12,6 @@ let cluster: Cluster
 test.describe('v2', () => {
   test.beforeEach(async ({ page, context }) => {
     cluster = await startCluster({ context, networkVersion: 'v2' })
-    await renterdWaitForContracts({
-      renterdNode: cluster.daemons.renterds[0].node,
-      hostdCount: cluster.daemons.hostds.length,
-    })
     await exploredStabilization(cluster)
     explorerApp = new ExplorerApp(page)
   })
@@ -117,10 +111,6 @@ test.describe('v2', () => {
 test.describe('v1', () => {
   test.beforeEach(async ({ page, context }) => {
     cluster = await startCluster({ context, networkVersion: 'v1' })
-    await renterdWaitForContracts({
-      renterdNode: cluster.daemons.renterds[0].node,
-      hostdCount: cluster.daemons.hostds.length,
-    })
     await exploredStabilization(cluster)
     explorerApp = new ExplorerApp(page)
   })
@@ -130,10 +120,10 @@ test.describe('v1', () => {
   })
 
   test('transaction can be searched by id', async ({ page }) => {
-    const events = await cluster.daemons.renterds[0].api.walletEvents({
-      params: { limit: 1, offset: 0 },
-    })
-    const transactionID = events.data[0].id
+    const testContract = await findV1TestContractWithStatus(cluster, 'active')
+
+    // eslint-disable-next-line playwright/no-conditional-in-test
+    const transactionID = testContract?.confirmationTransactionID || 'invalid'
 
     await explorerApp.goTo('/')
     await explorerApp.navigateBySearchBar(transactionID)
@@ -146,10 +136,10 @@ test.describe('v1', () => {
   })
 
   test('transaction can be navigated to by id', async ({ page }) => {
-    const events = await cluster.daemons.renterds[0].api.walletEvents({
-      params: { limit: 1, offset: 0 },
-    })
-    const transactionID = events.data[0].id
+    const testContract = await findV1TestContractWithStatus(cluster, 'active')
+
+    // eslint-disable-next-line playwright/no-conditional-in-test
+    const transactionID = testContract?.confirmationTransactionID || 'invalid'
 
     await explorerApp.goTo('/tx/' + transactionID)
 
@@ -161,10 +151,10 @@ test.describe('v1', () => {
   })
 
   test('transaction can click through to a contract', async ({ page }) => {
-    const events = await cluster.daemons.renterds[0].api.walletEvents({
-      params: { limit: 1, offset: 0 },
-    })
-    const transactionID = events.data[0].id
+    const testContract = await findV1TestContractWithStatus(cluster, 'active')
+
+    // eslint-disable-next-line playwright/no-conditional-in-test
+    const transactionID = testContract?.confirmationTransactionID || 'invalid'
 
     await explorerApp.goTo('/tx/' + transactionID)
     await page.getByRole('link', { name: 'C', exact: true }).click()
@@ -175,10 +165,10 @@ test.describe('v1', () => {
   })
 
   test('transaction can click through to an address', async ({ page }) => {
-    const events = await cluster.daemons.renterds[0].api.walletEvents({
-      params: { limit: 1, offset: 0 },
-    })
-    const transactionID = events.data[0].id
+    const testContract = await findV1TestContractWithStatus(cluster, 'active')
+
+    // eslint-disable-next-line playwright/no-conditional-in-test
+    const transactionID = testContract?.confirmationTransactionID || 'invalid'
 
     await explorerApp.goTo('/tx/' + transactionID)
     await page.getByText('Address').first().click()
@@ -189,10 +179,10 @@ test.describe('v1', () => {
   })
 
   test('transaction can click through to an output', async ({ page }) => {
-    const events = await cluster.daemons.renterds[0].api.walletEvents({
-      params: { limit: 1, offset: 0 },
-    })
-    const transactionID = events.data[0].id
+    const testContract = await findV1TestContractWithStatus(cluster, 'active')
+
+    // eslint-disable-next-line playwright/no-conditional-in-test
+    const transactionID = testContract?.confirmationTransactionID || 'invalid'
 
     await explorerApp.goTo('/tx/' + transactionID)
     await page.getByRole('link', { name: 'SO', exact: true }).first().click()
@@ -203,10 +193,10 @@ test.describe('v1', () => {
   })
 
   test('transaction displays the correct version', async ({ page }) => {
-    const events = await cluster.daemons.renterds[0].api.walletEvents({
-      params: { limit: 1, offset: 0 },
-    })
-    const transactionID = events.data[0].id
+    const testContract = await findV1TestContractWithStatus(cluster, 'active')
+
+    // eslint-disable-next-line playwright/no-conditional-in-test
+    const transactionID = testContract?.confirmationTransactionID || 'invalid'
 
     await explorerApp.goTo('/tx/' + transactionID)
 
