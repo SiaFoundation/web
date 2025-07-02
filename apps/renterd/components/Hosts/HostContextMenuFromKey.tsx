@@ -2,6 +2,7 @@ import { Button, DropdownMenu } from '@siafoundation/design-system'
 import { CaretDown16 } from '@siafoundation/react-icons'
 import { useHost } from '@siafoundation/renterd-react'
 import { HostContextMenuContent } from './HostContextMenu'
+import { getHostAddress } from '../../lib/host'
 
 type Props = {
   hostKey: string
@@ -44,10 +45,7 @@ function HostContextMenuFromKeyContent({ hostKey }: { hostKey: string }) {
     params: { hostkey: hostKey },
   })
 
-  return (
-    <HostContextMenuContent
-      address={host.data?.netAddress}
-      publicKey={hostKey}
-    />
-  )
+  const address = getHostAddress(host.data)
+
+  return <HostContextMenuContent address={address} publicKey={hostKey} />
 }

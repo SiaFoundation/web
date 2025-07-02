@@ -12,6 +12,7 @@ import { Maybe } from '@siafoundation/types'
 import { objectEntries } from '@siafoundation/design-system'
 import { maybeFromNullishArrayResponse } from '@siafoundation/react-core'
 import { ExplorerHost } from '@siafoundation/explored-types'
+import { getHostAddress } from '../../lib/host'
 
 export function useDataset({
   response,
@@ -65,9 +66,7 @@ export function useDataset({
 function getHostFields(host: Host, allContracts: Maybe<ContractData[]>) {
   return {
     id: host.publicKey,
-    netAddress: host.v2SiamuxAddresses?.length
-      ? host.v2SiamuxAddresses[0]
-      : host.netAddress,
+    address: getHostAddress(host),
     publicKey: host.publicKey,
     lastScanSuccess: host.interactions.lastScanSuccess,
     lastScan:
@@ -119,11 +118,12 @@ function getAllowedFields({
   const isOnAllowlist = !!allowlist?.find((a) => a === host.publicKey)
   const allowed = !isAllowlistActive || isOnAllowlist
   const isOnBlocklist = !!blocklist?.find((b) => {
-    if (b === host.netAddress) {
+    const hostAddress = getHostAddress(host)
+    if (b === hostAddress) {
       return true
     }
     try {
-      const hostname = new URL('https://' + host.netAddress).hostname
+      const hostname = new URL('https://' + hostAddress).hostname
       return b === hostname
     } catch (e) {
       return false

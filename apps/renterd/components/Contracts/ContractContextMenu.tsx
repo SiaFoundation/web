@@ -27,6 +27,7 @@ import { useAllowlistUpdate } from '../../hooks/useAllowlistUpdate'
 import { useBlocklistUpdate } from '../../hooks/useBlocklistUpdate'
 import { publicKeyContainsFilter } from './ContractsFilterPublicKeyDialog'
 import { useContractConfirmDelete } from './useContractConfirmDelete'
+import { getHostAddress } from '../../lib/host'
 
 type Props = {
   id: string
@@ -93,7 +94,7 @@ export function ContractContextMenuContent({
       hostkey: hostKey || '',
     },
   })
-  const hostAddress = host.data?.netAddress
+  const hostAddress = getHostAddress(host.data)
   return (
     <>
       <div className="px-1.5 py-1">
