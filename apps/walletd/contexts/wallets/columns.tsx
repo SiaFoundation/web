@@ -45,7 +45,7 @@ export const columns: WalletsTableColumn[] = [
     ),
   },
   {
-    id: 'details',
+    id: 'name',
     label: 'name',
     category: 'general',
     fixed: true,

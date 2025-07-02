@@ -10,7 +10,7 @@ export type WalletData = {
   state: {
     mnemonic?: string
     activityAt?: number
-    status: 'unlocked' | 'locked'
+    status: 'unlocked' | 'locked' | 'n/a'
   }
   actions: {
     unlock: () => void
@@ -22,7 +22,7 @@ export type WalletData = {
 
 export type TableColumnId =
   | 'actions'
-  | 'details'
+  | 'name'
   | 'balance'
   | 'type'
   | 'status'
@@ -30,7 +30,7 @@ export type TableColumnId =
 
 export const columnsDefaultVisible: TableColumnId[] = [
   'actions',
-  'details',
+  'name',
   'balance',
   'type',
   'status',
@@ -45,25 +45,33 @@ export const sortOptions: {
   id: SortField
   label: string
   category: string
+  dataKey:
+    | keyof WalletData
+    | ['state', keyof WalletData['state']]
+    | ['metadata', keyof WalletData['metadata']]
 }[] = [
   {
     id: 'name',
     label: 'name',
     category: 'general',
+    dataKey: 'name',
   },
   {
     id: 'type',
     label: 'type',
     category: 'general',
+    dataKey: ['metadata', 'type'],
   },
   {
     id: 'status',
     label: 'status',
     category: 'general',
+    dataKey: ['state', 'status'],
   },
   {
     id: 'createdAt',
     label: 'created on',
     category: 'general',
+    dataKey: 'createdAt',
   },
 ]
