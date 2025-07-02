@@ -1,5 +1,11 @@
 # Changelog
 
+## 9.0.1
+
+### Patch Changes
+
+- 201b9a38: Fixed an issue where toast notifications would appear behind dialogs.
+
 ## 9.0.0
 
 ### Minor Changes

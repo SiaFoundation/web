@@ -1,5 +1,11 @@
 # hostd
 
+## 0.64.1
+
+### Patch Changes
+
+- 201b9a38: Fixed an issue where toast notifications would appear behind dialogs.
+
 ## 0.64.0
 
 ### Minor Changes

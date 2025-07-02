@@ -1,5 +1,11 @@
 # explorer
 
+## 0.35.1
+
+### Patch Changes
+
+- 201b9a38: Fixed an issue where toast notifications would appear behind dialogs.
+
 ## 0.35.0
 
 ### Minor Changes

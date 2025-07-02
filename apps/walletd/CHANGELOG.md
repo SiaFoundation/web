@@ -1,5 +1,18 @@
 # walletd
 
+## 0.32.0
+
+### Minor Changes
+
+- 1ee5d796: Ledger wallets now support blind signing. Blind signing is temporarily required until Ledger supports V2 transactions.
+- 35a0e399: Seed wallets now v2 sign with each key once instead of every input.
+
+### Patch Changes
+
+- 8f22435a: Ledger wallets can now send v2 transactions.
+- 201b9a38: Fixed an issue where toast notifications would appear behind dialogs.
+- 1ee5d796: Fixed an issue where the user would need to reconnect ledger device for multiple transactions.
+
 ## 0.31.0
 
 ### Minor Changes
