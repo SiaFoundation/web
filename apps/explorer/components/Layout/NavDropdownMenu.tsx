@@ -55,6 +55,11 @@ export function NavDropdownMenu({ trigger, children, ...props }: Props) {
             Host Map
           </Link>
         </DropdownMenuItem>
+        <DropdownMenuItem className="p-2">
+          <Link href={routes.hostRevenueCalculator.index} underline="none">
+            Host Revenue Calculator
+          </Link>
+        </DropdownMenuItem>
       </DropdownMenuGroup>
       <DropdownMenuGroup className="py-1 px-1">
         <DropdownMenuLabel className="px-1">Settings</DropdownMenuLabel>

@@ -21,7 +21,7 @@ export default function Page() {
       <div className="flex flex-col gap-3">
         <Heading>Host Revenue Calculator</Heading>
         <iframe
-          src="https://bafybeiguvt6gevjdyxmruhetnbryyqqdnvwqnwuu3bobjuh35vg4trgvwm.ipfs.fsd.link"
+          src="https://host-roi-calculator.sia.tools"
           width="100%"
           height="1000px"
         />
