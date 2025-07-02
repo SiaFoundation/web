@@ -77,7 +77,12 @@ function useWalletsMain() {
         // rather it is from the temporary session caches
         state: {
           mnemonic: mnemonicCache[id],
-          status: mnemonicCache[id] ? 'unlocked' : 'locked',
+          status:
+            metadata.type === 'seed'
+              ? mnemonicCache[id]
+                ? 'unlocked'
+                : 'locked'
+              : 'n/a',
           activityAt: walletActivityAt[id],
         },
         // Wallet methods
@@ -132,10 +137,15 @@ function useWalletsMain() {
     defaultSortField,
   })
 
+  const dataKeySortField = useMemo(() => {
+    const sortOption = sortOptions.find((option) => option.id === sortField)
+    return sortOption?.dataKey
+  }, [sortField])
+
   const { datasetFiltered, datasetPage } = useClientFilteredDataset({
     dataset,
     filters,
-    sortField,
+    sortField: dataKeySortField,
     sortDirection,
     offset,
     limit,

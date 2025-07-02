@@ -15,7 +15,7 @@ type DatumValue =
 type Props<Datum extends Record<string, DatumValue>> = {
   dataset: Maybe<Datum[]>
   filters: ClientFilterItem<Datum>[]
-  sortField: string
+  sortField: string | [string, string]
   sortDirection: 'asc' | 'desc'
   limit: number
   offset: number
@@ -41,8 +41,12 @@ export function useClientFilteredDataset<
       : dataset
     const data = [...subset]
     return data.sort((a, b) => {
-      const aVal = a[sortField]
-      const bVal = b[sortField]
+      const aVal = Array.isArray(sortField)
+        ? (a[sortField[0]] as Record<string, DatumValue>)?.[sortField[1]]
+        : a[sortField]
+      const bVal = Array.isArray(sortField)
+        ? (b[sortField[0]] as Record<string, DatumValue>)?.[sortField[1]]
+        : b[sortField]
       if (sortDirection === 'desc') {
         if (aVal === undefined) {
           return 1
