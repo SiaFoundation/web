@@ -154,7 +154,7 @@ function useHostsMain() {
     sortField,
     sortDirection,
     resetDefaultColumnVisibility,
-  } = useTableState('renterd/v0/hosts', {
+  } = useTableState('renterd/v1/hosts', {
     columns,
     columnsDefaultVisible,
   })

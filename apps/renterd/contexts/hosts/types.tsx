@@ -18,7 +18,7 @@ export type HostData = {
   isOnAllowlist: boolean
   isOnBlocklist: boolean
   isBlocked: boolean
-  netAddress: string
+  address: string
   publicKey: string
   lastScanSuccess: boolean
   lastScan?: string
@@ -80,7 +80,7 @@ export type HostDataWithoutSelectable = Omit<HostData, 'isSelected' | 'onClick'>
 const generalColumns = [
   'actions',
   'allow',
-  'netAddress',
+  'address',
   'publicKey',
   'lastScan',
   'totalScans',
@@ -198,7 +198,7 @@ export type TableColumnId =
 
 export const columnsDefaultVisible: TableColumnId[] = [
   'allow',
-  'netAddress',
+  'address',
   'publicKey',
   'lastScan',
   'lastAnnouncement',
