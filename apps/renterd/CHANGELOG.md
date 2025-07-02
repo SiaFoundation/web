@@ -1,5 +1,11 @@
 # renterd
 
+## 0.82.1
+
+### Patch Changes
+
+- 201b9a38: Fixed an issue where toast notifications would appear behind dialogs.
+
 ## 0.82.0
 
 ### Minor Changes
