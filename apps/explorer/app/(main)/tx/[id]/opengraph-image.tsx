@@ -126,7 +126,7 @@ export default async function Image({ params }: ExplorerPageProps) {
     } else {
       return NotFoundImage(id)
     }
-  } catch (e) {
+  } catch {
     return NotFoundImage(id)
   }
 }

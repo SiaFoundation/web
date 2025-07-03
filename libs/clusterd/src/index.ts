@@ -123,7 +123,7 @@ export async function setupCluster({
         }
         console.log(`Waiting for nodes (${runningCount}/${totalCount})...`)
         return false
-      } catch (e) {
+      } catch {
         console.log(`Error fetching nodes: ${addr}`)
         return false
       }
@@ -388,7 +388,7 @@ export async function waitForData<T>(
       if (assertionResult) {
         return data // Success, assertion passed
       }
-    } catch (error) {
+    } catch {
       // Continue retrying on error
     }
 

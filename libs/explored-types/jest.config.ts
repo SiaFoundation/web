@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'explored-types',
   preset: '../../jest.preset.js',

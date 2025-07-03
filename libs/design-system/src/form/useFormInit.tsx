@@ -23,7 +23,6 @@ export function useFormInit<DataForm extends FieldValues>({
     if (!isUnlockedAndAuthedRoute) {
       setInit(false)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isUnlockedAndAuthedRoute])
 
   // Reset form when needs init and the remoteValues become available.

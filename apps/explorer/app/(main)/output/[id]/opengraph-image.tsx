@@ -87,7 +87,7 @@ export default async function Image({ params }: ExplorerPageProps) {
     } else {
       return formatOGImage(id)
     }
-  } catch (e) {
+  } catch {
     return formatOGImage(id)
   }
 }

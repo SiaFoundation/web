@@ -7,11 +7,6 @@ import {
   useRegisterForm,
 } from './configurationFields'
 
-type Option = {
-  value: string
-  label: string
-}
-
 export function FieldSelect<
   Values extends FieldValues,
   Categories extends string

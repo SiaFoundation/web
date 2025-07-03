@@ -3,11 +3,11 @@
   "description": "Next font configuration for use across apps.",
   "version": "0.5.1",
   "license": "MIT",
-  "peerDependencies": {
-    "next": "^14.2.14"
-  },
   "dependencies": {
     "class-variance-authority": "^0.7.0"
+  },
+  "peerDependencies": {
+    "next": "^14.2.14"
   },
   "types": "./src/index.d.ts"
 }

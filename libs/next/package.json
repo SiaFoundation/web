@@ -3,6 +3,7 @@
   "description": "NextJS wrappers for build compatibility.",
   "version": "0.1.4",
   "license": "MIT",
+  "dependencies": {},
   "peerDependencies": {
     "next": "^14.2.14"
   },

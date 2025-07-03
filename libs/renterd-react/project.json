@@ -9,6 +9,7 @@
       "executor": "@nx/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "useLegacyTypescriptPlugin": true,
         "outputPath": "dist/libs/renterd-react",
         "tsConfig": "libs/renterd-react/tsconfig.lib.json",
         "project": "libs/renterd-react/package.json",

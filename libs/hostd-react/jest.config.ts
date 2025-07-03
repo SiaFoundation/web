@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'hostd-react',
   preset: '../../jest.preset.js',

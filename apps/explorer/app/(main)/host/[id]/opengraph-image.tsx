@@ -94,7 +94,7 @@ export default async function Image({ params }: ExplorerPageProps) {
       },
       size
     )
-  } catch (e) {
+  } catch {
     return getOGImage(
       {
         id,

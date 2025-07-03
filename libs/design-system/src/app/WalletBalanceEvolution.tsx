@@ -11,13 +11,13 @@ import { computeChartStats } from '../lib/chartStats'
 import { useTheme } from 'next-themes'
 import { colors } from '../lib/colors'
 
-type BalanceEvolution = {
+type BalanceEvolutionDatum = {
   sc: number
   timestamp: number
 }
 
 type Props = {
-  balances?: BalanceEvolution[]
+  balances?: BalanceEvolutionDatum[]
   isLoading: boolean
   chartType?: 'area' | 'line'
 }
