@@ -8,13 +8,9 @@ import {
 } from '@siafoundation/clusterd'
 import { humanSiacoin } from '@siafoundation/units'
 import { Cluster } from './cluster'
+import { initSDK, getSDK } from '@siafoundation/sdk'
 
 export async function addWalletToWalletd(walletd: ReturnType<typeof Walletd>) {
-  // For some reason when this code runs on GitHub Actions it throws an ESM
-  // import error for the SDK. Running locally it works fine.
-  // Error: require() of ES Module sdk/index.esm.js from /fixtures/walletd.ts not supported.
-  // This dynamic import is a workaround.
-  const { initSDK, getSDK } = await import('@siafoundation/sdk')
   await initSDK()
   const sdk = getSDK()
   const { phrase: mnemonic } = sdk.wallet.generateSeedPhrase()

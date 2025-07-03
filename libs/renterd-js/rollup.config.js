@@ -8,7 +8,6 @@ function getRollupOptions(options) {
     output: {
       ...options.output,
       preserveModules: true,
-      format: 'esm',
       sourcemap: true,
     },
     plugins: options.plugins.concat(preserveDirectives.default()),
