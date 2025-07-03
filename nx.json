@@ -1,7 +1,4 @@
 {
-  "affected": {
-    "defaultBase": "main"
-  },
   "generators": {},
   "defaultProject": "walletd",
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
@@ -70,5 +67,6 @@
   "workspaceLayout": {
     "appsDir": "apps",
     "libsDir": "libs"
-  }
+  },
+  "defaultBase": "main"
 }

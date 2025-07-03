@@ -9,6 +9,7 @@
       "executor": "@nx/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "useLegacyTypescriptPlugin": true,
         "outputPath": "dist/libs/fonts",
         "tsConfig": "libs/fonts/tsconfig.lib.json",
         "project": "libs/fonts/package.json",

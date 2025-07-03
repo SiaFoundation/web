@@ -9,6 +9,7 @@
       "executor": "@nx/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "useLegacyTypescriptPlugin": true,
         "outputPath": "dist/libs/hostd-react",
         "tsConfig": "libs/hostd-react/tsconfig.lib.json",
         "project": "libs/hostd-react/package.json",

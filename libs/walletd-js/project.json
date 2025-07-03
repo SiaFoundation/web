@@ -9,6 +9,7 @@
       "executor": "@nx/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "useLegacyTypescriptPlugin": true,
         "outputPath": "dist/libs/walletd-js",
         "tsConfig": "libs/walletd-js/tsconfig.lib.json",
         "project": "libs/walletd-js/package.json",
