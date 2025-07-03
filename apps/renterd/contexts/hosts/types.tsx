@@ -77,6 +77,7 @@ export type HostData = {
 
 export type HostDataWithoutSelectable = Omit<HostData, 'isSelected' | 'onClick'>
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const generalColumns = [
   'actions',
   'allow',
@@ -94,6 +95,7 @@ const generalColumns = [
   'contractCount',
 ] as const
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const autopilotColumns = [
   'ap_usable',
   'ap_gouging',
@@ -107,6 +109,7 @@ const autopilotColumns = [
   'ap_scoreVersion',
 ] as const
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const v2SettingsColumns = [
   'v2_acceptingContracts',
   'v2_maxCollateral',
@@ -120,6 +123,7 @@ const v2SettingsColumns = [
   'v2_egressPrice',
 ] as const
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const priceTableColumns = [
   'hpt_accountbalancecost',
   'hpt_collateralcost',
@@ -157,6 +161,7 @@ const priceTableColumns = [
   'hpt_writestorecost',
 ] as const
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const settingsColumns = [
   'hs_acceptingcontracts',
   'hs_baserpcprice',

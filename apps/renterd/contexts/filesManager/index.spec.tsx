@@ -8,7 +8,7 @@ import {
   mockApiBusSettingsUpload,
   mockMatchMedia,
 } from '../../mock/mock'
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+
 const { usePathname, useAppRouter, useParams } = require('@siafoundation/next')
 
 // NOTE: Update to use a functional test router after migrating to vitest.

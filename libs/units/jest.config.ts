@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'units',
   preset: '../../jest.preset.js',

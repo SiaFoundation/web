@@ -604,6 +604,7 @@ export function getFields({
         </>
       ),
       hidden: configViewMode === 'basic',
+      decimalsLimit: 4,
       suggestionLabel: 'Match with more hosts',
       suggestion: recommendations.minAccountExpiryDays?.targetValue,
       suggestionTip: 'This value will help you match with more hosts.',

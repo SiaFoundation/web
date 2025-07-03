@@ -10,7 +10,7 @@ export const clearToasts = step(
         await clearButtons.first().click({
           timeout: 1000,
         })
-      } catch (e) {
+      } catch {
         console.log('Attempted to clear toast, but it is already detached.')
       }
     }

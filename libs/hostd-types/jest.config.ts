@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'hostd-types',
   preset: '../../jest.preset.js',

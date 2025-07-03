@@ -1,6 +1,6 @@
-/* eslint-disable */
 export default {
   displayName: 'sdk',
+  testEnvironment: 'jest-fixed-jsdom',
   preset: '../../jest.preset.js',
   transform: {
     '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nx/react/plugins/jest',
@@ -14,5 +14,4 @@ export default {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/libs/sdk',
-  setupFiles: ['./jest.polyfills.js'],
 }

@@ -54,7 +54,7 @@ export const continueToClickUntil = step(
       try {
         console.log(`Attempting a click (${clickCount})...`)
         await clickLocator.click({ timeout: 100 })
-      } catch (e) {
+      } catch {
         console.log('Click failed, breaking...')
         break
       }

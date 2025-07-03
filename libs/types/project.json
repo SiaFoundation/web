@@ -9,6 +9,7 @@
       "executor": "@nx/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "useLegacyTypescriptPlugin": true,
         "outputPath": "dist/libs/types",
         "tsConfig": "libs/types/tsconfig.lib.json",
         "project": "libs/types/package.json",

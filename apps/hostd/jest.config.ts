@@ -1,5 +1,4 @@
-/* eslint-disable */
-export default {
+const config = {
   displayName: 'hostd',
   preset: '../../jest.preset.js',
   transform: {
@@ -23,3 +22,5 @@ export default {
     ),
   },
 }
+
+export default config

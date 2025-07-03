@@ -28,7 +28,7 @@ jobs:
       - name: Setup environment
         uses: ./.github/actions/setup-all
         with:
-          node_version: 20.10.0
+          node_version: 22.12.0
           go_version: 1.24.3
       - name: Only run if ${{ inputs.project }} is affected
         id: check
@@ -43,7 +43,7 @@ jobs:
           fi
       # The SDK is referenced via dist in the tsconfig.base.json because the
       # next executor does not actually support buildLibsFromSource=false.
-      # With this configuration NX does not build the SDK as expected when
+      # With this configuration Nx does not build the SDK as expected when
       # it is an app dependency.
       - name: Force build SDK
         if: ${{ steps.check.outputs.continue == 'true' }}
