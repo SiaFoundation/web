@@ -9,6 +9,7 @@
       "executor": "@nx/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "useLegacyTypescriptPlugin": true,
         "outputPath": "dist/libs/clusterd",
         "tsConfig": "libs/clusterd/tsconfig.lib.json",
         "project": "libs/clusterd/package.json",

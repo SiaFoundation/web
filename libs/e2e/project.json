@@ -9,6 +9,7 @@
       "executor": "@nx/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "useLegacyTypescriptPlugin": true,
         "outputPath": "dist/libs/e2e",
         "tsConfig": "libs/e2e/tsconfig.lib.json",
         "project": "libs/e2e/package.json",

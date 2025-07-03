@@ -64,3 +64,4 @@ bin/
 
 # playwright
 /playwright-report
+.github/instructions/nx.instructions.md

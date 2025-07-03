@@ -6,11 +6,11 @@ const { wasm } = require('@rollup/plugin-wasm')
 function getRollupOptions(options) {
   return {
     ...options,
-    output: {
-      ...options.output,
+    output: options.output.map((output) => ({
+      ...output,
       preserveModules: true,
       sourcemap: true,
-    },
+    })),
     plugins: options.plugins
       .concat(
         wasm({

@@ -7,6 +7,7 @@ on:
 # and creates one itself, so we need to explicitly have one.
 env:
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  NX_NO_CLOUD: true
 
 concurrency: commits-to-main
 
@@ -26,7 +27,7 @@ jobs:
       # The SDK is referenced via dist in the tsconfig.base.json
       # because the next executor does not actually support
       # buildLibsFromSource=false
-      # With this configuration NX does not build the SDK as expected
+      # With this configuration Nx does not build the SDK as expected
       # when it is an app dependency
       - name: Force build SDK
         shell: bash
@@ -82,7 +83,7 @@ jobs:
       # The SDK is referenced via dist in the tsconfig.base.json
       # because the next executor does not actually support
       # buildLibsFromSource=false
-      # With this configuration NX does not build the SDK as expected
+      # With this configuration Nx does not build the SDK as expected
       # when it is an app dependency
       - name: Force build SDK
         shell: bash

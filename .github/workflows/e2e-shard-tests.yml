@@ -1,5 +1,8 @@
 name: Run sharded e2e tests
 
+env:
+  NX_NO_CLOUD: true
+
 on:
   workflow_call:
     inputs:
@@ -43,7 +46,7 @@ jobs:
           fi
       # The SDK is referenced via dist in the tsconfig.base.json because the
       # next executor does not actually support buildLibsFromSource=false.
-      # With this configuration NX does not build the SDK as expected when
+      # With this configuration Nx does not build the SDK as expected when
       # it is an app dependency.
       - name: Force build SDK
         if: ${{ steps.check.outputs.continue == 'true' }}
