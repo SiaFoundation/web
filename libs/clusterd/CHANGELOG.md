@@ -1,5 +1,23 @@
 # @siafoundation/clusterd
 
+## 0.5.0
+
+### Minor Changes
+
+- 868907dd: setupCluster now defaults to v2 network.
+- 868907dd: waitFor now requires a description parameter.
+
+### Patch Changes
+
+- 388a7f38: The library is now published in both ESM and CJS.
+- Updated dependencies [388a7f38]
+  - @siafoundation/explored-js@0.8.1
+  - @siafoundation/hostd-js@0.5.5
+  - @siafoundation/renterd-js@0.14.6
+  - @siafoundation/types@0.12.1
+  - @siafoundation/units@3.5.1
+  - @siafoundation/walletd-js@0.4.2
+
 ## 0.4.0
 
 ### Minor Changes

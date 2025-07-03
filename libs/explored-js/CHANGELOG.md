@@ -1,5 +1,14 @@
 # @siafoundation/explored-js
 
+## 0.8.1
+
+### Patch Changes
+
+- 388a7f38: The library is now published in both ESM and CJS.
+- Updated dependencies [388a7f38]
+  - @siafoundation/explored-types@0.19.1
+  - @siafoundation/request@0.3.1
+
 ## 0.8.0
 
 ### Minor Changes

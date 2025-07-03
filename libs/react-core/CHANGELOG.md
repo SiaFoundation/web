@@ -1,5 +1,15 @@
 # @siafoundation/react-core
 
+## 6.0.1
+
+### Patch Changes
+
+- 388a7f38: The library is now published in both ESM and CJS.
+- Updated dependencies [388a7f38]
+  - @siafoundation/next@0.1.4
+  - @siafoundation/request@0.3.1
+  - @siafoundation/types@0.12.1
+
 ## 6.0.0
 
 ### Patch Changes

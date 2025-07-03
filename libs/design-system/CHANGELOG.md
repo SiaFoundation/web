@@ -1,5 +1,23 @@
 # Changelog
 
+## 9.1.0
+
+### Minor Changes
+
+- c2065783: useClientFilteredDataset now supports nested sortField keys.
+
+### Patch Changes
+
+- 388a7f38: The library is now published in both ESM and CJS.
+- Updated dependencies [388a7f38]
+  - @siafoundation/explored-react@0.8.1
+  - @siafoundation/explored-types@0.19.1
+  - @siafoundation/next@0.1.4
+  - @siafoundation/react-core@6.0.1
+  - @siafoundation/react-icons@0.3.1
+  - @siafoundation/types@0.12.1
+  - @siafoundation/units@3.5.1
+
 ## 9.0.1
 
 ### Patch Changes

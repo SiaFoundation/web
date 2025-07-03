@@ -1,5 +1,11 @@
 # @siafoundation/types
 
+## 0.12.1
+
+### Patch Changes
+
+- 388a7f38: The library is now published in both ESM and CJS.
+
 ## 0.12.0
 
 ### Minor Changes

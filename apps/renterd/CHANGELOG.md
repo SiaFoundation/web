@@ -1,5 +1,11 @@
 # renterd
 
+## 0.82.2
+
+### Patch Changes
+
+- e643f787: Fixed an issue where features were using the v1 host netAddress field for v2 hosts, which causes some features to be disabled or not work as expected.
+
 ## 0.82.1
 
 ### Patch Changes
