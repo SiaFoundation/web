@@ -1,5 +1,15 @@
 # @siafoundation/walletd-react
 
+## 4.5.3
+
+### Patch Changes
+
+- 388a7f38: The library is now published in both ESM and CJS.
+- Updated dependencies [388a7f38]
+  - @siafoundation/react-core@6.0.1
+  - @siafoundation/units@3.5.1
+  - @siafoundation/walletd-types@0.7.2
+
 ## 4.5.2
 
 ### Patch Changes

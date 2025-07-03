@@ -1,5 +1,14 @@
 # @siafoundation/renterd-js
 
+## 0.14.6
+
+### Patch Changes
+
+- 388a7f38: The library is now published in both ESM and CJS.
+- Updated dependencies [388a7f38]
+  - @siafoundation/renterd-types@0.17.3
+  - @siafoundation/request@0.3.1
+
 ## 0.14.5
 
 ### Patch Changes

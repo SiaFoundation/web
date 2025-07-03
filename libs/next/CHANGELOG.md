@@ -1,5 +1,11 @@
 # @siafoundation/next
 
+## 0.1.4
+
+### Patch Changes
+
+- 388a7f38: The library is now published in both ESM and CJS.
+
 ## 0.1.3
 
 ### Patch Changes

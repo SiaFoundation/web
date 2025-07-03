@@ -1,5 +1,16 @@
 # walletd
 
+## 0.33.0
+
+### Minor Changes
+
+- c6b1a04d: Wallets added to walletd externally are now displayed as watch-only wallets in the user interface.
+
+### Patch Changes
+
+- c6b1a04d: Adding addresses now works with externally added wallets. Closes https://github.com/SiaFoundation/walletd/issues/258
+- c2065783: Fixed an issue with sorting by column.
+
 ## 0.32.0
 
 ### Minor Changes
