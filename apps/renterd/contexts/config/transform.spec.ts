@@ -13,6 +13,7 @@ import {
   weeksToBlocks,
   valuePerPeriodToPerMonth,
   valuePerMonthToPerPeriod,
+  hoursInDays,
 } from '@siafoundation/units'
 import { CurrencyId } from '@siafoundation/react-core'
 import {
@@ -58,7 +59,7 @@ describe('tansforms', () => {
         maxRPCPriceMillion: new BigNumber('99970619'),
         maxStoragePriceTBMonth: new BigNumber('909.494702'),
         maxUploadPriceTB: new BigNumber('1000.232323'),
-        minAccountExpiryDays: new BigNumber(1),
+        minAccountExpiryDays: new BigNumber(hoursInDays(1)),
         minMaxEphemeralAccountBalance: new BigNumber('1'),
         minPriceTableValidityMinutes: new BigNumber(5),
         minShards: new BigNumber(10),
@@ -242,7 +243,7 @@ describe('tansforms', () => {
               maxRPCPriceMillion: new BigNumber('99970619'),
               maxStoragePriceTBMonth: new BigNumber('909.494702'),
               maxUploadPriceTB: new BigNumber('1000.232323'),
-              minAccountExpiryDays: new BigNumber(1),
+              minAccountExpiryDays: new BigNumber(hoursInDays(1)),
               minMaxEphemeralAccountBalance: new BigNumber('1'),
               minPriceTableValidityMinutes: new BigNumber(5),
               minShards: new BigNumber(10),
@@ -270,7 +271,7 @@ describe('tansforms', () => {
           maxRPCPrice: '99970619000000000000000000',
           maxStoragePrice: '210531181019',
           maxUploadPrice: '1000232323000000',
-          minAccountExpiry: 86400000,
+          minAccountExpiry: 3600000,
           minMaxEphemeralAccountBalance: '1000000000000000000000000',
           minPriceTableValidity: 300000,
         })
@@ -499,7 +500,7 @@ function buildAllResponses() {
       maxRPCPrice: '99970619000000000000000000',
       maxStoragePrice: '210531181019',
       maxUploadPrice: '1000232323000000',
-      minAccountExpiry: 86400000,
+      minAccountExpiry: 3600000,
       minMaxEphemeralAccountBalance: '1000000000000000000000000',
       minPriceTableValidity: 300000,
     } as SettingsGouging,

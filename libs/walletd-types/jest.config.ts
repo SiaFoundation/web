@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'walletd-types',
   preset: '../../jest.preset.js',

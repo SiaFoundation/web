@@ -5,9 +5,9 @@ import {
 } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 import { SiacoinField } from './SiacoinField'
-import { fireEvent, render, waitFor, act } from '@testing-library/react'
+import { fireEvent, render, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { useState } from 'react'
+import { useState, act } from 'react'
 import { setupServer } from 'msw/node'
 import { HttpResponse, http } from 'msw'
 
@@ -239,9 +239,21 @@ describe('SiacoinField', () => {
     fireEvent.blur(fiatInput)
     expect(scInput.value).toBe('0.123')
     expect(fiatInput.value).toBe('$0.123')
-    expect(onChange.mock.calls.length).toBe(6)
+    expect(onChange.mock.calls.length).toBe(11)
     expectOnChangeValues(
-      [undefined, '0', '0', '0.1', '0.12', '0.123'],
+      [
+        undefined,
+        undefined,
+        '0',
+        '0',
+        '0',
+        '0.1',
+        '0.1',
+        '0.12',
+        '0.12',
+        '0.123',
+        '0.123',
+      ],
       onChange
     )
   })
@@ -267,8 +279,18 @@ describe('SiacoinField', () => {
     fireEvent.blur(fiatInput)
     expect(fiatInput.value).toBe('$0.158')
     expect(scInput.value).toBe('45.208347')
-    expect(onChange.mock.calls.length).toBe(3)
-    expectOnChangeValues(['45.474447', '45.465863', '45.208347'], onChange)
+    expect(onChange.mock.calls.length).toBe(6)
+    expectOnChangeValues(
+      [
+        '45.474447',
+        '45.474447',
+        '45.465863',
+        '45.465863',
+        '45.208347',
+        '45.208347',
+      ],
+      onChange
+    )
   })
 
   it('rounds when changing fiat with realistic exchange rate', async () => {

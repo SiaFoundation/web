@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'renterd-js',
   preset: '../../jest.preset.js',

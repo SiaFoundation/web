@@ -65,7 +65,6 @@ function getFields({
       type: 'text',
       title: 'Seed',
       onClick: (e) => {
-        // eslint-disable-next-line @typescript-eslint/no-extra-semi
         ;(e as MouseEvent<HTMLTextAreaElement>).currentTarget.select()
         copySeed()
       },
@@ -75,7 +74,8 @@ function getFields({
         required: 'required',
         validate: {
           valid: (value: string) => {
-            const { error } = getSDK().wallet.keyPairFromSeedPhrase(value, 0)
+            const result = getSDK().wallet.keyPairFromSeedPhrase(value, 0)
+            const error = 'error' in result
             return !error || 'seed should be 12 word BIP39 mnemonic'
           },
           copied: (_, values) => values.hasCopied || 'Copy seed to continue',
@@ -119,7 +119,15 @@ export function WalletAddNewDialog({ trigger, open, onOpenChange }: Props) {
   }, [mnemonic, form])
 
   const regenerateMnemonic = useCallback(async () => {
-    const { phrase } = getSDK().wallet.generateSeedPhrase()
+    const result = getSDK().wallet.generateSeedPhrase()
+    if ('error' in result) {
+      triggerErrorToast({
+        title: 'Error generating seed phrase',
+        body: result.error,
+      })
+      return
+    }
+    const { phrase } = result
     form.setValue('hasCopied', false)
     form.setValue('mnemonic', phrase)
     form.clearErrors(['hasCopied', 'mnemonic'])

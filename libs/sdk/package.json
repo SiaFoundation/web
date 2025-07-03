@@ -6,8 +6,5 @@
   "dependencies": {
     "@siafoundation/types": "0.12.1"
   },
-  "devDependencies": {
-    "undici": "5.28.3"
-  },
   "types": "./src/index.d.ts"
 }

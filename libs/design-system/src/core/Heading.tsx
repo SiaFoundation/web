@@ -4,6 +4,7 @@ import { cx, VariantProps } from 'class-variance-authority'
 import { Link } from '@siafoundation/next'
 import { Link20 } from '@siafoundation/react-icons'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DEFAULT_TAG = 'h1'
 
 // This is the mapping of Heading to Text size variants

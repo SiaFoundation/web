@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import {
-  calculateSpendingEstimate as calculateSpendingEstimate,
+  calculateSpendingEstimate,
   derivePricingFromSpendingEstimate,
 } from './spending'
 

@@ -43,7 +43,7 @@ function getFields({
             try {
               const url = new URL(value)
               return (!!url.protocol && !!url.host) || 'invalid API URL'
-            } catch (e) {
+            } catch {
               return 'invalid API URL'
             }
           },

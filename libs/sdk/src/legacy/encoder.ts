@@ -139,7 +139,7 @@ export function decodeTime(d: Decoder): string {
   try {
     const time = new Date(Number(seconds) * 1000)
     return time.toISOString()
-  } catch (e) {
+  } catch {
     return new Date().toISOString()
   }
 }

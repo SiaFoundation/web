@@ -125,7 +125,7 @@ function getAllowedFields({
     try {
       const hostname = new URL('https://' + hostAddress).hostname
       return b === hostname
-    } catch (e) {
+    } catch {
       return false
     }
   })

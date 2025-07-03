@@ -9,7 +9,7 @@ import { usePostFunc, usePostSwr } from './usePost'
 import { RequestConfig, Response } from './request'
 import { delay } from './utils'
 import { WorkflowPayload, useWorkflows } from './workflows'
-import { act } from 'react-dom/test-utils'
+import { act } from 'react'
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn().mockReturnValue({

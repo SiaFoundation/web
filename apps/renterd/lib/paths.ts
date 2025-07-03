@@ -1,16 +1,12 @@
-import { trimStart } from '@technically/lodash'
+import { trimEnd, trimStart } from '@technically/lodash'
 
 export type FullPathSegments = string[]
 export type FullPath = string
 export type KeyPath = string
 
 export function join(a: string, b: string): FullPath {
-  const _a = a.endsWith('/') ? a.slice(0, -1) : a
-  const _b = b.startsWith('/')
-    ? b.slice(1)
-    : b.startsWith('./')
-    ? b.slice(2)
-    : b
+  const _a = trimEnd(a, '/')
+  const _b = trimStart(trimStart(b, '.'), '/')
   return `${_a}/${_b}`
 }
 

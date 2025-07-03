@@ -4,7 +4,7 @@ const plugin = require('tailwindcss/plugin')
 const animationDelay = plugin(
   function ({ addUtilities, theme, e }) {
     const values = theme('animationDelay')
-    var utilities = Object.entries(values).map(([key, value]) => {
+    const utilities = Object.entries(values).map(([key, value]) => {
       return {
         [`.${e(`animation-delay-${key}`)}`]: { animationDelay: `${value}` },
       }

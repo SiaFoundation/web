@@ -1,7 +1,8 @@
 import BigNumber from 'bignumber.js'
 
 export function toFixedMaxString(val: BigNumber, limit: number) {
-  return val.decimalPlaces() > limit ? val.toFixed(limit) : val.toString()
+  const decimalPlaces = val.decimalPlaces() || 0
+  return decimalPlaces > limit ? val.toFixed(limit) : val.toString()
 }
 
 export function toFixedMaxBigNumber(val: BigNumber, limit: number) {
@@ -30,7 +31,8 @@ export function toFixedOrPrecision(
     return v.precision(digits)
   }
   if (dynamicFixed) {
-    return v.decimalPlaces() > digits ? v.toFormat(digits) : v.toFormat()
+    const decimalPlaces = v.decimalPlaces() || 0
+    return decimalPlaces > digits ? v.toFormat(digits) : v.toFormat()
   }
   return v.toFormat(digits)
 }

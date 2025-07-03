@@ -1,6 +1,6 @@
-/* eslint-disable */
 export default {
   displayName: 'design-system',
+  testEnvironment: 'jest-fixed-jsdom',
   transform: {
     '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nx/react/plugins/jest',
     '^.+\\.[tj]sx?$': [
@@ -22,5 +22,4 @@ export default {
       'next/dist/build/jest/__mocks__/nextFontMock.js'
     ),
   },
-  setupFiles: ['./jest.polyfills.js'],
 }

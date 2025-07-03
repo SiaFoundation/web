@@ -1,6 +1,6 @@
-/* eslint-disable */
-export default {
+const config = {
   displayName: 'walletd',
+  testEnvironment: 'jest-fixed-jsdom',
   preset: '../../jest.preset.js',
   transform: {
     '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nx/react/plugins/jest',
@@ -22,5 +22,6 @@ export default {
       'next/dist/build/jest/__mocks__/nextFontMock.js'
     ),
   },
-  setupFiles: ['./jest.polyfills.js'],
 }
+
+export default config

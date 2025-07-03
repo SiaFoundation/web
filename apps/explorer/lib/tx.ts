@@ -71,8 +71,9 @@ export function getTransactionSummary(
   // Convert to sorted arrays.
   const sc: AddressSummary[] = Array.from(scMap.entries())
     .map(([address, sc]) => ({ address, sc }))
-    .sort((a, b) =>
-      (b.sc ?? new BigNumber(0)).comparedTo(a.sc ?? new BigNumber(0))
+    .sort(
+      (a, b) =>
+        (b.sc ?? new BigNumber(0)).comparedTo(a.sc ?? new BigNumber(0)) ?? 0
     )
 
   const sf: AddressSummary[] = Array.from(sfMap.entries())

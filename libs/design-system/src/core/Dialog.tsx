@@ -201,7 +201,6 @@ const Content = React.forwardRef<HTMLDivElement, ContentProps>(
     useEffect(() => {
       // 0.7 is eual to the maxHeight: 70vh below
       setShowSeparator(height > window.innerHeight * 0.7)
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [height])
     const Tag = onSubmit ? 'form' : 'div'
     return (
