@@ -1,7 +1,7 @@
 {
   "name": "@siafoundation/react-icons",
   "description": "React-based icons used across Sia apps.",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "license": "MIT",
   "dependencies": {
     "@carbon/icons-react": "^10.47.0"

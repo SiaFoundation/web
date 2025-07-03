@@ -1,5 +1,11 @@
 # explorer
 
+## 0.36.0
+
+### Minor Changes
+
+- 26166c3a: The host revenue calculator has been restored.
+
 ## 0.35.1
 
 ### Patch Changes
