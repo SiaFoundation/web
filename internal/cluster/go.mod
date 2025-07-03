@@ -5,7 +5,7 @@ go 1.24.3
 require (
 	go.sia.tech/cluster v0.1.3-0.20250610130308-2ed3922110c8
 	go.sia.tech/core v0.14.1
-	go.sia.tech/coreutils v0.16.3
+	go.sia.tech/coreutils v0.16.4
 	go.sia.tech/explored v1.0.0-beta.1.0.20250626123129-41f0e2946e9c
 	go.uber.org/zap v1.27.0
 )
@@ -14,10 +14,8 @@ require (
 	github.com/aws/aws-sdk-go v1.55.7 // indirect
 	github.com/cloudflare/cloudflare-go v0.115.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.9 // indirect
-	github.com/go-task/slim-sprig/v3 v3.0.0 // indirect
 	github.com/goccy/go-json v0.10.5 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
-	github.com/google/pprof v0.0.0-20250602020802-c6617b811d0e // indirect
 	github.com/gotd/contrib v0.21.0 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
@@ -26,23 +24,21 @@ require (
 	github.com/klauspost/reedsolomon v1.12.4 // indirect
 	github.com/mattn/go-sqlite3 v1.14.28 // indirect
 	github.com/montanaflynn/stats v0.7.1 // indirect
-	github.com/onsi/ginkgo/v2 v2.23.4 // indirect
 	github.com/oschwald/geoip2-golang v1.11.0 // indirect
 	github.com/oschwald/maxminddb-golang v1.13.1 // indirect
 	github.com/quic-go/qpack v0.5.1 // indirect
-	github.com/quic-go/quic-go v0.52.0 // indirect
-	github.com/quic-go/webtransport-go v0.8.1-0.20241018022711-4ac2c9250e66 // indirect
+	github.com/quic-go/quic-go v0.53.0 // indirect
+	github.com/quic-go/webtransport-go v0.9.0 // indirect
 	github.com/ryszard/goskiplist v0.0.0-20150312221310-2dfbae5fcf46 // indirect
 	github.com/shabbyrobe/gocovmerge v0.0.0-20230507112040-c3350d9342df // indirect
 	github.com/shopspring/decimal v1.4.0 // indirect
-	go.etcd.io/bbolt v1.4.1 // indirect
+	go.etcd.io/bbolt v1.4.2 // indirect
 	go.sia.tech/gofakes3 v0.0.5 // indirect
 	go.sia.tech/hostd/v2 v2.3.5-0.20250626122151-7137f3d8145c // indirect
 	go.sia.tech/jape v0.14.0 // indirect
 	go.sia.tech/mux v1.4.0 // indirect
 	go.sia.tech/renterd/v2 v2.3.3 // indirect
 	go.sia.tech/walletd/v2 v2.10.4-0.20250626124643-654169654c66 // indirect
-	go.uber.org/automaxprocs v1.6.0 // indirect
 	go.uber.org/mock v0.5.2 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/crypto v0.39.0 // indirect
