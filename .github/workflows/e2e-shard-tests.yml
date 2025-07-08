@@ -28,12 +28,12 @@ jobs:
       - name: Setup environment
         uses: ./.github/actions/setup-all
         with:
-          node_version: 22.12.0
+          bun_version: 1.2.18
           go_version: 1.24.3
       - name: Only run if ${{ inputs.project }} is affected
         id: check
         run: |
-          AFFECTED=$(npx nx show projects --affected --projects=${{ inputs.project }})
+          AFFECTED=$(bunx nx show projects --affected --projects=${{ inputs.project }})
           if [[ -z "$AFFECTED" ]]; then
             echo "${{ inputs.project }} is unaffected. Exiting."
             echo "continue=false" >> $GITHUB_OUTPUT
@@ -48,15 +48,15 @@ jobs:
       - name: Force build SDK
         if: ${{ steps.check.outputs.continue == 'true' }}
         shell: bash
-        run: npx nx run sdk:build
+        run: bunx nx run sdk:build
       - name: Install Playwright dependencies
         if: ${{ steps.check.outputs.continue == 'true' }}
         shell: bash
-        run: npx playwright install-deps
+        run: bunx playwright install-deps
       - name: Test e2e for ${{ inputs.project }}
         if: ${{ steps.check.outputs.continue == 'true' }}
         shell: bash
-        run: npx nx run ${{ inputs.project }}:e2e --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}
+        run: bunx nx run ${{ inputs.project }}:e2e --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Upload blob report to GitHub Actions Artifacts

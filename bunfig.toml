@@ -1,0 +1,6 @@
+# TODO: switch to text bun.lock format once these issues are resolved:
+# https://github.com/nrwl/nx/issues/30607
+# https://github.com/nrwl/nx/issues/30362
+[install]
+saveTextLockfile = false
+lockfileFormat = "bun"

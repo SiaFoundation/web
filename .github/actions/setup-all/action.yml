@@ -3,10 +3,10 @@ name: Setup all
 description: Setup all
 
 inputs:
-  node_version:
-    description: Node.js version
+  bun_version:
+    description: Bun version
     required: false
-    default: 22.12.0
+    default: 1.2.18
   go_version:
     description: Go version
     required: false
@@ -24,7 +24,7 @@ runs:
     - name: Setup JS
       uses: ./.github/actions/setup-js
       with:
-        node_version: ${{ inputs.node_version }}
+        bun_version: ${{ inputs.bun_version }}
         base_ref: ${{ inputs.base_ref }}
     - name: Setup Go
       uses: ./.github/actions/setup-go

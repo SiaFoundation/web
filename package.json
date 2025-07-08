@@ -2,6 +2,7 @@
   "name": "web",
   "version": "0.0.0",
   "license": "MIT",
+  "packageManager": "bun@1.2.18",
   "engines": {
     "node": ">=22.12.0"
   },
@@ -10,17 +11,15 @@
     "build": "nx build",
     "test": "nx test",
     "release": "changeset publish",
-    "version": "changeset version && npm install",
+    "version": "changeset version && bun install",
     "build:wasm": "cd walletd && GOOS=js GOARCH=wasm go build -o ../apps/walletd/public/walletd.wasm ./wasm",
     "clean": "nx reset && rimraf dist apps/*/node_modules libs/*/node_modules apps/*/.next"
   },
   "private": true,
-  "workspaces": {
-    "packages": [
-      "libs/*",
-      "apps/*"
-    ]
-  },
+  "workspaces": [
+    "libs/*",
+    "apps/*"
+  ],
   "dependencies": {
     "@carbon/icons-react": "^10.47.0",
     "@changesets/cli": "^2.25.0",
