@@ -23,7 +23,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup-all
         with:
-          node_version: 22.12.0
+          bun_version: 1.2.18
           go_version: 1.24.3
       - name: Check for prerelease mode
         id: check_pre
@@ -43,11 +43,11 @@ jobs:
       - name: Force build SDK
         if: steps.check_pre.outputs.run == 'true'
         shell: bash
-        run: npx nx run sdk:build
+        run: bunx nx run sdk:build
       - name: Build for publishing
         if: steps.check_pre.outputs.run == 'true'
         shell: bash
-        run: npx nx run-many --target=build --configuration=production --all --parallel=5
+        run: bunx nx run-many --target=build --configuration=production --all --parallel=5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
@@ -59,7 +59,7 @@ jobs:
         if: steps.check_pre.outputs.run == 'true'
         uses: changesets/action@v1
         with:
-          publish: npx changeset publish
+          publish: bunx changeset publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

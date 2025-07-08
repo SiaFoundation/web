@@ -42,7 +42,7 @@ export default defineConfig({
   outputDir: 'output',
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npx nx serve renterd',
+    command: 'bunx nx serve renterd',
     url: baseURL,
     reuseExistingServer: !process.env.CI,
     cwd: workspaceRoot,
