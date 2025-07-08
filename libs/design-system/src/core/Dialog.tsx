@@ -1,6 +1,6 @@
 'use client'
 
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, Variants } from 'motion/react'
 import { cva, cx } from 'class-variance-authority'
 import { panelStyles } from './Panel'
 import { useOpen } from '../hooks/useOpen'
@@ -25,7 +25,7 @@ const containerStyles = cva(['z-20', 'overflow-hidden'], {
   },
 })
 
-const animationVariants = {
+const animationVariants: Variants = {
   show: {
     scale: [0.95, 1],
     transition: { duration: 0.1, ease: 'easeOut' },

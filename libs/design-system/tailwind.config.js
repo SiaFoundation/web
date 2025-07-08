@@ -1,11 +1,6 @@
-const { createGlobPatternsForDependencies } = require('@nx/react/tailwind')
-const { join } = require('path')
-
 // This file provides tailwind intellisense within design-system src files.
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    join(__dirname, 'src/**/*!(*.stories|*.spec).{ts,tsx,html}'),
-    ...createGlobPatternsForDependencies(__dirname),
-  ],
+  content: ['./src/**/*!(*.stories|*.spec).{ts,tsx,html}'],
   presets: [require('./src/style/theme.js')],
 }

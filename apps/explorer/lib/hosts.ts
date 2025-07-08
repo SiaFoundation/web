@@ -171,8 +171,9 @@ function rankHosts(hosts: ExplorerHost[] | undefined) {
 }
 
 export async function getTopHosts(exploredAddress: string) {
+  const explored = await getExplored(exploredAddress)
   const [hosts, hostsError] = await to(
-    getExplored(exploredAddress).hostsList({
+    explored.hostsList({
       params: { sortBy: 'date_created', dir: 'asc', limit: 500 },
       data: { online: true, acceptContracts: true },
     })

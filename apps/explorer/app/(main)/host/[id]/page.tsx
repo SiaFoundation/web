@@ -24,8 +24,9 @@ export const revalidate = 0
 
 export default async function Page({ params }: ExplorerPageProps) {
   const id = params?.id
+  const explored = await getExplored()
   const [host, hostError, hostResponse] = await to(
-    getExplored().hostByPubkey({ params: { id } })
+    explored.hostByPubkey({ params: { id } })
   )
 
   if (hostError) {

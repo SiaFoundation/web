@@ -7,6 +7,7 @@
   "targets": {
     "build": {
       "executor": "@nx/next:build",
+      "dependsOn": ["sdk:build"],
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
@@ -32,7 +33,8 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "walletd:build",
-        "port": 3008
+        "port": 3008,
+        "turbo": true
       },
       "configurations": {
         "development": {

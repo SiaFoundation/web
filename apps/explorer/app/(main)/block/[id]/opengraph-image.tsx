@@ -29,10 +29,11 @@ const formatOGImage = (id: string) => {
 export default async function Image({ params }: ExplorerPageProps) {
   let id: string
 
+  const explored = await getExplored()
   // Check if the incoming id is referencing height.
   if (!isNaN(Number(params.id))) {
     // If it is, we need the block ID at that height.
-    const { data: tipAtHeight } = await getExplored().consensusTipByHeight({
+    const { data: tipAtHeight } = await explored.consensusTipByHeight({
       params: { height: Number(params.id) },
     })
     id = tipAtHeight.id
@@ -42,7 +43,7 @@ export default async function Image({ params }: ExplorerPageProps) {
   }
 
   try {
-    const { data: block } = await getExplored().blockByID({ params: { id } })
+    const { data: block } = await explored.blockByID({ params: { id } })
     const values = [
       {
         label: 'transactions',

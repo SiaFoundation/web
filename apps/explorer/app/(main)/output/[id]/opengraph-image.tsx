@@ -32,14 +32,15 @@ export default async function Image({ params }: ExplorerPageProps) {
   const id = params.id
 
   try {
-    const { data: searchResultType } = await getExplored().searchResultType({
+    const explored = await getExplored()
+    const { data: searchResultType } = await explored.searchResultType({
       params: { id },
     })
 
     if (!searchResultType) return formatOGImage(id)
 
     if (searchResultType === 'siacoinElement') {
-      const [output] = await to(getExplored().outputSiacoin({ params: { id } }))
+      const [output] = await to(explored.outputSiacoin({ params: { id } }))
 
       if (!output) return formatOGImage(id)
 
@@ -62,7 +63,7 @@ export default async function Image({ params }: ExplorerPageProps) {
         size
       )
     } else if (searchResultType === 'siafundElement') {
-      const [output] = await to(getExplored().outputSiafund({ params: { id } }))
+      const [output] = await to(explored.outputSiafund({ params: { id } }))
 
       if (!output) return formatOGImage(id)
 

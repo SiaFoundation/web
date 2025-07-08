@@ -5,7 +5,7 @@ import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { Paragraph } from './Paragraph'
 import { cx } from 'class-variance-authority'
 import { panelStyles } from './Panel'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, Variants } from 'motion/react'
 import { useOpen } from '../hooks/useOpen'
 
 type TooltipProps = Omit<
@@ -19,7 +19,7 @@ type TooltipProps = Omit<
   content: React.ReactNode
 }
 
-const variants = {
+const variants: Variants = {
   show: {
     opacity: [0, 1],
     scale: [0.95, 1],

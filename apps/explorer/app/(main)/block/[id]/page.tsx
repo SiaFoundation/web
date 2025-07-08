@@ -36,10 +36,11 @@ export const revalidate = 0
 export default async function Page({ params }: ExplorerPageProps) {
   let id: string
 
+  const explored = await getExplored()
   // Check if the incoming id is referencing height.
   if (!isNaN(Number(params?.id))) {
     // If it is, we need the block ID at that height.
-    const { data: tipAtHeight } = await getExplored().consensusTipByHeight({
+    const { data: tipAtHeight } = await explored.consensusTipByHeight({
       params: { height: Number(params?.id) },
     })
     id = tipAtHeight.id
@@ -52,8 +53,8 @@ export default async function Page({ params }: ExplorerPageProps) {
   // currentTip for next block navigation handling.
   const [[block, blockError, blockResponse], { data: currentTipInfo }] =
     await Promise.all([
-      to(getExplored().blockByID({ params: { id } })),
-      getExplored().consensusTip(),
+      to(explored.blockByID({ params: { id } })),
+      explored.consensusTip(),
     ])
 
   if (blockError) {

@@ -13,7 +13,7 @@ export function ListWithSeparators({ separator, children }: Props) {
         ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (child.type as any)(child.props) !== null
         : true)
-  ) as React.ReactElement[]
+  ) as React.ReactElement<{ id?: string; name?: string }>[]
   return (
     <>
       {filteredChildren.map((child, index) => (

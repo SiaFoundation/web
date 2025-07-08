@@ -4,7 +4,7 @@ import { getExploredAddress } from '../../../lib/explored'
 import { Map } from '../../../components/Map'
 
 export default async function Page() {
-  const exploredAddress = getExploredAddress()
+  const exploredAddress = await getExploredAddress()
   const [hosts, stats] = await Promise.all([
     getGeoHosts(exploredAddress),
     getStats(exploredAddress),

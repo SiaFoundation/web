@@ -26,13 +26,14 @@ export const revalidate = 0
 export default async function Page({ params }: ExplorerPageProps) {
   const id = params?.id as string
 
-  const { data: searchResultType } = await getExplored().searchResultType({
+  const explored = await getExplored()
+  const { data: searchResultType } = await explored.searchResultType({
     params: { id },
   })
 
   if (searchResultType === 'siacoinElement') {
     const [output, outputError, outputResponse] = await to(
-      getExplored().outputSiacoin({ params: { id } })
+      explored.outputSiacoin({ params: { id } })
     )
 
     if (outputError) {
@@ -43,7 +44,7 @@ export default async function Page({ params }: ExplorerPageProps) {
     return <Output outputElement={output} />
   } else if (searchResultType === 'siafundElement') {
     const [output, outputError, outputResponse] = await to(
-      getExplored().outputSiafund({ params: { id } })
+      explored.outputSiafund({ params: { id } })
     )
 
     if (outputError) {

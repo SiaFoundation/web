@@ -2,13 +2,14 @@ import { ExplorerBlock } from '@siafoundation/explored-types'
 import { getExplored } from './explored'
 
 export async function getBlockByHeight(height: number) {
+  const explored = await getExplored()
   // Grab the tip at this height.
-  const { data: tip } = await getExplored().consensusTipByHeight({
+  const { data: tip } = await explored.consensusTipByHeight({
     params: { height },
   })
 
   // Return the block with the ID at this tip height.
-  const { data: block } = await getExplored().blockByID({
+  const { data: block } = await explored.blockByID({
     params: { id: tip.id },
   })
 
@@ -18,15 +19,16 @@ export async function getBlockByHeight(height: number) {
 export async function getLatestBlocks(
   n = 6
 ): Promise<[ExplorerBlock[], undefined] | [undefined, Error]> {
+  const explored = await getExplored()
   // Grab the latest tip.
-  const { data: latestTip } = await getExplored().consensusTip()
+  const { data: latestTip } = await explored.consensusTip()
 
   const fetchedBlocks: ExplorerBlock[] = []
   let parentBlockID = latestTip.id
 
   // Fetch the latest n blocks.
   for (let i = 1; i <= n; i++) {
-    const { data: block } = await getExplored().blockByID({
+    const { data: block } = await explored.blockByID({
       params: { id: parentBlockID },
     })
     parentBlockID = block.parentID

@@ -26,21 +26,22 @@ export const revalidate = 0
 export default async function Page({ params }: ExplorerPageProps) {
   const id = params?.id
 
+  const explored = await getExplored()
   const [
     { data: searchResultType },
     {
       data: { height: currentHeight },
     },
   ] = await Promise.all([
-    getExplored().searchResultType({
+    explored.searchResultType({
       params: { id },
     }),
-    getExplored().consensusTip(),
+    explored.consensusTip(),
   ])
 
   if (searchResultType === 'contract') {
     const [c, contractError, contractResponse] = await to(
-      getExplored().contractByID({ params: { id } })
+      explored.contractByID({ params: { id } })
     )
 
     if (contractError) {
@@ -49,22 +50,22 @@ export default async function Page({ params }: ExplorerPageProps) {
     }
 
     const contract = normalizeContract(c, currentHeight)
-    const { data: contractRevisions } = await getExplored().contractRevisions({
+    const { data: contractRevisions } = await explored.contractRevisions({
       params: { id },
     })
 
     const formationTxnID =
       contractRevisions[0].transactionID ?? contract.transactionID
 
-    const { data: formationTransaction } = await getExplored().transactionByID({
+    const { data: formationTransaction } = await explored.transactionByID({
       params: { id: formationTxnID },
     })
     const { data: formationTxnChainIndices } =
-      await getExplored().transactionChainIndices({
+      await explored.transactionChainIndices({
         params: { id: formationTxnID },
       })
 
-    const { data: parentBlock } = await getExplored().blockByID({
+    const { data: parentBlock } = await explored.blockByID({
       params: { id: formationTxnChainIndices[0].id },
     })
 
@@ -86,7 +87,7 @@ export default async function Page({ params }: ExplorerPageProps) {
     )
   } else if (searchResultType === 'v2Contract') {
     const [c, contractError, contractResponse] = await to(
-      getExplored().v2ContractByID({ params: { id } })
+      explored.v2ContractByID({ params: { id } })
     )
 
     if (contractError) {
@@ -95,22 +96,22 @@ export default async function Page({ params }: ExplorerPageProps) {
     }
 
     const contract = normalizeContract(c, currentHeight)
-    const { data: contractRevisions } =
-      await getExplored().v2ContractRevisionsByID({ params: { id } })
+    const { data: contractRevisions } = await explored.v2ContractRevisionsByID({
+      params: { id },
+    })
 
     const formationTxnID =
       contractRevisions[0].transactionID ?? contract.transactionID
 
-    const { data: formationTransaction } =
-      await getExplored().v2TransactionByID({
-        params: { id: formationTxnID },
-      })
+    const { data: formationTransaction } = await explored.v2TransactionByID({
+      params: { id: formationTxnID },
+    })
     const { data: formationTxnChainIndices } =
-      await getExplored().v2TransactionChainIndices({
+      await explored.v2TransactionChainIndices({
         params: { id: formationTxnID },
       })
 
-    const { data: parentBlock } = await getExplored().blockByID({
+    const { data: parentBlock } = await explored.blockByID({
       params: { id: formationTxnChainIndices[0].id },
     })
 

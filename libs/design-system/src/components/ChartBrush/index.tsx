@@ -104,29 +104,31 @@ function Chart({
           margin={margin}
           gradientColor={accentColor}
         >
-          <PatternLines
-            id={PATTERN_ID}
-            height={8}
-            width={8}
-            stroke={patternColor}
-            strokeWidth={3}
-            orientation={['diagonal']}
-          />
-          <Brush
-            xScale={brushTimeScale}
-            yScale={brushValueScale}
-            width={xMax}
-            height={yMax}
-            margin={margin}
-            handleSize={8}
-            innerRef={brushRef}
-            resizeTriggerAreas={['left', 'right']}
-            brushDirection="horizontal"
-            initialBrushPosition={initialBrushPosition}
-            onChange={onBrushChange}
-            selectedBoxStyle={selectedBrushStyle}
-            useWindowMoveEvents
-          />
+          <>
+            <PatternLines
+              id={PATTERN_ID}
+              height={8}
+              width={8}
+              stroke={patternColor}
+              strokeWidth={3}
+              orientation={['diagonal']}
+            />
+            <Brush
+              xScale={brushTimeScale}
+              yScale={brushValueScale}
+              width={xMax}
+              height={yMax}
+              margin={margin}
+              handleSize={8}
+              innerRef={brushRef}
+              resizeTriggerAreas={['left', 'right']}
+              brushDirection="horizontal"
+              initialBrushPosition={initialBrushPosition}
+              onChange={onBrushChange}
+              selectedBoxStyle={selectedBrushStyle}
+              useWindowMoveEvents
+            />
+          </>
         </AreaChart>
       </svg>
     </div>

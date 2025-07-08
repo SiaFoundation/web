@@ -15,9 +15,10 @@ export const size = {
 export const contentType = 'image/png'
 
 export default async function Image() {
+  const explored = await getExplored()
   const [{ data: tip }, { data: hostMetrics }] = await Promise.all([
-    getExplored().consensusTip(),
-    getExplored().hostMetrics(),
+    explored.consensusTip(),
+    explored.hostMetrics(),
   ])
 
   const values: PreviewValue[] = []

@@ -24,16 +24,17 @@ function LearnMore({ color }: { color: string }) {
 export async function HardforkCountdown({ network }: { network: string }) {
   const isMainnet = network === 'mainnet'
   const networkName = isMainnet ? 'mainnet' : 'the zen network'
+  const explored = await getExplored()
   const [
     { data: chainIndex },
     { data: consensusNetwork },
     { data: consensusState },
     { data: blockMetrics },
   ] = await Promise.all([
-    getExplored().consensusTip(),
-    getExplored().consensusNetwork(),
-    getExplored().consensusState(),
-    getExplored().blockMetrics(),
+    explored.consensusTip(),
+    explored.consensusNetwork(),
+    explored.consensusState(),
+    explored.blockMetrics(),
   ])
 
   // If the node is not synced, don't show the countdown.

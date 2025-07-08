@@ -30,8 +30,9 @@ export const revalidate = 0
 export default async function Page({ params }: ExplorerPageProps) {
   const id = params?.id as string
 
+  const explored = await getExplored()
   // Do we have a v1 or v2 transaction?
-  const { data: searchResult } = await getExplored().searchResultType({
+  const { data: searchResult } = await explored.searchResultType({
     params: { id },
   })
 
@@ -42,9 +43,9 @@ export default async function Page({ params }: ExplorerPageProps) {
       { data: transactionChainIndices },
       { data: currentTip },
     ] = await Promise.all([
-      to(getExplored().transactionByID({ params: { id } })),
-      getExplored().transactionChainIndices({ params: { id } }),
-      getExplored().consensusTip(),
+      to(explored.transactionByID({ params: { id } })),
+      explored.transactionChainIndices({ params: { id } }),
+      explored.consensusTip(),
     ])
 
     if (transactionError) {
@@ -52,7 +53,7 @@ export default async function Page({ params }: ExplorerPageProps) {
       throw transactionError
     }
 
-    const { data: parentBlock } = await getExplored().blockByID({
+    const { data: parentBlock } = await explored.blockByID({
       params: { id: transactionChainIndices[0].id },
     })
     return (
@@ -75,9 +76,9 @@ export default async function Page({ params }: ExplorerPageProps) {
       { data: transactionChainIndices },
       { data: currentTip },
     ] = await Promise.all([
-      to(getExplored().v2TransactionByID({ params: { id } })),
-      getExplored().v2TransactionChainIndices({ params: { id } }),
-      getExplored().consensusTip(),
+      to(explored.v2TransactionByID({ params: { id } })),
+      explored.v2TransactionChainIndices({ params: { id } }),
+      explored.consensusTip(),
     ])
 
     if (transactionError) {
@@ -85,7 +86,7 @@ export default async function Page({ params }: ExplorerPageProps) {
       throw transactionError
     }
 
-    const { data: parentBlock } = await getExplored().blockByID({
+    const { data: parentBlock } = await explored.blockByID({
       params: { id: transactionChainIndices[0].id },
     })
     return (

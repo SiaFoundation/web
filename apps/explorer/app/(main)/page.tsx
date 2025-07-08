@@ -35,12 +35,14 @@ const getCachedTopHosts = unstable_cache(
 )
 
 export default async function HomePage() {
+  const explored = await getExplored()
+
   const [{ data: hostMetrics }, { data: blockMetrics }] = await Promise.all([
-    getExplored().hostMetrics(),
-    getExplored().blockMetrics(),
+    explored.hostMetrics(),
+    explored.blockMetrics(),
   ])
 
-  const exploredAddress = getExploredAddress()
+  const exploredAddress = await getExploredAddress()
   const selectedTopHosts = await getCachedTopHosts(exploredAddress)
 
   const [latestBlocks, latestBlocksError] = await getLatestBlocks()

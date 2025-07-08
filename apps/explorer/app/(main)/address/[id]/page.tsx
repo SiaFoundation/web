@@ -25,16 +25,17 @@ export const revalidate = 0
 export default async function Page({ params }: ExplorerPageProps) {
   const address = params.id
 
+  const explored = await getExplored()
   const [
     [balance, balanceError, balanceResponse],
     { data: unconfirmedEvents },
     { data: unspentOutputs },
     { data: explorerTip },
   ] = await Promise.all([
-    to(getExplored().addressBalance({ params: { address } })),
-    getExplored().addressUnconfirmedEvents({ params: { address } }),
-    getExplored().addressSiacoinUTXOs({ params: { address } }),
-    getExplored().explorerTip(),
+    to(explored.addressBalance({ params: { address } })),
+    explored.addressUnconfirmedEvents({ params: { address } }),
+    explored.addressSiacoinUTXOs({ params: { address } }),
+    explored.explorerTip(),
   ])
 
   if (balanceError) {
