@@ -32,7 +32,8 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "walletd:build",
-        "port": 3008
+        "port": 3008,
+        "turbo": true
       },
       "configurations": {
         "development": {

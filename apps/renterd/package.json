@@ -27,7 +27,9 @@
     "formik": "^2.2.9",
     "jszip": "^3.10.1",
     "msw": "^2.4.9",
+    "next": "^15.3.5",
     "next-themes": "^0.2.1",
+    "react": "^19.1.0",
     "react-dropzone": "^14.2.3",
     "react-globe.gl": "^2.24.2",
     "react-hook-form": "^7.52.0",
@@ -35,8 +37,6 @@
     "use-debounce": "^9.0.3",
     "use-local-storage-state": "^18.3.3",
     "usehooks-ts": "^2.9.1",
-    "yup": "^0.32.11",
-    "next": "14.2.30",
-    "react": "18.3.1"
+    "yup": "^0.32.11"
   }
 }
