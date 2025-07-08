@@ -19,8 +19,8 @@ export const metadata = {
   ),
 }
 
-function getUserCurrencyPreferenceCookie() {
-  const cookieStore = cookies()
+async function getUserCurrencyPreferenceCookie() {
+  const cookieStore = await cookies()
   const currency = cookieStore.get('currency')?.value as CurrencyID
   return currency || 'usd'
 }
@@ -30,7 +30,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const currency = getUserCurrencyPreferenceCookie()
+  const currency = await getUserCurrencyPreferenceCookie()
   return (
     <html lang="en" suppressHydrationWarning className={rootFontClasses}>
       <body>
@@ -45,7 +45,7 @@ export default async function RootLayout({
             // Pass any custom explored address to the client-side. The cookie is
             // only allowed in development mode and is used to point the explorer
             // to a local cluster.
-            ...buildFallbackDataExploredAddress(),
+            ...(await buildFallbackDataExploredAddress()),
           }}
         >
           {children}

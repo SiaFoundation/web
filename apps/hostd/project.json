@@ -32,7 +32,8 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "hostd:build",
-        "port": 3006
+        "port": 3006,
+        "turbo": true
       },
       "configurations": {
         "development": {

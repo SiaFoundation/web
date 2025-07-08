@@ -7,18 +7,19 @@ import {
 } from '../config/explored'
 
 // Allow passing a custom explored address via a cookie for testing purposes.
-function getExploredAddressCookie() {
-  const cookieStore = cookies()
+async function getExploredAddressCookie() {
+  const cookieStore = await cookies()
   const customExploredAddress = cookieStore.get(
     exploredCustomApiCookieName
   )?.value
   return customExploredAddress
 }
 
-export function buildFallbackDataExploredAddress() {
+export async function buildFallbackDataExploredAddress() {
   if (process.env.NODE_ENV === 'development') {
     return {
-      [exploredCustomApiSwrKey]: getExploredAddressCookie() || exploredApi,
+      [exploredCustomApiSwrKey]:
+        (await getExploredAddressCookie()) || exploredApi,
     }
   }
   return {
@@ -26,19 +27,19 @@ export function buildFallbackDataExploredAddress() {
   }
 }
 
-export function getExploredAddress() {
+export async function getExploredAddress() {
   if (process.env.NODE_ENV === 'development') {
-    return getExploredAddressCookie() || exploredApi
+    return (await getExploredAddressCookie()) || exploredApi
   }
   return exploredApi
 }
 
-export function getExplored(explicitAddress?: string) {
+export async function getExplored(explicitAddress?: string) {
   if (explicitAddress) {
     return Explored({ api: explicitAddress })
   }
   if (process.env.NODE_ENV === 'development') {
-    const exploredAddress = getExploredAddress()
+    const exploredAddress = await getExploredAddress()
     return Explored({ api: exploredAddress })
   }
   return Explored({ api: exploredApi })

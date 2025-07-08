@@ -8,7 +8,8 @@ import { getExplored } from './explored'
 // config's fallback prop allows the exchange rate hooks with a matching
 // key to server-render with an initial exchange rate value.
 export async function buildFallbackDataExchangeRate(currency: CurrencyID) {
-  const { data: rate } = await getExplored().exchangeRate({
+  const explored = await getExplored()
+  const { data: rate } = await explored.exchangeRate({
     params: { currency: 'usd' },
   })
   return {

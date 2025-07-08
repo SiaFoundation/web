@@ -14,8 +14,9 @@ const minDegreesApart = 1
 
 export const getGeoHosts = unstable_cache(
   async (exploredAddress: string): Promise<ExplorerPartialHost[]> => {
+    const explored = await getExplored(exploredAddress)
     const [results, error] = await to(
-      getExplored(exploredAddress).hostsList({
+      explored.hostsList({
         params: {
           sortBy: 'uptime',
           dir: 'desc',

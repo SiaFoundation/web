@@ -4,9 +4,10 @@ import { Warning24 } from '@siafoundation/react-icons'
 import { getExplored } from '../../lib/explored'
 
 export async function SyncWarning() {
+  const explored = await getExplored()
   const [{ data: consensusState }, { data: blockMetrics }] = await Promise.all([
-    getExplored().consensusState(),
-    getExplored().blockMetrics(),
+    explored.consensusState(),
+    explored.blockMetrics(),
   ])
 
   const isSynced = getIsSynced(consensusState)

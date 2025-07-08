@@ -26,8 +26,9 @@ export default async function Image({ params }: ExplorerPageProps) {
   const id = params?.id as string
 
   try {
-    const { data: host } = await getExplored().hostByPubkey({ params: { id } })
-    const { data: rate } = await getExplored().exchangeRate({
+    const explored = await getExplored()
+    const { data: host } = await explored.hostByPubkey({ params: { id } })
+    const { data: rate } = await explored.exchangeRate({
       params: { currency: 'usd' },
     })
 

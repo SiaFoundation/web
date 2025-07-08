@@ -18,7 +18,8 @@ export default async function Image({ params }: ExplorerPageProps) {
   const address = params?.id as string
 
   try {
-    const { data: balance } = await getExplored().addressBalance({
+    const explored = await getExplored()
+    const { data: balance } = await explored.addressBalance({
       params: { address },
     })
 

@@ -29,7 +29,8 @@ export default async function Image({ params }: ExplorerPageProps) {
   const id = params?.id as string
 
   try {
-    const { data: searchResult } = await getExplored().searchResultType({
+    const explored = await getExplored()
+    const { data: searchResult } = await explored.searchResultType({
       params: { id },
     })
     if (searchResult === 'transaction') {
@@ -38,11 +39,11 @@ export default async function Image({ params }: ExplorerPageProps) {
         { data: transactionChainIndices },
         { data: currentTip },
       ] = await Promise.all([
-        getExplored().transactionByID({ params: { id } }),
-        getExplored().transactionChainIndices({ params: { id } }),
-        getExplored().consensusTip(),
+        explored.transactionByID({ params: { id } }),
+        explored.transactionChainIndices({ params: { id } }),
+        explored.consensusTip(),
       ])
-      const { data: relatedBlock } = await getExplored().blockByID({
+      const { data: relatedBlock } = await explored.blockByID({
         params: { id: transactionChainIndices[0].id },
       })
 
@@ -84,11 +85,11 @@ export default async function Image({ params }: ExplorerPageProps) {
         { data: transactionChainIndices },
         { data: currentTip },
       ] = await Promise.all([
-        getExplored().v2TransactionByID({ params: { id } }),
-        getExplored().v2TransactionChainIndices({ params: { id } }),
-        getExplored().consensusTip(),
+        explored.v2TransactionByID({ params: { id } }),
+        explored.v2TransactionChainIndices({ params: { id } }),
+        explored.consensusTip(),
       ])
-      const { data: relatedBlock } = await getExplored().blockByID({
+      const { data: relatedBlock } = await explored.blockByID({
         params: { id: transactionChainIndices[0].id },
       })
       const confirmations =

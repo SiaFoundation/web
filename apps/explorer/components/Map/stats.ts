@@ -13,7 +13,7 @@ export type Stats = Awaited<ReturnType<typeof getStats>>
 
 export const getStats = unstable_cache(
   async (exploredAddress: string) => {
-    const explored = getExplored(exploredAddress)
+    const explored = await getExplored(exploredAddress)
     const [[latestBlock], [hostMetrics], github] = await Promise.all([
       to(explored.consensusTip()),
       to(explored.hostMetrics()),

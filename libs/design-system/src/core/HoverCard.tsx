@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, Variants } from 'motion/react'
 import * as HoverCardPrimitive from '@radix-ui/react-hover-card'
 import { panelStyles } from './Panel'
 import { cva, cx } from 'class-variance-authority'
@@ -29,7 +29,7 @@ type Props = {
   children: React.ReactNode
 }
 
-const variants = {
+const variants: Variants = {
   show: {
     opacity: [0, 1],
     scale: [0.95, 1],
