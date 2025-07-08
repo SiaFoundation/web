@@ -20,7 +20,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup-all
         with:
-          node_version: 22.12.0
+          bun_version: 1.2.18
           go_version: 1.24.3
       - name: Release
         run: ./scripts/release-go.sh

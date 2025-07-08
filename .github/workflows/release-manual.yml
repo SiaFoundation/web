@@ -21,7 +21,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup-all
         with:
-          node_version: 22.12.0
+          bun_version: 1.2.18
           go_version: 1.24.3
       # The SDK is referenced via dist in the tsconfig.base.json
       # because the next executor does not actually support
@@ -30,10 +30,10 @@ jobs:
       # when it is an app dependency
       - name: Force build SDK
         shell: bash
-        run: npx nx run sdk:build
+        run: bunx nx run sdk:build
       - name: Build for publishing
         shell: bash
-        run: npx nx run-many --target=build --configuration=production --all --parallel=5
+        run: bunx nx run-many --target=build --configuration=production --all --parallel=5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
@@ -49,7 +49,7 @@ jobs:
         id: changesets_release
         uses: changesets/action@v1
         with:
-          publish: npm run release
+          publish: bun run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -71,7 +71,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup-all
         with:
-          node_version: 22.12.0
+          bun_version: 1.2.18
           go_version: 1.24.3
       - uses: docker/setup-buildx-action@v2
       - uses: docker/login-action@v2
@@ -86,17 +86,17 @@ jobs:
       # when it is an app dependency
       - name: Force build SDK
         shell: bash
-        run: npx nx run sdk:build
+        run: bunx nx run sdk:build
       - name: Containers
         shell: bash
-        run: npx nx run-many --target=container --configuration=production -all --parallel=5
+        run: bunx nx run-many --target=container --configuration=production -all --parallel=5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           CCRI_TOKEN: ${{ secrets.CCRI_TOKEN }}
       - name: Containers zen
         shell: bash
-        run: npx nx run-many --target=container --configuration=production-testnet-zen -all --parallel=5
+        run: bunx nx run-many --target=container --configuration=production-testnet-zen -all --parallel=5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}

@@ -12,9 +12,9 @@
     "detect-gpu": "^5.0.34"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
     "@siafoundation/types": "0.12.1",
-    "@technically/lodash": "^4.17.0"
+    "@technically/lodash": "^4.17.0",
+    "react": "18.3.1"
   },
   "types": "./src/index.d.ts"
 }

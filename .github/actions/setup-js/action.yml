@@ -3,10 +3,10 @@ name: Setup JS
 description: Setup JS environment and dependencies
 
 inputs:
-  node_version:
-    description: Node.js version
+  bun_version:
+    description: Bun version
     required: false
-    default: 22.12.0
+    default: 1.2.18
   base_ref:
     description: Determines which base SHA to use ('base' for a specific SHA/branch, 'last_successful' for the last successful workflow)
     required: false
@@ -15,10 +15,9 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: actions/setup-node@v4
+    - uses: oven-sh/setup-bun@v2
       with:
-        node-version: ${{ inputs.node_version }}
-        registry-url: https://registry.npmjs.org
+        bun-version: ${{ inputs.bun_version }}
     - name: Derive appropriate SHAs for base and head for `nx affected` commands
       uses: nrwl/nx-set-shas@v4
     - name: Derive last successful base SHA for `nx affected` commands
@@ -30,21 +29,16 @@ runs:
       run: |
         echo "NX_BASE=${{ github.event.pull_request.base.sha }}" >> $GITHUB_ENV
         echo "NX_HEAD=${{ github.sha }}" >> $GITHUB_ENV
-    - name: Set up node cache
+    - name: Set up bun cache
       uses: actions/cache@v4
       with:
-        # See here for caching with `yarn` https://github.com/actions/cache/blob/main/examples.md#node---yarn or you can leverage caching with actions/setup-node https://github.com/actions/setup-node
         path: |
-          ~/.npm
-          ~/node_modules
+          ~/.bun/install/cache
           ${{ github.workspace }}/apps/*/dist/.next/cache
-        # Generate a new cache whenever packages or source files change.
-        key: ${{ runner.os }}-${{ inputs.node_version }}-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-        # If source files changed but packages didn't, rebuild from a prior cache.
+        key: ${{ runner.os }}-bun-${{ inputs.bun_version }}-${{ hashFiles('**/bun.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
         restore-keys: |
-          ${{ runner.os }}-${{ inputs.node_version }}-${{ hashFiles('**/package-lock.json') }}-
+          ${{ runner.os }}-bun-${{ inputs.bun_version }}-${{ hashFiles('**/bun.lock') }}-
+          ${{ runner.os }}-bun-
     - name: Install JavaScript dependencies
-      # could do this since its a ci, but it force rebuilds node_modules
-      # run: npm ci
-      run: npm install
+      run: bun install
       shell: bash

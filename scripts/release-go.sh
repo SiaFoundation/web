@@ -15,7 +15,7 @@ do
     if [ -z "$tag" ]
     then
       echo "Tag $go_release does not exists, exporting app"
-      npx nx run $app:build:export
+      bunx nx run $app:build:export
       mkdir -p $app/assets
       rm -rf $app/assets/*
       cp -R dist/apps/$app-export/.next/* $app/assets/
