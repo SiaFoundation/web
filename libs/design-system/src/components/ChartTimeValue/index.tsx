@@ -401,30 +401,32 @@ const Chart = withTooltip<ChartProps, TooltipData>(
               top={topChartHeight + topChartBottomMargin + margin.top}
               gradientColor={accentColor}
             >
-              <PatternLines
-                id={PATTERN_ID}
-                height={8}
-                width={8}
-                stroke={accentColor}
-                strokeWidth={1}
-                orientation={['diagonal']}
-              />
-              <Brush
-                xScale={brushTimeScale}
-                yScale={brushValueScale}
-                width={xBrushMax}
-                height={yBrushMax}
-                margin={brushMargin}
-                handleSize={8}
-                innerRef={brushRef}
-                resizeTriggerAreas={['left', 'right']}
-                brushDirection="horizontal"
-                initialBrushPosition={initialBrushPosition}
-                onChange={onBrushChange}
-                onClick={() => setFilteredDataset(dataset)}
-                selectedBoxStyle={selectedBrushStyle}
-                useWindowMoveEvents
-              />
+              <>
+                <PatternLines
+                  id={PATTERN_ID}
+                  height={8}
+                  width={8}
+                  stroke={accentColor}
+                  strokeWidth={1}
+                  orientation={['diagonal']}
+                />
+                <Brush
+                  xScale={brushTimeScale}
+                  yScale={brushValueScale}
+                  width={xBrushMax}
+                  height={yBrushMax}
+                  margin={brushMargin}
+                  handleSize={8}
+                  innerRef={brushRef}
+                  resizeTriggerAreas={['left', 'right']}
+                  brushDirection="horizontal"
+                  initialBrushPosition={initialBrushPosition}
+                  onChange={onBrushChange}
+                  onClick={() => setFilteredDataset(dataset)}
+                  selectedBoxStyle={selectedBrushStyle}
+                  useWindowMoveEvents
+                />
+              </>
             </AreaChart>
           )}
           {tooltipData && (
