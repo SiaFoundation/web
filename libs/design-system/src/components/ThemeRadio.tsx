@@ -7,22 +7,27 @@ import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 import { Tooltip } from '../core/Tooltip'
 import { cx } from 'class-variance-authority'
 
-const RadioCard = React.forwardRef<
-  React.ElementRef<typeof RadioGroupPrimitive.Item>,
-  RadioGroupPrimitive.RadioGroupItemProps
->(({ className, ...props }, ref) => (
-  <RadioGroupPrimitive.Item
-    {...props}
-    ref={ref}
-    className={cx(
-      'select-none flex items-center rounded cursor-pointer',
-      'focus:ring ring-blue-500 dark:ring-blue-200',
-      'text-gray-700 dark:text-graydark-700',
-      'data-[state=checked]:text-gray-1100 data-[state=checked]:dark:text-white',
-      className
-    )}
-  />
-))
+function RadioCard({
+  ref,
+  className,
+  ...props
+}: RadioGroupPrimitive.RadioGroupItemProps & {
+  ref?: React.RefObject<HTMLButtonElement>
+}) {
+  return (
+    <RadioGroupPrimitive.Item
+      {...props}
+      ref={ref}
+      className={cx(
+        'select-none flex items-center rounded cursor-pointer',
+        'focus:ring ring-blue-500 dark:ring-blue-200',
+        'text-gray-700 dark:text-graydark-700',
+        'data-[state=checked]:text-gray-1100 data-[state=checked]:dark:text-white',
+        className
+      )}
+    />
+  )
+}
 
 type Props = {
   tabIndex?: number

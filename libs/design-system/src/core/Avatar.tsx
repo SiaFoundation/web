@@ -64,61 +64,55 @@ const fallbackStyles = cva('uppercase', {
   },
 })
 
-export const Avatar = React.forwardRef<
-  React.ElementRef<typeof AvatarPrimitive.Root>,
-  VariantProps<typeof avatarStyles> &
-    AvatarPrimitive.AvatarProps &
-    AvatarPrimitive.AvatarImageProps & {
-      fallback?: string
-    }
->(
-  (
-    {
-      alt,
-      src,
-      fallback,
-      size,
-      variant,
-      shape,
-      interactive,
-      inactive,
-      className,
-      ...props
-    },
-    ref
-  ) => {
-    return (
-      <div className={cx('relative h-fit w-fit', className)}>
-        <AvatarPrimitive.Root
-          {...props}
-          ref={ref}
-          className={avatarStyles({
-            className,
-            size,
-            variant,
-            interactive,
-            inactive,
-            shape,
-          })}
-        >
-          {variant === 'filter' && (
-            <div
-              className="absolute w-full h-full z-10"
-              style={{
-                backgroundColor: 'rgba(30, 169, 76, 0.3)',
-              }}
-            />
-          )}
-          <AvatarPrimitive.Image
-            alt={alt}
-            src={src}
-            className="flex object-cover h-full align-middle w-full"
+export function Avatar({
+  ref,
+  alt,
+  src,
+  fallback,
+  size,
+  variant,
+  shape,
+  interactive,
+  inactive,
+  className,
+  ...props
+}: VariantProps<typeof avatarStyles> &
+  AvatarPrimitive.AvatarProps &
+  AvatarPrimitive.AvatarImageProps & {
+    fallback?: string
+    ref?: React.RefObject<HTMLDivElement>
+  }) {
+  return (
+    <div className={cx('relative h-fit w-fit', className)}>
+      <AvatarPrimitive.Root
+        {...props}
+        ref={ref}
+        className={avatarStyles({
+          className,
+          size,
+          variant,
+          interactive,
+          inactive,
+          shape,
+        })}
+      >
+        {variant === 'filter' && (
+          <div
+            className="absolute w-full h-full z-10"
+            style={{
+              backgroundColor: 'rgba(30, 169, 76, 0.3)',
+            }}
           />
-          <AvatarPrimitive.Fallback className={fallbackStyles({ size })}>
-            {fallback}
-          </AvatarPrimitive.Fallback>
-        </AvatarPrimitive.Root>
-      </div>
-    )
-  }
-)
+        )}
+        <AvatarPrimitive.Image
+          alt={alt}
+          src={src}
+          className="flex object-cover h-full align-middle w-full"
+        />
+        <AvatarPrimitive.Fallback className={fallbackStyles({ size })}>
+          {fallback}
+        </AvatarPrimitive.Fallback>
+      </AvatarPrimitive.Root>
+    </div>
+  )
+}

@@ -6,10 +6,11 @@ import * as TabsPrimitive from '@radix-ui/react-tabs'
 import { textStyles } from './Text'
 import { VariantProps } from '../types'
 
-export const Tabs = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.Root>,
-  TabsPrimitive.TabsProps
->(({ className, ...props }, ref) => {
+export function Tabs({
+  className,
+  ref,
+  ...props
+}: TabsPrimitive.TabsProps & { ref?: React.Ref<HTMLDivElement> }) {
   return (
     <TabsPrimitive.Root
       ref={ref}
@@ -17,12 +18,13 @@ export const Tabs = React.forwardRef<
       {...props}
     />
   )
-})
+}
 
-export const TabsList = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.List>,
-  TabsPrimitive.TabsListProps
->(({ className, ...props }, ref) => {
+export function TabsList({
+  className,
+  ref,
+  ...props
+}: TabsPrimitive.TabsListProps & { ref?: React.Ref<HTMLDivElement> }) {
   return (
     <TabsPrimitive.List
       ref={ref}
@@ -33,12 +35,17 @@ export const TabsList = React.forwardRef<
       {...props}
     />
   )
-})
+}
 
-export const TabsTrigger = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.Trigger>,
-  VariantProps<typeof textStyles> & TabsPrimitive.TabsTriggerProps
->(({ font, size = '16', weight = 'medium', className, ...props }, ref) => {
+export function TabsTrigger({
+  font,
+  size = '16',
+  weight = 'medium',
+  className,
+  ref,
+  ...props
+}: VariantProps<typeof textStyles> &
+  TabsPrimitive.TabsTriggerProps & { ref?: React.Ref<HTMLButtonElement> }) {
   return (
     <TabsPrimitive.Trigger
       ref={ref}
@@ -60,12 +67,14 @@ export const TabsTrigger = React.forwardRef<
       {...props}
     />
   )
-})
+}
 
-export const TabsContent = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.Content>,
-  VariantProps<typeof textStyles> & TabsPrimitive.TabsContentProps
->(({ className, ...props }, ref) => {
+export function TabsContent({
+  className,
+  ref,
+  ...props
+}: VariantProps<typeof textStyles> &
+  TabsPrimitive.TabsContentProps & { ref?: React.Ref<HTMLDivElement> }) {
   return (
     <TabsPrimitive.Content
       ref={ref}
@@ -73,4 +82,4 @@ export const TabsContent = React.forwardRef<
       {...props}
     />
   )
-})
+}

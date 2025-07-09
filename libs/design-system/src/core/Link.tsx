@@ -58,149 +58,147 @@ export const linkStyles = ({
     className
   )
 
-export const Link = React.forwardRef<
-  HTMLAnchorElement,
-  Omit<React.ComponentProps<typeof BaseNextLink>, 'href'> &
-    LinkVariants & {
-      href?: string | UrlObject
-    }
->(
-  (
-    {
-      href,
-      font,
-      size,
-      scaleSize,
-      color,
-      weight,
-      noWrap,
-      ellipsis,
-      underline,
-      disabled,
-      className,
-      rel: _rel,
-      target,
-      onClick,
-      ...props
-    },
-    ref
-  ) => {
-    const rel = _rel || (target === '_blank' ? 'noopener' : undefined)
-    const handleClick = useCallback(
-      (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-        if (onClick) {
-          if (!href) {
-            e.preventDefault()
-          }
-          onClick(e)
-        }
-      },
-      [onClick, href]
-    )
-    return (
-      <BaseNextLink
-        href={href || '#'}
-        ref={ref}
-        className={linkStyles({
-          font,
-          scaleSize,
-          size,
-          color,
-          weight,
-          noWrap,
-          ellipsis,
-          underline,
-          disabled,
-          className,
-        })}
-        {...props}
-        onClick={handleClick}
-        rel={rel}
-        target={target}
-      />
-    )
+type LinkProps = Omit<React.ComponentProps<typeof BaseNextLink>, 'href'> &
+  LinkVariants & {
+    href?: string | UrlObject
+    ref?: React.RefObject<HTMLAnchorElement>
   }
-)
 
-export const LinkButton = React.forwardRef<
-  HTMLAnchorElement,
-  Omit<React.ComponentProps<typeof BaseNextLink>, 'href' | 'tip'> &
-    VariantProps<typeof buttonStyles> & {
-      href?: string | UrlObject
-      tip?: React.ReactNode
-    }
->(
-  (
-    {
-      href,
-      disabled,
-      variant,
-      size,
-      state,
-      rounded,
-      icon,
-      className,
-      tip,
-      rel: _rel,
-      target,
-      onClick,
-      ...props
-    },
-    ref
-  ) => {
-    const rel = _rel || (target === '_blank' ? 'noopener' : undefined)
-    const handleClick = useCallback(
-      (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-        if (onClick) {
-          if (!href) {
-            e.preventDefault()
-          }
-          onClick(e)
+export function Link({
+  ref,
+  href,
+  font,
+  size,
+  scaleSize,
+  color,
+  weight,
+  noWrap,
+  ellipsis,
+  underline,
+  disabled,
+  className,
+  rel: _rel,
+  target,
+  onClick,
+  ...props
+}: LinkProps) {
+  const rel = _rel || (target === '_blank' ? 'noopener' : undefined)
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+      if (onClick) {
+        if (!href) {
+          e.preventDefault()
         }
-      },
-      [onClick, href]
-    )
-    if (tip) {
-      return (
-        <Tooltip content={tip}>
-          <BaseNextLink
-            href={href || '#'}
-            ref={ref}
-            className={buttonStyles({
-              variant,
-              size,
-              state,
-              rounded,
-              disabled,
-              icon,
-              className,
-            })}
-            onClick={handleClick}
-            {...props}
-            rel={rel}
-            target={target}
-          />
-        </Tooltip>
-      )
-    }
+        onClick(e)
+      }
+    },
+    [onClick, href]
+  )
+  return (
+    <BaseNextLink
+      href={href || '#'}
+      ref={ref}
+      className={linkStyles({
+        font,
+        scaleSize,
+        size,
+        color,
+        weight,
+        noWrap,
+        ellipsis,
+        underline,
+        disabled,
+        className,
+      })}
+      {...props}
+      onClick={handleClick}
+      rel={rel}
+      target={target}
+    />
+  )
+}
+
+type LinkButtonProps = Omit<
+  React.ComponentProps<typeof BaseNextLink>,
+  'href' | 'tip'
+> &
+  VariantProps<typeof buttonStyles> & {
+    href?: string | UrlObject
+    tip?: React.ReactNode
+    rel: string
+    target: string
+    onClick: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
+    ref?: React.RefObject<HTMLAnchorElement>
+  }
+
+export function LinkButton({
+  ref,
+  href,
+  disabled,
+  variant,
+  size,
+  state,
+  rounded,
+  icon,
+  className,
+  tip,
+  rel: _rel,
+  target,
+  onClick,
+  ...props
+}: LinkButtonProps) {
+  const rel = _rel || (target === '_blank' ? 'noopener' : undefined)
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+      if (onClick) {
+        if (!href) {
+          e.preventDefault()
+        }
+        onClick(e)
+      }
+    },
+    [onClick, href]
+  )
+  if (tip) {
     return (
-      <BaseNextLink
-        href={href || '#'}
-        ref={ref}
-        className={buttonStyles({
-          variant,
-          size,
-          state,
-          rounded,
-          disabled,
-          icon,
-          className,
-        })}
-        onClick={handleClick}
-        {...props}
-        rel={rel}
-        target={target}
-      />
+      <Tooltip content={tip}>
+        <BaseNextLink
+          href={href || '#'}
+          ref={ref}
+          className={buttonStyles({
+            variant,
+            size,
+            state,
+            rounded,
+            disabled,
+            icon,
+            className,
+          })}
+          onClick={handleClick}
+          {...props}
+          rel={rel}
+          target={target}
+        />
+      </Tooltip>
     )
   }
-)
+  return (
+    <BaseNextLink
+      href={href || '#'}
+      ref={ref}
+      className={buttonStyles({
+        variant,
+        size,
+        state,
+        rounded,
+        disabled,
+        icon,
+        className,
+      })}
+      onClick={handleClick}
+      {...props}
+      rel={rel}
+      target={target}
+    />
+  )
+}

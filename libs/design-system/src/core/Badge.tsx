@@ -96,13 +96,23 @@ const styles = cva(
   }
 )
 
-export const Badge = React.forwardRef<
-  HTMLDivElement,
-  VariantProps<typeof styles> & React.HTMLAttributes<HTMLDivElement>
->(({ variant, size, interactive, rounded, className, ...props }, ref) => (
-  <div
-    {...props}
-    className={styles({ variant, size, interactive, rounded, className })}
-    ref={ref}
-  />
-))
+export function Badge({
+  ref,
+  variant,
+  size,
+  interactive,
+  rounded,
+  className,
+  ...props
+}: VariantProps<typeof styles> &
+  React.HTMLAttributes<HTMLDivElement> & {
+    ref?: React.RefObject<HTMLDivElement>
+  }) {
+  return (
+    <div
+      {...props}
+      className={styles({ variant, size, interactive, rounded, className })}
+      ref={ref}
+    />
+  )
+}

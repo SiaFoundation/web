@@ -53,37 +53,50 @@ export const radioStyles = cva(
   }
 )
 
-export const Radio = React.forwardRef<
-  React.ElementRef<typeof RadioGroupPrimitive.Item>,
-  VariantProps<typeof radioStyles> & RadioGroupPrimitive.RadioGroupItemProps
->(({ size, className, children, ...props }, ref) => (
-  <div className="flex gap-2 items-center">
-    <RadioGroupPrimitive.Item
-      {...props}
-      className={radioStyles({ size, className })}
-      ref={ref}
-    >
-      <RadioGroupPrimitive.Indicator
-        className={radioIndicatorStyles({ size })}
-      />
-    </RadioGroupPrimitive.Item>
-    <Text
-      size="14"
-      className="relative top-px flex items-center"
-      color={props.disabled ? 'verySubtle' : 'subtle'}
-    >
-      {children}
-    </Text>
-  </div>
-))
+export function Radio({
+  size,
+  className,
+  children,
+  ref,
+  ...props
+}: VariantProps<typeof radioStyles> &
+  RadioGroupPrimitive.RadioGroupItemProps & {
+    ref?: React.Ref<HTMLButtonElement>
+  }) {
+  return (
+    <div className="flex gap-2 items-center">
+      <RadioGroupPrimitive.Item
+        {...props}
+        className={radioStyles({ size, className })}
+        ref={ref}
+      >
+        <RadioGroupPrimitive.Indicator
+          className={radioIndicatorStyles({ size })}
+        />
+      </RadioGroupPrimitive.Item>
+      <Text
+        size="14"
+        className="relative top-px flex items-center"
+        color={props.disabled ? 'verySubtle' : 'subtle'}
+      >
+        {children}
+      </Text>
+    </div>
+  )
+}
 
-export const RadioGroup = React.forwardRef<
-  React.ElementRef<typeof RadioGroupPrimitive.RadioGroup>,
-  RadioGroupPrimitive.RadioGroupProps
->(({ className, ...props }, ref) => (
-  <RadioGroupPrimitive.RadioGroup
-    {...props}
-    className={cx('flex gap-2', className)}
-    ref={ref}
-  />
-))
+export function RadioGroup({
+  className,
+  ref,
+  ...props
+}: RadioGroupPrimitive.RadioGroupProps & {
+  ref?: React.Ref<HTMLDivElement>
+}) {
+  return (
+    <RadioGroupPrimitive.RadioGroup
+      {...props}
+      className={cx('flex gap-2', className)}
+      ref={ref}
+    />
+  )
+}

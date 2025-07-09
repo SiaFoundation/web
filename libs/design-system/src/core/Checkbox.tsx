@@ -36,10 +36,15 @@ const styles = cva(
   }
 )
 
-export const Checkbox = React.forwardRef<
-  React.ElementRef<typeof CheckboxPrimitive.Root>,
-  VariantProps<typeof styles> & CheckboxPrimitive.CheckboxProps
->(({ size, children, ...props }, ref) => {
+export function Checkbox({
+  ref,
+  size,
+  children,
+  ...props
+}: VariantProps<typeof styles> &
+  CheckboxPrimitive.CheckboxProps & {
+    ref?: React.RefObject<HTMLButtonElement>
+  }) {
   const el = (
     <CheckboxPrimitive.Root className={styles({ size })} {...props} ref={ref}>
       <CheckboxPrimitive.Indicator className="flex items-center justify-center h-full w-full text-white">
@@ -56,4 +61,4 @@ export const Checkbox = React.forwardRef<
       <Text color={props.disabled ? 'subtle' : 'contrast'}>{children}</Text>
     </div>
   )
-})
+}

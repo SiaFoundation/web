@@ -23,13 +23,21 @@ const styles = cva(['font-mono', 'whitespace-nowrap', 'rounded'], {
   },
 })
 
-export const Code = React.forwardRef<
-  HTMLElement,
-  React.HTMLAttributes<HTMLElement> & VariantProps<typeof styles>
->(({ color, className, ellipsis, ...props }, ref) => (
-  <code
-    {...props}
-    className={styles({ color, ellipsis, className })}
-    ref={ref}
-  />
-))
+export function Code({
+  ref,
+  color,
+  className,
+  ellipsis,
+  ...props
+}: React.HTMLAttributes<HTMLElement> &
+  VariantProps<typeof styles> & {
+    ref?: React.RefObject<HTMLElement>
+  }) {
+  return (
+    <code
+      {...props}
+      className={styles({ color, ellipsis, className })}
+      ref={ref}
+    />
+  )
+}

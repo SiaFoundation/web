@@ -102,98 +102,97 @@ export const labelStyles = ({
 export const separatorStyles = (className?: string) =>
   cx(['h-px', 'my-2', 'mx-1.5', className])
 
-export const MenuSeparator = React.forwardRef<
-  React.ElementRef<typeof SeparatorPrimitive.Root>,
-  SeparatorProps
->(({ className, color, ...props }, ref) => {
+export function MenuSeparator({
+  className,
+  color,
+  ref,
+  ...props
+}: SeparatorProps & {
+  ref?: React.Ref<typeof SeparatorPrimitive.Root>
+}) {
   return (
     <Separator ref={ref} className={separatorStyles(className)} {...props} />
   )
-})
+}
 
-export const BaseMenuItem = React.forwardRef<
-  HTMLDivElement,
-  VariantProps<typeof baseItemStyles> & React.HTMLAttributes<HTMLDivElement>
->(
-  (
-    {
-      className,
-      font,
-      color,
-      weight,
-      size = '14',
-      scaleSize,
-      noWrap,
-      ellipsis,
-      ...props
-    },
-    ref
-  ) => {
-    return (
-      <div
-        ref={ref}
-        className={cx(
-          baseItemStyles({
-            className,
-            font,
-            color,
-            weight,
-            size,
-            scaleSize,
-            noWrap,
-            ellipsis,
-          })
-        )}
-        {...props}
-      />
-    )
-  }
-)
+export function BaseMenuItem({
+  className,
+  font,
+  color,
+  weight,
+  size = '14',
+  scaleSize,
+  noWrap,
+  ellipsis,
+  ref,
+  ...props
+}: VariantProps<typeof baseItemStyles> &
+  React.HTMLAttributes<HTMLDivElement> & {
+    ref?: React.RefObject<HTMLDivElement>
+  }) {
+  return (
+    <div
+      ref={ref}
+      className={cx(
+        baseItemStyles({
+          className,
+          font,
+          color,
+          weight,
+          size,
+          scaleSize,
+          noWrap,
+          ellipsis,
+        })
+      )}
+      {...props}
+    />
+  )
+}
 
-export const MenuItem = React.forwardRef<
-  HTMLDivElement,
-  VariantProps<typeof itemStyles> & React.HTMLAttributes<HTMLDivElement>
->(
-  (
-    {
-      className,
-      font,
-      color,
-      weight,
-      size = '14',
-      scaleSize,
-      noWrap,
-      ellipsis,
-      ...props
-    },
-    ref
-  ) => {
-    return (
-      <div
-        ref={ref}
-        className={cx(
-          itemStyles({
-            className,
-            font,
-            color,
-            weight,
-            size,
-            scaleSize,
-            noWrap,
-            ellipsis,
-          })
-        )}
-        {...props}
-      />
-    )
-  }
-)
+export function MenuItem({
+  className,
+  font,
+  color,
+  weight,
+  size = '14',
+  scaleSize,
+  noWrap,
+  ellipsis,
+  ref,
+  ...props
+}: VariantProps<typeof itemStyles> &
+  React.HTMLAttributes<HTMLDivElement> & {
+    ref?: React.RefObject<HTMLDivElement>
+  }) {
+  return (
+    <div
+      ref={ref}
+      className={cx(
+        itemStyles({
+          className,
+          font,
+          color,
+          weight,
+          size,
+          scaleSize,
+          noWrap,
+          ellipsis,
+        })
+      )}
+      {...props}
+    />
+  )
+}
 
-export const MenuItemRightSlot = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
+export function MenuItemRightSlot({
+  className,
+  ref,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & {
+  ref?: React.RefObject<HTMLDivElement>
+}) {
   return (
     <div ref={ref} className={cx(['ml-auto', 'pl-5', className])} {...props} />
   )
-})
+}

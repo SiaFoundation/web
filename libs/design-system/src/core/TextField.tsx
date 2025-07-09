@@ -64,29 +64,33 @@ export const textFieldStyles = cva(
   }
 )
 
-export const TextField = React.forwardRef<
-  HTMLInputElement,
-  VariantProps<typeof textFieldStyles> &
-    Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'className'>
->(
-  (
-    { variant, size, state, noSpin, cursor, focus, className, ...props },
-    ref
-  ) => {
-    return (
-      <input
-        ref={ref}
-        className={textFieldStyles({
-          variant,
-          size,
-          state,
-          noSpin,
-          cursor,
-          focus,
-          className,
-        })}
-        {...props}
-      />
-    )
-  }
-)
+export function TextField({
+  variant,
+  size,
+  state,
+  noSpin,
+  cursor,
+  focus,
+  className,
+  ref,
+  ...props
+}: VariantProps<typeof textFieldStyles> &
+  Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'className'> & {
+    ref?: React.Ref<HTMLInputElement>
+  }) {
+  return (
+    <input
+      ref={ref}
+      className={textFieldStyles({
+        variant,
+        size,
+        state,
+        noSpin,
+        cursor,
+        focus,
+        className,
+      })}
+      {...props}
+    />
+  )
+}

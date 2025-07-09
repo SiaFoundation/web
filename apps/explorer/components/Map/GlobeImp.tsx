@@ -1,13 +1,12 @@
 'use client'
 
-import { MutableRefObject } from 'react'
-import GlobeTmpl, { GlobeMethods } from 'react-globe.gl'
+import GlobeTmpl from 'react-globe.gl'
 
-const GlobeImp = ({
-  forwardRef,
+function GlobeImp({
+  ref,
   ...otherProps
-}: React.ComponentProps<typeof GlobeTmpl> & {
-  forwardRef: MutableRefObject<GlobeMethods>
-}) => <GlobeTmpl {...otherProps} ref={forwardRef} />
+}: React.ComponentProps<typeof GlobeTmpl>) {
+  return <GlobeTmpl {...otherProps} ref={ref} />
+}
 
 export default GlobeImp
