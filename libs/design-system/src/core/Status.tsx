@@ -12,10 +12,11 @@ const styles = cva(['rounded-full flex-shrink-0'], {
   },
 })
 
-type Props = React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof styles>
-
-export const Status = React.forwardRef<HTMLDivElement, Props>(
-  ({ size, className, ...props }, ref) => {
-    return <div ref={ref} className={styles({ size, className })} {...props} />
+type Props = VariantProps<typeof styles> &
+  React.HTMLAttributes<HTMLDivElement> & {
+    ref?: React.Ref<HTMLDivElement>
   }
-)
+
+export function Status({ size, className, ref, ...props }: Props) {
+  return <div ref={ref} className={styles({ size, className })} {...props} />
+}

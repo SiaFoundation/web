@@ -9,8 +9,10 @@ import { getExplored } from '../../../../lib/explored'
 import { ExplorerPageProps } from '../../../../lib/pageProps'
 import { buildMetadata } from '../../../../lib/utils'
 
-export function generateMetadata({ params }: ExplorerPageProps): Metadata {
-  const id = decodeURIComponent((params?.id as string) || '')
+export async function generateMetadata({
+  params,
+}: ExplorerPageProps): Promise<Metadata> {
+  const id = decodeURIComponent(((await params)?.id as string) || '')
   const title = `Output ${id}`
   const description = 'View details for Sia output'
   const url = routes.output.view.replace(':id', id)
@@ -24,7 +26,8 @@ export function generateMetadata({ params }: ExplorerPageProps): Metadata {
 export const revalidate = 0
 
 export default async function Page({ params }: ExplorerPageProps) {
-  const id = params?.id as string
+  const p = await params
+  const id = p?.id
 
   const explored = await getExplored()
   const { data: searchResultType } = await explored.searchResultType({

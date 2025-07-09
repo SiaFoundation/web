@@ -12,12 +12,16 @@ type Props = {
   contentProps?: React.ComponentProps<typeof NavMenuPrimitives.Content>
   trigger?: React.ReactNode
   children: React.ReactNode
+  ref?: React.RefObject<HTMLDivElement>
 }
 
-export const NavMenuItem = React.forwardRef<
-  React.ElementRef<typeof NavMenuPrimitives.Content>,
-  Props
->(({ trigger, children, rootProps, contentProps: _contentProps }, ref) => {
+export function NavMenuItem({
+  ref,
+  trigger,
+  children,
+  rootProps,
+  contentProps: _contentProps,
+}: Props) {
   const { className: contentClassName, ...contentProps } = _contentProps || {}
   return (
     <NavMenuPrimitives.Item {...rootProps}>
@@ -37,61 +41,58 @@ export const NavMenuItem = React.forwardRef<
       </NavMenuPrimitives.Content>
     </NavMenuPrimitives.Item>
   )
-})
+}
 
 export const NavMenuRoot = NavMenuPrimitives.Root
 export const NavMenuList = NavMenuPrimitives.List
 export const NavMenuViewport = NavMenuPrimitives.Viewport
 export const NavMenuIndicator = NavMenuPrimitives.Indicator
 
-export const NavMenuLink = React.forwardRef<
-  HTMLAnchorElement,
-  Omit<React.ComponentProps<typeof NextLink>, 'href'> &
-    LinkVariants & {
-      href?: string | UrlObject
-    }
->(
-  (
-    {
-      href = '#',
-      font,
-      size,
-      scaleSize,
-      color,
-      weight,
-      noWrap,
-      ellipsis,
-      underline,
-      disabled,
-      className,
-      rel: _rel,
-      target,
-      ...props
-    },
-    ref
-  ) => {
-    const rel = _rel || (target === '_blank' ? 'noopener' : undefined)
-    return (
-      <NavMenuPrimitives.Link asChild>
-        <NextLink
-          ref={ref}
-          href={href}
-          className={linkStyles({
-            font,
-            scaleSize,
-            size,
-            color,
-            weight,
-            noWrap,
-            ellipsis,
-            underline,
-            disabled,
-            className,
-          })}
-          rel={rel}
-          {...props}
-        />
-      </NavMenuPrimitives.Link>
-    )
+type NavMenuLinkProps = Omit<React.ComponentProps<typeof NextLink>, 'href'> &
+  LinkVariants & {
+    href?: string | UrlObject
+  } & {
+    ref?: React.RefObject<HTMLAnchorElement>
   }
-)
+
+export function NavMenuLink({
+  href = '#',
+  font,
+  size,
+  scaleSize,
+  color,
+  weight,
+  noWrap,
+  ellipsis,
+  underline,
+  disabled,
+  className,
+  rel: _rel,
+  target,
+  ref,
+  ...props
+}: NavMenuLinkProps) {
+  const rel = _rel || (target === '_blank' ? 'noopener' : undefined)
+  return (
+    <NavMenuPrimitives.Link asChild>
+      <NextLink
+        ref={ref}
+        href={href}
+        className={linkStyles({
+          font,
+          scaleSize,
+          size,
+          color,
+          weight,
+          noWrap,
+          ellipsis,
+          underline,
+          disabled,
+          className,
+        })}
+        rel={rel}
+        {...props}
+      />
+    </NavMenuPrimitives.Link>
+  )
+}

@@ -91,50 +91,47 @@ export const textStyles = cva([], {
   },
 })
 
-export const Text = React.forwardRef<
-  HTMLSpanElement,
-  VariantProps<typeof textStyles> & {
-    tag?: 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5'
-  } & React.HTMLAttributes<HTMLSpanElement>
->(
-  (
-    {
-      tag = 'span',
-      className,
-      font,
-      color,
-      weight,
-      size,
-      scaleSize,
-      noWrap,
-      underline,
-      ellipsis,
-      wrapEllipsis,
-      ...props
-    },
-    ref
-  ) => {
-    const Tag = tag
-    return (
-      <Tag
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ref={ref as any}
-        className={cx(
-          className,
-          textStyles({
-            font,
-            color,
-            weight,
-            size,
-            scaleSize,
-            underline,
-            noWrap,
-            ellipsis,
-            wrapEllipsis,
-          })
-        )}
-        {...props}
-      />
-    )
+type TextProps = VariantProps<typeof textStyles> & {
+  tag?: 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5'
+} & React.HTMLAttributes<HTMLSpanElement> & {
+    ref?: React.Ref<HTMLSpanElement>
   }
-)
+
+export function Text({
+  tag = 'span',
+  className,
+  font,
+  color,
+  weight,
+  size,
+  scaleSize,
+  noWrap,
+  underline,
+  ellipsis,
+  wrapEllipsis,
+  ref,
+  ...props
+}: TextProps) {
+  const Tag = tag
+  return (
+    <Tag
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ref={ref as any}
+      className={cx(
+        className,
+        textStyles({
+          font,
+          color,
+          weight,
+          size,
+          scaleSize,
+          underline,
+          noWrap,
+          ellipsis,
+          wrapEllipsis,
+        })
+      )}
+      {...props}
+    />
+  )
+}

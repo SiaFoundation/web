@@ -8,8 +8,10 @@ import { to } from '@siafoundation/request'
 import { notFound } from 'next/navigation'
 import { ExplorerPageProps } from '../../../../lib/pageProps'
 
-export function generateMetadata({ params }: ExplorerPageProps): Metadata {
-  const id = decodeURIComponent((params?.id as string) || '')
+export async function generateMetadata({
+  params,
+}: ExplorerPageProps): Promise<Metadata> {
+  const id = decodeURIComponent(((await params)?.id as string) || '')
   const height = Number(id || 0) as number
   if (isNaN(height)) {
     const title = getTitleId('Block', id, 30)
@@ -34,19 +36,20 @@ export function generateMetadata({ params }: ExplorerPageProps): Metadata {
 export const revalidate = 0
 
 export default async function Page({ params }: ExplorerPageProps) {
+  const p = await params
   let id: string
 
   const explored = await getExplored()
   // Check if the incoming id is referencing height.
-  if (!isNaN(Number(params?.id))) {
+  if (!isNaN(Number(p?.id))) {
     // If it is, we need the block ID at that height.
     const { data: tipAtHeight } = await explored.consensusTipByHeight({
-      params: { height: Number(params?.id) },
+      params: { height: Number(p?.id) },
     })
     id = tipAtHeight.id
   } else {
     // If it is not the height, assume we're referencing ID. No call necessary.
-    id = params?.id
+    id = p?.id
   }
 
   // Get the block using the id from the previous sequence. Also grab the

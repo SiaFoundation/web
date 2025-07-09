@@ -24,11 +24,16 @@ export const panelStyles = cva(
   }
 )
 
-export const Panel = React.forwardRef<
-  HTMLDivElement,
-  VariantProps<typeof panelStyles> & React.HTMLAttributes<HTMLDivElement>
->(({ className, color, ...props }, ref) => {
+export function Panel({
+  className,
+  color,
+  ref,
+  ...props
+}: VariantProps<typeof panelStyles> &
+  React.HTMLAttributes<HTMLDivElement> & {
+    ref?: React.RefObject<HTMLDivElement>
+  }) {
   return (
     <div ref={ref} className={panelStyles({ className, color })} {...props} />
   )
-})
+}

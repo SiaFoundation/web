@@ -110,8 +110,6 @@ export function Globe({
     <div ref={containerRef} className="w-full h-full">
       <GlobeDyn
         ref={globeEl}
-        // @ts-expect-error: This prop is required but the typing is lost in the wrapping.
-        // Revisit if we ever update this feature.
         width={width}
         height={height}
         backgroundColor="rgba(0,0,0,0)"
@@ -122,11 +120,13 @@ export function Globe({
         atmosphereColor="rgba(0,0,0,0)"
         atmosphereAltitude={0.16}
         animateIn={false}
-        arcLabel={(r: Route) => getHostLabel({ host: r.dst, currency, rate })}
-        arcStartLat={(r: Route) => +r.src.location.latitude}
-        arcStartLng={(r: Route) => +r.src.location.longitude}
-        arcEndLat={(r: Route) => +r.dst.location.latitude}
-        arcEndLng={(r: Route) => +r.dst.location.longitude}
+        arcLabel={(obj: object) =>
+          getHostLabel({ host: (obj as Route).dst, currency, rate })
+        }
+        arcStartLat={(obj: object) => +(obj as Route).src.location.latitude}
+        arcStartLng={(obj: object) => +(obj as Route).src.location.longitude}
+        arcEndLat={(obj: object) => +(obj as Route).dst.location.latitude}
+        arcEndLng={(obj: object) => +(obj as Route).dst.location.longitude}
         arcDashLength={0.75}
         arcAltitude={0}
         arcDashGap={0.1}
@@ -135,8 +135,8 @@ export function Globe({
         // arcDashAnimateTime={(route: Route) =>
         //   doesIncludeActiveHost(route, activeHost) ? 5000 : 0
         // }
-        arcColor={(r: Route) =>
-          doesIncludeActiveHost(r, activeHost)
+        arcColor={(obj: object) =>
+          doesIncludeActiveHost(obj as Route, activeHost)
             ? [`rgba(187, 229, 201, 0.25)`, `rgba(187, 229, 201, 0.25)`]
             : [`rgba(187, 229, 201, 0.10)`, `rgba(187, 229, 201, 0.10)`]
         }
@@ -145,16 +145,17 @@ export function Globe({
         // }}
         arcsTransitionDuration={0}
         pointsData={points}
-        pointLat={(h: HostDataWithLocation) => h.location.latitude}
-        pointLng={(h: HostDataWithLocation) => h.location.longitude}
-        pointLabel={(h: HostDataWithLocation) =>
-          getHostLabel({ host: h, currency, rate })
+        pointLat={(h: object) => (h as HostDataWithLocation).location.latitude}
+        pointLng={(h: object) => (h as HostDataWithLocation).location.longitude}
+        pointLabel={(h: object) =>
+          getHostLabel({ host: h as HostDataWithLocation, currency, rate })
         }
         // pointAltitude={
         //   (h: HostDataWithLocation) => h.settings.remainingstorage / 1e13 / 100
         //   // h.publicKey === activeHost.publicKey ? 0.6 : 0.2
         // }
-        pointAltitude={(h: HostDataWithLocation) => {
+        pointAltitude={(obj: object) => {
+          const h = obj as HostDataWithLocation
           if (activeHost) {
             return h.publicKey === activeHost?.publicKey
               ? 0.1
@@ -165,14 +166,16 @@ export function Globe({
           return h.activeContractsCount.gt(0) ? 0.1 : 0.1
         }}
         pointsTransitionDuration={0}
-        pointColor={(h: HostDataWithLocation) => {
+        pointColor={(obj: object) => {
+          const h = obj as HostDataWithLocation
           const { colorHex } = getHostStatus(h)
           if (!activeHost || h.publicKey === activeHost?.publicKey) {
             return colorHex
           }
           return colorWithOpacity(colorHex, 0.2)
         }}
-        pointRadius={(h: HostDataWithLocation) => {
+        pointRadius={(obj: object) => {
+          const h = obj as HostDataWithLocation
           let radius = 0
           if (h.activeContractsCount.gt(0)) {
             radius = h.activeContracts
@@ -184,7 +187,8 @@ export function Globe({
 
           return Math.max(radius, 0.1)
         }}
-        onPointHover={(h: HostDataWithLocation) => {
+        onPointHover={(obj: object | null) => {
+          const h = obj as HostDataWithLocation
           if (!h) {
             return
           }
@@ -193,7 +197,8 @@ export function Globe({
             h.location.longitude,
           ])
         }}
-        onPointClick={(h: HostDataWithLocation) => {
+        onPointClick={(obj: object) => {
+          const h = obj as HostDataWithLocation
           if (!h) {
             return
           }

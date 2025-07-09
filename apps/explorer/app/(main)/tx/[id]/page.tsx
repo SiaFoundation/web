@@ -13,8 +13,11 @@ import {
 } from '@siafoundation/units'
 import { explorerV2TransactionToGetV2TransactionTypeParam } from '../../../../lib/tx'
 
-export function generateMetadata({ params }: ExplorerPageProps): Metadata {
-  const id = decodeURIComponent((params?.id as string) || '')
+export async function generateMetadata({
+  params,
+}: ExplorerPageProps): Promise<Metadata> {
+  const p = await params
+  const id = decodeURIComponent(p?.id as string)
   const title = `Transaction ${truncate(id, 30)}`
   const description = `View details for Sia transaction.`
   const url = routes.transaction.view.replace(':id', id)
@@ -28,7 +31,8 @@ export function generateMetadata({ params }: ExplorerPageProps): Metadata {
 export const revalidate = 0
 
 export default async function Page({ params }: ExplorerPageProps) {
-  const id = params?.id as string
+  const p = await params
+  const id = p?.id
 
   const explored = await getExplored()
   // Do we have a v1 or v2 transaction?

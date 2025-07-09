@@ -15,7 +15,8 @@ export const size = {
 export const contentType = 'image/png'
 
 export default async function Image({ params }: ExplorerPageProps) {
-  const address = params?.id as string
+  const p = await params
+  const address = p?.id
 
   try {
     const explored = await getExplored()

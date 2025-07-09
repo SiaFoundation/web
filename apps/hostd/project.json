@@ -17,13 +17,7 @@
         "production": {},
         "local": {},
         "export": {
-          "outputPath": "dist/apps/hostd-export",
-          "fileReplacements": [
-            {
-              "replace": "apps/hostd/config/buildMode.ts",
-              "with": "apps/hostd/config/buildModeExport.ts"
-            }
-          ]
+          "outputPath": "dist/apps/hostd-export"
         }
       }
     },

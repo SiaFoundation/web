@@ -95,6 +95,8 @@ export function HostsFilterMenu() {
         }}
       >
         <Command.Input
+          aria-label="filter hosts"
+          name="filter-hosts-menu-input"
           ref={inputRef}
           value={search}
           onValueChange={setSearch}

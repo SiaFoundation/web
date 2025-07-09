@@ -1,6 +1,6 @@
 'use client'
 
-import React, { forwardRef } from 'react'
+import React from 'react'
 import * as SwitchPrimitive from '@radix-ui/react-switch'
 import { Text } from './Text'
 import { cva } from 'class-variance-authority'
@@ -72,20 +72,27 @@ const styles = cva(
   }
 )
 
-export const Switch = forwardRef<
-  React.ElementRef<typeof SwitchPrimitive.Root>,
-  VariantProps<typeof styles> & SwitchPrimitive.SwitchProps
->(({ size, state, className, children, ...props }, ref) => (
-  <div className="flex gap-2 items-center">
-    <SwitchPrimitive.Root
-      className={styles({ size, state, className })}
-      {...props}
-      ref={ref}
-    >
-      <SwitchPrimitive.Thumb className={thumbStyles({ size })} />
-    </SwitchPrimitive.Root>
-    {children && (
-      <Text color={props.disabled ? 'subtle' : 'contrast'}>{children}</Text>
-    )}
-  </div>
-))
+export function Switch({
+  size,
+  state,
+  className,
+  children,
+  ref,
+  ...props
+}: VariantProps<typeof styles> &
+  SwitchPrimitive.SwitchProps & { ref?: React.Ref<HTMLButtonElement> }) {
+  return (
+    <div className="flex gap-2 items-center">
+      <SwitchPrimitive.Root
+        className={styles({ size, state, className })}
+        {...props}
+        ref={ref}
+      >
+        <SwitchPrimitive.Thumb className={thumbStyles({ size })} />
+      </SwitchPrimitive.Root>
+      {children && (
+        <Text color={props.disabled ? 'subtle' : 'contrast'}>{children}</Text>
+      )}
+    </div>
+  )
+}

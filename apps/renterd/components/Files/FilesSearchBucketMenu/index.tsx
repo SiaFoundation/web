@@ -53,7 +53,7 @@ export function FilesSearchBucketMenu({ panel }: Props) {
       </Label>
       <Command.Input
         aria-label="search files"
-        name="search files"
+        name="search-files-menu-input"
         value={search}
         onValueChange={setSearch}
         className={textFieldStyles({ variant: 'ghost', focus: 'none' })}

@@ -91,10 +91,11 @@ export function CmdRoot({ panel }: Props) {
         </Label>
       )}
       <Command.Input
+        aria-label="search commands"
+        name="cmdk-input"
         value={search}
         onValueChange={setSearch}
         className={textFieldStyles({ variant: 'ghost', focus: 'none' })}
-        name="cmdk-input"
         placeholder={
           page?.prompt ||
           (rootPage

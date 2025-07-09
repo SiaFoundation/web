@@ -32,9 +32,10 @@ const nextConfigExport = {
   output: 'export',
 }
 
-const nextConfig = process.env.NEXT_OUTPUT_EXPORT
-  ? nextConfigExport
-  : nextConfigServe
+const nextConfig =
+  process.env.NX_TASK_TARGET_CONFIGURATION === 'export'
+    ? nextConfigExport
+    : nextConfigServe
 
 const plugins = [withNx]
 

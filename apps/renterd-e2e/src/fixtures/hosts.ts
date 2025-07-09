@@ -74,10 +74,10 @@ export const getHostRowsAll = step('get host rows', async (page: Page) => {
 export const openManageListsDialog = step(
   'open manage lists dialog',
   async (page: Page) => {
-    const dialog = await openCmdkMenu(page)
+    const cmdk = await openCmdkMenu(page)
     await fillTextInputByName(page, 'cmdk-input', 'manage filter lists')
-    await expect(dialog.locator('div[cmdk-item]')).toHaveCount(1)
-    await dialog
+    await expect(cmdk.locator('div[cmdk-item]')).toHaveCount(1)
+    await cmdk
       .locator('div[cmdk-item]')
       .getByText('manage filter lists')
       .click()

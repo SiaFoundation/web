@@ -2,10 +2,10 @@ import { MutableRefObject } from 'react'
 import GlobeTmpl, { GlobeMethods } from 'react-globe.gl'
 
 const GlobeImp = ({
-  forwardRef,
+  ref,
   ...otherProps
-}: React.ComponentProps<typeof GlobeTmpl> & {
-  forwardRef: MutableRefObject<GlobeMethods>
-}) => <GlobeTmpl {...otherProps} ref={forwardRef} />
+}: Omit<React.ComponentProps<typeof GlobeTmpl>, 'ref'> & {
+  ref: React.Ref<GlobeMethods>
+}) => <GlobeTmpl {...otherProps} ref={ref as MutableRefObject<GlobeMethods>} />
 
 export default GlobeImp

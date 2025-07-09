@@ -8,8 +8,10 @@ import { to } from '@siafoundation/request'
 import { notFound } from 'next/navigation'
 import { ExplorerPageProps } from '../../../../lib/pageProps'
 
-export function generateMetadata({ params }: ExplorerPageProps): Metadata {
-  const id = decodeURIComponent((params?.id as string) || '')
+export async function generateMetadata({
+  params,
+}: ExplorerPageProps): Promise<Metadata> {
+  const id = decodeURIComponent(((await params)?.id as string) || '')
   const title = `Address ${truncate(id, 30)}`
   const description = 'View details for Sia address.'
   const url = routes.address.view.replace(':id', id)
@@ -23,7 +25,8 @@ export function generateMetadata({ params }: ExplorerPageProps): Metadata {
 export const revalidate = 0
 
 export default async function Page({ params }: ExplorerPageProps) {
-  const address = params.id
+  const p = await params
+  const address = p?.id
 
   const explored = await getExplored()
   const [

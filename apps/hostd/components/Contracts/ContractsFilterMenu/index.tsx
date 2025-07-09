@@ -97,6 +97,8 @@ export function ContractsFilterMenu() {
         }}
       >
         <Command.Input
+          aria-label="filter contracts"
+          name="filter-contracts-menu-input"
           ref={inputRef}
           value={search}
           onValueChange={setSearch}

@@ -47,10 +47,13 @@ const variants: Variants = {
   },
 }
 
-export const Popover = React.forwardRef<
-  React.ElementRef<typeof PopoverPrimitive.Content>,
-  Props
->(({ trigger, children, rootProps, contentProps }, ref) => {
+export function Popover({
+  trigger,
+  children,
+  rootProps,
+  contentProps,
+  ref,
+}: Props & { ref?: React.Ref<HTMLDivElement> }) {
   const { open, onOpenChange } = useOpen({
     open: rootProps?.open,
     onOpenChange: rootProps?.onOpenChange,
@@ -86,4 +89,4 @@ export const Popover = React.forwardRef<
       </AnimatePresence>
     </PopoverPrimitive.Root>
   )
-})
+}

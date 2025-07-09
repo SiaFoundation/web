@@ -17,13 +17,7 @@
         "production": {},
         "local": {},
         "export": {
-          "outputPath": "dist/apps/renterd-export",
-          "fileReplacements": [
-            {
-              "replace": "apps/renterd/config/buildMode.ts",
-              "with": "apps/renterd/config/buildModeExport.ts"
-            }
-          ]
+          "outputPath": "dist/apps/renterd-export"
         }
       }
     },

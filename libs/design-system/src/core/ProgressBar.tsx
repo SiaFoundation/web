@@ -18,18 +18,25 @@ const styles = cva(['relative h-1 w-full overflow-hidden rounded-lg'], {
   },
 })
 
-export const ProgressBar = React.forwardRef<
-  React.ElementRef<typeof ProgressPrimitive.Root>,
-  VariantProps<typeof styles> &
-    ProgressPrimitive.ProgressProps & { label?: string }
->(({ label, variant, className, value, max = 100, ...props }, forwardedRef) => {
+export function ProgressBar({
+  ref,
+  label,
+  variant,
+  className,
+  value,
+  max = 100,
+  ...props
+}: VariantProps<typeof styles> &
+  ProgressPrimitive.ProgressProps & { label?: string } & {
+    ref?: React.Ref<HTMLDivElement>
+  }) {
   const percentage = value != null ? Math.round((value / max) * 100) : null
 
   return (
     <div className="flex flex-col gap-1 w-full">
       <ProgressPrimitive.Root
         {...props}
-        ref={forwardedRef}
+        ref={ref}
         value={value}
         max={max}
         className={styles({ variant, className })}
@@ -46,4 +53,4 @@ export const ProgressBar = React.forwardRef<
       )}
     </div>
   )
-})
+}

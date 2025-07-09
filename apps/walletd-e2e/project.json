@@ -7,6 +7,7 @@
   "targets": {
     "build-cluster": {
       "executor": "nx:run-commands",
+      "dependsOn": ["sdk:build"],
       "options": {
         "commands": [
           "cd internal/cluster && GOPRIVATE=go.sia.tech go get -u go.sia.tech/hostd/v2@master",

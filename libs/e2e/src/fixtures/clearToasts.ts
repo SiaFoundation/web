@@ -4,15 +4,24 @@ import { step } from './step'
 export const clearToasts = step(
   'clear toasts',
   async ({ page }: { page: Page }) => {
-    const clearButtons = page.getByTestId('toasts').locator('button')
-    while ((await clearButtons.count()) > 0) {
-      try {
-        await clearButtons.first().click({
-          timeout: 1000,
+    // Click close button on every toast instance.
+    await page.evaluate(() => {
+      document
+        .querySelectorAll('[data-testid="toast"]')
+        .forEach((container) => {
+          container
+            .querySelectorAll('button')
+            .forEach((btn) => (btn as HTMLElement).click())
         })
-      } catch {
-        console.log('Attempted to clear toast, but it is already detached.')
-      }
-    }
+    })
+
+    // Wait until no toast containers remain in the DOM.
+    await page
+      .locator('[data-testid="toast"]')
+      .waitFor({ state: 'hidden', timeout: 1000 })
+      .catch(() => {
+        // Silent catch: toast container already gone.
+        return undefined
+      })
   }
 )

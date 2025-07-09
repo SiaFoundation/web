@@ -47,37 +47,50 @@ const containerStyles = cva(
 
 // TODO: convert to radix select
 
-export const Select = React.forwardRef<
-  HTMLSelectElement,
-  VariantProps<typeof containerStyles> &
-    Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'size'> & {
-      icon?: React.ReactNode
-      value?: string
-      disabled?: boolean
-    }
->(({ size, state, icon, className, ...props }, ref) => (
-  <div className={containerStyles({ size, state, className })}>
-    {icon}
-    <select
+export function Select({
+  size,
+  state,
+  icon,
+  className,
+  ref,
+  ...props
+}: VariantProps<typeof containerStyles> &
+  Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'size'> & {
+    icon?: React.ReactNode
+    value?: string
+    disabled?: boolean
+  } & {
+    ref?: React.Ref<HTMLSelectElement>
+  }) {
+  return (
+    <div className={containerStyles({ size, state, className })}>
+      {icon}
+      <select
+        ref={ref}
+        {...props}
+        className="appearance-none flex-1 bg-transparent outline-none w-full h-full pl-1 pr-1"
+      />
+      <CaretSort16 className="pointer-events-none scale-75" />
+    </div>
+  )
+}
+
+export function Option({
+  className,
+  ref,
+  ...props
+}: React.HTMLProps<HTMLOptionElement> & {
+  ref?: React.Ref<HTMLOptionElement>
+}) {
+  return (
+    <option
       ref={ref}
       {...props}
-      className="appearance-none flex-1 bg-transparent outline-none w-full h-full pl-1 pr-1"
+      className={cx(
+        'bg-white dark:bg-graydark-200',
+        'text-gray-1100 dark:text-white',
+        className
+      )}
     />
-    <CaretSort16 className="pointer-events-none scale-75" />
-  </div>
-))
-
-export const Option = React.forwardRef<
-  HTMLOptionElement,
-  React.HTMLProps<HTMLOptionElement>
->(({ className, ...props }, ref) => (
-  <option
-    ref={ref}
-    {...props}
-    className={cx(
-      'bg-white dark:bg-graydark-200',
-      'text-gray-1100 dark:text-white',
-      className
-    )}
-  />
-))
+  )
+}
