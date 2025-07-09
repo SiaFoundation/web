@@ -27,6 +27,7 @@ type Props = {
   contentProps?: React.ComponentProps<typeof HoverCardPrimitive.Content>
   trigger?: React.ReactNode
   children: React.ReactNode
+  ref?: React.RefObject<HTMLDivElement>
 }
 
 const variants: Variants = {
@@ -42,10 +43,13 @@ const variants: Variants = {
   },
 }
 
-export const HoverCard = React.forwardRef<
-  React.ElementRef<typeof HoverCardPrimitive.Content>,
-  Props
->(({ trigger, children, rootProps, contentProps: _contentProps }, ref) => {
+export function HoverCard({
+  ref,
+  trigger,
+  children,
+  rootProps,
+  contentProps: _contentProps,
+}: Props) {
   const { className: contentClassName, ...contentProps } = _contentProps || {}
   const { open, onOpenChange } = useOpen({
     open: rootProps?.open,
@@ -89,4 +93,4 @@ export const HoverCard = React.forwardRef<
       </AnimatePresence>
     </HoverCardPrimitive.Root>
   )
-})
+}

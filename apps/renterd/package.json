@@ -21,7 +21,7 @@
     "@technically/lodash": "^4.17.0",
     "bignumber.js": "^9.0.2",
     "class-variance-authority": "^0.7.0",
-    "cmdk": "^0.2.0",
+    "cmdk": "0.2.1",
     "date-fns": "^2.28.0",
     "file-saver": "^2.0.5",
     "formik": "^2.2.9",

@@ -22,9 +22,17 @@ const styles = cva(['flex-shrink-0 w-full mx-auto'], {
   },
 })
 
-export const Container = React.forwardRef<
-  HTMLDivElement,
-  VariantProps<typeof styles> & React.HTMLAttributes<HTMLDivElement>
->(({ className, pad, size, ...props }, ref) => (
-  <div ref={ref} {...props} className={styles({ size, pad, className })} />
-))
+export function Container({
+  ref,
+  className,
+  pad,
+  size,
+  ...props
+}: VariantProps<typeof styles> &
+  React.HTMLAttributes<HTMLDivElement> & {
+    ref?: React.RefObject<HTMLDivElement>
+  }) {
+  return (
+    <div ref={ref} {...props} className={styles({ size, pad, className })} />
+  )
+}

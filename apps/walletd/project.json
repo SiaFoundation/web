@@ -18,13 +18,7 @@
         "production": {},
         "local": {},
         "export": {
-          "outputPath": "dist/apps/walletd-export",
-          "fileReplacements": [
-            {
-              "replace": "apps/walletd/config/buildMode.ts",
-              "with": "apps/walletd/config/buildModeExport.ts"
-            }
-          ]
+          "outputPath": "dist/apps/walletd-export"
         }
       }
     },

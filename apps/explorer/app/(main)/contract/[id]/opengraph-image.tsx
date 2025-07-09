@@ -27,7 +27,8 @@ const currencyOpt = currencyOptions.find(
 ) as CurrencyOption
 
 export default async function Image({ params }: ExplorerPageProps) {
-  const id = params?.id as string
+  const p = await params
+  const id = p?.id
 
   const explored = await getExplored()
   const [

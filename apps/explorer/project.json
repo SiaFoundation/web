@@ -15,33 +15,15 @@
       "configurations": {
         "development": {},
         "development-testnet-zen": {
-          "outputPath": "dist/apps/explorer-testnet-zen",
-          "fileReplacements": [
-            {
-              "replace": "apps/explorer/config/index.ts",
-              "with": "apps/explorer/config/testnet-zen.ts"
-            }
-          ]
+          "outputPath": "dist/apps/explorer-testnet-zen"
         },
         "local": {},
         "local-testnet-zen": {
-          "outputPath": "dist/apps/explorer-testnet-zen",
-          "fileReplacements": [
-            {
-              "replace": "apps/explorer/config/index.ts",
-              "with": "apps/explorer/config/testnet-zen.ts"
-            }
-          ]
+          "outputPath": "dist/apps/explorer-testnet-zen"
         },
         "production": {},
         "production-testnet-zen": {
-          "outputPath": "dist/apps/explorer-testnet-zen",
-          "fileReplacements": [
-            {
-              "replace": "apps/explorer/config/index.ts",
-              "with": "apps/explorer/config/testnet-zen.ts"
-            }
-          ]
+          "outputPath": "dist/apps/explorer-testnet-zen"
         }
       }
     },
@@ -61,7 +43,10 @@
         "development-testnet-zen": {
           "buildTarget": "explorer:build:development-testnet-zen",
           "dev": true,
-          "port": 3005
+          "port": 3005,
+          "env": {
+            "NETWORK": "zen"
+          }
         },
         "production": {
           "buildTarget": "explorer:build:production",

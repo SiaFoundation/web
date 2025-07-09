@@ -29,7 +29,8 @@ const formatOGImage = (id: string) => {
 }
 
 export default async function Image({ params }: ExplorerPageProps) {
-  const id = params.id
+  const p = await params
+  const id = p?.id
 
   try {
     const explored = await getExplored()

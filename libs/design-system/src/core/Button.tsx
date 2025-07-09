@@ -158,72 +158,68 @@ export const buttonStyles = cva(
   }
 )
 
-export const Button = React.forwardRef<
-  HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement> &
-    VariantProps<typeof buttonStyles> & {
-      tip?: string
-      tipAlign?: React.ComponentProps<typeof Tooltip>['align']
-      tipSide?: React.ComponentProps<typeof Tooltip>['side']
-    }
->(
-  (
-    {
-      variant,
-      size,
-      state,
-      rounded,
-      disabled,
-      icon,
-      color,
-      tip,
-      tipAlign,
-      tipSide,
-      className,
-      type = 'button',
-      ...props
-    },
-    ref
-  ) => {
-    if (tip) {
-      return (
-        <Tooltip content={tip} align={tipAlign} side={tipSide}>
-          <button
-            ref={ref}
-            type={type}
-            disabled={disabled}
-            className={buttonStyles({
-              variant,
-              size,
-              state,
-              rounded,
-              disabled,
-              icon,
-              color,
-              className,
-            })}
-            {...props}
-          />
-        </Tooltip>
-      )
-    }
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+  VariantProps<typeof buttonStyles> & {
+    tip?: string
+    tipAlign?: React.ComponentProps<typeof Tooltip>['align']
+    tipSide?: React.ComponentProps<typeof Tooltip>['side']
+    ref?: React.Ref<HTMLButtonElement>
+  }
+
+export function Button({
+  ref,
+  className,
+  variant,
+  size,
+  state,
+  rounded,
+  disabled,
+  icon,
+  color,
+  tip,
+  tipAlign,
+  tipSide,
+  type = 'button',
+  ...props
+}: ButtonProps) {
+  if (tip) {
     return (
-      <button
-        ref={ref}
-        disabled={disabled}
-        type={type}
-        className={buttonStyles({
-          variant,
-          size,
-          state,
-          rounded,
-          disabled,
-          icon,
-          color,
-          className,
-        })}
-        {...props}
-      />
+      <Tooltip content={tip} align={tipAlign} side={tipSide}>
+        <button
+          ref={ref}
+          type={type}
+          disabled={disabled}
+          className={buttonStyles({
+            variant,
+            size,
+            state,
+            rounded,
+            disabled,
+            icon,
+            color,
+            className,
+          })}
+          {...props}
+        />
+      </Tooltip>
     )
   }
-)
+  return (
+    <button
+      ref={ref}
+      disabled={disabled}
+      type={type}
+      className={buttonStyles({
+        variant,
+        size,
+        state,
+        rounded,
+        disabled,
+        icon,
+        color,
+        className,
+      })}
+      {...props}
+    />
+  )
+}

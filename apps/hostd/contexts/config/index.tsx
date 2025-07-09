@@ -95,7 +95,7 @@ export function useConfigMain() {
     [form, onValid, onInvalid]
   )
 
-  const configRef = useRef()
+  const configRef = useRef<HTMLDivElement>(null)
   const takeScreenshot = useCallback(
     async (props: {
       name: string

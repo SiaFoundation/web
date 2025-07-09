@@ -157,8 +157,8 @@ test.describe('v1', () => {
 
     await explorerApp.goTo('/host/' + publicKey)
 
-    expect(await page.getByText(downloadCost).count()).toBe(2)
-    expect(await page.getByText(uploadCost).count()).toBe(2)
-    expect(await page.getByText(storageCost).count()).toBe(2)
+    await expect(page.getByText(downloadCost)).toHaveCount(2)
+    await expect(page.getByText(uploadCost)).toHaveCount(2)
+    await expect(page.getByText(storageCost)).toHaveCount(2)
   })
 })

@@ -37,109 +37,105 @@ const animationVariants: Variants = {
   },
 }
 
-export const Dialog = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Content>,
-  {
-    rootProps?: React.ComponentProps<typeof DialogPrimitive.Root>
-    trigger?: React.ReactNode
-    open?: boolean
-    onOpenChange?: (open: boolean) => void
-    containerVariants?: VariantProps<typeof containerStyles>
-  } & ContentProps
->(
-  (
-    {
-      trigger,
-      rootProps,
-      open: _open,
-      onOpenChange: _onOpenChange,
-      onSubmit,
-      title,
-      titleVisuallyHidden,
-      description,
-      descriptionVisuallyHidden,
-      containerVariants,
-      contentVariants,
-      controls,
-      children,
-      bodyClassName,
-      closeClassName,
-      dynamicHeight = true,
-    },
-    ref
-  ) => {
-    const { open, onOpenChange } = useOpen({
-      open: _open,
-      onOpenChange: _onOpenChange,
-    })
+type DialogProps = {
+  ref?: React.RefObject<HTMLDivElement>
+  trigger?: React.ReactNode
+  rootProps?: React.ComponentProps<typeof DialogPrimitive.Root>
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+  containerVariants?: VariantProps<typeof containerStyles>
+} & ContentProps
 
-    // The dialog itself only triggers on internal open state change
-    useEffect(() => {
-      if (open) {
-        onOpenChange(open)
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [open])
+export function Dialog({
+  ref,
+  trigger,
+  rootProps,
+  open: _open,
+  onOpenChange: _onOpenChange,
+  onSubmit,
+  title,
+  titleVisuallyHidden,
+  description,
+  descriptionVisuallyHidden,
+  containerVariants,
+  contentVariants,
+  controls,
+  children,
+  bodyClassName,
+  closeClassName,
+  dynamicHeight = true,
+}: DialogProps) {
+  const { open, onOpenChange } = useOpen({
+    open: _open,
+    onOpenChange: _onOpenChange,
+  })
 
-    return (
-      <DialogPrimitive.Root
-        open={open}
-        onOpenChange={onOpenChange}
-        {...rootProps}
-      >
-        {trigger && (
-          <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
-        )}
-        <AnimatePresence>
-          {open ? (
-            <DialogPrimitive.Portal forceMount>
-              <DialogPrimitive.Content
-                asChild
-                forceMount
-                ref={ref}
-                // aria-describedby must be explicitly set to undefined if a
-                // description is not provided.
-                {...(description === undefined
-                  ? { 'aria-describedby': undefined }
-                  : {})}
-              >
-                <div className="fixed w-full h-full top-0 left-0 z-20">
-                  <DialogPrimitive.Overlay
-                    onClick={() => onOpenChange(false)}
-                    className="fixed z-10 top-0 right-0 bottom-0 left-0 inset-0 transition-opacity opacity-0 open:opacity-10 dark:open:opacity-20 bg-black"
-                  />
-                  <motion.div
-                    variants={animationVariants}
-                    initial="init"
-                    animate="show"
-                    exit="exit"
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    className={containerStyles(containerVariants as any)}
+  // The dialog itself only triggers on internal open state change
+  useEffect(() => {
+    if (open) {
+      onOpenChange(open)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open])
+
+  return (
+    <DialogPrimitive.Root
+      open={open}
+      onOpenChange={onOpenChange}
+      {...rootProps}
+    >
+      {trigger && (
+        <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
+      )}
+      <AnimatePresence>
+        {open ? (
+          <DialogPrimitive.Portal forceMount>
+            <DialogPrimitive.Content
+              asChild
+              forceMount
+              ref={ref}
+              // aria-describedby must be explicitly set to undefined if a
+              // description is not provided.
+              {...(description === undefined
+                ? { 'aria-describedby': undefined }
+                : {})}
+            >
+              <div className="fixed w-full h-full top-0 left-0 z-20">
+                <DialogPrimitive.Overlay
+                  onClick={() => onOpenChange(false)}
+                  className="fixed z-10 top-0 right-0 bottom-0 left-0 inset-0 transition-opacity opacity-0 open:opacity-10 dark:open:opacity-20 bg-black"
+                />
+                <motion.div
+                  variants={animationVariants}
+                  initial="init"
+                  animate="show"
+                  exit="exit"
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  className={containerStyles(containerVariants as any)}
+                >
+                  <Content
+                    title={title}
+                    description={description}
+                    titleVisuallyHidden={titleVisuallyHidden}
+                    descriptionVisuallyHidden={descriptionVisuallyHidden}
+                    contentVariants={contentVariants}
+                    onSubmit={onSubmit}
+                    controls={controls}
+                    bodyClassName={bodyClassName}
+                    closeClassName={closeClassName}
+                    dynamicHeight={dynamicHeight}
                   >
-                    <Content
-                      title={title}
-                      description={description}
-                      titleVisuallyHidden={titleVisuallyHidden}
-                      descriptionVisuallyHidden={descriptionVisuallyHidden}
-                      contentVariants={contentVariants}
-                      onSubmit={onSubmit}
-                      controls={controls}
-                      bodyClassName={bodyClassName}
-                      closeClassName={closeClassName}
-                      dynamicHeight={dynamicHeight}
-                    >
-                      {children}
-                    </Content>
-                  </motion.div>
-                </div>
-              </DialogPrimitive.Content>
-            </DialogPrimitive.Portal>
-          ) : null}
-        </AnimatePresence>
-      </DialogPrimitive.Root>
-    )
-  }
-)
+                    {children}
+                  </Content>
+                </motion.div>
+              </div>
+            </DialogPrimitive.Content>
+          </DialogPrimitive.Portal>
+        ) : null}
+      </AnimatePresence>
+    </DialogPrimitive.Root>
+  )
+}
 
 export function DialogClose({ className }: { className?: string }) {
   return (
@@ -177,87 +173,84 @@ type ContentProps = {
   closeClassName?: string
   bodyClassName?: string
   dynamicHeight?: boolean
+  ref?: React.RefObject<HTMLDivElement>
 }
 
-const Content = React.forwardRef<HTMLDivElement, ContentProps>(
-  (
-    {
-      children,
-      onSubmit,
-      title,
-      description,
-      titleVisuallyHidden,
-      descriptionVisuallyHidden,
-      controls,
-      contentVariants,
-      closeClassName,
-      bodyClassName,
-      dynamicHeight = true,
-    },
-    ref
-  ) => {
-    const { ref: heightRef, height } = useHeight([children, description])
-    const [showSeparator, setShowSeparator] = useState<boolean>(false)
-    useEffect(() => {
-      // 0.7 is eual to the maxHeight: 70vh below
-      setShowSeparator(height > window.innerHeight * 0.7)
-    }, [height])
-    const Tag = onSubmit ? 'form' : 'div'
-    return (
-      <Tag
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        onSubmit={onSubmit as any}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ref={ref as any}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        className={contentStyles(contentVariants as any)}
+function Content({
+  children,
+  onSubmit,
+  title,
+  description,
+  titleVisuallyHidden,
+  descriptionVisuallyHidden,
+  controls,
+  contentVariants,
+  closeClassName,
+  bodyClassName,
+  dynamicHeight = true,
+  ref,
+}: ContentProps) {
+  const { ref: heightRef, height } = useHeight([children, description])
+  const [showSeparator, setShowSeparator] = useState<boolean>(false)
+  useEffect(() => {
+    // 0.7 is eual to the maxHeight: 70vh below
+    setShowSeparator(height > window.innerHeight * 0.7)
+  }, [height])
+  const Tag = onSubmit ? 'form' : 'div'
+  return (
+    <Tag
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      onSubmit={onSubmit as any}
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ref={ref as any}
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      className={contentStyles(contentVariants as any)}
+    >
+      {title ? (
+        titleVisuallyHidden ? (
+          <VisuallyHidden.Root>
+            <DialogPrimitive.Title>{title}</DialogPrimitive.Title>
+          </VisuallyHidden.Root>
+        ) : (
+          <DialogPrimitive.Title
+            className={dialogTitleStyles({ showSeparator })}
+          >
+            {title}
+          </DialogPrimitive.Title>
+        )
+      ) : null}
+      <ScrollArea
+        style={{
+          height: dynamicHeight ? `${height}px` : undefined,
+          maxHeight: dynamicHeight ? '70vh' : undefined,
+        }}
       >
-        {title ? (
-          titleVisuallyHidden ? (
-            <VisuallyHidden.Root>
-              <DialogPrimitive.Title>{title}</DialogPrimitive.Title>
-            </VisuallyHidden.Root>
-          ) : (
-            <DialogPrimitive.Title
-              className={dialogTitleStyles({ showSeparator })}
-            >
-              {title}
-            </DialogPrimitive.Title>
-          )
-        ) : null}
-        <ScrollArea
-          style={{
-            height: dynamicHeight ? `${height}px` : undefined,
-            maxHeight: dynamicHeight ? '70vh' : undefined,
-          }}
-        >
-          <div ref={heightRef} className={cx('p-4', bodyClassName)}>
-            {description ? (
-              descriptionVisuallyHidden ? (
-                <VisuallyHidden.Root>
-                  <DialogPrimitive.Description>
-                    {description}
-                  </DialogPrimitive.Description>
-                </VisuallyHidden.Root>
-              ) : (
-                <DialogPrimitive.Description
-                  className={dialogDescriptionStyles()}
-                >
+        <div ref={heightRef} className={cx('p-4', bodyClassName)}>
+          {description ? (
+            descriptionVisuallyHidden ? (
+              <VisuallyHidden.Root>
+                <DialogPrimitive.Description>
                   {description}
                 </DialogPrimitive.Description>
-              )
-            ) : null}
-            {children}
-          </div>
-        </ScrollArea>
-        {controls && (
-          <DialogControls separator={showSeparator}>{controls}</DialogControls>
-        )}
-        <DialogClose className={closeClassName || 'absolute top-3.5 right-2'} />
-      </Tag>
-    )
-  }
-)
+              </VisuallyHidden.Root>
+            ) : (
+              <DialogPrimitive.Description
+                className={dialogDescriptionStyles()}
+              >
+                {description}
+              </DialogPrimitive.Description>
+            )
+          ) : null}
+          {children}
+        </div>
+      </ScrollArea>
+      {controls && (
+        <DialogControls separator={showSeparator}>{controls}</DialogControls>
+      )}
+      <DialogClose className={closeClassName || 'absolute top-3.5 right-2'} />
+    </Tag>
+  )
+}
 
 function useHeight(deps: unknown[] = []) {
   const [height, setHeight] = useState<number>(0)

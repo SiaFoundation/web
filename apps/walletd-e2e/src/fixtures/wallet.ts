@@ -6,6 +6,7 @@ import {
   waitForTableToReload,
   step,
   expectThenClick,
+  clearToasts,
 } from '@siafoundation/e2e'
 import { navigateToWallet } from './navigate'
 
@@ -77,6 +78,7 @@ export const unlockOpenWallet = step(
     } else {
       // Close context menu.
       await page.keyboard.press('Escape')
+      await expect(page.getByTestId('dropdown-menu-content')).toBeHidden()
     }
   }
 )
@@ -87,6 +89,7 @@ export const rescanWallets = step('rescan wallets', async (page: Page) => {
   await fillTextInputByName(page, 'rescanStartHeight', '0')
   await page.locator('input[name=rescanStartHeight]').press('Enter')
   await waitForRescanToFinish(page)
+  await clearToasts({ page })
 })
 
 export const waitForRescanToFinish = step(
@@ -166,6 +169,7 @@ export const openWallet = step(
     const row = page.getByRole('table').getByText(name).first()
     await expect(row).toBeVisible()
     await row.click()
+    await expect(page.getByTestId('navbar').getByText(name)).toBeVisible()
   }
 )
 

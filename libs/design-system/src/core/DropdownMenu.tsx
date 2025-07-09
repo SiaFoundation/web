@@ -45,72 +45,69 @@ const animationVariants: Variants = {
   },
 }
 
-export const DropdownMenu = React.forwardRef<
-  React.ElementRef<typeof DropdownMenuPrimitive.Content>,
-  {
-    label?: string
-    rootProps?: React.ComponentProps<typeof DropdownMenuPrimitive.Root>
-    contentProps?: React.ComponentProps<typeof DropdownMenuPrimitive.Content>
-    trigger: React.ReactNode
-    children: React.ReactNode
-    className?: string
-    open?: boolean
-    onOpenChange?: (open: boolean) => void
-  }
->(
-  (
-    {
-      trigger,
-      label,
-      children,
-      rootProps,
-      contentProps,
-      className,
-      open: _open,
-      onOpenChange: _onOpenChange,
-    },
-    ref
-  ) => {
-    const { open, onOpenChange } = useOpen({
-      open: _open,
-      onOpenChange: _onOpenChange,
-    })
+type DropdownMenuProps = {
+  ref?: React.RefObject<HTMLDivElement>
+  label?: string
+  rootProps?: React.ComponentProps<typeof DropdownMenuPrimitive.Root>
+  contentProps?: React.ComponentProps<typeof DropdownMenuPrimitive.Content>
+  trigger: React.ReactNode
+  children: React.ReactNode
+  className?: string
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+}
 
-    return (
-      <DropdownMenuPrimitive.Root
-        open={open}
-        onOpenChange={onOpenChange}
-        {...rootProps}
-      >
-        <DropdownMenuPrimitive.Trigger asChild aria-label={label}>
-          {trigger}
-        </DropdownMenuPrimitive.Trigger>
-        <AnimatePresence>
-          {open ? (
-            <DropdownMenuPrimitive.Portal forceMount>
-              <DropdownMenuPrimitive.Content
-                asChild
-                forceMount
-                ref={ref}
-                {...contentProps}
+export function DropdownMenu({
+  ref,
+  label,
+  rootProps,
+  contentProps,
+  trigger,
+  children,
+  className,
+  open: _open,
+  onOpenChange: _onOpenChange,
+}: DropdownMenuProps) {
+  const { open, onOpenChange } = useOpen({
+    open: _open,
+    onOpenChange: _onOpenChange,
+  })
+
+  return (
+    <DropdownMenuPrimitive.Root
+      open={open}
+      onOpenChange={onOpenChange}
+      {...rootProps}
+    >
+      <DropdownMenuPrimitive.Trigger asChild aria-label={label}>
+        {trigger}
+      </DropdownMenuPrimitive.Trigger>
+      <AnimatePresence>
+        {open ? (
+          <DropdownMenuPrimitive.Portal forceMount>
+            <DropdownMenuPrimitive.Content
+              data-testid="dropdown-menu-content"
+              asChild
+              forceMount
+              ref={ref}
+              {...contentProps}
+            >
+              <motion.div
+                variants={animationVariants}
+                initial="init"
+                animate="show"
+                exit="exit"
+                className={contentContainerStyles()}
               >
-                <motion.div
-                  variants={animationVariants}
-                  initial="init"
-                  animate="show"
-                  exit="exit"
-                  className={contentContainerStyles()}
-                >
-                  <div className={contentStyles(className)}>{children}</div>
-                </motion.div>
-              </DropdownMenuPrimitive.Content>
-            </DropdownMenuPrimitive.Portal>
-          ) : null}
-        </AnimatePresence>
-      </DropdownMenuPrimitive.Root>
-    )
-  }
-)
+                <div className={contentStyles(className)}>{children}</div>
+              </motion.div>
+            </DropdownMenuPrimitive.Content>
+          </DropdownMenuPrimitive.Portal>
+        ) : null}
+      </AnimatePresence>
+    </DropdownMenuPrimitive.Root>
+  )
+}
 
 export const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger
 
@@ -125,7 +122,7 @@ type DropdownMenuSubProps = {
   ref?: React.Ref<HTMLDivElement>
 }
 
-export const DropdownMenuSub = ({
+export function DropdownMenuSub({
   subProps,
   contentProps,
   trigger,
@@ -134,7 +131,7 @@ export const DropdownMenuSub = ({
   open: _open,
   onOpenChange: _onOpenChange,
   ref,
-}: DropdownMenuSubProps) => {
+}: DropdownMenuSubProps) {
   const { open, onOpenChange } = useOpen({
     open: _open,
     onOpenChange: _onOpenChange,
@@ -179,10 +176,13 @@ export const DropdownMenuSub = ({
   )
 }
 
-export const DropdownMenuSeparator = React.forwardRef<
-  HTMLDivElement,
-  DropdownMenuPrimitive.DropdownMenuSeparatorProps
->(({ className, ...props }, ref) => {
+export function DropdownMenuSeparator({
+  className,
+  ref,
+  ...props
+}: DropdownMenuPrimitive.DropdownMenuSeparatorProps & {
+  ref?: React.RefObject<HTMLDivElement>
+}) {
   return (
     <DropdownMenuPrimitive.Separator
       ref={ref}
@@ -190,12 +190,15 @@ export const DropdownMenuSeparator = React.forwardRef<
       {...props}
     />
   )
-})
+}
 
-export const DropdownMenuItem = React.forwardRef<
-  HTMLDivElement,
-  DropdownMenuPrimitive.DropdownMenuItemProps
->(({ className, ...props }, ref) => {
+export function DropdownMenuItem({
+  className,
+  ref,
+  ...props
+}: DropdownMenuPrimitive.DropdownMenuItemProps & {
+  ref?: React.RefObject<HTMLDivElement>
+}) {
   return (
     <DropdownMenuPrimitive.Item
       ref={ref}
@@ -203,12 +206,15 @@ export const DropdownMenuItem = React.forwardRef<
       {...props}
     />
   )
-})
+}
 
-export const DropdownMenuLabel = React.forwardRef<
-  HTMLDivElement,
-  DropdownMenuPrimitive.DropdownMenuLabelProps
->(({ className, ...props }, ref) => {
+export function DropdownMenuLabel({
+  className,
+  ref,
+  ...props
+}: DropdownMenuPrimitive.DropdownMenuLabelProps & {
+  ref?: React.RefObject<HTMLDivElement>
+}) {
   return (
     <DropdownMenuPrimitive.Label
       ref={ref}
@@ -216,14 +222,17 @@ export const DropdownMenuLabel = React.forwardRef<
       {...props}
     />
   )
-})
+}
 
 export const DropdownMenuGroup = DropdownMenuPrimitive.Group
 
-export const DropdownMenuRightSlot = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
+export function DropdownMenuRightSlot({
+  className,
+  ref,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & {
+  ref?: React.RefObject<HTMLDivElement>
+}) {
   return (
     <div
       ref={ref}
@@ -236,12 +245,15 @@ export const DropdownMenuRightSlot = React.forwardRef<
       {...props}
     />
   )
-})
+}
 
-export const DropdownMenuLeftSlot = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
+export function DropdownMenuLeftSlot({
+  className,
+  ref,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & {
+  ref?: React.RefObject<HTMLDivElement>
+}) {
   return (
     <div
       ref={ref}
@@ -249,4 +261,4 @@ export const DropdownMenuLeftSlot = React.forwardRef<
       {...props}
     />
   )
-})
+}

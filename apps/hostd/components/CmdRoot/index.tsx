@@ -72,6 +72,8 @@ export function CmdRoot({ panel }: Props) {
     >
       {page && <Label className="px-2">{page.label}</Label>}
       <Command.Input
+        aria-label="search commands"
+        name="cmdk-input"
         value={search}
         onValueChange={setSearch}
         className={textFieldStyles({ variant: 'ghost', focus: 'none' })}

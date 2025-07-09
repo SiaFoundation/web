@@ -1,6 +1,6 @@
 'use client'
 
-import { CSSProperties, forwardRef, MouseEvent, useMemo } from 'react'
+import { CSSProperties, MouseEvent, useMemo } from 'react'
 import { cx } from 'class-variance-authority'
 import { useDroppable, useDraggable } from '@dnd-kit/core'
 import {
@@ -55,124 +55,118 @@ export function createTableRow<
   D extends Data,
   Context
 >() {
-  const TableRow = forwardRef<
-    HTMLTableRowElement,
-    Props<Columns, D, Context> & {
-      className?: string
-      style?: CSSProperties
-      attributes?: DraggableAttributes
-      listeners?: DraggableSyntheticListeners
-    }
-  >(
-    (
-      {
-        data,
-        style,
-        attributes,
-        listeners,
-        context,
-        columns,
-        rowSize = 'default',
-        focusId,
-        focusColor = 'default',
-        getCellClassNames,
-        getContentClassNames,
-        className,
-      },
-      ref
-    ) => {
-      return (
-        <tr
-          ref={ref}
-          key={data.id}
-          {...attributes}
-          {...listeners}
-          style={style}
-          id={data.id}
-          data-testid={data.id}
-          onClick={data.onClick}
-          className={cx(
-            'border-b',
-            data.isSelected
-              ? [
-                  'bg-blue-400 border-blue-500/30',
-                  'dark:bg-blue-600/50 dark:border-blue-600/20',
-                ]
-              : 'border-gray-200/50 dark:border-graydark-100',
-            data.onClick ? 'cursor-pointer' : '',
-            data.className,
-            className
-          )}
-        >
-          {columns.map(
-            (
-              {
-                id,
-                render: Render,
-                contentClassName,
-                cellClassName,
-                rowCellClassName,
-                rowContentClassName,
-              },
-              i
-            ) => (
-              <td
-                key={`${id}/${data.id}`}
-                data-testid={id}
+  const TableRow = ({
+    ref,
+    data,
+    style,
+    attributes,
+    listeners,
+    context,
+    columns,
+    rowSize = 'default',
+    focusId,
+    focusColor = 'default',
+    getCellClassNames,
+    getContentClassNames,
+    className,
+  }: Props<Columns, D, Context> & {
+    className?: string
+    style?: CSSProperties
+    attributes?: DraggableAttributes
+    listeners?: DraggableSyntheticListeners
+    ref?: React.Ref<HTMLTableRowElement>
+  }) => {
+    return (
+      <tr
+        ref={ref}
+        key={data.id}
+        {...attributes}
+        {...listeners}
+        style={style}
+        id={data.id}
+        data-testid={data.id}
+        onClick={data.onClick}
+        className={cx(
+          'border-b',
+          data.isSelected
+            ? [
+                'bg-blue-400 border-blue-500/30',
+                'dark:bg-blue-600/50 dark:border-blue-600/20',
+              ]
+            : 'border-gray-200/50 dark:border-graydark-100',
+          data.onClick ? 'cursor-pointer' : '',
+          data.className,
+          className
+        )}
+      >
+        {columns.map(
+          (
+            {
+              id,
+              render: Render,
+              contentClassName,
+              cellClassName,
+              rowCellClassName,
+              rowContentClassName,
+            },
+            i
+          ) => (
+            <td
+              key={`${id}/${data.id}`}
+              data-testid={id}
+              className={cx(
+                getCellClassNames(
+                  i,
+                  cx(cellClassName, rowCellClassName),
+                  false
+                ),
+                // Must use shadow based borders on the individual tds because a tailwind ring
+                // on the tr does not show up correctly in Safari.
+                focusId && focusId === data.id
+                  ? [
+                      'shadow-border-y',
+                      'first:shadow-border-tlb',
+                      'last:shadow-border-trb',
+                    ]
+                  : '',
+                focusColor === 'default'
+                  ? '!shadow-blue-900 dark:!shadow-blue-200'
+                  : '',
+                focusColor === 'blue'
+                  ? '!shadow-blue-500 dark:!shadow-blue-400'
+                  : '',
+                focusColor === 'red'
+                  ? '!shadow-red-500 dark:!shadow-red-400'
+                  : '',
+                focusColor === 'amber'
+                  ? '!shadow-amber-500 dark:!shadow-amber-500'
+                  : '',
+                focusColor === 'green'
+                  ? '!shadow-green-500 dark:!shadow-green-400'
+                  : ''
+              )}
+            >
+              <div
                 className={cx(
-                  getCellClassNames(
+                  getContentClassNames(
                     i,
-                    cx(cellClassName, rowCellClassName),
-                    false
+                    cx(contentClassName, rowContentClassName)
                   ),
-                  // Must use shadow based borders on the individual tds because a tailwind ring
-                  // on the tr does not show up correctly in Safari.
-                  focusId && focusId === data.id
-                    ? [
-                        'shadow-border-y',
-                        'first:shadow-border-tlb',
-                        'last:shadow-border-trb',
-                      ]
-                    : '',
-                  focusColor === 'default'
-                    ? '!shadow-blue-900 dark:!shadow-blue-200'
-                    : '',
-                  focusColor === 'blue'
-                    ? '!shadow-blue-500 dark:!shadow-blue-400'
-                    : '',
-                  focusColor === 'red'
-                    ? '!shadow-red-500 dark:!shadow-red-400'
-                    : '',
-                  focusColor === 'amber'
-                    ? '!shadow-amber-500 dark:!shadow-amber-500'
-                    : '',
-                  focusColor === 'green'
-                    ? '!shadow-green-500 dark:!shadow-green-400'
+                  rowSize === 'dense'
+                    ? 'h-[50px]'
+                    : rowSize === 'default'
+                    ? 'h-[100px]'
                     : ''
                 )}
               >
-                <div
-                  className={cx(
-                    getContentClassNames(
-                      i,
-                      cx(contentClassName, rowContentClassName)
-                    ),
-                    rowSize === 'dense'
-                      ? 'h-[50px]'
-                      : rowSize === 'default'
-                      ? 'h-[100px]'
-                      : ''
-                  )}
-                >
-                  <Render data={data} context={context} />
-                </div>
-              </td>
-            )
-          )}
-        </tr>
-      )
-    }
-  )
+                <Render data={data} context={context} />
+              </div>
+            </td>
+          )
+        )}
+      </tr>
+    )
+  }
   return TableRow
 }
 

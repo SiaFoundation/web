@@ -53,11 +53,18 @@ export const styles = cva(
   }
 )
 
-export const TextArea = React.forwardRef<
-  HTMLTextAreaElement,
-  VariantProps<typeof styles> &
-    Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, 'size'>
->(({ size, variant, state, cursor, className, ...props }, ref) => {
+export function TextArea({
+  size,
+  variant,
+  state,
+  cursor,
+  className,
+  ref,
+  ...props
+}: VariantProps<typeof styles> &
+  Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, 'size'> & {
+    ref?: React.Ref<HTMLTextAreaElement>
+  }) {
   return (
     <textarea
       ref={ref}
@@ -65,4 +72,4 @@ export const TextArea = React.forwardRef<
       {...props}
     />
   )
-})
+}

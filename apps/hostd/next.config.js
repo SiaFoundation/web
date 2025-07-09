@@ -1,4 +1,4 @@
-const { composePlugins, withNx } = require('@nx/next');
+const { composePlugins, withNx } = require('@nx/next')
 
 /**
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
@@ -32,10 +32,11 @@ const nextConfigExport = {
   output: 'export',
 }
 
-const nextConfig = process.env.NEXT_OUTPUT_EXPORT ? nextConfigExport : nextConfigServe
+const nextConfig =
+  process.env.NX_TASK_TARGET_CONFIGURATION === 'export'
+    ? nextConfigExport
+    : nextConfigServe
 
-const plugins = [
-  withNx,
-];
+const plugins = [withNx]
 
-module.exports = composePlugins(...plugins)(nextConfig);
+module.exports = composePlugins(...plugins)(nextConfig)

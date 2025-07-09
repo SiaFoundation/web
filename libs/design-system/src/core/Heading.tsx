@@ -35,12 +35,10 @@ type HeadingProps = React.ComponentProps<typeof DEFAULT_TAG> &
     as?: string
     anchorLink?: boolean
     showAnchor?: boolean
+    ref?: React.RefObject<HTMLHeadingElement>
   }
 
-export const Heading = React.forwardRef<
-  React.ElementRef<typeof DEFAULT_TAG>,
-  HeadingProps
->((props, forwardedRef) => {
+export function Heading({ ref, ...props }: HeadingProps) {
   const {
     size = '24',
     className,
@@ -72,7 +70,7 @@ export const Heading = React.forwardRef<
           <Text
             as={tag}
             {...textProps}
-            ref={forwardedRef}
+            ref={ref}
             weight="none"
             className={cx('proportional-nums inline-block', textStyles[size])}
           >
@@ -88,7 +86,7 @@ export const Heading = React.forwardRef<
       <Text
         as={tag}
         {...textProps}
-        ref={forwardedRef}
+        ref={ref}
         weight="none"
         className={cx(
           'proportional-nums inline-block',
@@ -100,4 +98,4 @@ export const Heading = React.forwardRef<
       </Text>
     </div>
   )
-})
+}

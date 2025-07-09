@@ -9,8 +9,10 @@ import { getExplored } from '../../../../lib/explored'
 import { to } from '@siafoundation/request'
 import { ExplorerPageProps } from '../../../../lib/pageProps'
 
-export function generateMetadata({ params }: ExplorerPageProps): Metadata {
-  const id = decodeURIComponent((params?.id as string) || '')
+export async function generateMetadata({
+  params,
+}: ExplorerPageProps): Promise<Metadata> {
+  const id = decodeURIComponent(((await params)?.id as string) || '')
   const title = `Contract ${truncate(id, 30)}`
   const description = `View details for Sia contract.`
   const url = routes.contract.view.replace(':id', id)
@@ -24,7 +26,8 @@ export function generateMetadata({ params }: ExplorerPageProps): Metadata {
 export const revalidate = 0
 
 export default async function Page({ params }: ExplorerPageProps) {
-  const id = params?.id
+  const p = await params
+  const id = p?.id
 
   const explored = await getExplored()
   const [

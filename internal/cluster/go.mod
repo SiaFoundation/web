@@ -6,7 +6,7 @@ require (
 	go.sia.tech/cluster v0.1.3-0.20250610130308-2ed3922110c8
 	go.sia.tech/core v0.14.1
 	go.sia.tech/coreutils v0.16.5
-	go.sia.tech/explored v1.0.0-beta.1.0.20250702134902-0dbe60debb61
+	go.sia.tech/explored v1.0.0-beta.1.0.20250710202922-af67b5bc91bb
 	go.uber.org/zap v1.27.0
 )
 
@@ -38,7 +38,7 @@ require (
 	go.sia.tech/jape v0.14.0 // indirect
 	go.sia.tech/mux v1.4.0 // indirect
 	go.sia.tech/renterd/v2 v2.5.0 // indirect
-	go.sia.tech/walletd/v2 v2.10.4 // indirect
+	go.sia.tech/walletd/v2 v2.10.5-0.20250710153222-6c60e0338e8a // indirect
 	go.uber.org/mock v0.5.2 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/crypto v0.39.0 // indirect
