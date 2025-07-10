@@ -12,12 +12,12 @@
     "@siafoundation/next": "^0.1.4",
     "@siafoundation/request": "0.3.1",
     "swr": "^2.1.1",
-    "axios": "^0.27.2",
+    "axios": "^1.10.0",
     "use-local-storage-state": "^18.3.3",
     "detect-gpu": "^5.0.34"
   },
   "devDependencies": {
-    "undici": "5.28.3"
+    "undici": "5.29.0"
   },
   "types": "./src/index.d.ts"
 }
