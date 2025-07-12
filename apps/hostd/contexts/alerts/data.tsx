@@ -249,6 +249,34 @@ export const dataFields: {
       )
     },
   },
+  certFile: {
+    render({ value }) {
+      return (
+        <div className="flex justify-between w-full gap-2">
+          <Text size="12" color="subtle" ellipsis>
+            certFile
+          </Text>
+          <Text size="12" color="contrast" ellipsis>
+            {value}
+          </Text>
+        </div>
+      )
+    },
+  },
+  notAfter: {
+    render({ value }) {
+      return (
+        <div className="flex justify-between w-full gap-2">
+          <Text size="12" color="subtle" ellipsis>
+            notAfter
+          </Text>
+          <Text size="12" color="contrast" ellipsis>
+            {value}
+          </Text>
+        </div>
+      )
+    },
+  },
   current: {
     render({ value }) {
       return (
