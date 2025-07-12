@@ -586,6 +586,9 @@ export type AlertData = {
 
   force?: boolean
 
+  certFile?: string
+  notAfter?: string
+
   // versioning
   current?: string
   latest?: string
