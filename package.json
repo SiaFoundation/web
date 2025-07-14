@@ -96,7 +96,7 @@
     "tailwindcss-shadow-fill": "^1.0.1",
     "tailwindcss-text-fill": "^0.2.0",
     "use-debounce": "^9.0.4",
-    "use-local-storage-state": "^18.3.3",
+    "use-local-storage-state": "^19.5.0",
     "usehooks-ts": "^2.16.0",
     "yup": "^0.32.11"
   },

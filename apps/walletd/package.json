@@ -27,7 +27,7 @@
     "react-hook-form": "^7.52.0",
     "react-idle-timer": "^5.7.2",
     "swr": "^2.3.2",
-    "use-local-storage-state": "^18.3.3",
+    "use-local-storage-state": "^19.5.0",
     "@siafoundation/sdk": "0.4.2"
   }
 }
