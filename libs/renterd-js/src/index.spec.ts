@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter'
 import { Bus } from './bus'
 import { Worker } from './worker'
+import { AxiosProgressEvent } from 'axios'
 
 describe('renterd-js', () => {
   const api = 'https://sia.tech/api'
@@ -57,7 +58,10 @@ describe('renterd-js', () => {
       expect(config.headers?.['Content-Type']).toMatch(/multipart\/form-data/)
       expect(config.data).toBeInstanceOf(File)
       if (config.onUploadProgress) {
-        config.onUploadProgress({ loaded: 500, total: 1000 })
+        config.onUploadProgress({
+          loaded: 500,
+          total: 1000,
+        } as AxiosProgressEvent)
       }
       return [200, undefined]
     })
@@ -70,7 +74,7 @@ describe('renterd-js', () => {
       data: new File(['hello world'], name),
       config: {
         onUploadProgress: (progress) => {
-          expect(progress.loaded / progress.total).toBe(0.5)
+          expect(progress.loaded / (progress.total ?? 0)).toBe(0.5)
         },
       },
     })

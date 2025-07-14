@@ -1,4 +1,6 @@
-export default {
+import type { Config } from 'jest'
+
+const config: Config = {
   displayName: 'hostd-types',
   preset: '../../jest.preset.js',
   transform: {
@@ -14,3 +16,5 @@ export default {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/libs/hostd-types',
 }
+
+export default config

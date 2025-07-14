@@ -3,8 +3,8 @@ import axios, {
   AxiosError,
   AxiosInstance,
   AxiosRequestConfig,
-  AxiosRequestHeaders,
   AxiosResponse,
+  RawAxiosRequestHeaders,
 } from 'axios'
 
 export type RequestParams = Record<
@@ -112,7 +112,7 @@ export async function to<T>(
 }
 
 export function initAxios(api: string, password?: string): AxiosInstance {
-  const headers: AxiosRequestHeaders = {
+  const headers: RawAxiosRequestHeaders = {
     'Content-Type': 'application/json',
   }
   if (password) {

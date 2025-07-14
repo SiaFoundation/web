@@ -1,4 +1,6 @@
-export default {
+import type { Config } from 'jest'
+
+const config: Config = {
   displayName: 'renterd-js',
   preset: '../../jest.preset.js',
   transform: {
@@ -14,3 +16,5 @@ export default {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/libs/renterd-js',
 }
+
+export default config

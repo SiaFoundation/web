@@ -47,6 +47,9 @@ export default [
             '**/jest.config.ts',
             '**/project.json',
           ],
+          // Ignore this for now because the dist import in tsconfig.base.json
+          // breaks the nx dependency check lint rule.
+          ignoredDependencies: ['@siafoundation/sdk'],
         },
       ],
     },

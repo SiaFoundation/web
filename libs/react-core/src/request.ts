@@ -1,4 +1,9 @@
-import { AxiosRequestConfig, AxiosResponse, AxiosResponseHeaders } from 'axios'
+import {
+  AxiosRequestConfig,
+  AxiosResponse,
+  RawAxiosRequestHeaders,
+  RawAxiosResponseHeaders,
+} from 'axios'
 import { MutatorCallback, MutatorOptions } from 'swr'
 import { SWROptions } from './types'
 import { RequestSettings } from './appSettings/useRequestSettings/types'
@@ -180,7 +185,7 @@ export function mergeInternalCallbackArgs<
 export type Response<T> = {
   status: number
   data?: T
-  headers?: AxiosResponseHeaders
+  headers?: RawAxiosResponseHeaders
   error?: string
 }
 
@@ -201,7 +206,7 @@ function buildHeaders<Params extends RequestParams, Payload, Result>(
   configArgs: InternalHookArgsCallback<Params, Payload, Result>,
   callArgs: InternalCallbackArgs<Params, Payload, Result> | undefined
 ) {
-  const headers: Record<string, string> = {
+  const headers: RawAxiosRequestHeaders = {
     'Content-Type': 'application/json',
     ...configArgs.config?.axios?.headers,
     ...callArgs?.config?.axios?.headers,

@@ -1,4 +1,6 @@
-export default {
+import type { Config } from 'jest'
+
+const config: Config = {
   displayName: 'data-sources',
 
   globals: {},
@@ -15,3 +17,5 @@ export default {
   coverageDirectory: '../../coverage/libs/data-sources',
   preset: '../../jest.preset.js',
 }
+
+export default config
