@@ -22,15 +22,18 @@ User interfaces for the Sia software. The latest Sia software takes a modular ap
 The Sia web libraries provide developers with convenient TypeScript SDKs for using Sia core types, blockchain utilities, data fetching, daemon-specific React hooks, and components for common functionality such as Siacoin/fiat input fields, transaction lists, files, and more.
 
 - [@siafoundation/sdk](libs/sdk) - SDK for interacting directly with the Sia network from browsers and web clients.
-- [@siafoundation/renterd-js](libs/renterd-js) - SDK for interacting with `renterd`.
-- [@siafoundation/renterd-react](libs/renterd-react) - React hooks for interacting with `renterd`.
-- [@siafoundation/renterd-types](libs/renterd-types) - Types for `renterd`.
+- [@siafoundation/indexd-js](libs/indexd-js) - SDK for interacting with `indexd`.
+- [@siafoundation/indexd-react](libs/indexd-react) - React hooks for interacting with `indexd`.
+- [@siafoundation/indexd-types](libs/indexd-types) - Types for `indexd`.
 - [@siafoundation/hostd-js](libs/hostd-js) - SDK for interacting with `hostd`.
 - [@siafoundation/hostd-react](libs/hostd-react) - React hooks for interacting with `hostd`.
 - [@siafoundation/hostd-types](libs/hostd-types) - Types for `hostd`.
 - [@siafoundation/walletd-js](libs/walletd-js) - SDK for interacting with `walletd`.
 - [@siafoundation/walletd-react](libs/walletd-react) - React hooks for interacting with `walletd`.
 - [@siafoundation/walletd-types](libs/walletd-types) - Types for `walletd`.
+- [@siafoundation/renterd-js](libs/renterd-js) - SDK for interacting with `renterd`.
+- [@siafoundation/renterd-react](libs/renterd-react) - React hooks for interacting with `renterd`.
+- [@siafoundation/renterd-types](libs/renterd-types) - Types for `renterd`.
 - [@siafoundation/explored-js](libs/explored-js) - SDK for interacting with `explored`.
 - [@siafoundation/explored-react](libs/explored-react) - React hooks for interacting with `explored`.
 - [@siafoundation/explored-types](libs/explored-types) - Types for `explored`.
