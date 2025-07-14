@@ -1,0 +1,44 @@
+{
+  "name": "indexd-types",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/indexd-types/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "useLegacyTypescriptPlugin": true,
+        "outputPath": "dist/libs/indexd-types",
+        "tsConfig": "libs/indexd-types/tsconfig.lib.json",
+        "project": "libs/indexd-types/package.json",
+        "entryFile": "libs/indexd-types/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "compiler": "tsc",
+        "outputFileName": "index.js",
+        "rollupConfig": "libs/indexd-types/rollup.config.js",
+        "format": ["esm", "cjs"],
+        "assets": [
+          {
+            "glob": "libs/indexd-types/*.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      },
+      "configurations": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/indexd-types"],
+      "options": {
+        "jestConfig": "libs/indexd-types/jest.config.ts"
+      }
+    }
+  }
+}
