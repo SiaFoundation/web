@@ -63,7 +63,7 @@ export async function example() {
     data: new File(['file contents'], 'file.txt'),
     config: {
       onUploadProgress: (progress) => {
-        console.log(progress.loaded / progress.total)
+        console.log(progress.loaded / (progress.total ?? 0))
       },
     },
   })

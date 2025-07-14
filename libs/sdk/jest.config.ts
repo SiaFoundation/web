@@ -1,4 +1,6 @@
-export default {
+import type { Config } from 'jest'
+
+const config: Config = {
   displayName: 'sdk',
   testEnvironment: 'jest-fixed-jsdom',
   preset: '../../jest.preset.js',
@@ -15,3 +17,5 @@ export default {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/libs/sdk',
 }
+
+export default config

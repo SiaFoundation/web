@@ -11,6 +11,7 @@ import {
   MultipartUploadCompletePayload,
   MultipartUploadPartParams,
 } from '@siafoundation/renterd-types'
+import type { AxiosProgressEvent } from 'axios'
 
 type ApiWorkerUploadPart = ReturnType<typeof useMultipartUploadPart>
 type ApiBusUploadComplete = ReturnType<typeof useMultipartUploadComplete>
@@ -334,7 +335,7 @@ export class MultipartUpload {
     }
   }
 
-  #handleProgress(partNumber: number, event: ProgressEvent) {
+  #handleProgress(partNumber: number, event: AxiosProgressEvent) {
     this.#progressCache[partNumber] = event.loaded
 
     const progressTotal = Object.keys(this.#progressCache)
@@ -395,7 +396,7 @@ export class MultipartUpload {
       const uploadedPart = {
         partNumber: partNumber,
         // Remove the " enclosing characters from the raw ETag.
-        eTag: eTag.replace(/"/g, ''),
+        eTag: (eTag as string).replace(/"/g, ''),
       }
 
       this.#uploadedParts.push(uploadedPart)

@@ -4,7 +4,7 @@ import {
   MultipartParams,
   MultipartUpload,
 } from './multipartUpload'
-import { AxiosResponseHeaders } from 'axios'
+import { RawAxiosResponseHeaders } from 'axios'
 
 describe('MultipartUpload', () => {
   it('should report progress and complete with serial parts', async () => {
@@ -426,7 +426,7 @@ function buildMockApiWorkerUploadPart({
             if (loaded >= partSize) {
               clearInterval(intervalId)
 
-              const headers: AxiosResponseHeaders = {
+              const headers: RawAxiosResponseHeaders = {
                 etag: eTag,
               }
               if (failure?.type === 'missingEtag') {

@@ -16,6 +16,7 @@
     "@siafoundation/units": "3.5.1",
     "@siafoundation/walletd-react": "4.5.3",
     "@siafoundation/walletd-types": "0.7.2",
+    "@siafoundation/sdk": "0.4.2",
     "@technically/lodash": "^4.17.0",
     "bignumber.js": "^9.0.2",
     "blakejs": "^1.2.1",
@@ -27,7 +28,6 @@
     "react-hook-form": "^7.52.0",
     "react-idle-timer": "^5.7.2",
     "swr": "^2.3.2",
-    "use-local-storage-state": "^18.3.3",
-    "@siafoundation/sdk": "0.4.2"
+    "use-local-storage-state": "^19.5.0"
   }
 }
