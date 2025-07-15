@@ -3,4 +3,4 @@
 'hostd': minor
 ---
 
-feat(hostd): Add certificate alertData types for hostd alerts
+Alert data now includes certificate related fields.
