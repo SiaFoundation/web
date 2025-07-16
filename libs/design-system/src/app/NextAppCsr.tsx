@@ -1,20 +1,11 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { ThemeProvider } from 'next-themes'
 import { TooltipProvider } from '../hooks/tooltip'
 import { AppSettingsProvider, CoreProvider } from '@siafoundation/react-core'
 import { Toaster } from '../lib/toast'
-
-export function ClientSide({ children }: { children: React.ReactNode }) {
-  const [csrReady, setCsrReady] = useState(false)
-
-  useEffect(() => {
-    setCsrReady(true)
-  }, [])
-
-  return <div>{csrReady ? children : null}</div>
-}
+import { ClientSideOnly } from '../components/ClientSideOnly'
 
 type Props = {
   className?: string
@@ -34,7 +25,7 @@ export function NextAppCsr({
   lockRoutes,
 }: Props) {
   return (
-    <ClientSide>
+    <ClientSideOnly>
       <CoreProvider fallback={fallback}>
         <ThemeProvider attribute="class">
           <TooltipProvider>
@@ -51,6 +42,6 @@ export function NextAppCsr({
           </TooltipProvider>
         </ThemeProvider>
       </CoreProvider>
-    </ClientSide>
+    </ClientSideOnly>
   )
 }
