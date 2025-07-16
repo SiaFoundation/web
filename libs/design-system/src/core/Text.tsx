@@ -1,5 +1,5 @@
 import { cva, cx } from 'class-variance-authority'
-import React from 'react'
+
 import { VariantProps } from '../types'
 
 // // avoid clipping decenders when overflow is hidden

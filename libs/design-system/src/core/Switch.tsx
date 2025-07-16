@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import * as SwitchPrimitive from '@radix-ui/react-switch'
 import { Text } from './Text'
 import { cva } from 'class-variance-authority'

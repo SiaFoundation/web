@@ -10,7 +10,6 @@ import {
 import toast, { Toaster as RToaster, ToastOptions } from 'react-hot-toast'
 import { cx } from 'class-variance-authority'
 import { panelStyles } from '../core/Panel'
-import React from 'react'
 import { Text } from '../core/Text'
 import { Button } from '../core/Button'
 import { Tooltip } from '../core/Tooltip'

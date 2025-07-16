@@ -1,7 +1,6 @@
 import { itemStyles, Label } from '@siafoundation/design-system'
 import { cx } from 'class-variance-authority'
 import { Command, useCommandState } from 'cmdk'
-import React from 'react'
 import { Page } from './types'
 
 export function CommandItemNav({

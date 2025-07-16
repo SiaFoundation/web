@@ -1,4 +1,3 @@
-import React from 'react'
 import { DialogProvider, Dialogs } from '../contexts/dialog'
 import { ContractsProvider } from '../contexts/contracts'
 import { HostsProvider } from '../contexts/hosts'

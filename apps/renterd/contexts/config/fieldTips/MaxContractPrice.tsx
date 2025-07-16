@@ -3,7 +3,6 @@ import {
   TipNumber,
   formSetField,
 } from '@siafoundation/design-system'
-import React from 'react'
 import { Categories, RecommendationItem, InputValues } from '../types'
 import { toHastings } from '@siafoundation/units'
 import { UseFormReturn } from 'react-hook-form'

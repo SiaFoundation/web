@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import { AnimatePresence, motion, Variants } from 'motion/react'
 import { cva, cx } from 'class-variance-authority'
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'

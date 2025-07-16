@@ -1,4 +1,3 @@
-import React from 'react'
 import { cx } from 'class-variance-authority'
 
 export function LoadingDots({

@@ -1,7 +1,7 @@
 'use client'
 
 import { Heading, Panel, Text } from '@siafoundation/design-system'
-import React, { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { cx } from 'class-variance-authority'
 import { EntityListSkeleton } from './EntityListSkeleton'
 import { EntityListItem, EntityListItemProps } from './EntityListItem'

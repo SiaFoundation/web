@@ -7,7 +7,6 @@ import {
 import { Maybe } from '@siafoundation/types'
 import { hoursInDays, secondsInMinutes } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
-import React from 'react'
 import {
   Categories,
   ConfigViewMode,

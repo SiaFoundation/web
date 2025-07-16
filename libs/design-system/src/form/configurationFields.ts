@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { entries } from '@technically/lodash'
-import React, { MouseEvent, useCallback } from 'react'
+import { MouseEvent, useCallback } from 'react'
 import {
   DeepMap,
   DeepPartial,

@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import { AnimatePresence, motion, Variants } from 'motion/react'
 import * as PopoverPrimitive from '@radix-ui/react-popover'
 import { panelStyles } from './Panel'

@@ -1,5 +1,4 @@
 import { Container, Panel } from '@siafoundation/design-system'
-import React from 'react'
 
 type Props = {
   heading?: React.ReactNode

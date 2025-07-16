@@ -1,4 +1,4 @@
-import React, { useRef, createContext, useContext } from 'react'
+import { useRef, createContext, useContext } from 'react'
 import {
   nodeToImage,
   triggerErrorToast,

@@ -1,4 +1,3 @@
-import React from 'react'
 import pattern from '../assets/background-pattern.jpg'
 import { getImageProps } from '../lib/image'
 

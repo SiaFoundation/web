@@ -1,5 +1,4 @@
 import { DialogProvider, Dialogs } from '../contexts/dialog'
-import React from 'react'
 import { WalletsProvider } from '../contexts/wallets'
 import { AddressesProvider } from '../contexts/addresses'
 import { EventsProvider } from '../contexts/events'

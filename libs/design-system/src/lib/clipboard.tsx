@@ -1,4 +1,3 @@
-import React from 'react'
 import { writeText, write } from 'clipboard-polyfill'
 import { ToastOptions, triggerToast } from './toast'
 import { Copy24 } from '@siafoundation/react-icons'

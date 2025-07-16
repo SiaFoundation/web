@@ -1,4 +1,3 @@
-import React from 'react'
 import { OnboardingBar } from './OnboardingBar'
 import { TransfersBar } from './TransfersBar'
 import { EnabledBar } from './EnabledBar'

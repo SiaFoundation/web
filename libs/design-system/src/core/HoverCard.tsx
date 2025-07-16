@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import { AnimatePresence, motion, Variants } from 'motion/react'
 import * as HoverCardPrimitive from '@radix-ui/react-hover-card'
 import { panelStyles } from './Panel'

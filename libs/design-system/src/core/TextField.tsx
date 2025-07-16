@@ -1,5 +1,4 @@
 import { cva } from 'class-variance-authority'
-import React from 'react'
 import { VariantProps } from '../types'
 
 export const textFieldStyles = cva(

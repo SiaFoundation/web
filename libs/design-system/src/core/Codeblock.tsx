@@ -1,5 +1,4 @@
 import { cx } from 'class-variance-authority'
-import React from 'react'
 import { VariantProps } from '../types'
 import { textStyles } from './Text'
 

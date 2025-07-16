@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
 import { cva } from 'class-variance-authority'
 import { VariantProps } from '../types'

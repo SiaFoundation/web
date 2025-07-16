@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import { ThemeProvider } from 'next-themes'
 import { TooltipProvider } from '../hooks/tooltip'
 import { AppSettingsProvider, CoreProvider } from '@siafoundation/react-core'

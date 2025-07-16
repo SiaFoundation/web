@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 import { Text } from './Text'
 import { cva, cx } from 'class-variance-authority'

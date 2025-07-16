@@ -1,12 +1,12 @@
 'use client'
 
-import React from 'react'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { Paragraph } from './Paragraph'
 import { cx } from 'class-variance-authority'
 import { panelStyles } from './Panel'
 import { motion, AnimatePresence, Variants } from 'motion/react'
 import { useOpen } from '../hooks/useOpen'
+import { Fragment, isValidElement } from 'react'
 
 type TooltipProps = Omit<
   React.ComponentProps<typeof TooltipPrimitive.Root> &
@@ -94,8 +94,7 @@ export function Tooltip({
                   )}
                 >
                   {typeof content === 'string' ||
-                  (React.isValidElement(content) &&
-                    content?.type === React.Fragment) ? (
+                  (isValidElement(content) && content?.type === Fragment) ? (
                     <Paragraph size="12">{content}</Paragraph>
                   ) : (
                     content

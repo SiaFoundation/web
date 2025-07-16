@@ -1,4 +1,3 @@
-import React from 'react'
 import { Container } from '../../core/Container'
 import { AppNavbar } from '../AppNavbar'
 import { AppBackdrop } from '../AppBackdrop'

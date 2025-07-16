@@ -1,7 +1,6 @@
 'use client'
 
 import { cx } from 'class-variance-authority'
-import React from 'react'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import { textStyles } from './Text'
 import { VariantProps } from '../types'

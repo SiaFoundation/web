@@ -1,5 +1,4 @@
 import { ImageResponse } from 'next/og'
-import React from 'react'
 import { Preview } from './Preview'
 
 export async function getOGImage(
