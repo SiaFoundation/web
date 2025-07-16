@@ -1,4 +1,3 @@
-import React from 'react'
 import { cva, VariantProps } from 'class-variance-authority'
 
 const styles = cva(['font-mono', 'whitespace-nowrap', 'rounded'], {

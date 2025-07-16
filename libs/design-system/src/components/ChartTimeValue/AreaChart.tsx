@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import { AreaClosed } from '@visx/shape'
 import { Group } from '@visx/group'
 import { curveStep, curveMonotoneX } from '@visx/curve'

@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import * as AvatarPrimitive from '@radix-ui/react-avatar'
 import { cva, cx } from 'class-variance-authority'
 import { VariantProps } from '../types'

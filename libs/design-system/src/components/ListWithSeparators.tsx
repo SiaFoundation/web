@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Children, Fragment, isValidElement } from 'react'
 
 type Props = {
   separator: React.ReactNode
@@ -6,9 +6,9 @@ type Props = {
 }
 
 export function ListWithSeparators({ separator, children }: Props) {
-  const filteredChildren = React.Children.toArray(children).filter(
+  const filteredChildren = Children.toArray(children).filter(
     (child) =>
-      React.isValidElement(child) &&
+      isValidElement(child) &&
       (typeof child.type === 'function'
         ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (child.type as any)(child.props) !== null
@@ -19,7 +19,7 @@ export function ListWithSeparators({ separator, children }: Props) {
       {filteredChildren.map((child, index) => (
         <Fragment key={child?.props?.id || child?.props?.name}>
           {child}
-          {index < React.Children.count(filteredChildren) - 1 && separator}
+          {index < Children.count(filteredChildren) - 1 && separator}
         </Fragment>
       ))}
     </>

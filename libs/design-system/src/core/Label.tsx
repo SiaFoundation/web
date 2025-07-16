@@ -1,7 +1,6 @@
 'use client'
 
 import * as LabelPrimitive from '@radix-ui/react-label'
-import React from 'react'
 import { textStyles } from './Text'
 import { VariantProps } from '../types'
 import { labelStyles } from './Menu'

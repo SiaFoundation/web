@@ -1,5 +1,4 @@
 import { Text, textStyles } from './Text'
-import React from 'react'
 import { cx } from 'class-variance-authority'
 
 type Props = {

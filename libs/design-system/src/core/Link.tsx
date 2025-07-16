@@ -2,7 +2,7 @@
 
 import { cva, cx } from 'class-variance-authority'
 import { Link as BaseNextLink } from '@siafoundation/next'
-import React, { useCallback } from 'react'
+import { useCallback } from 'react'
 import { textStyles } from './Text'
 import { buttonStyles } from './Button'
 import { VariantProps } from '../types'

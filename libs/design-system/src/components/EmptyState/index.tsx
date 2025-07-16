@@ -2,7 +2,6 @@ import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
 import { StateError } from './StateError'
 import { StateNoneOnPage } from './StateNoneOnPage'
-import React from 'react'
 import { DatasetState } from '../../hooks/useDatasetState'
 
 export function EmptyState({

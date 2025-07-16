@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import { Checkmark16, Subtract16 } from '@siafoundation/react-icons'
 import { Text } from './Text'

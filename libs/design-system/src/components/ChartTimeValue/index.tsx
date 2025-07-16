@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo, useCallback, useState, useRef, useEffect } from 'react'
+import { useMemo, useCallback, useState, useRef, useEffect } from 'react'
 import { Line, Bar } from '@visx/shape'
 import { GridColumns, GridRows } from '@visx/grid'
 import { scaleTime, scaleLinear } from '@visx/scale'

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Text } from './Text'
 import { cx, VariantProps } from 'class-variance-authority'
 import { Link } from '@siafoundation/next'

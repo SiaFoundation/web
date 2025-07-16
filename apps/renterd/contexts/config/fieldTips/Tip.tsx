@@ -5,7 +5,6 @@ import {
   ValueScFiat,
   Separator,
 } from '@siafoundation/design-system'
-import React from 'react'
 import { UseFormReturn } from 'react-hook-form'
 import { InputValues } from '../types'
 import BigNumber from 'bignumber.js'

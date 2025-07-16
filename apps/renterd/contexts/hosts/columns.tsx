@@ -40,7 +40,7 @@ import {
 } from '@siafoundation/types'
 import { useHostsAllowlist } from '@siafoundation/renterd-react'
 import BigNumber from 'bignumber.js'
-import React, { memo } from 'react'
+import { memo } from 'react'
 
 type HostsTableColumn = TableColumn<TableColumnId, HostData, HostContext> & {
   fixed?: boolean

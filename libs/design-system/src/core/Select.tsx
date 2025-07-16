@@ -1,5 +1,5 @@
 import { cva, cx } from 'class-variance-authority'
-import React from 'react'
+
 import { CaretSort16 } from '@siafoundation/react-icons'
 import { VariantProps } from '../types'
 
