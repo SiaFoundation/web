@@ -1,5 +1,11 @@
 # renterd
 
+## 0.82.3
+
+### Patch Changes
+
+- 47d1210: Fixed an issue where the contract timeline would show the current block height indicator at the incorrect height.
+
 ## 0.82.2
 
 ### Patch Changes
