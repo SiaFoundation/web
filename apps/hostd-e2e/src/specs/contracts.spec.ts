@@ -7,6 +7,7 @@ import {
   getContractRows,
   setVersionMode,
   expectVersionMode,
+  getContractRowsAll,
 } from '../fixtures/contracts'
 import {
   ContractsResponse,
@@ -20,24 +21,23 @@ test.afterEach(async () => {
   await afterTest()
 })
 
-// TODO: re-enable once support for v2 integrity checks is added.
-// test('contracts bulk integrity check', async ({ page }) => {
-//   await beforeTest(page, {
-//     renterdCount: 3,
-//   })
-//   await navigateToContracts(page)
-//   const rows = await getContractRowsAll(page)
-//   await rows.at(0).click({ position: { x: 50, y: 5 } })
-//   await rows.at(2).click({ modifiers: ['Shift'] })
+test('contracts bulk integrity check', async ({ page }) => {
+  await beforeTest(page, {
+    renterdCount: 3,
+  })
+  await navigateToContracts(page)
+  const rows = await getContractRowsAll(page)
+  await rows.at(0).click({ position: { x: 50, y: 5 } })
+  await rows.at(2).click({ modifiers: ['Shift'] })
 
-//   const menu = page.getByLabel('contract multi-select menu')
+  const menu = page.getByLabel('contract multi-select menu')
 
-//   // Run check for each contract.
-//   await menu.getByLabel('run integrity check for each contract').click()
-//   await expect(
-//     page.getByText('Integrity checks started for 3 contracts')
-//   ).toBeVisible()
-// })
+  // Run check for each contract.
+  await menu.getByLabel('run integrity check for each contract').click()
+  await expect(
+    page.getByText('Integrity checks started for 3 contracts')
+  ).toBeVisible()
+})
 
 test('new contracts do not show a renewed from or to contract', async ({
   page,
