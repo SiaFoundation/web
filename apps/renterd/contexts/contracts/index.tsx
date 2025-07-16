@@ -126,7 +126,7 @@ function useContractsMain() {
 
   const cellContext = useMemo(() => {
     const context: ContractTableContext = {
-      currentHeight: syncStatus.estimatedBlockHeight,
+      currentHeight,
       contractsTimeRange,
       siascanUrl,
       hasFetchedAllPrunableSize,
@@ -137,7 +137,7 @@ function useContractsMain() {
     }
     return context
   }, [
-    syncStatus.estimatedBlockHeight,
+    currentHeight,
     contractsTimeRange,
     siascanUrl,
     hasFetchedAllPrunableSize,
