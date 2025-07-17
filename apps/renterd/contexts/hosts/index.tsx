@@ -1,6 +1,4 @@
 import {
-  triggerToast,
-  truncate,
   useDaemonExplorerHostsList,
   useDatasetState,
   useMultiSelect,
@@ -25,10 +23,8 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from 'react'
-import { Commands, emptyCommands } from '../../components/Hosts/HostMap/Globe'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 import { useContracts } from '../contracts'
@@ -110,15 +106,6 @@ function useHostsMain() {
 
   const geoHosts = useMemo(() => geo.data || [], [geo.data])
 
-  const cmdRef = useRef<Commands>(emptyCommands)
-
-  const setCmd = useCallback(
-    (cmd: Commands) => {
-      cmdRef.current = cmd
-    },
-    [cmdRef]
-  )
-
   const scrollToHost = useCallback((publicKey: string) => {
     // move table to host, select via data id data-table
     const rowEl = document.getElementById(publicKey)
@@ -160,7 +147,10 @@ function useHostsMain() {
   })
 
   const hostsWithLocation = useMemo(
-    () => dataset?.filter((h) => h.location) as HostDataWithLocation[],
+    () =>
+      dataset?.filter(
+        (h) => h.location && h.v2 && h.v2Settings
+      ) as HostDataWithLocation[],
     [dataset]
   )
 
@@ -200,35 +190,11 @@ function useHostsMain() {
       if (activeHost?.publicKey !== publicKey) {
         multiSelect.deselectAll()
         multiSelect.onSelect(publicKey)
-        if (location) {
-          cmdRef.current.moveToLocation(location)
-        }
         scrollToHost(publicKey)
       }
     },
-    [activeHost, multiSelect, cmdRef, scrollToHost]
+    [activeHost, multiSelect, scrollToHost]
   )
-
-  useEffect(() => {
-    if (!activeHost) {
-      return
-    }
-    if (viewMode !== 'map') {
-      return
-    }
-    const { location } = activeHost || {}
-    if (location) {
-      cmdRef.current.moveToLocation([location.latitude, location.longitude])
-    } else {
-      triggerToast({
-        title: `Location not available for host ${truncate(
-          activeHost.publicKey,
-          20
-        )}`,
-      })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeHost])
 
   const isValidating = response.isValidating
   const error = response.error
@@ -241,7 +207,6 @@ function useHostsMain() {
   })
 
   return {
-    setCmd,
     viewMode,
     activeHost,
     onHostMapClick,

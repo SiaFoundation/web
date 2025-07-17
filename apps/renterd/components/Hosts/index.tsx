@@ -20,7 +20,7 @@ export function Hosts() {
     <div className="relative flex flex-col overflow-hidden h-full w-full">
       <div
         className={cx(
-          'absolute h-[70%] w-full',
+          'absolute h-[50%] w-full',
           viewMode === 'map' ? 'block' : 'invisible',
           'transition-all'
         )}
@@ -38,8 +38,8 @@ export function Hosts() {
           height:
             viewMode === 'map'
               ? datasetPage && datasetPage.length
-                ? 400 - Math.max((2 - datasetPage.length) * 100, 0)
-                : 400
+                ? `calc(50% - ${Math.max((2 - datasetPage.length) * 100, 0)}px)`
+                : '50%'
               : '100%',
         }}
       >
