@@ -97,10 +97,9 @@ function getHostFields(host: Host, allContracts: Maybe<ContractData[]>) {
     ),
     activeContracts:
       allContracts?.filter((c) => c.hostKey === host.publicKey) || [],
-    priceTable: host.priceTable,
-    settings: host.settings,
     v2Settings: host.v2Settings,
     v2: !!host.v2SiamuxAddresses,
+    v1Settings: host.settings,
   }
 }
 
