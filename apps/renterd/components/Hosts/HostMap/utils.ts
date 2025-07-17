@@ -21,7 +21,7 @@ export function getHostLabel({
 }) {
   const storagePrice = host.v2
     ? host.v2Settings.prices.storagePrice
-    : host.settings.storageprice
+    : host.v1Settings.storageprice
   const storageCost = rate
     ? `${currency?.prefix}${new BigNumber(storagePrice || 0)
         .times(TBToBytes(1))
@@ -44,10 +44,10 @@ export function getHostLabel({
 
   const remainingStorage = host.v2
     ? sectorsToBytes(host.v2Settings.remainingStorage)
-    : host.settings.remainingstorage
+    : host.v1Settings.remainingstorage
   const totalStorage = host.v2
     ? sectorsToBytes(host.v2Settings.totalStorage)
-    : host.settings.totalstorage
+    : host.v1Settings.totalstorage
   const availableStorage = `${humanBytes(remainingStorage || 0)} / ${humanBytes(
     totalStorage || 0
   )} available`

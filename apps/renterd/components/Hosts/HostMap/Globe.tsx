@@ -183,7 +183,7 @@ export function Globe({
               .div(1e12)
               .toNumber()
           }
-          radius = (h.settings?.remainingstorage || 0) / 1e13 / 3
+          radius = (h.v1Settings?.remainingstorage || 0) / 1e13 / 3
 
           return Math.max(radius, 0.1)
         }}

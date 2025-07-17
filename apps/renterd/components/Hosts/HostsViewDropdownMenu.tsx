@@ -36,20 +36,8 @@ export function HostsViewDropdownMenu() {
       label: column.label,
       value: column.id,
     }))
-  const v2SettingsColumns = configurableColumns
-    .filter((c) => c.category === 'v2Settings')
-    .map((column) => ({
-      label: column.label,
-      value: column.id,
-    }))
-  const priceTableColumns = configurableColumns
-    .filter((c) => c.category === 'priceTable')
-    .map((column) => ({
-      label: column.label,
-      value: column.id,
-    }))
   const settingsColumns = configurableColumns
-    .filter((c) => c.category === 'hostSettings')
+    .filter((c) => c.category === 'settings')
     .map((column) => ({
       label: column.label,
       value: column.id,
@@ -115,46 +103,10 @@ export function HostsViewDropdownMenu() {
           </BaseMenuItem>
         </>
       ) : null}
-      {v2SettingsColumns.length ? (
-        <>
-          <MenuSectionLabelToggleAll
-            label="V2 settings (RHPv4)"
-            columns={v2SettingsColumns.map((c) => c.value)}
-            enabled={visibleColumnIds}
-            setColumnsVisible={setColumnsVisible}
-            setColumnsHidden={setColumnsHidden}
-          />
-          <BaseMenuItem>
-            <PoolCombo
-              options={v2SettingsColumns}
-              values={visibleColumnIds}
-              onChange={(value) => toggleColumnVisibility(value)}
-            />
-          </BaseMenuItem>
-        </>
-      ) : null}
-      {priceTableColumns.length ? (
-        <>
-          <MenuSectionLabelToggleAll
-            label="Price table (RHPv3)"
-            columns={priceTableColumns.map((c) => c.value)}
-            enabled={visibleColumnIds}
-            setColumnsVisible={setColumnsVisible}
-            setColumnsHidden={setColumnsHidden}
-          />
-          <BaseMenuItem>
-            <PoolCombo
-              options={priceTableColumns}
-              values={visibleColumnIds}
-              onChange={(value) => toggleColumnVisibility(value)}
-            />
-          </BaseMenuItem>
-        </>
-      ) : null}
       {settingsColumns.length ? (
         <>
           <MenuSectionLabelToggleAll
-            label="Host settings (RHPv2)"
+            label="Settings (RHPv4)"
             columns={settingsColumns.map((c) => c.value)}
             enabled={visibleColumnIds}
             setColumnsVisible={setColumnsVisible}

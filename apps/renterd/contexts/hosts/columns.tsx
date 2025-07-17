@@ -13,7 +13,6 @@ import {
   WarningSquareFilled16,
   Plane16,
   Settings16,
-  DataTable16,
   UndefinedFilled16,
   CheckboxCheckedFilled16,
 } from '@siafoundation/react-icons'
@@ -32,19 +31,14 @@ import {
   HostScanPayload,
   busHostHostKeyScanRoute,
 } from '@siafoundation/renterd-types'
-import {
-  HostPriceTable,
-  HostSettings,
-  V2HostPrices,
-  V2HostSettings,
-} from '@siafoundation/types'
+import { V2HostPrices, V2HostSettings } from '@siafoundation/types'
 import { useHostsAllowlist } from '@siafoundation/renterd-react'
 import BigNumber from 'bignumber.js'
 import { memo } from 'react'
 
 type HostsTableColumn = TableColumn<TableColumnId, HostData, HostContext> & {
   fixed?: boolean
-  category: string
+  category: 'general' | 'autopilot' | 'settings'
 }
 
 export const columns: HostsTableColumn[] = (
@@ -597,16 +591,16 @@ export const columns: HostsTableColumn[] = (
     },
     // v2 settings
     {
-      id: 'v2_acceptingContracts',
+      id: 'settings_acceptingContracts',
       label: 'accepting contracts',
-      category: 'v2Settings',
+      category: 'settings',
       contentClassName: 'w-[120px] justify-end',
-      render: makeRenderBool('v2Settings', 'acceptingContracts'),
+      render: makeRenderBool('acceptingContracts'),
     },
     {
-      id: 'v2_remainingStorage',
+      id: 'settings_remainingStorage',
       label: 'remaining storage',
-      category: 'v2Settings',
+      category: 'settings',
       contentClassName: 'w-[120px] justify-end',
       render: function RenderRemainingStorage({ data }) {
         return (
@@ -620,9 +614,9 @@ export const columns: HostsTableColumn[] = (
       },
     },
     {
-      id: 'v2_totalStorage',
+      id: 'settings_totalStorage',
       label: 'total storage',
-      category: 'v2Settings',
+      category: 'settings',
       contentClassName: 'w-[120px] justify-end',
       render: function RenderTotalStorage({ data }) {
         return (
@@ -636,9 +630,9 @@ export const columns: HostsTableColumn[] = (
       },
     },
     {
-      id: 'v2_storagePrice',
+      id: 'settings_storagePrice',
       label: 'storage price (per TB per month)',
-      category: 'v2Settings',
+      category: 'settings',
       contentClassName: 'w-[120px] justify-end',
       render: function RenderStoragePrice({ data }) {
         return (
@@ -655,9 +649,9 @@ export const columns: HostsTableColumn[] = (
       },
     },
     {
-      id: 'v2_ingressPrice',
+      id: 'settings_ingressPrice',
       label: 'ingress price (per TB)',
-      category: 'v2Settings',
+      category: 'settings',
       contentClassName: 'w-[120px] justify-end',
       render: function RenderIngressPrice({ data }) {
         return (
@@ -674,9 +668,9 @@ export const columns: HostsTableColumn[] = (
       },
     },
     {
-      id: 'v2_egressPrice',
+      id: 'settings_egressPrice',
       label: 'egress price (per TB)',
-      category: 'v2Settings',
+      category: 'settings',
       contentClassName: 'w-[120px] justify-end',
       render: function RenderEgressPrice({ data }) {
         return (
@@ -693,440 +687,39 @@ export const columns: HostsTableColumn[] = (
       },
     },
     {
-      id: 'v2_contractPrice',
+      id: 'settings_contractPrice',
       label: 'contract price',
-      category: 'v2Settings',
+      category: 'settings',
       contentClassName: 'w-[120px] justify-end',
       render: makeRenderV2Price('contractPrice'),
     },
     {
-      id: 'v2_collateral',
+      id: 'settings_collateral',
       label: 'collateral',
-      category: 'v2Settings',
+      category: 'settings',
       contentClassName: 'w-[120px] justify-end',
       render: makeRenderV2Price('collateral'),
     },
     {
-      id: 'v2_freeSectorPrice',
+      id: 'settings_freeSectorPrice',
       label: 'free sector price',
-      category: 'v2Settings',
+      category: 'settings',
       contentClassName: 'w-[120px] justify-end',
       render: makeRenderV2Price('freeSectorPrice'),
     },
     {
-      id: 'v2_maxCollateral',
+      id: 'settings_maxCollateral',
       label: 'max collateral',
-      category: 'v2Settings',
+      category: 'settings',
       contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('v2Settings', 'maxCollateral'),
+      render: makeRenderSc('maxCollateral'),
     },
     {
-      id: 'v2_maxContractDuration',
+      id: 'settings_maxContractDuration',
       label: 'max contract duration (blocks)',
-      category: 'v2Settings',
+      category: 'settings',
       contentClassName: 'w-[120px] justify-end',
-      render: makeRenderNumber('v2Settings', 'maxContractDuration'),
-    },
-    // price table
-    {
-      id: 'hpt_accountbalancecost',
-      label: 'account balance cost',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'accountbalancecost'),
-    },
-    {
-      id: 'hpt_collateralcost',
-      label: 'collateral cost',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'collateralcost'),
-    },
-    {
-      id: 'hpt_contractprice',
-      label: 'contract price',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'contractprice'),
-    },
-    {
-      id: 'hpt_downloadbandwidthcost',
-      label: 'download bandwidth cost',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'downloadbandwidthcost'),
-    },
-    {
-      id: 'hpt_dropsectorsbasecost',
-      label: 'drop sectors base cost',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'dropsectorsbasecost'),
-    },
-    {
-      id: 'hpt_dropsectorsunitcost',
-      label: 'drop sectors unit cost',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'dropsectorsunitcost'),
-    },
-    {
-      id: 'hpt_expiry',
-      label: 'expiry',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderNumber('priceTable', 'dropsectorsunitcost'),
-    },
-    {
-      id: 'hpt_fundaccountcost',
-      label: 'fund account cost',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'fundaccountcost'),
-    },
-    {
-      id: 'hpt_hassectorbasecost',
-      label: 'has sector cost',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'hassectorbasecost'),
-    },
-    {
-      id: 'hpt_hostblockheight',
-      label: 'host block height',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderNumber('priceTable', 'hostblockheight'),
-    },
-    {
-      id: 'hpt_initbasecost',
-      label: 'init base cost',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'initbasecost'),
-    },
-    {
-      id: 'hpt_latestrevisioncost',
-      label: 'latest revision cost',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'latestrevisioncost'),
-    },
-    {
-      id: 'hpt_maxcollateral',
-      label: 'max collateral',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'maxcollateral'),
-    },
-    {
-      id: 'hpt_maxduration',
-      label: 'max duration',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderNumber('priceTable', 'maxduration'),
-    },
-    {
-      id: 'hpt_memorytimecost',
-      label: 'memory time cost',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'memorytimecost'),
-    },
-    {
-      id: 'hpt_readbasecost',
-      label: 'read base cost',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'readbasecost'),
-    },
-    {
-      id: 'hpt_readlengthcost',
-      label: 'read length cost',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'readlengthcost'),
-    },
-    {
-      id: 'hpt_registryentriesleft',
-      label: 'registry entries left',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderNumber('priceTable', 'registryentriesleft'),
-    },
-    {
-      id: 'hpt_registryentriestotal',
-      label: 'registry entries total',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderNumber('priceTable', 'registryentriestotal'),
-    },
-    {
-      id: 'hpt_renewcontractcost',
-      label: 'renew contract cost',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'renewcontractcost'),
-    },
-    {
-      id: 'hpt_revisionbasecost',
-      label: 'revision base cost',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'renewcontractcost'),
-    },
-    {
-      id: 'hpt_subscriptionmemorycost',
-      label: 'subscription memory cost',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'subscriptionmemorycost'),
-    },
-    {
-      id: 'hpt_subscriptionnotificationcost',
-      label: 'subscription notification cost',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'subscriptionnotificationcost'),
-    },
-    {
-      id: 'hpt_swapsectorcost',
-      label: 'swap sector cost',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'swapsectorcost'),
-    },
-    {
-      id: 'hpt_txnfeemaxrecommended',
-      label: 'txn fee max recommended',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'txnfeemaxrecommended'),
-    },
-    {
-      id: 'hpt_txnfeeminrecommended',
-      label: 'txn fee min recommended',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'txnfeeminrecommended'),
-    },
-    {
-      id: 'hpt_uid',
-      label: 'UID',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderString('priceTable', 'uid'),
-    },
-    {
-      id: 'hpt_updatepricetablecost',
-      label: 'update price table cost',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'updatepricetablecost'),
-    },
-    {
-      id: 'hpt_uploadbandwidthcost',
-      label: 'upload bandwidth cost',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'uploadbandwidthcost'),
-    },
-    {
-      id: 'hpt_validity',
-      label: 'validity',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderNumber('priceTable', 'validity'),
-    },
-    {
-      id: 'hpt_windowsize',
-      label: 'window size',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderNumber('priceTable', 'windowsize'),
-    },
-    {
-      id: 'hpt_writebasecost',
-      label: 'write base cost',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'writebasecost'),
-    },
-    {
-      id: 'hpt_writelengthcost',
-      label: 'write length cost',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'writelengthcost'),
-    },
-    {
-      id: 'hpt_writestorecost',
-      label: 'write store cost',
-      category: 'priceTable',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('priceTable', 'writestorecost'),
-    },
-    // host settings
-    {
-      id: 'hs_acceptingcontracts',
-      label: 'accepting contracts',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderBool('settings', 'acceptingcontracts'),
-    },
-    {
-      id: 'hs_baserpcprice',
-      label: 'base RPC price',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('settings', 'baserpcprice'),
-    },
-    {
-      id: 'hs_collateral',
-      label: 'collateral',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('settings', 'collateral'),
-    },
-    {
-      id: 'hs_contractprice',
-      label: 'contract price',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('settings', 'contractprice'),
-    },
-    {
-      id: 'hs_downloadbandwidthprice',
-      label: 'download bandwidth price',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('settings', 'downloadbandwidthprice'),
-    },
-    {
-      id: 'hs_ephemeralaccountexpiry',
-      label: 'ephemeral account expiry',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderNumber('settings', 'ephemeralaccountexpiry'),
-    },
-    {
-      id: 'hs_maxcollateral',
-      label: 'max collateral',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('settings', 'maxcollateral'),
-    },
-    {
-      id: 'hs_maxdownloadbatchsize',
-      label: 'max download batch size',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderBytes('settings', 'maxdownloadbatchsize'),
-    },
-    {
-      id: 'hs_maxduration',
-      label: 'max duration',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderNumber('settings', 'maxduration'),
-    },
-    {
-      id: 'hs_maxephemeralaccountbalance',
-      label: 'max ephemeral account balance',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('settings', 'maxephemeralaccountbalance'),
-    },
-    {
-      id: 'hs_maxrevisebatchsize',
-      label: 'max revise batch size',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderBytes('settings', 'maxrevisebatchsize'),
-    },
-    {
-      id: 'hs_netaddress',
-      label: 'net address',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderString('settings', 'netaddress'),
-    },
-    {
-      id: 'hs_remainingstorage',
-      label: 'remaining storage',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderBytes('settings', 'remainingstorage'),
-    },
-    {
-      id: 'hs_revisionnumber',
-      label: 'revision number',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderNumber('settings', 'revisionnumber'),
-    },
-    {
-      id: 'hs_sectoraccessprice',
-      label: 'sector access price',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('settings', 'sectoraccessprice'),
-    },
-    {
-      id: 'hs_sectorsize',
-      label: 'sector size',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderBytes('settings', 'sectorsize'),
-    },
-    {
-      id: 'hs_siamuxport',
-      label: 'siamux port',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderNumber('settings', 'siamuxport'),
-    },
-    {
-      id: 'hs_storageprice',
-      label: 'storage price',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('settings', 'storageprice'),
-    },
-    {
-      id: 'hs_totalstorage',
-      label: 'total storage',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderBytes('settings', 'totalstorage'),
-    },
-    {
-      id: 'hs_unlockhash',
-      label: 'unlock hash',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderString('settings', 'unlockhash'),
-    },
-    {
-      id: 'hs_uploadbandwidthprice',
-      label: 'upload bandwidth price',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderSc('settings', 'uploadbandwidthprice'),
-    },
-    {
-      id: 'hs_version',
-      label: 'verison',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderString('settings', 'version'),
-    },
-    {
-      id: 'hs_windowsize',
-      label: 'window size',
-      category: 'hostSettings',
-      contentClassName: 'w-[120px] justify-end',
-      render: makeRenderNumber('settings', 'windowsize'),
+      render: makeRenderNumber('maxContractDuration'),
     },
   ] as HostsTableColumn[]
 ).map(
@@ -1148,25 +741,11 @@ function getFullLabelAndTip(col: HostsTableColumn): {
       tip: `autopilot: ${col.label}`,
     }
   }
-  if (col.category === 'hostSettings') {
+  if (col.category === 'settings') {
     return {
       icon: <Settings16 className="relative top-px opacity-50 scale-75" />,
       label: col.label,
-      tip: `host settings (RHPv2): ${col.label}`,
-    }
-  }
-  if (col.category === 'priceTable') {
-    return {
-      icon: <DataTable16 className="relative top-px opacity-50 scale-75" />,
-      label: col.label,
-      tip: `price table (RHPv3): ${col.label}`,
-    }
-  }
-  if (col.category === 'v2Settings') {
-    return {
-      icon: <Settings16 className="relative top-px opacity-50 scale-75" />,
-      label: col.label,
-      tip: `v2 settings: ${col.label}`,
+      tip: `settings: ${col.label}`,
     }
   }
   return {
@@ -1175,22 +754,18 @@ function getFullLabelAndTip(col: HostsTableColumn): {
   }
 }
 
-type Key = keyof HostPriceTable | keyof HostSettings | keyof V2HostSettings
+type Key = keyof V2HostSettings
 
-function makeRenderSc(
-  section: 'priceTable' | 'settings' | 'v2Settings',
-  name: Key
-) {
+function makeRenderSc(name: Key) {
   return memo(function RenderPriceTableNumber({ data }: { data: HostData }) {
-    if (!data[section]) {
+    if (!data.v2Settings) {
       return null
     }
     return (
       <ValueScFiat
         displayBoth
         size="12"
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        value={new BigNumber((data as any)[section][name] || 0)}
+        value={new BigNumber((data.v2Settings[name] as string) || 0)}
         fixedFiat={4}
         variant="value"
       />
@@ -1198,20 +773,15 @@ function makeRenderSc(
   })
 }
 
-function makeRenderNumber(
-  section: 'priceTable' | 'settings' | 'v2Settings',
-  name: Key,
-  abbreviated?: boolean
-) {
+function makeRenderNumber(name: Key, abbreviated?: boolean) {
   return function RenderNumberColumn({ data }: { data: HostData }) {
-    if (!data[section]) {
+    if (!data.v2Settings) {
       return null
     }
     return (
       <ValueNum
         size="12"
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        value={new BigNumber((data as any)[section][name] || 0)}
+        value={new BigNumber((data.v2Settings[name] as string) || 0)}
         variant="value"
         format={(v) =>
           humanNumber(v, {
@@ -1223,47 +793,9 @@ function makeRenderNumber(
   }
 }
 
-function makeRenderString(
-  section: 'priceTable' | 'settings' | 'v2Settings',
-  name: Key
-) {
-  return function RenderStringColumn({ data }: { data: HostData }) {
-    if (!data[section]) {
-      return null
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return <ValueCopyable value={(data as any)[section][name]} size="12" />
-  }
-}
-
-function makeRenderBytes(
-  section: 'priceTable' | 'settings' | 'v2Settings',
-  name: Key
-) {
-  return function RenderBytesColumn({ data }: { data: HostData }) {
-    if (!data[section]) {
-      return null
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const val = (data as any)[section][name]
-    return (
-      <Text size="12" weight="semibold" ellipsis>
-        {humanBytes(val)}
-      </Text>
-    )
-  }
-}
-
-function makeRenderBool(
-  section: 'priceTable' | 'settings' | 'v2Settings',
-  name: Key
-) {
+function makeRenderBool(name: Key) {
   return function RenderBoolColumn({ data }: { data: HostData }) {
-    if (!data[section]) {
-      return null
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const val = (data as any)[section][name]
+    const val = data.v2Settings[name]
     return (
       <div className="mt-[5px]">
         <Text color={val ? 'green' : 'red'}>
