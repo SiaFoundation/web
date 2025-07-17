@@ -5,7 +5,6 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
-    "@siafoundation/data-sources": "0.5.1",
     "@siafoundation/design-system": "9.1.0",
     "@siafoundation/explored-js": "0.8.1",
     "@siafoundation/explored-types": "0.19.1",
