@@ -16,7 +16,6 @@
     "baseUrl": ".",
     "paths": {
       "@siafoundation/clusterd": ["libs/clusterd/src/index.ts"],
-      "@siafoundation/data-sources": ["libs/data-sources/src/index.ts"],
       "@siafoundation/design-system": ["libs/design-system/src/index.ts"],
       "@siafoundation/e2e": ["libs/e2e/src/index.ts"],
       "@siafoundation/explored-js": ["libs/explored-js/src/index.ts"],
