@@ -34,11 +34,18 @@ runs:
       with:
         path: |
           ~/.bun/install/cache
-          ${{ github.workspace }}/apps/*/dist/.next/cache
-        key: ${{ runner.os }}-bun-${{ inputs.bun_version }}-${{ hashFiles('**/bun.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+        key: ${{ runner.os }}-bun-${{ inputs.bun_version }}-${{ hashFiles('**/bun.lock', '**/package.json') }}
         restore-keys: |
-          ${{ runner.os }}-bun-${{ inputs.bun_version }}-${{ hashFiles('**/bun.lock') }}-
+          ${{ runner.os }}-bun-${{ inputs.bun_version }}-
           ${{ runner.os }}-bun-
+    - name: Set up nx cache
+      uses: actions/cache@v4
+      with:
+        path: |
+          ${{ github.workspace }}/.nx
+        key: ${{ runner.os }}-nx-${{ hashFiles('**/nx.json', '**/package.json', '**/bun.lock', '**/project.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nx-
     - name: Install JavaScript dependencies
       run: bun install
       shell: bash

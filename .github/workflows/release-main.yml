@@ -25,14 +25,6 @@ jobs:
         with:
           bun_version: 1.2.18
           go_version: 1.24.3
-      # The SDK is referenced via dist in the tsconfig.base.json
-      # because the next executor does not actually support
-      # buildLibsFromSource=false
-      # With this configuration Nx does not build the SDK as expected
-      # when it is an app dependency
-      - name: Force build SDK
-        shell: bash
-        run: bunx nx run sdk:build
       - name: Build for publishing
         shell: bash
         run: bunx nx run-many --target=build --configuration=production --all --parallel=5
@@ -91,14 +83,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      # The SDK is referenced via dist in the tsconfig.base.json
-      # because the next executor does not actually support
-      # buildLibsFromSource=false
-      # With this configuration Nx does not build the SDK as expected
-      # when it is an app dependency
-      - name: Force build SDK
-        shell: bash
-        run: bunx nx run sdk:build
       - name: Containers
         shell: bash
         run: bunx nx run-many --target=container --configuration=production -all --parallel=5
@@ -132,14 +116,6 @@ jobs:
       - name: Lint TypeScript
         shell: bash
         run: bunx nx run-many --target=lint --all --parallel=5
-      # The SDK is referenced via dist in the tsconfig.base.json
-      # because the next executor does not actually support
-      # buildLibsFromSource=false
-      # With this configuration Nx does not build the SDK as expected
-      # when it is an app dependency
-      - name: Force build SDK
-        shell: bash
-        run: bunx nx run sdk:build
       - name: Test TypeScript
         shell: bash
         run: bunx nx run-many --target=test --all --parallel=5

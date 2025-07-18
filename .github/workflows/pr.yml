@@ -30,14 +30,6 @@ jobs:
       - name: Lint TypeScript
         shell: bash
         run: bunx nx affected --target=lint --parallel=5
-      # The SDK is referenced via dist in the tsconfig.base.json
-      # because the next executor does not actually support
-      # buildLibsFromSource=false
-      # With this configuration Nx does not build the SDK as expected
-      # when it is an app dependency
-      - name: Force build SDK
-        shell: bash
-        run: bunx nx run sdk:build
       - name: Test TypeScript
         shell: bash
         run: bunx nx affected --target=test --parallel=5
