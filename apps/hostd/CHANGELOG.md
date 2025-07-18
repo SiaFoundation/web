@@ -1,5 +1,13 @@
 # hostd
 
+## 0.64.2
+
+### Patch Changes
+
+- 98a6bd4: Removed unncessary imports with tsconfig react-jsx.
+- Updated dependencies [98a6bd4]
+  - @siafoundation/design-system@9.1.1
+
 ## 0.64.1
 
 ### Patch Changes

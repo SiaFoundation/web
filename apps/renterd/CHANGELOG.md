@@ -1,5 +1,18 @@
 # renterd
 
+## 0.83.0
+
+### Minor Changes
+
+- ddc47f5: The host explorer no longer includes columns for v1 settings or price table.
+- 5cd76d5: The host map is now a 2D world map instead of a 3D globe.
+
+### Patch Changes
+
+- 98a6bd4: Removed unncessary imports with tsconfig react-jsx.
+- Updated dependencies [98a6bd4]
+  - @siafoundation/design-system@9.1.1
+
 ## 0.82.3
 
 ### Patch Changes

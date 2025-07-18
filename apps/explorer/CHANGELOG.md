@@ -1,5 +1,13 @@
 # explorer
 
+## 0.36.1
+
+### Patch Changes
+
+- 98a6bd4: Removed unncessary imports with tsconfig react-jsx.
+- Updated dependencies [98a6bd4]
+  - @siafoundation/design-system@9.1.1
+
 ## 0.36.0
 
 ### Minor Changes

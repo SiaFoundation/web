@@ -1,5 +1,11 @@
 # Changelog
 
+## 9.1.1
+
+### Patch Changes
+
+- 98a6bd4: Removed unncessary imports with tsconfig react-jsx.
+
 ## 9.1.0
 
 ### Minor Changes
