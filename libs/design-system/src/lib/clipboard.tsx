@@ -1,12 +1,12 @@
 import { writeText, write } from 'clipboard-polyfill'
 import { ToastOptions, triggerToast } from './toast'
-import { Copy24 } from '@siafoundation/react-icons'
+import { Copy16 } from '@siafoundation/react-icons'
 
 export const copyToClipboard = (text: string, entity?: string) => {
   const message = entity
     ? `Copied ${entity} to clipboard`
     : 'Copied to clipboard'
-  triggerToast({ title: message, icon: <Copy24 /> })
+  triggerToast({ title: message, body: text, icon: <Copy16 /> })
   writeText(text)
 }
 
@@ -18,7 +18,7 @@ export const copyImageToClipboard = (
   const message = entity
     ? `Copied ${entity} to clipboard`
     : 'Copied to clipboard'
-  triggerToast({ title: message, icon: <Copy24 /> })
+  triggerToast({ title: message, icon: <Copy16 /> })
   write([new ClipboardItem({ [type]: image })])
 }
 
@@ -35,6 +35,6 @@ export const copyToClipboardCustom = ({
   icon?: React.ReactNode
   options?: ToastOptions
 }) => {
-  triggerToast({ title, body, icon: icon || <Copy24 />, options })
+  triggerToast({ title, body, icon: icon || <Copy16 />, options })
   writeText(text)
 }
