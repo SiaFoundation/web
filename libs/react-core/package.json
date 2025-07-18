@@ -1,20 +1,20 @@
 {
   "name": "@siafoundation/react-core",
-  "description": "Core library for building React hooks for interacting with a Sia daemon.",
   "version": "6.0.1",
+  "description": "Core library for building React hooks for interacting with a Sia daemon.",
   "license": "MIT",
+  "types": "./src/index.d.ts",
   "dependencies": {
     "@siafoundation/next": "^0.1.4",
-    "@siafoundation/request": "0.3.1",
-    "swr": "^2.1.1",
+    "@siafoundation/request": "^0.3.1",
     "axios": "^1.10.0",
-    "use-local-storage-state": "^19.5.0",
-    "detect-gpu": "^5.0.34"
+    "detect-gpu": "^5.0.34",
+    "swr": "^2.1.1",
+    "use-local-storage-state": "^19.5.0"
   },
   "peerDependencies": {
-    "@siafoundation/types": "0.12.1",
+    "@siafoundation/types": "^0.12.1",
     "@technically/lodash": "^4.17.0",
     "react": "^19.1.0"
-  },
-  "types": "./src/index.d.ts"
+  }
 }

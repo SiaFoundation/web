@@ -1,13 +1,13 @@
 {
   "name": "@siafoundation/fonts",
-  "description": "Next font configuration for use across apps.",
   "version": "0.5.1",
+  "description": "Next font configuration for use across apps.",
   "license": "MIT",
+  "types": "./src/index.d.ts",
   "dependencies": {
     "class-variance-authority": "^0.7.0"
   },
   "peerDependencies": {
     "next": "^15.3.5"
-  },
-  "types": "./src/index.d.ts"
+  }
 }

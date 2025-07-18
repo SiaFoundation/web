@@ -1,14 +1,14 @@
 {
   "name": "@siafoundation/units",
-  "description": "Methods for converting and formatting Sia units and data types.",
   "version": "3.5.1",
+  "description": "Methods for converting and formatting Sia units and data types.",
   "license": "MIT",
+  "types": "./src/index.d.ts",
   "dependencies": {
-    "bignumber.js": "^9.0.2",
+    "@siafoundation/explored-types": "^0.19.1",
+    "@siafoundation/types": "^0.12.1",
     "@technically/lodash": "^4.17.0",
-    "blakejs": "^1.2.1",
-    "@siafoundation/types": "0.12.1",
-    "@siafoundation/explored-types": "0.19.1"
-  },
-  "types": "./src/index.d.ts"
+    "bignumber.js": "^9.3.0",
+    "blakejs": "^1.2.1"
+  }
 }
