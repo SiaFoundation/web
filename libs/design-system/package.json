@@ -1,7 +1,7 @@
 {
   "name": "@siafoundation/design-system",
   "description": "React-based design system used across Sia apps.",
-  "version": "9.1.0",
+  "version": "9.1.1",
   "license": "MIT",
   "dependencies": {
     "@radix-ui/react-visually-hidden": "^1.1.0",
