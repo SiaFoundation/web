@@ -25,7 +25,7 @@ jobs:
           go_version: 1.24.3
       - name: Build for publishing
         shell: bash
-        run: bunx nx run-many --target=build --configuration=production --all --parallel=5
+        run: nx run-many --target=build --configuration=production --all --parallel=5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
@@ -73,14 +73,14 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Containers
         shell: bash
-        run: bunx nx run-many --target=container --configuration=production -all --parallel=5
+        run: nx run-many --target=container --configuration=production -all --parallel=5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           CCRI_TOKEN: ${{ secrets.CCRI_TOKEN }}
       - name: Containers zen
         shell: bash
-        run: bunx nx run-many --target=container --configuration=production-testnet-zen -all --parallel=5
+        run: nx run-many --target=container --configuration=production-testnet-zen -all --parallel=5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}

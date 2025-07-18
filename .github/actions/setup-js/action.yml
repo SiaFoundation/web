@@ -46,6 +46,9 @@ runs:
         key: ${{ runner.os }}-nx-${{ hashFiles('**/nx.json', '**/package.json', '**/bun.lock', '**/project.json') }}
         restore-keys: |
           ${{ runner.os }}-nx-
+    - name: Install Nx globally
+      run: bun install -g nx@21.1.3
+      shell: bash
     - name: Install JavaScript dependencies
       run: bun install
       shell: bash

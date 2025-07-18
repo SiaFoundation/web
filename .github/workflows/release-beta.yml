@@ -38,7 +38,7 @@ jobs:
       - name: Build for publishing
         if: steps.check_pre.outputs.run == 'true'
         shell: bash
-        run: bunx nx run-many --target=build --configuration=production --all --parallel=5
+        run: nx run-many --target=build --configuration=production --all --parallel=5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}

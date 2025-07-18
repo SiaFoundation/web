@@ -11,7 +11,7 @@ import {
   useDaemonExplorerHostMetrics,
 } from '@siafoundation/design-system'
 
-export function useAverages() {
+export function useMedianPrices() {
   const nodeState = useConsensusState()
   // renterd does not have an endpoint that returns the full consensus state
   // so we use the explorer api to get the v2 allow height.
@@ -29,7 +29,7 @@ export function useAverages() {
       ? nodeHeight >= networkV2AllowHeight
       : true // Default to v2
 
-  const explorerAverages = useDaemonExplorerHostMetrics({
+  const explorerHostMetrics = useDaemonExplorerHostMetrics({
     config: {
       swr: {
         revalidateOnFocus: false,
@@ -38,16 +38,16 @@ export function useAverages() {
   })
 
   const storagePrice = isV2Allowed
-    ? explorerAverages.data?.v2Settings.prices.storagePrice
-    : explorerAverages.data?.settings.storageprice
+    ? explorerHostMetrics.data?.v2Settings.prices.storagePrice
+    : explorerHostMetrics.data?.settings.storageprice
   const uploadPrice = isV2Allowed
-    ? explorerAverages.data?.v2Settings.prices.ingressPrice
-    : explorerAverages.data?.settings.uploadbandwidthprice
+    ? explorerHostMetrics.data?.v2Settings.prices.ingressPrice
+    : explorerHostMetrics.data?.settings.uploadbandwidthprice
   const downloadPrice = isV2Allowed
-    ? explorerAverages.data?.v2Settings.prices.egressPrice
-    : explorerAverages.data?.settings.downloadbandwidthprice
+    ? explorerHostMetrics.data?.v2Settings.prices.egressPrice
+    : explorerHostMetrics.data?.settings.downloadbandwidthprice
 
-  const storageAverage = useMemo(
+  const storageMedian = useMemo(
     () =>
       storagePrice
         ? new BigNumber(
@@ -58,14 +58,14 @@ export function useAverages() {
         : undefined,
     [storagePrice]
   )
-  const uploadAverage = useMemo(
+  const uploadMedian = useMemo(
     () =>
       uploadPrice
         ? new BigNumber(valuePerByteToPerTB(toSiacoins(uploadPrice)).toFixed(0))
         : undefined,
     [uploadPrice]
   )
-  const downloadAverage = useMemo(
+  const downloadMedian = useMemo(
     () =>
       downloadPrice
         ? new BigNumber(
@@ -75,16 +75,16 @@ export function useAverages() {
     [downloadPrice]
   )
 
-  const averages = useMemo(() => {
-    if (!storageAverage || !uploadAverage || !downloadAverage) {
+  const medians = useMemo(() => {
+    if (!storageMedian || !uploadMedian || !downloadMedian) {
       return {}
     }
     return {
-      storageAverage,
-      uploadAverage,
-      downloadAverage,
+      storageMedian,
+      uploadMedian,
+      downloadMedian,
     }
-  }, [storageAverage, uploadAverage, downloadAverage])
+  }, [storageMedian, uploadMedian, downloadMedian])
 
-  return averages
+  return medians
 }

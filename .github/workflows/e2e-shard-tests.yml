@@ -33,7 +33,7 @@ jobs:
       - name: Only run if ${{ inputs.project }} is affected
         id: check
         run: |
-          AFFECTED=$(bunx nx show projects --affected --projects=${{ inputs.project }})
+          AFFECTED=$(nx show projects --affected --projects=${{ inputs.project }})
           if [[ -z "$AFFECTED" ]]; then
             echo "${{ inputs.project }} is unaffected. Exiting."
             echo "continue=false" >> $GITHUB_OUTPUT
@@ -48,7 +48,7 @@ jobs:
       - name: Test e2e for ${{ inputs.project }}
         if: ${{ steps.check.outputs.continue == 'true' }}
         shell: bash
-        run: bunx nx run ${{ inputs.project }}:e2e --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}
+        run: nx run ${{ inputs.project }}:e2e --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Upload blob report to GitHub Actions Artifacts

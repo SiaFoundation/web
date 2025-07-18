@@ -8,7 +8,7 @@ import { UseFormReturn } from 'react-hook-form'
 import { Categories, RecommendationItem, InputValues } from '../types'
 import { useFormExchangeRate } from '../useFormExchangeRate'
 import { recommendationTipContent } from './Tip'
-import { useAverages } from '../useAverages'
+import { useMedianPrices } from '../useMedianPrices'
 
 export function MaxDownloadPriceTips({
   form,
@@ -19,24 +19,24 @@ export function MaxDownloadPriceTips({
   fields: ConfigFields<InputValues, Categories>
   recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
 }) {
-  const { downloadAverage } = useAverages()
+  const { downloadMedian } = useMedianPrices()
   const recommendationPrice = recommendations?.maxDownloadPriceTB?.targetValue
 
   return (
     <>
-      {downloadAverage && (
+      {downloadMedian && (
         <TipNumber
           type="siacoin"
-          label="Network average"
-          tip="Averages provided by Sia Central."
+          label="Network median"
+          tip="Median price provided by Siascan."
           decimalsLimit={0}
-          value={toHastings(downloadAverage)}
+          value={toHastings(downloadMedian)}
           onClick={() => {
             formSetField({
               form,
               fields,
               name: 'maxDownloadPriceTB',
-              value: downloadAverage,
+              value: downloadMedian,
               options: true,
             })
           }}
@@ -74,7 +74,7 @@ export function MaxDownloadPricePinnedTips({
   recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
 }) {
   const { rate } = useFormExchangeRate(form)
-  const { downloadAverage } = useAverages()
+  const { downloadMedian } = useMedianPrices()
   const recommendationInFiat =
     recommendations?.maxDownloadPriceTBPinned?.targetValue
   const recommendationInSiacoin =
@@ -83,19 +83,19 @@ export function MaxDownloadPricePinnedTips({
       : null
   return (
     <>
-      {downloadAverage && rate && (
+      {downloadMedian && rate && (
         <TipNumber
           type="siacoin"
-          label="Network average"
-          tip="Averages provided by Sia Central."
+          label="Network median"
+          tip="Median price provided by Siascan."
           decimalsLimit={0}
-          value={toHastings(downloadAverage)}
+          value={toHastings(downloadMedian)}
           onClick={() => {
             formSetField({
               form,
               fields,
               name: 'maxDownloadPriceTBPinned',
-              value: downloadAverage.times(rate),
+              value: downloadMedian.times(rate),
               options: true,
             })
           }}
