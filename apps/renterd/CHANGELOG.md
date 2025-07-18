@@ -1,5 +1,11 @@
 # renterd
 
+## 0.84.0
+
+### Minor Changes
+
+- 1947a62: Network price metrics are now more accurately referred to as median prices.
+
 ## 0.83.0
 
 ### Minor Changes
