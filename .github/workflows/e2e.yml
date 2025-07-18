@@ -8,7 +8,7 @@ on:
 
 jobs:
   renterd-e2e-shard-tests:
-    if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed' }}
+    if: ${{ (github.event_name == 'pull_request' && github.event.action != 'closed') || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
     strategy:
       fail-fast: false
       matrix:
@@ -28,7 +28,7 @@ jobs:
     with:
       project: renterd-e2e
   hostd-e2e-shard-tests:
-    if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed' }}
+    if: ${{ (github.event_name == 'pull_request' && github.event.action != 'closed') || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
     strategy:
       fail-fast: false
       matrix:
@@ -48,7 +48,7 @@ jobs:
     with:
       project: hostd-e2e
   walletd-e2e-shard-tests:
-    if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed' }}
+    if: ${{ (github.event_name == 'pull_request' && github.event.action != 'closed') || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
     strategy:
       fail-fast: false
       matrix:
@@ -68,7 +68,7 @@ jobs:
     with:
       project: walletd-e2e
   explorer-e2e-shard-tests:
-    if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed' }}
+    if: ${{ (github.event_name == 'pull_request' && github.event.action != 'closed') || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
     strategy:
       fail-fast: false
       matrix:
