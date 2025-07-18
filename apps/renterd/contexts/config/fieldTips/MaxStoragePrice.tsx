@@ -8,7 +8,7 @@ import { UseFormReturn } from 'react-hook-form'
 import { Categories, RecommendationItem, InputValues } from '../types'
 import { useFormExchangeRate } from '../useFormExchangeRate'
 import { PriceWithRedundancyTip, recommendationTipContent } from './Tip'
-import { useAverages } from '../useAverages'
+import { useMedianPrices } from '../useMedianPrices'
 
 export function MaxStoragePriceTips({
   form,
@@ -19,26 +19,26 @@ export function MaxStoragePriceTips({
   fields: ConfigFields<InputValues, Categories>
   recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
 }) {
-  const { storageAverage } = useAverages()
+  const { storageMedian } = useMedianPrices()
   const maxStoragePriceTBMonth = form.watch('maxStoragePriceTBMonth')
   const recommendationPrice =
     recommendations?.maxStoragePriceTBMonth?.targetValue
 
   return (
     <>
-      {storageAverage && (
+      {storageMedian && (
         <TipNumber
           type="siacoin"
-          label="Network average"
-          tip="Averages provided by Sia Central."
+          label="Network median"
+          tip="Median price provided by Siascan."
           decimalsLimit={0}
-          value={toHastings(storageAverage)}
+          value={toHastings(storageMedian)}
           onClick={() => {
             formSetField({
               form,
               fields,
               name: 'maxStoragePriceTBMonth',
-              value: storageAverage,
+              value: storageMedian,
               options: true,
             })
           }}
@@ -80,7 +80,7 @@ export function MaxStoragePricePinnedTips({
   fields: ConfigFields<InputValues, Categories>
   recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
 }) {
-  const { storageAverage } = useAverages()
+  const { storageMedian } = useMedianPrices()
   const { rate } = useFormExchangeRate(form)
   const maxStoragePriceTBMonthPinned = form.watch(
     'maxStoragePriceTBMonthPinned'
@@ -98,19 +98,19 @@ export function MaxStoragePricePinnedTips({
 
   return (
     <>
-      {storageAverage && rate && (
+      {storageMedian && rate && (
         <TipNumber
           type="siacoin"
-          label="Network average"
-          tip="Averages provided by Sia Central."
+          label="Network median"
+          tip="Median price provided by Siascan."
           decimalsLimit={0}
-          value={toHastings(storageAverage)}
+          value={toHastings(storageMedian)}
           onClick={() => {
             formSetField({
               form,
               fields,
               name: 'maxStoragePriceTBMonthPinned',
-              value: storageAverage.times(rate),
+              value: storageMedian.times(rate),
               options: true,
             })
           }}

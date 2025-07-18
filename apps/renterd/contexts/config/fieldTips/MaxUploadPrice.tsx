@@ -8,7 +8,7 @@ import { UseFormReturn } from 'react-hook-form'
 import { Categories, RecommendationItem, InputValues } from '../types'
 import { useFormExchangeRate } from '../useFormExchangeRate'
 import { PriceWithRedundancyTip, recommendationTipContent } from './Tip'
-import { useAverages } from '../useAverages'
+import { useMedianPrices } from '../useMedianPrices'
 
 export function MaxUploadPriceTips({
   form,
@@ -19,25 +19,25 @@ export function MaxUploadPriceTips({
   fields: ConfigFields<InputValues, Categories>
   recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
 }) {
-  const { uploadAverage } = useAverages()
+  const { uploadMedian } = useMedianPrices()
   const maxUploadPriceTB = form.watch('maxUploadPriceTB')
   const recommendationPrice = recommendations?.maxUploadPriceTB?.targetValue
 
   return (
     <>
-      {uploadAverage && (
+      {uploadMedian && (
         <TipNumber
           type="siacoin"
-          label="Network average"
-          tip="Averages provided by Sia Central."
+          label="Network median"
+          tip="Median price provided by Siascan."
           decimalsLimit={0}
-          value={toHastings(uploadAverage)}
+          value={toHastings(uploadMedian)}
           onClick={() => {
             formSetField({
               form,
               fields,
               name: 'maxUploadPriceTB',
-              value: uploadAverage,
+              value: uploadMedian,
               options: true,
             })
           }}
@@ -80,7 +80,7 @@ export function MaxUploadPricePinnedTips({
   recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
 }) {
   const { rate } = useFormExchangeRate(form)
-  const { uploadAverage } = useAverages()
+  const { uploadMedian } = useMedianPrices()
   const maxUploadPriceTBPinned = form.watch('maxUploadPriceTBPinned')
   const currentPriceInSiacoin =
     maxUploadPriceTBPinned && rate
@@ -94,19 +94,19 @@ export function MaxUploadPricePinnedTips({
       : undefined
   return (
     <>
-      {uploadAverage && rate && (
+      {uploadMedian && rate && (
         <TipNumber
           type="siacoin"
-          label="Network average"
-          tip="Averages provided by Sia Central."
+          label="Network median"
+          tip="Median price provided by Siascan."
           decimalsLimit={0}
-          value={toHastings(uploadAverage)}
+          value={toHastings(uploadMedian)}
           onClick={() => {
             formSetField({
               form,
               fields,
               name: 'maxUploadPriceTBPinned',
-              value: uploadAverage.times(rate),
+              value: uploadMedian.times(rate),
               options: true,
             })
           }}

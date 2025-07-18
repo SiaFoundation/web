@@ -179,12 +179,12 @@ test('pinned currency and app display currency can be different', async ({
   await expect(
     page
       .getByTestId('maxStoragePriceTBMonthGroup')
-      .getByLabel('Network average')
+      .getByLabel('Network median')
       .getByText('¥248.17')
   ).toBeVisible()
   const averageButton = page
     .getByTestId('maxStoragePriceTBMonthGroup')
-    .getByLabel('Network average')
+    .getByLabel('Network median')
     .getByText('¥248.17')
   // TODO: remove the need to click twice, there is some sort of glitch after toggling the pinning switch.
   await clickTwice(averageButton)

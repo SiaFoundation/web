@@ -22,8 +22,8 @@ export function ConfigurationFiat<
 }) {
   const field = fields[name]
   const {
-    average,
-    averageTip,
+    median,
+    medianTip,
     suggestionLabel,
     suggestion,
     suggestionTip,
@@ -41,12 +41,12 @@ export function ConfigurationFiat<
     currency: currency || undefined,
   })
   const rate = exchangeRate.rate
-  const averageSc = useMemo(
+  const medianSc = useMemo(
     () =>
-      average && typeof average !== 'boolean' && rate
-        ? new BigNumber(average).times(rate)
+      median && typeof median !== 'boolean' && rate
+        ? new BigNumber(median).times(rate)
         : undefined,
-    [average, rate]
+    [median, rate]
   )
   const suggestionSc = useMemo(
     () =>
@@ -67,15 +67,15 @@ export function ConfigurationFiat<
             group={false}
             currency={currency}
           />
-          {averageSc && (
+          {medianSc && (
             <TipNumber
               type="siacoin"
-              label="Network average"
-              tip={averageTip || 'Averages provided by Sia Central.'}
-              value={averageSc}
+              label="Network median"
+              tip={medianTip || 'Median price provided by Siascan.'}
+              value={medianSc}
               decimalsLimit={0}
               onClick={() => {
-                setField(average as PathValue<Values, Path<Values>>, true)
+                setField(median as PathValue<Values, Path<Values>>, true)
               }}
             />
           )}

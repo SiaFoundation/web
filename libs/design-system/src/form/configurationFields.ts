@@ -50,8 +50,8 @@ export type ConfigField<
   suggestionLabel?: string
   suggestionTip?: React.ReactNode
   suggestion?: BigNumber | string | boolean
-  average?: BigNumber | string | boolean
-  averageTip?: React.ReactNode
+  median?: BigNumber | string | boolean
+  medianTip?: React.ReactNode
   before?: React.FC<{
     name: Path<Values>
     form: UseFormReturn<Values>

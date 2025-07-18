@@ -25,7 +25,7 @@ export function FieldSiacoin<
   const field = fields[name]
   const {
     placeholder: _placeholder,
-    average,
+    median,
     suggestion,
     units,
     decimalsLimitSc = 6,
@@ -44,10 +44,10 @@ export function FieldSiacoin<
         ? new BigNumber(_placeholder)
         : suggestion && typeof suggestion !== 'boolean'
         ? new BigNumber(suggestion)
-        : average && typeof average !== 'boolean'
-        ? new BigNumber(average)
+        : median && typeof median !== 'boolean'
+        ? new BigNumber(median)
         : undefined,
-    [_placeholder, suggestion, average]
+    [_placeholder, suggestion, median]
   )
 
   const el = (

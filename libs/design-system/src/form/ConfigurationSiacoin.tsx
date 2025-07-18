@@ -13,8 +13,8 @@ export function ConfigurationSiacoin<
 >({ name, form, fields }: FieldProps<Values, Categories>) {
   const field = fields[name]
   const {
-    average,
-    averageTip,
+    median,
+    medianTip,
     suggestionLabel,
     suggestion,
     suggestionTip,
@@ -41,15 +41,15 @@ export function ConfigurationSiacoin<
             group={false}
             size="small"
           />
-          {average && (
+          {median && (
             <TipNumber
               type="siacoin"
-              label="Network average"
-              tip={averageTip || 'Averages provided by Sia Central.'}
+              label="Network median"
+              tip={medianTip || 'Median price provided by Siascan.'}
               decimalsLimit={tipsDecimalsLimitSc}
-              value={toHastings(average as BigNumber)}
+              value={toHastings(median as BigNumber)}
               onClick={() => {
-                setField(average as PathValue<Values, Path<Values>>, true)
+                setField(median as PathValue<Values, Path<Values>>, true)
               }}
             />
           )}

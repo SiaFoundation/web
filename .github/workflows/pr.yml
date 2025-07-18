@@ -29,13 +29,13 @@ jobs:
         run: bunx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}
       - name: Lint TypeScript
         shell: bash
-        run: bunx nx affected --target=lint --parallel=5
+        run: nx affected --target=lint --parallel=5
       - name: Test TypeScript
         shell: bash
-        run: bunx nx affected --target=test --parallel=5
+        run: nx affected --target=test --parallel=5
       - name: Build
         shell: bash
-        run: bunx nx affected --target=build --configuration=production --parallel=5
+        run: nx affected --target=build --configuration=production --parallel=5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
@@ -43,7 +43,7 @@ jobs:
       - name: Export
         shell: bash
         # issue with parallelism
-        run: bunx nx affected --target=build --configuration=export --parallel=5
+        run: nx affected --target=build --configuration=export --parallel=5
   e2e:
     if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed' }}
     uses: ./.github/workflows/e2e.yml

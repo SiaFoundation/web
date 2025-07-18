@@ -18,8 +18,8 @@ export function ConfigurationNumber<
 >({ name, form, fields }: Props<Values, Categories>) {
   const field = fields[name]
   const {
-    average,
-    averageTip,
+    median,
+    medianTip,
     suggestionLabel,
     suggestion,
     suggestionTip,
@@ -38,15 +38,15 @@ export function ConfigurationNumber<
     <div className="flex flex-col gap-3 items-end">
       <div className="flex flex-col gap-3 w-[260px]">
         <FieldNumber name={name} fields={fields} form={form} group={false} />
-        {average && (
+        {median && (
           <TipNumber
             type="number"
-            label="Network average"
-            tip={averageTip || 'Averages provided by Sia Central.'}
+            label="Network median"
+            tip={medianTip || 'Median value provided by Siascan.'}
             decimalsLimit={decimalsLimit}
-            value={average as BigNumber}
+            value={median as BigNumber}
             onClick={() => {
-              setField(average as PathValue<Values, Path<Values>>, true)
+              setField(median as PathValue<Values, Path<Values>>, true)
             }}
           />
         )}

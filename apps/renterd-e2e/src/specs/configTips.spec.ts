@@ -29,7 +29,7 @@ test('field tips for storage', async ({ page }) => {
   await setCurrencyDisplay(page, 'bothPreferSc', 'usd')
   let storageNetworkAverage = page
     .getByTestId('maxStoragePriceTBMonthGroup')
-    .getByLabel('Network average')
+    .getByLabel('Network median')
     .getByText('341')
   await expect(storageNetworkAverage).toBeVisible()
   await clickTwice(storageNetworkAverage)
@@ -41,7 +41,7 @@ test('field tips for storage', async ({ page }) => {
   await setCurrencyDisplay(page, 'bothPreferFiat', 'usd')
   let storageNetworkAverageFiat = page
     .getByTestId('maxStoragePriceTBMonthGroup')
-    .getByLabel('Network average')
+    .getByLabel('Network median')
     .getByText('$1.34')
   await expect(storageNetworkAverageFiat).toBeVisible()
   await clickTwice(storageNetworkAverageFiat)
@@ -53,7 +53,7 @@ test('field tips for storage', async ({ page }) => {
   await setCurrencyDisplay(page, 'bothPreferFiat', 'jpy')
   let storageNetworkAverageFiatJPY = page
     .getByTestId('maxStoragePriceTBMonthGroup')
-    .getByLabel('Network average')
+    .getByLabel('Network median')
     .getByText('¥248.17')
   await expect(storageNetworkAverageFiatJPY).toBeVisible()
   await clickTwice(storageNetworkAverageFiatJPY)
@@ -71,7 +71,7 @@ test('field tips for storage', async ({ page }) => {
   await setCurrencyDisplay(page, 'bothPreferSc', 'usd')
   storageNetworkAverage = page
     .getByTestId('maxStoragePriceTBMonthGroup')
-    .getByLabel('Network average')
+    .getByLabel('Network median')
     .getByText('341')
   await expect(storageNetworkAverage).toBeVisible()
   await clickTwice(storageNetworkAverage)
@@ -83,7 +83,7 @@ test('field tips for storage', async ({ page }) => {
   await setCurrencyDisplay(page, 'bothPreferFiat', 'usd')
   storageNetworkAverageFiat = page
     .getByTestId('maxStoragePriceTBMonthGroup')
-    .getByLabel('Network average')
+    .getByLabel('Network median')
     .getByText('$1.34')
   await expect(storageNetworkAverageFiat).toBeVisible()
   await clickTwice(storageNetworkAverageFiat)
@@ -95,7 +95,7 @@ test('field tips for storage', async ({ page }) => {
   await setCurrencyDisplay(page, 'bothPreferFiat', 'jpy')
   storageNetworkAverageFiatJPY = page
     .getByTestId('maxStoragePriceTBMonthGroup')
-    .getByLabel('Network average')
+    .getByLabel('Network median')
     .getByText('¥248.17')
   await expect(storageNetworkAverageFiatJPY).toBeVisible()
   await clickTwice(storageNetworkAverageFiatJPY)
@@ -109,7 +109,7 @@ test('field tips for upload', async ({ page }) => {
   await setCurrencyDisplay(page, 'bothPreferSc', 'usd')
   let uploadNetworkAverage = page
     .getByTestId('maxUploadPriceTBGroup')
-    .getByLabel('Network average')
+    .getByLabel('Network median')
     .getByText('76')
   await expect(uploadNetworkAverage).toBeVisible()
   await clickTwice(uploadNetworkAverage)
@@ -121,7 +121,7 @@ test('field tips for upload', async ({ page }) => {
   await setCurrencyDisplay(page, 'bothPreferFiat', 'usd')
   let uploadNetworkAverageFiat = page
     .getByTestId('maxUploadPriceTBGroup')
-    .getByLabel('Network average')
+    .getByLabel('Network median')
     .getByText('$0.30')
   await expect(uploadNetworkAverageFiat).toBeVisible()
   await clickTwice(uploadNetworkAverageFiat)
@@ -133,7 +133,7 @@ test('field tips for upload', async ({ page }) => {
   await setCurrencyDisplay(page, 'bothPreferFiat', 'jpy')
   let uploadNetworkAverageFiatJPY = page
     .getByTestId('maxUploadPriceTBGroup')
-    .getByLabel('Network average')
+    .getByLabel('Network median')
     .getByText('¥55.31')
   await expect(uploadNetworkAverageFiatJPY).toBeVisible()
   await clickTwice(uploadNetworkAverageFiatJPY)
@@ -151,7 +151,7 @@ test('field tips for upload', async ({ page }) => {
   await setCurrencyDisplay(page, 'bothPreferSc', 'usd')
   uploadNetworkAverage = page
     .getByTestId('maxUploadPriceTBGroup')
-    .getByLabel('Network average')
+    .getByLabel('Network median')
     .getByText('76')
   await expect(uploadNetworkAverage).toBeVisible()
   await clickTwice(uploadNetworkAverage)
@@ -163,7 +163,7 @@ test('field tips for upload', async ({ page }) => {
   await setCurrencyDisplay(page, 'bothPreferFiat', 'usd')
   uploadNetworkAverageFiat = page
     .getByTestId('maxUploadPriceTBGroup')
-    .getByLabel('Network average')
+    .getByLabel('Network median')
     .getByText('$0.30')
   await expect(uploadNetworkAverageFiat).toBeVisible()
   await clickTwice(uploadNetworkAverageFiat)
@@ -175,7 +175,7 @@ test('field tips for upload', async ({ page }) => {
   await setCurrencyDisplay(page, 'bothPreferFiat', 'jpy')
   uploadNetworkAverageFiatJPY = page
     .getByTestId('maxUploadPriceTBGroup')
-    .getByLabel('Network average')
+    .getByLabel('Network median')
     .getByText('¥55.31')
   await expect(uploadNetworkAverageFiatJPY).toBeVisible()
   await clickTwice(uploadNetworkAverageFiatJPY)
@@ -189,7 +189,7 @@ test('field tips for download', async ({ page }) => {
   await setCurrencyDisplay(page, 'bothPreferSc', 'usd')
   let downloadNetworkAverage = page
     .getByTestId('maxDownloadPriceTBGroup')
-    .getByLabel('Network average')
+    .getByLabel('Network median')
     .getByText('899')
   await expect(downloadNetworkAverage).toBeVisible()
   await clickTwice(downloadNetworkAverage)
@@ -201,7 +201,7 @@ test('field tips for download', async ({ page }) => {
   await setCurrencyDisplay(page, 'bothPreferFiat', 'usd')
   let downloadNetworkAverageFiat = page
     .getByTestId('maxDownloadPriceTBGroup')
-    .getByLabel('Network average')
+    .getByLabel('Network median')
     .getByText('$3.55')
   await expect(downloadNetworkAverageFiat).toBeVisible()
   await clickTwice(downloadNetworkAverageFiat)
@@ -213,7 +213,7 @@ test('field tips for download', async ({ page }) => {
   await setCurrencyDisplay(page, 'bothPreferFiat', 'jpy')
   let downloadNetworkAverageFiatJPY = page
     .getByTestId('maxDownloadPriceTBGroup')
-    .getByLabel('Network average')
+    .getByLabel('Network median')
     .getByText('¥654.27')
   await expect(downloadNetworkAverageFiatJPY).toBeVisible()
   await clickTwice(downloadNetworkAverageFiatJPY)
@@ -231,7 +231,7 @@ test('field tips for download', async ({ page }) => {
   await setCurrencyDisplay(page, 'bothPreferSc', 'usd')
   downloadNetworkAverage = page
     .getByTestId('maxDownloadPriceTBGroup')
-    .getByLabel('Network average')
+    .getByLabel('Network median')
     .getByText('899')
   await expect(downloadNetworkAverage).toBeVisible()
   await clickTwice(downloadNetworkAverage)
@@ -243,7 +243,7 @@ test('field tips for download', async ({ page }) => {
   await setCurrencyDisplay(page, 'bothPreferFiat', 'usd')
   downloadNetworkAverageFiat = page
     .getByTestId('maxDownloadPriceTBGroup')
-    .getByLabel('Network average')
+    .getByLabel('Network median')
     .getByText('$3.55')
   await expect(downloadNetworkAverageFiat).toBeVisible()
   await clickTwice(downloadNetworkAverageFiat)
@@ -255,7 +255,7 @@ test('field tips for download', async ({ page }) => {
   await setCurrencyDisplay(page, 'bothPreferFiat', 'jpy')
   downloadNetworkAverageFiatJPY = page
     .getByTestId('maxDownloadPriceTBGroup')
-    .getByLabel('Network average')
+    .getByLabel('Network median')
     .getByText('¥654.27')
   await expect(downloadNetworkAverageFiatJPY).toBeVisible()
   await clickTwice(downloadNetworkAverageFiatJPY)
