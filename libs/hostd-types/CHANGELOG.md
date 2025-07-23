@@ -1,5 +1,11 @@
 # @siafoundation/hostd-types
 
+## 0.10.0
+
+### Minor Changes
+
+- f0c0fb7: Alert data now includes certificate related fields.
+
 ## 0.9.2
 
 ### Patch Changes

@@ -1,5 +1,20 @@
 # hostd
 
+## 0.65.0
+
+### Minor Changes
+
+- 80965f4: Toast notifications now stack in a way that uses less space.
+- f0c0fb7: Alert data now includes certificate related fields.
+
+### Patch Changes
+
+- Updated dependencies [80965f4]
+- Updated dependencies [f0c0fb7]
+  - @siafoundation/design-system@9.2.0
+  - @siafoundation/hostd-types@0.10.0
+  - @siafoundation/hostd-react@4.6.7
+
 ## 0.64.2
 
 ### Patch Changes
