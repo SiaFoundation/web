@@ -1,5 +1,17 @@
 # renterd
 
+## 0.84.0
+
+### Minor Changes
+
+- 80965f4: Toast notifications now stack in a way that uses less space.
+- 1947a62: Network price metrics are now more accurately referred to as median prices.
+
+### Patch Changes
+
+- Updated dependencies [80965f4]
+  - @siafoundation/design-system@9.2.0
+
 ## 0.83.0
 
 ### Minor Changes

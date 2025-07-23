@@ -1,5 +1,16 @@
 # walletd
 
+## 0.34.0
+
+### Minor Changes
+
+- 80965f4: Toast notifications now stack in a way that uses less space.
+
+### Patch Changes
+
+- Updated dependencies [80965f4]
+  - @siafoundation/design-system@9.2.0
+
 ## 0.33.1
 
 ### Patch Changes

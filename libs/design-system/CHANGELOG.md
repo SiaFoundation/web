@@ -1,5 +1,11 @@
 # Changelog
 
+## 9.2.0
+
+### Minor Changes
+
+- 80965f4: Toasts now use the sonner library.
+
 ## 9.1.1
 
 ### Patch Changes
