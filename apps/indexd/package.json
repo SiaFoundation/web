@@ -16,6 +16,10 @@
     "@siafoundation/react-core": "6.0.1",
     "use-local-storage-state": "19.5.0",
     "@siafoundation/indexd-react": "0.0.0",
-    "next": "^15.3.5"
+    "next": "^15.3.5",
+    "next-themes": "0.2.1",
+    "class-variance-authority": "0.7.1",
+    "cmdk": "0.2.1",
+    "use-debounce": "9.0.4"
   }
 }
