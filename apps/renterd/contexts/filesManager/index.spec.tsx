@@ -9,12 +9,12 @@ import {
   mockMatchMedia,
 } from '../../mock/mock'
 
-const { usePathname, useAppRouter, useParams } = require('@siafoundation/next')
+const { usePathname, useRouter, useParams } = require('next/navigation')
 
 // NOTE: Update to use a functional test router after migrating to vitest.
-jest.mock('@siafoundation/next', () => {
+jest.mock('next/navigation', () => {
   return {
-    useAppRouter: jest.fn().mockReturnValue({
+    useRouter: jest.fn().mockReturnValue({
       query: {},
       push: jest.fn(),
     }),
@@ -40,7 +40,7 @@ afterAll(() => server.close())
 
 describe('filesManager', () => {
   it('directory mode navigates to directory with file filter', async () => {
-    useAppRouter.mockClear()
+    useRouter.mockClear()
     useParams.mockReturnValue({
       bucket: 'default',
       path: ['foo', 'bar', 'baz'],
@@ -56,7 +56,7 @@ describe('filesManager', () => {
     expect(context.state?.fileNamePrefixFilter).toBe('cats')
   })
   it('toggling to flat explorer mode applies the active directory as a filter', async () => {
-    useAppRouter.mockClear()
+    useRouter.mockClear()
     useParams.mockReturnValue({
       bucket: 'default',
       path: ['foo', 'bar', 'baz'],
@@ -73,7 +73,7 @@ describe('filesManager', () => {
     expect(context.state?.fileNamePrefixFilter).toBe('foo/bar/baz/')
   })
   it('toggling from flat mode to directory clears the file filter', async () => {
-    useAppRouter.mockClear()
+    useRouter.mockClear()
     useParams.mockReturnValue({
       bucket: 'default',
       path: ['foo', 'bar', 'baz'],
@@ -94,7 +94,7 @@ describe('filesManager', () => {
     expect(context.state?.fileNamePrefixFilter).toBe('')
   })
   it('does not routes if mode already active', async () => {
-    useAppRouter.mockClear()
+    useRouter.mockClear()
     useParams.mockReturnValue({
       bucket: 'default',
       path: [],
@@ -110,7 +110,7 @@ describe('filesManager', () => {
     expect(context.state?.fileNamePrefixFilter).toBe('')
   })
   it('routes to active mode if viewing uploads', async () => {
-    useAppRouter.mockClear()
+    useRouter.mockClear()
     useParams.mockReturnValue({
       bucket: 'default',
     })
@@ -156,12 +156,12 @@ function mountProvider() {
 }
 
 function getRouterPushCallCount() {
-  const mockPush = useAppRouter.mock.results.slice(-1)[0]
+  const mockPush = useRouter.mock.results.slice(-1)[0]
   return mockPush?.value.push.mock.calls.length
 }
 
 function getLastRouterPushCallParams() {
-  const mockPush = useAppRouter.mock.results.slice(-1)[0]
+  const mockPush = useRouter.mock.results.slice(-1)[0]
   const lastPushCallParams = mockPush?.value.push.mock.calls.slice(-1)[0]
   return lastPushCallParams
 }

@@ -20,7 +20,7 @@ import {
   useHostsBlocklist,
 } from '@siafoundation/renterd-react'
 import { routes } from '../../config/routes'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useContracts } from '../../contexts/contracts'
 import { useHosts } from '../../contexts/hosts'
 import { useAllowlistUpdate } from '../../hooks/useAllowlistUpdate'

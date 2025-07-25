@@ -1,11 +1,12 @@
 import { LinkButton } from '@siafoundation/design-system'
 import { ListNumbered16 } from '@siafoundation/react-icons'
 import { routes } from '../../config/routes'
-import { useRouter } from 'next/router'
+import { useParams } from 'next/navigation'
+import { Maybe } from '@siafoundation/types'
 
 export function AddressesButton() {
-  const router = useRouter()
-  const id = router.query.id as string
+  const params = useParams<Maybe<{ id: Maybe<string> }>>()
+  const id = params?.id
   return (
     <LinkButton
       aria-label="view addresses"

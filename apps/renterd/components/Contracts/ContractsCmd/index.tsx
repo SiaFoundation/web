@@ -5,7 +5,7 @@ import {
 } from '../../CmdRoot/Item'
 import { ContractsFilterCmd } from './ContractsFilterCmd'
 import { Page } from '../../CmdRoot/types'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useDialog } from '../../../contexts/dialog'
 import { routes } from '../../../config/routes'
 

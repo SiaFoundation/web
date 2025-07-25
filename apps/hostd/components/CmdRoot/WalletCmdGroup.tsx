@@ -1,6 +1,6 @@
 import { copyToClipboard } from '@siafoundation/design-system'
 import { routes } from '../../config/routes'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useDialog } from '../../contexts/dialog'
 import { CommandGroup, CommandItemNav, CommandItemSearch } from './Item'
 import { useWallet } from '@siafoundation/hostd-react'

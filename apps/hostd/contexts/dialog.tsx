@@ -1,4 +1,4 @@
-import { createContext, useContext, useCallback, useState } from 'react'
+import React, { createContext, useContext, useCallback, useState } from 'react'
 import {
   ConfirmDialog,
   SettingsDialog,

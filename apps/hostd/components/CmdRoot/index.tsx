@@ -17,7 +17,7 @@ import { useDebounce } from 'use-debounce'
 import { CmdEmptyDefault } from './CmdEmpty'
 import { ContractsCmd } from '../Contracts/ContractsCmd'
 import { useDialog } from '../../contexts/dialog'
-import { useRouter } from 'next/router'
+import { usePathname, useRouter } from 'next/navigation'
 import { routes } from '../../config/routes'
 import { VolumesCmd } from '../Volumes/VolumesCmd'
 import { AlertsCmd } from '../Alerts/AlertsCmd'
@@ -28,6 +28,7 @@ type Props = {
 
 export function CmdRoot({ panel }: Props) {
   const router = useRouter()
+  const pathname = usePathname()
   const { resetFilters: resetContractsFilters } = useContracts()
   const { closeDialog } = useDialog()
   const [search, setSearch] = useState('')
@@ -100,7 +101,7 @@ export function CmdRoot({ panel }: Props) {
             resetContractsFilters()
           }}
           afterSelect={() => {
-            if (!router.pathname.startsWith(routes.contracts.index)) {
+            if (!pathname.startsWith(routes.contracts.index)) {
               router.push(routes.contracts.index)
             }
             afterSelect()
@@ -114,7 +115,7 @@ export function CmdRoot({ panel }: Props) {
             resetContractsFilters()
           }}
           afterSelect={() => {
-            if (!router.pathname.startsWith(routes.alerts.index)) {
+            if (!pathname.startsWith(routes.alerts.index)) {
               router.push(routes.alerts.index)
             }
             afterSelect()

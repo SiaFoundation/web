@@ -105,7 +105,9 @@ export async function setupCluster({
       try {
         const nodes = await Axios.get<
           Maybe<{ type: string; apiAddress: string; password: string }[]>
-        >(`http://localhost:${clusterd.managementPort}/nodes`)
+        >(`http://localhost:${clusterd.managementPort}/nodes`, {
+          timeout: 5_000,
+        })
         const runningCount = nodes.data?.length
         const totalCount =
           renterdCount + hostdCount + walletdCount + exploredCount

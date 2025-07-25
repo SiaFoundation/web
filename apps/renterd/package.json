@@ -10,7 +10,6 @@
     "@siafoundation/design-system": "^9.2.0",
     "@siafoundation/explored-types": "^0.19.1",
     "@siafoundation/fonts": "^0.5.1",
-    "@siafoundation/next": "0.1.4",
     "@siafoundation/react-core": "^6.0.1",
     "@siafoundation/react-icons": "^0.3.1",
     "@siafoundation/renterd-js": "^0.14.6",

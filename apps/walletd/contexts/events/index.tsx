@@ -15,7 +15,7 @@ import {
   getEventFee,
   getEventTxType,
 } from '@siafoundation/units'
-import { createContext, useContext, useMemo } from 'react'
+import React, { createContext, useContext, useMemo } from 'react'
 import {
   CellContext,
   EventData,
@@ -24,7 +24,7 @@ import {
   sortOptions,
 } from './types'
 import { columns } from './columns'
-import { useRouter } from 'next/router'
+import { useParams } from 'next/navigation'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
@@ -33,8 +33,8 @@ import { Maybe } from '@siafoundation/types'
 const defaultLimit = 100
 
 export function useEventsMain() {
-  const router = useRouter()
-  const id = router.query.id as string
+  const params = useParams<Maybe<{ id: Maybe<string> }>>()
+  const id = params?.id
   const { limit, offset } = usePaginationOffset(defaultLimit)
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
     useServerFilters()

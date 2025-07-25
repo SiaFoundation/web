@@ -13,7 +13,7 @@ import { useCallback, useState } from 'react'
 import { NodeCmdGroup } from './NodeCmdGroup'
 import { ConfigCmdGroup } from './ConfigCmdGroup'
 import { useDialog } from '../../contexts/dialog'
-import { useRouter } from 'next/router'
+import { usePathname, useRouter } from 'next/navigation'
 import { routes } from '../../config/routes'
 import { ContractsCmd } from '../Contracts/ContractsCmd'
 import { AlertsCmd } from '../Alerts/AlertsCmd'
@@ -35,6 +35,7 @@ export function CmdRoot({ panel }: Props) {
   const { resetFilters: resetHostsFilters } = useHosts()
   const { closeDialog } = useDialog()
   const router = useRouter()
+  const pathname = usePathname()
   const [search, setSearch] = useState('')
   const [debouncedSearch] = useDebounce(search, 500)
   const [pages, setPages] = useState<Page[]>([])
@@ -130,7 +131,7 @@ export function CmdRoot({ panel }: Props) {
             resetContractsFilters()
           }}
           afterSelect={() => {
-            if (!router.pathname.startsWith(routes.contracts.index)) {
+            if (!pathname.startsWith(routes.contracts.index)) {
               router.push(routes.contracts.index)
             }
             afterSelect()
@@ -144,7 +145,7 @@ export function CmdRoot({ panel }: Props) {
             resetHostsFilters()
           }}
           afterSelect={() => {
-            if (!router.pathname.startsWith(routes.hosts.index)) {
+            if (!pathname.startsWith(routes.hosts.index)) {
               router.push(routes.hosts.index)
             }
             afterSelect()
@@ -157,7 +158,7 @@ export function CmdRoot({ panel }: Props) {
             beforeSelect()
           }}
           afterSelect={() => {
-            if (!router.pathname.startsWith(routes.keys.index)) {
+            if (!pathname.startsWith(routes.keys.index)) {
               router.push(routes.keys.index)
             }
             afterSelect()
@@ -171,7 +172,7 @@ export function CmdRoot({ panel }: Props) {
             resetContractsFilters()
           }}
           afterSelect={() => {
-            if (!router.pathname.startsWith(routes.alerts.index)) {
+            if (!pathname.startsWith(routes.alerts.index)) {
               router.push(routes.alerts.index)
             }
             afterSelect()

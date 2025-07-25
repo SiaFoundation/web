@@ -14,7 +14,7 @@ import {
   humanSiacoin,
   secondsInMilliseconds,
 } from '@siafoundation/units'
-import { useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { chartConfigs } from '../../config/charts'
 import { useMetricsPeriod } from '@siafoundation/hostd-react'
 import { configCategoryPattern, configCategoryLabel } from './utils'

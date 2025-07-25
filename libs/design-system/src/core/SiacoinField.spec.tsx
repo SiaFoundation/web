@@ -19,13 +19,6 @@ jest.mock('next/navigation', () => ({
   usePathname: jest.fn().mockReturnValue('/some-route'),
 }))
 
-jest.mock('next/router', () => ({
-  useRouter: jest.fn().mockReturnValue({
-    query: {},
-    push: jest.fn(),
-  }),
-}))
-
 const server = setupServer()
 beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())

@@ -3,7 +3,7 @@
 import { Button } from '../core/Button'
 import { ControlGroup } from '../core/ControlGroup'
 import { CaretRight16, PageFirst16 } from '@siafoundation/react-icons'
-import { usePagesRouter } from '@siafoundation/next'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { LoadingDots } from './LoadingDots'
 import { pluralize } from '@siafoundation/units'
 
@@ -23,7 +23,9 @@ export function PaginatorMarker({
   pageTotal,
   isLoading,
 }: Props) {
-  const router = usePagesRouter()
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
   // If no marker is provided, we do not know if we are on the first or any other page
   // so leave the control enabled. If the marker is null, we are on the first page.
   const previousDisabled = marker === undefined ? false : marker === null
@@ -36,14 +38,11 @@ export function PaginatorMarker({
         size="small"
         variant="gray"
         className="rounded-r-none"
-        onClick={() =>
-          router.push({
-            query: {
-              ...router.query,
-              marker: '',
-            },
-          })
-        }
+        onClick={() => {
+          const query = new URLSearchParams(searchParams.toString())
+          query.set('marker', '')
+          router.push(`${pathname}?${query.toString()}`)
+        }}
       >
         <div className="flex scale-[0.65]">
           <PageFirst16 />
@@ -73,14 +72,11 @@ export function PaginatorMarker({
         size="small"
         variant="gray"
         className="rounded-none"
-        onClick={() =>
-          router.push({
-            query: {
-              ...router.query,
-              marker: nextMarker,
-            },
-          })
-        }
+        onClick={() => {
+          const query = new URLSearchParams(searchParams.toString())
+          query.set('marker', nextMarker ?? '')
+          router.push(`${pathname}?${query.toString()}`)
+        }}
       >
         <CaretRight16 />
       </Button>

@@ -26,7 +26,9 @@ import { getHostAddress } from '../../lib/host'
 
 export const dataFields: {
   [K in keyof AlertData]: {
-    render: (props: { value: NonNullable<AlertData[K]> }) => JSX.Element | null
+    render: (props: {
+      value: NonNullable<AlertData[K]>
+    }) => React.JSX.Element | null
   }
 } = {
   origin: {

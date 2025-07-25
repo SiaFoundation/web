@@ -6,7 +6,7 @@ import {
   useMultiSelect,
   usePaginationOffset,
 } from '@siafoundation/design-system'
-import { createContext, useContext, useMemo } from 'react'
+import React, { createContext, useContext, useMemo } from 'react'
 import {
   CellContext,
   KeyData,

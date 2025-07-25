@@ -30,7 +30,7 @@ type Props<Key extends string, Cat extends string> = {
   stackOffset?: StackOffset
   actionsRight?: React.ReactNode
   actionsLeft?: React.ReactNode
-  emptyState?: JSX.Element
+  emptyState?: React.ReactNode
   allowConfiguration?: boolean
   variant?: 'panel' | 'ghost'
 }

@@ -4,7 +4,9 @@ import { AlertData } from './types'
 
 export const dataFields: {
   [K in keyof AlertData['data']]: {
-    render: (props: { value: NonNullable<AlertData['data'][K]> }) => JSX.Element
+    render: (props: {
+      value: NonNullable<AlertData['data'][K]>
+    }) => React.JSX.Element
   }
 } = {
   error: {

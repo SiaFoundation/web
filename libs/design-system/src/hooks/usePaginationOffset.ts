@@ -1,6 +1,6 @@
 'use client'
 
-import { useSearchParams } from '@siafoundation/next'
+import { useSearchParams } from 'next/navigation'
 
 export function usePaginationOffset(defaultLimit: number) {
   const searchParams = useSearchParams()

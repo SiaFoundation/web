@@ -2,7 +2,7 @@
 
 import { Dialog } from '../core/Dialog'
 import { FormSubmitButton } from '../components/Form'
-import { useCallback } from 'react'
+import React, { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 
 export type ConfirmDialogParams = {

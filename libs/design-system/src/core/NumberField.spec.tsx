@@ -13,13 +13,6 @@ jest.mock('next/navigation', () => ({
   usePathname: jest.fn().mockReturnValue('/some-route'),
 }))
 
-jest.mock('next/router', () => ({
-  useRouter: jest.fn().mockReturnValue({
-    query: {},
-    push: jest.fn(),
-  }),
-}))
-
 describe('NumberField', () => {
   it('updates external value immediately', async () => {
     const user = userEvent.setup()

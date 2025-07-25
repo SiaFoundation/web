@@ -14,6 +14,7 @@ export default [
         'error',
         {
           ignoredFiles: [
+            '**/eslint.config.mjs',
             '**/rollup.config.js',
             '**/tailwind.config.js',
             '**/next.config.js',
