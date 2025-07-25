@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
+  - name: indexd issues
+    url: https://github.com/SiaFoundation/indexd/issues/new/choose
+    about: Please create indexd UI issues on the indexd repo.
   - name: renterd issues
     url: https://github.com/SiaFoundation/renterd/issues/new/choose
     about: Please create renterd UI issues on the renterd repo.

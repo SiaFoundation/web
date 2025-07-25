@@ -1,0 +1,76 @@
+{
+  "name": "indexd",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/indexd",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/indexd",
+        "postcssConfig": "apps/indexd/postcss.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {},
+        "local": {},
+        "export": {
+          "outputPath": "dist/apps/indexd-export"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "indexd:build",
+        "port": 3009,
+        "turbo": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "indexd:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "indexd:build:production",
+          "dev": false
+        }
+      }
+    },
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "dependsOn": ["build"],
+      "defaultConfiguration": "local",
+      "options": {
+        "engine": "docker",
+        "context": "./",
+        "file": "apps/indexd/Dockerfile"
+      },
+      "configurations": {
+        "local": {
+          "tags": ["siafoundation/web-indexd:latest"],
+          "push": false
+        },
+        "production": {
+          "tags": ["ghcr.io/siafoundation/web-indexd:latest"],
+          "push": true
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/indexd"],
+      "options": {
+        "jestConfig": "apps/indexd/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": []
+}

@@ -8,9 +8,10 @@ Web packages for the Sia project and ecosystem.
 
 User interfaces for the Sia software. The latest Sia software takes a modular approach, with separate daemons and user interfaces for renting, hosting, the explorer, and advanced wallet functionality.
 
-- [renterd](apps/renterd) - The [`renterd`](https://github.com/siafoundation/renterd) user interface, focused on renting functionality.
+- [indexd](apps/indexd) - The [`indexd`](https://github.com/siafoundation/indexd) user interface, focused on indexing functionality.
 - [hostd](apps/hostd) - The [`hostd`](https://github.com/siafoundation/hostd) user interface, focused on hosting functionality.
 - [walletd](apps/walletd) - The [`walletd`](https://github.com/siafoundation/walletd) user interface, includes a wallet with support for hot, cold, and hardware wallets.
+- [renterd](apps/renterd) - The [`renterd`](https://github.com/siafoundation/renterd) user interface, focused on renting functionality.
 - [explorer](apps/explorer) - The `explorer` user interface, a Sia blockchain explorer interface that powers [siascan.com](https://siascan.com) and [zen.siascan.com](https://zen.siascan.com).
 
 ## Libraries
@@ -46,9 +47,10 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 
 - [go.sia.tech/web/sdk](sdk) - SDK for signing transactions, encoding RPCs, computing merkle roots, and more. Compiled with WASM for use in the TypeScript SDK.
 - [go.sia.tech/web/ui](ui) - Library for embedding NextJS applications in Go.
+- [go.sia.tech/web/indexd](indexd) - HTTP handler with embedded `indexd` application.
+- [go.sia.tech/web/hostd](hostd) - HTTP handler with embedded `hostd` application.
 - [go.sia.tech/web/walletd](walletd) - HTTP handler with embedded `walletd` application.
 - [go.sia.tech/web/renterd](renterd) - HTTP handler with embedded `renterd` application.
-- [go.sia.tech/web/hostd](hostd) - HTTP handler with embedded `hostd` application.
 
 ## Internal
 
@@ -60,9 +62,9 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 
 ### Testing
 
+- [hostd-e2e](apps/hostd-e2e) - App for testing hostd.
 - [walletd-e2e](apps/walletd-e2e) - App for testing walletd.
 - [renterd-e2e](apps/renterd-e2e) - App for testing renterd.
-- [hostd-e2e](apps/hostd-e2e) - App for testing hostd.
 - [explorer-e2e](apps/explorer-e2e) - App for testing explorer.
 - [e2e](libs/e2e) - Shared e2e testing code.
 - [@siafoundation/clusterd](libs/clusterd) - Methods for controlling `clusterd` in e2e testing.
