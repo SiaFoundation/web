@@ -5,5 +5,5 @@ export type Page = {
   label: string
   prompt?: string
   tag?: string
-  empty?: (props: CmdEmptyProps) => JSX.Element
+  empty?: (props: CmdEmptyProps) => React.JSX.Element
 }

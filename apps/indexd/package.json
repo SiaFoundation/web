@@ -20,6 +20,10 @@
     "next-themes": "0.2.1",
     "class-variance-authority": "0.7.1",
     "cmdk": "0.2.1",
-    "use-debounce": "9.0.4"
+    "use-debounce": "9.0.4",
+    "@siafoundation/fonts": "0.5.1",
+    "@carbon/icons-react": "10.49.6",
+    "jszip": "3.10.1",
+    "file-saver": "2.0.5"
   }
 }
