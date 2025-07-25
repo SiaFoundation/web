@@ -24,7 +24,6 @@
     "@radix-ui/react-tooltip": "^1.2.7",
     "@radix-ui/react-visually-hidden": "^1.2.3",
     "@react-spring/web": "^9.7.5",
-    "@siafoundation/next": "^0.1.4",
     "@siafoundation/react-core": "^6.0.1",
     "@siafoundation/react-icons": "^0.3.1",
     "@siafoundation/types": "^0.12.1",
@@ -75,6 +74,7 @@
   "peerDependencies": {
     "@siafoundation/explored-react": "^0.8.1",
     "@siafoundation/explored-types": "^0.19.1",
+    "next": "^15.3.5",
     "react": "^19.1.0"
   }
 }

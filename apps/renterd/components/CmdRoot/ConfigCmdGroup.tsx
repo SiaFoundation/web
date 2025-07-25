@@ -1,5 +1,5 @@
 import { routes } from '../../config/routes'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useDialog } from '../../contexts/dialog'
 import { CommandGroup, CommandItemNav, CommandItemSearch } from './Item'
 import { Page } from './types'

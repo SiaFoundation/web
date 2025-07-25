@@ -1,6 +1,6 @@
 import { minutesInMilliseconds } from '@siafoundation/units'
 import { routes } from '../../config/routes'
-import { useRouter } from 'next/router'
+import { useParams, usePathname } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useIdleTimer } from 'react-idle-timer'
 import useLocalStorageState from 'use-local-storage-state'
@@ -74,14 +74,14 @@ export function useWalletSeedCache() {
     _setMnemonicCache({})
   }, [_setMnemonicCache])
 
-  const router = useRouter()
+  const pathname = usePathname()
+  const params = useParams<{ id: string }>()
   const onAction = useCallback(() => {
     // user is active with a specific wallet
-    if (router.pathname.startsWith(routes.wallet.base)) {
-      const walletId = router.query.id as string
-      updateWalletActivityAt(walletId)
+    if (pathname.startsWith(routes.wallet.base)) {
+      updateWalletActivityAt(params.id)
     }
-  }, [router, updateWalletActivityAt])
+  }, [pathname, params, updateWalletActivityAt])
 
   useIdleTimer({
     onAction,

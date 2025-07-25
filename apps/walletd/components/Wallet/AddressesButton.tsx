@@ -1,11 +1,11 @@
 import { LinkButton } from '@siafoundation/design-system'
 import { ListNumbered16 } from '@siafoundation/react-icons'
 import { routes } from '../../config/routes'
-import { useRouter } from 'next/router'
+import { useParams } from 'next/navigation'
 
 export function AddressesButton() {
-  const router = useRouter()
-  const id = router.query.id as string
+  const params = useParams<{ id: string }>()
+  const id = params.id
   return (
     <LinkButton
       aria-label="view addresses"

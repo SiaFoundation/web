@@ -1,6 +1,6 @@
 'use client'
 
-import { useAppRouter, usePathname } from '@siafoundation/next'
+import { useRouter, usePathname } from 'next/navigation'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { useCallback } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
@@ -59,7 +59,7 @@ function useRequestSettingsMain({
     [_setSettings]
   )
 
-  const router = useAppRouter()
+  const router = useRouter()
   const pathname = usePathname()
   // Arbirary callbacks can be registered at a unique key.
   const [onLockCallbacks, setOnLockCallbacks] = useState<
