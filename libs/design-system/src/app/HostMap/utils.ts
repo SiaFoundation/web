@@ -8,17 +8,25 @@ import {
 } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import { CurrencyOption } from '@siafoundation/react-core'
-import { HostDataWithLocation } from '../../../contexts/hosts/types'
+import { HostMapHost } from './types'
 
 export function getHostLabel({
   host,
   currency,
   rate,
 }: {
-  host: HostDataWithLocation
+  host: HostMapHost
   currency?: CurrencyOption
   rate?: BigNumber
 }) {
+  if (host.type === 'group') {
+    return `${countryCodeEmoji(host.location.countryCode)} (${
+      host.activeContractsCount
+    })`
+  }
+  if (!host.v2Settings || !host.activeContracts) {
+    return null
+  }
   const storagePrice = host.v2Settings.prices.storagePrice
   const storageCost = rate
     ? `${currency?.prefix}${new BigNumber(storagePrice || 0)

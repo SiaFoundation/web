@@ -31,17 +31,12 @@ export function Point({
   const eventInFuture = eventHeight ? eventHeight > currentHeight : false
   const eventUnconfirmed =
     eventHeight && !eventInFuture && currentHeight - eventHeight < 6
-  const spanHeight = range.endHeight - range.startHeight
-  const spanTime = blocksToMilliseconds(spanHeight)
-
-  const rangeStartTime = blockHeightToTime(currentHeight, range.startHeight)
-  // const rangeEndTime = blockHeightToTime(currentHeight, range.endHeight)
 
   const eventTime = eventHeight
     ? blockHeightToTime(currentHeight, eventHeight)
     : 0
 
-  const eventPos = eventTime ? (eventTime - rangeStartTime) / spanTime : 0
+  // const eventPos = eventTime ? (eventTime - rangeStartTime) / spanTime : 0
 
   if (!eventHeight) {
     return null
@@ -59,7 +54,7 @@ export function Point({
         className
       )}
       style={{
-        left: toPercent(eventPos),
+        left: 0,
       }}
     >
       <div
