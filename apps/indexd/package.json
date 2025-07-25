@@ -1,0 +1,11 @@
+{
+  "name": "indexd",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The `indexd` user interface, dedicated to indexer related functionality.",
+  "license": "MIT",
+  "dependencies": {
+    "@siafoundation/indexd-types": "0.0.0",
+    "@siafoundation/units": "3.5.1"
+  }
+}

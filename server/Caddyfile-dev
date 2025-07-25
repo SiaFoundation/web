@@ -12,6 +12,8 @@
 # 127.0.0.1 wallet.local
 # 127.0.0.1 walletd.local
 # 127.0.0.1 walletd.zen.local
+# 127.0.0.1 index.local
+# 127.0.0.1 indexd.local
 
 (cors) {
   @cors_preflight method OPTIONS
@@ -75,6 +77,10 @@ wallet.local {
   reverse_proxy localhost:3008
 }
 
+index.local {
+  reverse_proxy localhost:3009
+}
+
 renterd.local {
   import cors
   reverse_proxy localhost:9980
@@ -98,4 +104,9 @@ renterd.zen.local {
 hostd.zen.local {
   import cors
   reverse_proxy localhost:9880
+}
+
+indexd.local {
+  import cors
+  reverse_proxy localhost:9980
 }
