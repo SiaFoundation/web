@@ -64,7 +64,7 @@ export function ConfigCmdGroup({ currentPage, parentPage, pushPage }: Props) {
         currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
-          router.push(routes.config.pricePinning)
+          router.push(routes.config.pricing)
           closeDialog()
         }}
       >

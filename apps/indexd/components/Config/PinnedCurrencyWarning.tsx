@@ -15,12 +15,12 @@ export function PinnedCurrencyWarning({
       </Text>
       <div className="flex flex-col">
         {!canUseExchangeRates && !!pinnedCurrency && (
-          <Link size="12" href={routes.config.pricePinning} underline="hover">
+          <Link size="12" href={routes.config.pricing} underline="hover">
             - Enable an exchange rate API
           </Link>
         )}
         {!pinnedCurrency && (
-          <Link size="12" href={routes.config.pricePinning} underline="hover">
+          <Link size="12" href={routes.config.pricing} underline="hover">
             - Select a pinned currency
           </Link>
         )}
