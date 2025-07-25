@@ -9,6 +9,7 @@ updates:
     directories:
       - '/hostd'
       - '/renterd'
+      - '/indexd'
       - '/walletd'
       - '/sdk'
       - '/internal/cluster'
