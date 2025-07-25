@@ -1,6 +1,6 @@
 'use client'
 
-import { usePathname } from '@siafoundation/next'
+import { usePathname } from 'next/navigation'
 
 type UnauthenticatedRoutes = {
   login: string

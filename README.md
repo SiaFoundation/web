@@ -53,7 +53,6 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 
 - [@siafoundation/request](libs/request) - Core library for building request APIs.
 - [@siafoundation/react-icons](libs/react-icons) - React-based icons used across Sia apps.
-- [@siafoundation/data-sources](libs/data-sources) - Data sources used for stats in Sia apps.
 - [@siafoundation/fonts](libs/fonts) - Next font configuration for use across apps.
 
 ### Testing

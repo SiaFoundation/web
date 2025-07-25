@@ -9,7 +9,7 @@ import {
   getFilesSearchBucketPage,
 } from './FilesSearchCmd'
 import { Page } from '../../CmdRoot/types'
-import { useRouter } from 'next/router'
+import { usePathname, useRouter } from 'next/navigation'
 import { useDialog } from '../../../contexts/dialog'
 import { routes } from '../../../config/routes'
 import { useFilesManager } from '../../../contexts/filesManager'
@@ -37,6 +37,7 @@ export function FilesCmd({
   pushPage: (page: Page) => void
 }) {
   const router = useRouter()
+  const pathname = usePathname()
   const { closeDialog } = useDialog()
   const { activeBucket } = useFilesManager()
   return (
@@ -56,7 +57,7 @@ export function FilesCmd({
           currentPage={currentPage}
           commandPage={commandPage}
           onSelect={() => {
-            if (!router.pathname.startsWith(routes.buckets.index)) {
+            if (!pathname.startsWith(routes.buckets.index)) {
               router.push(routes.buckets.index)
             }
             closeDialog()

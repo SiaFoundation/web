@@ -9,7 +9,7 @@ import {
 } from '@siafoundation/design-system'
 import { Maybe } from '@siafoundation/types'
 import { useContracts as useContractsData } from '@siafoundation/renterd-react'
-import { createContext, useContext, useMemo, useState } from 'react'
+import React, { createContext, useContext, useMemo, useState } from 'react'
 import {
   ContractData,
   ContractTableContext,

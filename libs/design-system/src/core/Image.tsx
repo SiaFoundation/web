@@ -1,4 +1,4 @@
-import { Image as NextImage } from '@siafoundation/next'
+import NextImage from 'next/image'
 import { cva } from 'class-variance-authority'
 import { VariantProps } from '../types'
 

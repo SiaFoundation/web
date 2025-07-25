@@ -9,7 +9,7 @@ import {
 import { Command } from 'cmdk'
 import { useCallback, useState } from 'react'
 import { useDialog } from '../../../contexts/dialog'
-import { useAppRouter, usePathname } from '@siafoundation/next'
+import { useRouter, usePathname } from 'next/navigation'
 import { routes } from '../../../config/routes'
 import {
   getFilesSearchBucketPage,
@@ -25,7 +25,7 @@ type Props = {
 
 export function FilesSearchBucketMenu({ panel }: Props) {
   const { closeDialog } = useDialog()
-  const router = useAppRouter()
+  const router = useRouter()
   const pathname = usePathname()
   const [search, setSearch] = useState('')
   const [debouncedSearch] = useDebounce(search, 500)

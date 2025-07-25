@@ -8,7 +8,7 @@ import {
   PageFirst16,
   PageLast16,
 } from '@siafoundation/react-icons'
-import { usePagesRouter } from '@siafoundation/next'
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { LoadingDots } from '../components/LoadingDots'
 
 type Props = {
@@ -24,7 +24,9 @@ export function PaginatorKnownTotal({
   total,
   isLoading,
 }: Props) {
-  const router = usePagesRouter()
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
   return (
     <ControlGroup>
       <Button
@@ -34,14 +36,11 @@ export function PaginatorKnownTotal({
         size="small"
         variant="gray"
         className="rounded-r-none"
-        onClick={() =>
-          router.push({
-            query: {
-              ...router.query,
-              offset: 0,
-            },
-          })
-        }
+        onClick={() => {
+          const query = new URLSearchParams(searchParams.toString())
+          query.set('offset', '0')
+          router.push(`${pathname}?${query.toString()}`)
+        }}
       >
         <div className="flex scale-[0.65]">
           <PageFirst16 />
@@ -54,14 +53,11 @@ export function PaginatorKnownTotal({
         size="small"
         variant="gray"
         className="rounded-none"
-        onClick={() =>
-          router.push({
-            query: {
-              ...router.query,
-              offset: Math.max(offset - limit, 0),
-            },
-          })
-        }
+        onClick={() => {
+          const query = new URLSearchParams(searchParams.toString())
+          query.set('offset', Math.max(offset - limit, 0).toString())
+          router.push(`${pathname}?${query.toString()}`)
+        }}
       >
         <CaretLeft16 />
       </Button>
@@ -83,14 +79,11 @@ export function PaginatorKnownTotal({
         size="small"
         variant="gray"
         className="rounded-none"
-        onClick={() =>
-          router.push({
-            query: {
-              ...router.query,
-              offset: Math.min(offset + limit, total),
-            },
-          })
-        }
+        onClick={() => {
+          const query = new URLSearchParams(searchParams.toString())
+          query.set('offset', Math.min(offset + limit, total).toString())
+          router.push(`${pathname}?${query.toString()}`)
+        }}
       >
         <CaretRight16 />
       </Button>
@@ -101,14 +94,11 @@ export function PaginatorKnownTotal({
         size="small"
         variant="gray"
         className="rounded-l-none"
-        onClick={() =>
-          router.push({
-            query: {
-              ...router.query,
-              offset: Math.floor(total / limit) * limit,
-            },
-          })
-        }
+        onClick={() => {
+          const query = new URLSearchParams(searchParams.toString())
+          query.set('offset', (Math.floor(total / limit) * limit).toString())
+          router.push(`${pathname}?${query.toString()}`)
+        }}
       >
         <div className="flex" style={{ transform: 'scale(0.65)' }}>
           <PageLast16 />

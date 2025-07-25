@@ -1,10 +1,10 @@
 'use client'
 
-import { useAppRouter, usePathname, useSearchParams } from '@siafoundation/next'
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useCallback } from 'react'
 
 export function useResetPagination() {
-  const router = useAppRouter()
+  const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
 

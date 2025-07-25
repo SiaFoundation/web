@@ -1,6 +1,6 @@
 'use client'
 
-import { Link as NextLink } from '@siafoundation/next'
+import NextLink from 'next/link'
 import * as NavMenuPrimitives from '@radix-ui/react-navigation-menu'
 import { cx } from 'class-variance-authority'
 import { linkStyles, LinkVariants } from './Link'
