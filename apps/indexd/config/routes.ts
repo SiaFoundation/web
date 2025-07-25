@@ -6,7 +6,7 @@ export const routes = {
     index: '/config',
     hosts: '/config#hosts',
     contracts: '/config#contracts',
-    pricePinning: '/config#price-pinning',
+    pricing: '/config#pricing',
   },
   wallet: {
     view: '/wallet',

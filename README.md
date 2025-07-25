@@ -8,7 +8,7 @@ Web packages for the Sia project and ecosystem.
 
 User interfaces for the Sia software. The latest Sia software takes a modular approach, with separate daemons and user interfaces for renting, hosting, the explorer, and advanced wallet functionality.
 
-- [indexd](apps/indexd) - The [`indexd`](https://github.com/siafoundation/indexd) user interface, focused on indexing functionality.
+- [indexd](apps/indexd) - The [`indexd`](https://github.com/siafoundation/indexd) user interface, focused on pinning functionality.
 - [hostd](apps/hostd) - The [`hostd`](https://github.com/siafoundation/hostd) user interface, focused on hosting functionality.
 - [walletd](apps/walletd) - The [`walletd`](https://github.com/siafoundation/walletd) user interface, includes a wallet with support for hot, cold, and hardware wallets.
 - [renterd](apps/renterd) - The [`renterd`](https://github.com/siafoundation/renterd) user interface, focused on renting functionality.

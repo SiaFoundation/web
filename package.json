@@ -10,7 +10,7 @@
   "scripts": {
     "build": "nx build",
     "build:wasm": "cd walletd && GOOS=js GOARCH=wasm go build -o ../apps/walletd/public/walletd.wasm ./wasm",
-    "clean": "rimraf dist apps/*/node_modules libs/*/node_modules apps/*/.next .nx playwright-report && nx reset && bun i",
+    "clean": "bunx rimraf dist apps/*/node_modules libs/*/node_modules apps/*/.next .nx playwright-report && nx reset && bun i",
     "release": "changeset publish",
     "sort": "bunx sort-package-json && find apps libs -type f -name package.json -depth 2 -execdir bunx sort-package-json \\;",
     "start": "nx serve",
