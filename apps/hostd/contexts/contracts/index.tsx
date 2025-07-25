@@ -11,7 +11,7 @@ import {
   useContracts as useContractsData,
   useContractsV2 as useContractsV2Data,
 } from '@siafoundation/hostd-react'
-import { createContext, useCallback, useContext, useMemo } from 'react'
+import React, { createContext, useCallback, useContext, useMemo } from 'react'
 import {
   columnsDefaultVisible,
   ContractData,

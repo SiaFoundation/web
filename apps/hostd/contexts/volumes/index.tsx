@@ -7,7 +7,7 @@ import {
 } from '@siafoundation/design-system'
 import { VolumeMeta } from '@siafoundation/hostd-types'
 import { useVolumes as useVolumesData } from '@siafoundation/hostd-react'
-import { createContext, useContext } from 'react'
+import React, { createContext, useContext } from 'react'
 import { columnsDefaultVisible, VolumeData } from './types'
 import { columns } from './columns'
 import { useDataset } from './dataset'

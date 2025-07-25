@@ -7,7 +7,7 @@ import {
   CaretRight16,
   PageFirst16,
 } from '@siafoundation/react-icons'
-import { usePagesRouter } from '@siafoundation/next'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { LoadingDots } from './LoadingDots'
 
 type Props = {
@@ -23,7 +23,9 @@ export function PaginatorUnknownTotal({
   pageTotal,
   isLoading,
 }: Props) {
-  const router = usePagesRouter()
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
   const isMore = pageTotal >= limit
   const from = offset + 1
   const to = Math.min(offset + limit, offset + pageTotal)
@@ -36,14 +38,11 @@ export function PaginatorUnknownTotal({
         size="small"
         variant="gray"
         className="rounded-r-none"
-        onClick={() =>
-          router.push({
-            query: {
-              ...router.query,
-              offset: 0,
-            },
-          })
-        }
+        onClick={() => {
+          const query = new URLSearchParams(searchParams.toString())
+          query.set('offset', '0')
+          router.push(`${pathname}?${query.toString()}`)
+        }}
       >
         <div className="flex scale-[0.65]">
           <PageFirst16 />
@@ -56,14 +55,11 @@ export function PaginatorUnknownTotal({
         size="small"
         variant="gray"
         className="rounded-none"
-        onClick={() =>
-          router.push({
-            query: {
-              ...router.query,
-              offset: Math.max(offset - limit, 0),
-            },
-          })
-        }
+        onClick={() => {
+          const query = new URLSearchParams(searchParams.toString())
+          query.set('offset', Math.max(offset - limit, 0).toString())
+          router.push(`${pathname}?${query.toString()}`)
+        }}
       >
         <CaretLeft16 />
       </Button>
@@ -87,14 +83,11 @@ export function PaginatorUnknownTotal({
         size="small"
         variant="gray"
         className="rounded-none"
-        onClick={() =>
-          router.push({
-            query: {
-              ...router.query,
-              offset: offset + limit,
-            },
-          })
-        }
+        onClick={() => {
+          const query = new URLSearchParams(searchParams.toString())
+          query.set('offset', (offset + limit).toString())
+          router.push(`${pathname}?${query.toString()}`)
+        }}
       >
         <CaretRight16 />
       </Button>

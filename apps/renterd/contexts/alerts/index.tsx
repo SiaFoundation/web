@@ -4,7 +4,7 @@ import {
   useServerFilters,
   usePaginationOffset,
 } from '@siafoundation/design-system'
-import { createContext, useContext, useMemo } from 'react'
+import React, { createContext, useContext, useMemo } from 'react'
 import {
   AlertData,
   columnsDefaultVisible,

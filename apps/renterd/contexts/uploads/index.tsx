@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useState } from 'react'
+import React, { createContext, useCallback, useContext, useState } from 'react'
 import { useFilesManager } from '../filesManager'
 import { useRemoteUploads } from './useRemoteUploads'
 import { useLocalUploads } from './useLocalUploads'

@@ -10,7 +10,7 @@
   "scripts": {
     "build": "nx build",
     "build:wasm": "cd walletd && GOOS=js GOARCH=wasm go build -o ../apps/walletd/public/walletd.wasm ./wasm",
-    "clean": "nx reset && rimraf dist apps/*/node_modules libs/*/node_modules apps/*/.next",
+    "clean": "rimraf dist apps/*/node_modules libs/*/node_modules apps/*/.next .nx playwright-report && nx reset && bun i",
     "release": "changeset publish",
     "sort": "bunx sort-package-json && find apps libs -type f -name package.json -depth 2 -execdir bunx sort-package-json \\;",
     "start": "nx serve",
@@ -77,7 +77,7 @@
     "ts-node": "10.9.2",
     "tslib": "^2.8.1",
     "typescript": "5.8.3",
-    "typescript-eslint": "^8.37.0"
+    "typescript-eslint": "^8.38.0"
   },
   "packageManager": "bun@1.2.18",
   "engines": {

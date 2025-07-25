@@ -1,7 +1,7 @@
 import TransportWebBLE from '@ledgerhq/hw-transport-web-ble'
 import TransportWebHID from '@ledgerhq/hw-transport-webhid'
 import Sia from '@siacentral/ledgerjs-sia'
-import {
+import React, {
   createContext,
   useCallback,
   useContext,

@@ -1,5 +1,5 @@
 import { useDatasetState, useMultiSelect } from '@siafoundation/design-system'
-import {
+import React, {
   createContext,
   MouseEvent,
   useContext,

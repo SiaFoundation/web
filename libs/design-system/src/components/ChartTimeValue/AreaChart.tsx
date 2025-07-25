@@ -51,7 +51,7 @@ export function AreaChart({
   top?: number
   left?: number
   curve?: 'step' | 'monotone'
-  children?: JSX.Element
+  children?: React.ReactNode
 }) {
   if (width < 10) return null
   return (

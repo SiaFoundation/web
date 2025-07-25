@@ -9,7 +9,7 @@ import BigNumber from 'bignumber.js'
 import { AddressesButton } from './AddressesButton'
 import { EventsViewDropdownMenu } from './EventsViewDropdownMenu'
 import { useWalletBalance } from '@siafoundation/walletd-react'
-import { useRouter } from 'next/router'
+import { useParams } from 'next/navigation'
 import { useWallets } from '../../contexts/wallets'
 import { useDialog } from '../../contexts/dialog'
 import { WalletContextMenu } from '../WalletContextMenu'
@@ -17,12 +17,13 @@ import { WalletBalanceWithSf } from './WalletBalanceWithSf'
 import { useAddresses } from '../../contexts/addresses'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { walletTypes } from '../../config/walletTypes'
+import { Maybe } from '@siafoundation/types'
 
 export function WalletActionsMenu() {
   const status = useSyncStatus()
-  const router = useRouter()
   const { openDialog } = useDialog()
-  const walletId = router.query.id as string
+  const params = useParams<Maybe<{ id: Maybe<string> }>>()
+  const walletId = params?.id
   const balance = useWalletBalance({
     disabled: !walletId,
     params: {

@@ -1,26 +1,13 @@
 'use client'
 
 import { useAppSettings } from '@siafoundation/react-core'
-import { NextRouter, usePagesRouter } from '@siafoundation/next'
+import { usePathname } from 'next/navigation'
 import { useEffect } from 'react'
 import { useConnectivity } from '../../hooks/useConnectivity'
 
 type Routes = {
   home: string
   login: string
-}
-
-export function getRouteToSaveAsPrev(router: NextRouter, routes: Routes) {
-  if ([routes.login].includes(router.asPath)) {
-    return routes.home
-  }
-  return router.asPath
-}
-
-export function getRedirectRouteFromQuery(router: NextRouter, routes: Routes) {
-  return router.query['prev']
-    ? decodeURIComponent(router.query['prev'] as string)
-    : routes.home
 }
 
 export function useConnAndPassLock({
@@ -36,18 +23,18 @@ export function useConnAndPassLock({
     route,
   })
   const { settings } = useAppSettings()
-  const router = usePagesRouter()
+  const pathname = usePathname()
 
   useEffect(() => {
     if (isValidating) {
       return
     }
-    const isProtectedPath = !router.asPath.startsWith(routes.login)
+    const isProtectedPath = !pathname?.startsWith(routes.login)
     const noPasswordOrDisconnected = !settings.password || !isConnected
     if (isProtectedPath && noPasswordOrDisconnected) {
       lock()
       return
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router, settings.password, isConnected, isValidating])
+  }, [pathname, settings.password, isConnected, isValidating])
 }

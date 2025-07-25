@@ -1,9 +1,9 @@
-import { Head } from '@siafoundation/next'
+import Head from 'next/head'
 
 type Props = {
   appName: string
   title?: string
-  children?: React.ReactNode
+  children?: React.JSX.Element
 }
 
 export function AppPageHead({ appName, title, children }: Props) {

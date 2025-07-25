@@ -7,7 +7,7 @@ import {
 } from '@siafoundation/design-system'
 import { WalletMetadata } from '@siafoundation/walletd-types'
 import { useWallets as useWalletsData } from '@siafoundation/walletd-react'
-import { createContext, useContext, useEffect, useMemo } from 'react'
+import React, { createContext, useContext, useEffect, useMemo } from 'react'
 import {
   WalletData,
   columnsDefaultVisible,
@@ -15,7 +15,7 @@ import {
   sortOptions,
 } from './types'
 import { columns } from './columns'
-import { useRouter } from 'next/router'
+import { useParams, useRouter } from 'next/navigation'
 import { routes } from '../../config/routes'
 import { useWalletSeedCache } from './useWalletSeedCache'
 import { useDialog } from '../dialog'
@@ -94,13 +94,7 @@ function useWalletsMain() {
           lock: () => cacheWalletMnemonic(id, undefined),
         },
         // Table row click handler
-        onClick: () =>
-          router.push({
-            pathname: routes.wallet.view,
-            query: {
-              id,
-            },
-          }),
+        onClick: () => router.push(`${routes.wallet.view}?id=${id}`),
       }
       return datum
     })
@@ -114,7 +108,8 @@ function useWalletsMain() {
     cacheWalletMnemonic,
   ])
 
-  const wallet = dataset?.find((w) => w.id === (router.query.id as string))
+  const params = useParams<Maybe<{ id: Maybe<string> }>>()
+  const wallet = dataset?.find((w) => w.id === params?.id)
 
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
     useClientFilters<WalletData>()

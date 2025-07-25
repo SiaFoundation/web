@@ -8,7 +8,7 @@ import { BucketIcon } from '@siafoundation/react-icons'
 import { useFilesManager } from '../contexts/filesManager'
 import { useAppSettings } from '@siafoundation/react-core'
 import { routes } from '../config/routes'
-import { Link } from '@siafoundation/next'
+import Link from 'next/link'
 import { useUploadsManager } from '../contexts/uploadsManager'
 
 export function TransfersBar() {

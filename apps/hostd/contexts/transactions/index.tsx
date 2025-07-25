@@ -8,8 +8,8 @@ import {
   useWalletEvents,
   useWalletPending,
 } from '@siafoundation/hostd-react'
-import { createContext, useContext, useMemo } from 'react'
-import { useRouter } from 'next/router'
+import React, { createContext, useContext, useMemo } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
@@ -33,9 +33,9 @@ import { Maybe } from '@siafoundation/types'
 const defaultPageSize = 50
 
 function useTransactionsMain() {
-  const router = useRouter()
-  const limit = Number(router.query.limit || defaultPageSize)
-  const offset = Number(router.query.offset || 0)
+  const searchParams = useSearchParams()
+  const limit = Number(searchParams.get('limit') || defaultPageSize)
+  const offset = Number(searchParams.get('offset') || 0)
   const events = useWalletEvents({
     params: {
       limit,

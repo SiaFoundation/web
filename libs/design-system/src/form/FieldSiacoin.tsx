@@ -64,6 +64,7 @@ export function FieldSiacoin<
       changed={getFormStateFieldBoolean(form.formState.dirtyFields, name)}
       placeholder={placeholder}
       onChange={(val) => {
+        console.log('onChange', val?.toString())
         setValue(val as PathValue<Values, Path<Values>>, true)
       }}
       onBlur={onBlur}

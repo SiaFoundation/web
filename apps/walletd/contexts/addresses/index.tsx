@@ -14,16 +14,17 @@ import {
   sortOptions,
 } from './types'
 import { columns } from './columns'
-import { useRouter } from 'next/router'
+import { useParams } from 'next/navigation'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { useDataset } from './dataset'
+import { Maybe } from '@siafoundation/types'
 
 const defaultLimit = 50
 
 export function useAddressesMain() {
-  const router = useRouter()
-  const walletId = router.query.id as string
+  const params = useParams<Maybe<{ id: Maybe<string> }>>()
+  const walletId = params?.id
   const { limit, offset } = usePaginationOffset(defaultLimit)
 
   const response = useWalletAddresses({

@@ -43,6 +43,7 @@ runs:
       with:
         path: |
           ${{ github.workspace }}/.nx
+          ${{ github.workspace }}/libs/sdk/src/resources/sdk.wasm
         key: ${{ runner.os }}-nx-${{ hashFiles('**/nx.json', '**/package.json', '**/bun.lock', '**/project.json') }}
         restore-keys: |
           ${{ runner.os }}-nx-

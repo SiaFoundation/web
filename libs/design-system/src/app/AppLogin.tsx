@@ -1,9 +1,8 @@
 'use client'
 
 import { useAppSettings } from '@siafoundation/react-core'
-import { usePagesRouter } from '@siafoundation/next'
+import { useRouter, useSearchParams } from 'next/navigation'
 import axios, { AxiosError } from 'axios'
-import { getRedirectRouteFromQuery } from './AppAuthedLayout/useConnAndPassLock'
 import { useForm } from 'react-hook-form'
 import { useCallback, useEffect, useMemo } from 'react'
 import { ConfigFields, useOnInvalid } from '../form/configurationFields'
@@ -112,6 +111,17 @@ async function checkPassword({
   }
 }
 
+function getRedirectRouteFromQuery(
+  searchParams: URLSearchParams,
+  routes: {
+    home: string
+  }
+) {
+  return searchParams.get('prev')
+    ? decodeURIComponent(searchParams.get('prev') as string)
+    : routes.home
+}
+
 type Props = {
   appName: string
   route: string
@@ -122,7 +132,8 @@ type Props = {
 }
 
 export function AppLogin({ appName, route, routes }: Props) {
-  const router = usePagesRouter()
+  const router = useRouter()
+  const searchParams = useSearchParams()
   const { settings, setRequestSettings } = useAppSettings()
   const { loginWithCustomApi } = settings
 
@@ -163,7 +174,7 @@ export function AppLogin({ appName, route, routes }: Props) {
             [api]: { lastUsed: new Date().getTime() },
           },
         })
-        router.push(getRedirectRouteFromQuery(router, routes))
+        router.push(getRedirectRouteFromQuery(searchParams, routes))
         form.reset(defaultValues)
       } else {
         form.setError('password', {
@@ -175,6 +186,7 @@ export function AppLogin({ appName, route, routes }: Props) {
       loginWithCustomApi,
       form,
       router,
+      searchParams,
       routes,
       settings,
       setRequestSettings,
