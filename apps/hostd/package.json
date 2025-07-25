@@ -22,7 +22,7 @@
     "next": "^15.3.5",
     "next-themes": "^0.2.1",
     "react": "^19.1.0",
-    "react-hook-form": "^7.52.0",
+    "react-hook-form": "^7.60.0",
     "swr": "^2.3.2",
     "use-debounce": "^9.0.3",
     "use-local-storage-state": "^19.5.0",

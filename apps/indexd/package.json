@@ -6,6 +6,14 @@
   "license": "MIT",
   "dependencies": {
     "@siafoundation/indexd-types": "0.0.0",
-    "@siafoundation/units": "3.5.1"
+    "@siafoundation/units": "3.5.1",
+    "@siafoundation/design-system": "9.2.0",
+    "@siafoundation/react-icons": "0.3.1",
+    "react-hook-form": "^7.60.0",
+    "react": "^19.1.0",
+    "@siafoundation/types": "0.12.1",
+    "bignumber.js": "9.3.0",
+    "@siafoundation/react-core": "6.0.1",
+    "@siafoundation/indexd-react": "0.0.0"
   }
 }
