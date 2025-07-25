@@ -1,15 +1,15 @@
 import { Button } from '@siafoundation/design-system'
 import { Add16 } from '@siafoundation/react-icons'
 import { useWallets } from '../../contexts/wallets'
-import { useRouter } from 'next/router'
+import { useParams } from 'next/navigation'
 import { useDialog } from '../../contexts/dialog'
 import { AddressesViewDropdownMenu } from './AddressesViewDropdownMenu'
 
 export function AddressesActionsMenu() {
   const { openDialog } = useDialog()
-  const router = useRouter()
   const { wallet } = useWallets()
-  const id = router.query.id as string
+  const params = useParams<{ id: string }>()
+  const id = params.id
   return (
     <div className="flex gap-2">
       <Button

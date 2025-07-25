@@ -3,7 +3,7 @@
 import { Button } from '../../core/Button'
 import { Link } from '../../core/Link'
 import { Tooltip } from '../../core/Tooltip'
-import { usePathname } from '@siafoundation/next'
+import { usePathname } from 'next/navigation'
 
 type Props = {
   title: string

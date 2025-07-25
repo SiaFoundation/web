@@ -1,4 +1,4 @@
-import { Head } from '@siafoundation/next'
+import Head from 'next/head'
 
 type Props = {
   appName: string

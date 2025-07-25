@@ -1,7 +1,7 @@
 'use client'
 
 import { useServerFilters } from '@siafoundation/design-system'
-import { useParams, useAppRouter, usePathname } from '@siafoundation/next'
+import { useParams, useRouter, usePathname } from 'next/navigation'
 import { createContext, useCallback, useContext, useMemo } from 'react'
 import { ExplorerMode } from './types'
 import {
@@ -17,7 +17,7 @@ import { routes } from '../../config/routes'
 import useLocalStorageState from 'use-local-storage-state'
 
 function useFilesManagerMain() {
-  const router = useAppRouter()
+  const router = useRouter()
   const params = useParams<{ bucket?: string; path?: FullPathSegments }>()
   const activeBucketName = params?.bucket
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =

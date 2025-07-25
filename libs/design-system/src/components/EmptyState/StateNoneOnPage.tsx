@@ -1,20 +1,21 @@
+'use client'
+
 import { Button } from '../../core/Button'
 import { Text } from '../../core/Text'
-import { usePagesRouter } from '@siafoundation/next'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { Reset32 } from '@siafoundation/react-icons'
 import { useCallback } from 'react'
 
 export function StateNoneOnPage() {
-  const router = usePagesRouter()
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
   const back = useCallback(() => {
-    router.push({
-      query: {
-        ...router.query,
-        offset: 0,
-        marker: undefined,
-      },
-    })
-  }, [router])
+    const query = new URLSearchParams(searchParams.toString())
+    query.set('offset', '0')
+    query.set('marker', '')
+    router.push(`${pathname}?${query.toString()}`)
+  }, [router, pathname, searchParams])
   return (
     <div className="flex flex-col gap-10 justify-center items-center h-[400px]">
       <Text>

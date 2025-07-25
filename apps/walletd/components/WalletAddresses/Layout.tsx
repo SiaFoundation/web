@@ -7,14 +7,14 @@ import {
 } from '../WalletdAuthedLayout'
 import { WalletdSidenav } from '../WalletdSidenav'
 import { AddressesActionsMenu } from './AddressesActionsMenu'
-import { useRouter } from 'next/router'
+import { useParams } from 'next/navigation'
 import { useWallets } from '../../contexts/wallets'
 import { AddressesFiltersBar } from './AddressesFilterBar'
 
 export const Layout = WalletdAuthedLayout
 export function useLayoutProps(): WalletdAuthedPageLayoutProps {
-  const router = useRouter()
-  const id = router.query.id as string
+  const params = useParams<{ id: string }>()
+  const id = params.id
   const { openDialog } = useDialog()
   const { wallet } = useWallets()
   return {
