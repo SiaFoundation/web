@@ -1,5 +1,16 @@
 # @siafoundation/renterd-react
 
+## 4.15.8
+
+### Patch Changes
+
+- e399659: Updated dependencies.
+- Updated dependencies [ac3b587]
+- Updated dependencies [e399659]
+  - @siafoundation/react-core@7.0.0
+  - @siafoundation/renterd-types@0.17.4
+  - @siafoundation/units@3.5.2
+
 ## 4.15.7
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @siafoundation/units
 
+## 3.5.2
+
+### Patch Changes
+
+- e399659: Updated dependencies.
+- Updated dependencies [e399659]
+  - @siafoundation/explored-types@0.19.2
+  - @siafoundation/types@0.12.2
+
 ## 3.5.1
 
 ### Patch Changes

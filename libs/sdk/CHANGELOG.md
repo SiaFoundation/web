@@ -1,5 +1,13 @@
 # @siafoundation/sdk
 
+## 0.4.3
+
+### Patch Changes
+
+- e399659: Updated dependencies.
+- Updated dependencies [e399659]
+  - @siafoundation/types@0.12.2
+
 ## 0.4.2
 
 ### Patch Changes

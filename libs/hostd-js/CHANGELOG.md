@@ -1,5 +1,14 @@
 # @siafoundation/hostd-js
 
+## 0.5.7
+
+### Patch Changes
+
+- e399659: Updated dependencies.
+- Updated dependencies [e399659]
+  - @siafoundation/hostd-types@0.10.1
+  - @siafoundation/request@0.3.2
+
 ## 0.5.6
 
 ### Patch Changes

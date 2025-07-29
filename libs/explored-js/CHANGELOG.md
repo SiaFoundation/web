@@ -1,5 +1,14 @@
 # @siafoundation/explored-js
 
+## 0.8.2
+
+### Patch Changes
+
+- e399659: Updated dependencies.
+- Updated dependencies [e399659]
+  - @siafoundation/explored-types@0.19.2
+  - @siafoundation/request@0.3.2
+
 ## 0.8.1
 
 ### Patch Changes

@@ -1,11 +1,11 @@
 {
   "name": "@siafoundation/indexd-js",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "SDK for interacting with `indexd`.",
   "license": "MIT",
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@siafoundation/indexd-types": "0.0.0",
-    "@siafoundation/request": "0.3.1"
+    "@siafoundation/indexd-types": "0.1.0",
+    "@siafoundation/request": "0.3.2"
   }
 }

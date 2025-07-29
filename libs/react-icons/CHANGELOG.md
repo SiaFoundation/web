@@ -1,5 +1,11 @@
 # @siafoundation/react-icons
 
+## 0.3.2
+
+### Patch Changes
+
+- e399659: Updated dependencies.
+
 ## 0.3.1
 
 ### Patch Changes

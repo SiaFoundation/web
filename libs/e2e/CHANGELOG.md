@@ -1,5 +1,15 @@
 # @siafoundation/e2e
 
+## 0.6.8
+
+### Patch Changes
+
+- e399659: Updated dependencies.
+- Updated dependencies [ac3b587]
+- Updated dependencies [e399659]
+  - @siafoundation/react-core@7.0.0
+  - @siafoundation/explored-types@0.19.2
+
 ## 0.6.7
 
 ### Patch Changes

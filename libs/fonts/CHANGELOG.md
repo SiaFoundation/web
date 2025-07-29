@@ -1,5 +1,11 @@
 # @siafoundation/fonts
 
+## 0.5.2
+
+### Patch Changes
+
+- e399659: Updated dependencies.
+
 ## 0.5.1
 
 ### Patch Changes
