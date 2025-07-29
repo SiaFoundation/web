@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect, useRef, useCallback, useMemo } from 'react'
+import { useEffect, useRef, useCallback, useMemo, RefObject } from 'react'
 import { GlobeMethods } from 'react-globe.gl'
 import { getHostLabel } from './utils'
-import { useElementSize } from 'usehooks-ts'
+import { useResizeObserver } from 'usehooks-ts'
 import { useTryUntil } from '@siafoundation/react-core'
 import { useExternalExchangeRate } from '@siafoundation/design-system'
 import earthDarkContrast from './assets/earth-dark-contrast.png'
@@ -16,7 +16,7 @@ import { ExplorerPartialHost } from './types'
 export type Commands = {
   moveToLocation: (
     location: [number, number] | undefined,
-    altitude?: number
+    altitude?: number,
   ) => void
 }
 
@@ -62,10 +62,10 @@ export function Globe({
           lng: location[1],
           altitude: altitude || 1.5,
         },
-        700
+        700,
       )
     },
-    []
+    [],
   )
 
   useEffect(() => {
@@ -81,7 +81,7 @@ export function Globe({
       activeHost?.location
         ? [activeHost.location.latitude, activeHost.location.longitude]
         : [48.8323, 2.4075],
-      1.5
+      1.5,
     )
 
     // const directionalLight = globeEl.current
@@ -103,7 +103,10 @@ export function Globe({
 
   const routes = useDecRoutes({ hosts, activeHost })
 
-  const [containerRef, { height, width }] = useElementSize()
+  const containerRef = useRef<HTMLDivElement>(null)
+  const { height, width } = useResizeObserver({
+    ref: containerRef as RefObject<HTMLDivElement>,
+  })
 
   const points = useMemo(() => hosts || [], [hosts])
 
