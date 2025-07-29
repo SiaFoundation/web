@@ -1,5 +1,14 @@
 # @siafoundation/renterd-js
 
+## 0.14.7
+
+### Patch Changes
+
+- e399659: Updated dependencies.
+- Updated dependencies [e399659]
+  - @siafoundation/renterd-types@0.17.4
+  - @siafoundation/request@0.3.2
+
 ## 0.14.6
 
 ### Patch Changes

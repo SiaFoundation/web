@@ -1,5 +1,15 @@
 # @siafoundation/renterd-types
 
+## 0.17.4
+
+### Patch Changes
+
+- e399659: Updated dependencies.
+- Updated dependencies [ac3b587]
+- Updated dependencies [e399659]
+  - @siafoundation/react-core@7.0.0
+  - @siafoundation/types@0.12.2
+
 ## 0.17.3
 
 ### Patch Changes

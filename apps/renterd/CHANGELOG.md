@@ -1,5 +1,22 @@
 # renterd
 
+## 0.84.1
+
+### Patch Changes
+
+- Updated dependencies [ac3b587]
+- Updated dependencies [e399659]
+  - @siafoundation/design-system@10.0.0
+  - @siafoundation/react-core@7.0.0
+  - @siafoundation/explored-types@0.19.2
+  - @siafoundation/fonts@0.5.2
+  - @siafoundation/react-icons@0.3.2
+  - @siafoundation/renterd-js@0.14.7
+  - @siafoundation/renterd-react@4.15.8
+  - @siafoundation/renterd-types@0.17.4
+  - @siafoundation/types@0.12.2
+  - @siafoundation/units@3.5.2
+
 ## 0.84.0
 
 ### Minor Changes

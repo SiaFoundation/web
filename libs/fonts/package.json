@@ -1,6 +1,6 @@
 {
   "name": "@siafoundation/fonts",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Next font configuration for use across apps.",
   "license": "MIT",
   "types": "./src/index.d.ts",

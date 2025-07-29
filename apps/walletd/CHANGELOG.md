@@ -1,5 +1,22 @@
 # walletd
 
+## 0.34.1
+
+### Patch Changes
+
+- 12c578b: Move the auth and connectivity route to /wallets so that consensus and syncer routes can be made public without affecting the UI.
+- Updated dependencies [ac3b587]
+- Updated dependencies [e399659]
+  - @siafoundation/design-system@10.0.0
+  - @siafoundation/react-core@7.0.0
+  - @siafoundation/fonts@0.5.2
+  - @siafoundation/react-icons@0.3.2
+  - @siafoundation/sdk@0.4.3
+  - @siafoundation/types@0.12.2
+  - @siafoundation/units@3.5.2
+  - @siafoundation/walletd-react@4.5.4
+  - @siafoundation/walletd-types@0.7.3
+
 ## 0.34.0
 
 ### Minor Changes

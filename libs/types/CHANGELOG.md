@@ -1,5 +1,11 @@
 # @siafoundation/types
 
+## 0.12.2
+
+### Patch Changes
+
+- e399659: Updated dependencies.
+
 ## 0.12.1
 
 ### Patch Changes

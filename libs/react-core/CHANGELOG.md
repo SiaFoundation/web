@@ -1,5 +1,18 @@
 # @siafoundation/react-core
 
+## 7.0.0
+
+### Major Changes
+
+- ac3b587: Migrate all router usage to next/nagivation.
+
+### Patch Changes
+
+- e399659: Updated dependencies.
+- Updated dependencies [e399659]
+  - @siafoundation/request@0.3.2
+  - @siafoundation/types@0.12.2
+
 ## 6.0.1
 
 ### Patch Changes
