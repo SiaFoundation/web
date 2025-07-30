@@ -232,14 +232,14 @@ export function WalletAddressesGenerateLedgerDialog({
         return newIndices
       })
     },
-    [setIndicies]
+    [setIndicies],
   )
 
   const indiciesWithAddresses = useMemo(() => {
     const indiciesWithAddresses: Record<string, AddressMeta> = {}
     for (const [index, { address, publicKey }] of Object.entries(indices)) {
       const existing = existingAddresses?.find(
-        (a) => a.metadata.index === Number(index)
+        (a) => a.metadata.index === Number(index),
       )
       indiciesWithAddresses[index] = {
         isNew: !existing,
@@ -256,7 +256,7 @@ export function WalletAddressesGenerateLedgerDialog({
       Object.entries(indiciesWithAddresses)
         .filter(([index, item]) => item.isNew && item.address)
         .map(([index, item]) => item),
-    [indiciesWithAddresses]
+    [indiciesWithAddresses],
   )
 
   const saveAddresses = useCallback(async () => {
@@ -327,7 +327,7 @@ export function WalletAddressesGenerateLedgerDialog({
       await triggerRescan(values)
       closeAndReset()
     },
-    [newGeneratedAddresses, saveAddresses, closeAndReset, triggerRescan]
+    [newGeneratedAddresses, saveAddresses, closeAndReset, triggerRescan],
   )
 
   return (
@@ -355,7 +355,7 @@ export function WalletAddressesGenerateLedgerDialog({
                 ? `Save ${pluralize(
                     newGeneratedAddresses.length,
                     'address',
-                    'addresses'
+                    'addresses',
                   )}${shouldRescan ? ' and rescan' : ''}`
                 : 'Rescan'}
             </FormSubmitButton>
@@ -395,7 +395,7 @@ export function WalletAddressesGenerateLedgerDialog({
                   index={Number(index)}
                   remove={() => removeIndex(Number(index))}
                 />
-              )
+              ),
             )}
           </div>
         </div>

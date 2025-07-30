@@ -45,7 +45,7 @@ export function BalanceEvolution({
               color: colors.accentdark[800],
             },
           },
-    [resolvedTheme]
+    [resolvedTheme],
   )
 
   const chart = useMemo<Chart<Key, never>>(() => {

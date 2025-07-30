@@ -16,7 +16,7 @@ export type RequestConfig<Payload, Result> = {
 
 export type HookArgsSwr<
   Params extends RequestParams,
-  Result
+  Result,
 > = Params extends void
   ? {
       api?: string
@@ -32,7 +32,7 @@ export type HookArgsSwr<
 
 export type InternalHookArgsSwr<
   Params extends RequestParams,
-  Result
+  Result,
 > = HookArgsSwr<Params, Result> & {
   route: string
   config?: RequestConfig<void, Result>
@@ -41,7 +41,7 @@ export type InternalHookArgsSwr<
 export type HookArgsWithPayloadSwr<
   Params extends RequestParams,
   Payload,
-  Result
+  Result,
 > = Params extends void
   ? Payload extends void
     ? {
@@ -56,24 +56,24 @@ export type HookArgsWithPayloadSwr<
         disabled?: boolean
       }
   : Payload extends void
-  ? {
-      params: Params
-      api?: string
-      config?: RequestConfig<void, Result>
-      disabled?: boolean
-    }
-  : {
-      params: Params
-      payload: Payload
-      api?: string
-      config?: RequestConfig<void, Result>
-      disabled?: boolean
-    }
+    ? {
+        params: Params
+        api?: string
+        config?: RequestConfig<void, Result>
+        disabled?: boolean
+      }
+    : {
+        params: Params
+        payload: Payload
+        api?: string
+        config?: RequestConfig<void, Result>
+        disabled?: boolean
+      }
 
 export type InternalHookArgsWithPayloadSwr<
   Params extends RequestParams,
   Payload,
-  Result
+  Result,
 > = HookArgsWithPayloadSwr<Params, Payload, Result> & {
   route: string
   config?: RequestConfig<void, Result>
@@ -89,7 +89,7 @@ export type HookArgsCallback<Params extends RequestParams, Payload, Result> = {
 export type InternalHookArgsCallback<
   Params extends RequestParams,
   Payload,
-  Result
+  Result,
 > = HookArgsCallback<Params, Payload, Result> & {
   route: string
   defaultParams?: Params
@@ -97,7 +97,7 @@ export type InternalHookArgsCallback<
 
 export type InternalHookArgs<
   Params extends RequestParams,
-  Result
+  Result,
 > = Params extends void
   ? {
       api?: string
@@ -116,7 +116,7 @@ export type InternalHookArgs<
 export type InternalCallbackArgs<
   Params extends RequestParams,
   Payload,
-  Result
+  Result,
 > = Params extends void
   ? Payload extends void
     ? {
@@ -129,24 +129,24 @@ export type InternalCallbackArgs<
         config?: RequestConfig<Payload, Result>
       }
   : Payload extends void
-  ? {
-      params: Params
-      api?: string
-      config?: RequestConfig<Payload, Result>
-    }
-  : {
-      params: Params
-      payload: Payload
-      api?: string
-      config?: RequestConfig<Payload, Result>
-    }
+    ? {
+        params: Params
+        api?: string
+        config?: RequestConfig<Payload, Result>
+      }
+    : {
+        params: Params
+        payload: Payload
+        api?: string
+        config?: RequestConfig<Payload, Result>
+      }
 
 export function mergeInternalHookArgsCallback<
   Params extends RequestParams,
   Payload,
-  Result
+  Result,
 >(
-  args: InternalHookArgsCallback<Params, Payload, Result>
+  args: InternalHookArgsCallback<Params, Payload, Result>,
 ): InternalHookArgsCallback<Params, Payload, Result> {
   return {
     ...args,
@@ -157,7 +157,7 @@ export function mergeInternalHookArgsCallback<
 }
 
 export function mergeInternalHookArgsSwr<Params extends RequestParams, Result>(
-  args: InternalHookArgsSwr<Params, Result>
+  args: InternalHookArgsSwr<Params, Result>,
 ): InternalHookArgsSwr<Params, Result> {
   return {
     ...args,
@@ -170,9 +170,9 @@ export function mergeInternalHookArgsSwr<Params extends RequestParams, Result>(
 export function mergeInternalCallbackArgs<
   Params extends RequestParams,
   Payload,
-  Result
+  Result,
 >(
-  args: InternalCallbackArgs<Params, Payload, Result>
+  args: InternalCallbackArgs<Params, Payload, Result>,
 ): InternalCallbackArgs<Params, Payload, Result> {
   return {
     ...args,
@@ -196,7 +196,7 @@ function getApi(
         api?: string
       }
     | undefined,
-  callArgs: { api?: string } | undefined
+  callArgs: { api?: string } | undefined,
 ): string {
   return callArgs?.api || hookArgs?.api || requestSettings.api
 }
@@ -204,7 +204,7 @@ function getApi(
 function buildHeaders<Params extends RequestParams, Payload, Result>(
   settings: RequestSettings,
   configArgs: InternalHookArgsCallback<Params, Payload, Result>,
-  callArgs: InternalCallbackArgs<Params, Payload, Result> | undefined
+  callArgs: InternalCallbackArgs<Params, Payload, Result> | undefined,
 ) {
   const headers: RawAxiosRequestHeaders = {
     'Content-Type': 'application/json',
@@ -222,7 +222,7 @@ function buildHeaders<Params extends RequestParams, Payload, Result>(
 export function buildAxiosConfig<Params extends RequestParams, Payload, Result>(
   settings: RequestSettings,
   configArgs: InternalHookArgsCallback<Params, Payload, Result>,
-  callArgs: InternalCallbackArgs<Params, Payload, Result> | undefined
+  callArgs: InternalCallbackArgs<Params, Payload, Result> | undefined,
 ) {
   const headers = buildHeaders(settings, configArgs, callArgs)
   return {
@@ -236,7 +236,7 @@ export function buildAxiosConfig<Params extends RequestParams, Payload, Result>(
 export function buildRouteWithParams<
   Params extends RequestParams,
   Payload,
-  Result
+  Result,
 >(
   settings: RequestSettings,
   route: string,
@@ -246,7 +246,7 @@ export function buildRouteWithParams<
         params?: Params
       }
     | undefined,
-  callArgs: InternalCallbackArgs<Params, Payload, Result> | undefined
+  callArgs: InternalCallbackArgs<Params, Payload, Result> | undefined,
 ): string {
   let params = hookArgs?.params || {}
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -277,7 +277,7 @@ export function getRouteFromKey(
         api?: string
       }
     | undefined,
-  callArgs: { api?: string } | undefined
+  callArgs: { api?: string } | undefined,
 ): string {
   const api = getApi(settings, hookArgs, callArgs)
   if (api === settings.api) {
@@ -290,8 +290,8 @@ export type After<Params extends RequestParams, Payload, Result> = (
   mutate: <T>(
     matcher: (key: string) => boolean,
     data?: T | Promise<T> | MutatorCallback<T>,
-    opts?: boolean | MutatorOptions<T>
+    opts?: boolean | MutatorOptions<T>,
   ) => Promise<(T | undefined)[]>,
   args: InternalCallbackArgs<Params, Payload, Result>,
-  response: AxiosResponse<Result, void>
+  response: AxiosResponse<Result, void>,
 ) => Promise<void>

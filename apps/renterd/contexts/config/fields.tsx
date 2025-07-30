@@ -179,9 +179,9 @@ export function getFields({
             .toNumber()
             .toLocaleString()} which is ${toFixedMaxString(
             new BigNumber(
-              hoursInDays(advancedDefaults?.maxDowntimeHours.toNumber())
+              hoursInDays(advancedDefaults?.maxDowntimeHours.toNumber()),
             ),
-            1
+            1,
           )} days.`
         : undefined,
       hidden: configViewMode === 'basic',
@@ -235,7 +235,7 @@ export function getFields({
             (value: Maybe<string>) => {
               const regex = /^\d+\.\d+\.\d+$/
               return regex.test(value || '') || 'must be a valid version number'
-            }
+            },
           ),
         },
       },
@@ -312,19 +312,19 @@ export function getFields({
                 return true
               }
               return !!value || 'required'
-            }
+            },
           ),
           currency: requiredIfPinningEnabled(
             'shouldPinMaxStoragePrice',
             (_, values) =>
-              !!values.pinnedCurrency || 'must select a pinned currency'
+              !!values.pinnedCurrency || 'must select a pinned currency',
           ),
           range: requiredIfPinningEnabled(
             'shouldPinMaxStoragePrice',
             (value: Maybe<BigNumber>, values) =>
               !values.shouldPinMaxStoragePrice ||
               value?.gt(0) ||
-              'must be greater than 0'
+              'must be greater than 0',
           ),
         },
       },
@@ -382,19 +382,19 @@ export function getFields({
                 return true
               }
               return !!value || 'required'
-            }
+            },
           ),
           currency: requiredIfPinningEnabled(
             'shouldPinMaxUploadPrice',
             (_, values) =>
-              !!values.pinnedCurrency || 'must select a pinned currency'
+              !!values.pinnedCurrency || 'must select a pinned currency',
           ),
           range: requiredIfPinningEnabled(
             'shouldPinMaxUploadPrice',
             (value: Maybe<BigNumber>, values) =>
               !values.shouldPinMaxUploadPrice ||
               value?.gt(0) ||
-              'must be greater than 0'
+              'must be greater than 0',
           ),
         },
       },
@@ -452,19 +452,19 @@ export function getFields({
                 return true
               }
               return !!value || 'required'
-            }
+            },
           ),
           currency: requiredIfPinningEnabled(
             'shouldPinMaxDownloadPrice',
             (_, values) =>
-              !!values.pinnedCurrency || 'must select a pinned currency'
+              !!values.pinnedCurrency || 'must select a pinned currency',
           ),
           range: requiredIfPinningEnabled(
             'shouldPinMaxDownloadPrice',
             (value: Maybe<BigNumber>, values) =>
               !values.shouldPinMaxDownloadPrice ||
               value?.gt(0) ||
-              'must be greater than 0'
+              'must be greater than 0',
           ),
         },
       },
@@ -559,7 +559,7 @@ export function getFields({
               return (
                 new BigNumber(value || 0).gte(3) || 'must be at least 3 blocks'
               )
-            }
+            },
           ),
         },
       },
@@ -586,7 +586,7 @@ export function getFields({
                 new BigNumber(value || 0).gte(secondsInMinutes(10)) ||
                 'must be at least 10 seconds'
               )
-            }
+            },
           ),
         },
       },
@@ -617,7 +617,7 @@ export function getFields({
                 new BigNumber(value || 0).gte(hoursInDays(1)) ||
                 'must be at least 1 hour'
               )
-            }
+            },
           ),
         },
       },
@@ -644,7 +644,7 @@ export function getFields({
             validationContext,
             (value: Maybe<BigNumber>) => {
               return new BigNumber(value || 0).gte(1) || 'must be at least 1 SC'
-            }
+            },
           ),
         },
       },
@@ -667,7 +667,7 @@ export function getFields({
             validationContext,
             (value: Maybe<BigNumber>) => {
               return new BigNumber(value || 0).gt(0) || 'must be greater than 0'
-            }
+            },
           ),
         },
       },
@@ -689,12 +689,12 @@ export function getFields({
             validationContext,
             (value: Maybe<BigNumber>, values) =>
               new BigNumber(value || 0).gte(values.minShards || 0) ||
-              'must be at least equal to min shards'
+              'must be at least equal to min shards',
           ),
           max: requiredIfAdvanced(
             validationContext,
             (value: Maybe<BigNumber>) =>
-              new BigNumber(value || 0).lt(256) || 'must be less than 256'
+              new BigNumber(value || 0).lt(256) || 'must be less than 256',
           ),
         },
       },
@@ -757,8 +757,8 @@ function requiredIfAdvanced(
   method?: (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     value: any,
-    values: InputValues
-  ) => string | boolean
+    values: InputValues,
+  ) => string | boolean,
 ) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (value: any, values: InputValues) => {
@@ -780,7 +780,7 @@ type ShouldPinField =
 function requiredIfPinningEnabled(
   field: ShouldPinField,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  method?: (value: any, values: InputValues) => string | boolean
+  method?: (value: any, values: InputValues) => string | boolean,
 ) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (value: any, values: InputValues) => {

@@ -13,7 +13,7 @@ export function useBusSdk() {
       Bus({
         api: `${api}/api`,
         password,
-      })
+      }),
     )
   }, [api, password])
 

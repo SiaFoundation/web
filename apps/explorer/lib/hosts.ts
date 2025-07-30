@@ -32,15 +32,15 @@ function rankHosts(hosts: ExplorerHost[] | undefined) {
         ...hosts.map((h) =>
           h.v2
             ? Number(h.v2Settings.prices.egressPrice)
-            : Number(h.settings.downloadbandwidthprice)
-        )
+            : Number(h.settings.downloadbandwidthprice),
+        ),
       ),
       max: Math.max(
         ...hosts.map((h) =>
           h.v2
             ? Number(h.v2Settings.prices.egressPrice)
-            : Number(h.settings.downloadbandwidthprice)
-        )
+            : Number(h.settings.downloadbandwidthprice),
+        ),
       ),
     },
     uploadPrice: {
@@ -48,15 +48,15 @@ function rankHosts(hosts: ExplorerHost[] | undefined) {
         ...hosts.map((h) =>
           h.v2
             ? Number(h.v2Settings.prices.ingressPrice)
-            : Number(h.settings.uploadbandwidthprice)
-        )
+            : Number(h.settings.uploadbandwidthprice),
+        ),
       ),
       max: Math.max(
         ...hosts.map((h) =>
           h.v2
             ? Number(h.v2Settings.prices.ingressPrice)
-            : Number(h.settings.uploadbandwidthprice)
-        )
+            : Number(h.settings.uploadbandwidthprice),
+        ),
       ),
     },
     storagePrice: {
@@ -64,15 +64,15 @@ function rankHosts(hosts: ExplorerHost[] | undefined) {
         ...hosts.map((h) =>
           h.v2
             ? Number(h.v2Settings.prices.storagePrice)
-            : Number(h.settings.storageprice)
-        )
+            : Number(h.settings.storageprice),
+        ),
       ),
       max: Math.max(
         ...hosts.map((h) =>
           h.v2
             ? Number(h.v2Settings.prices.storagePrice)
-            : Number(h.settings.storageprice)
-        )
+            : Number(h.settings.storageprice),
+        ),
       ),
     },
     usedStorage: {
@@ -85,7 +85,7 @@ function rankHosts(hosts: ExplorerHost[] | undefined) {
             : sectorsToBytes(h.settings.totalstorage)
                 .minus(sectorsToBytes(h.settings.remainingstorage))
                 .toNumber()
-        })
+        }),
       ),
       max: Math.max(
         ...hosts.map((h) => {
@@ -96,7 +96,7 @@ function rankHosts(hosts: ExplorerHost[] | undefined) {
             : sectorsToBytes(h.settings.totalstorage)
                 .minus(sectorsToBytes(h.settings.remainingstorage))
                 .toNumber()
-        })
+        }),
       ),
     },
   }
@@ -107,7 +107,7 @@ function rankHosts(hosts: ExplorerHost[] | undefined) {
         new Date(host.knownSince).getTime(),
         ranges.age.min,
         ranges.age.max,
-        true
+        true,
       )
 
       const uptimePct =
@@ -146,21 +146,21 @@ function rankHosts(hosts: ExplorerHost[] | undefined) {
             downloadPrice,
             ranges.downloadPrice.min,
             ranges.downloadPrice.max,
-            true
+            true,
           ) +
         weights.uploadPrice *
           normalize(
             uploadPrice,
             ranges.uploadPrice.min,
             ranges.uploadPrice.max,
-            true
+            true,
           ) +
         weights.storagePrice *
           normalize(
             storagePrice,
             ranges.storagePrice.min,
             ranges.storagePrice.max,
-            true
+            true,
           ) +
         weights.usedStorage *
           normalize(usedStorage, ranges.usedStorage.min, ranges.usedStorage.max)
@@ -176,11 +176,11 @@ export async function getTopHosts(exploredAddress: string) {
     explored.hostsList({
       params: { sortBy: 'date_created', dir: 'asc', limit: 500 },
       data: { online: true, acceptContracts: true },
-    })
+    }),
   )
   if (hostsError)
     throw new Error(
-      'Error from getTopHosts /hosts request: ' + hostsError.message
+      'Error from getTopHosts /hosts request: ' + hostsError.message,
     )
   if (!hosts) throw new Error('No hosts found from getTopHosts /hosts request')
 

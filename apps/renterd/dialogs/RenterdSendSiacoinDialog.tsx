@@ -21,7 +21,7 @@ export function RenterdSendSiacoinDialog() {
         ? // This is the same estimated fee calculation that happens in the daemon.
           new BigNumber(recommendedFee.data).times(standardTxnSize)
         : new BigNumber(0),
-    [recommendedFee.data]
+    [recommendedFee.data],
   )
 
   const walletSend = useWalletSend()
@@ -51,7 +51,7 @@ export function RenterdSendSiacoinDialog() {
         transactionId: response.data,
       }
     },
-    [walletSend]
+    [walletSend],
   )
 
   return (

@@ -31,15 +31,15 @@ type SimpleScaleConfig = { type: 'band' | 'linear'; paddingInner?: number }
 export function useChartXY<Key extends string, Cat extends string>(
   id: string,
   chartData: ChartData<Key>,
-  config: ChartConfig<Key, Cat>
+  config: ChartConfig<Key, Cat>,
 ) {
   const [useAnimatedComponents, setUseAnimatedComponents] = useState(
-    !usePrefersReducedMotion() && !config.disableAnimations
+    !usePrefersReducedMotion() && !config.disableAnimations,
   )
   const { resolvedTheme } = useTheme()
   const theme = useMemo(
     () => (resolvedTheme === 'dark' ? darkTheme : lightTheme),
-    [resolvedTheme]
+    [resolvedTheme],
   )
   const [animationTrajectory, setAnimationTrajectory] = useState<
     AnimationTrajectory | undefined
@@ -66,19 +66,19 @@ export function useChartXY<Key extends string, Cat extends string>(
     `${id}/chartType`,
     {
       defaultValue: config.chartType || defaultChartType,
-    }
+    },
   )
   const [curveType, setCurveType] = useLocalStorageState<CurveType>(
     `${id}/curveType`,
     {
       defaultValue: config.curveType || defaultCurveType,
-    }
+    },
   )
   const [stackOffset, setStackOffset] = useLocalStorageState<StackOffset>(
     `${id}/stackOffset`,
     {
       defaultValue: config.stackOffset || defaultStackOffset,
-    }
+    },
   )
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -149,7 +149,7 @@ export function useChartXY<Key extends string, Cat extends string>(
         </text>
       )
     },
-    [tooltipGlyphComponent, glyphOutline]
+    [tooltipGlyphComponent, glyphOutline],
   )
 
   const data = useMemo(() => {
@@ -186,7 +186,7 @@ export function useChartXY<Key extends string, Cat extends string>(
 
   const keys = useMemo(
     () => Object.keys(omit(chartData[0], 'timestamp')) as Key[],
-    [chartData]
+    [chartData],
   )
 
   const enabledGraph = useMemo(() => {
@@ -204,18 +204,18 @@ export function useChartXY<Key extends string, Cat extends string>(
           ...acc,
           [key]: (d: ChartPoint<Key>) => d.timestamp,
         }),
-        {} as Record<string, (d: ChartPoint<Key>) => number>
+        {} as Record<string, (d: ChartPoint<Key>) => number>,
       ),
       y: keys.reduce(
         (acc, key) => ({
           ...acc,
           [key]: (d: ChartPoint<Key>) => d[key],
         }),
-        {} as Record<string, (d: ChartPoint<Key>) => number>
+        {} as Record<string, (d: ChartPoint<Key>) => number>,
       ),
       date: (d: ChartPoint<Key>) => d.timestamp,
     }),
-    [keys]
+    [keys],
   )
 
   const scales = useMemo(
@@ -226,7 +226,7 @@ export function useChartXY<Key extends string, Cat extends string>(
       } as SimpleScaleConfig,
       y: { type: 'linear' } as SimpleScaleConfig,
     }),
-    [isLine]
+    [isLine],
   )
 
   const curve = useMemo(
@@ -234,7 +234,7 @@ export function useChartXY<Key extends string, Cat extends string>(
       (curveType === 'cardinal' && curveCardinal) ||
       (curveType === 'step' && curveStep) ||
       curveLinear,
-    [curveType]
+    [curveType],
   )
 
   const margin = useMemo(
@@ -244,7 +244,7 @@ export function useChartXY<Key extends string, Cat extends string>(
       right: yAxisOrientation === 'right' ? 60 : 0,
       left: yAxisOrientation === 'left' ? 60 : 0,
     }),
-    [xAxisOrientation, yAxisOrientation]
+    [xAxisOrientation, yAxisOrientation],
   )
 
   return {

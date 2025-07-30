@@ -9,7 +9,7 @@ import {
 
 export function FieldTextArea<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   name,
   form,
@@ -37,8 +37,8 @@ export function FieldTextArea<
         error
           ? 'invalid'
           : getFormStateFieldBoolean(form.formState.dirtyFields, name)
-          ? 'valid'
-          : 'default'
+            ? 'valid'
+            : 'default'
       }
       onChange={onChange}
       onBlur={onBlur}

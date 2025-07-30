@@ -27,7 +27,7 @@ export function BulkRescanHosts<T extends MultiSelectRow>({
           payload: {
             timeout: secondsInMilliseconds(30),
           },
-        })
+        }),
       ),
       {
         toastError: ({ successCount, errorCount, totalCount }) => ({
@@ -40,7 +40,7 @@ export function BulkRescanHosts<T extends MultiSelectRow>({
         after: () => {
           multiSelect.deselectAll()
         },
-      }
+      },
     )
   }, [multiSelect, publicKeys, scan])
 

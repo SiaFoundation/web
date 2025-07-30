@@ -9,7 +9,7 @@ test('storage fiat', () => {
     getStorageCost({
       exchange: { currency: { prefix: '$' }, rate: '2' },
       price: (1e9).toString(),
-    })
+    }),
   ).toEqual('$8.64/TB')
 })
 

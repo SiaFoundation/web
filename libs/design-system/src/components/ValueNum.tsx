@@ -31,8 +31,8 @@ export function ValueNum({
       ? value.isGreaterThan(0)
         ? 'green'
         : value.isLessThan(0)
-        ? 'red'
-        : 'subtle'
+          ? 'red'
+          : 'subtle'
       : 'contrast'
 
   return (

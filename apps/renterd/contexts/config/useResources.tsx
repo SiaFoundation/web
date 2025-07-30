@@ -88,7 +88,7 @@ export function useResources() {
       pinned.error,
       upload.data,
       upload.error,
-    ]
+    ],
   )
 
   return {

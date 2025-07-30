@@ -39,7 +39,7 @@ export function FilesCreateDirectoryDialog({
     onSubmit: async (values, actions) => {
       const response = await upload.put({
         params: bucketAndKeyParamsFromPath(
-          activeDirectoryPath + values.name + '/'
+          activeDirectoryPath + values.name + '/',
         ),
         // @ts-expect-error TODO: fix types
         payload: null,

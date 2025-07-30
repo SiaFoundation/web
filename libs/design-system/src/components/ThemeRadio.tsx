@@ -22,7 +22,7 @@ function RadioCard({
         'focus:ring ring-blue-500 dark:ring-blue-200',
         'text-gray-700 dark:text-graydark-700',
         'data-[state=checked]:text-gray-1100 data-[state=checked]:dark:text-white',
-        className
+        className,
       )}
     />
   )

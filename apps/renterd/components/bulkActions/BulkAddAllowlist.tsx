@@ -28,7 +28,7 @@ export function BulkAddAllowlist({
         openConfirmDialog({
           title: `Add ${pluralize(
             multiSelect.selectionCount,
-            'host'
+            'host',
           )} to allowlist`,
           action: 'Add to allowlist',
           variant: 'accent',

@@ -110,7 +110,7 @@ export function useFundV1() {
         }
       }
     },
-    [walletFundSc, walletFundSf, walletId]
+    [walletFundSc, walletFundSf, walletId],
   )
 
   return fund

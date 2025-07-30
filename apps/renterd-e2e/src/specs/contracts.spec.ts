@@ -108,7 +108,7 @@ test('contracts bulk allowlist', async ({ page }) => {
   await expect(dialog.getByText('The blocklist is empty')).toBeVisible()
   await dialog.getByLabel('view allowlist').click()
   await expect(
-    dialog.getByTestId('allowlistPublicKeys').getByTestId('item')
+    dialog.getByTestId('allowlistPublicKeys').getByTestId('item'),
   ).toHaveCount(3)
   await dialog.getByLabel('close').click()
 

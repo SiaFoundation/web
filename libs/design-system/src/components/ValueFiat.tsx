@@ -42,18 +42,18 @@ export function ValueFiat({
   const sign = sc.isZero()
     ? ''
     : sc.isGreaterThan(0) && variant === 'change'
-    ? '+'
-    : sc.isLessThan(0)
-    ? '-'
-    : ''
+      ? '+'
+      : sc.isLessThan(0)
+        ? '-'
+        : ''
   const color =
     customColor ||
     (variant === 'change'
       ? sc.isGreaterThan(0)
         ? 'green'
         : sc.isLessThan(0)
-        ? 'red'
-        : 'subtle'
+          ? 'red'
+          : 'subtle'
       : 'contrast')
 
   if (!rate || !currency) {
@@ -75,7 +75,7 @@ export function ValueFiat({
     >
       {`${sign}${currency.prefix}${formatBigNumberLocale(
         fiat.absoluteValue(),
-        digits
+        digits,
       )}${extendedSuffix ? extendedSuffix : ''}`}
     </Text>
   )
@@ -88,7 +88,7 @@ export function ValueFiat({
           (tooltip ? `${tooltip} ` : '') +
           `${sign}${currency.prefix}${formatBigNumberLocale(
             fiat.absoluteValue(),
-            fixedTip
+            fixedTip,
           )}${extendedSuffix ? extendedSuffix : ''}`
         }
       >
@@ -106,7 +106,7 @@ function formatBigNumberLocale(bigNumber: BigNumber, fixed: number): string {
 
   // Format the integer part using the locale
   const formattedIntegerPart = new Intl.NumberFormat().format(
-    parseInt(integerPart)
+    parseInt(integerPart),
   )
 
   // Return the formatted number with the original decimal part

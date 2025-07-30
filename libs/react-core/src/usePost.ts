@@ -25,7 +25,7 @@ import { useRequestSettings } from './appSettings/useRequestSettings'
 import { buildMutateMatcherFn } from './mutate'
 
 export function usePostSwr<Params extends RequestParams, Payload, Result>(
-  args: InternalHookArgsWithPayloadSwr<Params, Payload, Result>
+  args: InternalHookArgsWithPayloadSwr<Params, Payload, Result>,
 ) {
   const hookArgs: InternalHookArgsSwr<
     Record<string, string | number | boolean | string[]>,
@@ -37,16 +37,16 @@ export function usePostSwr<Params extends RequestParams, Payload, Result>(
     requestSettings,
     hookArgs.route,
     hookArgs,
-    undefined
+    undefined,
   )
   const key = useMemo(
     () =>
       keyOrNull(
         getKey('post', reqRoute, args as { payload: Payload }),
         hookArgs.disabled ||
-          (passwordProtectRequestHooks && !requestSettings.password)
+          (passwordProtectRequestHooks && !requestSettings.password),
       ),
-    [reqRoute, args, hookArgs, passwordProtectRequestHooks, requestSettings]
+    [reqRoute, args, hookArgs, passwordProtectRequestHooks, requestSettings],
   )
   return useSWR<Result, SWRError>(
     key,
@@ -63,7 +63,7 @@ export function usePostSwr<Params extends RequestParams, Payload, Result>(
           reqRoute,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (args as any).payload,
-          reqConfig
+          reqConfig,
         )
         return response.data
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -74,19 +74,19 @@ export function usePostSwr<Params extends RequestParams, Payload, Result>(
         throw error
       }
     },
-    hookArgs.config?.swr
+    hookArgs.config?.swr,
   )
 }
 
 type PostFunc<Params extends RequestParams, Payload, Result> = {
   post: (
-    args: InternalCallbackArgs<Params, Payload, Result>
+    args: InternalCallbackArgs<Params, Payload, Result>,
   ) => Promise<Response<Result>>
 }
 
 export function usePostFunc<Params extends RequestParams, Payload, Result>(
   args: InternalHookArgsCallback<Params, Payload, Result>,
-  after?: After<Params, Payload, Result>
+  after?: After<Params, Payload, Result>,
 ): PostFunc<Params, Payload, Result> {
   const { setWorkflow, removeWorkflow } = useWorkflows()
   const { mutate } = useSWRConfig()
@@ -101,7 +101,7 @@ export function usePostFunc<Params extends RequestParams, Payload, Result>(
           requestSettings,
           hookArgs.route,
           hookArgs,
-          callArgs
+          callArgs,
         )
         if (!reqRoute) {
           throw Error('No route')
@@ -118,7 +118,7 @@ export function usePostFunc<Params extends RequestParams, Payload, Result>(
           key,
           args,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          callArgs as any
+          callArgs as any,
         )
 
         const workflowKey = key.join('')
@@ -137,10 +137,10 @@ export function usePostFunc<Params extends RequestParams, Payload, Result>(
                 callArgs,
                 matcher,
                 data,
-                opts
+                opts,
               ),
             callArgs,
-            response
+            response,
           )
         }
         removeWorkflow(workflowKey)

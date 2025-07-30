@@ -96,19 +96,19 @@ export function DebugDialog({ trigger, open, onOpenChange }: Props) {
       if (values.contractSettings) {
         zip.file(
           'contractSettings.json',
-          JSON.stringify(contractSettings.data, null, 2)
+          JSON.stringify(contractSettings.data, null, 2),
         )
       }
       if (values.hostSettings) {
         zip.file(
           'hostSettings.json',
-          JSON.stringify(hostSettings.data, null, 2)
+          JSON.stringify(hostSettings.data, null, 2),
         )
       }
       if (values.pricePinningSettings) {
         zip.file(
           'pricePinningSettings.json',
-          JSON.stringify(pricePinningSettings.data, null, 2)
+          JSON.stringify(pricePinningSettings.data, null, 2),
         )
       }
       if (values.contracts) {
@@ -124,7 +124,7 @@ export function DebugDialog({ trigger, open, onOpenChange }: Props) {
       if (values.openGithub) {
         window.open(
           'https://github.com/SiaFoundation/indexd/issues/new?template=bug_report.yml',
-          '_blank'
+          '_blank',
         )
       }
     },
@@ -133,7 +133,7 @@ export function DebugDialog({ trigger, open, onOpenChange }: Props) {
       contractSettings.data,
       hostSettings.data,
       pricePinningSettings.data,
-    ]
+    ],
   )
 
   const fields = useMemo(() => getFields(), [])

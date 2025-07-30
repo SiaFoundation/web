@@ -5,7 +5,7 @@ export function getHostNetAddress(host: ExplorerHost) {
 
   if (host.v2) {
     netAddress = host.v2NetAddresses.find(
-      (address) => address.protocol === 'siamux'
+      (address) => address.protocol === 'siamux',
     )?.address
   } else {
     netAddress = host.settings.netaddress

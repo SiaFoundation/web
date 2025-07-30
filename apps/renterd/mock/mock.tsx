@@ -13,7 +13,7 @@ export function mockApiBusBuckets(server: SetupServer) {
           },
         },
       ] as Bucket[])
-    })
+    }),
   )
 }
 
@@ -30,7 +30,7 @@ export function mockApiBusSettingsUpload(server: SetupServer) {
           totalShards: 30,
         },
       } as SettingsUpload)
-    })
+    }),
   )
 }
 

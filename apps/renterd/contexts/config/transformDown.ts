@@ -29,7 +29,7 @@ import {
 
 // down
 export function transformDownAutopilot(
-  config?: AutopilotConfig
+  config?: AutopilotConfig,
 ): InputValuesAutopilot {
   if (!config) {
     return inputValuesAutopilot
@@ -38,25 +38,25 @@ export function transformDownAutopilot(
   const amountHosts = new BigNumber(config.contracts.amount)
   const periodWeeks = new BigNumber(blocksToWeeks(config.contracts.period))
   const renewWindowWeeks = new BigNumber(
-    blocksToWeeks(config.contracts.renewWindow)
+    blocksToWeeks(config.contracts.renewWindow),
   )
   const downloadTBMonth = new BigNumber(
     toFixedMaxString(
       valuePerPeriodToPerMonth(
         bytesToTB(config.contracts.download),
-        config.contracts.period
+        config.contracts.period,
       ),
-      2
-    )
+      2,
+    ),
   )
   const uploadTBMonth = new BigNumber(
     toFixedMaxString(
       valuePerPeriodToPerMonth(
         bytesToTB(config.contracts.upload),
-        config.contracts.period
+        config.contracts.period,
       ),
-      2
-    )
+      2,
+    ),
   )
   const storageTB = bytesToTB(new BigNumber(config.contracts.storage))
   const prune = config.contracts.prune
@@ -73,7 +73,7 @@ export function transformDownAutopilot(
     // hosts
     maxDowntimeHours: new BigNumber(config.hosts.maxDowntimeHours),
     maxConsecutiveScanFailures: new BigNumber(
-      config.hosts.maxConsecutiveScanFailures
+      config.hosts.maxConsecutiveScanFailures,
     ),
     minProtocolVersion: config.hosts.minProtocolVersion || '',
   }
@@ -87,33 +87,33 @@ export function transformDownGouging({
   return {
     maxStoragePriceTBMonth: toSiacoins(
       valuePerBytePerBlockToPerTBPerMonth(
-        new BigNumber(gouging.maxStoragePrice)
+        new BigNumber(gouging.maxStoragePrice),
       ),
-      scDecimalPlaces
+      scDecimalPlaces,
     ), // TB/month
     maxUploadPriceTB: toSiacoins(
       valuePerByteToPerTB(new BigNumber(gouging.maxUploadPrice)),
-      scDecimalPlaces
+      scDecimalPlaces,
     ),
     maxDownloadPriceTB: toSiacoins(
       valuePerByteToPerTB(new BigNumber(gouging.maxDownloadPrice)),
-      scDecimalPlaces
+      scDecimalPlaces,
     ),
     maxContractPrice: toSiacoins(gouging.maxContractPrice, scDecimalPlaces),
     maxRPCPriceMillion: toSiacoins(
       valuePerOneToPerMillion(new BigNumber(gouging.maxRPCPrice)),
-      scDecimalPlaces
+      scDecimalPlaces,
     ),
     hostBlockHeightLeeway: new BigNumber(gouging.hostBlockHeightLeeway),
     minPriceTableValidityMinutes: new BigNumber(
-      millisecondsInMinutes(gouging.minPriceTableValidity)
+      millisecondsInMinutes(gouging.minPriceTableValidity),
     ),
     minAccountExpiryDays: new BigNumber(
-      millisecondsInDays(gouging.minAccountExpiry)
+      millisecondsInDays(gouging.minAccountExpiry),
     ),
     minMaxEphemeralAccountBalance: toSiacoins(
       gouging.minMaxEphemeralAccountBalance,
-      scDecimalPlaces
+      scDecimalPlaces,
     ),
   }
 }
@@ -124,15 +124,15 @@ export function transformDownPinned(p: SettingsPinned): ValuesPinned {
     pinnedThreshold: new BigNumber(p.threshold).times(100),
     shouldPinMaxStoragePrice: p.gougingSettingsPins?.maxStorage.pinned,
     maxStoragePriceTBMonthPinned: new BigNumber(
-      p.gougingSettingsPins.maxStorage.value
+      p.gougingSettingsPins.maxStorage.value,
     ),
     shouldPinMaxUploadPrice: p.gougingSettingsPins?.maxUpload.pinned,
     maxUploadPriceTBPinned: new BigNumber(
-      p.gougingSettingsPins.maxUpload.value
+      p.gougingSettingsPins.maxUpload.value,
     ),
     shouldPinMaxDownloadPrice: p.gougingSettingsPins?.maxDownload.pinned,
     maxDownloadPriceTBPinned: new BigNumber(
-      p.gougingSettingsPins.maxDownload.value
+      p.gougingSettingsPins.maxDownload.value,
     ),
   }
 }

@@ -38,15 +38,15 @@ test('can search for a file within a bucket via the actions menu', async ({
   await expect(cmdk.locator('div[cmdk-item]')).toHaveCount(2)
   await expect(cmdk.getByText('bucket-2')).toBeVisible()
   await expect(
-    cmdk.locator('div[cmdk-item]').getByText('foobar-1')
+    cmdk.locator('div[cmdk-item]').getByText('foobar-1'),
   ).toBeVisible()
   await expect(
-    cmdk.locator('div[cmdk-item]').getByText('foobar-2')
+    cmdk.locator('div[cmdk-item]').getByText('foobar-2'),
   ).toBeVisible()
   await fillTextInputByName(page, 'search-files-menu-input', 'foobar-1')
   await expect(cmdk.locator('div[cmdk-item]')).toHaveCount(1)
   await expect(
-    cmdk.locator('div[cmdk-item]').getByText('foobar-1')
+    cmdk.locator('div[cmdk-item]').getByText('foobar-1'),
   ).toBeVisible()
 })
 
@@ -69,15 +69,15 @@ test('can search for a file within a bucket via the cmdk menu', async ({
   await expect(cmdk.locator('div[cmdk-item]')).toHaveCount(2)
   await expect(cmdk.getByText('bucket-2')).toBeVisible()
   await expect(
-    cmdk.locator('div[cmdk-item]').getByText('foobar-1')
+    cmdk.locator('div[cmdk-item]').getByText('foobar-1'),
   ).toBeVisible()
   await expect(
-    cmdk.locator('div[cmdk-item]').getByText('foobar-2')
+    cmdk.locator('div[cmdk-item]').getByText('foobar-2'),
   ).toBeVisible()
   await fillTextInputByName(page, 'search-files-menu-input', 'foobar-1')
   await expect(cmdk.locator('div[cmdk-item]')).toHaveCount(1)
   await expect(
-    cmdk.locator('div[cmdk-item]').getByText('foobar-1')
+    cmdk.locator('div[cmdk-item]').getByText('foobar-1'),
   ).toBeVisible()
 })
 
@@ -98,23 +98,23 @@ test('can search for a file across all buckets', async ({ page }) => {
   await expect(cmdk.locator('div[cmdk-item]')).toHaveCount(1)
   await cmdk.locator('div[cmdk-item]').getByText('search all files').click()
   await expect(
-    cmdk.locator('div[cmdk-item]').getByText('bucket-1')
+    cmdk.locator('div[cmdk-item]').getByText('bucket-1'),
   ).toHaveCount(2)
   await expect(
-    cmdk.locator('div[cmdk-item]').getByText('bucket-2')
+    cmdk.locator('div[cmdk-item]').getByText('bucket-2'),
   ).toHaveCount(2)
   await expect(
-    cmdk.locator('div[cmdk-item]').getByText('foobar-1')
+    cmdk.locator('div[cmdk-item]').getByText('foobar-1'),
   ).toHaveCount(2)
   await expect(
-    cmdk.locator('div[cmdk-item]').getByText('foobar-2')
+    cmdk.locator('div[cmdk-item]').getByText('foobar-2'),
   ).toHaveCount(2)
   await fillTextInputByName(page, 'cmdk-input', 'foobar-1')
   await expect(cmdk.locator('div[cmdk-item]')).toHaveCount(2)
   await expect(
-    cmdk.locator('div[cmdk-item]').getByText('foobar-1')
+    cmdk.locator('div[cmdk-item]').getByText('foobar-1'),
   ).toHaveCount(2)
   await expect(
-    cmdk.locator('div[cmdk-item]').getByText('foobar-2')
+    cmdk.locator('div[cmdk-item]').getByText('foobar-2'),
   ).toHaveCount(0)
 })

@@ -22,7 +22,7 @@ export function HangingNavItem({
     `v0/renterd/${localStorageKey}`,
     {
       defaultValue: true,
-    }
+    },
   )
   const el = (
     <div className="flex flex-col gap-1">
@@ -32,7 +32,7 @@ export function HangingNavItem({
           maximized && children
             ? 'border-b border-gray-200 dark:border-graydark-300'
             : '',
-          canMaximizeControls ? 'cursor-pointer' : ''
+          canMaximizeControls ? 'cursor-pointer' : '',
         )}
         onClick={() => {
           if (canMaximizeControls) {

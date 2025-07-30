@@ -18,7 +18,7 @@ export function HostMap() {
   const { activeHost, onHostMapClick, hostsWithLocation } = useHosts()
   const { currency, rate } = useActiveDaemonExplorerExchangeRate()
   const [tooltipHost, setTooltipHost] = useState<HostDataWithLocation | null>(
-    null
+    null,
   )
   const [geographyData, setGeographyData] = useState<
     Record<string, unknown> | undefined

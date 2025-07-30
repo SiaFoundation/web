@@ -21,7 +21,7 @@ export const ledgerComposeSiacoin = step(
       amount: number
       expectedFee: number
       transactionVersionIndicator: string
-    }
+    },
   ) => {
     const amountWithFeeString = `${(amount + expectedFee).toFixed(3)} SC`
     await navigateToWallet(page, walletName)
@@ -35,23 +35,23 @@ export const ledgerComposeSiacoin = step(
     const sendDialog = page.getByRole('dialog', { name: 'Send' })
     await expect(sendDialog.getByText('Connect Ledger...')).toBeVisible()
     await expect(
-      sendDialog.getByText('Connect device to start signing.')
+      sendDialog.getByText('Connect device to start signing.'),
     ).toBeVisible()
     await expect(sendDialog.getByLabel('Recipient address')).toContainText(
-      receiveAddress.slice(0, 5)
+      receiveAddress.slice(0, 5),
     )
     await expect(sendDialog.getByLabel('Change address')).toContainText(
-      changeAddress.slice(0, 5)
+      changeAddress.slice(0, 5),
     )
     await expect(sendDialog.getByLabel('Network fee')).toContainText(
-      `${expectedFee.toFixed(3)} SC`
+      `${expectedFee.toFixed(3)} SC`,
     )
     await expect(sendDialog.getByLabel('Total')).toContainText(
-      amountWithFeeString
+      amountWithFeeString,
     )
     await expect(
-      sendDialog.getByText(transactionVersionIndicator)
+      sendDialog.getByText(transactionVersionIndicator),
     ).toBeVisible()
     await sendDialog.getByRole('button', { name: 'Close' }).click()
-  }
+  },
 )

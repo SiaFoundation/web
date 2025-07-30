@@ -44,7 +44,7 @@ export function Preview({
                 'pt-1 pb-2 px-3 rounded text-2xl text-white items-center justify-center',
                 statusColor === 'amber' ? 'bg-amber-400' : '',
                 statusColor === 'green' ? 'bg-green-600' : '',
-                statusColor === 'red' ? 'bg-red-400' : ''
+                statusColor === 'red' ? 'bg-red-400' : '',
               )}
             >
               {status}
@@ -96,7 +96,7 @@ export function Preview({
       <div
         tw={cx(
           'absolute bottom-0 left-0 right-0 h-4',
-          network !== 'mainnet' ? 'bg-amber-500' : 'bg-green-600'
+          network !== 'mainnet' ? 'bg-amber-500' : 'bg-green-600',
         )}
       />
     </div>

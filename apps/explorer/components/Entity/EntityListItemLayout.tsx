@@ -41,7 +41,7 @@ export function EntityListItemLayout({
 function itemBorderStyles() {
   return cx(
     'border-t border-gray-200 dark:border-graydark-300',
-    'first:border-none'
+    'first:border-none',
   )
 }
 

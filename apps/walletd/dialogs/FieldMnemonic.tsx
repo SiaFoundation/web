@@ -15,7 +15,7 @@ type Props<Values extends FieldValues, Categories extends string> = {
 
 export function FieldMnemonic<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({ walletId, name, form, fields, actionText }: Props<Values, Categories>) {
   const { dataset, walletAutoLockEnabled, walletAutoLockTimeout } = useWallets()
   const wallet = dataset?.find((w) => w.id === walletId)

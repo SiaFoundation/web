@@ -12,7 +12,7 @@ export function useNowAtInterval(dataInterval: DataInterval) {
     const minIntervalMs = hoursInMilliseconds(1)
     const intervalMs = Math.min(
       getDataIntervalInMs(dataInterval),
-      minIntervalMs
+      minIntervalMs,
     )
     const i = setInterval(() => {
       setNow(new Date().getTime())

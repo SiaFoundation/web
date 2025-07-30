@@ -19,14 +19,14 @@ type Validate<Values extends FieldValues> = (
   // Making it any so the caller can specify the type.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value: any,
-  values: Values
+  values: Values,
 ) => boolean | string
 
 type ValidateMap<Values extends FieldValues> = Record<string, Validate<Values>>
 
 export type ConfigField<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 > = {
   type:
     | 'number'
@@ -97,12 +97,12 @@ export type ConfigField<
 
 export type ConfigFields<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 > = Record<keyof Values, ConfigField<Values, Categories>>
 
 export function useRegisterForm<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   form,
   field,
@@ -126,7 +126,7 @@ export function useRegisterForm<
       _onChange(e)
       field.trigger?.forEach((t) => form.trigger(t))
     },
-    [_onChange, form, field]
+    [_onChange, form, field],
   )
 
   const onBlur = useCallback(() => {
@@ -143,7 +143,7 @@ export function useRegisterForm<
             shouldValidate: boolean
             shouldDirty: boolean
             shouldTouch: boolean
-          }
+          },
     ) => {
       form.setValue(
         name,
@@ -156,11 +156,11 @@ export function useRegisterForm<
                 shouldTouch: true,
               }
             : undefined
-          : options
+          : options,
       )
       field.trigger?.forEach((t) => form.trigger(t))
     },
-    [name, form, field]
+    [name, form, field],
   )
 
   return {
@@ -176,7 +176,7 @@ export function useRegisterForm<
 
 export function useOnInvalid<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >(fields: ConfigFields<Values, Categories>) {
   return useCallback(
     (errors: FieldErrors<Values>) => {
@@ -187,13 +187,13 @@ export function useOnInvalid<
           .join(', '),
       })
     },
-    [fields]
+    [fields],
   )
 }
 
 export type FieldProps<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 > = {
   name: Path<Values>
   form: UseFormReturn<Values>
@@ -202,7 +202,7 @@ export type FieldProps<
 
 export function shouldShowField<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({ name, form, fields }: FieldProps<Values, Categories>) {
   const field = fields[name]
   return !field.hidden && (!field.show || field.show(form.getValues()))
@@ -211,7 +211,7 @@ export function shouldShowField<
 // Helper method that works around some TypeScript issues with key access.
 export function getFormStateFieldBoolean<Values>(
   map: Partial<Readonly<DeepMap<DeepPartial<Values>, boolean>>>,
-  name: string
+  name: string,
 ) {
   return (map as Record<string, boolean>)[name]
 }

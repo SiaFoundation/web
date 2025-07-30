@@ -10,17 +10,17 @@ test('pluralize', () => {
   expect(
     pluralize(0, 'child', {
       customZero: 'no children',
-    })
+    }),
   ).toBe('no children')
   expect(
     pluralize(3, 'child', {
       customZero: 'no children',
-    })
+    }),
   ).toBe('3 childs')
   expect(
     pluralize(3, 'child', {
       customZero: 'no children',
       plural: 'children',
-    })
+    }),
   ).toBe('3 children')
 })

@@ -53,7 +53,7 @@ test.describe('v2', () => {
     } = await cluster.daemons.hostds[0].api.consensusTip()
 
     await expect(page.getByTestId(HOME_ACTIVE_HOSTS)).toContainText(
-      String(activeHostCount)
+      String(activeHostCount),
     )
     await expect(page.getByTestId(HOME_HEIGHT)).toContainText(String(height))
   })
@@ -96,7 +96,7 @@ test.describe('v1', () => {
     } = await cluster.daemons.hostds[0].api.consensusTip()
 
     await expect(page.getByTestId(HOME_ACTIVE_HOSTS)).toContainText(
-      String(activeHostCount)
+      String(activeHostCount),
     )
     await expect(page.getByTestId(HOME_HEIGHT)).toContainText(String(height))
   })

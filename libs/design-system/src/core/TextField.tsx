@@ -60,7 +60,7 @@ export const textFieldStyles = cva(
       cursor: 'default',
       state: 'default',
     },
-  }
+  },
 )
 
 export function TextField({

@@ -28,7 +28,7 @@ export function BulkRemoveBlocklist({
         openConfirmDialog({
           title: `Remove ${pluralize(
             multiSelect.selectionCount,
-            'host'
+            'host',
           )} from blocklist`,
           action: 'Remove from blocklist',
           variant: 'red',
@@ -39,7 +39,7 @@ export function BulkRemoveBlocklist({
                 {pluralize(
                   multiSelect.selectionCount,
                   'host address',
-                  'host addresses'
+                  'host addresses',
                 )}{' '}
                 from the blocklist?
               </Paragraph>

@@ -14,7 +14,7 @@ export const createBucket = step(
     await expect(page.getByText('Bucket created')).toBeVisible()
     await clearToasts({ page })
     await expect(page.getByRole('cell', { name })).toBeVisible()
-  }
+  },
 )
 
 export const deleteBucket = step(
@@ -26,7 +26,7 @@ export const deleteBucket = step(
     await page.locator('input[name=name]').press('Enter')
     await expect(page.getByRole('dialog')).toBeHidden()
     await bucketNotInList(page, name)
-  }
+  },
 )
 
 export const deleteBucketIfExists = step(
@@ -43,7 +43,7 @@ export const deleteBucketIfExists = step(
       // eslint-disable-next-line playwright/no-wait-for-timeout
       await page.waitForTimeout(1000)
       await expect(
-        page.locator('[data-testid=filesTable][data-loading=false]')
+        page.locator('[data-testid=filesTable][data-loading=false]'),
       ).toBeVisible()
       const tableRows = await page
         .getByTestId('filesTable')
@@ -65,7 +65,7 @@ export const deleteBucketIfExists = step(
       await navigateToBuckets({ page })
       await deleteBucket(page, name)
     }
-  }
+  },
 )
 
 export const openBucketContextMenu = step(
@@ -74,7 +74,7 @@ export const openBucketContextMenu = step(
     const menu = page.getByRole('row', { name }).getByRole('button').first()
     await expect(menu).toBeVisible()
     return menu.click()
-  }
+  },
 )
 
 export const openBucket = step(
@@ -85,19 +85,19 @@ export const openBucket = step(
     await row.click()
     await expect(page.getByTestId('navbar').getByText(name)).toBeVisible()
     await expect(page.getByLabel('Upload files')).toBeVisible()
-  }
+  },
 )
 
 export const bucketInList = step(
   'expect bucket in list',
   async (page: Page, name: string) => {
     await expect(page.getByTestId('bucketsTable').getByText(name)).toBeVisible()
-  }
+  },
 )
 
 export const bucketNotInList = step(
   'expect bucket not in list',
   async (page: Page, name: string) => {
     await expect(page.getByTestId('bucketsTable').getByText(name)).toBeHidden()
-  }
+  },
 )

@@ -51,7 +51,7 @@ describe('rhp', () => {
         } as RPCSettingsResponse
         expectError(
           sdk.rhp.encodeSettingsResponse(json),
-          'address must be 76 characters'
+          'address must be 76 characters',
         )
       })
       it('decode error', async () => {
@@ -62,7 +62,7 @@ describe('rhp', () => {
         rpc!.set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 0)
         expectError(
           sdk.rhp.decodeSettingsResponse(rpc!),
-          'encoded object contains invalid length prefix (723118041428460547 elems > 11254 bytes left in stream)'
+          'encoded object contains invalid length prefix (723118041428460547 elems > 11254 bytes left in stream)',
         )
       })
     })
@@ -109,7 +109,7 @@ describe('rhp', () => {
         }
         expectError(
           sdk.rhp.encodeReadSectorRequest(json),
-          "decoding acct:<hex> failed: encoding/hex: invalid byte: U+0069 'i'"
+          "decoding acct:<hex> failed: encoding/hex: invalid byte: U+0069 'i'",
         )
       })
     })
@@ -128,7 +128,7 @@ describe('rhp', () => {
             0, 1, 0, 0, 0, 0, 0, 0, 0, 69, 114, 86, 214, 161, 96, 59, 239, 127,
             169, 87, 167, 11, 91, 169, 106, 157, 239, 47, 234, 139, 76, 20, 131,
             6, 13, 123, 165, 207, 138, 7, 44, 4, 0, 0, 0, 0, 0, 0, 0,
-          ].toString()
+          ].toString(),
         )
         const { data } = expectResult(sdk.rhp.decodeReadSectorResponse(rpc!))
         expect(data).toEqual(json)
@@ -141,7 +141,7 @@ describe('rhp', () => {
         }
         expectError(
           sdk.rhp.encodeReadSectorResponse(json),
-          'decoding "invalid" failed: encoding/hex: invalid byte: U+0069 \'i\''
+          'decoding "invalid" failed: encoding/hex: invalid byte: U+0069 \'i\'',
         )
       })
     })
@@ -184,7 +184,7 @@ describe('rhp', () => {
         } as RPCWriteSectorRequest
         expectError(
           sdk.rhp.encodeWriteSectorRequest(json),
-          "decoding acct:<hex> failed: encoding/hex: invalid byte: U+0069 'i'"
+          "decoding acct:<hex> failed: encoding/hex: invalid byte: U+0069 'i'",
         )
       })
     })
@@ -200,7 +200,7 @@ describe('rhp', () => {
             0, 69, 114, 86, 214, 161, 96, 59, 239, 127, 169, 87, 167, 11, 91,
             169, 106, 157, 239, 47, 234, 139, 76, 20, 131, 6, 13, 123, 165, 207,
             138, 7, 44,
-          ].toString()
+          ].toString(),
         )
         const { data } = expectResult(sdk.rhp.decodeWriteSectorResponse(rpc!))
         expect(data).toEqual(json)
@@ -212,7 +212,7 @@ describe('rhp', () => {
         } as RPCWriteSectorResponse
         expectError(
           sdk.rhp.encodeWriteSectorResponse(json),
-          'decoding "invalid" failed: encoding/hex: invalid byte: U+0069 \'i\''
+          'decoding "invalid" failed: encoding/hex: invalid byte: U+0069 \'i\'',
         )
       })
     })

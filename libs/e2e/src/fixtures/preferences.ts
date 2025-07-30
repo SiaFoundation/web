@@ -8,7 +8,7 @@ export const setCurrencyDisplay = step(
   async (
     page: Page,
     display: 'sc' | 'fiat' | 'bothPreferSc' | 'bothPreferFiat',
-    currency?: CurrencyId
+    currency?: CurrencyId,
   ) => {
     await page.getByTestId('sidenav').getByLabel('App preferences').click()
     await fillSelectInputByName(page, 'currencyDisplay', display)
@@ -16,7 +16,7 @@ export const setCurrencyDisplay = step(
       await fillSelectInputByName(page, 'currencyFiat', currency)
     }
     await page.getByRole('dialog').getByLabel('close').click()
-  }
+  },
 )
 
 export const toggleColumnVisibility = step(
@@ -41,7 +41,7 @@ export const toggleColumnVisibility = step(
       }
     }
     await page.getByLabel('configure view').click()
-  }
+  },
 )
 
 export const setSortField = step(
@@ -50,7 +50,7 @@ export const setSortField = step(
     await page.getByLabel('configure view').click()
     await fillSelectInputByName(page, 'sortField', field)
     await page.getByLabel('configure view').click()
-  }
+  },
 )
 
 export const setSortDirection = step(
@@ -59,5 +59,5 @@ export const setSortDirection = step(
     await page.getByLabel('configure view').click()
     await fillSelectInputByName(page, 'sortDirection', direction)
     await page.getByLabel('configure view').click()
-  }
+  },
 )

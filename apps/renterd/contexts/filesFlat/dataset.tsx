@@ -63,7 +63,7 @@ export function useDataset({ tableState }: Props) {
       isValidating: response.isValidating,
       data: response.data?.objects,
     }),
-    [response.isValidating, response.data]
+    [response.isValidating, response.data],
   )
 
   const d = useDatasetGeneric({

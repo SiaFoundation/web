@@ -49,7 +49,7 @@ export const styles = cva(
       cursor: 'default',
       state: 'default',
     },
-  }
+  },
 )
 
 export function TextArea({

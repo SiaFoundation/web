@@ -58,7 +58,7 @@ export function useResources() {
       hosts.error,
       pricePinning.data,
       pricePinning.error,
-    ]
+    ],
   )
 
   return {

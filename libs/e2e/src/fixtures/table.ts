@@ -10,5 +10,5 @@ export const waitForTableToReload = step(
     await page
       .locator(`[data-testid=${tableTestId}][data-loading=false]`)
       .isVisible()
-  }
+  },
 )

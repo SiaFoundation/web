@@ -40,7 +40,7 @@ function useDialogMain() {
       setDialog(dialog)
       setId(id)
     },
-    [setDialog, setId]
+    [setDialog, setId],
   )
 
   const [confirm, setConfirm] = useState<ConfirmProps>()
@@ -49,7 +49,7 @@ function useDialogMain() {
       setDialog('confirm')
       setConfirm(confirm)
     },
-    [setDialog, setConfirm]
+    [setDialog, setConfirm],
   )
 
   const closeDialog = useCallback(() => {
@@ -64,7 +64,7 @@ function useDialogMain() {
         closeDialog()
       }
     },
-    [closeDialog]
+    [closeDialog],
   )
 
   return {

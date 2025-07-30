@@ -38,11 +38,11 @@ export function WalletSendSeedDialogV1({
   const { dataset: addresses } = useWalletAddresses({ id: walletId })
   const balanceSc = useMemo(
     () => new BigNumber(balance.data?.siacoins || 0),
-    [balance.data]
+    [balance.data],
   )
   const balanceSf = useMemo(
     () => new BigNumber(balance.data?.siafunds || 0),
-    [balance.data]
+    [balance.data],
   )
 
   const [step, setStep] = useState<SendStep>('compose')

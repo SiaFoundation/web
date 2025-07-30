@@ -27,7 +27,7 @@ function useWorkflowsMain() {
         }
       })
     },
-    [setWorkflowsMap]
+    [setWorkflowsMap],
   )
 
   const removeWorkflow = useCallback(
@@ -39,7 +39,7 @@ function useWorkflowsMain() {
         }
       })
     },
-    [setWorkflowsMap]
+    [setWorkflowsMap],
   )
 
   const resetWorkflows = useCallback(() => {
@@ -48,7 +48,7 @@ function useWorkflowsMain() {
 
   const workflows = useMemo(
     () => Object.entries(workflowsMap).map((i) => i[1]),
-    [workflowsMap]
+    [workflowsMap],
   )
 
   return {

@@ -22,8 +22,8 @@ describe('getMoveFileOperations', () => {
               id: 'default/path/correct/',
             },
           ],
-        })
-      )
+        }),
+      ),
     ).toEqual([
       {
         bucket: 'default',
@@ -57,8 +57,8 @@ describe('getMoveFileOperations', () => {
         ['default/path/a/'],
         getMoveFileDestinationDirectory(['default', 'path', 'to'], {
           collisions: [],
-        })
-      )
+        }),
+      ),
     ).toEqual([
       {
         bucket: 'default',
@@ -78,8 +78,8 @@ describe('getMoveFileOperations', () => {
               id: 'default/path/nested/',
             },
           ],
-        })
-      )
+        }),
+      ),
     ).toEqual([
       {
         bucket: 'default',
@@ -93,8 +93,8 @@ describe('getMoveFileOperations', () => {
     expect(
       getMoveFileOperations(
         ['default/path/a'],
-        getMoveFileDestinationDirectory(['default', 'path', 'to'])
-      )
+        getMoveFileDestinationDirectory(['default', 'path', 'to']),
+      ),
     ).toEqual([
       {
         bucket: 'default',
@@ -114,8 +114,8 @@ describe('getMoveFileOperations', () => {
               id: 'default/path/nested/',
             },
           ],
-        })
-      )
+        }),
+      ),
     ).toEqual([
       {
         bucket: 'default',

@@ -32,7 +32,7 @@ const styles = cva(
     defaultVariants: {
       size: 'small',
     },
-  }
+  },
 )
 
 export function Checkbox({

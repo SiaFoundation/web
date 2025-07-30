@@ -156,7 +156,7 @@ export class MultipartUpload {
     const partCount = Math.ceil(this.#file.size / this.#partSize)
     this.#pendingPartNumbers = Array.from(
       { length: partCount },
-      (_, i) => i + 1
+      (_, i) => i + 1,
     )
     return this.#uploadId
   }
@@ -168,7 +168,7 @@ export class MultipartUpload {
 
     const workers = Math.min(
       MultipartUpload.#globalMaxConcurrentParts,
-      Math.ceil(this.#file.size / this.#partSize)
+      Math.ceil(this.#file.size / this.#partSize),
     )
 
     // Run enough workers per multipart upload to saturate the global
@@ -214,7 +214,7 @@ export class MultipartUpload {
       sent: number
       total: number
       percentage: number
-    }) => void
+    }) => void,
   ) {
     this.#onProgress = onProgress
   }
@@ -250,7 +250,7 @@ export class MultipartUpload {
           const partOffset = (partNumber - 1) * this.#partSize
           const partData = this.#file.slice(
             partOffset,
-            partOffset + this.#partSize
+            partOffset + this.#partSize,
           )
           await this.#upload(partNumber, partData, partOffset)
           this.#resetDelay()
@@ -321,7 +321,7 @@ export class MultipartUpload {
           key: this.#key,
           uploadID: this.#uploadId,
           parts: this.#uploadedParts.sort(
-            (a, b) => a.partNumber - b.partNumber
+            (a, b) => a.partNumber - b.partNumber,
           ),
         } as MultipartUploadCompletePayload
         await this.#api.busUploadComplete.post({
@@ -357,7 +357,7 @@ export class MultipartUpload {
   async #upload(
     partNumber: number,
     partData: Blob,
-    partOffset: number
+    partOffset: number,
   ): Promise<void> {
     const controller = new AbortController()
     this.#activeConnections[partNumber] = controller

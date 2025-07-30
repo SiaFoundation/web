@@ -53,7 +53,7 @@ test('dismissing alerts', async ({ page }) => {
   // so maybe try to dismiss more than once.
   await continueToClickUntil(
     page.getByRole('button', { name: 'dismiss alert' }),
-    page.getByText('There are currently no alerts.')
+    page.getByText('There are currently no alerts.'),
   )
   await navigateToVolumes({ page })
   await deleteVolume(page, name, dirPath)

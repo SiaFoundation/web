@@ -153,7 +153,7 @@ export type WasmApi = {
     }>
     keyPairFromSeedPhrase: (
       phrase: string,
-      index: number
+      index: number,
     ) => Result<{
       privateKey: string
       publicKey: string
@@ -165,7 +165,7 @@ export type WasmApi = {
       address: string
     }>
     addressFromUnlockConditions: (
-      unlockConditions: UnlockConditions
+      unlockConditions: UnlockConditions,
     ) => Result<{
       address: string
     }>
@@ -180,20 +180,20 @@ export type WasmApi = {
       cn: ConsensusNetwork,
       txn: Transaction,
       sigIndex: number,
-      privateKey: string
+      privateKey: string,
     ) => Result<{
       signature: string
     }>
     v2TransactionInputSigHash: (
       state: ConsensusState,
       network: ConsensusNetwork,
-      txn: V2Transaction
+      txn: V2Transaction,
     ) => Result<{
       sigHash: string
     }>
     signHash: (
       privateKey: string,
-      hash: string
+      hash: string,
     ) => Result<{
       signature: string
     }>

@@ -8,7 +8,7 @@ export function getKey<Payload>(
   route: string,
   args?: {
     payload?: Payload
-  }
+  },
 ): [Method, string] {
   return [
     method,

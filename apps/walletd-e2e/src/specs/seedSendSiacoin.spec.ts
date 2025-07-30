@@ -42,7 +42,7 @@ test('send siacoin between wallets', async ({ page, browserName }) => {
   // Add initial funds to wallet1.
   await sendSiacoinFromRenterd(
     wallet1Address0,
-    toHastings(1_000_000).toString()
+    toHastings(1_000_000).toString(),
   )
   await page.reload()
 

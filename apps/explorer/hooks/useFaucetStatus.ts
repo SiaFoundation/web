@@ -15,7 +15,7 @@ type FaucetStatusResponse = {
 }
 
 export function useFaucetStatus(
-  args: HookArgsSwr<{ id: string }, FaucetStatusResponse>
+  args: HookArgsSwr<{ id: string }, FaucetStatusResponse>,
 ) {
   return useGetSwr({
     api: faucetApi,

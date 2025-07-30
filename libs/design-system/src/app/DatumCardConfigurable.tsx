@@ -63,7 +63,7 @@ export function DatumCardConfigurable({
     `v0/datum/${category}/${label}`,
     {
       defaultValue: defaultMode,
-    }
+    },
   )
   return (
     <DatumCard

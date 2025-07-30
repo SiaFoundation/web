@@ -97,12 +97,12 @@ export function useDataset() {
       prunableSizes,
       fetchPrunableSize,
       isFetchingPrunableSizeById,
-    ]
+    ],
   )
 
   const hasFetchedAllPrunableSize = useMemo(
     () => !!dataset?.every((d) => d.hasFetchedPrunableSize),
-    [dataset]
+    [dataset],
   )
 
   return {

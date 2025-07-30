@@ -26,7 +26,7 @@ function useRequestSettingsMain({
 }: RequestSettingsProviderProps) {
   const customDefaultSettings = useMemo(
     () => getDefaultRequestSettings(overrideDefaultSettings),
-    [overrideDefaultSettings]
+    [overrideDefaultSettings],
   )
   const [_settings, _setSettings] = useLocalStorageState('v1/requestConfig', {
     defaultValue: customDefaultSettings,
@@ -44,7 +44,7 @@ function useRequestSettingsMain({
       ...customDefaultSettings,
       ..._settings,
     }),
-    [_settings, customDefaultSettings]
+    [_settings, customDefaultSettings],
   )
 
   const { resetWorkflows } = useWorkflows()
@@ -56,7 +56,7 @@ function useRequestSettingsMain({
         ...values,
       }))
     },
-    [_setSettings]
+    [_setSettings],
   )
 
   const router = useRouter()
@@ -72,12 +72,12 @@ function useRequestSettingsMain({
         [key]: callback,
       }))
     },
-    [setOnLockCallbacks]
+    [setOnLockCallbacks],
   )
   const lock = useCallback(() => {
     if (lockRoutes) {
       router.push(
-        `${lockRoutes.login}?prev=${getRouteToSaveAsPrev(pathname, lockRoutes)}`
+        `${lockRoutes.login}?prev=${getRouteToSaveAsPrev(pathname, lockRoutes)}`,
       )
     }
     setRequestSettings({ password: '' })
@@ -103,7 +103,7 @@ function useRequestSettingsMain({
   })
   const isUnlocked = useMemo(
     () => !!requestSettings.password,
-    [requestSettings]
+    [requestSettings],
   )
   const isUnlockedAndAuthedRoute = isUnlocked && isAuthenticatedRoute
 
@@ -119,7 +119,7 @@ function useRequestSettingsMain({
 
 export function getRouteToSaveAsPrev(
   pathname: string,
-  routes: { home: string; login: string }
+  routes: { home: string; login: string },
 ) {
   if ([routes.login].includes(pathname)) {
     return routes.home

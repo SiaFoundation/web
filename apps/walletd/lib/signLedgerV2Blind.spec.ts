@@ -19,7 +19,7 @@ describe('signLedgerV2Blind', () => {
           consensusState: mocks.consensusState,
           consensusNetwork: mocks.consensusNetwork,
           addresses: getMockAddresses(mocks),
-        })
+        }),
       ).toMatchSnapshot()
     })
 
@@ -42,7 +42,7 @@ describe('signLedgerV2Blind', () => {
               },
             },
           ],
-        })
+        }),
       ).toEqual({
         error:
           'Missing address 90c6057cdd2463eca61f83796e83152dbba28b6cb9a74831a043833051ec9f422726bfff2ee8',
@@ -68,7 +68,7 @@ describe('signLedgerV2Blind', () => {
               metadata: {},
             },
           ],
-        })
+        }),
       ).toEqual({
         error:
           'Missing address 90c6057cdd2463eca61f83796e83152dbba28b6cb9a74831a043833051ec9f422726bfff2ee8',

@@ -31,19 +31,19 @@ export function getHostLabel({
         new BigNumber(storagePrice || 0)
           .times(TBToBytes(1))
           .times(monthsToBlocks(1)),
-        { fixed: 0 }
+        { fixed: 0 },
       )}/TB`
 
   const usedStorage = `${humanBytes(
     host.activeContracts
       .reduce((acc, c) => acc.plus(c.size), new BigNumber(0))
-      .toNumber()
+      .toNumber(),
   )} utilized`
 
   const remainingStorage = sectorsToBytes(host.v2Settings.remainingStorage)
   const totalStorage = sectorsToBytes(host.v2Settings.totalStorage)
   const availableStorage = `${humanBytes(remainingStorage || 0)} / ${humanBytes(
-    totalStorage || 0
+    totalStorage || 0,
   )} available`
 
   const cc = host.location.countryCode

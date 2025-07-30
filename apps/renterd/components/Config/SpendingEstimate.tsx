@@ -22,7 +22,7 @@ export function SpendingEstimate() {
     'v0/renterd/config/spendingEstimateMode',
     {
       defaultValue: 'total',
-    }
+    },
   )
 
   const minShards = form.watch('minShards')

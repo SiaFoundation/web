@@ -4,7 +4,7 @@ import test from 'playwright/test'
 export function step<T, Args extends any[]>(
   name: string,
   fn: (...args: Args) => Promise<T>,
-  { box = true } = {}
+  { box = true } = {},
 ): (...args: Args) => Promise<T> {
   return (...args: Args) => test.step(name, () => fn(...args), { box })
 }

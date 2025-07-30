@@ -97,6 +97,6 @@ export function useSignAndBroadcastV1() {
       siafundOutputs.data,
       cacheWalletMnemonic,
       broadcast,
-    ]
+    ],
   )
 }

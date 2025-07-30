@@ -83,7 +83,7 @@ export function MaxStoragePricePinnedTips({
   const { storageMedian } = useMedianPrices()
   const { rate } = useFormExchangeRate(form)
   const maxStoragePriceTBMonthPinned = form.watch(
-    'maxStoragePriceTBMonthPinned'
+    'maxStoragePriceTBMonthPinned',
   )
   const currentPriceInSiacoin =
     maxStoragePriceTBMonthPinned && rate

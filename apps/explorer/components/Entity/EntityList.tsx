@@ -98,7 +98,7 @@ export function EntityList({
               <div
                 className={cx(
                   'flex items-center justify-center h-[84px]',
-                  itemBorderStyles()
+                  itemBorderStyles(),
                 )}
               >
                 <Text size="18" color="subtle">
@@ -150,6 +150,6 @@ export function EntityList({
 function itemBorderStyles() {
   return cx(
     'border-t border-gray-200 dark:border-graydark-300',
-    'first:border-none'
+    'first:border-none',
   )
 }

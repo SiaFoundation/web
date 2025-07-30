@@ -24,7 +24,7 @@ const formatOGImage = (id: string) => {
       subtitle: 'Output',
       initials: 'O',
     },
-    size
+    size,
   )
 }
 
@@ -61,7 +61,7 @@ export default async function Image({ params }: ExplorerPageProps) {
           initials: 'O',
           values,
         },
-        size
+        size,
       )
     } else if (searchResultType === 'siafundElement') {
       const [output] = await to(explored.outputSiafund({ params: { id } }))
@@ -84,7 +84,7 @@ export default async function Image({ params }: ExplorerPageProps) {
           initials: 'O',
           values,
         },
-        size
+        size,
       )
     } else {
       return formatOGImage(id)

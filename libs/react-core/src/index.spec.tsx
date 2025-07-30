@@ -48,7 +48,7 @@ describe('react-core', () => {
         <AppSettingsProvider>
           <Component />
         </AppSettingsProvider>
-      </CoreProvider>
+      </CoreProvider>,
     )
 
     // Check that the initial render is correct.
@@ -101,7 +101,7 @@ describe('react-core', () => {
         <AppSettingsProvider>
           <Component foo1="bar" foo2="jazz" />
         </AppSettingsProvider>
-      </CoreProvider>
+      </CoreProvider>,
     )
 
     // Check that the initial render is correct.
@@ -116,7 +116,7 @@ describe('react-core', () => {
         <AppSettingsProvider>
           <Component foo1="baz" foo2="jazz" />
         </AppSettingsProvider>
-      </CoreProvider>
+      </CoreProvider>,
     )
 
     await waitFor(() => {
@@ -159,7 +159,7 @@ describe('react-core', () => {
         },
         async (mutate) => {
           mutate((route) => route.startsWith('/dependency'))
-        }
+        },
       )
       post = func.post
       return dependency.data
@@ -170,7 +170,7 @@ describe('react-core', () => {
         <AppSettingsProvider>
           <Component />
         </AppSettingsProvider>
-      </CoreProvider>
+      </CoreProvider>,
     )
 
     // Check that the initial render is correct.
@@ -190,8 +190,8 @@ describe('react-core', () => {
     // Check that the workflow is registered.
     expect(
       workflows.workflows.find(
-        (w?: { route?: string }) => w?.route === '/postroute'
-      )
+        (w?: { route?: string }) => w?.route === '/postroute',
+      ),
     ).toBeTruthy()
 
     await act(async () => {
@@ -202,8 +202,8 @@ describe('react-core', () => {
     // Check that the workflow has been removed.
     expect(
       workflows.workflows.find(
-        (w?: { route?: string }) => w?.route === '/postroute'
-      )
+        (w?: { route?: string }) => w?.route === '/postroute',
+      ),
     ).toBeFalsy()
 
     // Dependency should have been revalidated.
@@ -220,27 +220,27 @@ function mockEndpoint(
   route: string,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   response: any,
-  delayMs = 0
+  delayMs = 0,
 ) {
   server.use(
     http[method](route, async () => {
       await delay(delayMs)
       networkCallCount += 1
       return HttpResponse.json(response)
-    })
+    }),
   )
 }
 
 function mockEndpointByPayload(
   method: 'get' | 'post' | 'put' | 'delete' | 'patch',
   route: string,
-  delayMs = 0
+  delayMs = 0,
 ) {
   server.use(
     http[method](route, async ({ request }) => {
       await delay(delayMs)
       networkCallCount += 1
       return HttpResponse.json(await request.json())
-    })
+    }),
   )
 }

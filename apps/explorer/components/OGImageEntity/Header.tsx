@@ -27,7 +27,7 @@ export function Header({
           tw={cx(
             'w-24 h-24 rounded border',
             'bg-white text-black',
-            'border-gray-500'
+            'border-gray-500',
           )}
           alt={initials}
         />

@@ -59,7 +59,7 @@ export function doesEntityHaveSiascanUrl(type?: EntityType) {
 export function getEntitySiascanUrl(
   baseUrl: string,
   type: EntityType,
-  value: string
+  value: string,
 ) {
   switch (type) {
     case 'hostIp':
@@ -88,7 +88,7 @@ export function defaultFormatValue(text: string, maxLength: number) {
 export function formatEntityValue(
   type: EntityType,
   text: string,
-  maxLength: number
+  maxLength: number,
 ) {
   switch (type) {
     case 'blockHash': {

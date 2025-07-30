@@ -73,7 +73,7 @@ export function useSendFormV1({ walletId, params, onConfirm }: Props) {
         mnemonicHash,
         isSeedCached,
       }),
-    [mnemonicFieldType, setMnemonicFieldType, mnemonicHash, isSeedCached]
+    [mnemonicFieldType, setMnemonicFieldType, mnemonicHash, isSeedCached],
   )
 
   const onValid = useCallback(
@@ -90,14 +90,14 @@ export function useSendFormV1({ walletId, params, onConfirm }: Props) {
 
       onConfirm({})
     },
-    [signAndBroadcast, params, onConfirm, wallet]
+    [signAndBroadcast, params, onConfirm, wallet],
   )
 
   const onInvalid = useOnInvalid(fields)
 
   const handleSubmit = useMemo(
     () => form.handleSubmit(onValid, onInvalid),
-    [form, onValid, onInvalid]
+    [form, onValid, onInvalid],
   )
 
   const el = (

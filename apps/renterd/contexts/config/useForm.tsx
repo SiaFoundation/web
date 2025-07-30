@@ -23,7 +23,7 @@ export function useForm({ resources }: { resources: ResourcesMaybeLoaded }) {
   const totalShards = form.watch('totalShards')
   const redundancyMultiplier = useMemo(
     () => getRedundancyMultiplier(minShards, totalShards),
-    [minShards, totalShards]
+    [minShards, totalShards],
   )
 
   const [configViewMode, setConfigViewMode] =

@@ -25,7 +25,7 @@ type Props = {
   balance?: BigNumber
   fee: BigNumber
   send: (
-    params: SendSiacoinParams & { includeFee: boolean }
+    params: SendSiacoinParams & { includeFee: boolean },
   ) => Promise<{ transactionId?: string; error?: string }>
 }
 

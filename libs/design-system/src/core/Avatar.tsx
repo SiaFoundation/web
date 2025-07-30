@@ -46,7 +46,7 @@ const avatarStyles = cva(
       variant: 'gray',
       shape: 'circle',
     },
-  }
+  },
 )
 
 const fallbackStyles = cva('uppercase', {

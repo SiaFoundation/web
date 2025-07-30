@@ -73,7 +73,7 @@ export function signTransactionSeedV1({
 
     const pkResponse = getSDK().wallet.keyPairFromSeedPhrase(
       mnemonic,
-      address.metadata.index
+      address.metadata.index,
     )
 
     if (pkResponse.error) {
@@ -87,7 +87,7 @@ export function signTransactionSeedV1({
       consensusNetwork,
       transaction,
       i,
-      pkResponse.privateKey
+      pkResponse.privateKey,
     )
     if (error) {
       return {

@@ -15,9 +15,9 @@ export const navigateToWalletsList = step(
     }
 
     await expect(
-      page.getByTestId('navbar').getByText('Wallets', { exact: true })
+      page.getByTestId('navbar').getByText('Wallets', { exact: true }),
     ).toBeVisible()
-  }
+  },
 )
 
 export const navigateToWallet = step(
@@ -25,5 +25,5 @@ export const navigateToWallet = step(
   async (page: Page, name: string) => {
     await navigateToWalletsList(page)
     await openWallet(page, name)
-  }
+  },
 )

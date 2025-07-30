@@ -7,7 +7,7 @@ import { useCallback, useMemo } from 'react'
 
 type Props = {
   send: (
-    params: SendSiacoinParams & { includeFee: boolean }
+    params: SendSiacoinParams & { includeFee: boolean },
   ) => Promise<{ transactionId?: string; error?: string }>
   params: SendSiacoinParams
   fee: BigNumber

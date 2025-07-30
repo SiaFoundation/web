@@ -157,7 +157,7 @@ export function useEventsMain() {
     () => ({
       siascanUrl,
     }),
-    [siascanUrl]
+    [siascanUrl],
   )
 
   return {

@@ -66,7 +66,7 @@ export function useDataset({
       isValidating: response.isValidating,
       data: response.data?.objects,
     }),
-    [response.isValidating, response.data?.objects]
+    [response.isValidating, response.data?.objects],
   )
 
   const d = useDatasetGeneric({

@@ -202,7 +202,7 @@ export function WalletAddressesGenerateSeedDialog({
 
       closeAndReset()
     },
-    [closeAndReset, addressAdd, walletId, cacheWalletMnemonic]
+    [closeAndReset, addressAdd, walletId, cacheWalletMnemonic],
   )
 
   const triggerRescan = useTriggerRescan()
@@ -211,11 +211,11 @@ export function WalletAddressesGenerateSeedDialog({
       await generateAddresses(
         wallet.state.mnemonic || mnemonic,
         index.toNumber(),
-        count.toNumber()
+        count.toNumber(),
       )
       triggerRescan(values)
     },
-    [generateAddresses, mnemonic, index, count, wallet, triggerRescan]
+    [generateAddresses, mnemonic, index, count, wallet, triggerRescan],
   )
 
   return (

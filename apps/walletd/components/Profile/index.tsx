@@ -26,8 +26,8 @@ export function Profile() {
     version === '?'
       ? `https://github.com/SiaFoundation/walletd/commits/`
       : version?.match(/^v\d+\.\d+\.\d+/)
-      ? `https://github.com/SiaFoundation/walletd/releases/${version}`
-      : `https://github.com/SiaFoundation/walletd/tree/${version}`
+        ? `https://github.com/SiaFoundation/walletd/releases/${version}`
+        : `https://github.com/SiaFoundation/walletd/tree/${version}`
 
   const uptime = state.data
     ? new Date().getTime() - new Date(state.data?.startTime).getTime()

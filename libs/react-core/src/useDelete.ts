@@ -21,13 +21,13 @@ import { buildMutateMatcherFn } from './mutate'
 
 type DeleteFunc<Params extends RequestParams, Result> = {
   delete: (
-    args: InternalCallbackArgs<Params, undefined, Result>
+    args: InternalCallbackArgs<Params, undefined, Result>,
   ) => Promise<Response<Result>>
 }
 
 export function useDeleteFunc<Params extends RequestParams, Result>(
   args: InternalHookArgsCallback<Params, void, Result>,
-  after?: After<Params, void, Result>
+  after?: After<Params, void, Result>,
 ): DeleteFunc<Params, Result> {
   const { mutate } = useSWRConfig()
   const { requestSettings } = useRequestSettings()
@@ -42,7 +42,7 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
           requestSettings,
           hookArgs.route,
           hookArgs,
-          callArgs
+          callArgs,
         )
         if (!reqRoute) {
           throw Error('No route')
@@ -54,7 +54,7 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
           key,
           args,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          callArgs as any
+          callArgs as any,
         )
         const workflowKey = key.join('')
         setWorkflow(workflowKey, {
@@ -71,10 +71,10 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
                 callArgs,
                 matcher,
                 data,
-                opts
+                opts,
               ),
             callArgs,
-            response
+            response,
           )
         }
         removeWorkflow(workflowKey)

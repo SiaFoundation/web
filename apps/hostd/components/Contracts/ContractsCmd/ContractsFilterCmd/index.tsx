@@ -33,7 +33,7 @@ export function ContractsFilterCmd({
         afterSelect()
       }
     },
-    [setFilter, beforeSelect, afterSelect]
+    [setFilter, beforeSelect, afterSelect],
   )
 
   return (

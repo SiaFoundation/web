@@ -26,18 +26,18 @@ export function getHostLabel({
         new BigNumber(host.storagePrice)
           .times(TBToBytes(1))
           .times(monthsToBlocks(1)),
-        { fixed: 0 }
+        { fixed: 0 },
       )}/TB`
 
   const usedStorage = `${humanBytes(
-    host.totalStorage - host.remainingStorage
+    host.totalStorage - host.remainingStorage,
   )} utilized`
 
   const availableStorage = `${humanBytes(host.remainingStorage)} / ${humanBytes(
-    host.totalStorage
+    host.totalStorage,
   )} available`
 
   return `${countryCodeEmoji(
-    host.location.countryCode
+    host.location.countryCode,
   )} · ${storageCost} · ${usedStorage} · ${availableStorage}`
 }

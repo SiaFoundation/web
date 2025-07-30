@@ -109,19 +109,19 @@ export function getFields(): ConfigFields<InputValues, Categories> {
                 return true
               }
               return !!value || 'required'
-            }
+            },
           ),
           currency: requiredIfPinningEnabled(
             'shouldPinMaxStoragePrice',
             (_, values) =>
-              !!values.pinnedCurrency || 'must select a pinned currency'
+              !!values.pinnedCurrency || 'must select a pinned currency',
           ),
           range: requiredIfPinningEnabled(
             'shouldPinMaxStoragePrice',
             (value: Maybe<BigNumber>, values) =>
               !values.shouldPinMaxStoragePrice ||
               value?.gt(0) ||
-              'must be greater than 0'
+              'must be greater than 0',
           ),
         },
       },
@@ -171,19 +171,19 @@ export function getFields(): ConfigFields<InputValues, Categories> {
                 return true
               }
               return !!value || 'required'
-            }
+            },
           ),
           currency: requiredIfPinningEnabled(
             'shouldPinMaxIngressPrice',
             (_, values) =>
-              !!values.pinnedCurrency || 'must select a pinned currency'
+              !!values.pinnedCurrency || 'must select a pinned currency',
           ),
           range: requiredIfPinningEnabled(
             'shouldPinMaxIngressPrice',
             (value: Maybe<BigNumber>, values) =>
               !values.shouldPinMaxIngressPrice ||
               value?.gt(0) ||
-              'must be greater than 0'
+              'must be greater than 0',
           ),
         },
       },
@@ -233,19 +233,19 @@ export function getFields(): ConfigFields<InputValues, Categories> {
                 return true
               }
               return !!value || 'required'
-            }
+            },
           ),
           currency: requiredIfPinningEnabled(
             'shouldPinMaxEgressPrice',
             (_, values) =>
-              !!values.pinnedCurrency || 'must select a pinned currency'
+              !!values.pinnedCurrency || 'must select a pinned currency',
           ),
           range: requiredIfPinningEnabled(
             'shouldPinMaxEgressPrice',
             (value: Maybe<BigNumber>, values) =>
               !values.shouldPinMaxEgressPrice ||
               value?.gt(0) ||
-              'must be greater than 0'
+              'must be greater than 0',
           ),
         },
       },
@@ -291,19 +291,19 @@ export function getFields(): ConfigFields<InputValues, Categories> {
                 return true
               }
               return !!value || 'required'
-            }
+            },
           ),
           currency: requiredIfPinningEnabled(
             'shouldPinMinCollateral',
             (_, values) =>
-              !!values.pinnedCurrency || 'must select a pinned currency'
+              !!values.pinnedCurrency || 'must select a pinned currency',
           ),
           range: requiredIfPinningEnabled(
             'shouldPinMinCollateral',
             (value: Maybe<BigNumber>, values) =>
               !values.shouldPinMinCollateral ||
               value?.gt(0) ||
-              'must be greater than 0'
+              'must be greater than 0',
           ),
         },
       },
@@ -358,7 +358,7 @@ type ShouldPinField =
 function requiredIfPinningEnabled(
   field: ShouldPinField,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  method?: (value: any, values: InputValues) => string | boolean
+  method?: (value: any, values: InputValues) => string | boolean,
 ) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (value: any, values: InputValues) => {

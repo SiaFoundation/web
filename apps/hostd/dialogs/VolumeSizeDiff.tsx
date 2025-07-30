@@ -28,7 +28,7 @@ export function VolumeSizeDiff({
             newSizeGB !== undefined && isNewSizeSmaller
               ? 'bg-red-500 dark:bg-red-500'
               : 'bg-gray-700 dark:bg-graydark-800',
-            isNewSizeBigger ? 'z-10' : 'z-0'
+            isNewSizeBigger ? 'z-10' : 'z-0',
           )}
           style={{
             width: maxSizeGB ? `${(currentSizeGB / maxSizeGB) * 100}%` : '0%',
@@ -40,9 +40,9 @@ export function VolumeSizeDiff({
             notEnoughSpace
               ? 'bg-amber-500 dark:bg-amber-500'
               : newSizeGB !== undefined && isNewSizeBigger
-              ? 'bg-green-500 dark:bg-green-500'
-              : 'bg-gray-700 dark:bg-graydark-800',
-            isNewSizeSmaller ? 'z-10' : 'z-0'
+                ? 'bg-green-500 dark:bg-green-500'
+                : 'bg-gray-700 dark:bg-graydark-800',
+            isNewSizeSmaller ? 'z-10' : 'z-0',
           )}
           style={{
             width: maxSizeGB ? `${(newSizeGB / maxSizeGB) * 100}%` : '0%',
@@ -56,7 +56,7 @@ export function VolumeSizeDiff({
             (newSizeGB / maxSizeGB) *
             100
           ).toFixed(0)}% of ${humanBytes(
-            GBToBytes(maxSizeGB)
+            GBToBytes(maxSizeGB),
           )} available`}</Text>
         ) : null}
       </div>

@@ -30,7 +30,7 @@ export function usePrunableContractSizes() {
               prunable: contract.prunable,
             },
           }),
-          {}
+          {},
         ),
       }))
     } catch (err) {
@@ -67,7 +67,7 @@ export function usePrunableContractSizes() {
         }))
       }
     },
-    [bus]
+    [bus],
   )
 
   return {

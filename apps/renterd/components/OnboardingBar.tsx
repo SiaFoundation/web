@@ -34,7 +34,7 @@ export function OnboardingBar() {
     'v0/renterd/onboarding/maximized',
     {
       defaultValue: true,
-    }
+    },
   )
 
   const syncStatus = useSyncStatus()
@@ -46,7 +46,7 @@ export function OnboardingBar() {
   }
 
   const walletBalance = new BigNumber(
-    wallet.data ? wallet.data.confirmed + wallet.data.unconfirmed : 0
+    wallet.data ? wallet.data.confirmed + wallet.data.unconfirmed : 0,
   )
 
   const step1Configured = true
@@ -152,7 +152,7 @@ export function OnboardingBar() {
                   </Link>
                 }
                 description={`Fund your wallet with at least ${humanSiacoin(
-                  estimatedSpendingPerMonth || 0
+                  estimatedSpendingPerMonth || 0,
                 )} siacoin to cover the estimated spending for a month.${
                   syncStatus.isWalletSynced
                     ? ''

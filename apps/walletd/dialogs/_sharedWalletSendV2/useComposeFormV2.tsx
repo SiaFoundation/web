@@ -204,12 +204,12 @@ export function useComposeFormV2({
         fee,
       })
     },
-    [onComplete, defaultChangeAddress, fee]
+    [onComplete, defaultChangeAddress, fee],
   )
 
   const handleSubmit = useMemo(
     () => form.handleSubmit(onValid),
-    [form, onValid]
+    [form, onValid],
   )
 
   const siacoin = form.watch('siacoin')

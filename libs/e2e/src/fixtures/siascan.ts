@@ -16,7 +16,7 @@ export async function mockApiSiaScanExchangeRates({ page }: { page: Page }) {
       } else {
         await route.fulfill({ json: 0.003944045283 })
       }
-    }
+    },
   )
 }
 
@@ -39,7 +39,7 @@ export async function mockApiSiaScanExchangeRatesHanging({
       await new Promise(() => {
         // Never resolve, leaving the request hanging.
       })
-    }
+    },
   )
 }
 

@@ -31,7 +31,7 @@ export function useCancelV1() {
         })
       }
     },
-    [walletId, walletRelease]
+    [walletId, walletRelease],
   )
 
   return cancel

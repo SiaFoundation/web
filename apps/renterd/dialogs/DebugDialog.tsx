@@ -141,7 +141,7 @@ export function DebugDialog({ trigger, open, onOpenChange }: Props) {
       if (values.openGithub) {
         window.open(
           'https://github.com/SiaFoundation/renterd/issues/new?template=bug_report.yml',
-          '_blank'
+          '_blank',
         )
       }
     },
@@ -152,7 +152,7 @@ export function DebugDialog({ trigger, open, onOpenChange }: Props) {
       gouging.data,
       upload.data,
       pinned.data,
-    ]
+    ],
   )
 
   const fields = useMemo(() => getFields(), [])

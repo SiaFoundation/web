@@ -22,7 +22,7 @@ export function Hosts() {
         className={cx(
           'absolute h-[50%] w-full',
           viewMode === 'map' ? 'block' : 'invisible',
-          'transition-all'
+          'transition-all',
         )}
       >
         <HostMap />
@@ -31,7 +31,7 @@ export function Hosts() {
         className={cx(
           'absolute overflow-hidden transition-all w-full',
           'duration-300',
-          'overflow-hidden'
+          'overflow-hidden',
         )}
         style={{
           bottom: 0,
@@ -47,7 +47,7 @@ export function Hosts() {
           <div
             className={cx(
               viewMode === 'map' ? 'pb-6 px-6' : 'p-6',
-              'min-w-fit'
+              'min-w-fit',
             )}
           >
             <Table

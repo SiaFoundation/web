@@ -25,7 +25,7 @@ export function determineV1ContractStatus({
 
 export function determineV2ContractStatus(
   contract: ExplorerV2FileContract,
-  currentHeight: number
+  currentHeight: number,
 ): ContractStatus {
   const {
     resolutionType,
@@ -81,7 +81,7 @@ export type ContractData = {
 
 export function normalizeContract(
   contract: ExplorerFileContract | ExplorerV2FileContract,
-  currentHeight: number
+  currentHeight: number,
 ): ContractData {
   if ('v2FileContract' in contract) {
     return {

@@ -44,7 +44,7 @@ function useAlertsMain() {
         })
       }
     },
-    [setFilter, removeFilter]
+    [setFilter, removeFilter],
   )
 
   const severityFilter = filters.find((f) => f.id === 'severity')
@@ -85,7 +85,7 @@ function useAlertsMain() {
         triggerSuccessToast({ title: 'Alert has been dismissed' })
       }
     },
-    [dismiss]
+    [dismiss],
   )
 
   const dismissMany = useCallback(
@@ -102,7 +102,7 @@ function useAlertsMain() {
         triggerSuccessToast({ title: 'Selected alerts have been dismissed' })
       }
     },
-    [dismiss]
+    [dismiss],
   )
 
   const datasetPage = useMemo<Maybe<AlertData[]>>(() => {
@@ -157,10 +157,10 @@ function useAlertsMain() {
         (acc, [severity, count]) => {
           return acc + count
         },
-        0
+        0,
       ),
     }),
-    [response.data]
+    [response.data],
   )
 
   return {

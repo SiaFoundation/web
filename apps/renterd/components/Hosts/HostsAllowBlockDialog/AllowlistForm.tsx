@@ -55,7 +55,7 @@ export function AllowlistForm() {
   const isFiltered = formik.values.publicKey
   const filtered =
     allowlistResponse.data?.filter(
-      (a) => !formik.values.publicKey || a.includes(formik.values.publicKey)
+      (a) => !formik.values.publicKey || a.includes(formik.values.publicKey),
     ) || []
 
   return (

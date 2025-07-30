@@ -128,7 +128,7 @@ export const columns: VolumesTableColumn[] = [
           value={data.usedBytes}
           max={data.totalBytes}
           label={`${humanBytes(data.usedBytes)} / ${humanBytes(
-            data.totalBytes
+            data.totalBytes,
           )}`}
         />
       </div>

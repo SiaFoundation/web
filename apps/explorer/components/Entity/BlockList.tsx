@@ -61,7 +61,7 @@ export function BlockList({
             <div
               className={cx(
                 'flex items-center justify-center h-[100px]',
-                itemBorderStyles()
+                itemBorderStyles(),
               )}
             >
               <Text size="18" color="subtle">
@@ -114,7 +114,7 @@ export function BlockList({
                           <Text color="subtle" size="12">
                             {`mined in ${formatDistance(
                               new Date(block.timestamp),
-                              new Date(dataset[i + 1].timestamp)
+                              new Date(dataset[i + 1].timestamp),
                             )}`}
                           </Text>
                         </ClientSideOnly>
@@ -129,7 +129,7 @@ export function BlockList({
                               new Date(),
                               {
                                 addSuffix: true,
-                              }
+                              },
                             )}{' '}
                             {' • '}
                             {block.version}
@@ -153,6 +153,6 @@ export function BlockList({
 function itemBorderStyles() {
   return cx(
     'border-t border-gray-200 dark:border-graydark-300',
-    'first:border-none'
+    'first:border-none',
   )
 }

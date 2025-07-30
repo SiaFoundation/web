@@ -16,7 +16,7 @@ import { retryOperation } from './retryOperation'
 
 export async function beforeTest(
   page: Page,
-  { siafundAddr }: { siafundAddr?: string } = {}
+  { siafundAddr }: { siafundAddr?: string } = {},
 ) {
   await mockApiSiaScanExchangeRates({ page })
   await mockApiSiaScanHostMetrics({ page })

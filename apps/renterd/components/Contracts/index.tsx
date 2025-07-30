@@ -38,7 +38,7 @@ export function Contracts() {
           'absolute w-full',
           showDetailView ? 'block' : 'invisible',
           'transition-all',
-          'p-6'
+          'p-6',
         )}
         style={{
           height: showDetailView ? `calc(100% - ${listHeight})` : 0,
@@ -50,7 +50,7 @@ export function Contracts() {
         className={cx(
           'absolute overflow-hidden transition-all w-full',
           'duration-300',
-          'overflow-hidden'
+          'overflow-hidden',
         )}
         style={{
           bottom: 0,

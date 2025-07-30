@@ -20,7 +20,7 @@ export const createVolume = step(
     await page.waitForTimeout(1000)
     await fillTextInputByName(page, 'size', '11')
     await expect(
-      page.getByRole('dialog').getByText('Must be between 10.00 GB')
+      page.getByRole('dialog').getByText('Must be between 10.00 GB'),
     ).toBeHidden()
     await page.locator('input[name=size]').press('Enter')
     await expect(page.getByRole('dialog')).toBeHidden()
@@ -29,7 +29,7 @@ export const createVolume = step(
     await expect(row.getByText('ready')).toBeVisible()
     await expect(page.getByRole('cell', { name: fullPath })).toBeVisible()
     await clearToasts({ page })
-  }
+  },
 )
 
 export const deleteVolume = step(
@@ -43,7 +43,7 @@ export const deleteVolume = step(
     await page.locator('input[name=path]').press('Enter')
     await expect(page.getByRole('dialog')).toBeHidden()
     await expect(
-      page.getByText('Volume is now being permanently deleted')
+      page.getByText('Volume is now being permanently deleted'),
     ).toBeVisible()
     const row = page.getByRole('row', { name: fullPath })
     await expect
@@ -53,10 +53,10 @@ export const deleteVolume = step(
           (await page
             .getByTestId('volumesTable')
             .getByText(fullPath)
-            .isHidden())
+            .isHidden()),
       )
       .toBe(true)
-  }
+  },
 )
 
 export const deleteVolumeIfExists = step(
@@ -69,7 +69,7 @@ export const deleteVolumeIfExists = step(
     if (doesVolumeExist) {
       await deleteVolume(page, name, path)
     }
-  }
+  },
 )
 
 export const openVolumeContextMenu = step(
@@ -80,7 +80,7 @@ export const openVolumeContextMenu = step(
       .getByLabel('volume context menu')
     await expect(menu).toBeVisible()
     await menu.click()
-  }
+  },
 )
 
 export function getVolumeRows(page: Page) {
@@ -91,14 +91,14 @@ export const volumeInList = step(
   'volume in list',
   async (page: Page, name: string) => {
     await expect(page.getByTestId('volumesTable').getByText(name)).toBeVisible()
-  }
+  },
 )
 
 export const volumeNotInList = step(
   'volume not in list',
   async (page: Page, name: string) => {
     await expect(page.getByTestId('volumesTable').getByText(name)).toBeHidden()
-  }
+  },
 )
 
 export const getVolumeRowByIndex = step(
@@ -110,9 +110,9 @@ export const getVolumeRowByIndex = step(
         .locator('tbody')
         .getByRole('row')
         .nth(index),
-      shouldExpect
+      shouldExpect,
     )
-  }
+  },
 )
 
 export const expectVolumeRowByIndex = step(
@@ -123,7 +123,7 @@ export const expectVolumeRowByIndex = step(
         .getByTestId('volumesTable')
         .locator('tbody')
         .getByRole('row')
-        .nth(index)
+        .nth(index),
     ).toBeVisible()
-  }
+  },
 )

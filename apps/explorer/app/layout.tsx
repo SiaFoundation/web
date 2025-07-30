@@ -15,7 +15,7 @@ export const metadata = {
   metadataBase: new URL(
     process.env.NODE_ENV === 'development'
       ? `http://localhost:${process.env.PORT || 3000}`
-      : appLink
+      : appLink,
   ),
 }
 

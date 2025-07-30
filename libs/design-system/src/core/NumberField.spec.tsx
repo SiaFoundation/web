@@ -101,7 +101,7 @@ describe('NumberField', () => {
         '4444.5',
         '4444.55',
       ],
-      onChange
+      onChange,
     )
   })
 
@@ -135,7 +135,7 @@ describe('NumberField', () => {
         '4444.5',
         '4444.55',
       ],
-      onChange
+      onChange,
     )
   })
 
@@ -170,7 +170,7 @@ describe('NumberField', () => {
         '0.12345',
         '0.123456',
       ],
-      onChange
+      onChange,
     )
   })
 })
@@ -205,7 +205,7 @@ async function renderNode({
       <AppSettingsProvider>
         <Component initialValue={initialValue} {...props} />
       </AppSettingsProvider>
-    </CoreProvider>
+    </CoreProvider>,
   )
 
   const input = node.getByTestId('numberfield') as HTMLInputElement

@@ -22,7 +22,7 @@ type Props<Datum extends Record<string, DatumValue>> = {
 }
 
 export function useClientFilteredDataset<
-  Datum extends Record<string, DatumValue>
+  Datum extends Record<string, DatumValue>,
 >({ dataset, filters, sortField, sortDirection, limit, offset }: Props<Datum>) {
   const datasetFiltered = useMemo<Maybe<Datum[]>>(() => {
     if (!dataset) {

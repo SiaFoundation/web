@@ -49,7 +49,7 @@ type Values = ReturnType<typeof getDefaultValues>
 
 function getFields(
   minSizeGB: number,
-  maxSizeGB: number
+  maxSizeGB: number,
 ): ConfigFields<Values, never> {
   return {
     size: {
@@ -63,7 +63,7 @@ function getFields(
         validate: {
           between: (value?: BigNumber) => {
             const error = `Must be between ${humanBytes(
-              GBToBytes(minSizeGB)
+              GBToBytes(minSizeGB),
             )} and ${humanBytes(GBToBytes(maxSizeGB), { fixed: 3 })}`
             return (value?.lte(maxSizeGB) && value?.gte(minSizeGB)) || error
           },
@@ -94,7 +94,7 @@ export function VolumeResizeDialog({ trigger, open, onOpenChange }: Props) {
   const volumeResize = useVolumeResize()
 
   const defaultValues = getDefaultValues(
-    volume.data ? sectorsToGB(volume.data.totalSectors) : new BigNumber(0)
+    volume.data ? sectorsToGB(volume.data.totalSectors) : new BigNumber(0),
   )
 
   const form = useForm({
@@ -131,22 +131,22 @@ export function VolumeResizeDialog({ trigger, open, onOpenChange }: Props) {
         closeAndReset()
       }
     },
-    [id, volumeResize, closeAndReset]
+    [id, volumeResize, closeAndReset],
   )
 
   const newSizeGB = useMemo(() => size || new BigNumber(0), [size])
   const currentSizeGB = useMemo(
     () =>
       volume.data ? sectorsToGB(volume.data.totalSectors) : new BigNumber(0),
-    [volume.data]
+    [volume.data],
   )
   const freeSizeGB = useMemo(
     () => (dir.data ? bytesToGB(dir.data.freeBytes) : new BigNumber(0)),
-    [dir.data]
+    [dir.data],
   )
   const maxSizeGB = useMemo(
     () => currentSizeGB.plus(freeSizeGB),
-    [currentSizeGB, freeSizeGB]
+    [currentSizeGB, freeSizeGB],
   )
 
   const isNewSizeBigger = currentSizeGB.lt(newSizeGB)
@@ -154,7 +154,7 @@ export function VolumeResizeDialog({ trigger, open, onOpenChange }: Props) {
 
   const fields = useMemo(
     () => getFields(minSizeGB.toNumber(), maxSizeGB.toNumber()),
-    [maxSizeGB]
+    [maxSizeGB],
   )
 
   const onInvalid = useOnInvalid(fields)
@@ -199,10 +199,10 @@ export function VolumeResizeDialog({ trigger, open, onOpenChange }: Props) {
               <Text size="12" color="subtle">
                 {isNewSizeBigger
                   ? `Increase by ${humanBytes(
-                      GBToBytes(newSizeGB.minus(currentSizeGB))
+                      GBToBytes(newSizeGB.minus(currentSizeGB)),
                     )}`
                   : `Decrease by ${humanBytes(
-                      GBToBytes(currentSizeGB.minus(newSizeGB))
+                      GBToBytes(currentSizeGB.minus(newSizeGB)),
                     )}`}
               </Text>
             ) : (

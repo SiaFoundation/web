@@ -92,7 +92,7 @@ const styles = cva(
       rounded: true,
       interactive: false,
     },
-  }
+  },
 )
 
 export function Badge({

@@ -22,7 +22,7 @@ const formatOGImage = (id: string) => {
       subtitle: 'block',
       initials: 'B',
     },
-    size
+    size,
   )
 }
 
@@ -70,7 +70,7 @@ export default async function Image({ params }: ExplorerPageProps) {
         initials: 'B',
         values,
       },
-      size
+      size,
     )
   } catch {
     return formatOGImage(id)

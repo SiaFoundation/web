@@ -99,7 +99,7 @@ export function AddressUpdateDialog({
         closeAndReset()
       }
     },
-    [walletId, addr, addressAdd, address, closeAndReset]
+    [walletId, addr, addressAdd, address, closeAndReset],
   )
 
   return (

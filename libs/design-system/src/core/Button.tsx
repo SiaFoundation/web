@@ -154,7 +154,7 @@ export const buttonStyles = cva(
       icon: 'subtle',
       color: 'none',
     },
-  }
+  },
 )
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &

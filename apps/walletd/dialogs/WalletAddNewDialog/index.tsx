@@ -172,7 +172,7 @@ export function WalletAddNewDialog({ trigger, open, onOpenChange }: Props) {
         form.reset(defaultValues)
       }
     },
-    [form, openDialog, walletAdd]
+    [form, openDialog, walletAdd],
   )
 
   return (

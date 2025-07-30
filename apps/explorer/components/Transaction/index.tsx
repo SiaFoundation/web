@@ -56,12 +56,12 @@ export function Transaction({
         addressHref: routes.address.view.replace(
           ':id',
           stripPrefix(
-            'parent' in o ? o.parent.siacoinOutput.address : o.address
-          )
+            'parent' in o ? o.parent.siacoinOutput.address : o.address,
+          ),
         ),
         address: 'parent' in o ? o.parent.siacoinOutput.address : o.address,
         sc: new BigNumber(
-          'parent' in o ? o.parent.siacoinOutput.value : o.value
+          'parent' in o ? o.parent.siacoinOutput.value : o.value,
         ),
         outputId: 'parent' in o ? o.parent.id : o.parentID,
       })
@@ -72,8 +72,8 @@ export function Transaction({
         addressHref: routes.address.view.replace(
           ':id',
           stripPrefix(
-            'parent' in o ? o.parent.siafundOutput.address : o.address
-          )
+            'parent' in o ? o.parent.siafundOutput.address : o.address,
+          ),
         ),
         address: 'parent' in o ? o.parent.siafundOutput.address : o.address,
         sf: Number('parent' in o ? o.parent.siafundOutput.value : o.value),
@@ -99,7 +99,7 @@ export function Transaction({
         addressHref: routes.address.view.replace(
           ':id',
 
-          o.siacoinOutput.address
+          o.siacoinOutput.address,
         ),
         address: o.siacoinOutput.address,
         sc: new BigNumber(o.siacoinOutput.value),
@@ -111,7 +111,7 @@ export function Transaction({
         label: 'siafund output',
         addressHref: routes.address.view.replace(
           ':id',
-          stripPrefix(o.siafundOutput.address)
+          stripPrefix(o.siafundOutput.address),
         ),
         address: o.siafundOutput.address,
         sf: Number(o.siafundOutput.value),
@@ -144,7 +144,7 @@ export function Transaction({
             type: 'contract',
             href: routes.contract.view.replace(
               ':id',
-              stripPrefix(contract.parent.id)
+              stripPrefix(contract.parent.id),
             ),
             hash: contract.parent.id,
           })
@@ -155,7 +155,7 @@ export function Transaction({
           href: routes.contract.view.replace(':id', stripPrefix(contract.id)),
           hash: contract.id,
         })
-      }
+      },
     )
     {
       'fileContractResolutions' in transaction &&
@@ -165,7 +165,7 @@ export function Transaction({
             type: 'contract',
             href: routes.contract.view.replace(
               ':id',
-              stripPrefix(resolution.parent.id)
+              stripPrefix(resolution.parent.id),
             ),
             hash: resolution.parent.id,
           })
@@ -179,7 +179,7 @@ export function Transaction({
           'netAddress' in host
             ? host.netAddress
             : host.V2HostAnnouncement.filter(
-                (ha) => ha.protocol === 'siamux'
+                (ha) => ha.protocol === 'siamux',
               )[0].address,
       })
     })

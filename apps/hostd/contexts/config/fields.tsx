@@ -121,12 +121,12 @@ export function getFields({
             validationContext,
             (value) =>
               new BigNumber(value as BigNumber).lte(100) ||
-              `must be at most 100%`
+              `must be at most 100%`,
           ),
           min: requiredIfPinningEnabled(
             validationContext,
             (value) =>
-              new BigNumber(value as BigNumber).gte(0) || `must be at least 0%`
+              new BigNumber(value as BigNumber).gte(0) || `must be at least 0%`,
           ),
         },
       },
@@ -175,14 +175,14 @@ export function getFields({
           currency: requiredIfPinningEnabled(
             validationContext,
             (_, values) =>
-              !!values.pinnedCurrency || 'must select a pinned currency'
+              !!values.pinnedCurrency || 'must select a pinned currency',
           ),
           range: requiredIfPinningEnabled(
             validationContext,
             (value: BigNumber, values) =>
               !values.shouldPinStoragePrice ||
               value?.gt(0) ||
-              'storage price must be greater than 0'
+              'storage price must be greater than 0',
           ),
         },
       },
@@ -232,14 +232,14 @@ export function getFields({
           currency: requiredIfPinningEnabled(
             validationContext,
             (_, values) =>
-              !!values.pinnedCurrency || 'must select a pinned currency'
+              !!values.pinnedCurrency || 'must select a pinned currency',
           ),
           range: requiredIfPinningEnabled(
             validationContext,
             (value: BigNumber, values) =>
               !values.shouldPinEgressPrice ||
               value?.gt(0) ||
-              'egress price must be greater than 0'
+              'egress price must be greater than 0',
           ),
         },
       },
@@ -288,14 +288,14 @@ export function getFields({
           currency: requiredIfPinningEnabled(
             validationContext,
             (_, values) =>
-              !!values.pinnedCurrency || 'must select a pinned currency'
+              !!values.pinnedCurrency || 'must select a pinned currency',
           ),
           range: requiredIfPinningEnabled(
             validationContext,
             (value: BigNumber, values) =>
               !values.shouldPinIngressPrice ||
               value?.gt(0) ||
-              'ingress price must be greater than 0'
+              'ingress price must be greater than 0',
           ),
         },
       },
@@ -360,14 +360,14 @@ export function getFields({
           currency: requiredIfPinningEnabled(
             validationContext,
             (_, values) =>
-              !!values.pinnedCurrency || 'must select a pinned currency'
+              !!values.pinnedCurrency || 'must select a pinned currency',
           ),
           range: requiredIfPinningEnabled(
             validationContext,
             (value: BigNumber, values) =>
               !values.shouldPinMaxCollateral ||
               value?.gt(0) ||
-              'max collateral must be greater than 0'
+              'max collateral must be greater than 0',
           ),
         },
       },
@@ -645,11 +645,11 @@ export function getFields({
 
 function usdInScRoundedToNearestTen(
   usdAmount: number,
-  exchangeRateUSD?: BigNumber
+  exchangeRateUSD?: BigNumber,
 ) {
   return exchangeRateUSD
     ? new BigNumber(
-        new BigNumber(usdAmount).div(exchangeRateUSD).div(10).toFixed(0)
+        new BigNumber(usdAmount).div(exchangeRateUSD).div(10).toFixed(0),
       ).times(10)
     : undefined
 }
@@ -658,7 +658,7 @@ function requiredIfPinningEnabled<Values>(
   context: {
     pinningEnabled: boolean
   },
-  method?: (value: unknown, values: Values) => string | boolean
+  method?: (value: unknown, values: Values) => string | boolean,
 ) {
   return (value: unknown, values: Values) => {
     if (context.pinningEnabled) {

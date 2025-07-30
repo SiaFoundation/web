@@ -96,7 +96,7 @@ async function signTransactionIndex({
       encodedTransactionBuffer,
       0,
       keyIndex,
-      0
+      0,
     )
     return { signature }
   } catch (e) {

@@ -23,7 +23,7 @@ export function useServerFilters() {
       })
       resetPaginationParams()
     },
-    [_setFilters, resetPaginationParams]
+    [_setFilters, resetPaginationParams],
   )
 
   const resetFilters = useCallback(() => {
@@ -36,7 +36,7 @@ export function useServerFilters() {
       _setFilters((filters) => filters.filter((f) => f.id !== id))
       resetPaginationParams()
     },
-    [_setFilters, resetPaginationParams]
+    [_setFilters, resetPaginationParams],
   )
 
   const removeLastFilter = useCallback(() => {

@@ -67,27 +67,26 @@ export function getV2TransactionType(txn: {
   siacoinOutputs?: unknown[]
   fileContracts?: unknown[]
   arbitraryData?: Uint8Array
-  fileContractResolutions?:
-    | (
-        | {
-            type: 'renewal'
-            parent: {
-              v2FileContract: {
-                proofHeight: number
-                expirationHeight: number
-              }
-            }
-            resolution: {
-              newContract: {
-                proofHeight: number
-                expirationHeight: number
-              }
-            }
+  fileContractResolutions?: (
+    | {
+        type: 'renewal'
+        parent: {
+          v2FileContract: {
+            proofHeight: number
+            expirationHeight: number
           }
-        | {
-            type: 'expiration' | 'finalization' | 'storageProof'
+        }
+        resolution: {
+          newContract: {
+            proofHeight: number
+            expirationHeight: number
           }
-      )[]
+        }
+      }
+    | {
+        type: 'expiration' | 'finalization' | 'storageProof'
+      }
+  )[]
   fileContractRevisions?: {
     parent: {
       v2FileContract: {
@@ -128,7 +127,7 @@ export function getV2TransactionType(txn: {
     return 'contractFormation'
   }
   const announcement = txn.attestations?.filter(
-    (at) => at.key === 'HostAnnouncement'
+    (at) => at.key === 'HostAnnouncement',
   )
   if (announcement && announcement.length > 0) return 'hostAnnouncement'
   if (txn.siafundOutputs && txn.siafundOutputs.length > 0) {

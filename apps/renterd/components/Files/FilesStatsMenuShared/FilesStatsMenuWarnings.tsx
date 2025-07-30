@@ -71,9 +71,9 @@ export function FilesStatsMenuWarnings() {
   const warningList = useMemo(
     () =>
       [syncStatusEl, autopilotNotEnabledEl, notEnoughContractsEl].filter(
-        Boolean
+        Boolean,
       ),
-    [syncStatusEl, autopilotNotEnabledEl, notEnoughContractsEl]
+    [syncStatusEl, autopilotNotEnabledEl, notEnoughContractsEl],
   )
 
   if (warningList.length)

@@ -133,7 +133,7 @@ export function WalletAddLedgerDialog({ trigger, open, onOpenChange }: Props) {
       {
         unlockConditions,
         address,
-      }: { unlockConditions: UnlockConditions; address: string }
+      }: { unlockConditions: UnlockConditions; address: string },
     ) => {
       const metadata: WalletAddressMetadata = {
         index: 0,
@@ -157,7 +157,7 @@ export function WalletAddLedgerDialog({ trigger, open, onOpenChange }: Props) {
         return
       }
     },
-    [addressAdd]
+    [addressAdd],
   )
 
   const onSubmit = useCallback(
@@ -200,12 +200,12 @@ export function WalletAddLedgerDialog({ trigger, open, onOpenChange }: Props) {
         form.reset(defaultValues)
       }
     },
-    [form, openDialog, walletAdd, device, addAddress0]
+    [form, openDialog, walletAdd, device, addAddress0],
   )
 
   form.register(
     'ledgerConnectedAndVerified',
-    fields.ledgerConnectedAndVerified.validation
+    fields.ledgerConnectedAndVerified.validation,
   )
 
   return (

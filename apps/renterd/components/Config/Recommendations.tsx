@@ -227,7 +227,7 @@ export function Recommendations() {
                   </Text>
                 }
               />
-            )
+            ),
           )}
         </div>
       ) : null}

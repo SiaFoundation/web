@@ -18,7 +18,7 @@ export const getAlertRowByIndex = step(
         .locator('tbody')
         .getByRole('row')
         .nth(index),
-      shouldExpect
+      shouldExpect,
     )
-  }
+  },
 )

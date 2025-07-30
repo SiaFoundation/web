@@ -10,7 +10,7 @@ export function getIsSynced(data?: { prevTimestamps: string[] }) {
 
 export function getIsIndexing(
   consensusState?: { index: { height: number } },
-  blockMetrics?: { index: { height: number } }
+  blockMetrics?: { index: { height: number } },
 ) {
   if (!blockMetrics || !consensusState) {
     return false

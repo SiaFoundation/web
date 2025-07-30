@@ -64,7 +64,7 @@ export function WalletActionsMenu() {
             disabled={isSendDisabled}
             onClick={() => {
               const addressLowestIndex = dataset?.sort((a, b) =>
-                a.metadata.index > b.metadata.index ? 1 : -1
+                a.metadata.index > b.metadata.index ? 1 : -1,
               )[0]?.address
               openDialog('addressUpdate', {
                 walletId: walletId,

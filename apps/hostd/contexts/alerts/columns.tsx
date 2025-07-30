@@ -58,8 +58,8 @@ export const columns: AlertsTableColumn[] = [
                 severity === 'error' || severity === 'critical'
                   ? 'red'
                   : severity === 'warning'
-                  ? 'amber'
-                  : 'gray'
+                    ? 'amber'
+                    : 'gray'
               }
               size="small"
             >
@@ -107,7 +107,7 @@ export const columns: AlertsTableColumn[] = [
             })
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             .filter((data) => data) as { key: string; value: any }[],
-        [data]
+        [data],
       )
       if (datums.length === 0) {
         return (

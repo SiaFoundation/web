@@ -14,7 +14,7 @@ function getRollupOptions(options) {
       .concat(
         wasm({
           targetEnv: 'auto-inline',
-        })
+        }),
       )
       .concat(preserveDirectives.default()),
   }

@@ -31,7 +31,7 @@ import {
 // state
 
 export function useWorkerState(
-  args?: HookArgsSwr<WorkerStateParams, WorkerStateResponse>
+  args?: HookArgsSwr<WorkerStateParams, WorkerStateResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -44,7 +44,7 @@ export function useObjectDownloadFunc(
     ObjectDownloadParams,
     ObjectDownloadPayload,
     ObjectDownloadResponse
-  >
+  >,
 ) {
   return useGetDownloadFunc({ ...args, route: workerObjectKeyRoute })
 }
@@ -54,7 +54,7 @@ export function useObjectUpload(
     ObjectUploadParams,
     ObjectUploadPayload,
     ObjectUploadResponse
-  >
+  >,
 ) {
   return usePutFunc(
     {
@@ -72,7 +72,7 @@ export function useObjectUpload(
     },
     async (mutate) => {
       mutate((key) => key.startsWith(busObjectsRoute))
-    }
+    },
   )
 }
 
@@ -81,7 +81,7 @@ export function useMultipartUploadPart(
     MultipartUploadPartParams,
     MultipartUploadPartPayload,
     MultipartUploadPartResponse
-  >
+  >,
 ) {
   return usePutFunc({
     ...args,
@@ -105,7 +105,7 @@ export function useAccountResetDrift(
     AccountResetDriftParams,
     AccountResetDriftPayload,
     AccountResetDriftResponse
-  >
+  >,
 ) {
   return usePostFunc({
     ...args,

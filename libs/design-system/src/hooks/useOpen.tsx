@@ -29,7 +29,7 @@ export function useOpen({
         localSetOpen(open)
       }
     },
-    [controlOnOpenChange]
+    [controlOnOpenChange],
   )
 
   return {

@@ -22,7 +22,7 @@ export function FilesBulkDelete({
         bucket: item.bucket.name,
         prefix: item.key,
       })),
-    [multiSelect.selection]
+    [multiSelect.selection],
   )
   const { openConfirmDialog } = useDialog()
   const objectsRemove = useObjectsRemove()
@@ -34,7 +34,7 @@ export function FilesBulkDelete({
             bucket,
             prefix,
           },
-        })
+        }),
       ),
       {
         toastError: ({ totalCount, errorCount, successCount }) => ({
@@ -47,7 +47,7 @@ export function FilesBulkDelete({
         after: () => {
           multiSelect.deselectAll()
         },
-      }
+      },
     )
   }, [multiSelect, filesToDelete, objectsRemove])
 

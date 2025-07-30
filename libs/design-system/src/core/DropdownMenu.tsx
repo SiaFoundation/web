@@ -28,7 +28,7 @@ const contentStyles = (className?: string) =>
     panelStyles(),
     cva(['max-w-xs', 'shadow-sm', 'py-1', 'px-1'])({
       className,
-    })
+    }),
   )
 
 const animationVariants: Variants = {

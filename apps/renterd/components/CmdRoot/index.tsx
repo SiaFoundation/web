@@ -46,7 +46,7 @@ export function CmdRoot({ panel }: Props) {
     (page: Page) => {
       setPages((pages) => [...pages, page])
     },
-    [setPages]
+    [setPages],
   )
 
   const beforeSelect = useCallback(() => {

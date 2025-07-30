@@ -26,7 +26,7 @@ export async function exampleExploredDataFetch() {
 
     if (transactionFeeResponse.status !== 200)
       throw new Error(
-        `transactionFee request failed: ${transactionFeeResponse.status}`
+        `transactionFee request failed: ${transactionFeeResponse.status}`,
       )
 
     const transactionFee = transactionFeeResponse.data

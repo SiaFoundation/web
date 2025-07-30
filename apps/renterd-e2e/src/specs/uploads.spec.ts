@@ -38,13 +38,13 @@ test('uploads are shown in the local and all uploads lists', async ({
     },
     {
       waitForEachUploadToFinish: false,
-    }
+    },
   )
   await expect(
-    page.getByTestId('docked-controls').getByText('Active uploads')
+    page.getByTestId('docked-controls').getByText('Active uploads'),
   ).toBeVisible()
   await expect(
-    page.getByTestId('docked-controls').getByText('bucket1')
+    page.getByTestId('docked-controls').getByText('bucket1'),
   ).toBeVisible()
   await changeExplorerMode(page, 'uploads')
   await expect(getUploadRows(page)).toHaveCount(6)
@@ -70,6 +70,6 @@ export async function mockApiWorkerMultipartUploadPartHanging({
       await new Promise(() => {
         // Never resolve, leaving the request hanging.
       })
-    }
+    },
   )
 }

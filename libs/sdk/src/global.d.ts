@@ -1,6 +1,6 @@
 declare module '*.wasm' {
   const func: (
-    imports: WebAssembly.Imports
+    imports: WebAssembly.Imports,
   ) => Promise<WebAssembly.WebAssemblyInstantiatedSource>
   export default func
 }

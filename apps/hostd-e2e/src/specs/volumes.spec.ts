@@ -120,7 +120,7 @@ test('viewing a page with no data shows the correct empty state', async ({
   await page.goto(url + '?limit=1&offset=2')
 
   await expect(
-    page.getByText('No data on this page, reset pagination to continue.')
+    page.getByText('No data on this page, reset pagination to continue.'),
   ).toBeVisible()
   await expect(page.getByText('Back to first page')).toBeVisible()
   await page.getByText('Back to first page').click()

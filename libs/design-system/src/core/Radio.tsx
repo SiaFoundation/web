@@ -20,7 +20,7 @@ export const radioIndicatorStyles = cva(
     defaultVariants: {
       size: 'small',
     },
-  }
+  },
 )
 
 export const radioStyles = cva(
@@ -49,7 +49,7 @@ export const radioStyles = cva(
     defaultVariants: {
       size: 'small',
     },
-  }
+  },
 )
 
 export function Radio({

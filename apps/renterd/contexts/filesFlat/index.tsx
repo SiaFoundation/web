@@ -61,8 +61,8 @@ function useFilesFlatMain() {
       ({
         isViewingBuckets,
         multiSelect,
-      } as CellContext),
-    [multiSelect, isViewingBuckets]
+      }) as CellContext,
+    [multiSelect, isViewingBuckets],
   )
 
   return {

@@ -3,16 +3,16 @@ import { Preview } from './Preview'
 
 export async function getOGImage(
   props: React.ComponentProps<typeof Preview>,
-  size: { width: number; height: number }
+  size: { width: number; height: number },
 ) {
   const medium = await fetch(
-    new URL('https://sia.tech/siascan/preview/fonts/plex-sans-medium.ttf')
+    new URL('https://sia.tech/siascan/preview/fonts/plex-sans-medium.ttf'),
   ).then((res) => res.arrayBuffer())
   const semibold = await fetch(
-    new URL('https://sia.tech/siascan/preview/fonts/plex-sans-semibold.ttf')
+    new URL('https://sia.tech/siascan/preview/fonts/plex-sans-semibold.ttf'),
   ).then((res) => res.arrayBuffer())
   const bold = await fetch(
-    new URL('https://sia.tech/siascan/preview/fonts/plex-sans-bold.ttf')
+    new URL('https://sia.tech/siascan/preview/fonts/plex-sans-bold.ttf'),
   ).then((res) => res.arrayBuffer())
 
   return new ImageResponse(<Preview {...props} />, {

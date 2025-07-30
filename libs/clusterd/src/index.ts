@@ -92,7 +92,7 @@ export async function setupCluster({
   })
   clusterd.process.on('exit', (code) => {
     console.log(
-      `clusterd process ${clusterd?.process?.pid} exited with code ${code}`
+      `clusterd process ${clusterd?.process?.pid} exited with code ${code}`,
     )
   })
 
@@ -133,7 +133,7 @@ export async function setupCluster({
     {
       timeout: maxTimeWaitingForAllNodesToStartup,
       interval: 1_000,
-    }
+    },
   )
   console.timeEnd(waitingForNodesToStartTimer)
 
@@ -143,7 +143,7 @@ export async function setupCluster({
   await mine(10)
 
   console.log(
-    `started: ${renterdCount} renterd, ${hostdCount} hostd, ${walletdCount} walletd, and ${exploredCount} explored nodes`
+    `started: ${renterdCount} renterd, ${hostdCount} hostd, ${walletdCount} walletd, and ${exploredCount} explored nodes`,
   )
 
   const explored = clusterd.nodes.filter((n) => n.type === 'explored')
@@ -232,14 +232,14 @@ export async function renterdWaitForContracts({
       const contractCount = contracts.data?.length || 0
 
       console.log(
-        `usable hosts: ${hostCount}/${hostdCount} - active contracts: ${contractCount}/${hostdCount}`
+        `usable hosts: ${hostCount}/${hostdCount} - active contracts: ${contractCount}/${hostdCount}`,
       )
       return hostCount >= hostdCount && contractCount >= hostdCount
     },
     {
       timeout: maxTimeWaitingForContractsToForm,
       interval: 2_000,
-    }
+    },
   )
   console.timeEnd(waitingForContractsToFormTimer)
 }
@@ -278,7 +278,7 @@ export async function hostdWaitForContracts({
     {
       timeout: maxTimeWaitingForContractsToForm,
       interval: 2_000,
-    }
+    },
   )
   console.timeEnd(waitingForContractsToFormTimer)
 }
@@ -286,7 +286,7 @@ export async function hostdWaitForContracts({
 // Sometimes the wallet balance is confirmed but not spendable immediately
 // after the cluster is started. This function waits until it is spendable.
 export async function waitUntilRenterdWalletBalanceIsSpendable(
-  renterd: ReturnType<typeof Bus>
+  renterd: ReturnType<typeof Bus>,
 ) {
   await waitFor(
     'Waiting for wallet balance to be spendable',
@@ -298,7 +298,7 @@ export async function waitUntilRenterdWalletBalanceIsSpendable(
     {
       timeout: 20_000,
       interval: 500,
-    }
+    },
   )
 }
 
@@ -318,7 +318,7 @@ export async function mineToHeight(height: number) {
 
 export async function getCurrentHeight() {
   const response = await Axios.get(
-    `http://localhost:${clusterd.managementPort}/height`
+    `http://localhost:${clusterd.managementPort}/height`,
   )
   return response.data?.height
 }
@@ -334,7 +334,7 @@ export function waitFor(
   {
     timeout = 5_000,
     interval = 500,
-  }: { timeout?: number; interval?: number } = {}
+  }: { timeout?: number; interval?: number } = {},
 ) {
   return new Promise<void>((resolve, reject) => {
     const startTime = Date.now()
@@ -369,7 +369,7 @@ export async function waitForData<T>(
   dataFetcher: () => Promise<T>,
   assertion: (data: T) => boolean | Promise<boolean>,
   timeoutMs = 10_000,
-  retryIntervalMs = 1_000
+  retryIntervalMs = 1_000,
 ): Promise<T> {
   const startTime = Date.now()
 
@@ -390,6 +390,6 @@ export async function waitForData<T>(
   }
 
   throw new Error(
-    `Timeout waiting for data assertion to pass after ${timeoutMs}ms.`
+    `Timeout waiting for data assertion to pass after ${timeoutMs}ms.`,
   )
 }

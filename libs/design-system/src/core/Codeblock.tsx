@@ -24,7 +24,7 @@ export function Codeblock({
           'bg-white dark:bg-graydark-200',
           'border border-gray-400 dark:border-graydark-400',
           'rounded',
-          className
+          className,
         )}
         {...props}
         ref={ref}

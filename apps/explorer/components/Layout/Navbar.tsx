@@ -24,7 +24,7 @@ export function Navbar({ appName, network, homeHref, children }: Props) {
           : '',
         network === 'zen'
           ? 'border-t-4  border-t-amber-500 dark:border-t-amber-400'
-          : ''
+          : '',
       )}
     >
       <Container size="4" className="relative">

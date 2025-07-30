@@ -11,7 +11,7 @@ import { useMemo } from 'react'
 
 export function ConfigurationFiat<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   name,
   form,
@@ -46,14 +46,14 @@ export function ConfigurationFiat<
       median && typeof median !== 'boolean' && rate
         ? new BigNumber(median).times(rate)
         : undefined,
-    [median, rate]
+    [median, rate],
   )
   const suggestionSc = useMemo(
     () =>
       suggestion && typeof suggestion !== 'boolean' && rate
         ? new BigNumber(suggestion).times(rate)
         : undefined,
-    [suggestion, rate]
+    [suggestion, rate],
   )
   return (
     <div className="flex flex-col gap-3 items-end">

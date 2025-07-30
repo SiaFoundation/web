@@ -17,7 +17,7 @@ describe('signLedgerV2', () => {
           device,
           transaction: mocks.walletConstructV2Response.transaction,
           addresses: getMockAddresses(mocks),
-        })
+        }),
       ).toMatchSnapshot()
     })
 
@@ -38,7 +38,7 @@ describe('signLedgerV2', () => {
               },
             },
           ],
-        })
+        }),
       ).toEqual({
         error:
           'Missing address 90c6057cdd2463eca61f83796e83152dbba28b6cb9a74831a043833051ec9f422726bfff2ee8',
@@ -62,7 +62,7 @@ describe('signLedgerV2', () => {
               metadata: {},
             },
           ],
-        })
+        }),
       ).toEqual({
         error:
           'Missing address 90c6057cdd2463eca61f83796e83152dbba28b6cb9a74831a043833051ec9f422726bfff2ee8',

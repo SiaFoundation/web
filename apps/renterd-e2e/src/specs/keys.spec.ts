@@ -51,6 +51,6 @@ test('bulk delete multiple keys', async ({ page }) => {
   await expect(row2).toBeHidden()
   await expect(row3).toBeHidden()
   await expect(
-    page.getByText('There are no S3 authentication keypairs yet.')
+    page.getByText('There are no S3 authentication keypairs yet.'),
   ).toBeVisible()
 })

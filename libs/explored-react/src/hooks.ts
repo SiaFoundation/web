@@ -138,7 +138,7 @@ export function useTxpoolBroadcast(
     TxpoolBroadcastParams,
     TxpoolBroadcastPayload,
     TxpoolBroadcastResponse
-  >
+  >,
 ) {
   return usePostFunc(
     { ...args, route: txpoolBroadcastRoute },
@@ -146,12 +146,12 @@ export function useTxpoolBroadcast(
       mutate((key) => {
         return key.startsWith(txpoolTransactionsRoute)
       })
-    }
+    },
   )
 }
 
 export function useTxpoolTransactions(
-  args?: HookArgsSwr<TxpoolTransactionsParams, TxpoolTransactionsResponse>
+  args?: HookArgsSwr<TxpoolTransactionsParams, TxpoolTransactionsResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -160,7 +160,7 @@ export function useTxpoolTransactions(
 }
 
 export function useTxpoolFee(
-  args?: HookArgsSwr<TxpoolFeeParams, TxpoolFeeResponse>
+  args?: HookArgsSwr<TxpoolFeeParams, TxpoolFeeResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -175,7 +175,7 @@ export function useSyncerConnect(
     SyncerConnectParams,
     SyncerConnectPayload,
     SyncerConnectResponse
-  >
+  >,
 ) {
   return usePostFunc(
     {
@@ -186,12 +186,12 @@ export function useSyncerConnect(
       mutate((key) => {
         return key.startsWith(syncerPeersRoute)
       })
-    }
+    },
   )
 }
 
 export function useSyncerPeers(
-  args?: HookArgsSwr<SyncerPeersParams, SyncerPeersResponse>
+  args?: HookArgsSwr<SyncerPeersParams, SyncerPeersResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -204,7 +204,7 @@ export function useSyncerBroadcastBlock(
     SyncerBroadcastBlockParams,
     SyncerBroadcastBlockPayload,
     SyncerBroadcastBlockResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: syncerBroadcastBlockRoute })
 }
@@ -212,7 +212,7 @@ export function useSyncerBroadcastBlock(
 // Consensus
 
 export function useConsensusTip(
-  args?: HookArgsSwr<ConsensusTipParams, ConsensusTipResponse>
+  args?: HookArgsSwr<ConsensusTipParams, ConsensusTipResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -223,7 +223,7 @@ export function useConsensusTip(
 // TODO: TipByHeight AKA "Best Index"
 
 export function useConsensusNetwork(
-  args?: HookArgsSwr<ConsensusNetworkParams, ConsensusNetworkResponse>
+  args?: HookArgsSwr<ConsensusNetworkParams, ConsensusNetworkResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -232,7 +232,7 @@ export function useConsensusNetwork(
 }
 
 export function useConsensusState(
-  args?: HookArgsSwr<ConsensusStateParams, ConsensusStateResponse>
+  args?: HookArgsSwr<ConsensusStateParams, ConsensusStateResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -243,7 +243,7 @@ export function useConsensusState(
 // Transaction
 
 export function useTransactionByID(
-  args: HookArgsSwr<TransactionByIDParams, TransactionByIDResponse>
+  args: HookArgsSwr<TransactionByIDParams, TransactionByIDResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -256,7 +256,7 @@ export function useTransactionsByIDs(
     TransactionsByIDsParams,
     TransactionsByIDsPayload,
     TransactionsByIDsResponse
-  >
+  >,
 ) {
   return usePostSwr({
     ...args,
@@ -268,7 +268,7 @@ export function useTransactionChainIndices(
   args: HookArgsSwr<
     TransactionChainIndicesParams,
     TransactionChainIndicesResponse
-  >
+  >,
 ) {
   return useGetSwr({
     ...args,
@@ -277,7 +277,7 @@ export function useTransactionChainIndices(
 }
 
 export function useV2TransactionByID(
-  args: HookArgsSwr<V2TransactionByIDParams, V2TransactionByIDResponse>
+  args: HookArgsSwr<V2TransactionByIDParams, V2TransactionByIDResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -290,7 +290,7 @@ export function useV2TransactionsByIDs(
     V2TransactionsByIDsParams,
     V2TransactionsByIDsPayload,
     V2TransactionsByIDsResponse
-  >
+  >,
 ) {
   return usePostSwr({
     ...args,
@@ -302,7 +302,7 @@ export function useV2TransactionChainIndices(
   args: HookArgsSwr<
     V2TransactionChainIndicesParams,
     V2TransactionChainIndicesResponse
-  >
+  >,
 ) {
   return useGetSwr({
     ...args,
@@ -313,7 +313,7 @@ export function useV2TransactionChainIndices(
 // Address
 
 export function useAddressSiacoinUTXOs(
-  args: HookArgsSwr<AddressSiacoinUTXOsParams, AddressSiacoinUTXOsResponse>
+  args: HookArgsSwr<AddressSiacoinUTXOsParams, AddressSiacoinUTXOsResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -322,7 +322,7 @@ export function useAddressSiacoinUTXOs(
 }
 
 export function useAddressSiafundUTXOs(
-  args: HookArgsSwr<AddressSiafundUTXOsParams, AddressSiafundUTXOsResponse>
+  args: HookArgsSwr<AddressSiafundUTXOsParams, AddressSiafundUTXOsResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -331,7 +331,7 @@ export function useAddressSiafundUTXOs(
 }
 
 export function useAddressEvents(
-  args: HookArgsSwr<AddressEventsParams, AddressEventsResponse>
+  args: HookArgsSwr<AddressEventsParams, AddressEventsResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -343,7 +343,7 @@ export function useAddressUnconfirmedEvents(
   args: HookArgsSwr<
     AddressUnconfirmedEventsParams,
     AddressUnconfirmedEventsResponse
-  >
+  >,
 ) {
   return useGetSwr({
     ...args,
@@ -352,7 +352,7 @@ export function useAddressUnconfirmedEvents(
 }
 
 export function useAddressBalance(
-  args: HookArgsSwr<AddressBalanceParams, AddressBalanceResponse>
+  args: HookArgsSwr<AddressBalanceParams, AddressBalanceResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -363,7 +363,7 @@ export function useAddressBalance(
 // Output
 
 export function useOutputSiacoin(
-  args: HookArgsSwr<OutputSiacoinParams, OutputSiacoinResponse>
+  args: HookArgsSwr<OutputSiacoinParams, OutputSiacoinResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -372,7 +372,7 @@ export function useOutputSiacoin(
 }
 
 export function useOutputSiafund(
-  args: HookArgsSwr<OutputSiafundParams, OutputSiafundResponse>
+  args: HookArgsSwr<OutputSiafundParams, OutputSiafundResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -383,7 +383,7 @@ export function useOutputSiafund(
 // Contract
 
 export function useContractByID(
-  args: HookArgsSwr<ContractByIDParams, ContractByIDResponse>
+  args: HookArgsSwr<ContractByIDParams, ContractByIDResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -396,7 +396,7 @@ export function useContractsByIDs(
     ContractsByIDsParams,
     ContractsByIDsPayload,
     ContractsByIDsResponse
-  >
+  >,
 ) {
   return usePostSwr({
     ...args,
@@ -405,7 +405,7 @@ export function useContractsByIDs(
 }
 
 export function useContractByPubkey(
-  args: HookArgsSwr<ContractByPubkeyParams, ContractByPubkeyResponse>
+  args: HookArgsSwr<ContractByPubkeyParams, ContractByPubkeyResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -414,7 +414,7 @@ export function useContractByPubkey(
 }
 
 export function useContractRevisions(
-  args: HookArgsSwr<ContractRevisionsParams, ContractRevisionsResponse>
+  args: HookArgsSwr<ContractRevisionsParams, ContractRevisionsResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -423,7 +423,7 @@ export function useContractRevisions(
 }
 
 export function useV2ContractByID(
-  args: HookArgsSwr<V2ContractByIDParams, V2ContractByIDResponse>
+  args: HookArgsSwr<V2ContractByIDParams, V2ContractByIDResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -436,7 +436,7 @@ export function useV2ContractsByIDs(
     V2ContractsByIDsParams,
     V2ContractsByIDsPayload,
     V2ContractsByIDsResponse
-  >
+  >,
 ) {
   return usePostSwr({
     ...args,
@@ -445,7 +445,7 @@ export function useV2ContractsByIDs(
 }
 
 export function useV2ContractByPubkey(
-  args: HookArgsSwr<V2ContractsByPubkeyParams, V2ContractsByPubkeyResponse>
+  args: HookArgsSwr<V2ContractsByPubkeyParams, V2ContractsByPubkeyResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -457,7 +457,7 @@ export function useV2ContractRevisions(
   args: HookArgsSwr<
     V2ContractRevisionsByIDParams,
     V2ContractRevisionsByIDResponse
-  >
+  >,
 ) {
   return useGetSwr({
     ...args,
@@ -468,7 +468,7 @@ export function useV2ContractRevisions(
 // Metrics
 
 export function useBlockMetrics(
-  args: HookArgsSwr<BlockMetricsParams, BlockMetricsResponse>
+  args: HookArgsSwr<BlockMetricsParams, BlockMetricsResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -477,7 +477,7 @@ export function useBlockMetrics(
 }
 
 export function useBlockMetricsByID(
-  args: HookArgsSwr<BlockMetricsByIDParams, BlockMetricsByIDResponse>
+  args: HookArgsSwr<BlockMetricsByIDParams, BlockMetricsByIDResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -486,7 +486,7 @@ export function useBlockMetricsByID(
 }
 
 export function useHostMetrics(
-  args: HookArgsSwr<HostMetricsParams, HostMetricsResponse>
+  args: HookArgsSwr<HostMetricsParams, HostMetricsResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -497,7 +497,7 @@ export function useHostMetrics(
 // Search
 
 export function useSearchResultType(
-  args: HookArgsSwr<SearchResultTypeParams, SearchResultTypeResponse>
+  args: HookArgsSwr<SearchResultTypeParams, SearchResultTypeResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -507,7 +507,7 @@ export function useSearchResultType(
 
 // Host
 export function useHostByPubkey(
-  args: HookArgsSwr<HostByPubkeyParams, HostByPubkeyResponse>
+  args: HookArgsSwr<HostByPubkeyParams, HostByPubkeyResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -520,14 +520,14 @@ export function useHostsList(
     HostsListParams,
     HostsListPayload,
     HostsListResponse
-  >
+  >,
 ) {
   return usePostSwr({ ...args, route: hostsListRoute })
 }
 
 // Exchange
 export function useExchangeRate(
-  args: HookArgsSwr<ExchangeRateParams, ExchangeRateResponse>
+  args: HookArgsSwr<ExchangeRateParams, ExchangeRateResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -537,7 +537,7 @@ export function useExchangeRate(
 
 // Explorer Tip
 export function useExplorerTip(
-  args: HookArgsSwr<ExplorerTipParams, ExplorerTipResponse>
+  args: HookArgsSwr<ExplorerTipParams, ExplorerTipResponse>,
 ) {
   return useGetSwr({
     ...args,

@@ -36,7 +36,7 @@ export const baseItemStyles = ({
       'whitespace-nowrap',
       'px-1.5',
       'py-1.5',
-    ]
+    ],
   )
 
 export const itemStyles = ({
@@ -74,7 +74,7 @@ export const itemStyles = ({
       'data-[disabled]:pointer-events-none',
       'data-[disabled]:text-gray-700',
       'dark:data-[disabled]:text-graydark-700',
-    ]
+    ],
   )
 
 export const labelStyles = ({
@@ -142,7 +142,7 @@ export function BaseMenuItem({
           scaleSize,
           noWrap,
           ellipsis,
-        })
+        }),
       )}
       {...props}
     />
@@ -177,7 +177,7 @@ export function MenuItem({
           scaleSize,
           noWrap,
           ellipsis,
-        })
+        }),
       )}
       {...props}
     />

@@ -10,9 +10,9 @@ export const setSwitchByLabel = step(
     }
     await expect(el).toHaveAttribute(
       'data-state',
-      state ? 'checked' : 'unchecked'
+      state ? 'checked' : 'unchecked',
     )
-  }
+  },
 )
 
 export const expectSwitchVisible = step(
@@ -20,7 +20,7 @@ export const expectSwitchVisible = step(
   async (page: Page, label: string) => {
     const el = page.getByLabel(label)
     await expect(el).toBeVisible()
-  }
+  },
 )
 
 export const expectSwitchNotVisible = step(
@@ -28,7 +28,7 @@ export const expectSwitchNotVisible = step(
   async (page: Page, label: string) => {
     const el = page.getByLabel(label)
     await expect(el).toBeHidden()
-  }
+  },
 )
 
 export const getSwitchByLabel = step(
@@ -42,7 +42,7 @@ export const getSwitchByLabel = step(
       el,
       value: value === 'checked',
     }
-  }
+  },
 )
 
 export const expectSwitchByLabel = step(
@@ -50,5 +50,5 @@ export const expectSwitchByLabel = step(
   async (page: Page, label: string, value: boolean) => {
     const { value: actualValue } = await getSwitchByLabel(page, label)
     expect(actualValue).toBe(value)
-  }
+  },
 )

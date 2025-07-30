@@ -72,7 +72,7 @@ export function SyncerConnectPeerDialog({
         closeAndReset()
       }
     },
-    [closeAndReset, connect]
+    [closeAndReset, connect],
   )
 
   return (

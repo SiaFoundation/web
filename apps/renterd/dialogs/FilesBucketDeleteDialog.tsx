@@ -79,7 +79,7 @@ export function FilesBucketDeleteDialog({
         closeAndReset()
       }
     },
-    [bucketDelete, closeAndReset]
+    [bucketDelete, closeAndReset],
   )
 
   const fields = useMemo(() => getFields(name), [name])

@@ -53,7 +53,7 @@ function useExternalDataMain({
       ...customDefaultSettings,
       ..._settings,
     }),
-    [_settings, customDefaultSettings]
+    [_settings, customDefaultSettings],
   )
 
   const setExternalDataSettings = useCallback(
@@ -63,7 +63,7 @@ function useExternalDataMain({
         ...values,
       }))
     },
-    [_setSettings]
+    [_setSettings],
   )
   const setCurrency = useCallback(
     (id: CurrencyId) => {
@@ -75,7 +75,7 @@ function useExternalDataMain({
         })
       }
     },
-    [setExternalDataSettings]
+    [setExternalDataSettings],
   )
 
   const daemonExplorer = useDaemonExplorerMetadata({

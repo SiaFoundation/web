@@ -35,7 +35,7 @@ export async function signTransactionLedgerV2Blind({
   const sigHashResult = getSDK().wallet.v2TransactionInputSigHash(
     consensusState,
     consensusNetwork,
-    transaction
+    transaction,
   )
 
   if ('error' in sigHashResult) {

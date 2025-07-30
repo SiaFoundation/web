@@ -28,7 +28,7 @@ export function BulkAddBlocklist({
         openConfirmDialog({
           title: `Add ${pluralize(
             multiSelect.selectionCount,
-            'host'
+            'host',
           )} to blocklist`,
           action: 'Add to blocklist',
           variant: 'red',
@@ -39,7 +39,7 @@ export function BulkAddBlocklist({
                 {pluralize(
                   multiSelect.selectionCount,
                   'host address',
-                  'host addresses'
+                  'host addresses',
                 )}{' '}
                 to the blocklist?
               </Paragraph>

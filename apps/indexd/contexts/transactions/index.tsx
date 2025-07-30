@@ -133,7 +133,7 @@ function useTransactionsMain() {
     () => ({
       siascanUrl,
     }),
-    [siascanUrl]
+    [siascanUrl],
   )
 
   return {

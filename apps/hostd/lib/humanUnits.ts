@@ -13,14 +13,14 @@ export function humanBaseRpcPrice(val: BigNumber | string | number): BigNumber {
 
 export const humanSectorAccessPriceSuffix = '/million'
 export function humanSectorAccessPrice(
-  val: BigNumber | string | number
+  val: BigNumber | string | number,
 ): BigNumber {
   return new BigNumber(val).times(1e6) // per 1 access to per million access
 }
 
 export const humanCollateralPriceSuffix = '/TB/month'
 export function humanCollateralPrice(
-  val: BigNumber | string | number
+  val: BigNumber | string | number,
 ): BigNumber {
   return new BigNumber(val).times(TBToBytes(1)).times(monthsToBlocks(1))
 }

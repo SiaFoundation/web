@@ -21,7 +21,7 @@ import { RequestParams } from '@siafoundation/request'
 import { useRequestSettings } from './appSettings/useRequestSettings'
 
 export function useGetSwr<Params extends RequestParams, Result>(
-  args: InternalHookArgsSwr<Params, Result>
+  args: InternalHookArgsSwr<Params, Result>,
 ) {
   const hookArgs = useMemo(() => mergeInternalHookArgsSwr(args), [args])
   const { requestSettings, passwordProtectRequestHooks } = useRequestSettings()
@@ -29,13 +29,13 @@ export function useGetSwr<Params extends RequestParams, Result>(
     requestSettings,
     hookArgs.route,
     hookArgs,
-    undefined
+    undefined,
   )
   return useSWR<Result, SWRError>(
     keyOrNull(
       getKey('get', reqRoute),
       hookArgs.disabled ||
-        (passwordProtectRequestHooks && !requestSettings.password)
+        (passwordProtectRequestHooks && !requestSettings.password),
     ),
     async () => {
       if (!hookArgs.route) {
@@ -56,18 +56,18 @@ export function useGetSwr<Params extends RequestParams, Result>(
         throw error
       }
     },
-    hookArgs.config?.swr
+    hookArgs.config?.swr,
   )
 }
 
 type GetFunc<Params extends RequestParams, Result> = {
   get: (
-    args: InternalCallbackArgs<Params, void, Result>
+    args: InternalCallbackArgs<Params, void, Result>,
   ) => Promise<Response<Result>>
 }
 
 export function useGetFunc<Params extends RequestParams, Result>(
-  args: InternalHookArgsCallback<Params, void, Result>
+  args: InternalHookArgsCallback<Params, void, Result>,
 ): GetFunc<Params, Result> {
   const { settings } = useAppSettings()
   const hookArgs = mergeInternalHookArgsCallback(args)
@@ -80,7 +80,7 @@ export function useGetFunc<Params extends RequestParams, Result>(
           settings,
           hookArgs.route,
           hookArgs,
-          callArgs
+          callArgs,
         )
         if (!reqRoute) {
           throw Error('No route')

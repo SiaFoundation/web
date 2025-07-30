@@ -97,7 +97,7 @@ export function Contract({
           <LoadingTimestamp>
             {blockHeightToHumanDate(
               currentHeight,
-              contract.confirmationIndex.height
+              contract.confirmationIndex.height,
             )}
           </LoadingTimestamp>
         ),
@@ -114,7 +114,7 @@ export function Contract({
           <LoadingTimestamp>
             {blockHeightToHumanDate(
               currentHeight,
-              contract.resolutionWindowStart
+              contract.resolutionWindowStart,
             )}
           </LoadingTimestamp>
         ),
@@ -131,7 +131,7 @@ export function Contract({
           <LoadingTimestamp>
             {blockHeightToHumanDate(
               currentHeight,
-              contract.resolutionIndex.height
+              contract.resolutionIndex.height,
             )}
           </LoadingTimestamp>
         ) : (
@@ -150,7 +150,7 @@ export function Contract({
           <LoadingTimestamp>
             {blockHeightToHumanDate(
               currentHeight,
-              contract.resolutionWindowEnd
+              contract.resolutionWindowEnd,
             )}
           </LoadingTimestamp>
         ),
@@ -167,7 +167,7 @@ export function Contract({
           <LoadingTimestamp>
             {blockHeightToHumanDate(
               currentHeight,
-              determinePayoutHeight(contract)
+              determinePayoutHeight(contract),
             )}
           </LoadingTimestamp>
         ),

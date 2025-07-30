@@ -17,7 +17,7 @@ describe('signSeedV2', () => {
         consensusState: mocks.consensusState,
         consensusNetwork: mocks.consensusNetwork,
         addresses: getMockAddresses(mocks),
-      })
+      }),
     ).toMatchSnapshot()
   })
 
@@ -39,7 +39,7 @@ describe('signSeedV2', () => {
             },
           },
         ],
-      })
+      }),
     ).toEqual({
       error: `Missing address ${mocks.walletConstructV2Response.transaction.siacoinInputs[0].parent.siacoinOutput.address}`,
     })
@@ -63,7 +63,7 @@ describe('signSeedV2', () => {
             metadata: {},
           },
         ],
-      })
+      }),
     ).toEqual({
       error: 'Missing address index',
     })

@@ -21,7 +21,7 @@ type Props = {
 export function getStorageCost({ price, exchange }: Props) {
   return exchange
     ? `${exchange.currency.prefix}${valuePerBytePerBlockToPerTBPerMonth(
-        toSiacoins(price)
+        toSiacoins(price),
       )
         .times(exchange.rate || 1)
         .toFormat(2)}/TB`
@@ -29,14 +29,14 @@ export function getStorageCost({ price, exchange }: Props) {
         valuePerBytePerBlockToPerTBPerMonth(new BigNumber(price)),
         {
           fixed: 3,
-        }
+        },
       )}/TB`
 }
 
 function hastingsPerByteToCurrencyPerTBFormatted({ price, exchange }: Props) {
   return exchange
     ? `${exchange.currency.prefix}${toSiacoins(
-        new BigNumber(price).times(TBToBytes(1))
+        new BigNumber(price).times(TBToBytes(1)),
       )
         .times(exchange.rate || 1)
         .toFormat(2)}/TB`
@@ -56,11 +56,11 @@ export function getUploadCost({ price, exchange }: Props) {
 export function getRemainingOverTotalStorage(host: ExplorerHost) {
   if (host.v2 === true) {
     return `${humanBytes(
-      sectorsToBytes(host.v2Settings.remainingStorage)
+      sectorsToBytes(host.v2Settings.remainingStorage),
     )}/${humanBytes(sectorsToBytes(host.v2Settings.totalStorage))} remaining`
   }
   return `${humanBytes(host.settings.remainingstorage)}/${humanBytes(
-    host.settings.totalstorage
+    host.settings.totalstorage,
   )} remaining`
 }
 
@@ -73,7 +73,7 @@ export function getRemainingStorage(host: ExplorerHost) {
 
 export function getRedundancyMultiplier(
   minShards?: BigNumber,
-  totalShards?: BigNumber
+  totalShards?: BigNumber,
 ): BigNumber {
   let redundancyMult = new BigNumber(1)
   const canCalcRedundancy =

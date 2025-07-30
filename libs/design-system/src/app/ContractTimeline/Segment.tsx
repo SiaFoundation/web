@@ -55,7 +55,7 @@ export function Segment({
         'group flex items-center justify-center',
         'absolute -top-[5px] h-4',
         'cursor-pointer',
-        'transition-colors'
+        'transition-colors',
       )}
       style={{
         left: toPercent(posStart),
@@ -66,7 +66,7 @@ export function Segment({
         className={cx(
           'z-0 absolute w-full h-full',
           'rounded-md',
-          'group-hover:bg-blue-500/10 dark:group-hover:bg-blue-200/10'
+          'group-hover:bg-blue-500/10 dark:group-hover:bg-blue-200/10',
         )}
         style={{
           width: 'calc(100% + 8px)',
@@ -80,14 +80,14 @@ export function Segment({
           rounded === 'start'
             ? 'rounded-l-lg'
             : rounded === 'end'
-            ? 'rounded-r-lg'
-            : 'rounded-lg',
+              ? 'rounded-r-lg'
+              : 'rounded-lg',
           'border-y',
           rounded === 'start'
             ? 'border-l'
             : rounded === 'end'
-            ? 'border-r'
-            : 'border',
+              ? 'border-r'
+              : 'border',
           color === 'blue'
             ? [
                 'bg-blue-300 dark:bg-blue-300',
@@ -108,7 +108,7 @@ export function Segment({
                 'group-hover:bg-amber-400 dark:group-hover:bg-amber-400',
                 'border-amber-500/50 dark:border-amber-500/50',
               ]
-            : []
+            : [],
         )}
       />
       <div
@@ -119,12 +119,12 @@ export function Segment({
                 width: '100%',
               }
             : align === 'end'
-            ? {
-                right: toPercent(1 - posEnd),
-              }
-            : {
-                left: toPercent(posStart),
-              }
+              ? {
+                  right: toPercent(1 - posEnd),
+                }
+              : {
+                  left: toPercent(posStart),
+                }
         }
       >
         <BlockLabel blockHeight={startHeight} align="start" variant="primary" />
@@ -140,12 +140,12 @@ export function Segment({
                   width: '100%',
                 }
               : align === 'end'
-              ? {
-                  right: toPercent(1 - posEnd),
-                }
-              : {
-                  left: toPercent(posStart),
-                }
+                ? {
+                    right: toPercent(1 - posEnd),
+                  }
+                : {
+                    left: toPercent(posStart),
+                  }
           }
         >
           <DateLabel date={timeStart} align="start" variant="secondary" />
@@ -160,12 +160,12 @@ export function Segment({
                 width: '100%',
               }
             : align === 'end'
-            ? {
-                right: toPercent(1 - posEnd),
-              }
-            : {
-                left: toPercent(posStart),
-              }
+              ? {
+                  right: toPercent(1 - posEnd),
+                }
+              : {
+                  left: toPercent(posStart),
+                }
         }
       >
         <DateLabel date={timeStart} align="start" variant="secondary" />

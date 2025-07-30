@@ -150,7 +150,7 @@ function mountProvider() {
       <FilesManagerProvider>
         <ContextConsumer onContext={onContext} />
       </FilesManagerProvider>
-    </NextAppCsr>
+    </NextAppCsr>,
   )
   return context
 }

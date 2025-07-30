@@ -19,20 +19,20 @@ export function valuePerMonthToPerBlock(valuePerMonth: BigNumber) {
 }
 
 export function valuePerTBPerMonthToPerBytePerBlock(
-  valuePerTBPerMonth: BigNumber
+  valuePerTBPerMonth: BigNumber,
 ) {
   return valuePerMonthToPerBlock(valuePerTBToPerByte(valuePerTBPerMonth))
 }
 
 export function valuePerBytePerBlockToPerTBPerMonth(
-  valuePerBytePerBlock: BigNumber
+  valuePerBytePerBlock: BigNumber,
 ) {
   return valuePerBlockToPerMonth(valuePerByteToPerTB(valuePerBytePerBlock))
 }
 
 export function valuePerPeriodToPerMonth(
   valuePerPeriod: BigNumber,
-  periodBlocks: number
+  periodBlocks: number,
 ) {
   const valuePerBlock = valuePerPeriod.div(periodBlocks)
   return valuePerBlock.times(monthsToBlocks(1))
@@ -40,7 +40,7 @@ export function valuePerPeriodToPerMonth(
 
 export function valuePerMonthToPerPeriod(
   valuePerMonth: BigNumber,
-  periodWeeks: BigNumber
+  periodWeeks: BigNumber,
 ) {
   const periodBlocks = weeksToBlocks(periodWeeks.toNumber())
   return valuePerMonth.times(periodBlocks).div(monthsToBlocks(1))

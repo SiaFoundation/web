@@ -47,7 +47,7 @@ export function Search() {
       // Catch possible block number, avoid request, go there.
       if (!isNaN(Number(values.query.replace(',', '')))) {
         router.push(
-          routes.block.view.replace(':id', values.query.replace(',', ''))
+          routes.block.view.replace(':id', values.query.replace(',', '')),
         )
         form.reset()
         return
@@ -66,7 +66,7 @@ export function Search() {
           explored.hostsList({
             params: { sortBy: 'net_address', dir: 'asc' },
             data: { netAddresses: [values.query] },
-          })
+          }),
         )
 
         if (hostSearchError)
@@ -98,7 +98,7 @@ export function Search() {
       const [searchType, searchTypeError, searchTypeResponse] = await to(
         explored.searchResultType({
           params: { id: values.query.toLowerCase() },
-        })
+        }),
       )
 
       if (!searchType || searchTypeResponse.status === 404) {
@@ -151,7 +151,7 @@ export function Search() {
 
       form.reset()
     },
-    [form, router, explored]
+    [form, router, explored],
   )
 
   return (

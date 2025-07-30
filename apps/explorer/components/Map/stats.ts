@@ -25,7 +25,7 @@ export const getStats = unstable_cache(
       // storage
       totalStorage: humanBytes(hostMetrics?.totalStorage || 0),
       usedStorage: humanBytes(
-        (hostMetrics?.totalStorage || 0) - (hostMetrics?.remainingStorage || 0)
+        (hostMetrics?.totalStorage || 0) - (hostMetrics?.remainingStorage || 0),
       ),
     }
 
@@ -35,5 +35,5 @@ export const getStats = unstable_cache(
   {
     tags: ['stats'],
     revalidate: maxAge,
-  }
+  },
 )

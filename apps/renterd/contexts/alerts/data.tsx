@@ -202,7 +202,7 @@ export const dataFields: {
                           ellipsis
                           onClick={() => {
                             setActiveDirectory(() =>
-                              getDirectorySegmentsFromPath(fullPath)
+                              getDirectorySegmentsFromPath(fullPath),
                             )
                             closeDialog()
                           }}

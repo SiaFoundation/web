@@ -121,7 +121,7 @@ export function WalletAddRecoverDialog({ trigger, open, onOpenChange }: Props) {
         form.reset(defaultValues)
       }
     },
-    [form, openDialog, walletAdd]
+    [form, openDialog, walletAdd],
   )
 
   return (

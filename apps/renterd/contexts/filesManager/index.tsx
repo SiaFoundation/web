@@ -59,11 +59,11 @@ function useFilesManagerMain() {
         .replace('[bucket]', nextActiveDirectory[0])
         .replace(
           '[path]',
-          nextActiveDirectory.slice(1).map(encodeURIComponent).join('/')
+          nextActiveDirectory.slice(1).map(encodeURIComponent).join('/'),
         )
       router.push(route)
     },
-    [router, activeDirectory]
+    [router, activeDirectory],
   )
 
   const isViewingBuckets = activeDirectory.length === 0
@@ -78,7 +78,7 @@ function useFilesManagerMain() {
         value,
       })
     },
-    [setFilter]
+    [setFilter],
   )
 
   const removeFileNamePrefixFilter = useCallback(() => {
@@ -94,17 +94,17 @@ function useFilesManagerMain() {
       }
       setActiveDirectory(() => activeDirectory)
     },
-    [setActiveDirectory, setFileNamePrefixFilter, removeFileNamePrefixFilter]
+    [setActiveDirectory, setFileNamePrefixFilter, removeFileNamePrefixFilter],
   )
 
   const navigateToFileInFilteredDirectory = useCallback(
     (path: FullPath) => {
       setActiveDirectoryAndFileNamePrefix(
         getDirectorySegmentsFromPath(path),
-        getFilename(path)
+        getFilename(path),
       )
     },
-    [setActiveDirectoryAndFileNamePrefix]
+    [setActiveDirectoryAndFileNamePrefix],
   )
 
   const navigateToModeSpecificFiltering = useCallback(
@@ -119,12 +119,12 @@ function useFilesManagerMain() {
       activeExplorerMode,
       navigateToFileInFilteredDirectory,
       setFileNamePrefixFilter,
-    ]
+    ],
   )
 
   const activeBucketUploadsRoute = routes.buckets.uploads.replace(
     '[bucket]',
-    activeBucketName || ''
+    activeBucketName || '',
   )
 
   const navigateToActiveBucketUploads = useCallback(() => {
@@ -164,7 +164,7 @@ function useFilesManagerMain() {
     }
     setActiveDirectoryAndFileNamePrefix(
       [activeBucketName],
-      getKeyFromPath(activeDirectoryPath).slice(1)
+      getKeyFromPath(activeDirectoryPath).slice(1),
     )
     setActiveExplorerMode('flat')
   }, [

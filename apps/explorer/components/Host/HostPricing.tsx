@@ -49,7 +49,7 @@ export function HostPricing({ host }: Props) {
       ) : (
         <LoadingCurrency type="perTB" />
       ),
-    [exchange, host]
+    [exchange, host],
   )
 
   const downloadCost = useMemo(
@@ -67,7 +67,7 @@ export function HostPricing({ host }: Props) {
       ) : (
         <LoadingCurrency type="perTB" />
       ),
-    [exchange, host]
+    [exchange, host],
   )
 
   const uploadCost = useMemo(
@@ -85,7 +85,7 @@ export function HostPricing({ host }: Props) {
       ) : (
         <LoadingCurrency type="perTB" />
       ),
-    [exchange, host]
+    [exchange, host],
   )
 
   return (

@@ -15,7 +15,7 @@ export function useDownloads() {
       const { bucket, key } = bucketAndKeyParamsFromPath(path)
       let workerPath = `${workerObjectKeyRoute.replace(
         ':key',
-        key
+        key,
       )}?bucket=${bucket}&dl=true`
       if (token) {
         workerPath += `&apikey=${token}`
@@ -26,7 +26,7 @@ export function useDownloads() {
       const host = origin.replace('https://', '').replace('http://', '')
       return `${scheme}://${host}/api${workerPath}`
     },
-    [settings]
+    [settings],
   )
 
   const getAuthenticatedFileUrl = useCallback(
@@ -34,7 +34,7 @@ export function useDownloads() {
       const { bucket, key } = bucketAndKeyParamsFromPath(path)
       const workerPath = `${workerObjectKeyRoute.replace(
         ':key',
-        key
+        key,
       )}?bucket=${bucket}`
       // Parse settings.api if its set otherwise URL.
       const origin = settings.api || location.origin
@@ -42,7 +42,7 @@ export function useDownloads() {
       const host = origin.replace('https://', '').replace('http://', '')
       return `${scheme}://:${settings.password}@${host}/api${workerPath}`
     },
-    [settings]
+    [settings],
   )
 
   const getAuthToken = useCallback(async () => {
@@ -76,7 +76,7 @@ export function useDownloads() {
         window.open(url)
       })
     },
-    [getAuthToken, getDownloadUrl]
+    [getAuthToken, getDownloadUrl],
   )
 
   return {

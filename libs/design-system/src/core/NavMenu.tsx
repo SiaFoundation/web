@@ -32,7 +32,7 @@ export function NavMenuItem({
         className={cx(
           'absolute top-0 left-0 w-full sm:w-auto',
           'data-[motion=from-start]:animate-enterFromLeft data-[motion=from-end]:animate-enterFromRight',
-          'data-[motion=to-start]:animate-exitToLeft data-[motion=to-end]:animate-exitToRight'
+          'data-[motion=to-start]:animate-exitToLeft data-[motion=to-end]:animate-exitToRight',
         )}
         {...contentProps}
       >

@@ -375,7 +375,7 @@ export const columns: ContractsTableColumn[] = (
   (col): ContractsTableColumn => ({
     ...col,
     ...getFullLabelAndTip(col),
-  })
+  }),
 )
 
 function getFullLabelAndTip(col: ContractsTableColumn): {
@@ -403,7 +403,7 @@ function getStatusColor(
     | 'rejected'
     | 'failed'
     | 'renewed'
-    | 'successful'
+    | 'successful',
 ) {
   if (status === 'active') {
     return 'amber'

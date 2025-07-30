@@ -66,7 +66,7 @@ export function FilesBucketCreateDialog({
         closeDialog()
       }
     },
-    [form, bucketCreate, closeDialog]
+    [form, bucketCreate, closeDialog],
   )
 
   const fields = useMemo(() => getFields(), [])

@@ -44,7 +44,7 @@ type Values = typeof defaultValues
 
 function getFields(
   minSizeGB: number,
-  maxSizeGB: number
+  maxSizeGB: number,
 ): ConfigFields<Values, never> {
   return {
     name: {
@@ -85,7 +85,7 @@ function getFields(
         validate: {
           between: (value: number) => {
             const error = `Must be between ${humanBytes(
-              GBToBytes(minSizeGB)
+              GBToBytes(minSizeGB),
             )} and ${humanBytes(GBToBytes(maxSizeGB), { fixed: 3 })}`
             return (value <= maxSizeGB && value >= minSizeGB) || error
           },
@@ -151,7 +151,7 @@ export function VolumeCreateDialog({ trigger, open, onOpenChange }: Props) {
         closeDialog()
       }
     },
-    [form, volumeAdd, closeDialog, name, path, separator]
+    [form, volumeAdd, closeDialog, name, path, separator],
   )
 
   const selectedDir = useSystemDirectory({
@@ -193,16 +193,16 @@ export function VolumeCreateDialog({ trigger, open, onOpenChange }: Props) {
       selectedDir.data
         ? bytesToGB(selectedDir.data.freeBytes)
         : new BigNumber(0),
-    [selectedDir.data]
+    [selectedDir.data],
   )
   const maxSizeGB = useMemo(
     () => bytesToGB(selectedDir.data?.freeBytes || new BigNumber(0)),
-    [selectedDir.data]
+    [selectedDir.data],
   )
 
   const fields = useMemo(
     () => getFields(minSizeGB.toNumber(), maxSizeGB.toNumber()),
-    [maxSizeGB]
+    [maxSizeGB],
   )
 
   const onInvalid = useOnInvalid(fields)

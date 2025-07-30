@@ -43,6 +43,6 @@ const animationDelay = plugin(
         9000: '9000ms',
       },
     },
-  }
+  },
 )
 module.exports = animationDelay

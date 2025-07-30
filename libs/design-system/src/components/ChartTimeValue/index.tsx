@@ -40,7 +40,7 @@ const throttled = throttle((func: () => void) => func(), 15)
 
 // accessors
 export const bisectDate = bisector<Point, Date>(
-  (d) => new Date(d?.timestamp || 0)
+  (d) => new Date(d?.timestamp || 0),
 ).left
 
 export type ChartProps = {
@@ -138,16 +138,16 @@ const Chart = withTooltip<ChartProps, TooltipData>(
     }, [resolvedTheme])
 
     const [selectedDatasetName, setSelectedDatasetName] = useState<string>(
-      datasets[0]?.name
+      datasets[0]?.name,
     )
     const selectedDataset = useMemo(
       () => datasets.find((d) => d.name === selectedDatasetName),
-      [datasets, selectedDatasetName]
+      [datasets, selectedDatasetName],
     )
 
     const dataset = useMemo(() => {
       const selectedDataset = datasets.find(
-        (d) => d.name === selectedDatasetName
+        (d) => d.name === selectedDatasetName,
       )
       if (!selectedDataset) {
         return []
@@ -206,7 +206,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
     const xBrushMax = Math.max(width - brushMargin.left - brushMargin.right, 0)
     const yBrushMax = Math.max(
       bottomChartHeight - brushMargin.top - brushMargin.bottom,
-      0
+      0,
     )
 
     // scales
@@ -217,7 +217,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
           range: [0, xMax],
           domain: extent(filteredDataset, getPointTime) as [Date, Date],
         }),
-      [xMax, filteredDataset]
+      [xMax, filteredDataset],
     )
     const valueScale = useMemo(
       () =>
@@ -232,7 +232,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
           ],
           nice: true,
         }),
-      [yMax, filteredDataset]
+      [yMax, filteredDataset],
     )
     const brushTimeScale = useMemo(
       () =>
@@ -240,7 +240,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
           range: [0, xBrushMax],
           domain: extent(dataset, getPointTime) as [Date, Date],
         }),
-      [dataset, xBrushMax]
+      [dataset, xBrushMax],
     )
     const brushValueScale = useMemo(
       () =>
@@ -249,7 +249,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
           domain: [0, max(dataset, getPointValue) || 0],
           nice: true,
         }),
-      [dataset, yBrushMax]
+      [dataset, yBrushMax],
     )
 
     const initialBrushPosition = useMemo(
@@ -257,7 +257,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
         start: { x: brushTimeScale(getPointTime(dataset[0])) },
         end: { x: brushTimeScale(getPointTime(dataset[dataset.length - 1])) },
       }),
-      [dataset, brushTimeScale]
+      [dataset, brushTimeScale],
     )
 
     // // event handlers
@@ -273,7 +273,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
         const updater: UpdateBrush = (prevBrush) => {
           const newExtent = brushRef.current?.getExtent(
             initialBrushPosition.start,
-            initialBrushPosition.end
+            initialBrushPosition.end,
           )
 
           if (!newExtent) {
@@ -297,7 +297,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
       (
         event:
           | React.TouchEvent<SVGRectElement>
-          | React.MouseEvent<SVGRectElement>
+          | React.MouseEvent<SVGRectElement>,
       ) => {
         throttled(() => {
           const { x } = localPoint(event) || { x: 0 }
@@ -320,7 +320,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
           })
         })
       },
-      [showTooltip, valueScale, timeScale, filteredDataset]
+      [showTooltip, valueScale, timeScale, filteredDataset],
     )
     if (width < 10) return null
 
@@ -502,7 +502,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
         </div>
       </div>
     )
-  }
+  },
 )
 
 type Dataset = {

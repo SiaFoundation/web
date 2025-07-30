@@ -49,7 +49,7 @@ export function useOnValid({
           const settingsPinned = await settingsPinnedUpdate.put({
             payload: transformUpSettingsPinned(
               values,
-              resources.settingsPinned.data
+              resources.settingsPinned.data,
             ),
           })
 
@@ -74,7 +74,7 @@ export function useOnValid({
       settingsPinnedUpdate,
       revalidateAndResetForm,
       state.data,
-    ]
+    ],
   )
   return onValid
 }

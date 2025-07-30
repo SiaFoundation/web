@@ -21,7 +21,7 @@ import {
 } from '@siafoundation/renterd-types'
 
 export function useAutopilotState(
-  args?: HookArgsSwr<AutopilotStateParams, AutopilotStateResponse>
+  args?: HookArgsSwr<AutopilotStateParams, AutopilotStateResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -34,7 +34,7 @@ export function useAutopilotConfigEvaluate(
     AutopilotConfigEvaluateParams,
     AutopilotConfigEvaluatePayload,
     AutopilotConfigEvaluateResponse
-  >
+  >,
 ) {
   return usePostSwr({ ...args, route: autopilotConfigEvaluateRoute })
 }
@@ -44,7 +44,7 @@ export function useAutopilotTrigger(
     AutopilotTriggerParams,
     AutopilotTriggerPayload,
     AutopilotTriggerResponse
-  >
+  >,
 ) {
   return usePostFunc({
     ...args,

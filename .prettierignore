@@ -3,3 +3,10 @@
 /dist
 /coverage
 /.nx
+/renterd
+/hostd
+/walletd
+/indexd
+apps/*/output
+/playwright-report
+**/countries-110m.json

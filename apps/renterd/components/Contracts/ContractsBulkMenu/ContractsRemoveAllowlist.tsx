@@ -8,7 +8,7 @@ export function ContractsRemoveAllowlist() {
   const publicKeys = useMemo(
     () =>
       Object.entries(multiSelect.selection).map(([_, item]) => item.hostKey),
-    [multiSelect.selection]
+    [multiSelect.selection],
   )
 
   return (

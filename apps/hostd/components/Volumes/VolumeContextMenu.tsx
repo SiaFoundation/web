@@ -83,7 +83,7 @@ function VolumeContextMenuContents({ id }: Props) {
             if (response.error) {
               triggerErrorToast({
                 title: `Error canceling volume ${getActiveOperationLabel(
-                  status
+                  status,
                 )}`,
               })
             } else {

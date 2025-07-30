@@ -53,7 +53,7 @@ export function useFundAndSignV1({ fund, cancel, sign }: Props) {
         signedTransaction,
       }
     },
-    [fund, sign, cancel]
+    [fund, sign, cancel],
   )
 
   return fundAndSign

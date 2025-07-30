@@ -69,7 +69,7 @@ export function WalletsRescanDialog({ trigger, open, onOpenChange }: Props) {
       triggerRescan(values)
       closeAndReset()
     },
-    [closeAndReset, triggerRescan]
+    [closeAndReset, triggerRescan],
   )
 
   return (

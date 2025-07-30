@@ -14,7 +14,7 @@ export type RequestParams = Record<
 
 export function parameterizeRoute(
   route: string,
-  params: RequestParams
+  params: RequestParams,
 ): string {
   if (route && params) {
     const paramKeys = Object.keys(params)
@@ -39,7 +39,7 @@ export type RequestMethod = 'get' | 'post' | 'patch' | 'put' | 'delete'
 export function buildRequestHandler<
   Params = void,
   Data = void,
-  Response = void
+  Response = void,
 >(
   axios: AxiosInstance,
   method: RequestMethod,
@@ -47,22 +47,22 @@ export function buildRequestHandler<
   options: {
     defaultParams?: Params
     config?: AxiosRequestConfig<Data>
-  } = {}
+  } = {},
 ) {
   type Args = Params extends void
     ? Data extends void
       ? { config?: AxiosRequestConfig<Data> } | void
       : { data: Data; config?: AxiosRequestConfig<Data> }
     : Data extends void
-    ? {
-        params: Params
-        config?: AxiosRequestConfig<Data>
-      }
-    : {
-        params: Params
-        data: Data
-        config?: AxiosRequestConfig<Data>
-      }
+      ? {
+          params: Params
+          config?: AxiosRequestConfig<Data>
+        }
+      : {
+          params: Params
+          data: Data
+          config?: AxiosRequestConfig<Data>
+        }
 
   type MaybeArgs = {
     params?: Params
@@ -96,11 +96,11 @@ type Success<T> = [data: T, error: undefined, response: AxiosResponse<T>]
 type Failure<T> = [
   data: undefined,
   error: AxiosError<T>,
-  response: AxiosResponse<T> | undefined
+  response: AxiosResponse<T> | undefined,
 ]
 
 export async function to<T>(
-  promise: Promise<AxiosResponse<T>>
+  promise: Promise<AxiosResponse<T>>,
 ): Promise<Success<T> | Failure<T>> {
   try {
     const response = await promise

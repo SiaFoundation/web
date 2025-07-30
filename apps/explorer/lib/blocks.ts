@@ -17,7 +17,7 @@ export async function getBlockByHeight(height: number) {
 }
 
 export async function getLatestBlocks(
-  n = 6
+  n = 6,
 ): Promise<[ExplorerBlock[], undefined] | [undefined, Error]> {
   const explored = await getExplored()
   // Grab the latest tip.

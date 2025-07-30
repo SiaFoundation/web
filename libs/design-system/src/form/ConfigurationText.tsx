@@ -7,7 +7,7 @@ import { useFormSetField } from './useFormSetField'
 
 export function ConfigurationText<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   name,
   form,

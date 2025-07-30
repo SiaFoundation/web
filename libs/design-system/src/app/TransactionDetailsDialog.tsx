@@ -36,7 +36,7 @@ export function TransactionDetailsDialog({
           ? upperFirst(getTxTypeLabel(transaction.txType))
           : 'Transaction',
         id || '',
-        16
+        16,
       )}
       trigger={trigger}
       open={open}
@@ -70,8 +70,8 @@ export function TransactionDetailsDialog({
                     new BigNumber(
                       transaction?.raw.minerFees?.reduce(
                         (acc, val) => acc.plus(val),
-                        new BigNumber(0)
-                      ) || 0
+                        new BigNumber(0),
+                      ) || 0,
                     )
                   }
                 />

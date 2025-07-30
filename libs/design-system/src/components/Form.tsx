@@ -71,7 +71,7 @@ export function FieldLabelAndError<Values extends FieldValues>({
       className={cx(
         'flex justify-between items-center gap-x-4 overflow-hidden',
         wrap ? 'flex-wrap' : '',
-        className
+        className,
       )}
     >
       <FieldLabel name={name} title={title} actions={actions} />

@@ -54,6 +54,6 @@ export function useFileDelete() {
           }
         },
       }),
-    [openConfirmDialog, deleteObjects]
+    [openConfirmDialog, deleteObjects],
   )
 }

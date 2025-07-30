@@ -10,7 +10,7 @@ import { ScopedMutator } from 'swr/_internal'
 export type UseMutateReturn = <T>(
   matcher: (key: string) => boolean,
   data?: T | Promise<T> | MutatorCallback<T>,
-  opts?: boolean | MutatorOptions<T>
+  opts?: boolean | MutatorOptions<T>,
 ) => Promise<(T | undefined)[]>
 
 export function useMutate(args?: { api: string }): UseMutateReturn {
@@ -21,7 +21,7 @@ export function useMutate(args?: { api: string }): UseMutateReturn {
       function mutateFn<T>(
         matcher: (route: string) => boolean,
         data?: T | Promise<T> | MutatorCallback<T>,
-        opts?: boolean | MutatorOptions<T>
+        opts?: boolean | MutatorOptions<T>,
       ): Promise<(T | undefined)[]> {
         return buildMutateMatcherFn(
           mutate,
@@ -30,10 +30,10 @@ export function useMutate(args?: { api: string }): UseMutateReturn {
           undefined,
           matcher,
           data,
-          opts
+          opts,
         )
       },
-    [mutate, requestSettings, args]
+    [mutate, requestSettings, args],
   )
 }
 
@@ -44,7 +44,7 @@ export function buildMutateMatcherFn<T>(
   callArgs: { api?: string } | undefined,
   matcher: (key: string) => boolean,
   data: T | Promise<T> | MutatorCallback<T> | undefined,
-  opts?: boolean | MutatorOptions<T>
+  opts?: boolean | MutatorOptions<T>,
 ): Promise<(T | undefined)[]> {
   return mutate(
     (key) => {
@@ -55,11 +55,11 @@ export function buildMutateMatcherFn<T>(
         requestSettings,
         key as [string, string],
         hookArgs,
-        callArgs
+        callArgs,
       )
       return matcher(route)
     },
     data || ((d) => d),
-    opts
+    opts,
   )
 }

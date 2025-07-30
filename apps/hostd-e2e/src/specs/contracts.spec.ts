@@ -35,7 +35,7 @@ test('contracts bulk integrity check', async ({ page }) => {
   // Run check for each contract.
   await menu.getByLabel('run integrity check for each contract').click()
   await expect(
-    page.getByText('Integrity checks started for 3 contracts')
+    page.getByText('Integrity checks started for 3 contracts'),
   ).toBeVisible()
 })
 
@@ -60,7 +60,7 @@ test('viewing a page with no data shows the correct empty state', async ({
   await page.goto('/contracts?offset=100')
   // Check that the empty state is correct.
   await expect(
-    page.getByText('No data on this page, reset pagination to continue.')
+    page.getByText('No data on this page, reset pagination to continue.'),
   ).toBeVisible()
   await expect(page.getByText('Back to first page')).toBeVisible()
   await page.getByText('Back to first page').click()
@@ -288,16 +288,16 @@ test('contract timeline displays correct heights for v1 and v2 contracts', async
   await expect(rowsV2).toHaveCount(1)
   const rowV2 = await getContractRowById(
     page,
-    '0eb545efe95764aae11c186c5f07983c24ecea19dff9ef7fe7df97cb173a0565'
+    '0eb545efe95764aae11c186c5f07983c24ecea19dff9ef7fe7df97cb173a0565',
   )
   await expect(rowV2.getByLabel('contract formation 114454')).toBeVisible()
   await expect(
-    rowV2.getByLabel('contract duration 114454 - 122517')
+    rowV2.getByLabel('contract duration 114454 - 122517'),
   ).toBeVisible()
   await expect(rowV2.getByLabel('proof window 122517 - 122661')).toBeVisible()
   await expect(rowV2.getByLabel('payout 122662')).toBeVisible()
   await expect(
-    rowV2.getByTestId('payout').getByText('+15.747 SC')
+    rowV2.getByTestId('payout').getByText('+15.747 SC'),
   ).toBeVisible()
 
   // v1
@@ -307,15 +307,15 @@ test('contract timeline displays correct heights for v1 and v2 contracts', async
   await expect(rowsV1).toHaveCount(1)
   const rowV1 = await getContractRowById(
     page,
-    '8f455ffa8c916336f5492f88bd54e6d67ca6cf2aee324cc212eb201431b2d3fc'
+    '8f455ffa8c916336f5492f88bd54e6d67ca6cf2aee324cc212eb201431b2d3fc',
   )
   await expect(rowV1.getByLabel('contract formation 96831')).toBeVisible()
   await expect(
-    rowV1.getByLabel('contract duration 96831 - 97032')
+    rowV1.getByLabel('contract duration 96831 - 97032'),
   ).toBeVisible()
   await expect(rowV1.getByLabel('proof window 97032 - 97176')).toBeVisible()
   await expect(rowV1.getByLabel('payout 97177')).toBeVisible()
   await expect(
-    rowV1.getByTestId('payout').getByText('+403.759 mS')
+    rowV1.getByTestId('payout').getByText('+403.759 mS'),
   ).toBeVisible()
 })

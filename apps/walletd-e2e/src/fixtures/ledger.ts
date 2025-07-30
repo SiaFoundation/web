@@ -35,7 +35,7 @@ export async function createLedgerWalletWithApi({
         description: '',
         metadata,
       },
-    })
+    }),
   )
   if (walletError) {
     throw new Error(`Failed to create wallet: ${walletError}`)
@@ -63,7 +63,7 @@ export async function createLedgerWalletWithApi({
         id: wallet.id,
       },
       data: addressData,
-    })
+    }),
   )
   if (addressError) {
     throw new Error(`Failed to add address: ${addressError}`)

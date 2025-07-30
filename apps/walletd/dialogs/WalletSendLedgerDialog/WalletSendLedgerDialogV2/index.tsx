@@ -46,12 +46,12 @@ export function WalletSendLedgerDialogV2({
 
   const balanceSc = useMemo(
     () => new BigNumber(balance.data?.siacoins || 0),
-    [balance.data]
+    [balance.data],
   )
 
   const balanceSf = useMemo(
     () => new BigNumber(balance.data?.siafunds || 0),
-    [balance.data]
+    [balance.data],
   )
 
   // Form for each step

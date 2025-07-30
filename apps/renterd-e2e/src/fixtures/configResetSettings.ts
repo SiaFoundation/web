@@ -68,11 +68,11 @@ export const configResetAllSettings = step(
     // save
     await clickIfEnabledAndWait(
       page.getByText('Save changes'),
-      page.getByText('Configuration has been saved')
+      page.getByText('Configuration has been saved'),
     )
     await clearToasts({ page })
     await setViewMode({ page, state: 'basic' })
-  }
+  },
 )
 
 export const configResetBasicSettings = step(
@@ -95,10 +95,10 @@ export const configResetBasicSettings = step(
     // save
     await clickIfEnabledAndWait(
       page.getByText('Save changes'),
-      page.getByText('Configuration has been saved')
+      page.getByText('Configuration has been saved'),
     )
     await clearToasts({ page })
-  }
+  },
 )
 
 export const configFillEstimatesSiacoin = step(
@@ -107,7 +107,7 @@ export const configFillEstimatesSiacoin = step(
     await fillTextInputByName(page, 'maxStoragePriceTBMonth', '3000')
     await fillTextInputByName(page, 'maxUploadPriceTB', '3000')
     await fillTextInputByName(page, 'maxDownloadPriceTB', '3000')
-  }
+  },
 )
 
 export const configFillEstimatesFiat = step(
@@ -116,5 +116,5 @@ export const configFillEstimatesFiat = step(
     await fillTextInputByName(page, 'maxStoragePriceTBMonthPinned', '11.832136')
     await fillTextInputByName(page, 'maxUploadPriceTBPinned', '11.832136')
     await fillTextInputByName(page, 'maxDownloadPriceTBPinned', '11.832136')
-  }
+  },
 )

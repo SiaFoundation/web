@@ -36,7 +36,7 @@ export function useConfigMain() {
         error: settingsPinned.error,
       },
     }),
-    [settings.data, settings.error, settingsPinned.data, settingsPinned.error]
+    [settings.data, settings.error, settingsPinned.data, settingsPinned.error],
   )
 
   const remoteValues = useMemo(() => {
@@ -51,7 +51,7 @@ export function useConfigMain() {
 
   const remoteError = useMemo(
     () => checkIfAnyResourcesErrored(resources),
-    [resources]
+    [resources],
   )
 
   const state = useHostState()
@@ -68,7 +68,7 @@ export function useConfigMain() {
         transformDown({
           settings: _settings,
           settingsPinned: _settingsPinned,
-        })
+        }),
       )
     }
   }, [form, settings, settingsPinned, dynDNSCheck, pinningEnabled])
@@ -92,7 +92,7 @@ export function useConfigMain() {
 
   const onSubmit = useMemo(
     () => form.handleSubmit(onValid, onInvalid),
-    [form, onValid, onInvalid]
+    [form, onValid, onInvalid],
   )
 
   const configRef = useRef<HTMLDivElement>(null)
@@ -105,7 +105,7 @@ export function useConfigMain() {
     }) => {
       nodeToImage(configRef.current, props)
     },
-    []
+    [],
   )
 
   return {

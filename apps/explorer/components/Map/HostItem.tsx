@@ -37,7 +37,7 @@ export function HostItem({
         .div(1e24)
         .times(rate.rate || 1)
         .toFixed(2)}/TB`,
-    [rate, host]
+    [rate, host],
   )
 
   const downloadCost = useMemo(
@@ -47,7 +47,7 @@ export function HostItem({
         .div(1e24)
         .times(rate.rate || 1)
         .toFixed(2)}/TB`,
-    [rate, host]
+    [rate, host],
   )
 
   const uploadCost = useMemo(
@@ -57,7 +57,7 @@ export function HostItem({
         .div(1e24)
         .times(rate.rate || 1)
         .toFixed(2)}/TB`,
-    [rate, host]
+    [rate, host],
   )
 
   return (
@@ -65,7 +65,7 @@ export function HostItem({
       onClick={() => selectActiveHost(host.publicKey)}
       className={cx(
         'flex flex-col py-1 px-2 gap-1 h-[100px] cursor-pointer',
-        activeHost?.publicKey === host.publicKey && 'ring !ring-green-600'
+        activeHost?.publicKey === host.publicKey && 'ring !ring-green-600',
       )}
       key={host.publicKey}
       id={host.publicKey}

@@ -65,7 +65,7 @@ export function useConstructV2() {
         basis: response.data.basis,
       }
     },
-    [walletId, construct]
+    [walletId, construct],
   )
 
   return fund

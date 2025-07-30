@@ -46,7 +46,7 @@ export function ExpandableText({
               'absolute bottom-0 left-0 right-0 h-[48px]',
               'bg-gradient-to-b from-transparent',
               'dark:via-graydark-50/80 dark:to-graydark-50',
-              'via-gray-50/80 to-gray-50'
+              'via-gray-50/80 to-gray-50',
             )}
           />
         )}
@@ -55,7 +55,7 @@ export function ExpandableText({
         <div
           className={cx(
             'flex justify-center',
-            isExpanded && 'sticky bottom-2 z-10'
+            isExpanded && 'sticky bottom-2 z-10',
           )}
         >
           <Button
@@ -64,7 +64,7 @@ export function ExpandableText({
             onClick={() => setIsExpanded(!isExpanded)}
             className={cx(
               isExpanded && 'bg-gray-50 dark:bg-graydark-50',
-              isExpanded && 'shadow-md'
+              isExpanded && 'shadow-md',
             )}
           >
             {isExpanded ? 'Show less' : 'Show more'}

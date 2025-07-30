@@ -36,7 +36,7 @@ function useKeysMain() {
       return undefined
     }
     const data: KeyData[] = Object.entries(
-      response.data?.authentication.v4Keypairs || {}
+      response.data?.authentication.v4Keypairs || {},
     ).map(([key, secret]) => {
       return {
         id: key,
@@ -109,8 +109,8 @@ function useKeysMain() {
     () =>
       ({
         multiSelect,
-      } as CellContext),
-    [multiSelect]
+      }) as CellContext,
+    [multiSelect],
   )
 
   return {

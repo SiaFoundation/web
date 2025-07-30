@@ -12,7 +12,7 @@ export function useFundAndSignV2() {
   const fundAndSign = useCallback(
     async (
       params: SendParamsV2,
-      isBlind: boolean
+      isBlind: boolean,
     ): Promise<
       Result<{
         id: string
@@ -51,7 +51,7 @@ export function useFundAndSignV2() {
         signedTransaction,
       }
     },
-    [construct, sign, cancel]
+    [construct, sign, cancel],
   )
 
   return fundAndSign

@@ -118,9 +118,9 @@ const settingsColumns = [
   'settings_egressPrice',
 ] as const
 
-export type HostTableColumnGeneral = typeof generalColumns[number]
-export type HostTableColumnAutopilot = typeof autopilotColumns[number]
-export type HostTableColumnV2Settings = typeof settingsColumns[number]
+export type HostTableColumnGeneral = (typeof generalColumns)[number]
+export type HostTableColumnAutopilot = (typeof autopilotColumns)[number]
+export type HostTableColumnV2Settings = (typeof settingsColumns)[number]
 
 export type TableColumnId =
   | HostTableColumnGeneral

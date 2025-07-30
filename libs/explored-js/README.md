@@ -22,8 +22,7 @@ export async function exampleExploredDataFetch() {
   try {
     const transactionFeeResponse = await explored.txpoolFee()
 
-    if (transactionFeeResponse.status !== 200)
-      throw new Error(transactionFeeResponse.statusText)
+    if (transactionFeeResponse.status !== 200) throw new Error(transactionFeeResponse.statusText)
 
     const transactionFee = transactionFeeResponse.data
     // Do Transaction Fee things.

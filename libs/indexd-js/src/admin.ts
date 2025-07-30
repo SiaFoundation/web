@@ -111,7 +111,7 @@ export function Admin({ api, password }: { api: string; password?: string }) {
     state: buildRequestHandler<StateParams, StatePayload, StateResponse>(
       axios,
       'get',
-      stateRoute
+      stateRoute,
     ),
     syncerConnect: buildRequestHandler<
       SyncerConnectParams,
@@ -161,7 +161,7 @@ export function Admin({ api, password }: { api: string; password?: string }) {
     host: buildRequestHandler<HostParams, HostPayload, HostResponse>(
       axios,
       'get',
-      hostRoute
+      hostRoute,
     ),
     hostScan: buildRequestHandler<
       HostScanParams,
@@ -171,7 +171,7 @@ export function Admin({ api, password }: { api: string; password?: string }) {
     hosts: buildRequestHandler<HostsParams, HostsPayload, HostsResponse>(
       axios,
       'get',
-      hostsRoute
+      hostsRoute,
     ),
     hostsBlocklist: buildRequestHandler<
       HostsBlocklistParams,
@@ -221,7 +221,7 @@ export function Admin({ api, password }: { api: string; password?: string }) {
     wallet: buildRequestHandler<WalletParams, WalletPayload, WalletResponse>(
       axios,
       'get',
-      walletRoute
+      walletRoute,
     ),
     walletEvents: buildRequestHandler<
       WalletEventsParams,

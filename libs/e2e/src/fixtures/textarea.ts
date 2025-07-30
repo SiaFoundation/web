@@ -5,7 +5,7 @@ export const clickTextareaByName = step(
   'click textarea by name',
   async (page: Page, name: string) => {
     await page.locator(`textarea[name="${name}"]`).click()
-  }
+  },
 )
 
 export const fillTextareaByName = step(
@@ -16,28 +16,28 @@ export const fillTextareaByName = step(
     if (tabAfterFill) {
       await page.locator(`textarea[name="${name}"]`).press('Tab')
     }
-  }
+  },
 )
 
 export const expectTextareaByName = step(
   'expect textarea by name',
   async (page: Page, name: string, value: string) => {
     await expect(page.locator(`textarea[name="${name}"]`)).toHaveValue(value)
-  }
+  },
 )
 
 export const expectTextareaNotVisible = step(
   'expect textarea not visible',
   async (page: Page, name: string) => {
     await expect(page.locator(`textarea[name="${name}"]`)).toBeHidden()
-  }
+  },
 )
 
 export const expectTextareaByNameAttribute = step(
   'expect textarea by name attribute',
   async (page: Page, name: string, value: string) => {
     await expect(page.locator(`textarea[name="${name}"]`)).toHaveAttribute(
-      value
+      value,
     )
-  }
+  },
 )

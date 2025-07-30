@@ -61,7 +61,7 @@ export function DeviceConnectForm({
     () => getSupportedTransports(),
     {
       revalidateOnFocus: false,
-    }
+    },
   )
 
   useEffect(() => {
@@ -70,8 +70,8 @@ export function DeviceConnectForm({
       if (supportedTransports.data.length === 0) {
         setError(
           new Error(
-            'This browser does not support connecting to Ledger devices, please use a different browser.'
-          )
+            'This browser does not support connecting to Ledger devices, please use a different browser.',
+          ),
         )
       }
     }

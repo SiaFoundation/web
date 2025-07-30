@@ -74,7 +74,7 @@ export function useAutopilotEvaluations({
     // the transformUp calculations that assume all data is valid and present.
     return mergeValuesWithDefaultsOrZeroValues(
       valuesWithPinnedOverrides,
-      renterdState.data?.network
+      renterdState.data?.network,
     )
   }, [values, pricing, renterdState.data?.network])
 
@@ -183,10 +183,10 @@ export function useAutopilotEvaluations({
   const recommendationMargin = recommendedGougingSettings50
     ? '50%'
     : recommendedGougingSettings10
-    ? '10%'
-    : recommendedGougingSettings0
-    ? '0%'
-    : 'N/A'
+      ? '10%'
+      : recommendedGougingSettings0
+        ? '0%'
+        : 'N/A'
 
   // Get the number of usable hosts we would have after applying the recommended settings.
   const usableAfterRecsEvalEnabled = !!(payloads && recommendedGougingSettings)
@@ -228,7 +228,7 @@ export function useAutopilotEvaluations({
       shouldPinMaxStoragePrice,
       shouldPinMaxUploadPrice,
       shouldPinMaxDownloadPrice,
-    ]
+    ],
   )
 
   const { pinnedCurrency, rate } = useFormExchangeRate(form)
@@ -385,7 +385,7 @@ function pricesToPinnedPrices({
   return {
     maxStoragePriceTBMonthPinned: siacoinToFiat(
       maxStoragePriceTBMonth,
-      exchangeRate
+      exchangeRate,
     ),
     maxDownloadPriceTBPinned: siacoinToFiat(maxDownloadPriceTB, exchangeRate),
     maxUploadPriceTBPinned: siacoinToFiat(maxUploadPriceTB, exchangeRate),
@@ -475,7 +475,7 @@ export const valuesZeroDefaults: Values = {
 // Current value, otherwise advanced default if there is one, otherwise zero value.
 export function mergeValuesWithDefaultsOrZeroValues(
   values: InputValues,
-  network: 'mainnet' | 'zen' | 'anagami' = 'mainnet'
+  network: 'mainnet' | 'zen' | 'anagami' = 'mainnet',
 ) {
   const defaults = getAdvancedDefaults(network)
   const merged = {

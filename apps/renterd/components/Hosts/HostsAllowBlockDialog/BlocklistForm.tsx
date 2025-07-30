@@ -62,9 +62,9 @@ export function BlocklistForm() {
   const filtered = useMemo(
     () =>
       blockListResponse.data?.filter(
-        (a) => !formik.values.address || a.includes(formik.values.address)
+        (a) => !formik.values.address || a.includes(formik.values.address),
       ) || [],
-    [blockListResponse.data, formik.values.address]
+    [blockListResponse.data, formik.values.address],
   )
 
   const suggestionsNotOnList = useMemo(
@@ -74,7 +74,7 @@ export function BlocklistForm() {
         .map((s) => ({
           address: s,
         })),
-    [blockListResponse.data]
+    [blockListResponse.data],
   )
 
   return (

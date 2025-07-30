@@ -15,7 +15,7 @@ import { throttle } from '@technically/lodash'
  */
 export function useThrottledStateMap<T extends Record<string, unknown>>(
   initialValue: T,
-  throttleMs = 1000
+  throttleMs = 1000,
 ): [T, (value: T | ((prev: T) => T)) => void, T] {
   // Real-time value in ref.
   const valueRef = useRef<T>(initialValue)
@@ -32,9 +32,9 @@ export function useThrottledStateMap<T extends Record<string, unknown>>(
         throttleMs,
         {
           trailing: true,
-        }
+        },
       ),
-    [throttleMs]
+    [throttleMs],
   )
 
   // Cleanup throttle on unmount.
@@ -52,7 +52,7 @@ export function useThrottledStateMap<T extends Record<string, unknown>>(
       valueRef.current = nextValue
       sync()
     },
-    [sync]
+    [sync],
   )
 
   return [valueRef.current, setValue, throttledValue]

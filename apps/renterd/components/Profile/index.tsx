@@ -38,8 +38,8 @@ export function Profile() {
     version === '?'
       ? `https://github.com/SiaFoundation/renterd/commits/`
       : version?.match(/^v\d+\.\d+\.\d+/)
-      ? `https://github.com/SiaFoundation/renterd/releases/${version}`
-      : `https://github.com/SiaFoundation/renterd/tree/${version}`
+        ? `https://github.com/SiaFoundation/renterd/releases/${version}`
+        : `https://github.com/SiaFoundation/renterd/tree/${version}`
 
   const uptime = state.data
     ? new Date().getTime() - new Date(state.data?.startTime).getTime()

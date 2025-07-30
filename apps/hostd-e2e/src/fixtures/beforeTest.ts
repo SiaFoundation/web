@@ -22,7 +22,7 @@ export async function beforeTest(
   }: {
     renterdCount?: number
     testContracts?: TestContracts
-  } = {}
+  } = {},
 ) {
   await mockApiSiaScanExchangeRates({ page })
   await mockApiSiaScanHostMetrics({ page })

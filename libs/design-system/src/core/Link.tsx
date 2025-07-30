@@ -55,7 +55,7 @@ export const linkStyles = ({
       underline,
     }),
     linkVariants({ disabled, underline }),
-    className
+    className,
   )
 
 type LinkProps = Omit<React.ComponentProps<typeof BaseNextLink>, 'href'> &
@@ -92,7 +92,7 @@ export function Link({
         onClick(e)
       }
     },
-    [onClick, href]
+    [onClick, href],
   )
   return (
     <BaseNextLink
@@ -157,7 +157,7 @@ export function LinkButton({
         onClick(e)
       }
     },
-    [onClick, href]
+    [onClick, href],
   )
   if (tip) {
     return (

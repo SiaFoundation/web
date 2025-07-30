@@ -9,7 +9,7 @@ import { useFormSetField } from './useFormSetField'
 
 export function ConfigurationSiacoin<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({ name, form, fields }: FieldProps<Values, Categories>) {
   const field = fields[name]
   const {

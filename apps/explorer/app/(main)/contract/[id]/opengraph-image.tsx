@@ -23,7 +23,7 @@ export const size = {
 export const contentType = 'image/png'
 
 const currencyOpt = currencyOptions.find(
-  (c) => c.id === 'usd'
+  (c) => c.id === 'usd',
 ) as CurrencyOption
 
 export default async function Image({ params }: ExplorerPageProps) {
@@ -65,7 +65,7 @@ export default async function Image({ params }: ExplorerPageProps) {
         value: blockHeightToHumanDate(
           currentTip.height,
           nContract.resolutionWindowStart,
-          'short'
+          'short',
         ),
       },
       {
@@ -87,7 +87,7 @@ export default async function Image({ params }: ExplorerPageProps) {
         initials: 'C',
         values,
       },
-      size
+      size,
     )
   } catch {
     return getOGImage(
@@ -97,7 +97,7 @@ export default async function Image({ params }: ExplorerPageProps) {
         subtitle: 'contract',
         initials: 'C',
       },
-      size
+      size,
     )
   }
 }

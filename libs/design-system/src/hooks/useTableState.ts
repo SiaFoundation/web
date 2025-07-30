@@ -23,7 +23,7 @@ type Params<Col extends TableColumn, SortField extends string> = {
 
 export function useTableState<
   Column extends TableColumn,
-  SortField extends string
+  SortField extends string,
 >(scope: string, params: Params<Column, SortField>) {
   const {
     columns,
@@ -50,7 +50,7 @@ export function useTableState<
         return enabled.concat(column)
       })
     },
-    [setEnabledColumnIds]
+    [setEnabledColumnIds],
   )
 
   const setColumnsVisible = useCallback(
@@ -59,7 +59,7 @@ export function useTableState<
         return uniq([...enabled, ...columns])
       })
     },
-    [setEnabledColumnIds]
+    [setEnabledColumnIds],
   )
 
   const setColumnsHidden = useCallback(
@@ -68,7 +68,7 @@ export function useTableState<
         return difference(enabled, columns)
       })
     },
-    [setEnabledColumnIds]
+    [setEnabledColumnIds],
   )
 
   const resetDefaultColumnVisibility = useCallback(() => {
@@ -80,20 +80,20 @@ export function useTableState<
       columns.filter((column) => {
         return !column.fixed
       }),
-    [columns]
+    [columns],
   )
 
   const visibleColumns = useMemo(
     () =>
       columns.filter(
-        (column) => column.fixed || _enabledColumnIds.includes(column.id)
+        (column) => column.fixed || _enabledColumnIds.includes(column.id),
       ),
-    [_enabledColumnIds, columns]
+    [_enabledColumnIds, columns],
   )
 
   const visibleColumnIds = useMemo(
     () => visibleColumns.map((column) => column.id),
-    [visibleColumns]
+    [visibleColumns],
   )
 
   const {
@@ -116,7 +116,7 @@ export function useTableState<
     const sortFieldIds = sortOptions.map((o) => o.id)
     return intersection(
       sortFieldIds,
-      visibleColumnIds as string[]
+      visibleColumnIds as string[],
     ) as SortField[]
   }, [sortOptions, visibleColumnIds])
 

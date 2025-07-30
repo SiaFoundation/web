@@ -38,8 +38,8 @@ export function ValueSf({
             ? value > 0
               ? 'green'
               : value < 0
-              ? 'red'
-              : 'subtle'
+                ? 'red'
+                : 'subtle'
             : 'contrast'
         }
       >
