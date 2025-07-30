@@ -98,7 +98,7 @@ function getSiacoinUtxoAndAddressV1({
   // find the utxo's address metadata which has the index and public key saved
   // the public key was computed and saved when the address was generated
   const addressData = addresses?.find(
-    (a) => stripPrefix(a.address) === stripPrefix(utxo.siacoinOutput.address)
+    (a) => stripPrefix(a.address) === stripPrefix(utxo.siacoinOutput.address),
   )
 
   if (!addressData) {
@@ -143,7 +143,7 @@ function getSiafundUtxoAndAddressV1({
   // find the utxo's address metadata which has the index and public key saved
   // the public key was computed and saved when the address was generated
   const addressData = addresses?.find(
-    (a) => stripPrefix(a.address) === stripPrefix(utxo.siafundOutput.address)
+    (a) => stripPrefix(a.address) === stripPrefix(utxo.siafundOutput.address),
   )
 
   if (!addressData) {
@@ -199,7 +199,7 @@ export function getToSignMetadataV1({
   if (!scUtxoAddr.error) {
     // find the siacoin input by matching the toSign ID to the siacoin input's parent ID
     const sci = transaction.siacoinInputs?.find(
-      (sci) => stripPrefix(sci.parentID) === stripPrefix(scUtxoAddr.utxo.id)
+      (sci) => stripPrefix(sci.parentID) === stripPrefix(scUtxoAddr.utxo.id),
     )
 
     if (!sci) {
@@ -223,7 +223,7 @@ export function getToSignMetadataV1({
   if (!sfUtxoAddr.error) {
     // find the siacoin input by matching the toSign ID to the saifund input's parent ID
     const sfi = transaction.siafundInputs?.find(
-      (sfi) => stripPrefix(sfi.parentID) === stripPrefix(sfUtxoAddr.utxo.id)
+      (sfi) => stripPrefix(sfi.parentID) === stripPrefix(sfUtxoAddr.utxo.id),
     )
 
     if (!sfi) {

@@ -26,7 +26,7 @@ export async function getSupportedTransports() {
       return supported && !isBrave ? 'Bluetooth' : null
     }),
     TransportWebHID.isSupported().then((supported) =>
-      supported ? 'HID' : null
+      supported ? 'HID' : null,
     ),
     // USB is not supported by ledger or the sia app.
     // Attempting to use this transports results in the following error:

@@ -15,7 +15,7 @@ function useUploadsMain() {
       resetPagination()
       _setActiveView(view)
     },
-    [resetPagination]
+    [resetPagination],
   )
   const remoteUploads = useRemoteUploads()
   const localUploads = useLocalUploads()

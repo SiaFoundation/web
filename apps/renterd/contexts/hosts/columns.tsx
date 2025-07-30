@@ -224,7 +224,7 @@ export const columns: HostsTableColumn[] = (
         const isPending = workflows.find((w) => {
           const rhpw = w as { route?: string; payload?: HostScanPayload }
           return rhpw.route?.startsWith(
-            busHostHostKeyScanRoute.replace(':hostkey', data.publicKey)
+            busHostHostKeyScanRoute.replace(':hostkey', data.publicKey),
           )
         })
         if (isPending) {
@@ -659,7 +659,7 @@ export const columns: HostsTableColumn[] = (
             displayBoth
             size="12"
             value={new BigNumber(
-              data.v2Settings.prices.ingressPrice || 0
+              data.v2Settings.prices.ingressPrice || 0,
             ).times(TBToBytes(1))}
             fixedFiat={4}
             variant="value"
@@ -678,7 +678,7 @@ export const columns: HostsTableColumn[] = (
             displayBoth
             size="12"
             value={new BigNumber(data.v2Settings.prices.egressPrice || 0).times(
-              TBToBytes(1)
+              TBToBytes(1),
             )}
             fixedFiat={4}
             variant="value"
@@ -726,7 +726,7 @@ export const columns: HostsTableColumn[] = (
   (col): HostsTableColumn => ({
     ...col,
     ...getFullLabelAndTip(col),
-  })
+  }),
 )
 
 function getFullLabelAndTip(col: HostsTableColumn): {

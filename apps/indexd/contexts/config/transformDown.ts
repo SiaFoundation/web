@@ -21,7 +21,7 @@ import { CurrencyId } from '@siafoundation/react-core'
 
 // down
 export function transformDownContracts(
-  config: MaintenanceSettings
+  config: MaintenanceSettings,
 ): InputValuesContracts {
   const periodWeeks = new BigNumber(blocksToWeeks(config.period))
   const renewWindowWeeks = new BigNumber(blocksToWeeks(config.renewWindow))
@@ -35,35 +35,35 @@ export function transformDownContracts(
 }
 
 export function transformDownHosts(
-  config: UsabilitySettings
+  config: UsabilitySettings,
 ): InputValuesHosts {
   return {
     maxStoragePriceTBMonth: toSiacoins(
       valuePerBytePerBlockToPerTBPerMonth(
-        new BigNumber(config.maxStoragePrice)
+        new BigNumber(config.maxStoragePrice),
       ),
-      scDecimalPlaces
+      scDecimalPlaces,
     ), // TB/month
     maxIngressPriceTB: toSiacoins(
       valuePerByteToPerTB(new BigNumber(config.maxIngressPrice)),
-      scDecimalPlaces
+      scDecimalPlaces,
     ),
     maxEgressPriceTB: toSiacoins(
       valuePerByteToPerTB(new BigNumber(config.maxEgressPrice)),
-      scDecimalPlaces
+      scDecimalPlaces,
     ),
     minCollateral: toSiacoins(
       new BigNumber(config.minCollateral),
-      scDecimalPlaces
+      scDecimalPlaces,
     ),
     minProtocolVersion: config.minProtocolVersion.join(
-      '.'
+      '.',
     ) as `${number}.${number}.${number}`,
   }
 }
 
 export function transformDownPricePinning(
-  p: PinnedSettings
+  p: PinnedSettings,
 ): InputValuesPricePinning {
   return {
     pinnedCurrency: p.currency as CurrencyId,

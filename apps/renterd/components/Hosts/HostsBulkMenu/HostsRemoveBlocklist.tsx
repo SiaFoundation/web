@@ -8,7 +8,7 @@ export function HostsRemoveBlocklist() {
   const hostAddresses = useMemo(
     () =>
       Object.entries(multiSelect.selection).map(([_, item]) => item.address),
-    [multiSelect.selection]
+    [multiSelect.selection],
   )
 
   return (

@@ -376,7 +376,7 @@ describe('useMultiSelect', () => {
     test('preserve selections across pages', () => {
       const { result, rerender } = renderHook(
         ({ dataset }) => useMultiSelect<Row>(dataset),
-        { initialProps: { dataset: page1 } }
+        { initialProps: { dataset: page1 } },
       )
 
       act(() => {
@@ -402,7 +402,7 @@ describe('useMultiSelect', () => {
     test('onSelectPage affects only current page', () => {
       const { result, rerender } = renderHook(
         ({ dataset }) => useMultiSelect<Row>(dataset),
-        { initialProps: { dataset: page1 } }
+        { initialProps: { dataset: page1 } },
       )
 
       // Select all on page 1.
@@ -427,7 +427,7 @@ describe('useMultiSelect', () => {
         result.current.onSelectPage()
       })
       expect(result.current.selectedIds.sort()).toEqual(
-        ['1', '10', '2', '3', '4', '5', '6', '7', '8', '9'].sort()
+        ['1', '10', '2', '3', '4', '5', '6', '7', '8', '9'].sort(),
       )
       expect(result.current.isPageAllSelected).toBe(true)
 
@@ -452,7 +452,7 @@ describe('useMultiSelect', () => {
     test('deselectAll clears selections across pages', () => {
       const { result, rerender } = renderHook(
         ({ dataset }) => useMultiSelect<Row>(dataset),
-        { initialProps: { dataset: page1 } }
+        { initialProps: { dataset: page1 } },
       )
 
       act(() => {
@@ -489,7 +489,7 @@ describe('useMultiSelect', () => {
     test('anchor resets after dataset change', () => {
       const { result, rerender } = renderHook(
         ({ dataset }) => useMultiSelect(dataset),
-        { initialProps: { dataset: initialDataset } }
+        { initialProps: { dataset: initialDataset } },
       )
 
       act(() => {

@@ -13,7 +13,7 @@ function LearnMore({ color }: { color: string }) {
       className={clsx(
         'rounded py-1 px-2 inline-block font-sans text-white dark:text-graydark-50',
         'font-normal text-sm inline-flex items-center justify-center gap-1 cursor-pointer w-full max-w-[381px] sm:max-w-none sm:w-auto',
-        color
+        color,
       )}
     >
       Learn more

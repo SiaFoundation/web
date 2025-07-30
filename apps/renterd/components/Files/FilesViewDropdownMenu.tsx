@@ -71,7 +71,7 @@ export function FilesViewDropdownMenu({
                     </Option>
                   ))}
                 </optgroup>
-              )
+              ),
             )}
           </Select>
         </MenuItemRightSlot>
@@ -88,7 +88,7 @@ export function FilesViewDropdownMenu({
             }}
             onChange={(e) => {
               tableState.setSortDirection(
-                e.currentTarget.value as 'asc' | 'desc'
+                e.currentTarget.value as 'asc' | 'desc',
               )
             }}
           >

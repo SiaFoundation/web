@@ -32,7 +32,7 @@ export function HostsFilterCmd({
         afterSelect()
       }
     },
-    [setFilter, beforeSelect, afterSelect]
+    [setFilter, beforeSelect, afterSelect],
   )
 
   return (

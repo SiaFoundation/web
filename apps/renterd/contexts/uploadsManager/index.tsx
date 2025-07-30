@@ -82,7 +82,7 @@ function useUploadsManagerMain() {
   })
   const uploadsList: ObjectUploadData[] = useMemo(
     () => Object.values(uploadsMap),
-    [uploadsMap]
+    [uploadsMap],
   )
 
   const hasUploads = uploadsList.length > 0
@@ -109,7 +109,7 @@ function useUploadsManagerMain() {
         return current
       })
     },
-    [setUploadsMapRef]
+    [setUploadsMapRef],
   )
 
   const updateUploadProgress = useCallback(
@@ -132,7 +132,7 @@ function useUploadsManagerMain() {
         return current
       })
     },
-    [setUploadsMapRef]
+    [setUploadsMapRef],
   )
 
   const removeUpload = useCallback(
@@ -142,7 +142,7 @@ function useUploadsManagerMain() {
         return current
       })
     },
-    [setUploadsMapRef]
+    [setUploadsMapRef],
   )
 
   const initMultipartUpload = useCallback(
@@ -165,7 +165,7 @@ function useUploadsManagerMain() {
         bucket: bucket.name,
         api: ref.current,
         partSize: getMultipartUploadPartSize(
-          uploadSettings.data?.redundancy.minShards || 1
+          uploadSettings.data?.redundancy.minShards || 1,
         ).toNumber(),
       })
 
@@ -185,13 +185,13 @@ function useUploadsManagerMain() {
       })
       multipartUpload.setOnComplete(async () => {
         throttle(busObjectsRoute, 5000, () =>
-          mutate((key) => key.startsWith(busObjectsRoute))
+          mutate((key) => key.startsWith(busObjectsRoute)),
         )
         ref.current.removeUpload(id)
       })
       return multipartUpload
     },
-    [uploadSettings.data, mutate]
+    [uploadSettings.data, mutate],
   )
 
   const addUploadToQueue = useCallback(
@@ -243,7 +243,7 @@ function useUploadsManagerMain() {
         return current
       })
     },
-    [initMultipartUpload, setUploadsMapRef]
+    [initMultipartUpload, setUploadsMapRef],
   )
 
   const startMultipartUpload = useCallback(
@@ -277,7 +277,7 @@ function useUploadsManagerMain() {
       })
       await upload.start()
     },
-    [updateStatus]
+    [updateStatus],
   )
 
   const checkAndStartUploads = useCallback(
@@ -288,15 +288,15 @@ function useUploadsManagerMain() {
         const activeUploads = uploadsListRef.filter(
           (upload) =>
             upload.uploadStatus === 'uploading to daemon' ||
-            upload.uploadStatus === 'uploading to hosts'
+            upload.uploadStatus === 'uploading to hosts',
         )
         const queuedUploads = uploadsListRef.filter(
-          (upload) => upload.uploadStatus === 'queued'
+          (upload) => upload.uploadStatus === 'queued',
         )
 
         const availableSlots = Math.max(
           maxMultipartUploads - activeUploads.length,
-          0
+          0,
         )
         queuedUploads.slice(0, availableSlots).forEach((upload) => {
           if (!upload.multipartUpload) {
@@ -308,7 +308,7 @@ function useUploadsManagerMain() {
           })
         })
       }),
-    [uploadsMapRef, startMultipartUpload]
+    [uploadsMapRef, startMultipartUpload],
   )
 
   const uploadFiles = useCallback(
@@ -356,7 +356,7 @@ function useUploadsManagerMain() {
         })
       })
     },
-    [activeDirectoryPath, addUploadToQueue, buckets.data, uploadsMapRef]
+    [activeDirectoryPath, addUploadToQueue, buckets.data, uploadsMapRef],
   )
 
   // Use a ref for functions that will be used in closures/asynchronous callbacks

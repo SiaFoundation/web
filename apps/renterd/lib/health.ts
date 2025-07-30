@@ -4,7 +4,7 @@ import { ContractData } from '../contexts/contracts/types'
 
 export function getObjectHealth(
   obj: Obj,
-  contracts: ContractData[]
+  contracts: ContractData[],
 ): {
   slabs: SlabHealthStats[]
   health: number
@@ -31,7 +31,7 @@ type SlabHealthStats = {
 function getSlabHealthStats(
   slabSlice: SlabSlice,
   contracts: ContractData[],
-  index: string
+  index: string,
 ): SlabHealthStats {
   const slab = slabSlice.slab
   let shardsWithContracts = 0
@@ -54,7 +54,7 @@ function getSlabHealthStats(
 export function computeSlabHealth(
   totalShards: number,
   minShards: number,
-  contractShards: number
+  contractShards: number,
 ) {
   if (contractShards >= totalShards) {
     return 1

@@ -129,7 +129,7 @@ export function Walletd({ api, password }: { api: string; password?: string }) {
     state: buildRequestHandler<StateParams, StatePayload, StateResponse>(
       axios,
       'get',
-      stateRoute
+      stateRoute,
     ),
     consensusTip: buildRequestHandler<
       ConsensusTipParams,

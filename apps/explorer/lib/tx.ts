@@ -22,7 +22,7 @@ export type AddressSummary = {
  * @returns An object with { sc, sf } arrays of address summaries
  */
 export function getTransactionSummary(
-  transaction: ExplorerTransaction | ExplorerV2Transaction
+  transaction: ExplorerTransaction | ExplorerV2Transaction,
 ): { sc: AddressSummary[]; sf: AddressSummary[] } {
   const scMap = new Map<string, BigNumber>()
   const sfMap = new Map<string, number>()
@@ -40,7 +40,7 @@ export function getTransactionSummary(
     const address =
       'parent' in input ? input.parent.siacoinOutput.address : input.address
     const value = new BigNumber(
-      'parent' in input ? input.parent.siacoinOutput.value : input.value
+      'parent' in input ? input.parent.siacoinOutput.value : input.value,
     )
     updateSC(address, value.negated())
   })
@@ -49,7 +49,7 @@ export function getTransactionSummary(
     const address =
       'parent' in input ? input.parent.siafundOutput.address : input.address
     const value = Number(
-      'parent' in input ? input.parent.siafundOutput.value : input.value
+      'parent' in input ? input.parent.siafundOutput.value : input.value,
     )
     // Note the negation here.
     updateSF(address, -value)
@@ -73,7 +73,7 @@ export function getTransactionSummary(
     .map(([address, sc]) => ({ address, sc }))
     .sort(
       (a, b) =>
-        (b.sc ?? new BigNumber(0)).comparedTo(a.sc ?? new BigNumber(0)) ?? 0
+        (b.sc ?? new BigNumber(0)).comparedTo(a.sc ?? new BigNumber(0)) ?? 0,
     )
 
   const sf: AddressSummary[] = Array.from(sfMap.entries())
@@ -84,7 +84,7 @@ export function getTransactionSummary(
 }
 
 export function explorerV2TransactionToGetV2TransactionTypeParam(
-  tx: ExplorerV2Transaction
+  tx: ExplorerV2Transaction,
 ): Parameters<typeof getV2TransactionType>[0] {
   return {
     ...tx,

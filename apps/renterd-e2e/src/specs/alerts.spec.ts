@@ -25,10 +25,10 @@ test('churn alert and slab migration alert', async ({ page }) => {
   const churnData = page.getByTestId('churn')
   await expect(churnData.getByText('churn: 37.54%')).toBeVisible()
   const churnDataContractB6 = churnData.getByTestId(
-    'b6f32dc39998bd85d730d39666360225af12fbad3bc18de4df50ce09073c9393'
+    'b6f32dc39998bd85d730d39666360225af12fbad3bc18de4df50ce09073c9393',
   )
   await expect(
-    churnDataContractB6.getByText('host is price gouging')
+    churnDataContractB6.getByText('host is price gouging'),
   ).toHaveCount(2)
   await expect(churnDataContractB6.getByText('11/28/2023')).toBeVisible()
   await expect(churnDataContractB6.getByText('11/27/2023')).toBeVisible()

@@ -16,7 +16,7 @@ export function throttle<T extends (...args: any[]) => any>(
   key: string,
   delay: number,
   fn: T,
-  edge: 'leading' | 'trailing' | 'both' = 'both'
+  edge: 'leading' | 'trailing' | 'both' = 'both',
 ): (...args: Parameters<T>) => ReturnType<T> {
   const fullKey = key + edge + String(delay)
   if (!wrapperRegistry.has(fullKey)) {
@@ -25,7 +25,7 @@ export function throttle<T extends (...args: any[]) => any>(
       _throttle((func: T, ...args: Parameters<T>) => func(...args), delay, {
         leading: edge === 'leading' || edge === 'both',
         trailing: edge === 'trailing' || edge === 'both',
-      })
+      }),
     )
   }
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

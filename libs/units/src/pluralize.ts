@@ -6,7 +6,7 @@ type PluralizeOptions = {
 export function pluralize(
   count: number,
   word: string,
-  pluralFormOrOptions?: string | PluralizeOptions
+  pluralFormOrOptions?: string | PluralizeOptions,
 ) {
   const oneForm = `1 ${word}`
   let plural = `${word}s`

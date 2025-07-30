@@ -129,7 +129,7 @@ export function Text({
           noWrap,
           ellipsis,
           wrapEllipsis,
-        })
+        }),
       )}
       {...props}
     />

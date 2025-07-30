@@ -42,7 +42,7 @@ test.beforeEach(async ({ page }) => {
   // Add initial funds to ledger wallet
   await sendSiacoinFromRenterd(
     wallet1Address0,
-    toHastings(1_000_000).toString()
+    toHastings(1_000_000).toString(),
   )
   await page.reload()
 })

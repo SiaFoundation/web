@@ -102,7 +102,7 @@ export type DialogParams = {
 
 export type OpenDialog = <D extends DialogType>(
   type: D,
-  params?: DialogParams[D]
+  params?: DialogParams[D],
 ) => void
 
 export type DialogType = keyof DialogParams
@@ -119,7 +119,7 @@ function useDialogMain() {
       }))
       setDialog(type)
     },
-    [setParams, setDialog]
+    [setParams, setDialog],
   )
 
   const closeDialog = useCallback(() => {
@@ -136,7 +136,7 @@ function useDialogMain() {
         closeDialog()
       }
     },
-    [closeDialog]
+    [closeDialog],
   )
 
   return {

@@ -53,7 +53,7 @@ function useAlertsMain() {
         triggerSuccessToast({ title: 'Alert has been dismissed' })
       }
     },
-    [dismiss]
+    [dismiss],
   )
 
   const dismissMany = useCallback(
@@ -70,7 +70,7 @@ function useAlertsMain() {
         triggerSuccessToast({ title: 'Selected alerts have been dismissed' })
       }
     },
-    [dismiss]
+    [dismiss],
   )
 
   const dataset = useMemo<Maybe<AlertData[]>>(() => {
@@ -95,7 +95,7 @@ function useAlertsMain() {
       return undefined
     }
     const severityFilter = clientFilters.filters.find(
-      (f) => f.id === 'severity'
+      (f) => f.id === 'severity',
     )
     if (severityFilter) {
       return dataset.filter(severityFilter.fn)

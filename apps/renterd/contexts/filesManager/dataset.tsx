@@ -131,7 +131,7 @@ export function useDataset({ id, objects, tableState }: Props) {
       const sortInfo = sortOptions.find((s) => s.id === tableState.sortField)
       const all = sortBy(
         toPairs(dataMap).map((p) => p[1]),
-        sortInfo?.clientId || 'path'
+        sortInfo?.clientId || 'path',
       )
       if (tableState.sortDirection === 'desc') {
         all.reverse()
@@ -140,7 +140,7 @@ export function useDataset({ id, objects, tableState }: Props) {
     },
     {
       keepPreviousData: true,
-    }
+    },
   )
   // Refetch when the dependent data changes. Adding these object reference
   // dependencies to the swr key would cause the swr cache to grow indefinitely.

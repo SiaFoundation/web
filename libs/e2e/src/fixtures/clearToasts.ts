@@ -8,7 +8,7 @@ export const clearToasts = step(
     await page.evaluate(() => {
       document
         .querySelectorAll(
-          'li[data-sonner-toast] button[aria-label="Close toast"]'
+          'li[data-sonner-toast] button[aria-label="Close toast"]',
         )
         .forEach((btn) => (btn as HTMLElement).click())
     })
@@ -21,5 +21,5 @@ export const clearToasts = step(
         // Silent catch: toast container already gone.
         return undefined
       })
-  }
+  },
 )

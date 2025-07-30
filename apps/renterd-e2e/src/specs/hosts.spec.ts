@@ -47,14 +47,14 @@ test('hosts bulk allowlist', async ({ page }) => {
   await expect(dialog.getByText('The blocklist is empty')).toBeVisible()
   await dialog.getByLabel('view allowlist').click()
   await expect(
-    dialog.getByTestId('allowlistPublicKeys').getByTestId('item')
+    dialog.getByTestId('allowlistPublicKeys').getByTestId('item'),
   ).toHaveCount(3)
   await dialog.getByLabel('close').click()
   await expect(
-    getHostRows(page).getByTestId('allow').getByTestId('blocked')
+    getHostRows(page).getByTestId('allow').getByTestId('blocked'),
   ).toHaveCount(0)
   await expect(
-    getHostRows(page).getByTestId('allow').getByTestId('allowed')
+    getHostRows(page).getByTestId('allow').getByTestId('allowed'),
   ).toHaveCount(3)
 
   await rows.at(0).click({ position: { x: 50, y: 5 } })
@@ -70,10 +70,10 @@ test('hosts bulk allowlist', async ({ page }) => {
   await expect(dialog.getByText('The allowlist is empty')).toBeVisible()
   await dialog.getByLabel('close').click()
   await expect(
-    getHostRows(page).getByTestId('allow').getByTestId('blocked')
+    getHostRows(page).getByTestId('allow').getByTestId('blocked'),
   ).toHaveCount(0)
   await expect(
-    getHostRows(page).getByTestId('allow').getByTestId('allowed')
+    getHostRows(page).getByTestId('allow').getByTestId('allowed'),
   ).toHaveCount(3)
 })
 
@@ -105,16 +105,16 @@ test('hosts bulk blocklist', async ({ page }) => {
 
   await openManageListsDialog(page)
   await expect(
-    dialog.getByTestId('blocklistAddresses').getByTestId('item')
+    dialog.getByTestId('blocklistAddresses').getByTestId('item'),
   ).toHaveCount(3)
   await dialog.getByLabel('view allowlist').click()
   await expect(dialog.getByText('The allowlist is empty')).toBeVisible()
   await dialog.getByLabel('close').click()
   await expect(
-    getHostRows(page).getByTestId('allow').getByTestId('blocked')
+    getHostRows(page).getByTestId('allow').getByTestId('blocked'),
   ).toHaveCount(3)
   await expect(
-    getHostRows(page).getByTestId('allow').getByTestId('allowed')
+    getHostRows(page).getByTestId('allow').getByTestId('allowed'),
   ).toHaveCount(0)
 
   await rows.at(0).click({ position: { x: 50, y: 5 } })
@@ -130,9 +130,9 @@ test('hosts bulk blocklist', async ({ page }) => {
   await expect(dialog.getByText('The allowlist is empty')).toBeVisible()
   await dialog.getByLabel('close').click()
   await expect(
-    getHostRows(page).getByTestId('allow').getByTestId('blocked')
+    getHostRows(page).getByTestId('allow').getByTestId('blocked'),
   ).toHaveCount(0)
   await expect(
-    getHostRows(page).getByTestId('allow').getByTestId('allowed')
+    getHostRows(page).getByTestId('allow').getByTestId('allowed'),
   ).toHaveCount(3)
 })

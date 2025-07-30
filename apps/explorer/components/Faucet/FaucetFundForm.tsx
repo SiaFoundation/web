@@ -75,8 +75,8 @@ export function FaucetFundForm({ onDone }: Props) {
         (response.status === 400
           ? 'Check the address or try again later.'
           : response.status === 429
-          ? 'You have reached your request limits. Try again later.'
-          : 'Check your connection or try again later.')
+            ? 'You have reached your request limits. Try again later.'
+            : 'Check your connection or try again later.')
 
       triggerErrorToast({ title })
     } else {

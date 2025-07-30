@@ -87,7 +87,7 @@ export function derivePricingFromSpendingEstimate({
     storageTBWithRedundancy
       .times(storageWeight)
       .plus(downloadTBMonth.times(downloadWeight))
-      .plus(uploadTBMonthWithRedundancy.times(uploadWeight))
+      .plus(uploadTBMonthWithRedundancy.times(uploadWeight)),
   )
 
   // Calculate the price per TB for each type of usage.

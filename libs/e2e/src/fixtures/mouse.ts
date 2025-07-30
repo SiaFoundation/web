@@ -12,7 +12,7 @@ export const moveMouseOver = step(
     const y = box.y + box.height / 2
     await page.mouse.move(x, y)
     return { x, y }
-  }
+  },
 )
 
 export const hoverMouseOver = step(
@@ -27,5 +27,5 @@ export const hoverMouseOver = step(
       await page.mouse.move(x + (i % 2), y + (i % 2))
       await page.waitForTimeout(hoverStep)
     }
-  }
+  },
 )

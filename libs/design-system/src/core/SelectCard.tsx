@@ -19,7 +19,7 @@ export function SelectCard({
         'border-gray-400 dark:border-graydark-400',
         'enabled:hover:border-gray-500 enabled:hover:dark:border-graydark-500',
         'disabled:cursor-default',
-        'disabled:opacity-50'
+        'disabled:opacity-50',
       )}
     />
   )

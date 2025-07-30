@@ -76,7 +76,7 @@ function Chart({
         domain: [0, 1],
         nice: true,
       }),
-    [yMax]
+    [yMax],
   )
 
   const initialBrushPosition = useMemo(
@@ -84,7 +84,7 @@ function Chart({
       start: { x: start },
       end: { x: end },
     }),
-    [start, end]
+    [start, end],
   )
 
   if (width < 10) return null

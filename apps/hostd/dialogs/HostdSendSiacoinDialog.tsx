@@ -22,7 +22,7 @@ export function HostdSendSiacoinDialog() {
         ? // This is the same estimated fee calculation that happens in the daemon.
           new BigNumber(recommendedFee.data).times(standardTxnSize)
         : undefined,
-    [recommendedFee.data]
+    [recommendedFee.data],
   )
 
   const send = useCallback(
@@ -51,7 +51,7 @@ export function HostdSendSiacoinDialog() {
         transactionId: response.data,
       }
     },
-    [walletSend]
+    [walletSend],
   )
 
   return (

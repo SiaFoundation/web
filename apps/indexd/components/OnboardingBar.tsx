@@ -32,7 +32,7 @@ export function OnboardingBar() {
     'v0/indexd/onboarding/maximized',
     {
       defaultValue: true,
-    }
+    },
   )
 
   const syncStatus = useSyncStatus()
@@ -43,7 +43,7 @@ export function OnboardingBar() {
   }
 
   const walletBalance = new BigNumber(
-    wallet.data ? wallet.data.confirmed + wallet.data.unconfirmed : 0
+    wallet.data ? wallet.data.confirmed + wallet.data.unconfirmed : 0,
   )
 
   const step1Configured = true

@@ -36,7 +36,7 @@ export function ChurnEventsField({
           contractId,
           hostKey: events[0].hostKey,
           events: events.sort((a, b) =>
-            new Date(a.time).getTime() < new Date(b.time).getTime() ? 1 : -1
+            new Date(a.time).getTime() < new Date(b.time).getTime() ? 1 : -1,
           ),
         }
       })
@@ -50,25 +50,25 @@ export function ChurnEventsField({
 
   const bads = useMemo(
     () => churnEvents.filter(({ events }) => events[0].to === 'bad'),
-    [churnEvents]
+    [churnEvents],
   )
   const goods = useMemo(
     () => churnEvents.filter(({ events }) => events[0].to === 'good'),
-    [churnEvents]
+    [churnEvents],
   )
   const badSize = useMemo(
     () =>
       bads.reduce(
         (acc, { events }) => acc.plus(events[0].size),
-        new BigNumber(0)
+        new BigNumber(0),
       ),
-    [bads]
+    [bads],
   )
   // Calculate churn %: contracts bad size / total size.
   const churn = useMemo(
     () =>
       contractSizeTotal?.gt(0) ? badSize.div(contractSizeTotal).times(100) : 0,
-    [badSize, contractSizeTotal]
+    [badSize, contractSizeTotal],
   )
 
   return (
@@ -80,7 +80,7 @@ export function ChurnEventsField({
         <div className="flex-1" />
         <Tooltip
           content={`${humanBytes(badSize)} of ${humanBytes(
-            contractSizeTotal
+            contractSizeTotal,
           )} contract size removed`}
         >
           <div className="flex gap-1 items-center">
@@ -198,7 +198,7 @@ function ChurnEventItem({
                 ? to === 'good'
                   ? 'bg-green-400/20'
                   : 'bg-red-400/20'
-                : 'opacity-50'
+                : 'opacity-50',
             )}
           >
             <div className="flex gap-1 items-center overflow-hidden">

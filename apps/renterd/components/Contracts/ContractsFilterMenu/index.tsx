@@ -27,7 +27,7 @@ export function ContractsFilterMenu() {
     (page: Page) => {
       setPages((pages) => [...pages, page])
     },
-    [setPages]
+    [setPages],
   )
 
   const resetPage = useCallback(() => {

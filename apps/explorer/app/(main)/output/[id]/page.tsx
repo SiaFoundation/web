@@ -36,7 +36,7 @@ export default async function Page({ params }: ExplorerPageProps) {
 
   if (searchResultType === 'siacoinElement') {
     const [output, outputError, outputResponse] = await to(
-      explored.outputSiacoin({ params: { id } })
+      explored.outputSiacoin({ params: { id } }),
     )
 
     if (outputError) {
@@ -47,7 +47,7 @@ export default async function Page({ params }: ExplorerPageProps) {
     return <Output outputElement={output} />
   } else if (searchResultType === 'siafundElement') {
     const [output, outputError, outputResponse] = await to(
-      explored.outputSiafund({ params: { id } })
+      explored.outputSiafund({ params: { id } }),
     )
 
     if (outputError) {

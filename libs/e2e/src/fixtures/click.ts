@@ -13,7 +13,7 @@ export const clickIfEnabledAndWait = step(
       return true
     }
     return false
-  }
+  },
 )
 
 export const clickAndWait = step(
@@ -23,7 +23,7 @@ export const clickAndWait = step(
     if (waitForLocator) {
       await expect(waitForLocator).toBeVisible()
     }
-  }
+  },
 )
 
 export const continueToClickUntil = step(
@@ -62,7 +62,7 @@ export const continueToClickUntil = step(
       // Small delay to prevent too rapid clicking.
       await new Promise((resolve) => setTimeout(resolve, 500))
     }
-  }
+  },
 )
 
 export const clickIf = step(
@@ -74,7 +74,7 @@ export const clickIf = step(
       return true
     }
     return false
-  }
+  },
 )
 
 export const clickTwice = step('click twice', async (locator: Locator) => {
@@ -87,5 +87,5 @@ export const expectThenClick = step(
   async (locator: Locator) => {
     await expect(locator).toBeVisible()
     await locator.click()
-  }
+  },
 )

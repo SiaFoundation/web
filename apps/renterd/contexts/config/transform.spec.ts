@@ -40,7 +40,7 @@ describe('tansforms', () => {
           gouging,
           pinned,
           upload,
-        })
+        }),
       ).toEqual({
         amountHosts: new BigNumber('51'),
         periodWeeks: new BigNumber('6'),
@@ -88,7 +88,7 @@ describe('tansforms', () => {
               periodWeeks: new BigNumber('6'),
               renewWindowWeeks: new BigNumber('2.2301587301587302'),
               downloadTBMonth: new BigNumber(
-                '0.785365448411428571428571428571'
+                '0.785365448411428571428571428571',
               ),
               uploadTBMonth: new BigNumber('0.785714285714285714285714285714'),
               storageTB: new BigNumber('1'),
@@ -97,8 +97,8 @@ describe('tansforms', () => {
               maxConsecutiveScanFailures: new BigNumber('10'),
               minProtocolVersion: '',
             },
-            autopilot
-          )
+            autopilot,
+          ),
         ).toEqual({
           enabled: false,
           hosts: {
@@ -127,7 +127,7 @@ describe('tansforms', () => {
               periodWeeks: new BigNumber('6'),
               renewWindowWeeks: new BigNumber('2.2301587301587302'),
               downloadTBMonth: new BigNumber(
-                '0.785365448411428571428571428571'
+                '0.785365448411428571428571428571',
               ),
               uploadTBMonth: new BigNumber('0.785714285714285714285714285714'),
               storageTB: new BigNumber('1'),
@@ -147,8 +147,8 @@ describe('tansforms', () => {
                 foobar: 'value',
               },
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            } as any
-          )
+            } as any,
+          ),
         ).toEqual({
           foobar1: 'value',
           enabled: false,
@@ -180,7 +180,7 @@ describe('tansforms', () => {
               periodWeeks: new BigNumber('6'),
               renewWindowWeeks: new BigNumber('2.2301587301587302'),
               downloadTBMonth: new BigNumber(
-                '0.785365448411428571428571428571'
+                '0.785365448411428571428571428571',
               ),
               uploadTBMonth: new BigNumber('0.785714285714285714285714285714'),
               storageTB: new BigNumber('1'),
@@ -196,8 +196,8 @@ describe('tansforms', () => {
               },
               hosts: {},
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            } as any
-          )
+            } as any,
+          ),
         ).toEqual({
           enabled: true,
           hosts: {
@@ -228,7 +228,7 @@ describe('tansforms', () => {
               periodWeeks: new BigNumber('6'),
               renewWindowWeeks: new BigNumber('2.2301587301587302'),
               downloadTBMonth: new BigNumber(
-                '0.785365448411428571428571428571'
+                '0.785365448411428571428571428571',
               ),
               uploadTBMonth: new BigNumber('0.785714285714285714285714285714'),
               storageTB: new BigNumber('1'),
@@ -261,8 +261,8 @@ describe('tansforms', () => {
               maxStoragePrice: '77777777777',
               foobar: 'value',
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            } as any
-          )
+            } as any,
+          ),
         ).toEqual({
           foobar: 'value',
           hostBlockHeightLeeway: 4,
@@ -297,8 +297,8 @@ describe('tansforms', () => {
               otherNewValue: '77777777777',
               foobar: 'value',
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            } as any
-          )
+            } as any,
+          ),
         ).toEqual({
           currency: 'usd' as CurrencyId,
           threshold: 0.01,
@@ -344,8 +344,8 @@ describe('tansforms', () => {
               ...upload.redundancy,
               extraRedundancyValue: 'value',
             },
-          } as SettingsUpload
-        )
+          } as SettingsUpload,
+        ),
       ).toEqual({
         packing: {
           ...upload.packing,
@@ -423,14 +423,14 @@ describe('tansforms', () => {
       const periodBlocks = new BigNumber(4244)
       const valuePerMonth = valuePerPeriodToPerMonth(
         valuePerPeriod,
-        periodBlocks.toNumber()
+        periodBlocks.toNumber(),
       )
       expect(valuePerMonth).toEqual(
-        new BigNumber('92716244841034.38265786993402450518378887952')
+        new BigNumber('92716244841034.38265786993402450518378887952'),
       )
       const periodWeeks = new BigNumber(blocksToWeeks(periodBlocks.toNumber()))
       expect(
-        valuePerMonthToPerPeriod(valuePerMonth, periodWeeks).toFixed(0)
+        valuePerMonthToPerPeriod(valuePerMonth, periodWeeks).toFixed(0),
       ).toEqual(valuePerPeriod.toString())
     })
 
@@ -438,7 +438,7 @@ describe('tansforms', () => {
       const valuePerMonth = new BigNumber(87908469486735)
       const periodWeeks = new BigNumber(30).div(7)
       expect(valuePerMonthToPerPeriod(valuePerMonth, periodWeeks)).toEqual(
-        valuePerMonth
+        valuePerMonth,
       )
     })
     it('period <- month', () => {
@@ -446,12 +446,12 @@ describe('tansforms', () => {
       const periodWeeks = new BigNumber(30).div(7)
       const valuePerPeriod = valuePerMonthToPerPeriod(
         valuePerMonth,
-        periodWeeks
+        periodWeeks,
       )
 
       const periodBlocks = weeksToBlocks(periodWeeks.toNumber())
       expect(
-        valuePerPeriodToPerMonth(valuePerPeriod, periodBlocks).toFixed(0)
+        valuePerPeriodToPerMonth(valuePerPeriod, periodBlocks).toFixed(0),
       ).toEqual('30')
     })
   })

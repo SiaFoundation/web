@@ -38,7 +38,7 @@ export function Block({ block, blockID, currentHeight }: Props) {
   const blockDatums: DatumProps[] = useMemo(() => {
     // Grab the miner payout address
     const minerPayoutAddress = block.minerPayouts.find(
-      (payout) => payout.source === 'miner_payout'
+      (payout) => payout.source === 'miner_payout',
     )?.siacoinOutput.address
     // Trim "bid:" from the incoming blockID
     const strippedBlockID = stripPrefix(blockID)
@@ -93,7 +93,7 @@ export function Block({ block, blockID, currentHeight }: Props) {
                   variant={previousBlockExists ? 'gray' : 'inactive'}
                   href={routes.block.view.replace(
                     ':id',
-                    String(block.height - 1)
+                    String(block.height - 1),
                   )}
                   disabled={!previousBlockExists}
                   data-testid="explorer-block-prevBlock"
@@ -106,7 +106,7 @@ export function Block({ block, blockID, currentHeight }: Props) {
                   variant={nextBlockExists ? 'gray' : 'inactive'}
                   href={routes.block.view.replace(
                     ':id',
-                    String(block.height + 1)
+                    String(block.height + 1),
                   )}
                   disabled={!nextBlockExists}
                   data-testid="explorer-block-nextBlock"
@@ -116,14 +116,14 @@ export function Block({ block, blockID, currentHeight }: Props) {
               </Tooltip>
               <Tooltip
                 content={`${humanNumber(
-                  block.transactions?.length || 0
+                  block.transactions?.length || 0,
                 )} transactions`}
               >
                 <Badge variant="accent">
                   {`${humanNumber(
                     block.v2?.transactions.length ||
                       block.transactions?.length ||
-                      0
+                      0,
                   )}`}{' '}
                   transactions
                 </Badge>
@@ -161,7 +161,7 @@ export function Block({ block, blockID, currentHeight }: Props) {
                 initials: 'T',
                 href: routes.transaction.view.replace(':id', txID),
                 txType: getV2TransactionType(
-                  explorerV2TransactionToGetV2TransactionTypeParam(tx)
+                  explorerV2TransactionToGetV2TransactionTypeParam(tx),
                 ),
               }
             })}

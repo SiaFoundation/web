@@ -173,7 +173,7 @@ function useIsEnabledAndDifferentEnough() {
   })
   const canCalculatePrices = useMemo(
     () => estimatedSpendingPerMonth?.gt(0),
-    [estimatedSpendingPerMonth]
+    [estimatedSpendingPerMonth],
   )
   const differenceThreshold = 0.01
   // Calculate the difference between the current and optimal pricing values.
@@ -198,17 +198,17 @@ function useIsEnabledAndDifferentEnough() {
       isPriceDifferenceGreaterThanThreshold(
         optimalPrices?.maxStoragePriceTBMonth,
         currentPrices?.maxStoragePriceTBMonth,
-        differenceThreshold
+        differenceThreshold,
       ) ||
       isPriceDifferenceGreaterThanThreshold(
         optimalPrices?.maxUploadPriceTB,
         currentPrices?.maxUploadPriceTB,
-        differenceThreshold
+        differenceThreshold,
       ) ||
       isPriceDifferenceGreaterThanThreshold(
         optimalPrices?.maxDownloadPriceTB,
         currentPrices?.maxDownloadPriceTB,
-        differenceThreshold
+        differenceThreshold,
       )
     )
   }, [
@@ -225,7 +225,7 @@ function useIsEnabledAndDifferentEnough() {
 function isPriceDifferenceGreaterThanThreshold(
   a: BigNumber = new BigNumber(0),
   b: BigNumber = new BigNumber(0),
-  threshold: number
+  threshold: number,
 ) {
   if (a.eq(0) || b.eq(0)) {
     return new BigNumber(100)

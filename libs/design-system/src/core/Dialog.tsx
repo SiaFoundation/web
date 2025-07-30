@@ -294,7 +294,7 @@ export const dialogTitleStyles = cva(
         true: 'border-b border-gray-200 dark:border-graydark-200',
       },
     },
-  }
+  },
 )
 
 export const dialogDescriptionStyles = cva([
@@ -315,7 +315,7 @@ function DialogControls({ children, separator = true }: DialogControlsProps) {
     <div
       className={cx(
         'py-2 mx-3',
-        separator ? 'border-t border-gray-200 dark:border-graydark-200' : ''
+        separator ? 'border-t border-gray-200 dark:border-graydark-200' : '',
       )}
     >
       {children}

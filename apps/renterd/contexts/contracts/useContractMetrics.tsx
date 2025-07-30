@@ -65,7 +65,7 @@ export function useContractMetrics({
         remainingFunds: Number(m.remainingFunds),
         timestamp: new Date(m.timestamp).getTime(),
       })),
-      'none'
+      'none',
     )
     const stats = computeChartStats(data)
     return {

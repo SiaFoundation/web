@@ -42,7 +42,7 @@ export function useBroadcastV2() {
         id,
       }
     },
-    [cancel, txPoolBroadcast]
+    [cancel, txPoolBroadcast],
   )
 
   return broadcast

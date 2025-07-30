@@ -128,7 +128,7 @@ describe('SiacoinField', () => {
         '4444.5',
         '4444.55',
       ],
-      onChange
+      onChange,
     )
   })
 
@@ -166,7 +166,7 @@ describe('SiacoinField', () => {
         '4444.5',
         '4444.55',
       ],
-      onChange
+      onChange,
     )
   })
 
@@ -204,7 +204,7 @@ describe('SiacoinField', () => {
         '4444.5',
         '4444.55',
       ],
-      onChange
+      onChange,
     )
   })
 
@@ -242,7 +242,7 @@ describe('SiacoinField', () => {
         '0.12345',
         '0.123456',
       ],
-      onChange
+      onChange,
     )
   })
 
@@ -279,7 +279,7 @@ describe('SiacoinField', () => {
         '0.123',
         '0.123',
       ],
-      onChange
+      onChange,
     )
   })
 
@@ -315,7 +315,7 @@ describe('SiacoinField', () => {
         '45.208347',
         '45.208347',
       ],
-      onChange
+      onChange,
     )
   })
 
@@ -340,7 +340,7 @@ describe('SiacoinField', () => {
     expect(onChange.mock.calls.length).toBe(7)
     expectOnChangeValues(
       ['0.444', undefined, '0', '0', '0.1', '0.12', '0.123'],
-      onChange
+      onChange,
     )
   })
 
@@ -386,7 +386,7 @@ async function renderNode({
       <AppSettingsProvider daemonExplorerInfoRoute={daemonExplorerInfoRoute}>
         <Component sc={sc} {...props} />
       </AppSettingsProvider>
-    </CoreProvider>
+    </CoreProvider>,
   )
 
   const scInput = node.getByTestId('scInput') as HTMLInputElement
@@ -412,7 +412,7 @@ function mockDaemonExplorerEndpoint() {
           enabled: true,
         },
       })
-    })
+    }),
   )
 }
 
@@ -420,7 +420,7 @@ function mockSiascanExchangeRateEndpoint(rate = '1') {
   server.use(
     http.get('https://api.siascan.com/exchange-rate/siacoin/*', () => {
       return HttpResponse.json(rate)
-    })
+    }),
   )
 }
 

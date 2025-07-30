@@ -29,7 +29,7 @@ export default async function Page({ params }: ExplorerPageProps) {
   const id = p?.id
   const explored = await getExplored()
   const [host, hostError, hostResponse] = await to(
-    explored.hostByPubkey({ params: { id } })
+    explored.hostByPubkey({ params: { id } }),
   )
 
   if (hostError) {

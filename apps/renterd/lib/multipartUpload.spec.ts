@@ -26,8 +26,8 @@ describe('MultipartUpload', () => {
           params.sent,
           params.total,
           params.percentage,
-        ]
-      )
+        ],
+      ),
     ).toEqual([
       // The upload mock is configured to report progress 2 times per part.
       [1, 20, 5], // attempt 0 progress 0
@@ -93,8 +93,8 @@ describe('MultipartUpload', () => {
           params.sent,
           params.total,
           params.percentage,
-        ]
-      )
+        ],
+      ),
     ).toEqual([
       // The upload mock is configured to report progress 2 times per part.
       [1, 20, 5], // attempt 0 progress 0
@@ -171,8 +171,8 @@ describe('MultipartUpload', () => {
           params.sent,
           params.total,
           params.percentage,
-        ]
-      )
+        ],
+      ),
     ).toEqual([
       // The upload mock is configured to report progress 2 times per part.
       [1, 6, 17], // attempt 0 progress 0
@@ -238,8 +238,8 @@ describe('MultipartUpload', () => {
           params.sent,
           params.total,
           params.percentage,
-        ]
-      )
+        ],
+      ),
     ).toEqual([
       // The upload mock is configured to report progress 2 times per part.
       [1, 6, 17], // attempt 0 progress 0
@@ -319,14 +319,14 @@ describe('MultipartUpload', () => {
     // Assert that the partLog is in the correct order with all file1 parts
     // first and then all file2 parts.
     expect(partLog).toEqual(
-      Array(10).fill(file1.name).concat(Array(10).fill(file2.name))
+      Array(10).fill(file1.name).concat(Array(10).fill(file2.name)),
     )
   })
 })
 
 function getMockedParams(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  params?: Partial<Record<keyof MultipartParams, any>> & { partLog?: string[] }
+  params?: Partial<Record<keyof MultipartParams, any>> & { partLog?: string[] },
 ) {
   const {
     partSize: paramsPartSize,
@@ -359,7 +359,7 @@ function getMockedParams(
             status: 201,
             data: { uploadID: '12345' },
             headers: { ETag: 'etag' },
-          })
+          }),
         ),
       },
       busUploadAbort: { post: jest.fn() },
@@ -415,7 +415,7 @@ function buildMockApiWorkerUploadPart({
           const failure = failures.find(
             (failure) =>
               currentPartAttemptIndex === failure.failPartAttemptIndex &&
-              progressIndex === failure.failPartProgressIndex
+              progressIndex === failure.failPartProgressIndex,
           )
           loaded += progressPartSize
           onUploadProgress({ type: 'progress', loaded, total })

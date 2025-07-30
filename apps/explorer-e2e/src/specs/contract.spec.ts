@@ -28,7 +28,7 @@ test.describe('v2', () => {
   test('contract can be searched by id', async ({ page }) => {
     const activeContract = await findV2TestContractWithResolutionType(
       cluster,
-      'renewal'
+      'renewal',
     )
     // eslint-disable-next-line playwright/no-conditional-in-test
     const contractID = activeContract?.id || 'invalid'
@@ -39,14 +39,14 @@ test.describe('v2', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText('Contract ' + contractID.slice(0, 5))
+        .getByText('Contract ' + contractID.slice(0, 5)),
     ).toBeVisible()
   })
 
   test('contract can be directly navigated to', async ({ page }) => {
     const activeContract = await findV2TestContractWithResolutionType(
       cluster,
-      'renewal'
+      'renewal',
     )
     // eslint-disable-next-line playwright/no-conditional-in-test
     const contractID = activeContract?.id || 'invalid'
@@ -56,14 +56,14 @@ test.describe('v2', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText('Contract ' + contractID.slice(0, 5))
+        .getByText('Contract ' + contractID.slice(0, 5)),
     ).toBeVisible()
   })
 
   test('contract correctly displays a completed contract', async ({ page }) => {
     const completedContract = await findV2TestContractWithResolutionType(
       cluster,
-      'storage_proof'
+      'storage_proof',
     )
     await explorerApp.goTo('/contract/' + completedContract?.id)
 
@@ -73,7 +73,7 @@ test.describe('v2', () => {
   test('contract correctly displays a failed contract', async ({ page }) => {
     const failedContract = await findV2TestContractWithResolutionType(
       cluster,
-      'expiration'
+      'expiration',
     )
     await explorerApp.goTo('/contract/' + failedContract?.id)
 
@@ -85,7 +85,7 @@ test.describe('v2', () => {
   }) => {
     const renewedContract = await findV2TestContractWithResolutionType(
       cluster,
-      'renewal'
+      'renewal',
     )
     await explorerApp.goTo('/contract/' + renewedContract?.renewedTo)
     await expect(page.getByText('active')).toBeVisible()
@@ -94,25 +94,25 @@ test.describe('v2', () => {
   test('contract navigate to and from a renewed contract', async ({ page }) => {
     const renewedContract = await findV2TestContractWithResolutionType(
       cluster,
-      'renewal'
+      'renewal',
     )
     await explorerApp.goTo('/contract/' + renewedContract?.id)
     await expectThenClick(page.getByTestId(RENEWED_TO_BUTTON))
     await expect(
       page
         .getByText(renewedContract?.renewedTo?.slice(0, 6) || 'TEST FAIL')
-        .first()
+        .first(),
     ).toBeVisible()
     await expectThenClick(page.getByTestId(RENEWED_FROM_BUTTON))
     await expect(
-      page.getByText(renewedContract?.id.slice(0, 6) || 'TEST FAIL').first()
+      page.getByText(renewedContract?.id.slice(0, 6) || 'TEST FAIL').first(),
     ).toBeVisible()
   })
 
   test('contract displays the correct version', async ({ page }) => {
     const contract = await findV2TestContractWithResolutionType(
       cluster,
-      'renewal'
+      'renewal',
     )
     // eslint-disable-next-line playwright/no-conditional-in-test
     const contractID = contract?.id || 'invalid'
@@ -120,7 +120,7 @@ test.describe('v2', () => {
     await explorerApp.goTo('/contract/' + contractID)
 
     await expect(
-      page.getByTestId('explorer-contract-version').getByText('v2')
+      page.getByTestId('explorer-contract-version').getByText('v2'),
     ).toBeVisible()
   })
 })
@@ -140,7 +140,7 @@ test.describe('v1', () => {
   test('contract can be searched by id', async ({ page }) => {
     const completedContract = await findV1TestContractWithStatus(
       cluster,
-      'active'
+      'active',
     )
     // eslint-disable-next-line playwright/no-conditional-in-test
     const contractID = completedContract?.id || 'invalid'
@@ -151,7 +151,7 @@ test.describe('v1', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText('Contract ' + contractID.slice(0, 5))
+        .getByText('Contract ' + contractID.slice(0, 5)),
     ).toBeVisible()
   })
 
@@ -166,14 +166,14 @@ test.describe('v1', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText('Contract ' + contractID.slice(0, 5))
+        .getByText('Contract ' + contractID.slice(0, 5)),
     ).toBeVisible()
   })
 
   test('contract correctly displays a completed contract', async ({ page }) => {
     const completedContract = await findV1TestContractWithStatus(
       cluster,
-      'complete'
+      'complete',
     )
     await explorerApp.goTo('/contract/' + completedContract?.id)
 
@@ -205,7 +205,7 @@ test.describe('v1', () => {
     await explorerApp.goTo('/contract/' + contractID)
 
     await expect(
-      page.getByTestId('explorer-contract-version').getByText('v1')
+      page.getByTestId('explorer-contract-version').getByText('v1'),
     ).toBeVisible()
   })
 })

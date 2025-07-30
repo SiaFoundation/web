@@ -20,10 +20,10 @@ export function EmptyState({
   return datasetState === 'noneOnPage'
     ? noneOnPage || <StateNoneOnPage />
     : datasetState === 'noneMatchingFilters'
-    ? noneMatching || <StateNoneMatching />
-    : datasetState === 'noneYet'
-    ? noneYet || <StateNoneYet />
-    : datasetState === 'error'
-    ? error || <StateError />
-    : null
+      ? noneMatching || <StateNoneMatching />
+      : datasetState === 'noneYet'
+        ? noneYet || <StateNoneYet />
+        : datasetState === 'error'
+          ? error || <StateError />
+          : null
 }

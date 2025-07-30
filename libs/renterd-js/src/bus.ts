@@ -323,7 +323,7 @@ export function Bus({ api, password }: { api: string; password?: string }) {
     wallet: buildRequestHandler<WalletParams, WalletPayload, WalletResponse>(
       axios,
       'get',
-      busWalletRoute
+      busWalletRoute,
     ),
     walletEvents: buildRequestHandler<
       WalletEventsParams,
@@ -358,12 +358,12 @@ export function Bus({ api, password }: { api: string; password?: string }) {
     hosts: buildRequestHandler<HostsParams, HostsPayload, HostsResponse>(
       axios,
       'post',
-      busHostsRoute
+      busHostsRoute,
     ),
     host: buildRequestHandler<HostParams, HostPayload, HostResponse>(
       axios,
       'get',
-      busHostHostKeyRoute
+      busHostHostKeyRoute,
     ),
     hostsInteractionAdd: buildRequestHandler<
       HostInteractionParams,
@@ -458,7 +458,7 @@ export function Bus({ api, password }: { api: string; password?: string }) {
     bucket: buildRequestHandler<BucketParams, BucketPayload, BucketResponse>(
       axios,
       'get',
-      busBucketNameRoute
+      busBucketNameRoute,
     ),
     bucketCreate: buildRequestHandler<
       BucketCreateParams,
@@ -483,7 +483,7 @@ export function Bus({ api, password }: { api: string; password?: string }) {
     object: buildRequestHandler<ObjectParams, ObjectPayload, ObjectResponse>(
       axios,
       'get',
-      busObjectKeyRoute
+      busObjectKeyRoute,
     ),
     objectAdd: buildRequestHandler<
       ObjectAddParams,
@@ -548,7 +548,7 @@ export function Bus({ api, password }: { api: string; password?: string }) {
     alerts: buildRequestHandler<AlertsParams, AlertsPayload, AlertsResponse>(
       axios,
       'get',
-      busAlertsRoute
+      busAlertsRoute,
     ),
     alertsDismiss: buildRequestHandler<
       AlertsDismissParams,

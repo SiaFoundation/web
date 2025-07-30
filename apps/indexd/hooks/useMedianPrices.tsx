@@ -25,27 +25,27 @@ export function useMedianPrices() {
       storagePrice
         ? new BigNumber(
             valuePerBytePerBlockToPerTBPerMonth(
-              toSiacoins(storagePrice)
-            ).toFixed(0)
+              toSiacoins(storagePrice),
+            ).toFixed(0),
           )
         : undefined,
-    [storagePrice]
+    [storagePrice],
   )
   const ingressMedian = useMemo(
     () =>
       ingressPrice
         ? new BigNumber(
-            valuePerByteToPerTB(toSiacoins(ingressPrice)).toFixed(0)
+            valuePerByteToPerTB(toSiacoins(ingressPrice)).toFixed(0),
           )
         : undefined,
-    [ingressPrice]
+    [ingressPrice],
   )
   const egressMedian = useMemo(
     () =>
       egressPrice
         ? new BigNumber(valuePerByteToPerTB(toSiacoins(egressPrice)).toFixed(0))
         : undefined,
-    [egressPrice]
+    [egressPrice],
   )
 
   const medians = useMemo(() => {

@@ -129,7 +129,7 @@ export function useEstimatedNetworkBlockHeight(): number {
     {
       refreshInterval: 60_000,
       keepPreviousData: true,
-    }
+    },
   )
   return res.data || 0
 }
@@ -141,7 +141,7 @@ export function useSyncerConnect(
     SyncerConnectParams,
     SyncerConnectPayload,
     SyncerConnectResponse
-  >
+  >,
 ) {
   return usePostFunc({
     ...args,
@@ -152,7 +152,7 @@ export function useSyncerConnect(
 // txpool
 
 export function useTxpoolRecommendedFee(
-  args?: HookArgsSwr<TxpoolRecommendedFeeParams, TxpoolRecommendedFeeResponse>
+  args?: HookArgsSwr<TxpoolRecommendedFeeParams, TxpoolRecommendedFeeResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -163,7 +163,7 @@ export function useTxpoolRecommendedFee(
 // accounts
 
 export function useAccounts(
-  args?: HookArgsSwr<AccountsParams, AccountsResponse>
+  args?: HookArgsSwr<AccountsParams, AccountsResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -176,7 +176,7 @@ export function useAccountAdd(
     AccountAddParams,
     AccountAddPayload,
     AccountAddResponse
-  >
+  >,
 ) {
   return usePostFunc({
     ...args,
@@ -189,7 +189,7 @@ export function useAccountRotateKey(
     AccountRotateKeyParams,
     AccountRotateKeyPayload,
     AccountRotateKeyResponse
-  >
+  >,
 ) {
   return usePutFunc({
     ...args,
@@ -202,7 +202,7 @@ export function useAccountDelete(
     AccountDeleteParams,
     AccountDeletePayload,
     AccountDeleteResponse
-  >
+  >,
 ) {
   return useDeleteFunc({
     ...args,
@@ -213,7 +213,7 @@ export function useAccountDelete(
 // contract
 
 export function useContract(
-  args?: HookArgsSwr<ContractParams, ContractResponse>
+  args?: HookArgsSwr<ContractParams, ContractResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -222,7 +222,7 @@ export function useContract(
 }
 
 export function useContracts(
-  args?: HookArgsSwr<ContractsParams, ContractsResponse>
+  args?: HookArgsSwr<ContractsParams, ContractsResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -234,7 +234,7 @@ export function useExplorerExchangeRateSiacoin(
   args?: HookArgsSwr<
     ExplorerExchangeRateSiacoinParams,
     ExplorerExchangeRateSiacoinResponse
-  >
+  >,
 ) {
   return useGetSwr({
     ...args,
@@ -252,7 +252,7 @@ export function useHost(args?: HookArgsSwr<HostParams, HostResponse>) {
 }
 
 export function useHostScan(
-  args?: HookArgsCallback<HostScanParams, HostScanPayload, HostScanResponse>
+  args?: HookArgsCallback<HostScanParams, HostScanPayload, HostScanResponse>,
 ) {
   return usePostFunc({
     ...args,
@@ -268,7 +268,7 @@ export function useHosts(args?: HookArgsSwr<HostsParams, HostsResponse>) {
 }
 
 export function useHostsBlocklist(
-  args?: HookArgsSwr<HostsBlocklistParams, HostsBlocklistResponse>
+  args?: HookArgsSwr<HostsBlocklistParams, HostsBlocklistResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -281,7 +281,7 @@ export function useHostsBlocklistUpdate(
     HostsBlocklistUpdateParams,
     HostsBlocklistUpdatePayload,
     HostsBlocklistUpdateResponse
-  >
+  >,
 ) {
   return usePutFunc({
     ...args,
@@ -294,7 +294,7 @@ export function useHostsBlocklistDelete(
     HostsBlocklistDeleteParams,
     HostsBlocklistDeletePayload,
     HostsBlocklistDeleteResponse
-  >
+  >,
 ) {
   return useDeleteFunc({
     ...args,
@@ -305,7 +305,7 @@ export function useHostsBlocklistDelete(
 // settings
 
 export function useSettingsContracts(
-  args?: HookArgsSwr<SettingsContractsParams, SettingsContractsResponse>
+  args?: HookArgsSwr<SettingsContractsParams, SettingsContractsResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -318,7 +318,7 @@ export function useSettingsContractsUpdate(
     SettingsContractsUpdateParams,
     SettingsContractsUpdatePayload,
     SettingsContractsUpdateResponse
-  >
+  >,
 ) {
   return usePutFunc({
     ...args,
@@ -327,7 +327,7 @@ export function useSettingsContractsUpdate(
 }
 
 export function useSettingsHosts(
-  args?: HookArgsSwr<SettingsHostsParams, SettingsHostsResponse>
+  args?: HookArgsSwr<SettingsHostsParams, SettingsHostsResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -340,7 +340,7 @@ export function useSettingsHostsUpdate(
     SettingsHostsUpdateParams,
     SettingsHostsUpdatePayload,
     SettingsHostsUpdateResponse
-  >
+  >,
 ) {
   return usePutFunc({
     ...args,
@@ -349,7 +349,7 @@ export function useSettingsHostsUpdate(
 }
 
 export function useSettingsPricePinning(
-  args?: HookArgsSwr<SettingsPricePinningParams, SettingsPricePinningResponse>
+  args?: HookArgsSwr<SettingsPricePinningParams, SettingsPricePinningResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -362,7 +362,7 @@ export function useSettingsPricePinningUpdate(
     SettingsPricePinningUpdateParams,
     SettingsPricePinningUpdatePayload,
     SettingsPricePinningUpdateResponse
-  >
+  >,
 ) {
   return usePutFunc({
     ...args,
@@ -380,7 +380,7 @@ export function useWallet(args?: HookArgsSwr<WalletParams, WalletResponse>) {
 }
 
 export function useWalletEvents(
-  args?: HookArgsSwr<WalletEventsParams, WalletEventsResponse>
+  args?: HookArgsSwr<WalletEventsParams, WalletEventsResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -389,7 +389,7 @@ export function useWalletEvents(
 }
 
 export function useWalletPending(
-  args?: HookArgsSwr<WalletPendingParams, WalletPendingResponse>
+  args?: HookArgsSwr<WalletPendingParams, WalletPendingResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -402,7 +402,7 @@ export function useWalletSend(
     WalletSendParams,
     WalletSendPayload,
     WalletSendResponse
-  >
+  >,
 ) {
   return usePostFunc({
     ...args,

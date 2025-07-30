@@ -82,18 +82,18 @@ function getHostFields(host: Host, allContracts: Maybe<ContractData[]>) {
     uptime: new BigNumber(host.interactions.uptime || 0),
     downtime: new BigNumber(host.interactions.downtime || 0),
     successfulInteractions: new BigNumber(
-      host.interactions.successfulInteractions || 0
+      host.interactions.successfulInteractions || 0,
     ),
     totalInteractions: new BigNumber(
       host.interactions.successfulInteractions +
-        host.interactions.failedInteractions || 0
+        host.interactions.failedInteractions || 0,
     ),
     failedInteractions: new BigNumber(
-      host.interactions.failedInteractions || 0
+      host.interactions.failedInteractions || 0,
     ),
     totalScans: new BigNumber(host.interactions.totalScans || 0),
     activeContractsCount: new BigNumber(
-      allContracts?.filter((c) => c.hostKey === host.publicKey).length || 0
+      allContracts?.filter((c) => c.hostKey === host.publicKey).length || 0,
     ),
     activeContracts:
       allContracts?.filter((c) => c.hostKey === host.publicKey) || [],
@@ -205,7 +205,7 @@ function getAutopilotFields(ahc?: {
       interactions: new BigNumber(ahc?.scoreBreakdown.interactions || 0),
       prices: new BigNumber(ahc?.scoreBreakdown.prices || 0),
       storageRemaining: new BigNumber(
-        ahc?.scoreBreakdown.storageRemaining || 0
+        ahc?.scoreBreakdown.storageRemaining || 0,
       ),
       uptime: new BigNumber(ahc?.scoreBreakdown.uptime || 0),
       version: new BigNumber(ahc?.scoreBreakdown.version || 0),
@@ -235,7 +235,7 @@ function getAutopilotFields(ahc?: {
 }
 
 function getUnusableReasonLabel(
-  key: keyof HostAutopilotChecks['usabilityBreakdown']
+  key: keyof HostAutopilotChecks['usabilityBreakdown'],
 ): string {
   switch (key) {
     case 'blocked':

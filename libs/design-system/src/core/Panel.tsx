@@ -20,7 +20,7 @@ export const panelStyles = cva(
     defaultVariants: {
       color: 'default',
     },
-  }
+  },
 )
 
 export function Panel({

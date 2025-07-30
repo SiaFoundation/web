@@ -39,7 +39,7 @@ export function useConfigMain() {
 
   const remoteError = useMemo(
     () => checkIfAnyResourcesErrored(resources),
-    [resources]
+    [resources],
   )
 
   const revalidateAndResetForm = useCallback(async () => {
@@ -56,7 +56,7 @@ export function useConfigMain() {
         hosts: _hosts,
         contracts: _contracts,
         pricePinning: _pricePinning,
-      })
+      }),
     )
   }, [form, hosts, contracts, pricePinning])
 
@@ -79,7 +79,7 @@ export function useConfigMain() {
 
   const onSubmit = useMemo(
     () => form.handleSubmit(onValid, onInvalid),
-    [form, onValid, onInvalid]
+    [form, onValid, onInvalid],
   )
 
   const configRef = useRef<HTMLDivElement>(null)
@@ -95,7 +95,7 @@ export function useConfigMain() {
       }
       nodeToImage(configRef.current, props)
     },
-    []
+    [],
   )
 
   return {

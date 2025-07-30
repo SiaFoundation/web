@@ -8,7 +8,7 @@ export type MnemonicFieldType = 'text' | 'password'
 
 export function getFieldMnemonic<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   mnemonicHash,
   mnemonicFieldType: mnemonicType,

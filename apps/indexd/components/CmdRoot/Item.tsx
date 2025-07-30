@@ -39,7 +39,7 @@ export function CommandItemSearch({
   const search = useCommandState((state) => state.search)
   // show if user is searching, or we are on the commands page
   const withinSearchSpace = commandPage.namespace.startsWith(
-    currentPage?.namespace || ''
+    currentPage?.namespace || '',
   )
   if (
     (search && withinSearchSpace) ||
@@ -66,7 +66,7 @@ export function CommandItemRootAndSearch({
   const search = useCommandState((state) => state.search)
   // show if user is searching, or we are on the root or commands page
   const withinSearchSpace = commandPage.namespace.startsWith(
-    currentPage?.namespace || ''
+    currentPage?.namespace || '',
   )
   if (
     (search && withinSearchSpace) ||

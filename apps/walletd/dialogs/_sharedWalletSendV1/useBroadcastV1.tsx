@@ -42,7 +42,7 @@ export function useBroadcastV1({
         // transactionId: signResponse.data.??,
       }
     },
-    [cancel, txPoolBroadcast]
+    [cancel, txPoolBroadcast],
   )
 
   return broadcast

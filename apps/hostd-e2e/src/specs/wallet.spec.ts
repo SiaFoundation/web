@@ -28,43 +28,43 @@ test('send siacoin with include fee off', async ({ page }) => {
   await fillTextInputByName(page, 'address', receiveAddress)
   await fillTextInputByName(page, 'siacoin', amount)
   await expect(
-    sendDialog.getByTestId('networkFee').getByText('0.012 SC')
+    sendDialog.getByTestId('networkFee').getByText('0.012 SC'),
   ).toBeVisible()
   await expect(
-    sendDialog.getByTestId('total').getByText(amountWithFeeString)
+    sendDialog.getByTestId('total').getByText(amountWithFeeString),
   ).toBeVisible()
 
   // Confirm.
   await page.getByRole('button', { name: 'Generate transaction' }).click()
   await expect(
-    sendDialog.getByTestId('address').getByText(receiveAddress.slice(0, 5))
+    sendDialog.getByTestId('address').getByText(receiveAddress.slice(0, 5)),
   ).toBeVisible()
   await expect(
-    sendDialog.getByTestId('amount').getByText(amountString)
+    sendDialog.getByTestId('amount').getByText(amountString),
   ).toBeVisible()
   await expect(
-    sendDialog.getByTestId('networkFee').getByText('0.012 SC')
+    sendDialog.getByTestId('networkFee').getByText('0.012 SC'),
   ).toBeVisible()
   await expect(
-    sendDialog.getByTestId('total').getByText(amountWithFeeString)
+    sendDialog.getByTestId('total').getByText(amountWithFeeString),
   ).toBeVisible()
 
   // Complete.
   await page.getByRole('button', { name: 'Broadcast transaction' }).click()
   await expect(
-    page.getByText('Transaction successfully broadcasted.')
+    page.getByText('Transaction successfully broadcasted.'),
   ).toBeVisible()
   await expect(
-    sendDialog.getByTestId('address').getByText(receiveAddress.slice(0, 5))
+    sendDialog.getByTestId('address').getByText(receiveAddress.slice(0, 5)),
   ).toBeVisible()
   await expect(
-    sendDialog.getByTestId('amount').getByText(amountString)
+    sendDialog.getByTestId('amount').getByText(amountString),
   ).toBeVisible()
   await expect(
-    sendDialog.getByTestId('networkFee').getByText('0.012 SC')
+    sendDialog.getByTestId('networkFee').getByText('0.012 SC'),
   ).toBeVisible()
   await expect(
-    sendDialog.getByTestId('total').getByText(amountWithFeeString)
+    sendDialog.getByTestId('total').getByText(amountWithFeeString),
   ).toBeVisible()
   await expect(sendDialog.getByTestId('transactionId')).toBeVisible()
 
@@ -72,7 +72,7 @@ test('send siacoin with include fee off', async ({ page }) => {
   await sendDialog.getByRole('button', { name: 'Close' }).click()
   await expect(page.getByTestId('eventsTable')).toBeVisible()
   await expect(
-    page.getByTestId('eventsTable').locator('tbody tr').first()
+    page.getByTestId('eventsTable').locator('tbody tr').first(),
   ).toBeVisible()
   await expect(
     page
@@ -80,7 +80,7 @@ test('send siacoin with include fee off', async ({ page }) => {
       .locator('tbody tr')
       .first()
       .getByTestId('amount')
-      .getByText(`-${amountWithFeeString}`)
+      .getByText(`-${amountWithFeeString}`),
   ).toBeVisible()
 })
 
@@ -100,43 +100,43 @@ test('send siacoin with include fee on', async ({ page }) => {
   await fillTextInputByName(page, 'siacoin', amount.toString())
   await setSwitchByLabel(page, 'includeFee', true)
   await expect(
-    sendDialog.getByTestId('networkFee').getByText('0.012 SC')
+    sendDialog.getByTestId('networkFee').getByText('0.012 SC'),
   ).toBeVisible()
   await expect(
-    sendDialog.getByTestId('total').getByText(amountString)
+    sendDialog.getByTestId('total').getByText(amountString),
   ).toBeVisible()
 
   // Confirm.
   await page.getByRole('button', { name: 'Generate transaction' }).click()
   await expect(
-    sendDialog.getByTestId('address').getByText(receiveAddress.slice(0, 5))
+    sendDialog.getByTestId('address').getByText(receiveAddress.slice(0, 5)),
   ).toBeVisible()
   await expect(
-    sendDialog.getByTestId('amount').getByText(amountWithoutFeeString)
+    sendDialog.getByTestId('amount').getByText(amountWithoutFeeString),
   ).toBeVisible()
   await expect(
-    sendDialog.getByTestId('networkFee').getByText('0.012 SC')
+    sendDialog.getByTestId('networkFee').getByText('0.012 SC'),
   ).toBeVisible()
   await expect(
-    sendDialog.getByTestId('total').getByText(amountString)
+    sendDialog.getByTestId('total').getByText(amountString),
   ).toBeVisible()
 
   // Complete.
   await page.getByRole('button', { name: 'Broadcast transaction' }).click()
   await expect(
-    page.getByText('Transaction successfully broadcasted.')
+    page.getByText('Transaction successfully broadcasted.'),
   ).toBeVisible()
   await expect(
-    sendDialog.getByTestId('address').getByText(receiveAddress.slice(0, 5))
+    sendDialog.getByTestId('address').getByText(receiveAddress.slice(0, 5)),
   ).toBeVisible()
   await expect(
-    sendDialog.getByTestId('amount').getByText(amountWithoutFeeString)
+    sendDialog.getByTestId('amount').getByText(amountWithoutFeeString),
   ).toBeVisible()
   await expect(
-    sendDialog.getByTestId('networkFee').getByText('0.012 SC')
+    sendDialog.getByTestId('networkFee').getByText('0.012 SC'),
   ).toBeVisible()
   await expect(
-    sendDialog.getByTestId('total').getByText(amountString)
+    sendDialog.getByTestId('total').getByText(amountString),
   ).toBeVisible()
   await expect(sendDialog.getByTestId('transactionId')).toBeVisible()
 
@@ -144,7 +144,7 @@ test('send siacoin with include fee on', async ({ page }) => {
   await sendDialog.getByRole('button', { name: 'Close' }).click()
   await expect(page.getByTestId('eventsTable')).toBeVisible()
   await expect(
-    page.getByTestId('eventsTable').locator('tbody tr').first()
+    page.getByTestId('eventsTable').locator('tbody tr').first(),
   ).toBeVisible()
   await expect(
     page
@@ -152,6 +152,6 @@ test('send siacoin with include fee on', async ({ page }) => {
       .locator('tbody tr')
       .first()
       .getByTestId('amount')
-      .getByText(`-${amountString}`)
+      .getByText(`-${amountString}`),
   ).toBeVisible()
 })

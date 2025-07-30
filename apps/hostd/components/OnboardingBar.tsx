@@ -35,7 +35,7 @@ export function OnboardingBar() {
     'v0/hostd/onboarding/maximized',
     {
       defaultValue: true,
-    }
+    },
   )
   const syncStatus = useSyncStatus()
 
@@ -44,7 +44,7 @@ export function OnboardingBar() {
   }
 
   const walletBalance = new BigNumber(
-    wallet.data ? wallet.data.confirmed + wallet.data.unconfirmed : 0
+    wallet.data ? wallet.data.confirmed + wallet.data.unconfirmed : 0,
   )
   const minimumBalance = toHastings(0)
   const step1Funded = wallet.data && walletBalance.gt(minimumBalance)

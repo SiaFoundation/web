@@ -16,7 +16,7 @@ export function useEnabledPricingValuesInSiacoin({
   const shouldPinMaxUploadPrice = form.watch('shouldPinMaxUploadPrice')
   const maxStoragePriceTBMonth = form.watch('maxStoragePriceTBMonth')
   const maxStoragePriceTBMonthPinned = form.watch(
-    'maxStoragePriceTBMonthPinned'
+    'maxStoragePriceTBMonthPinned',
   )
   const maxDownloadPriceTB = form.watch('maxDownloadPriceTB')
   const maxDownloadPriceTBPinned = form.watch('maxDownloadPriceTBPinned')

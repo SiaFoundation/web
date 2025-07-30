@@ -26,7 +26,7 @@ export const sendSiacoinWithSeedWallet = step(
       expectedFee: number
       expectedVersion: 'v1' | 'v2'
       transactionVersionIndicator: string
-    }
+    },
   ) => {
     const amountWithFeeString = `${(amount + expectedFee).toFixed(3)} SC`
     const feeString = `${expectedFee.toFixed(3)} SC`
@@ -41,36 +41,36 @@ export const sendSiacoinWithSeedWallet = step(
     })
     const sendDialog = page.getByRole('dialog', { name: 'Send' })
     await expect(
-      sendDialog.getByText('The wallet is currently unlocked')
+      sendDialog.getByText('The wallet is currently unlocked'),
     ).toBeVisible()
     await expect(sendDialog.getByLabel('Recipient address')).toContainText(
-      receiveAddress.slice(0, 5)
+      receiveAddress.slice(0, 5),
     )
     await expect(sendDialog.getByLabel('Change address')).toContainText(
-      changeAddress.slice(0, 5)
+      changeAddress.slice(0, 5),
     )
     await expect(sendDialog.getByLabel('Network fee')).toContainText(feeString)
     await expect(sendDialog.getByText('Total')).toBeVisible()
     await expect(sendDialog.getByText(amountWithFeeString)).toBeVisible()
     await expect(
-      sendDialog.getByText(transactionVersionIndicator)
+      sendDialog.getByText(transactionVersionIndicator),
     ).toBeVisible()
 
     await page
       .getByRole('button', { name: 'Sign and broadcast transaction' })
       .click()
     await expect(
-      page.getByText('Transaction successfully broadcast')
+      page.getByText('Transaction successfully broadcast'),
     ).toBeVisible()
     await expect(sendDialog.getByLabel('Recipient address')).toContainText(
-      receiveAddress.slice(0, 5)
+      receiveAddress.slice(0, 5),
     )
     await expect(sendDialog.getByLabel('Change address')).toContainText(
-      changeAddress.slice(0, 5)
+      changeAddress.slice(0, 5),
     )
     await expect(sendDialog.getByLabel('Network fee')).toContainText(feeString)
     await expect(sendDialog.getByLabel('Total')).toContainText(
-      amountWithFeeString
+      amountWithFeeString,
     )
     if (expectedVersion === 'v2') {
       await expect(sendDialog.getByLabel('Transaction ID')).toBeVisible()
@@ -89,7 +89,7 @@ export const sendSiacoinWithSeedWallet = step(
     await page.reload()
     await expect(page.getByTestId('eventsTable')).toBeVisible()
     await expect(
-      page.getByTestId('eventsTable').locator('tbody tr').first()
+      page.getByTestId('eventsTable').locator('tbody tr').first(),
     ).toBeVisible()
     await expect(
       page
@@ -97,9 +97,9 @@ export const sendSiacoinWithSeedWallet = step(
         .locator('tbody tr')
         .first()
         .getByTestId('amount')
-        .getByText(`-${amountWithFeeString}`)
+        .getByText(`-${amountWithFeeString}`),
     ).toBeVisible()
 
     return transactionId
-  }
+  },
 )

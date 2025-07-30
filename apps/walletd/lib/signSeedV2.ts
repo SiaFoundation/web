@@ -34,7 +34,7 @@ export function signTransactionSeedV2({
   const sigHashResult = getSDK().wallet.v2TransactionInputSigHash(
     consensusState,
     consensusNetwork,
-    transaction
+    transaction,
   )
 
   if ('error' in sigHashResult) {
@@ -113,7 +113,7 @@ function signTransactionIndex({
 
   const signHashResponse = getSDK().wallet.signHash(
     pkResponse.privateKey,
-    sigHash
+    sigHash,
   )
 
   if ('error' in signHashResponse) {

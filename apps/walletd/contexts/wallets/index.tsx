@@ -161,7 +161,7 @@ function useWalletsMain() {
       walletAutoLockTimeout,
       walletAutoLockEnabled,
     }),
-    [walletAutoLockEnabled, walletAutoLockTimeout]
+    [walletAutoLockEnabled, walletAutoLockTimeout],
   )
 
   return {

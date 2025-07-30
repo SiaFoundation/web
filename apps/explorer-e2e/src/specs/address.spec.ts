@@ -28,7 +28,7 @@ test.describe('v2', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText(`Address ${wallet.data.address.slice(0, 5)}`)
+        .getByText(`Address ${wallet.data.address.slice(0, 5)}`),
     ).toBeVisible()
   })
 
@@ -38,7 +38,7 @@ test.describe('v2', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText(`Address ${wallet.data.address.slice(0, 5)}`)
+        .getByText(`Address ${wallet.data.address.slice(0, 5)}`),
     ).toBeVisible()
   })
 
@@ -50,11 +50,11 @@ test.describe('v2', () => {
 
     await explorerApp.goTo('/address/' + siacoinOutput.address)
     await expect(
-      page.getByText(`Address ${siacoinOutput.address.slice(0, 5)}`)
+      page.getByText(`Address ${siacoinOutput.address.slice(0, 5)}`),
     ).toBeVisible()
     await expect(page.getByText(events.data[0].id.slice(0, 5))).toBeVisible()
     await expect(page.getByTestId('entity-link')).toHaveCount(
-      events.data.length
+      events.data.length,
     )
 
     // The test output is missing the ID, so we need to get an output from
@@ -91,7 +91,7 @@ test.describe('v1', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText(`Address ${address.slice(0, 5)}`)
+        .getByText(`Address ${address.slice(0, 5)}`),
     ).toBeVisible()
   })
 
@@ -102,7 +102,7 @@ test.describe('v1', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText(`Address ${address.slice(0, 5)}`)
+        .getByText(`Address ${address.slice(0, 5)}`),
     ).toBeVisible()
   })
 
@@ -114,11 +114,11 @@ test.describe('v1', () => {
 
     await explorerApp.goTo('/address/' + siacoinOutput.address)
     await expect(
-      page.getByText(`Address ${siacoinOutput.address.slice(0, 5)}`)
+      page.getByText(`Address ${siacoinOutput.address.slice(0, 5)}`),
     ).toBeVisible()
     await expect(page.getByText(events.data[0].id.slice(0, 5))).toBeVisible()
     await expect(page.getByTestId('entity-link')).toHaveCount(
-      events.data.length
+      events.data.length,
     )
 
     // The test output is missing the ID, so we need to get an output from

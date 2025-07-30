@@ -93,7 +93,7 @@ function useContractsMain() {
 
   const { range: contractsTimeRange } = useMemo(
     () => getContractsTimeRangeBlockHeight(currentHeight, _datasetPage || []),
-    [currentHeight, _datasetPage]
+    [currentHeight, _datasetPage],
   )
 
   const siascanUrl = useSiascanUrl()
@@ -169,7 +169,7 @@ function useContractsMain() {
     () =>
       dataset?.reduce((acc, { size }) => acc.plus(size), new BigNumber(0)) ??
       new BigNumber(0),
-    [dataset]
+    [dataset],
   )
 
   return {

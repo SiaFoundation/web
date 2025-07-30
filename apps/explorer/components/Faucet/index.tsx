@@ -34,7 +34,7 @@ export function Faucet() {
       setId(id)
       setTab('status')
     },
-    [setId, setTab]
+    [setId, setTab],
   )
 
   return (

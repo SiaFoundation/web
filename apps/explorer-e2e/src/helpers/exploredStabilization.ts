@@ -4,14 +4,14 @@ export async function exploredStabilization(
   api: Cluster,
   maxRetries = 20,
   delayMs = 500,
-  stabilizationMs = 5000
+  stabilizationMs = 5000,
 ) {
   for (let i = 0; i < maxRetries; i++) {
     const tip = await api.daemons.explored.api.explorerTip()
     const tipHeight = tip.data.height
 
     console.log(
-      `observed explored tip height: ${tipHeight} — entering stabilization window`
+      `observed explored tip height: ${tipHeight} — entering stabilization window`,
     )
 
     const start = Date.now()
@@ -23,7 +23,7 @@ export async function exploredStabilization(
 
       if (observedHeight !== tipHeight) {
         console.log(
-          `explored height changed during stabilization — expected ${tipHeight}, got ${observedHeight}`
+          `explored height changed during stabilization — expected ${tipHeight}, got ${observedHeight}`,
         )
         isStable = false
         break
@@ -42,6 +42,6 @@ export async function exploredStabilization(
   }
 
   throw new Error(
-    `explored failed to stabilize height within ${maxRetries} retries`
+    `explored failed to stabilize height within ${maxRetries} retries`,
   )
 }

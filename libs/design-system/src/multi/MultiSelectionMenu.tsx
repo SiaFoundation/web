@@ -40,12 +40,12 @@ export function MultiSelectionMenu<Row extends MultiSelectRow>({
               multiSelect.someSelectedOnCurrentPage
                 ? ' on this and other pages'
                 : !multiSelect.someSelectedRowsOutsideCurrentPage &&
-                  multiSelect.someSelectedOnCurrentPage
-                ? ''
-                : multiSelect.someSelectedRowsOutsideCurrentPage &&
-                  !multiSelect.someSelectedOnCurrentPage
-                ? ' on other pages'
-                : ''
+                    multiSelect.someSelectedOnCurrentPage
+                  ? ''
+                  : multiSelect.someSelectedRowsOutsideCurrentPage &&
+                      !multiSelect.someSelectedOnCurrentPage
+                    ? ' on other pages'
+                    : ''
             }`}
           </Text>
         )}

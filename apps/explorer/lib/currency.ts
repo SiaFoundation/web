@@ -7,7 +7,7 @@ const digits = 2
 
 export function hastingsToFiat(
   hastings: string,
-  exchange?: { currency: CurrencyOption; rate: BigNumber }
+  exchange?: { currency: CurrencyOption; rate: BigNumber },
 ) {
   if (exchange) {
     const val = new BigNumber(hastings).div(1e24).times(exchange?.rate || 1)

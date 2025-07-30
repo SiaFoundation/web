@@ -25,7 +25,7 @@ describe('renterd-js', () => {
       expect(config.data).toEqual(
         JSON.stringify({
           name: bucket,
-        })
+        }),
       )
       return [200, { name: bucket }]
     })

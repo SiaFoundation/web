@@ -9,7 +9,7 @@ import {
 
 export function FieldSwitch<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   name,
   form,
@@ -43,8 +43,8 @@ export function FieldSwitch<
           error
             ? 'invalid'
             : getFormStateFieldBoolean(form.formState.dirtyFields, name)
-            ? 'valid'
-            : 'default'
+              ? 'valid'
+              : 'default'
         }
         onCheckedChange={(val) => {
           setValue(val as PathValue<Values, Path<Values>>, true)

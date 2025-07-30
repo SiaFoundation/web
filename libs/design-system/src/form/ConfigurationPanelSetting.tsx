@@ -5,7 +5,7 @@ import { ConfigurationControl } from './ConfigurationControl'
 
 export function ConfigurationPanelSetting<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   name,
   form,

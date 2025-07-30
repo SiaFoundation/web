@@ -30,7 +30,7 @@ describe('tansforms', () => {
           contracts,
           hosts,
           pricePinning,
-        })
+        }),
       ).toEqual({
         wantedContracts: new BigNumber(51),
         periodWeeks: new BigNumber(6),
@@ -64,8 +64,8 @@ describe('tansforms', () => {
               periodWeeks: new BigNumber(6),
               renewWindowWeeks: new BigNumber(2),
             },
-            contracts
-          )
+            contracts,
+          ),
         ).toEqual({
           enabled: true,
           wantedContracts: 51,
@@ -85,8 +85,8 @@ describe('tansforms', () => {
               enabled: false,
               foobar1: 'value',
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            } as any
-          )
+            } as any,
+          ),
         ).toEqual({
           enabled: false,
           wantedContracts: 51,
@@ -112,8 +112,8 @@ describe('tansforms', () => {
               maxStoragePrice: '77777777777',
               foobar: 'value',
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            } as any
-          )
+            } as any,
+          ),
         ).toEqual({
           foobar: 'value',
           maxEgressPrice: '200000000000000',
@@ -144,8 +144,8 @@ describe('tansforms', () => {
               otherNewValue: '77777777777',
               foobar: 'value',
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            } as any
-          )
+            } as any,
+          ),
         ).toEqual({
           currency: 'usd' as CurrencyId,
           maxEgressPrice: 1,
@@ -200,14 +200,14 @@ describe('tansforms', () => {
       const periodBlocks = new BigNumber(4244)
       const valuePerMonth = valuePerPeriodToPerMonth(
         valuePerPeriod,
-        periodBlocks.toNumber()
+        periodBlocks.toNumber(),
       )
       expect(valuePerMonth).toEqual(
-        new BigNumber('92716244841034.3826578699340245152')
+        new BigNumber('92716244841034.3826578699340245152'),
       )
       const periodWeeks = new BigNumber(blocksToWeeks(periodBlocks.toNumber()))
       expect(
-        valuePerMonthToPerPeriod(valuePerMonth, periodWeeks).toFixed(0)
+        valuePerMonthToPerPeriod(valuePerMonth, periodWeeks).toFixed(0),
       ).toEqual(valuePerPeriod.toString())
     })
 
@@ -215,7 +215,7 @@ describe('tansforms', () => {
       const valuePerMonth = new BigNumber(87908469486735)
       const periodWeeks = new BigNumber(30).div(7)
       expect(valuePerMonthToPerPeriod(valuePerMonth, periodWeeks)).toEqual(
-        valuePerMonth
+        valuePerMonth,
       )
     })
     it('period <- month', () => {
@@ -223,12 +223,12 @@ describe('tansforms', () => {
       const periodWeeks = new BigNumber(30).div(7)
       const valuePerPeriod = valuePerMonthToPerPeriod(
         valuePerMonth,
-        periodWeeks
+        periodWeeks,
       )
 
       const periodBlocks = weeksToBlocks(periodWeeks.toNumber())
       expect(
-        valuePerPeriodToPerMonth(valuePerPeriod, periodBlocks).toFixed(0)
+        valuePerPeriodToPerMonth(valuePerPeriod, periodBlocks).toFixed(0),
       ).toEqual('30')
     })
   })

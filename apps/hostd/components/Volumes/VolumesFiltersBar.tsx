@@ -15,15 +15,15 @@ export function VolumesFiltersBar() {
     <div className="flex gap-2 justify-between items-center w-full">
       <div className="flex gap-4">
         <Text size="12" font="mono" weight="medium">{`${humanBytes(
-          used
+          used,
         )} used`}</Text>
         <Separator variant="vertical" />
         <Text size="12" font="mono" weight="medium">{`${humanBytes(
-          free
+          free,
         )} free`}</Text>
         <Separator variant="vertical" />
         <Text size="12" font="mono" weight="medium">{`${humanBytes(
-          total
+          total,
         )} total`}</Text>
       </div>
       <PaginatorKnownTotal

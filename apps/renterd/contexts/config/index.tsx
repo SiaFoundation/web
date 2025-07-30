@@ -47,7 +47,7 @@ export function useConfigMain() {
 
   const remoteError = useMemo(
     () => checkIfAnyResourcesErrored(resources),
-    [resources]
+    [resources],
   )
 
   const revalidateAndResetForm = useCallback(async () => {
@@ -67,7 +67,7 @@ export function useConfigMain() {
         gouging: _gouging,
         pinned: _pinned,
         upload: _upload,
-      })
+      }),
     )
   }, [form, autopilotState, autopilot, gouging, pinned, upload])
 
@@ -90,7 +90,7 @@ export function useConfigMain() {
 
   const onSubmit = useMemo(
     () => form.handleSubmit(onValid, onInvalid),
-    [form, onValid, onInvalid]
+    [form, onValid, onInvalid],
   )
 
   const configRef = useRef<HTMLDivElement>(null)
@@ -106,7 +106,7 @@ export function useConfigMain() {
       }
       nodeToImage(configRef.current, props)
     },
-    []
+    [],
   )
 
   return {

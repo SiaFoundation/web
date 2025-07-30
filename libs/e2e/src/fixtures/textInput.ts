@@ -9,28 +9,28 @@ export const fillTextInputByName = step(
     if (tabAfterFill) {
       await page.locator(`input[name="${name}"]`).press('Tab')
     }
-  }
+  },
 )
 
 export const expectTextInputByName = step(
   'expect text input by name',
   async (page: Page, name: string, value: string) => {
     await expect(page.locator(`input[name="${name}"]`)).toHaveValue(value)
-  }
+  },
 )
 
 export const expectTextInputNotVisible = step(
   'expect text input not visible',
   async (page: Page, name: string) => {
     await expect(page.locator(`input[name="${name}"]`)).toBeHidden()
-  }
+  },
 )
 
 export const expectTextInputByNameAttribute = step(
   'expect text input by name attribute',
   async (page: Page, name: string, value: string) => {
     await expect(page.locator(`input[name="${name}"]`)).toHaveAttribute(value)
-  }
+  },
 )
 
 export const getTextInputValueByName = step(
@@ -40,5 +40,5 @@ export const getTextInputValueByName = step(
       await expect(page.locator(`input[name="${name}"]`)).toHaveValue(/.*/)
     }
     return await page.locator(`input[name="${name}"]`).inputValue()
-  }
+  },
 )

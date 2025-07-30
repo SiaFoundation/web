@@ -36,15 +36,15 @@ test('system offers recommendations', async ({ page }) => {
   await fillTextInputByName(page, 'maxDownloadPriceTB', '100000000')
   await clickIfEnabledAndWait(
     page.getByText('Save changes'),
-    page.getByText('Configuration has been saved')
+    page.getByText('Configuration has been saved'),
   )
   await clearToasts({ page })
 
   // Configuration matches with hosts.
   await expect(
     page.getByText(
-      /(No recommendations to match with more hosts|Configuration matches with a sufficient number of hosts)/
-    )
+      /(No recommendations to match with more hosts|Configuration matches with a sufficient number of hosts)/,
+    ),
   ).toBeVisible()
 
   // Reset to low values that will need recommendations.
@@ -56,12 +56,12 @@ test('system offers recommendations', async ({ page }) => {
   await fillTextInputByName(page, 'maxDownloadPriceTB', '375')
   await clickIfEnabledAndWait(
     page.getByText('Save changes'),
-    page.getByText('Configuration has been saved')
+    page.getByText('Configuration has been saved'),
   )
   await clearToasts({ page })
   // There are now recommendations.
   await expect(
-    page.getByText('No recommendations to match with more hosts')
+    page.getByText('No recommendations to match with more hosts'),
   ).toBeHidden()
 
   // Apply all recommendations.
@@ -111,7 +111,7 @@ test('recommendations work with pinned fields', async ({ page }) => {
   await fillTextInputByName(page, 'maxDownloadPriceTB', '375')
   // There are now recommendations.
   await expect(
-    page.getByText('No recommendations to match with more hosts')
+    page.getByText('No recommendations to match with more hosts'),
   ).toBeHidden()
 
   // Set to high mixed values that will not need any recommendations.
@@ -121,14 +121,14 @@ test('recommendations work with pinned fields', async ({ page }) => {
   await fillTextInputByName(page, 'maxDownloadPriceTB', '100000000')
   await expect(
     page.getByText(
-      /(No recommendations to match with more hosts|Configuration matches with a sufficient number of hosts)/
-    )
+      /(No recommendations to match with more hosts|Configuration matches with a sufficient number of hosts)/,
+    ),
   ).toBeVisible()
 
   // Set the pinned max storage price to a low USD value equivalent to 100 SC.
   await fillTextInputByName(page, 'maxStoragePriceTBMonthPinned', '0.39')
   // There are now recommendations again.
   await expect(
-    page.getByText('No recommendations to match with more hosts')
+    page.getByText('No recommendations to match with more hosts'),
   ).toBeHidden()
 })

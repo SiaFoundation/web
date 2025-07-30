@@ -39,7 +39,7 @@ export function NumberField({
 }: Props) {
   const externalValue = useMemo(
     () => new BigNumber(_externalValue),
-    [_externalValue]
+    [_externalValue],
   )
   const [localValue, setLocalValue] = useState<string>('')
 
@@ -47,11 +47,11 @@ export function NumberField({
     (value: string) => {
       if (onChange) {
         onChange(
-          value && !isNaN(Number(value)) ? new BigNumber(value) : undefined
+          value && !isNaN(Number(value)) ? new BigNumber(value) : undefined,
         )
       }
     },
-    [onChange]
+    [onChange],
   )
 
   const onValueChange = useCallback(
@@ -59,7 +59,7 @@ export function NumberField({
       setLocalValue(value)
       updateExternalValue(value)
     },
-    [setLocalValue, updateExternalValue]
+    [setLocalValue, updateExternalValue],
   )
 
   // sync externally controlled value

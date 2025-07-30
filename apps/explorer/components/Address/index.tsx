@@ -54,7 +54,7 @@ export function Address({
 
   const getKey = (
     pageIndex: number,
-    previousPageData: ExplorerEvent[] | null
+    previousPageData: ExplorerEvent[] | null,
   ) => {
     if (previousPageData && !previousPageData.length) return null
     return { address: id, limit: 100, offset: pageIndex * 100 }
@@ -72,7 +72,7 @@ export function Address({
     {
       revalidateOnFocus: false,
       revalidateFirstPage: false,
-    }
+    },
   )
 
   const confirmedEvents = useMemo(() => data?.flat() || [], [data])
@@ -80,15 +80,15 @@ export function Address({
   const eventEntities = useMemo(() => {
     return [
       ...unconfirmedEvents.map((event) =>
-        formatEvent(id, networkHeight, event, true)
+        formatEvent(id, networkHeight, event, true),
       ),
       ...confirmedEvents.map((event) =>
-        formatEvent(id, networkHeight, event, false)
+        formatEvent(id, networkHeight, event, false),
       ),
     ].sort(
       (a, b) =>
         new Date(b.timestamp || 0).getTime() -
-        new Date(a.timestamp || 0).getTime()
+        new Date(a.timestamp || 0).getTime(),
     )
   }, [id, networkHeight, confirmedEvents, unconfirmedEvents])
 
@@ -115,7 +115,7 @@ export function Address({
 
   const utxos = useMemo(() => {
     return unspentOutputs.map((output) =>
-      formatUnspentSiacoinOutputEntity(output)
+      formatUnspentSiacoinOutputEntity(output),
     )
   }, [unspentOutputs])
 
@@ -177,20 +177,20 @@ function getTotal({
   return (outputs || [])
     .reduce(
       (acc, o) => (o.address === address ? acc.plus(o.value) : acc),
-      new BigNumber(0)
+      new BigNumber(0),
     )
     .minus(
       (inputs || []).reduce(
         (acc, i) => (i.address === address ? acc.plus(i.value) : acc),
-        new BigNumber(0)
-      )
+        new BigNumber(0),
+      ),
     )
 }
 
 function formatV1TransactionEntity(
   id: string,
   networkHeight: number,
-  v1Transaction: ExplorerEvent
+  v1Transaction: ExplorerEvent,
 ): EntityListItemProps {
   const { transaction } = v1Transaction.data as EventV1Transaction
   return {
@@ -218,7 +218,7 @@ function formatV1TransactionEntity(
 function formatV2TransactionEntity(
   id: string,
   networkHeight: number,
-  v2Transaction: ExplorerEvent
+  v2Transaction: ExplorerEvent,
 ): EntityListItemProps {
   const transaction = v2Transaction.data as ExplorerV2Transaction
   return {
@@ -251,7 +251,7 @@ function formatV2TransactionEntity(
 
 function formatV1ContractResolutionEntity(
   networkHeight: number,
-  v1ContractResolution: ExplorerEvent
+  v1ContractResolution: ExplorerEvent,
 ): EntityListItemProps {
   const { parent, siacoinElement } =
     v1ContractResolution.data as EventV1ContractResolution
@@ -270,7 +270,7 @@ function formatV1ContractResolutionEntity(
 
 function formatV2ContractResolutionEntity(
   networkHeight: number,
-  v1ContractResolution: ExplorerEvent
+  v1ContractResolution: ExplorerEvent,
 ): EntityListItemProps {
   const { resolution, siacoinElement } =
     v1ContractResolution.data as EventV2ContractResolution
@@ -290,7 +290,7 @@ function formatV2ContractResolutionEntity(
 
 function formatPayoutEntity(
   networkHeight: number,
-  payout: ExplorerEvent
+  payout: ExplorerEvent,
 ): EntityListItemProps {
   const { siacoinElement } = payout.data as EventPayout
   const capitalizedType =
@@ -309,7 +309,7 @@ function formatPayoutEntity(
 }
 
 function formatUnspentSiacoinOutputEntity(
-  siacoinOutput: ExplorerSiacoinOutput
+  siacoinOutput: ExplorerSiacoinOutput,
 ): EntityListItemProps {
   return {
     hash: siacoinOutput.id,
@@ -324,7 +324,7 @@ const formatEvent = (
   id: string,
   networkHeight: number,
   event: ExplorerEvent,
-  isUnconfirmed = false
+  isUnconfirmed = false,
 ): EntityListItemProps => {
   let baseEntity: EntityListItemProps
 

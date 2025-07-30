@@ -77,7 +77,7 @@ export function useOnValid({
       settingsPricePinningUpdate,
       revalidateAndResetForm,
       mutate,
-    ]
+    ],
   )
 
   return onValid

@@ -101,7 +101,7 @@ export function WalletUpdateDialog({
         }
         return acc
       }, []) || [],
-    [dataset, wallet]
+    [dataset, wallet],
   )
   const fields = getFields({ walletNames })
   const onSubmit = useCallback(
@@ -125,7 +125,7 @@ export function WalletUpdateDialog({
         closeAndReset()
       }
     },
-    [walletId, walletUpdate, wallet, closeAndReset]
+    [walletId, walletUpdate, wallet, closeAndReset],
   )
 
   return (

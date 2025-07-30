@@ -70,10 +70,10 @@ export const configResetAllSettings = step(
     // save
     await clickIfEnabledAndWait(
       page.getByText('Save changes'),
-      page.getByText('Settings have been saved')
+      page.getByText('Settings have been saved'),
     )
     await clearToasts({ page })
     await setViewMode({ page, state: 'basic' })
     await navigateToConfig({ page })
-  }
+  },
 )

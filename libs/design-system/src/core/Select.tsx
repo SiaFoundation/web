@@ -42,7 +42,7 @@ const containerStyles = cva(
       state: 'default',
       size: 'small',
     },
-  }
+  },
 )
 
 // TODO: convert to radix select
@@ -89,7 +89,7 @@ export function Option({
       className={cx(
         'bg-white dark:bg-graydark-200',
         'text-gray-1100 dark:text-white',
-        className
+        className,
       )}
     />
   )

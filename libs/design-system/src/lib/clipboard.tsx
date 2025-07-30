@@ -13,7 +13,7 @@ export const copyToClipboard = (text: string, entity?: string) => {
 export const copyImageToClipboard = (
   image: Blob,
   type: string,
-  entity?: string
+  entity?: string,
 ) => {
   const message = entity
     ? `Copied ${entity} to clipboard`

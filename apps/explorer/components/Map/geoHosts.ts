@@ -24,7 +24,7 @@ export const getGeoHosts = unstable_cache(
         data: {
           online: true,
         },
-      })
+      }),
     )
     if (error) {
       return []
@@ -35,7 +35,7 @@ export const getGeoHosts = unstable_cache(
     hosts.sort((a, b) =>
       a.totalStorage - a.remainingStorage < b.totalStorage - b.remainingStorage
         ? 1
-        : -1
+        : -1,
     )
 
     // Filter out hosts without location data
@@ -71,7 +71,7 @@ export const getGeoHosts = unstable_cache(
   {
     tags: ['geoHosts'],
     revalidate: maxAge,
-  }
+  },
 )
 
 // transform to only necessary data to limit transfer size
@@ -85,7 +85,7 @@ function transformHost(h: ExplorerHost): ExplorerPartialHost {
       downloadPrice: h.v2Settings.prices.egressPrice,
       uploadPrice: h.v2Settings.prices.ingressPrice,
       remainingStorage: sectorsToBytes(
-        h.v2Settings.remainingStorage
+        h.v2Settings.remainingStorage,
       ).toNumber(),
       totalStorage: sectorsToBytes(h.v2Settings.totalStorage).toNumber(),
     }

@@ -82,7 +82,7 @@ export function Tooltip({
                   'data-[side=left]:right-1',
                   'data-[side=left]:origin-right',
                   'data-[side=right]:left-1',
-                  'data-[side=right]:origin-left'
+                  'data-[side=right]:origin-left',
                 )}
               >
                 <div
@@ -90,7 +90,7 @@ export function Tooltip({
                     'py-1 px-2',
                     'max-w-xs',
                     'overflow-hidden',
-                    panelStyles()
+                    panelStyles(),
                   )}
                 >
                   {typeof content === 'string' ||

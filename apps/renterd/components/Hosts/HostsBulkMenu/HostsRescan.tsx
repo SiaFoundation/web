@@ -8,7 +8,7 @@ export function HostsRescan() {
   const publicKeys = useMemo(
     () =>
       Object.entries(multiSelect.selection).map(([_, item]) => item.publicKey),
-    [multiSelect.selection]
+    [multiSelect.selection],
   )
 
   return <BulkRescanHosts multiSelect={multiSelect} publicKeys={publicKeys} />

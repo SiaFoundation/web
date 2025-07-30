@@ -55,6 +55,6 @@ export function useDirectoryDelete() {
           }
         },
       }),
-    [openConfirmDialog, deleteObjects]
+    [openConfirmDialog, deleteObjects],
   )
 }

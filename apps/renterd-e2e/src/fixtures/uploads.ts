@@ -7,14 +7,14 @@ export const uploadInList = step(
     await expect(getUploadsTable(page).getByTestId(id)).toBeVisible({
       timeout,
     })
-  }
+  },
 )
 
 export const uploadNotInList = step(
   'expect upload not in list',
   async (page: Page, id: string) => {
     await expect(getUploadsTable(page).getByTestId(id)).toBeHidden()
-  }
+  },
 )
 
 export const getUploadRowById = step(
@@ -22,9 +22,9 @@ export const getUploadRowById = step(
   async (page: Page, id: string, shouldExpect?: boolean) => {
     return maybeExpectAndReturn(
       getUploadsTable(page).getByTestId(id),
-      shouldExpect
+      shouldExpect,
     )
-  }
+  },
 )
 
 export function getUploadsTable(page: Page) {
@@ -39,5 +39,5 @@ export const expectUploadRowById = step(
   'expect upload row by ID',
   async (page: Page, id: string) => {
     return expect(getUploadsTable(page).getByTestId(id)).toBeVisible()
-  }
+  },
 )

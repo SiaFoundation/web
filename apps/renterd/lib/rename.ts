@@ -15,7 +15,7 @@ type Id = string | number
 
 export function getMoveFileDestinationDirectory(
   activeDirectory: FullPathSegments,
-  e?: { collisions: { id: Id }[] | null }
+  e?: { collisions: { id: Id }[] | null },
 ) {
   let toPath = pathSegmentsToPath(activeDirectory)
   if (e?.collisions?.length) {
@@ -30,7 +30,7 @@ export function getMoveFileDestinationDirectory(
 
 export function getMoveFileOperations(
   paths: FullPath[],
-  destinationPath: FullPath
+  destinationPath: FullPath,
 ) {
   const list: {
     bucket: string

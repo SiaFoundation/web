@@ -10,7 +10,7 @@ import { Stats } from './stats'
 export type Commands = {
   moveToLocation: (
     location: [number, number] | undefined,
-    altitude?: number
+    altitude?: number,
   ) => void
 }
 
@@ -31,7 +31,7 @@ export function Map({ hosts, stats }: Props) {
 
   const activeHost = useMemo(
     () => hosts?.find((d) => d.publicKey === activeHostPublicKey),
-    [hosts, activeHostPublicKey]
+    [hosts, activeHostPublicKey],
   )
 
   const cmdRef = useRef<Commands>(emptyCommands)
@@ -40,7 +40,7 @@ export function Map({ hosts, stats }: Props) {
     (cmd: Commands) => {
       cmdRef.current = cmd
     },
-    [cmdRef]
+    [cmdRef],
   )
 
   const scrollToHost = useCallback((publicKey: string) => {
@@ -76,7 +76,7 @@ export function Map({ hosts, stats }: Props) {
       }
       scrollToHost(publicKey)
     },
-    [setActiveHostPublicKey, cmdRef, activeHostPublicKey, scrollToHost]
+    [setActiveHostPublicKey, cmdRef, activeHostPublicKey, scrollToHost],
   )
 
   const onHostListClick = useCallback(
@@ -91,12 +91,12 @@ export function Map({ hosts, stats }: Props) {
       }
       scrollToHost(publicKey)
     },
-    [setActiveHostPublicKey, cmdRef, activeHostPublicKey, scrollToHost]
+    [setActiveHostPublicKey, cmdRef, activeHostPublicKey, scrollToHost],
   )
 
   const onHostMapHover = useCallback(
     (publicKey: string, location?: [number, number]) => null,
-    []
+    [],
   )
 
   // Disabling this because it is causing many false positives and anyone

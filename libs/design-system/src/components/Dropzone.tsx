@@ -58,7 +58,7 @@ export function Dropzone({
                 'hover:border-green-500 hover:dark:border-green-600 hover:bg-green-100/20 hover:dark:bg-green-100/20',
               ]
             : '',
-          className
+          className,
         )}
       >
         <input {...getInputProps()} />

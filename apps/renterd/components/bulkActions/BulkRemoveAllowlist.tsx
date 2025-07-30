@@ -28,7 +28,7 @@ export function BulkRemoveAllowlist({
         openConfirmDialog({
           title: `Remove ${pluralize(
             multiSelect.selectionCount,
-            'host'
+            'host',
           )} from allowlist`,
           action: 'Remove from allowlist',
           variant: 'accent',

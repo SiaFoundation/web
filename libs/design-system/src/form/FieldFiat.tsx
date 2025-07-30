@@ -20,7 +20,7 @@ import { cx } from 'class-variance-authority'
 
 export function FieldFiat<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   name,
   form,
@@ -46,7 +46,7 @@ export function FieldFiat<
   })
   const currencyOption = useMemo(
     () => currencyOptions.find((c) => c.id === currency),
-    [currency]
+    [currency],
   )
   const changed = getFormStateFieldBoolean(form.formState.dirtyFields, name)
   const el = (
@@ -62,11 +62,11 @@ export function FieldFiat<
         field.readOnly
           ? 'border-blue-400 dark:border-blue-400'
           : error
-          ? 'border-red-500 dark:border-red-400'
-          : changed
-          ? 'border-green-500 dark:border-green-400'
-          : 'border-gray-200 dark:border-graydark-200',
-        'rounded'
+            ? 'border-red-500 dark:border-red-400'
+            : changed
+              ? 'border-green-500 dark:border-green-400'
+              : 'border-gray-200 dark:border-graydark-200',
+        'rounded',
       )}
     >
       <NumberField

@@ -91,7 +91,7 @@ export function ValueScFiat({
       currencyDisplay,
       displayBoth,
       displayBothDirection,
-    ]
+    ],
   )
 
   const fiatEl = useMemo(
@@ -136,7 +136,7 @@ export function ValueScFiat({
       currencyDisplay,
       displayBoth,
       displayBothDirection,
-    ]
+    ],
   )
 
   if (currencyDisplay === 'sc') {

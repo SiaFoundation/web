@@ -8,7 +8,7 @@ import { Maybe, Nullish } from '@siafoundation/types'
  * @returns Maybe<T[]>
  */
 export function maybeFromNullishArrayResponse<T>(
-  data: Nullish<T[]>
+  data: Nullish<T[]>,
 ): Maybe<T[]> {
   if (data) {
     return data

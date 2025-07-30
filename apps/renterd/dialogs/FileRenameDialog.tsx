@@ -88,7 +88,7 @@ export function FileRenameDialog({ trigger, open, onOpenChange }: Props) {
       }
       const { bucket, to, from, mode } = getRenameFileRenameParams(
         originalPath,
-        values.name
+        values.name,
       )
       const response = await objectRename.post({
         payload: {
@@ -117,7 +117,7 @@ export function FileRenameDialog({ trigger, open, onOpenChange }: Props) {
         })
       }
     },
-    [originalPath, refreshDirectory, refreshFlat, objectRename, closeAndReset]
+    [originalPath, refreshDirectory, refreshFlat, objectRename, closeAndReset],
   )
 
   const fields = useMemo(() => getFields({ currentName: name }), [name])

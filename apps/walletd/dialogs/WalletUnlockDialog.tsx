@@ -80,7 +80,7 @@ export function WalletUnlockDialog({
       cacheWalletMnemonic(walletId, values.mnemonic)
       closeAndReset()
     },
-    [walletId, cacheWalletMnemonic, closeAndReset]
+    [walletId, cacheWalletMnemonic, closeAndReset],
   )
 
   const onInvalid = useOnInvalid(fields)

@@ -19,7 +19,7 @@ type Props = {
   multiSelect: MultiSelect<ObjectData>
   activeDirectory: FullPathSegments
   setActiveDirectory: (
-    func: (directory: FullPathSegments) => FullPathSegments
+    func: (directory: FullPathSegments) => FullPathSegments,
   ) => void
   dataset?: ObjectData[]
   refresh: () => void
@@ -68,7 +68,7 @@ export function useMove({
       refresh()
       multiSelect.deselectAll()
     },
-    [refresh, rename, multiSelect]
+    [refresh, rename, multiSelect],
   )
 
   const moveSelectedFilesOperationCount = useMemo(() => {
@@ -94,11 +94,11 @@ export function useMove({
       const paths = draggingObjects.map((o) => o.path)
       const destinationPath = getMoveFileDestinationDirectory(
         activeDirectory,
-        e
+        e,
       )
       moveFiles(paths, destinationPath)
     },
-    [draggingObjects, activeDirectory, moveFiles]
+    [draggingObjects, activeDirectory, moveFiles],
   )
 
   const delayedNavigation = useCallback(
@@ -122,7 +122,7 @@ export function useMove({
         return newTimeout
       })
     },
-    [setNavTimeout, setActiveDirectory]
+    [setNavTimeout, setActiveDirectory],
   )
 
   const scheduleNavigation = useCallback(
@@ -138,7 +138,7 @@ export function useMove({
         }
       }
     },
-    [delayedNavigation, activeDirectory]
+    [delayedNavigation, activeDirectory],
   )
 
   const onDragStart = useCallback(
@@ -148,28 +148,28 @@ export function useMove({
       const id = String(e.active.id)
       if (multiSelect.selectedIds.includes(id)) {
         setDraggingObjects(
-          Object.entries(multiSelect.selection).map(([, obj]) => obj)
+          Object.entries(multiSelect.selection).map(([, obj]) => obj),
         )
       } else {
         const ob = dataset?.find((d) => d.id === e.active.id)
         setDraggingObjects(ob ? [ob] : undefined)
       }
     },
-    [dataset, setDraggingObjects, multiSelect]
+    [dataset, setDraggingObjects, multiSelect],
   )
 
   const onDragOver = useCallback(
     (e: DragOverEvent) => {
       scheduleNavigation(e)
     },
-    [scheduleNavigation]
+    [scheduleNavigation],
   )
 
   const onDragMove = useCallback(
     (e: DragMoveEvent) => {
       scheduleNavigation(e)
     },
-    [scheduleNavigation]
+    [scheduleNavigation],
   )
 
   const onDragEnd = useCallback(
@@ -178,7 +178,7 @@ export function useMove({
       setDraggingObjects(undefined)
       moveDraggedFiles(e)
     },
-    [setDraggingObjects, delayedNavigation, moveDraggedFiles]
+    [setDraggingObjects, delayedNavigation, moveDraggedFiles],
   )
 
   const onDragCancel = useCallback(
@@ -186,7 +186,7 @@ export function useMove({
       delayedNavigation(undefined)
       setDraggingObjects(undefined)
     },
-    [setDraggingObjects, delayedNavigation]
+    [setDraggingObjects, delayedNavigation],
   )
 
   return {

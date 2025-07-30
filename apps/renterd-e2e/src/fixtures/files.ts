@@ -13,12 +13,12 @@ export const deleteFile = step(
     await openFileContextMenu(page, path)
     await page.getByRole('menuitem', { name: 'Delete file' }).click()
     await expect(
-      page.getByRole('dialog').getByText('Delete file')
+      page.getByRole('dialog').getByText('Delete file'),
     ).toBeVisible()
     await page.locator('form button[type=submit]').click()
     await expect(page.getByRole('dialog')).toBeHidden()
     await fileNotInList(page, path)
-  }
+  },
 )
 
 export const deleteFileIfExists = step(
@@ -31,7 +31,7 @@ export const deleteFileIfExists = step(
     if (exists) {
       await deleteFile(page, path)
     }
-  }
+  },
 )
 
 export const deleteDirectory = step(
@@ -44,12 +44,12 @@ export const deleteDirectory = step(
     await expect(deleteDirectoryItem).toBeVisible()
     await deleteDirectoryItem.click()
     await expect(
-      page.getByRole('dialog').getByText('Delete directory')
+      page.getByRole('dialog').getByText('Delete directory'),
     ).toBeVisible()
     await page.locator('form button[type=submit]').click()
     await expect(page.getByRole('dialog')).toBeHidden()
     await fileNotInList(page, path)
-  }
+  },
 )
 
 export const deleteDirectoryIfExists = step(
@@ -62,7 +62,7 @@ export const deleteDirectoryIfExists = step(
     if (exists) {
       await deleteDirectory(page, path)
     }
-  }
+  },
 )
 
 export const openDirectoryContextMenu = step(
@@ -74,7 +74,7 @@ export const openDirectoryContextMenu = step(
     // await page.waitForTimeout(100)
     await expect(selector).toBeVisible()
     await selector.click()
-  }
+  },
 )
 
 export const openFileContextMenu = step(
@@ -83,7 +83,7 @@ export const openFileContextMenu = step(
     const selector = page.getByTestId(path).getByLabel('File context menu')
     await expect(selector).toBeVisible()
     await selector.click()
-  }
+  },
 )
 
 export const openDirectory = step(
@@ -98,10 +98,10 @@ export const openDirectory = step(
       .click()
     for (const dir of path.split('/').slice(0, -1)) {
       await expect(
-        page.getByTestId('navbar').getByText(dir, { exact: true })
+        page.getByTestId('navbar').getByText(dir, { exact: true }),
       ).toBeVisible()
     }
-  }
+  },
 )
 
 export const openDirectoryFromAnywhere = step(
@@ -116,7 +116,7 @@ export const openDirectoryFromAnywhere = step(
       currentPath += dir + '/'
       await openDirectory(page, currentPath)
     }
-  }
+  },
 )
 
 export const navigateToParentDirectory = step(
@@ -130,7 +130,7 @@ export const navigateToParentDirectory = step(
     } else {
       await page.getByRole('cell', { name: '..' }).click()
     }
-  }
+  },
 )
 
 export const createDirectory = step(
@@ -141,7 +141,7 @@ export const createDirectory = step(
     await fillTextInputByName(page, 'name', name)
     await page.locator('input[name=name]').press('Enter')
     await expect(page.getByRole('dialog')).toBeHidden()
-  }
+  },
 )
 
 export const createDirectoryIfNotExists = step(
@@ -154,7 +154,7 @@ export const createDirectoryIfNotExists = step(
     if (!exists) {
       await createDirectory(page, name)
     }
-  }
+  },
 )
 
 export const fileInList = step(
@@ -163,14 +163,14 @@ export const fileInList = step(
     await expect(page.getByTestId('filesTable').getByTestId(path)).toBeVisible({
       timeout,
     })
-  }
+  },
 )
 
 export const fileNotInList = step(
   'expect file not in list',
   async (page: Page, path: string) => {
     await expect(page.getByTestId('filesTable').getByTestId(path)).toBeHidden()
-  }
+  },
 )
 
 export const getFileRowById = step(
@@ -178,15 +178,15 @@ export const getFileRowById = step(
   async (page: Page, id: string, shouldExpect?: boolean) => {
     return maybeExpectAndReturn(
       page.getByTestId('filesTable').getByTestId(id),
-      shouldExpect
+      shouldExpect,
     )
-  }
+  },
 )
 
 export function getFileRowByIndex(
   page: Page,
   index: number,
-  mode: 'directory' | 'all files'
+  mode: 'directory' | 'all files',
 ) {
   return (
     page
@@ -202,16 +202,16 @@ export const expectFileRowById = step(
   'expect file row by ID',
   async (page: Page, id: string) => {
     return expect(page.getByTestId('filesTable').getByTestId(id)).toBeVisible()
-  }
+  },
 )
 
 export const fileInListAndDoneUploading = step(
   'expect file in list and done uploading',
   async (page: Page, path: string) => {
     await expect(
-      page.getByTestId('filesTable').getByTestId(path).getByText('100%')
+      page.getByTestId('filesTable').getByTestId(path).getByText('100%'),
     ).toBeVisible()
-  }
+  },
 )
 
 export const changeExplorerMode = step(
@@ -234,16 +234,16 @@ export const changeExplorerMode = step(
     if (mode === 'all files') {
       await expect(page.getByTestId('filesTable')).toBeVisible()
       await expect(
-        page.getByTestId('navbar').getByText('All files')
+        page.getByTestId('navbar').getByText('All files'),
       ).toBeVisible()
     }
     if (mode === 'directory') {
       await expect(page.getByTestId('filesTable')).toBeVisible()
       await expect(
-        page.getByTestId('navbar').getByText('All files')
+        page.getByTestId('navbar').getByText('All files'),
       ).toBeHidden()
     }
-  }
+  },
 )
 
 function generateDummyFile(sizeInBytes: number): Buffer {
@@ -254,7 +254,7 @@ async function simulateDragAndDropFile(
   page: Page,
   selector: string,
   fileName: string,
-  sizeInBytes: number
+  sizeInBytes: number,
 ) {
   const buffer = generateDummyFile(sizeInBytes).toString('base64')
 
@@ -274,7 +274,7 @@ async function simulateDragAndDropFile(
       bufferData: `data:application/octet-stream;base64,${buffer}`,
       localFileName: fileName,
       localFileType: '',
-    }
+    },
   )
 
   await page.dispatchEvent(selector, 'drop', { dataTransfer })
@@ -287,9 +287,9 @@ export const dragAndDropFileFromSystem = step(
       page,
       `[data-testid=filesDropzone]`,
       '/' + localFilePath,
-      sizeInBytes
+      sizeInBytes,
     )
-  }
+  },
 )
 
 export type FileMap = {
@@ -305,7 +305,7 @@ export const createFilesMap = step(
     map: FileMap,
     {
       waitForEachUploadToFinish = true,
-    }: { waitForEachUploadToFinish?: boolean } = {}
+    }: { waitForEachUploadToFinish?: boolean } = {},
   ) => {
     const create = async (map: FileMap, stack: string[]) => {
       for (const name in map) {
@@ -334,7 +334,7 @@ export const createFilesMap = step(
     await create(map, [bucketName])
     await navigateToBuckets({ page })
     await openBucket(page, bucketName)
-  }
+  },
 )
 
 type FileExpectMap = {
@@ -364,5 +364,5 @@ export const expectFilesMap = step(
       }
     }
     await check(map, [bucketName])
-  }
+  },
 )

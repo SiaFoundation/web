@@ -10,7 +10,7 @@ import {
 async function getExploredAddressCookie() {
   const cookieStore = await cookies()
   const customExploredAddress = cookieStore.get(
-    exploredCustomApiCookieName
+    exploredCustomApiCookieName,
   )?.value
   return customExploredAddress
 }

@@ -15,7 +15,7 @@ export function ContractsBulkDelete() {
 
   const ids = useMemo(
     () => Object.entries(multiSelect.selection).map(([_, item]) => item.id),
-    [multiSelect.selection]
+    [multiSelect.selection],
   )
   const { openConfirmDialog } = useDialog()
   const deleteContract = useContractDelete()
@@ -33,7 +33,7 @@ export function ContractsBulkDelete() {
         after: () => {
           multiSelect.deselectAll()
         },
-      }
+      },
     )
   }, [multiSelect, ids, deleteContract])
 

@@ -10,7 +10,7 @@ type KeyStats = {
 }
 
 export function computeChartStats<Key extends string>(
-  dataset: ChartPoint<Key>[] | undefined
+  dataset: ChartPoint<Key>[] | undefined,
 ): Record<string, KeyStats> {
   if (!dataset || !dataset.length) {
     return {}
@@ -26,7 +26,7 @@ export function computeChartStats<Key extends string>(
       ...acc,
       [key]: getStatsForKey(key, dataset),
     }),
-    {}
+    {},
   )
   return {
     ...map,
@@ -48,13 +48,13 @@ function getStatsForKey<Key extends string>(key: Key, data: ChartPoint<Key>[]) {
 
 function getStatsTotal<Key extends string>(
   keys: Key[],
-  data: ChartPoint<Key>[]
+  data: ChartPoint<Key>[],
 ) {
   const start = getTotalForPoint(keys, data[0])
   const end = getTotalForPoint(keys, data[data.length - 1])
   const total = data.reduce(
     (acc, point) => acc + getTotalForPoint(keys, point),
-    0
+    0,
   )
   return calcStats({
     total,
@@ -87,7 +87,7 @@ function calcStats({
 
 function getTotalForPoint<Key extends string>(
   keys: Key[],
-  point?: ChartPoint<Key>
+  point?: ChartPoint<Key>,
 ) {
   return keys.reduce((acc, key) => acc + (point?.[key] || 0), 0)
 }

@@ -41,7 +41,7 @@ export function ProgressSteps({ activeStep, steps, onChange }: Props) {
             key={id}
             className={cx(
               'absolute h-2 w-2 -top-0.5',
-              isBacktrackable ? 'cursor-pointer' : 'cursor-default'
+              isBacktrackable ? 'cursor-pointer' : 'cursor-default',
             )}
             style={{
               left: `calc(${(i / lastIndex) * 100}% - ${
@@ -60,7 +60,7 @@ export function ProgressSteps({ activeStep, steps, onChange }: Props) {
                 'absolute top-[-30px]',
                 isFirst ? 'left-0' : '',
                 isLast ? 'right-0' : '',
-                !isFirst && !isLast ? '-translate-x-1/2' : ''
+                !isFirst && !isLast ? '-translate-x-1/2' : '',
               )}
               noWrap
             >
@@ -74,7 +74,7 @@ export function ProgressSteps({ activeStep, steps, onChange }: Props) {
                   : 'bg-gray-500 dark:bg-graydark-500',
                 isActiveOrPrev
                   ? 'border-accent-900 dark:border-accentdark-900'
-                  : 'border-gray-600 dark:border-graydark-600'
+                  : 'border-gray-600 dark:border-graydark-600',
               )}
             />
             {isActive && (

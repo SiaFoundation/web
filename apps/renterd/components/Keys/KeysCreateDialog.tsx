@@ -134,7 +134,7 @@ export function KeysCreateDialog({ trigger, open, onOpenChange }: Props) {
         closeDialog()
       }
     },
-    [form, closeDialog, settingsS3Update, settingsS3.data]
+    [form, closeDialog, settingsS3Update, settingsS3.data],
   )
 
   const fields = useMemo(
@@ -147,10 +147,10 @@ export function KeysCreateDialog({ trigger, open, onOpenChange }: Props) {
           form.setValue('secret', generateSecretAccessKey())
         },
         existingKeys: Object.keys(
-          settingsS3.data?.authentication.v4Keypairs || {}
+          settingsS3.data?.authentication.v4Keypairs || {},
         ),
       }),
-    [settingsS3.data, form]
+    [settingsS3.data, form],
   )
 
   const onInvalid = useOnInvalid(fields)

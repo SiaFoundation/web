@@ -31,7 +31,7 @@ const getCachedTopHosts = unstable_cache(
   {
     tags: ['top-hosts'],
     revalidate: 300,
-  }
+  },
 )
 
 export default async function HomePage() {

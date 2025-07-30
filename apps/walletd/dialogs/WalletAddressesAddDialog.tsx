@@ -52,7 +52,7 @@ function formatAddresses(value: string) {
       .trim()
       .split(/[^0-9a-fA-F]+/)
       .map((v) => v)
-      .filter((v) => !!v)
+      .filter((v) => !!v),
   )
 }
 
@@ -144,7 +144,7 @@ export function WalletAddressesAddDialog({
         total,
       }
     },
-    [walletId, addressAdd]
+    [walletId, addressAdd],
   )
 
   const triggerRescan = useTriggerRescan()
@@ -174,7 +174,7 @@ export function WalletAddressesAddDialog({
       triggerRescan(values)
       closeAndReset()
     },
-    [addAllAddresses, closeAndReset, triggerRescan]
+    [addAllAddresses, closeAndReset, triggerRescan],
   )
 
   const addressesText = form.watch('addresses')

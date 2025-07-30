@@ -45,7 +45,7 @@ export function ScrollArea({
         <ScrollAreaPrimitive.Thumb
           className={cx(
             'flex-1 relative bg-gray-300 rounded',
-            'before:content[""] before:absolute before:top-1/2 before:left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full'
+            'before:content[""] before:absolute before:top-1/2 before:left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full',
           )}
         />
       </ScrollAreaPrimitive.Scrollbar>
@@ -57,7 +57,7 @@ export function ScrollArea({
         <ScrollAreaPrimitive.Thumb
           className={cx(
             'flex-1 relative bg-gray-300 rounded',
-            'before:content[""] before:absolute before:top-1/2 before:left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full'
+            'before:content[""] before:absolute before:top-1/2 before:left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full',
           )}
         />
       </ScrollAreaPrimitive.Scrollbar>

@@ -44,7 +44,7 @@ export function SiacoinField({
 }: Props) {
   const externalSc = useMemo(
     () => new BigNumber(_externalSc === undefined ? NaN : _externalSc),
-    [_externalSc]
+    [_externalSc],
   )
   const { settings } = useAppSettings()
   const exchangeRate = useExternalActiveExchangeRate()
@@ -59,7 +59,7 @@ export function SiacoinField({
         onChange(sc && !isNaN(Number(sc)) ? new BigNumber(sc) : undefined)
       }
     },
-    [onChange]
+    [onChange],
   )
 
   const updateFiat = useCallback(
@@ -67,7 +67,7 @@ export function SiacoinField({
       const uf = toFixedMaxString(fiat, decimalsLimitFiat)
       setLocalFiat(uf)
     },
-    [setLocalFiat, decimalsLimitFiat]
+    [setLocalFiat, decimalsLimitFiat],
   )
 
   const updateSc = useCallback(
@@ -77,7 +77,7 @@ export function SiacoinField({
       updateExternalSc(usc)
       return usc
     },
-    [setLocalSc, decimalsLimitSc, updateExternalSc]
+    [setLocalSc, decimalsLimitSc, updateExternalSc],
   )
 
   const onScChange = useCallback(
@@ -85,7 +85,7 @@ export function SiacoinField({
       setLocalSc(sc)
       updateExternalSc(sc)
     },
-    [setLocalSc, updateExternalSc]
+    [setLocalSc, updateExternalSc],
   )
 
   const syncFiatToSc = useCallback(
@@ -93,7 +93,7 @@ export function SiacoinField({
       const fiat = new BigNumber(sc).times(rate || 0)
       updateFiat(fiat)
     },
-    [updateFiat, rate]
+    [updateFiat, rate],
   )
 
   const syncScToFiat = useCallback(
@@ -101,7 +101,7 @@ export function SiacoinField({
       const sc = new BigNumber(fiat).dividedBy(rate || 0)
       updateSc(sc)
     },
-    [updateSc, rate]
+    [updateSc, rate],
   )
 
   const [hasInitializedSc, setHasInitializedSc] = useState(false)
@@ -160,7 +160,7 @@ export function SiacoinField({
           : changed
             ? 'border-green-500 dark:border-green-400'
             : 'border-gray-200 dark:border-graydark-200',
-        'rounded'
+        'rounded',
       )}
     >
       <BaseNumberField

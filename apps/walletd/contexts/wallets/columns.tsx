@@ -141,7 +141,7 @@ export const columns: WalletsTableColumn[] = [
 
         const tipUnlocked = walletAutoLockEnabled
           ? `The wallet is currently unlocked. The wallet will stay unlocked until it is inactive for ${remaining.amount.toFixed(
-              0
+              0,
             )} more ${remaining.units}, manually locked, or the app is closed.`
           : `The wallet is currently unlocked. The wallet will stay unlocked until it is manually locked or the app is closed.`
         const tip =

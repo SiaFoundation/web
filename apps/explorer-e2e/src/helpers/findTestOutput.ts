@@ -22,7 +22,7 @@ export async function findTestOutput(cluster: Cluster, version: 'v1' | 'v2') {
           if (!foundOutput) {
             foundOutput = output
           }
-        })
+        }),
       )
     }
 
@@ -32,7 +32,7 @@ export async function findTestOutput(cluster: Cluster, version: 'v1' | 'v2') {
           if (!foundOutput) {
             foundOutput = output
           }
-        })
+        }),
       )
     }
 

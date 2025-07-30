@@ -11,9 +11,9 @@ export const getKeyRowById = step(
   async (page: Page, id: string, shouldExpect?: boolean) => {
     return maybeExpectAndReturn(
       page.getByTestId('keysTable').getByTestId(id),
-      shouldExpect
+      shouldExpect,
     )
-  }
+  },
 )
 
 export const getKeysSummaryRow = step(
@@ -21,9 +21,9 @@ export const getKeysSummaryRow = step(
   async (page: Page, shouldExpect?: boolean) => {
     return maybeExpectAndReturn(
       page.getByTestId('keysTable').locator('thead').getByRole('row').nth(1),
-      shouldExpect
+      shouldExpect,
     )
-  }
+  },
 )
 
 export const getKeyRowByIndex = step(
@@ -35,9 +35,9 @@ export const getKeyRowByIndex = step(
         .locator('tbody')
         .getByRole('row')
         .nth(index),
-      shouldExpect
+      shouldExpect,
     )
-  }
+  },
 )
 
 export const createKey = step(
@@ -51,7 +51,7 @@ export const createKey = step(
     await getKeyRowById(page, accessKeyId, true)
     await expect(dialog).toBeHidden()
     return accessKeyId
-  }
+  },
 )
 
 export const openKeyContextMenu = step(
@@ -60,5 +60,5 @@ export const openKeyContextMenu = step(
     const selector = page.getByTestId(key).getByLabel('key context menu')
     await expect(selector).toBeVisible()
     await selector.click()
-  }
+  },
 )

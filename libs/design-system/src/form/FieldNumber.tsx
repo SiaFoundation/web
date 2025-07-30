@@ -11,7 +11,7 @@ import { useMemo } from 'react'
 
 export function FieldNumber<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   name,
   form,
@@ -43,11 +43,11 @@ export function FieldNumber<
       _placeholder
         ? new BigNumber(_placeholder)
         : suggestion && typeof suggestion !== 'boolean'
-        ? new BigNumber(suggestion)
-        : median && typeof median !== 'boolean'
-        ? new BigNumber(median)
-        : undefined,
-    [_placeholder, suggestion, median]
+          ? new BigNumber(suggestion)
+          : median && typeof median !== 'boolean'
+            ? new BigNumber(median)
+            : undefined,
+    [_placeholder, suggestion, median],
   )
 
   const el = (
@@ -65,8 +65,8 @@ export function FieldNumber<
         error
           ? 'invalid'
           : getFormStateFieldBoolean(form.formState.dirtyFields, name)
-          ? 'valid'
-          : 'default'
+            ? 'valid'
+            : 'default'
       }
       onChange={(val) => {
         const v = val !== undefined ? new BigNumber(val) : undefined

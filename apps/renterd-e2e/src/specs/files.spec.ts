@@ -47,7 +47,7 @@ test('can create directory and delete a directory', async ({ page }) => {
   await createBucket(page, bucketName)
   await openBucket(page, bucketName)
   await expect(
-    page.getByText('bucket does not contain any files')
+    page.getByText('bucket does not contain any files'),
   ).toBeVisible()
 
   // Create directory.
@@ -118,7 +118,7 @@ test('can sort files in both modes', async ({ page }) => {
     page: Page,
     index: number,
     mode: 'directory' | 'all files',
-    path: string
+    path: string,
   ) {
     return getFileRowByIndex(page, index, mode).and(page.getByTestId(path))
   }
@@ -221,7 +221,7 @@ test('can upload, rename, and delete files', async ({ page }) => {
   await fileInList(page, dirPath)
   await openDirectory(page, dirPath)
   await expect(
-    page.getByText('The current directory does not contain any files yet')
+    page.getByText('The current directory does not contain any files yet'),
   ).toBeVisible()
   await clearToasts({ page })
 
@@ -281,7 +281,7 @@ test('can upload and download a file', async ({ page }) => {
   const downloadPromise = page.waitForEvent('download')
   await openFileContextMenu(page, filePath)
   await expect(
-    page.getByRole('menuitem', { name: 'Download file' })
+    page.getByRole('menuitem', { name: 'Download file' }),
   ).toBeVisible()
   await page.getByRole('menuitem', { name: 'Download file' }).click()
 
@@ -309,7 +309,7 @@ test('can rename and delete a directory with contents', async ({ page }) => {
   await fileInList(page, dirPath)
   await openDirectory(page, dirPath)
   await expect(
-    page.getByText('The current directory does not contain any files yet')
+    page.getByText('The current directory does not contain any files yet'),
   ).toBeVisible()
   await clearToasts({ page })
 
@@ -338,7 +338,7 @@ test('can rename and delete a directory with contents', async ({ page }) => {
 
   // Confirm no files or directories remain.
   await expect(
-    page.getByText('bucket does not contain any files')
+    page.getByText('bucket does not contain any files'),
   ).toBeVisible()
 })
 
@@ -358,7 +358,7 @@ test('shows a new intermediate directory when uploading nested files', async ({
   await createBucket(page, bucketName)
   await openBucket(page, bucketName)
   await expect(
-    page.getByText('bucket does not contain any files')
+    page.getByText('bucket does not contain any files'),
   ).toBeVisible()
 
   // Create a container directory for the test.
@@ -366,7 +366,7 @@ test('shows a new intermediate directory when uploading nested files', async ({
   await fileInList(page, containerDirPath)
   await openDirectory(page, containerDirPath)
   await expect(
-    page.getByText('The current directory does not contain any files yet')
+    page.getByText('The current directory does not contain any files yet'),
   ).toBeVisible()
   await clearToasts({ page })
 

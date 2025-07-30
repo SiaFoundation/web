@@ -31,7 +31,7 @@ test.describe('v2', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText('Output ' + output.id.slice(0, 6))
+        .getByText('Output ' + output.id.slice(0, 6)),
     ).toBeVisible()
   })
 
@@ -43,7 +43,7 @@ test.describe('v2', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText('Output ' + output.id.slice(0, 6))
+        .getByText('Output ' + output.id.slice(0, 6)),
     ).toBeVisible()
   })
 
@@ -53,10 +53,10 @@ test.describe('v2', () => {
     await explorerApp.goTo('/output/' + output.id)
 
     await expect(
-      page.getByText(output.siacoinOutput.address.slice(0, 6))
+      page.getByText(output.siacoinOutput.address.slice(0, 6)),
     ).toBeVisible()
     await expect(
-      page.getByText(humanSiacoin(output.siacoinOutput.value))
+      page.getByText(humanSiacoin(output.siacoinOutput.value)),
     ).toBeVisible()
   })
 
@@ -66,13 +66,13 @@ test.describe('v2', () => {
     await explorerApp.goTo('/output/' + output.id)
 
     await expectThenClick(
-      page.getByText(output.siacoinOutput.address.slice(0, 6))
+      page.getByText(output.siacoinOutput.address.slice(0, 6)),
     )
 
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText(`Address ${output.siacoinOutput.address.slice(0, 6)}`)
+        .getByText(`Address ${output.siacoinOutput.address.slice(0, 6)}`),
     ).toBeVisible()
   })
 })
@@ -98,7 +98,7 @@ test.describe('v1', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText('Output ' + output.id.slice(0, 6))
+        .getByText('Output ' + output.id.slice(0, 6)),
     ).toBeVisible()
   })
 
@@ -110,7 +110,7 @@ test.describe('v1', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText('Output ' + output.id.slice(0, 6))
+        .getByText('Output ' + output.id.slice(0, 6)),
     ).toBeVisible()
   })
 
@@ -120,10 +120,10 @@ test.describe('v1', () => {
     await explorerApp.goTo('/output/' + output.id)
 
     await expect(
-      page.getByText(output.siacoinOutput.address.slice(0, 6))
+      page.getByText(output.siacoinOutput.address.slice(0, 6)),
     ).toBeVisible()
     await expect(
-      page.getByText(humanSiacoin(output.siacoinOutput.value))
+      page.getByText(humanSiacoin(output.siacoinOutput.value)),
     ).toBeVisible()
   })
 
@@ -133,13 +133,13 @@ test.describe('v1', () => {
     await explorerApp.goTo('/output/' + output.id)
 
     await expectThenClick(
-      page.getByText(output.siacoinOutput.address.slice(0, 6))
+      page.getByText(output.siacoinOutput.address.slice(0, 6)),
     )
 
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText(`Address ${output.siacoinOutput.address.slice(0, 6)}`)
+        .getByText(`Address ${output.siacoinOutput.address.slice(0, 6)}`),
     ).toBeVisible()
   })
 })

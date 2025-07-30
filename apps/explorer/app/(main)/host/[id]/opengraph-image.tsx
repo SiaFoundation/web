@@ -42,7 +42,7 @@ export default async function Image({ params }: ExplorerPageProps) {
           initials: 'H',
           avatar: true,
         },
-        size
+        size,
       )
     }
 
@@ -94,7 +94,7 @@ export default async function Image({ params }: ExplorerPageProps) {
         avatar: true,
         values,
       },
-      size
+      size,
     )
   } catch {
     return getOGImage(
@@ -104,7 +104,7 @@ export default async function Image({ params }: ExplorerPageProps) {
         subtitle: 'host',
         initials: 'H',
       },
-      size
+      size,
     )
   }
 }

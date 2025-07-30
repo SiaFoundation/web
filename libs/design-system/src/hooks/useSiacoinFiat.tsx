@@ -19,7 +19,7 @@ export function useSiacoinFiat({ sc }: Props):
   })
   const fiat = useMemo(
     () => new BigNumber(sc || 0).times(exchangeRate.rate || 1),
-    [sc, exchangeRate]
+    [sc, exchangeRate],
   )
 
   if (!sc || !exchangeRate.rate || exchangeRate.rate.isZero()) {

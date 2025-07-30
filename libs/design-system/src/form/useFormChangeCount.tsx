@@ -10,7 +10,7 @@ export function useFormChangeCount<DataForm extends FieldValues>({
   form,
 }: Props<DataForm>) {
   const changeCount = Object.entries(form.formState.dirtyFields).filter(
-    ([_, val]) => !!val
+    ([_, val]) => !!val,
   ).length
 
   return {

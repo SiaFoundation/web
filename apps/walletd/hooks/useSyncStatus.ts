@@ -31,7 +31,9 @@ export function useSyncStatus() {
   const syncPercent =
     isUnlockedAndAuthedRoute && nodeBlockHeight && estimatedBlockHeight
       ? Number(
-          (Math.min(nodeBlockHeight / estimatedBlockHeight, 1) * 100).toFixed(1)
+          (Math.min(nodeBlockHeight / estimatedBlockHeight, 1) * 100).toFixed(
+            1,
+          ),
         )
       : 0
 

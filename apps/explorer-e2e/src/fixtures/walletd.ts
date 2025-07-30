@@ -25,7 +25,7 @@ export async function addWalletToWalletd(walletd: ReturnType<typeof Walletd>) {
           mnemonicHash,
         },
       },
-    })
+    }),
   )
   if (!wallet || walletError) {
     throw new Error(`Failed to add wallet: ${walletError}`)
@@ -50,7 +50,7 @@ export async function addWalletToWalletd(walletd: ReturnType<typeof Walletd>) {
         },
         metadata,
       },
-    })
+    }),
   )
   if (addressError) {
     throw new Error(`Failed to add address: ${addressError}`)
@@ -62,7 +62,7 @@ export async function addWalletToWalletd(walletd: ReturnType<typeof Walletd>) {
 export async function sendSiacoinFromRenterd(
   renterd: Cluster['daemons']['renterds'][number],
   address: string,
-  amount: string
+  amount: string,
 ) {
   console.log(`Sending ${humanSiacoin(amount)} from renterd to:`, address)
   try {

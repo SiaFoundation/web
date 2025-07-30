@@ -20,5 +20,5 @@ export const login = step(
     await fillTextInputByName(page, 'password', password)
     await page.locator('input[name=password]').press('Enter')
     await expect(page.getByTestId('navbar').getByText('Overview')).toBeVisible()
-  }
+  },
 )

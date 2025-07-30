@@ -27,7 +27,7 @@ test.describe('v2', () => {
   test('transaction can be searched by id', async ({ page }) => {
     const contract = await findV2TestContractWithResolutionType(
       cluster,
-      'renewal'
+      'renewal',
     )
 
     // eslint-disable-next-line playwright/no-conditional-in-test
@@ -39,14 +39,14 @@ test.describe('v2', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText('Transaction ' + transactionID.slice(0, 5))
+        .getByText('Transaction ' + transactionID.slice(0, 5)),
     ).toBeVisible()
   })
 
   test('transaction can be navigated to by id', async ({ page }) => {
     const contract = await findV2TestContractWithResolutionType(
       cluster,
-      'renewal'
+      'renewal',
     )
 
     // eslint-disable-next-line playwright/no-conditional-in-test
@@ -57,14 +57,14 @@ test.describe('v2', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText('Transaction ' + transactionID.slice(0, 5))
+        .getByText('Transaction ' + transactionID.slice(0, 5)),
     ).toBeVisible()
   })
 
   test('transaction can click through to a contract', async ({ page }) => {
     const contract = await findV2TestContractWithResolutionType(
       cluster,
-      'renewal'
+      'renewal',
     )
 
     // eslint-disable-next-line playwright/no-conditional-in-test
@@ -72,18 +72,18 @@ test.describe('v2', () => {
 
     await explorerApp.goTo('/tx/' + transactionID)
     await expectThenClick(
-      page.getByRole('link', { name: 'C', exact: true }).first()
+      page.getByRole('link', { name: 'C', exact: true }).first(),
     )
 
     await expect(
-      page.getByTestId('entity-heading').getByText('Contract')
+      page.getByTestId('entity-heading').getByText('Contract'),
     ).toBeVisible()
   })
 
   test('transaction can click through to an address', async ({ page }) => {
     const contract = await findV2TestContractWithResolutionType(
       cluster,
-      'renewal'
+      'renewal',
     )
 
     // eslint-disable-next-line playwright/no-conditional-in-test
@@ -93,14 +93,14 @@ test.describe('v2', () => {
     await expectThenClick(page.getByText('Address').first())
 
     await expect(
-      page.getByTestId('entity-heading').getByText('Address')
+      page.getByTestId('entity-heading').getByText('Address'),
     ).toBeVisible()
   })
 
   test('transaction can click through to an output', async ({ page }) => {
     const contract = await findV2TestContractWithResolutionType(
       cluster,
-      'renewal'
+      'renewal',
     )
 
     // eslint-disable-next-line playwright/no-conditional-in-test
@@ -108,18 +108,18 @@ test.describe('v2', () => {
 
     await explorerApp.goTo('/tx/' + transactionID)
     await expectThenClick(
-      page.getByRole('link', { name: 'SO', exact: true }).first()
+      page.getByRole('link', { name: 'SO', exact: true }).first(),
     )
 
     await expect(
-      page.getByTestId('entity-heading').getByText('Output')
+      page.getByTestId('entity-heading').getByText('Output'),
     ).toBeVisible()
   })
 
   test('transaction displays the correct version', async ({ page }) => {
     const contract = await findV2TestContractWithResolutionType(
       cluster,
-      'renewal'
+      'renewal',
     )
 
     // eslint-disable-next-line playwright/no-conditional-in-test
@@ -128,7 +128,7 @@ test.describe('v2', () => {
     await explorerApp.goTo('/tx/' + transactionID)
 
     await expect(
-      page.getByTestId('explorer-transaction-version').getByText('v2')
+      page.getByTestId('explorer-transaction-version').getByText('v2'),
     ).toBeVisible()
   })
 })
@@ -157,7 +157,7 @@ test.describe('v1', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText('Transaction ' + transactionID.slice(0, 5))
+        .getByText('Transaction ' + transactionID.slice(0, 5)),
     ).toBeVisible()
   })
 
@@ -172,7 +172,7 @@ test.describe('v1', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText('Transaction ' + transactionID.slice(0, 5))
+        .getByText('Transaction ' + transactionID.slice(0, 5)),
     ).toBeVisible()
   })
 
@@ -184,11 +184,11 @@ test.describe('v1', () => {
 
     await explorerApp.goTo('/tx/' + transactionID)
     await expectThenClick(
-      page.getByRole('link', { name: 'C', exact: true }).first()
+      page.getByRole('link', { name: 'C', exact: true }).first(),
     )
 
     await expect(
-      page.getByTestId('entity-heading').getByText('Contract')
+      page.getByTestId('entity-heading').getByText('Contract'),
     ).toBeVisible()
   })
 
@@ -202,7 +202,7 @@ test.describe('v1', () => {
     await expectThenClick(page.getByText('Address').first())
 
     await expect(
-      page.getByTestId('entity-heading').getByText('Address')
+      page.getByTestId('entity-heading').getByText('Address'),
     ).toBeVisible()
   })
 
@@ -214,11 +214,11 @@ test.describe('v1', () => {
 
     await explorerApp.goTo('/tx/' + transactionID)
     await expectThenClick(
-      page.getByRole('link', { name: 'SO', exact: true }).first()
+      page.getByRole('link', { name: 'SO', exact: true }).first(),
     )
 
     await expect(
-      page.getByTestId('entity-heading').getByText('Output')
+      page.getByTestId('entity-heading').getByText('Output'),
     ).toBeVisible()
   })
 
@@ -231,7 +231,7 @@ test.describe('v1', () => {
     await explorerApp.goTo('/tx/' + transactionID)
 
     await expect(
-      page.getByTestId('explorer-transaction-version').getByText('v1')
+      page.getByTestId('explorer-transaction-version').getByText('v1'),
     ).toBeVisible()
   })
 })

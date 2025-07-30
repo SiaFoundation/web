@@ -9,7 +9,7 @@ export const getContractRowById = step(
   'get contract row by ID',
   async (page: Page, id: string) => {
     return page.getByTestId('contractsTable').getByTestId(id)
-  }
+  },
 )
 
 export const getContractsSummaryRow = step(
@@ -20,7 +20,7 @@ export const getContractsSummaryRow = step(
       .locator('thead')
       .getByRole('row')
       .nth(1)
-  }
+  },
 )
 
 export function locateContractRowByIndex(page: Page, index: number) {
@@ -36,9 +36,9 @@ export const getContractRowByIndex = step(
   async (page: Page, index: number, shouldExpect?: boolean) => {
     return maybeExpectAndReturn(
       locateContractRowByIndex(page, index),
-      shouldExpect
+      shouldExpect,
     )
-  }
+  },
 )
 
 export const expectContractRowByIndex = step(
@@ -49,9 +49,9 @@ export const expectContractRowByIndex = step(
         .getByTestId('contractsTable')
         .locator('tbody')
         .getByRole('row')
-        .nth(index)
+        .nth(index),
     ).toBeVisible()
-  }
+  },
 )
 
 export function getContractRows(page: Page) {
@@ -62,7 +62,7 @@ export const getContractRowsAll = step(
   'get contract rows',
   async (page: Page) => {
     return getContractRows(page).all()
-  }
+  },
 )
 
 export const setVersionMode = step(
@@ -70,7 +70,7 @@ export const setVersionMode = step(
   async (page: Page, version: 'v1' | 'v2') => {
     await page.getByLabel('contracts version mode').click()
     await page.getByText(`View ${version} contracts`).click()
-  }
+  },
 )
 
 export const expectVersionMode = step(
@@ -81,7 +81,7 @@ export const expectVersionMode = step(
     await expect(
       locateContractRowByIndex(page, 0)
         .getByTestId('version')
-        .getByText(version)
+        .getByText(version),
     ).toBeVisible()
-  }
+  },
 )

@@ -29,7 +29,7 @@ const thumbStyles = cva(
     defaultVariants: {
       size: 'small',
     },
-  }
+  },
 )
 
 const styles = cva(
@@ -68,7 +68,7 @@ const styles = cva(
       size: 'small',
       state: 'default',
     },
-  }
+  },
 )
 
 export function Switch({

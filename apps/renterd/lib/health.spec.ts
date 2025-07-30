@@ -18,63 +18,63 @@ describe('contract set shards', () => {
         totalShards: 30,
         minShards: 10,
         health: 1.5,
-      })
+      }),
     ).toBe(30)
     expect(
       computeSlabContractSetShards({
         totalShards: 30,
         minShards: 10,
         health: 1,
-      })
+      }),
     ).toBe(30)
     expect(
       computeSlabContractSetShards({
         totalShards: 30,
         minShards: 10,
         health: 0.75,
-      })
+      }),
     ).toBe(25)
     expect(
       computeSlabContractSetShards({
         totalShards: 30,
         minShards: 10,
         health: 0.5,
-      })
+      }),
     ).toBe(20)
     expect(
       computeSlabContractSetShards({
         totalShards: 30,
         minShards: 10,
         health: 0.1,
-      })
+      }),
     ).toBe(12)
     expect(
       computeSlabContractSetShards({
         totalShards: 30,
         minShards: 10,
         health: 0,
-      })
+      }),
     ).toBe(10)
     expect(
       computeSlabContractSetShards({
         totalShards: 30,
         minShards: 10,
         health: -0.25,
-      })
+      }),
     ).toBe(5)
     expect(
       computeSlabContractSetShards({
         totalShards: 30,
         minShards: 10,
         health: -0.5,
-      })
+      }),
     ).toBe(0)
     expect(
       computeSlabContractSetShards({
         totalShards: 30,
         minShards: 10,
         health: -1,
-      })
+      }),
     ).toBe(0)
   })
 })

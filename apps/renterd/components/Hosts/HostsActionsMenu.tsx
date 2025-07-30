@@ -27,8 +27,8 @@ export function HostsActionsMenu() {
           !settings.siascan
             ? 'Configure an explorer to view interactive map'
             : gpu.canGpuRender && gpu.isGpuEnabled
-            ? 'Toggle interactive map'
-            : 'Enable GPU to view interactive map'
+              ? 'Toggle interactive map'
+              : 'Enable GPU to view interactive map'
         }
       >
         <Button

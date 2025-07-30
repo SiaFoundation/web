@@ -115,7 +115,7 @@ function getRedirectRouteFromQuery(
   searchParams: URLSearchParams,
   routes: {
     home: string
-  }
+  },
 ) {
   return searchParams.get('prev')
     ? decodeURIComponent(searchParams.get('prev') as string)
@@ -139,7 +139,7 @@ export function AppLogin({ appName, route, routes }: Props) {
 
   const defaultValues = useMemo(
     () => getDefaultValues(settings.api),
-    [settings.api]
+    [settings.api],
   )
 
   const form = useForm({
@@ -192,7 +192,7 @@ export function AppLogin({ appName, route, routes }: Props) {
       setRequestSettings,
       defaultValues,
       route,
-    ]
+    ],
   )
 
   const fields = getFields({ loginWithCustomApi })
@@ -202,7 +202,7 @@ export function AppLogin({ appName, route, routes }: Props) {
 
   const recentApis = sortBy(
     Object.entries(settings.recentApis),
-    ([_, { lastUsed }]) => -lastUsed
+    ([_, { lastUsed }]) => -lastUsed,
   ).map(([api]) => api)
 
   return (

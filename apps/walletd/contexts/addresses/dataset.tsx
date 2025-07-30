@@ -12,7 +12,7 @@ import { Maybe } from '@siafoundation/types'
 export function transformAddressesResponse(
   response: WalletAddressesResponse,
   walletId: string,
-  openDialog: OpenDialog
+  openDialog: OpenDialog,
 ) {
   const data: AddressData[] = response.map((addressObject) => {
     const { address, description, metadata, spendPolicy } = addressObject
@@ -62,7 +62,7 @@ export function useDataset({
   const lastIndex = (dataset || []).reduce(
     (highest, { metadata }) =>
       metadata.index > highest ? metadata.index : highest,
-    -1
+    -1,
   )
 
   return {

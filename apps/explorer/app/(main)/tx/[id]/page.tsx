@@ -96,7 +96,7 @@ export default async function Page({ params }: ExplorerPageProps) {
     return (
       <Transaction
         txType={getV2TransactionType(
-          explorerV2TransactionToGetV2TransactionTypeParam(transaction)
+          explorerV2TransactionToGetV2TransactionTypeParam(transaction),
         )}
         transaction={transaction}
         transactionHeaderData={{

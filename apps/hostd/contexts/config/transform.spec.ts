@@ -59,7 +59,7 @@ describe('data transforms', () => {
             value: 0,
           },
         },
-      })
+      }),
     ).toEqual({
       // settings
       acceptingContracts: true,
@@ -151,8 +151,8 @@ describe('data transforms', () => {
           shouldPinMaxCollateral: false,
           maxCollateralPinned: new BigNumber('0'),
         },
-        { ddns: { provider: 'invalid' }, foobar: 'foobar' }
-      )
+        { ddns: { provider: 'invalid' }, foobar: 'foobar' },
+      ),
     ).toEqual({
       foobar: 'foobar',
       acceptingContracts: true,
@@ -237,8 +237,8 @@ describe('data transforms', () => {
           shouldPinMaxCollateral: false,
           maxCollateralPinned: new BigNumber('0'),
         },
-        { other: { pinned: true, value: 200 }, foobar: 'foobar' }
-      )
+        { other: { pinned: true, value: 200 }, foobar: 'foobar' },
+      ),
     ).toEqual({
       currency: 'jpy',
       threshold: 0.1,
@@ -268,7 +268,7 @@ describe('data transforms', () => {
 
   it('max collateral', () => {
     expect(
-      calculateMaxCollateral(new BigNumber('400'), new BigNumber(2))
+      calculateMaxCollateral(new BigNumber('400'), new BigNumber(2)),
     ).toEqual(new BigNumber('2400'))
   })
 })

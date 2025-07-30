@@ -26,7 +26,7 @@ export function HostsFilterMenu() {
     (page: Page) => {
       setPages((pages) => [...pages, page])
     },
-    [setPages]
+    [setPages],
   )
 
   const resetPage = useCallback(() => {

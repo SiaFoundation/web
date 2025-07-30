@@ -64,10 +64,10 @@ function getContractFieldsFromV1(c: Contract): ContractData {
     payout: new BigNumber(
       c.status == 'active' || c.resolutionHeight > 0
         ? c.revision.validProofOutputs[1].value
-        : c.revision.missedProofOutputs[1].value
+        : c.revision.missedProofOutputs[1].value,
     ),
     remainingRenterFunds: new BigNumber(
-      c.revision.validProofOutputs?.[0].value || 0
+      c.revision.validProofOutputs?.[0].value || 0,
     ),
     negotiationHeight: c.negotiationHeight,
     formationConfirmed: c.formationConfirmed,
@@ -150,7 +150,7 @@ function getContractFieldsFromV2(c: V2Contract): ContractData {
         : new BigNumber(
             c.status == 'active' || c.resolutionIndex.height > 0
               ? c.hostOutput.value
-              : c.missedHostValue
+              : c.missedHostValue,
           ),
     renewedTo: c.renewedTo,
     renewedFrom: c.renewedFrom,

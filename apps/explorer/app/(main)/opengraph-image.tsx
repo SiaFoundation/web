@@ -38,9 +38,9 @@ export default async function Image() {
       {
         label: 'Used storage',
         value: humanBytes(
-          hostMetrics.totalStorage - hostMetrics.remainingStorage
+          hostMetrics.totalStorage - hostMetrics.remainingStorage,
         ),
-      }
+      },
     )
   }
 
@@ -53,6 +53,6 @@ export default async function Image() {
           : 'Siascan Zen is a block explorer with host statistics and pricing details. Siascan Zen is built for the Sia Zen Testnet.',
       values: values.length ? values : undefined,
     },
-    size
+    size,
   )
 }

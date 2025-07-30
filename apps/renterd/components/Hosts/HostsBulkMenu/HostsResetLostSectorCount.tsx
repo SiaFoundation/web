@@ -12,7 +12,7 @@ export function HostsResetLostSectorCount() {
   const publicKeys = useMemo(
     () =>
       Object.entries(multiSelect.selection).map(([_, item]) => item.publicKey),
-    [multiSelect.selection]
+    [multiSelect.selection],
   )
   const resetAll = useCallback(async () => {
     await handleBatchOperation(
@@ -21,13 +21,13 @@ export function HostsResetLostSectorCount() {
           params: {
             hostkey: publicKey,
           },
-        })
+        }),
       ),
       {
         toastError: ({ successCount, errorCount, totalCount }) => ({
           title: `Reset lost sector count for ${pluralize(
             successCount,
-            'host'
+            'host',
           )}`,
           body: `Error reseting lost sector count for ${errorCount}/${totalCount} total hosts.`,
         }),
@@ -37,7 +37,7 @@ export function HostsResetLostSectorCount() {
         after: () => {
           multiSelect.deselectAll()
         },
-      }
+      },
     )
   }, [multiSelect, publicKeys, resetLostSectors])
 

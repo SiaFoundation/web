@@ -33,7 +33,7 @@ test.describe('v2', () => {
     await explorerApp.navigateBySearchBar(publicKey)
 
     await expect(
-      page.getByText(String(publicKey.slice(0, 6))).first()
+      page.getByText(String(publicKey.slice(0, 6))).first(),
     ).toBeVisible()
   })
 
@@ -44,7 +44,7 @@ test.describe('v2', () => {
     await explorerApp.goTo('/host/' + publicKey)
 
     await expect(
-      page.getByText(String(publicKey.slice(0, 6))).first()
+      page.getByText(String(publicKey.slice(0, 6))).first(),
     ).toBeVisible()
   })
 
@@ -108,7 +108,7 @@ test.describe('v1', () => {
     await explorerApp.navigateBySearchBar(publicKey)
 
     await expect(
-      page.getByText(String(publicKey.slice(0, 6))).first()
+      page.getByText(String(publicKey.slice(0, 6))).first(),
     ).toBeVisible()
   })
 
@@ -119,7 +119,7 @@ test.describe('v1', () => {
     await explorerApp.goTo('/host/' + publicKey)
 
     await expect(
-      page.getByText(String(publicKey.slice(0, 6))).first()
+      page.getByText(String(publicKey.slice(0, 6))).first(),
     ).toBeVisible()
   })
 

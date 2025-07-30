@@ -6,7 +6,7 @@ export const navigateToBuckets = step(
   async ({ page }: { page: Page }) => {
     await page.getByTestId('sidenav').getByLabel('Files').click()
     await expect(page.getByTestId('navbar').getByText('Buckets')).toBeVisible()
-  }
+  },
 )
 
 export const navigateToAlerts = step(
@@ -14,7 +14,7 @@ export const navigateToAlerts = step(
   async ({ page }: { page: Page }) => {
     await page.getByTestId('sidenav').getByLabel('Alerts').click()
     await expect(page.getByTestId('navbar').getByText('Alerts')).toBeVisible()
-  }
+  },
 )
 
 export const navigateToContracts = step(
@@ -22,9 +22,9 @@ export const navigateToContracts = step(
   async ({ page }: { page: Page }) => {
     await page.getByTestId('sidenav').getByLabel('Contracts').click()
     await expect(
-      page.getByTestId('navbar').getByText('Active contracts')
+      page.getByTestId('navbar').getByText('Active contracts'),
     ).toBeVisible()
-  }
+  },
 )
 
 export const navigateToConfig = step(
@@ -32,9 +32,9 @@ export const navigateToConfig = step(
   async ({ page }: { page: Page }) => {
     await page.getByTestId('sidenav').getByLabel('Configuration').click()
     await expect(
-      page.getByTestId('navbar').getByText('Configuration')
+      page.getByTestId('navbar').getByText('Configuration'),
     ).toBeVisible()
-  }
+  },
 )
 
 export const navigateToWallet = step(
@@ -42,7 +42,7 @@ export const navigateToWallet = step(
   async (page: Page) => {
     await page.getByTestId('sidenav').getByLabel('Wallet').click()
     await expect(page.getByTestId('navbar').getByText('Wallet')).toBeVisible()
-  }
+  },
 )
 
 export const navigateToHosts = step(
@@ -50,7 +50,7 @@ export const navigateToHosts = step(
   async ({ page }: { page: Page }) => {
     await page.getByTestId('sidenav').getByLabel('Hosts').click()
     await expect(page.getByTestId('navbar').getByText('Hosts')).toBeVisible()
-  }
+  },
 )
 
 export const navigateToKeys = step(
@@ -61,5 +61,5 @@ export const navigateToKeys = step(
       .getByLabel('S3 authentication keypairs')
       .click()
     await expect(page.getByTestId('navbar').getByText('Keys')).toBeVisible()
-  }
+  },
 )

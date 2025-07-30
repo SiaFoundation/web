@@ -23,7 +23,7 @@ const defaultRequestSettings: RequestSettings = {
 }
 
 export function getDefaultRequestSettings(
-  customDefaults?: Partial<RequestSettings>
+  customDefaults?: Partial<RequestSettings>,
 ) {
   return {
     ...defaultRequestSettings,

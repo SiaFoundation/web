@@ -57,7 +57,7 @@ export function useSignV1({ cancel }: { cancel: (t: Transaction) => void }) {
         signedTransaction: signResponse.transaction,
       }
     },
-    [device, addresses, siacoinOutputs.data, siafundOutputs.data, cancel]
+    [device, addresses, siacoinOutputs.data, siafundOutputs.data, cancel],
   )
 
   return sign

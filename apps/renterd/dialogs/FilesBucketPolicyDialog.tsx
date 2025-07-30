@@ -103,7 +103,7 @@ export function FilesBucketPolicyDialog({
         closeDialog()
       }
     },
-    [form, name, policyUpdate, closeDialog]
+    [form, name, policyUpdate, closeDialog],
   )
 
   const fields = useMemo(() => getFields(name), [name])

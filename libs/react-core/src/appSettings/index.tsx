@@ -41,7 +41,7 @@ function useAppSettingsMain() {
       ...requestSettings,
       ...externalDataSettings,
     }),
-    [requestSettings, externalDataSettings]
+    [requestSettings, externalDataSettings],
   )
 
   return {

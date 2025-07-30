@@ -24,5 +24,5 @@ export const fillComposeTransactionSiafund = step(
     await fillTextInputByName(page, 'changeAddress', changeAddress)
     await fillTextInputByName(page, 'siafund', String(amount))
     await page.getByRole('button', { name: 'Generate transaction' }).click()
-  }
+  },
 )

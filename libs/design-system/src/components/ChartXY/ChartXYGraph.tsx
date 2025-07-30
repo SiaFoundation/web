@@ -226,8 +226,8 @@ export function ChartXYGraph<Key extends string, Cat extends string>({
           stackOffset == null
             ? 'SC'
             : stackOffset === 'expand'
-            ? 'Fraction of total'
-            : ''
+              ? 'Fraction of total'
+              : ''
         }
         orientation={yAxisOrientation}
         numTicks={numTicks}
@@ -275,7 +275,7 @@ export function ChartXYGraph<Key extends string, Cat extends string>({
                 ({
                   key,
                   category: config.data?.[key]?.category || '',
-                } as KeyOption)
+                }) as KeyOption,
             )
 
             const keyGroups = groupBy(options, 'category')
@@ -304,7 +304,7 @@ export function ChartXYGraph<Key extends string, Cat extends string>({
                     'grid gap-x-6 gap-y-4',
                     keyGroupOrderedList.length > 1
                       ? 'grid-cols-2'
-                      : 'grid-cols-1'
+                      : 'grid-cols-1',
                   )}
                 >
                   {keyGroupOrderedList.map(([group, keys]) => {
@@ -338,7 +338,7 @@ export function ChartXYGraph<Key extends string, Cat extends string>({
                                     color: config.data?.[key]?.color,
                                   }}
                                   className={cx(
-                                    nearestKey === key ? 'underline' : ''
+                                    nearestKey === key ? 'underline' : '',
                                   )}
                                 >
                                   {config.data?.[key]?.label || key}
@@ -349,7 +349,7 @@ export function ChartXYGraph<Key extends string, Cat extends string>({
                                     textAlign: 'end',
                                   }}
                                   className={cx(
-                                    nearestKey === key ? 'underline' : ''
+                                    nearestKey === key ? 'underline' : '',
                                   )}
                                 >
                                   {val == null || Number.isNaN(val) ? (
@@ -404,7 +404,7 @@ function getIdKey(id: string, key: string) {
 export function getColor<Key extends string, Cat extends string>(
   id: string,
   key: Key,
-  config: ChartConfig<Key, Cat>
+  config: ChartConfig<Key, Cat>,
 ) {
   const idKey = getIdKey(id, key)
 

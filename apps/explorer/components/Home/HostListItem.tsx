@@ -55,7 +55,7 @@ export function HostListItem({ host, exchange, entity }: Props) {
       ) : (
         <LoadingCurrency type="perTB" />
       ),
-    [exchange, host]
+    [exchange, host],
   )
 
   const downloadCost = useMemo(
@@ -73,7 +73,7 @@ export function HostListItem({ host, exchange, entity }: Props) {
       ) : (
         <LoadingCurrency type="perTB" />
       ),
-    [exchange, host]
+    [exchange, host],
   )
 
   const uploadCost = useMemo(
@@ -91,7 +91,7 @@ export function HostListItem({ host, exchange, entity }: Props) {
       ) : (
         <LoadingCurrency type="perTB" />
       ),
-    [exchange, host]
+    [exchange, host],
   )
 
   const remainingStorage = useMemo(
@@ -100,10 +100,10 @@ export function HostListItem({ host, exchange, entity }: Props) {
         ? humanBytes(
             host.v2
               ? sectorsToBytes(host.v2Settings.remainingStorage)
-              : host.settings.remainingstorage
+              : host.settings.remainingstorage,
           )
         : '-',
-    [host]
+    [host],
   )
 
   return (

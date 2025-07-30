@@ -47,7 +47,7 @@ test('with estimates of 1 TB, standard weights, 1x redundancy, 1x spending facto
       downloadTBMonth,
       uploadTBMonth,
       redundancyMultiplier,
-    })
+    }),
   ).toEqual(estimatedSpendingPerMonth)
 })
 
@@ -94,7 +94,7 @@ test('with estimates of 1 TB, standard weights, 2x redundancy, 1x spending facto
       downloadTBMonth,
       uploadTBMonth,
       redundancyMultiplier,
-    })
+    }),
   ).toEqual(estimatedSpendingPerMonth)
 })
 
@@ -141,7 +141,7 @@ test('with estimates of 1 TB, standard weights, 3x redunancy, 1x spending factor
       downloadTBMonth,
       uploadTBMonth,
       redundancyMultiplier,
-    })
+    }),
   ).toEqual(estimatedSpendingPerMonth)
 })
 
@@ -188,7 +188,7 @@ test('with estimates of 1 TB, standard weights, 1x redundancy, 2x spending facto
       downloadTBMonth,
       uploadTBMonth,
       redundancyMultiplier,
-    })
+    }),
   ).toEqual(estimatedSpendingPerMonth)
 })
 
@@ -235,7 +235,7 @@ test('with estimates of 1 TB, standard weights, 2x redundancy, 2x spending facto
       downloadTBMonth,
       uploadTBMonth,
       redundancyMultiplier,
-    })
+    }),
   ).toEqual(estimatedSpendingPerMonth)
 })
 
@@ -282,7 +282,7 @@ test('with estimates of 1 TB, standard weights, 3x redunancy, 2x spending factor
       downloadTBMonth,
       uploadTBMonth,
       redundancyMultiplier,
-    })
+    }),
   ).toEqual(estimatedSpendingPerMonth)
 })
 
@@ -329,7 +329,7 @@ test('with mostly storage, standard weights, 1x redunancy, 2x spending factor', 
       downloadTBMonth,
       uploadTBMonth,
       redundancyMultiplier,
-    })
+    }),
   ).toEqual(estimatedSpendingPerMonth)
 })
 
@@ -376,7 +376,7 @@ test('with varied estimates, standard weights, 1x redunancy, 2x spending factor'
       downloadTBMonth,
       uploadTBMonth,
       redundancyMultiplier,
-    })
+    }),
   ).toEqual(estimatedSpendingPerMonth)
 })
 
@@ -423,7 +423,7 @@ test('with estimates of 1 TB, standard weights, 1x redundancy, 1.5x spending fac
       downloadTBMonth,
       uploadTBMonth,
       redundancyMultiplier,
-    })
+    }),
   ).toEqual(estimatedSpendingPerMonth)
 })
 
@@ -470,7 +470,7 @@ test('with varied estimates, standard weights, 1x redundancy, 1.5x spending fact
       downloadTBMonth,
       uploadTBMonth,
       redundancyMultiplier,
-    })
+    }),
   ).toEqual(estimatedSpendingPerMonth)
 })
 

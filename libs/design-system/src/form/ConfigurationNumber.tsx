@@ -14,7 +14,7 @@ type Props<Values extends FieldValues, Categories extends string> = {
 
 export function ConfigurationNumber<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({ name, form, fields }: Props<Values, Categories>) {
   const field = fields[name]
   const {

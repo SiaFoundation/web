@@ -126,7 +126,7 @@ export type SubmitValues = GetSubmitValues<Values, AdvancedDefaults>
 
 // advanced defaults
 export function getAdvancedDefaultsAutopilot(
-  network: 'mainnet' | 'zen' | 'anagami'
+  network: 'mainnet' | 'zen' | 'anagami',
 ) {
   return network === 'mainnet'
     ? {
@@ -160,7 +160,7 @@ export function getAdvancedDefaultsPinned() {
 }
 
 export function getAdvancedDefaultsUpload(
-  network: 'mainnet' | 'zen' | 'anagami'
+  network: 'mainnet' | 'zen' | 'anagami',
 ) {
   const advancedDefaultRedundancy =
     network === 'mainnet'

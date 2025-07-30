@@ -149,9 +149,9 @@ function useHostsMain() {
   const hostsWithLocation = useMemo(
     () =>
       dataset?.filter(
-        (h) => h.location && h.v2 && h.v2Settings
+        (h) => h.location && h.v2 && h.v2Settings,
       ) as HostDataWithLocation[],
-    [dataset]
+    [dataset],
   )
 
   const multiSelect = useMultiSelect(dataset)
@@ -182,7 +182,7 @@ function useHostsMain() {
       siascanUrl,
       multiSelect,
     }),
-    [siascanUrl, multiSelect]
+    [siascanUrl, multiSelect],
   )
 
   const onHostMapClick = useCallback(
@@ -193,7 +193,7 @@ function useHostsMain() {
         scrollToHost(publicKey)
       }
     },
-    [activeHost, multiSelect, scrollToHost]
+    [activeHost, multiSelect, scrollToHost],
   )
 
   const isValidating = response.isValidating

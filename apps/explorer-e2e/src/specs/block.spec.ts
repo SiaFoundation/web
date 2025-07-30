@@ -34,7 +34,7 @@ test.describe('v2', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText('Block ' + testBlock.toLocaleString())
+        .getByText('Block ' + testBlock.toLocaleString()),
     ).toBeVisible()
   })
 
@@ -48,7 +48,7 @@ test.describe('v2', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText('Block ' + data.height.toLocaleString())
+        .getByText('Block ' + data.height.toLocaleString()),
     ).toBeVisible()
   })
 
@@ -61,7 +61,7 @@ test.describe('v2', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText('Block ' + height.toLocaleString())
+        .getByText('Block ' + height.toLocaleString()),
     ).toBeVisible()
   })
 
@@ -74,7 +74,7 @@ test.describe('v2', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText('Block ' + data.height.toLocaleString())
+        .getByText('Block ' + data.height.toLocaleString()),
     ).toBeVisible()
   })
 
@@ -88,7 +88,7 @@ test.describe('v2', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText((Number(height) - 1).toLocaleString())
+        .getByText((Number(height) - 1).toLocaleString()),
     ).toBeVisible()
   })
 
@@ -102,14 +102,14 @@ test.describe('v2', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText((Number(height) + 1).toLocaleString())
+        .getByText((Number(height) + 1).toLocaleString()),
     ).toBeVisible()
   })
 
   test('block can click through to a transaction', async ({ page }) => {
     const contract = await findV2TestContractWithResolutionType(
       cluster,
-      'renewal'
+      'renewal',
     )
 
     // eslint-disable-next-line playwright/no-conditional-in-test
@@ -119,11 +119,11 @@ test.describe('v2', () => {
 
     await explorerApp.goTo('/block/' + blockHeight)
     await expectThenClick(
-      page.locator(`a[data-testid="entity-link"][href*="${transactionID}"]`)
+      page.locator(`a[data-testid="entity-link"][href*="${transactionID}"]`),
     )
 
     await expect(
-      page.getByTestId('entity-heading').getByText(transactionID.slice(0, 5))
+      page.getByTestId('entity-heading').getByText(transactionID.slice(0, 5)),
     ).toBeVisible()
   })
 
@@ -134,7 +134,7 @@ test.describe('v2', () => {
     await explorerApp.goTo('/block/' + height)
 
     await expect(
-      page.getByTestId('explorer-block-version').getByText('v2')
+      page.getByTestId('explorer-block-version').getByText('v2'),
     ).toBeVisible()
   })
 })
@@ -161,7 +161,7 @@ test.describe('v1', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText('Block ' + testBlock.toLocaleString())
+        .getByText('Block ' + testBlock.toLocaleString()),
     ).toBeVisible()
   })
 
@@ -175,7 +175,7 @@ test.describe('v1', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText('Block ' + data.height.toLocaleString())
+        .getByText('Block ' + data.height.toLocaleString()),
     ).toBeVisible()
   })
 
@@ -188,7 +188,7 @@ test.describe('v1', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText('Block ' + height.toLocaleString())
+        .getByText('Block ' + height.toLocaleString()),
     ).toBeVisible()
   })
 
@@ -201,7 +201,7 @@ test.describe('v1', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText('Block ' + data.height.toLocaleString())
+        .getByText('Block ' + data.height.toLocaleString()),
     ).toBeVisible()
   })
 
@@ -215,7 +215,7 @@ test.describe('v1', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText((Number(height) - 1).toLocaleString())
+        .getByText((Number(height) - 1).toLocaleString()),
     ).toBeVisible()
   })
 
@@ -229,7 +229,7 @@ test.describe('v1', () => {
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText((Number(height) + 1).toLocaleString())
+        .getByText((Number(height) + 1).toLocaleString()),
     ).toBeVisible()
   })
 
@@ -242,11 +242,11 @@ test.describe('v1', () => {
 
     await explorerApp.goTo('/block/' + blockHeight)
     await expectThenClick(
-      page.locator(`a[data-testid="entity-link"][href*="${transactionID}"]`)
+      page.locator(`a[data-testid="entity-link"][href*="${transactionID}"]`),
     )
 
     await expect(
-      page.getByTestId('entity-heading').getByText(transactionID.slice(0, 5))
+      page.getByTestId('entity-heading').getByText(transactionID.slice(0, 5)),
     ).toBeVisible()
   })
 
@@ -254,7 +254,7 @@ test.describe('v1', () => {
     await explorerApp.goTo('/block/1')
 
     await expect(
-      page.getByTestId('explorer-block-version').getByText('v1')
+      page.getByTestId('explorer-block-version').getByText('v1'),
     ).toBeVisible()
   })
 })

@@ -83,7 +83,7 @@ export function useAddressesMain() {
     () => ({
       siascanUrl,
     }),
-    [siascanUrl]
+    [siascanUrl],
   )
 
   return {

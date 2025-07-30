@@ -80,6 +80,6 @@ export function useSignAndBroadcastV2() {
       cn.data,
       cacheWalletMnemonic,
       broadcast,
-    ]
+    ],
   )
 }

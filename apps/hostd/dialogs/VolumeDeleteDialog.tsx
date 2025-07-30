@@ -92,7 +92,7 @@ export function VolumeDeleteDialog({ trigger, open, onOpenChange }: Props) {
         closeDialog()
       }
     },
-    [form, volume.data, volumeDelete, closeDialog]
+    [form, volume.data, volumeDelete, closeDialog],
   )
 
   const fields = useMemo(() => getFields(path), [path])

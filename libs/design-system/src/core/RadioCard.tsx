@@ -37,7 +37,7 @@ export function RadioCard({
 
         'enabled:data-[state=checked]:ring',
         'enabled:data-[state=checked]:ring-green-600 dark:enabled:data-[state=checked]:ring-green-500',
-        'disabled:data-[state=checked]:ring-green-600/50 dark:disabled:data-[state=checked]:ring-green-500/50'
+        'disabled:data-[state=checked]:ring-green-600/50 dark:disabled:data-[state=checked]:ring-green-500/50',
       )}
     >
       {indicator && (

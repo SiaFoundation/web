@@ -4,7 +4,7 @@ import { ConfigFields } from './configurationFields'
 
 export function useFormSetField<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   form,
   fields,
@@ -23,17 +23,17 @@ export function useFormSetField<
             shouldValidate: boolean
             shouldDirty: boolean
             shouldTouch: boolean
-          }
+          },
     ) => {
       formSetField({ form, fields, name, value: val, options })
     },
-    [name, form, fields]
+    [name, form, fields],
   )
 }
 
 export function formSetField<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   form,
   fields,
@@ -64,14 +64,14 @@ export function formSetField<
             shouldTouch: true,
           }
         : undefined
-      : options
+      : options,
   )
   fields[name].trigger?.forEach((t) => form.trigger(t))
 }
 
 export function formSetFields<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   form,
   fields,

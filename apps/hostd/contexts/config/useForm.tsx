@@ -53,7 +53,7 @@ export function useForm() {
       collateralMultiplier,
       exchangeRateUSD.rate,
       state.data,
-    ]
+    ],
   )
 
   return {

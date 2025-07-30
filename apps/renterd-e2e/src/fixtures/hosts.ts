@@ -11,9 +11,9 @@ export const getHostRowById = step(
   async (page: Page, id: string, shouldExpect?: boolean) => {
     return maybeExpectAndReturn(
       page.getByTestId('hostsTable').getByTestId(id),
-      shouldExpect
+      shouldExpect,
     )
-  }
+  },
 )
 
 export const getHostsSummaryRow = step(
@@ -21,9 +21,9 @@ export const getHostsSummaryRow = step(
   async (page: Page, shouldExpect?: boolean) => {
     return maybeExpectAndReturn(
       page.getByTestId('hostsTable').locator('thead').getByRole('row').nth(1),
-      shouldExpect
+      shouldExpect,
     )
-  }
+  },
 )
 
 export const getHostRowByIndex = step(
@@ -35,9 +35,9 @@ export const getHostRowByIndex = step(
         .locator('tbody')
         .getByRole('row')
         .nth(index),
-      shouldExpect
+      shouldExpect,
     )
-  }
+  },
 )
 
 export const openHostContextMenu = step(
@@ -51,7 +51,7 @@ export const openHostContextMenu = step(
       .first()
     await expect(menu).toBeVisible()
     return menu.click()
-  }
+  },
 )
 
 export const openRowHostContextMenu = step(
@@ -60,7 +60,7 @@ export const openRowHostContextMenu = step(
     const menu = row.getByTestId('actions').getByRole('button').first()
     await expect(menu).toBeVisible()
     return menu.click()
-  }
+  },
 )
 
 export function getHostRows(page: Page) {
@@ -81,5 +81,5 @@ export const openManageListsDialog = step(
       .locator('div[cmdk-item]')
       .getByText('manage filter lists')
       .click()
-  }
+  },
 )

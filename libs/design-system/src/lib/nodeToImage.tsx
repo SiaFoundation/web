@@ -13,7 +13,7 @@ export async function nodeToImage(
     quality?: number
     copy?: boolean
     download?: boolean
-  }
+  },
 ) {
   if (!node) {
     throw Error('HTML node required')

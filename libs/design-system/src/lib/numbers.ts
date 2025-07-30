@@ -24,7 +24,7 @@ export function toFixedOrPrecision(
     digits: number
     // if true, will use toFixed if decimalPlaces > digits
     dynamicFixed?: boolean
-  }
+  },
 ) {
   const v = new BigNumber(val)
   if (v.lt(1)) {

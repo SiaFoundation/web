@@ -10,9 +10,7 @@ To build a hook for making a GET request to renterd for a contract we would crea
 
 ```ts
 type ContractParams = { id: string; extra?: string }
-export function useContract(
-  args: HookArgsSwr<ContractParams, ContractResponse>
-) {
+export function useContract(args: HookArgsSwr<ContractParams, ContractResponse>) {
   return useGetSwr({ ...args, route: '/contracts/:id' })
 }
 ```
@@ -101,9 +99,7 @@ The lifecycle of imperative methods are tracked by a workflow ID. Workflows allo
 
 ```ts
 // Hook
-export function useHostScan(
-  args?: HookArgsCallback<HostScanParams, HostScanPayload, HostScanResponse>
-) {
+export function useHostScan(args?: HookArgsCallback<HostScanParams, HostScanPayload, HostScanResponse>) {
   return usePostFunc({ ...args, route: busHostScanRoute })
 }
 
@@ -123,10 +119,7 @@ await rescan.post({
 // Check the workflow status.
 const { workflows } = useWorkflows()
 const isPending = workflows.find((w) => {
-  return (
-    w.route?.startsWith(workerRhpScanRoute) &&
-    w.payload?.hostKey === data.publicKey
-  )
+  return w.route?.startsWith(workerRhpScanRoute) && w.payload?.hostKey === data.publicKey
 })
 ```
 

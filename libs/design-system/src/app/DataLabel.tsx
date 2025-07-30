@@ -23,7 +23,7 @@ export function DataLabel({
         'flex gap-1.5 items-center',
         enabled ? 'opacity-100' : 'opacity-50',
         onChange ? 'cursor-pointer' : 'cursor-auto',
-        onChange && (enabled ? 'hover:opacity-90' : 'hover:opacity-60')
+        onChange && (enabled ? 'hover:opacity-90' : 'hover:opacity-60'),
       )}
       onClick={() => onChange && onChange(!enabled)}
     >

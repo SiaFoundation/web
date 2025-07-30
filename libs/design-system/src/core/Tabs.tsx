@@ -29,7 +29,7 @@ export function TabsList({
       ref={ref}
       className={cx(
         'flex flex-shrink-0 border-b border-gray-500 dark:border-graydark-500',
-        className
+        className,
       )}
       {...props}
     />
@@ -61,7 +61,7 @@ export function TabsTrigger({
         'data-[state=active]:text-accent-1100 data-[state=active]:dark:text-accentdark-1100',
         'data-[state=active]:border-green-600 data-[state=active]:dark:border-green-500',
         textStyles({ font, size, weight, ellipsis: true }),
-        className
+        className,
       )}
       {...props}
     />

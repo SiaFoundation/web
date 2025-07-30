@@ -105,14 +105,14 @@ async function signTransactionIndex({
       signature = await device.sia.signTransactionV044(
         encodedTransactionBuffer,
         signatureIndex,
-        keyIndex
+        keyIndex,
       )
     } else {
       signature = await device.sia.signTransaction(
         encodedTransactionBuffer,
         signatureIndex,
         keyIndex,
-        0
+        0,
       )
     }
   } catch (e) {

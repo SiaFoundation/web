@@ -43,7 +43,7 @@ export function useBlocklistUpdate() {
                   ? `Host ${truncate(remove[0], 20)} removed from blocklist.`
                   : `Removed ${pluralize(
                       remove.length,
-                      'host'
+                      'host',
                     )} from the blocklist.`,
             })
           }
@@ -52,6 +52,6 @@ export function useBlocklistUpdate() {
       }
       return func()
     },
-    [blocklistUpdate]
+    [blocklistUpdate],
   )
 }

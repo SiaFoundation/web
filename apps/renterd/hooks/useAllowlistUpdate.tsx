@@ -43,7 +43,7 @@ export function useAllowlistUpdate() {
                   ? `Host ${truncate(remove[0], 20)} removed from allowlist.`
                   : `Removed ${pluralize(
                       remove.length,
-                      'host'
+                      'host',
                     )} from the allowlist.`,
             })
           }
@@ -52,6 +52,6 @@ export function useAllowlistUpdate() {
       }
       return func()
     },
-    [allowlistUpdate]
+    [allowlistUpdate],
   )
 }

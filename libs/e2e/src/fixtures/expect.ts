@@ -2,7 +2,7 @@ import { expect, Locator } from '@playwright/test'
 
 export async function maybeExpectAndReturn(
   locator: Locator,
-  shouldExpect?: boolean
+  shouldExpect?: boolean,
 ) {
   if (shouldExpect) {
     await expect(locator).toBeVisible()

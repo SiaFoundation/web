@@ -20,7 +20,7 @@ import { ResourcesRequiredLoaded } from './useResources'
 // up
 export function transformUpContracts(
   values: ValuesContracts,
-  existingValues: MaintenanceSettings
+  existingValues: MaintenanceSettings,
 ): MaintenanceSettings {
   return {
     ...existingValues,
@@ -32,31 +32,31 @@ export function transformUpContracts(
 
 export function transformUpHosts(
   values: ValuesHosts,
-  existingValues: UsabilitySettings
+  existingValues: UsabilitySettings,
 ): UsabilitySettings {
   return {
     ...existingValues,
     maxStoragePrice: toHastings(
-      valuePerTBPerMonthToPerBytePerBlock(values.maxStoragePriceTBMonth)
+      valuePerTBPerMonthToPerBytePerBlock(values.maxStoragePriceTBMonth),
     ).toString(),
     maxIngressPrice: toHastings(
-      valuePerTBToPerByte(values.maxIngressPriceTB)
+      valuePerTBToPerByte(values.maxIngressPriceTB),
     ).toString(),
     maxEgressPrice: toHastings(
-      valuePerTBToPerByte(values.maxEgressPriceTB)
+      valuePerTBToPerByte(values.maxEgressPriceTB),
     ).toString(),
     minCollateral: toHastings(values.minCollateral).toString(),
     minProtocolVersion: values.minProtocolVersion.split('.').map(Number) as [
       number,
       number,
-      number
+      number,
     ],
   }
 }
 
 export function transformUpPinned(
   values: ValuesPricePinning,
-  existingValues: PinnedSettings
+  existingValues: PinnedSettings,
 ): PinnedSettings {
   return {
     ...existingValues,

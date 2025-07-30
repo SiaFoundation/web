@@ -25,7 +25,7 @@ export const createNewWallet = step(
     await expect(page.getByText(`Wallet ${name.slice(0, 5)}`)).toBeVisible()
     await fillTextInputByName(page, 'mnemonic', mnemonic)
     await page.getByRole('button', { name: 'Generate addresses' }).click()
-  }
+  },
 )
 
 export const recoverWallet = step(
@@ -41,7 +41,7 @@ export const recoverWallet = step(
     await expect(page.getByText(`Wallet ${name.slice(0, 5)}`)).toBeVisible()
     await fillTextInputByName(page, 'mnemonic', mnemonic)
     await page.getByRole('button', { name: 'Generate addresses' }).click()
-  }
+  },
 )
 
 export const deleteWallet = step(
@@ -53,7 +53,7 @@ export const deleteWallet = step(
     await page.locator('input[name=name]').press('Enter')
     await expect(page.getByRole('dialog')).toBeHidden()
     await walletNotInList(page, name)
-  }
+  },
 )
 
 export const unlockOpenWallet = step(
@@ -62,7 +62,7 @@ export const unlockOpenWallet = step(
     await openWalletNavContextMenu(page)
     // Wait for menu to open.
     await expect(
-      page.getByRole('menuitem', { name: 'Delete wallet' })
+      page.getByRole('menuitem', { name: 'Delete wallet' }),
     ).toBeVisible()
     // If we see a "lock wallet" button, its already unlocked.
     const isLocked = await page
@@ -70,7 +70,7 @@ export const unlockOpenWallet = step(
       .isVisible()
     if (isLocked) {
       await expectThenClick(
-        page.getByRole('menuitem', { name: 'Unlock wallet' })
+        page.getByRole('menuitem', { name: 'Unlock wallet' }),
       )
       await fillTextInputByName(page, 'mnemonic', mnemonic)
       await page.locator('input[name=mnemonic]').press('Enter')
@@ -80,7 +80,7 @@ export const unlockOpenWallet = step(
       await page.keyboard.press('Escape')
       await expect(page.getByTestId('dropdown-menu-content')).toBeHidden()
     }
-  }
+  },
 )
 
 export const rescanWallets = step('rescan wallets', async (page: Page) => {
@@ -105,10 +105,10 @@ export const waitForRescanToFinish = step(
       await expect(
         page
           .getByTestId('rescanStatusPanel')
-          .getByText('Rescanning the blockchain')
+          .getByText('Rescanning the blockchain'),
       ).toBeHidden()
     }
-  }
+  },
 )
 
 export const generateAddresses = step(
@@ -138,14 +138,14 @@ export const generateAddresses = step(
       await fillTextInputByName(
         page,
         'rescanStartHeight',
-        rescanStartHeight.toString()
+        rescanStartHeight.toString(),
       )
     }
     await page.getByRole('button', { name: 'Generate addresses' }).click()
     if (rescan) {
       await waitForRescanToFinish(page)
     }
-  }
+  },
 )
 
 export const deleteWalletIfExists = step(
@@ -160,7 +160,7 @@ export const deleteWalletIfExists = step(
     if (doesWalletExist) {
       await deleteWallet(page, name)
     }
-  }
+  },
 )
 
 export const openWallet = step(
@@ -170,7 +170,7 @@ export const openWallet = step(
     await expect(row).toBeVisible()
     await row.click()
     await expect(page.getByTestId('navbar').getByText(name)).toBeVisible()
-  }
+  },
 )
 
 export const openWalletRowContextMenu = step(
@@ -179,7 +179,7 @@ export const openWalletRowContextMenu = step(
     const menu = page.getByRole('row', { name }).getByRole('button').first()
     await expect(menu).toBeVisible()
     await menu.click()
-  }
+  },
 )
 
 export const openWalletNavContextMenu = step(
@@ -189,7 +189,7 @@ export const openWalletNavContextMenu = step(
     await expect(menu).toBeVisible()
     await menu.click()
     return menu
-  }
+  },
 )
 
 export const openWalletsContextMenu = step(
@@ -198,19 +198,19 @@ export const openWalletsContextMenu = step(
     const menu = page.getByLabel('wallet settings')
     await expect(menu).toBeVisible()
     await menu.click()
-  }
+  },
 )
 
 export const walletInList = step(
   'expect wallet in list',
   async (page: Page, name: string) => {
     await expect(page.getByRole('table').getByText(name).first()).toBeVisible()
-  }
+  },
 )
 
 export const walletNotInList = step(
   'expect wallet not in list',
   async (page: Page, name: string) => {
     await expect(page.getByRole('table').getByText(name).first()).toBeHidden()
-  }
+  },
 )

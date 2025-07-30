@@ -25,7 +25,7 @@ export const ledgerComposeSiafund = step(
       expectedFee: number
       expectedVersion: 'v1' | 'v2'
       transactionVersionIndicator: string
-    }
+    },
   ) => {
     const amountString = `${amount} SF`
     const feeString = `${expectedFee.toFixed(3)} SC`
@@ -41,24 +41,24 @@ export const ledgerComposeSiafund = step(
     const sendDialog = page.getByRole('dialog', { name: 'Send' })
     await expect(sendDialog.getByText('Connect Ledger...')).toBeVisible()
     await expect(
-      sendDialog.getByText('Connect device to start signing.')
+      sendDialog.getByText('Connect device to start signing.'),
     ).toBeVisible()
     await expect(sendDialog.getByLabel('Recipient address')).toContainText(
-      receiveAddress.slice(0, 5)
+      receiveAddress.slice(0, 5),
     )
     await expect(sendDialog.getByLabel('Change address')).toContainText(
-      changeAddress.slice(0, 5)
+      changeAddress.slice(0, 5),
     )
     if (expectedVersion === 'v1' && claimAddress) {
       await expect(sendDialog.getByLabel('Claim address')).toContainText(
-        claimAddress.slice(0, 5)
+        claimAddress.slice(0, 5),
       )
     }
     await expect(sendDialog.getByLabel('Amount')).toContainText(amountString)
     await expect(sendDialog.getByLabel('Network fee')).toContainText(feeString)
     await expect(
-      sendDialog.getByText(transactionVersionIndicator)
+      sendDialog.getByText(transactionVersionIndicator),
     ).toBeVisible()
     await sendDialog.getByRole('button', { name: 'Close' }).click()
-  }
+  },
 )

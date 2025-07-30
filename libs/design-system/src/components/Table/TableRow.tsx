@@ -45,7 +45,7 @@ type Props<Columns extends string, Data, Context> = {
   getCellClassNames: (
     i: number,
     className: string | undefined,
-    rounded?: boolean
+    rounded?: boolean,
   ) => string
   getContentClassNames: (i: number, className?: string) => string
 }
@@ -53,7 +53,7 @@ type Props<Columns extends string, Data, Context> = {
 export function createTableRow<
   Columns extends string,
   D extends Data,
-  Context
+  Context,
 >() {
   const TableRow = ({
     ref,
@@ -96,7 +96,7 @@ export function createTableRow<
             : 'border-gray-200/50 dark:border-graydark-100',
           data.onClick ? 'cursor-pointer' : '',
           data.className,
-          className
+          className,
         )}
       >
         {columns.map(
@@ -109,7 +109,7 @@ export function createTableRow<
               rowCellClassName,
               rowContentClassName,
             },
-            i
+            i,
           ) => (
             <td
               key={`${id}/${data.id}`}
@@ -118,7 +118,7 @@ export function createTableRow<
                 getCellClassNames(
                   i,
                   cx(cellClassName, rowCellClassName),
-                  false
+                  false,
                 ),
                 // Must use shadow based borders on the individual tds because a tailwind ring
                 // on the tr does not show up correctly in Safari.
@@ -143,26 +143,26 @@ export function createTableRow<
                   : '',
                 focusColor === 'green'
                   ? '!shadow-green-500 dark:!shadow-green-400'
-                  : ''
+                  : '',
               )}
             >
               <div
                 className={cx(
                   getContentClassNames(
                     i,
-                    cx(contentClassName, rowContentClassName)
+                    cx(contentClassName, rowContentClassName),
                   ),
                   rowSize === 'dense'
                     ? 'h-[50px]'
                     : rowSize === 'default'
-                    ? 'h-[100px]'
-                    : ''
+                      ? 'h-[100px]'
+                      : '',
                 )}
               >
                 <Render data={data} context={context} />
               </div>
             </td>
-          )
+          ),
         )}
       </tr>
     )
@@ -173,7 +173,7 @@ export function createTableRow<
 export function TableRowDraggable<
   Columns extends string,
   D extends Data,
-  Context
+  Context,
 >({
   data,
   context,
@@ -215,7 +215,7 @@ export function TableRowDraggable<
 export function TableRowDroppable<
   Columns extends string,
   D extends Data,
-  Context
+  Context,
 >({
   data,
   context,

@@ -90,7 +90,7 @@ export function Heading({ ref, ...props }: HeadingProps) {
         className={cx(
           'proportional-nums inline-block',
           textStyles[size],
-          className
+          className,
         )}
       >
         {children}

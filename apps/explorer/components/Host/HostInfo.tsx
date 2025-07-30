@@ -75,8 +75,8 @@ export function HostInfo({ host }: Props) {
               host.v2
                 ? host.v2Settings.acceptingContracts
                 : host.settings.acceptingcontracts
-                ? 'Host is accepting contracts'
-                : 'Host is not accepting contracts'
+                  ? 'Host is accepting contracts'
+                  : 'Host is not accepting contracts'
             }
           >
             <Text
@@ -102,8 +102,8 @@ export function HostInfo({ host }: Props) {
               {host.v2
                 ? host.v2Settings.acceptingContracts
                 : host.settings.acceptingcontracts
-                ? 'Accepting contracts'
-                : 'Not accepting contracts'}
+                  ? 'Accepting contracts'
+                  : 'Not accepting contracts'}
             </Text>
           </Tooltip>
         )}
@@ -112,7 +112,7 @@ export function HostInfo({ host }: Props) {
         {host.v2 ? (
           <Tooltip
             content={`Host version ${host.v2Settings.protocolVersion.join(
-              '.'
+              '.',
             )}`}
           >
             <Text size="14" color="subtle" className="flex gap-1 items-center">

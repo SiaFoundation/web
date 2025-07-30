@@ -137,7 +137,7 @@ function useTransactionsMain() {
     () => ({
       siascanUrl,
     }),
-    [siascanUrl]
+    [siascanUrl],
   )
 
   const periods = 30
@@ -172,7 +172,7 @@ function useTransactionsMain() {
           }
         })
         .sort((a, b) => (a.timestamp >= b.timestamp ? 1 : -1)),
-    [metrics.data]
+    [metrics.data],
   )
 
   return {

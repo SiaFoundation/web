@@ -131,7 +131,7 @@ import {
 // state
 
 export function useHostState(
-  args?: HookArgsSwr<HostStateParams, HostStateResponse>
+  args?: HookArgsSwr<HostStateParams, HostStateResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -140,7 +140,7 @@ export function useHostState(
 }
 
 export function useConsensusTip(
-  args?: HookArgsSwr<ConsensusTipParams, ConsensusTipResponse>
+  args?: HookArgsSwr<ConsensusTipParams, ConsensusTipResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -149,7 +149,7 @@ export function useConsensusTip(
 }
 
 export function useConsensusTipState(
-  args?: HookArgsSwr<ConsensusTipStateParams, ConsensusTipStateResponse>
+  args?: HookArgsSwr<ConsensusTipStateParams, ConsensusTipStateResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -158,7 +158,7 @@ export function useConsensusTipState(
 }
 
 export function useConsensusNetwork(
-  args?: HookArgsSwr<ConsensusNetworkParams, ConsensusNetworkResponse>
+  args?: HookArgsSwr<ConsensusNetworkParams, ConsensusNetworkResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -167,7 +167,7 @@ export function useConsensusNetwork(
 }
 
 export function useIndexTip(
-  args?: HookArgsSwr<IndexTipParams, IndexTipResponse>
+  args?: HookArgsSwr<IndexTipParams, IndexTipResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -194,7 +194,7 @@ export function useEstimatedNetworkBlockHeight(): number {
     {
       refreshInterval: 60_000,
       keepPreviousData: true,
-    }
+    },
   )
   return res.data || 0
 }
@@ -202,7 +202,7 @@ export function useEstimatedNetworkBlockHeight(): number {
 // syncer
 
 export function useSyncerPeers(
-  args?: HookArgsSwr<SyncerPeersParams, SyncerPeersResponse>
+  args?: HookArgsSwr<SyncerPeersParams, SyncerPeersResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -215,7 +215,7 @@ export function useSyncerConnect(
     SyncerConnectParams,
     SyncerConnectPayload,
     SyncerConnectResponse
-  >
+  >,
 ) {
   return usePutFunc(
     {
@@ -224,7 +224,7 @@ export function useSyncerConnect(
     },
     async (mutate) => {
       mutate((key) => key === syncerPeersRoute)
-    }
+    },
   )
 }
 
@@ -238,7 +238,7 @@ export function useWallet(args?: HookArgsSwr<WalletParams, WalletResponse>) {
 }
 
 export function useWalletEvents(
-  args?: HookArgsSwr<WalletEventsParams, WalletEventsResponse>
+  args?: HookArgsSwr<WalletEventsParams, WalletEventsResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -247,7 +247,7 @@ export function useWalletEvents(
 }
 
 export function useWalletPending(
-  args?: HookArgsSwr<WalletPendingParams, WalletPendingResponse>
+  args?: HookArgsSwr<WalletPendingParams, WalletPendingResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -260,7 +260,7 @@ export function useWalletSend(
     WalletSendParams,
     WalletSendPayload,
     WalletSendResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: walletSendRoute }, async (mutate) => {
     await delay(2_000)
@@ -276,7 +276,7 @@ export function useWalletSend(
 // txpool
 
 export function useTxPoolFee(
-  args?: HookArgsSwr<TxPoolFeeParams, TxPoolFeeResponse>
+  args?: HookArgsSwr<TxPoolFeeParams, TxPoolFeeResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -291,7 +291,7 @@ export function useContracts(
     ContractsParams,
     ContractsPayload,
     ContractsResponse
-  >
+  >,
 ) {
   return usePostSwr({
     ...args,
@@ -304,7 +304,7 @@ export function useContractsV2(
     V2ContractsParams,
     V2ContractsPayload,
     V2ContractsResponse
-  >
+  >,
 ) {
   return usePostSwr({
     ...args,
@@ -317,7 +317,7 @@ export function useContractsIntegrityCheck(
     ContractsIntegrityCheckParams,
     ContractsIntegrityCheckPayload,
     ContractsIntegrityCheckResponse
-  >
+  >,
 ) {
   return usePutFunc({ ...args, route: contractsIdIntegrityRoute })
 }
@@ -332,7 +332,7 @@ export function useMetrics(args?: HookArgsSwr<MetricsParams, MetricsResponse>) {
 }
 
 export function useMetricsPeriod(
-  args?: HookArgsSwr<MetricsPeriodParams, MetricsPeriodResponse>
+  args?: HookArgsSwr<MetricsPeriodParams, MetricsPeriodResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -343,7 +343,7 @@ export function useMetricsPeriod(
 // settings
 
 export function useSettings(
-  args?: HookArgsSwr<SettingsParams, SettingsResponse>
+  args?: HookArgsSwr<SettingsParams, SettingsResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -356,7 +356,7 @@ export function useSettingsUpdate(
     SettingsUpdateParams,
     SettingsUpdatePayload,
     SettingsUpdateResponse
-  >
+  >,
 ) {
   return usePatchFunc({ ...args, route: settingsRoute }, async (mutate) => {
     await mutate((key) => {
@@ -370,7 +370,7 @@ export function useSettingsAnnounce(
     SettingsAnnounceParams,
     SettingsAnnouncePayload,
     SettingsAnnounceResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: settingsAnnounceRoute })
 }
@@ -380,14 +380,14 @@ export function useSettingsDdnsUpdate(
     SettingsDdnsUpdateParams,
     SettingsDdnsUpdatePayload,
     SettingsDdnsUpdateResponse
-  >
+  >,
 ) {
   return usePutSwr({ ...args, payload: {}, route: settingsDdnsUpdateRoute })
 }
 
 const settingsPinnedRoute = '/settings/pinned'
 export function useSettingsPinned(
-  args?: HookArgsSwr<SettingsParams, SettingsPinnedResponse>
+  args?: HookArgsSwr<SettingsParams, SettingsPinnedResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -400,7 +400,7 @@ export function useSettingsPinnedUpdate(
     SettingsPinnedUpdateParams,
     SettingsPinnedUpdatePayload,
     SettingsPinnedUpdateResponse
-  >
+  >,
 ) {
   return usePutFunc({ ...args, route: settingsPinnedRoute }, async (mutate) => {
     mutate((key) => {
@@ -424,7 +424,7 @@ export function useVolumeCreate(
     VolumeCreateParams,
     VolumeCreatePayload,
     VolumeCreateResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: volumesRoute }, async (mutate) => {
     mutate((key) => {
@@ -438,7 +438,7 @@ export function useVolumeUpdate(
     VolumeUpdateParams,
     VolumeUpdatePayload,
     VolumeUpdateResponse
-  >
+  >,
 ) {
   return usePutFunc({ ...args, route: volumesIdRoute }, async (mutate) => {
     mutate((key) => {
@@ -452,7 +452,7 @@ export function useVolumeDelete(
     VolumeDeleteParams,
     VolumeDeletePayload,
     VolumeDeleteResponse
-  >
+  >,
 ) {
   return useDeleteFunc({ ...args, route: volumesIdRoute }, async (mutate) => {
     mutate((key) => {
@@ -466,7 +466,7 @@ export function useVolumeResize(
     VolumeResizeParams,
     VolumeResizePayload,
     VolumeResizeResponse
-  >
+  >,
 ) {
   return usePutFunc(
     { ...args, route: volumesIdResizeRoute },
@@ -475,7 +475,7 @@ export function useVolumeResize(
       mutate((key) => {
         return key.startsWith(volumesRoute)
       })
-    }
+    },
   )
 }
 
@@ -484,7 +484,7 @@ export function useVolumeCancel(
     VolumeCancelParams,
     VolumeCancelPayload,
     VolumeCancelResponse
-  >
+  >,
 ) {
   return useDeleteFunc(
     { ...args, route: volumesIdCancelRoute },
@@ -493,12 +493,12 @@ export function useVolumeCancel(
       mutate((key) => {
         return key.startsWith(volumesRoute)
       })
-    }
+    },
   )
 }
 
 export function useSystemDirectory(
-  args: HookArgsSwr<SystemDirectoryParams, SystemDirectoryResponse>
+  args: HookArgsSwr<SystemDirectoryParams, SystemDirectoryResponse>,
 ) {
   return useGetSwr({ ...args, route: systemDirRoute })
 }
@@ -508,7 +508,7 @@ export function useSystemDirectoryCreate(
     SystemDirectoryCreateParams,
     SystemDirectoryCreatePayload,
     SystemDirectoryCreateResponse
-  >
+  >,
 ) {
   return usePutFunc({ ...args, route: systemDirRoute })
 }
@@ -524,7 +524,7 @@ export function useAlertsDismiss(
     AlertsDismissParams,
     AlertsDismissPayload,
     AlertsDismissResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: alertsDismissRoute }, async (mutate) => {
     mutate((key) => {

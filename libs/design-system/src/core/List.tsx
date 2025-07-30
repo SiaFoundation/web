@@ -53,7 +53,7 @@ export function Li({
         // The className removes vertical padding from p tags, this was added
         // because when Li is used in mdx rendering there is always a nested p tag
         '[&>p]:!py-0',
-        className
+        className,
       )}
     >
       {children}

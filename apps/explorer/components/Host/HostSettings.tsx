@@ -47,7 +47,7 @@ export function HostSettings({ host }: Props) {
         value: humanBytes(
           host.v2
             ? sectorsToBytes(host.v2Settings.totalStorage)
-            : host.settings.totalstorage
+            : host.settings.totalstorage,
         ),
       },
       {
@@ -56,7 +56,7 @@ export function HostSettings({ host }: Props) {
         value: humanBytes(
           host.v2
             ? sectorsToBytes(host.v2Settings.remainingStorage)
-            : host.settings.remainingstorage
+            : host.settings.remainingstorage,
         ),
       },
       {
@@ -163,13 +163,13 @@ export function HostSettings({ host }: Props) {
               {
                 rate: exchange.rate,
                 currency: exchange.currency,
-              }
+              },
             )
           ) : (
             <LoadingCurrency />
           ),
         comment: humanSiacoin(
-          host.v2 ? host.v2Settings.maxCollateral : host.settings.maxcollateral
+          host.v2 ? host.v2Settings.maxCollateral : host.settings.maxcollateral,
         ),
       },
       {
@@ -184,7 +184,7 @@ export function HostSettings({ host }: Props) {
               {
                 rate: exchange.rate,
                 currency: exchange.currency,
-              }
+              },
             )
           ) : (
             <LoadingCurrency />
@@ -192,7 +192,7 @@ export function HostSettings({ host }: Props) {
         comment: humanSiacoin(
           host.v2
             ? host.v2Settings.prices.contractPrice
-            : host.settings.contractprice
+            : host.settings.contractprice,
         ),
       },
       !host.v2 && {
@@ -201,7 +201,7 @@ export function HostSettings({ host }: Props) {
         value:
           exchange.currency && exchange.rate ? (
             `${exchange.currency.prefix || ''}${toSiacoins(
-              host.settings.baserpcprice
+              host.settings.baserpcprice,
             )
               .times(1e6)
               .times(exchange.rate || 1)
@@ -210,7 +210,7 @@ export function HostSettings({ host }: Props) {
             <LoadingCurrency type="perMillion" />
           ),
         comment: `${toSiacoins(host.settings.baserpcprice).times(
-          1e6
+          1e6,
         )} SC/million`,
       },
       !host.v2 && {
@@ -219,7 +219,7 @@ export function HostSettings({ host }: Props) {
         value:
           exchange.currency && exchange.rate ? (
             `${exchange.currency.prefix || ''}${toSiacoins(
-              host.settings.sectoraccessprice
+              host.settings.sectoraccessprice,
             )
               .times(1e6)
               .times(exchange.rate || 1)
@@ -228,7 +228,7 @@ export function HostSettings({ host }: Props) {
             <LoadingCurrency type="perSCMillion" />
           ),
         comment: `${toSiacoins(host.settings.sectoraccessprice).times(
-          1e6
+          1e6,
         )} SC/million`,
       },
       !host.v2 && {
@@ -243,11 +243,11 @@ export function HostSettings({ host }: Props) {
           blocksToMonths(
             host.v2
               ? host.v2Settings.maxContractDuration
-              : host.settings.maxduration
+              : host.settings.maxduration,
           ),
           {
             digits: 2,
-          }
+          },
         )} months`,
         comment: `${
           host.v2
@@ -287,7 +287,7 @@ export function HostSettings({ host }: Props) {
         {!!priceTableValues?.length && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-4">
             {priceTableValues.map(
-              (item) => item && <ExplorerDatum key={item.label} {...item} />
+              (item) => item && <ExplorerDatum key={item.label} {...item} />,
             )}
           </div>
         )}

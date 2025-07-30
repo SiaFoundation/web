@@ -49,7 +49,7 @@ export function useMultiSelect<Row extends MultiSelectRow>(dataset?: Row[]) {
       Object.entries(selectionMap)
         .map(([_, s]) => s)
         .sort((a, b) => a.index - b.index),
-    [selectionMap]
+    [selectionMap],
   )
   const [[anchor, rangeEnd], _setAnchor] = useState<
     | [SelectionRow<Row>, SelectionRow<Row>]
@@ -65,13 +65,13 @@ export function useMultiSelect<Row extends MultiSelectRow>(dataset?: Row[]) {
     (anchor: SelectionRow<Row>, rangeEnd: SelectionRow<Row> | undefined) => {
       _setAnchor([anchor, rangeEnd])
     },
-    []
+    [],
   )
 
   // Page change could be pagination, refetch with new results, filtering, etc.
   const datasetKey = useMemo(
     () => dataset?.map((d) => d.id).join(','),
-    [dataset]
+    [dataset],
   )
   // Reset anchor when page changes.
   useEffect(() => {
@@ -173,12 +173,12 @@ export function useMultiSelect<Row extends MultiSelectRow>(dataset?: Row[]) {
       resetAnchor,
       anchor,
       rangeEnd,
-    ]
+    ],
   )
 
   const isPageAllSelected = useMemo(
     () => getIsPageAllSelected({ dataset, selectionMap }),
-    [dataset, selectionMap]
+    [dataset, selectionMap],
   )
 
   const someSelectedRowsOutsideCurrentPage = useMemo(() => {
@@ -231,7 +231,7 @@ export function useMultiSelect<Row extends MultiSelectRow>(dataset?: Row[]) {
         resetAnchor()
       }
     },
-    [anchor?.row.id, resetAnchor]
+    [anchor?.row.id, resetAnchor],
   )
 
   const deselectAll = useCallback(() => {
@@ -243,7 +243,7 @@ export function useMultiSelect<Row extends MultiSelectRow>(dataset?: Row[]) {
 
   const selection = useMemo(
     () => mapValues(selectionMap, (s) => s.row),
-    [selectionMap]
+    [selectionMap],
   )
 
   return {
@@ -285,7 +285,7 @@ function getIsPageAllSelected<Row extends { id: string }>({
  */
 function findNextAnchor<Row extends MultiSelectRow>(
   selectedList: SelectionRow<Row>[],
-  idx: number
+  idx: number,
 ): SelectionRow<Row> | undefined {
   const nextHighest = selectedList.find((s) => s.index > idx)
   if (nextHighest) {

@@ -14,6 +14,6 @@ export default async function Image() {
       title: 'Zen faucet',
       subtitle: 'Zen testnet siacoin faucet.',
     },
-    size
+    size,
   )
 }

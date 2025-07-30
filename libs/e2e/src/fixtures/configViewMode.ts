@@ -9,7 +9,7 @@ export const setViewMode = step(
     if (state !== value) {
       await el.click()
     }
-  }
+  },
 )
 
 export const getViewMode = step(
@@ -21,5 +21,5 @@ export const getViewMode = step(
       el,
       value: value ? 'advanced' : 'basic',
     }
-  }
+  },
 )

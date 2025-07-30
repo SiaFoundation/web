@@ -36,14 +36,14 @@ function useContractsMain() {
     'hostd/v0/contracts/versionMode',
     {
       defaultValue: 'v2',
-    }
+    },
   )
   const setVersionMode = useCallback(
     (mode: 'v1' | 'v2') => {
       _setVersionMode(mode)
       resetFilters()
     },
-    [resetFilters, _setVersionMode]
+    [resetFilters, _setVersionMode],
   )
 
   const {
@@ -120,7 +120,7 @@ function useContractsMain() {
 
   const { range: contractsTimeRange } = useMemo(
     () => getContractsTimeRangeBlockHeight(currentHeight, _datasetPage || []),
-    [currentHeight, _datasetPage]
+    [currentHeight, _datasetPage],
   )
 
   const multiSelect = useMultiSelect(_datasetPage)
@@ -158,7 +158,7 @@ function useContractsMain() {
       siascanUrl,
       multiSelect,
     }),
-    [contractsTimeRange, currentHeight, siascanUrl, multiSelect]
+    [contractsTimeRange, currentHeight, siascanUrl, multiSelect],
   )
 
   return {

@@ -49,7 +49,7 @@ test('send siafund between wallets', async ({ page, browserName }) => {
   // Add some siacoins to cover fees.
   await sendSiacoinFromRenterd(
     wallet1Address0,
-    toHastings(1_000_000).toString()
+    toHastings(1_000_000).toString(),
   )
   await page.reload()
 
@@ -103,7 +103,7 @@ test('switching between siacoin and siafund modes resets amount fields', async (
 
   await sendSiacoinFromRenterd(
     wallet1Address0,
-    toHastings(1_000_000).toString()
+    toHastings(1_000_000).toString(),
   )
   await page.reload()
 

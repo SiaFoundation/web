@@ -64,17 +64,17 @@ test('configuration shows not-enabled message when exchange rates API hangs', as
   await expect(
     page
       .getByTestId('maxStoragePriceTBMonthGroup')
-      .getByText('Enable an exchange rate API')
+      .getByText('Enable an exchange rate API'),
   ).toBeVisible()
   await expect(
     page
       .getByTestId('maxUploadPriceTBGroup')
-      .getByText('Enable an exchange rate API')
+      .getByText('Enable an exchange rate API'),
   ).toBeVisible()
   await expect(
     page
       .getByTestId('maxDownloadPriceTBGroup')
-      .getByText('Enable an exchange rate API')
+      .getByText('Enable an exchange rate API'),
   ).toBeVisible()
 })
 
@@ -97,25 +97,25 @@ test('configuration does not show network averages when sia central API hangs', 
   await setSwitchByLabel(page, 'shouldPinMaxUploadPrice', false)
   await setSwitchByLabel(page, 'shouldPinMaxDownloadPrice', false)
   await expect(
-    page.getByTestId('maxStoragePriceTBMonthGroup').getByText('Network median')
+    page.getByTestId('maxStoragePriceTBMonthGroup').getByText('Network median'),
   ).toBeHidden()
   await expect(
-    page.getByTestId('maxUploadPriceTBGroup').getByText('Network median')
+    page.getByTestId('maxUploadPriceTBGroup').getByText('Network median'),
   ).toBeHidden()
   await expect(
-    page.getByTestId('maxDownloadPriceTBGroup').getByText('Network median')
+    page.getByTestId('maxDownloadPriceTBGroup').getByText('Network median'),
   ).toBeHidden()
   await setSwitchByLabel(page, 'shouldPinMaxStoragePrice', true)
   await setSwitchByLabel(page, 'shouldPinMaxUploadPrice', true)
   await setSwitchByLabel(page, 'shouldPinMaxDownloadPrice', true)
   await expect(
-    page.getByTestId('maxStoragePriceTBMonthGroup').getByText('Network median')
+    page.getByTestId('maxStoragePriceTBMonthGroup').getByText('Network median'),
   ).toBeHidden()
   await expect(
-    page.getByTestId('maxUploadPriceTBGroup').getByText('Network median')
+    page.getByTestId('maxUploadPriceTBGroup').getByText('Network median'),
   ).toBeHidden()
   await expect(
-    page.getByTestId('maxDownloadPriceTBGroup').getByText('Network median')
+    page.getByTestId('maxDownloadPriceTBGroup').getByText('Network median'),
   ).toBeHidden()
 
   await mockApiSiaScanHostMetricsUnroute({ page })
@@ -132,60 +132,64 @@ test('configuration does not show network averages when sia central API hangs', 
   await setSwitchByLabel(page, 'shouldPinMaxUploadPrice', false)
   await setSwitchByLabel(page, 'shouldPinMaxDownloadPrice', false)
   await expect(
-    page.getByTestId('maxStoragePriceTBMonthGroup').getByLabel('Network median')
+    page
+      .getByTestId('maxStoragePriceTBMonthGroup')
+      .getByLabel('Network median'),
   ).toBeVisible()
   await expect(
-    page.getByTestId('maxUploadPriceTBGroup').getByLabel('Network median')
+    page.getByTestId('maxUploadPriceTBGroup').getByLabel('Network median'),
   ).toBeVisible()
   await expect(
-    page.getByTestId('maxDownloadPriceTBGroup').getByLabel('Network median')
+    page.getByTestId('maxDownloadPriceTBGroup').getByLabel('Network median'),
   ).toBeVisible()
   await expect(
     page
       .getByTestId('maxStoragePriceTBMonthGroup')
       .getByLabel('Network median')
-      .getByText('0 SC')
+      .getByText('0 SC'),
   ).toBeHidden()
   await expect(
     page
       .getByTestId('maxUploadPriceTBGroup')
       .getByLabel('Network median')
-      .getByText('0 SC')
+      .getByText('0 SC'),
   ).toBeHidden()
   await expect(
     page
       .getByTestId('maxDownloadPriceTBGroup')
       .getByLabel('Network median')
-      .getByText('0 SC')
+      .getByText('0 SC'),
   ).toBeHidden()
   await setSwitchByLabel(page, 'shouldPinMaxStoragePrice', true)
   await setSwitchByLabel(page, 'shouldPinMaxUploadPrice', true)
   await setSwitchByLabel(page, 'shouldPinMaxDownloadPrice', true)
   await expect(
-    page.getByTestId('maxStoragePriceTBMonthGroup').getByLabel('Network median')
+    page
+      .getByTestId('maxStoragePriceTBMonthGroup')
+      .getByLabel('Network median'),
   ).toBeVisible()
   await expect(
-    page.getByTestId('maxUploadPriceTBGroup').getByLabel('Network median')
+    page.getByTestId('maxUploadPriceTBGroup').getByLabel('Network median'),
   ).toBeVisible()
   await expect(
-    page.getByTestId('maxDownloadPriceTBGroup').getByLabel('Network median')
+    page.getByTestId('maxDownloadPriceTBGroup').getByLabel('Network median'),
   ).toBeVisible()
   await expect(
     page
       .getByTestId('maxStoragePriceTBMonthGroup')
       .getByLabel('Network median')
-      .getByText('0 SC')
+      .getByText('0 SC'),
   ).toBeHidden()
   await expect(
     page
       .getByTestId('maxUploadPriceTBGroup')
       .getByLabel('Network median')
-      .getByText('0 SC')
+      .getByText('0 SC'),
   ).toBeHidden()
   await expect(
     page
       .getByTestId('maxDownloadPriceTBGroup')
       .getByLabel('Network median')
-      .getByText('0 SC')
+      .getByText('0 SC'),
   ).toBeHidden()
 })

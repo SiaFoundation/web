@@ -97,7 +97,7 @@ export function useOnValid({
       revalidateAndResetForm,
       autopilotTrigger,
       mutate,
-    ]
+    ],
   )
 
   return onValid

@@ -23,7 +23,7 @@ export function useGpuFeatures() {
         isGpuEnabled: !reduceMotion,
         hasUserSet: false,
       },
-    }
+    },
   )
 
   const setIsGpuEnabled = useCallback(
@@ -34,7 +34,7 @@ export function useGpuFeatures() {
         hasUserSet: byUser,
       }))
     },
-    [setSettings]
+    [setSettings],
   )
 
   const checkGpu = useCallback(async () => {

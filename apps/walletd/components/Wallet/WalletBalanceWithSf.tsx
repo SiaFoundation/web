@@ -48,7 +48,7 @@ export function WalletBalanceWithSf({
     <Panel
       className={cx(
         'hidden sm:flex h-7 items-center gap-2',
-        !isSynced ? 'pl-2 pr-3' : 'px-3'
+        !isSynced ? 'pl-2 pr-3' : 'px-3',
       )}
     >
       {!isSynced && (

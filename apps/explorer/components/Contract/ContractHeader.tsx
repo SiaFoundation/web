@@ -39,7 +39,7 @@ export function ContractHeader({
               variant="active"
               href={routes.contract.view.replace(
                 ':id',
-                contract.renewedFromContractID
+                contract.renewedFromContractID,
               )}
               data-testid="explorer-contract-renewedFrom"
             >
@@ -51,7 +51,7 @@ export function ContractHeader({
               variant="active"
               href={routes.contract.view.replace(
                 ':id',
-                contract.renewedToContractID
+                contract.renewedToContractID,
               )}
               data-testid="explorer-contract-renewedTo"
             >
@@ -93,8 +93,8 @@ export function ContractHeader({
                   contract.resolutionWindowEnd +
                     (contract.resolutionWindowStart -
                       (contract.confirmationIndex?.height ||
-                        formationTxnChainIndex[0].height))
-                )
+                        formationTxnChainIndex[0].height)),
+                ),
               ),
             }}
           />

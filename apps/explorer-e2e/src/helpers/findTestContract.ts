@@ -7,7 +7,7 @@ import { Cluster } from '../fixtures/cluster'
 
 export async function findV2TestContractWithResolutionType(
   cluster: Cluster,
-  resolutionType: ExplorerV2FileContractResolutionType
+  resolutionType: ExplorerV2FileContractResolutionType,
 ) {
   const foundContracts: ExplorerV2FileContract[] = []
 
@@ -21,7 +21,7 @@ export async function findV2TestContractWithResolutionType(
 
     // Get the block.
     const { data: currentBlock } = await cluster.daemons.explored.api.blockByID(
-      { params: { id: blockID } }
+      { params: { id: blockID } },
     )
 
     // Push all fileConctracts onto foundContracts.
@@ -36,13 +36,13 @@ export async function findV2TestContractWithResolutionType(
 
   // Return our target contract or undefined.
   return foundContracts.find(
-    (contract) => contract.resolutionType === resolutionType
+    (contract) => contract.resolutionType === resolutionType,
   )
 }
 
 export async function findV1TestContractWithStatus(
   cluster: Cluster,
-  status: 'complete' | 'failed' | 'active' | 'invalid'
+  status: 'complete' | 'failed' | 'active' | 'invalid',
 ) {
   const foundContracts: ExplorerFileContract[] = []
 
@@ -56,7 +56,7 @@ export async function findV1TestContractWithStatus(
 
     // Get the block.
     const { data: currentBlock } = await cluster.daemons.explored.api.blockByID(
-      { params: { id: blockID } }
+      { params: { id: blockID } },
     )
 
     // Push all fileConctracts onto foundContracts.
@@ -72,11 +72,11 @@ export async function findV1TestContractWithStatus(
   switch (status) {
     case 'complete':
       return foundContracts.find(
-        (contract) => contract.valid && contract.resolved
+        (contract) => contract.valid && contract.resolved,
       )
     case 'failed':
       return foundContracts.find(
-        (contract) => !contract.valid && contract.resolved
+        (contract) => !contract.valid && contract.resolved,
       )
     case 'active':
       return foundContracts.find((contract) => !contract.resolved)

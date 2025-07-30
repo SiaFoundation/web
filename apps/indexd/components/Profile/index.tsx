@@ -33,8 +33,8 @@ export function Profile() {
     version === '?'
       ? `https://github.com/SiaFoundation/indexd/commits/`
       : version?.match(/^v\d+\.\d+\.\d+/)
-      ? `https://github.com/SiaFoundation/indexd/releases/${version}`
-      : `https://github.com/SiaFoundation/indexd/tree/${version}`
+        ? `https://github.com/SiaFoundation/indexd/releases/${version}`
+        : `https://github.com/SiaFoundation/indexd/tree/${version}`
 
   const uptime = state.data
     ? new Date().getTime() - new Date(state.data?.startTime).getTime()

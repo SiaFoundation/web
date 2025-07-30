@@ -47,7 +47,7 @@ export function FieldSiacoin<
           : median && typeof median !== 'boolean'
             ? new BigNumber(median)
             : undefined,
-    [_placeholder, suggestion, median]
+    [_placeholder, suggestion, median],
   )
 
   const el = (

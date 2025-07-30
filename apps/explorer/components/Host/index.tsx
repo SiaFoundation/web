@@ -22,7 +22,7 @@ export function Host({ host }: Props) {
             {host.lastScan !== '0001-01-01T00:00:00Z' &&
               ` Last scan attempt was ${formatDistance(
                 new Date(host.lastScan),
-                new Date()
+                new Date(),
               )} ago.`}
           </Text>
         </Panel>

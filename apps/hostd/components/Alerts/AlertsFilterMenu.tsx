@@ -32,7 +32,7 @@ export function AlertsFilterMenu() {
         fn: (a) => a.severity === severity,
       })
     },
-    [clientFilters]
+    [clientFilters],
   )
 
   return (

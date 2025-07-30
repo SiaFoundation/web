@@ -73,7 +73,7 @@ export function FilesHealthColumnContents({
           })
         : 0,
     })) || [],
-    'contractSetShards'
+    'contractSetShards',
   )
 
   return (

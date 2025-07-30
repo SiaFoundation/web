@@ -15,7 +15,7 @@ const defaultExternalDataSettings: ExternalDataSettings = {
 }
 
 export function getDefaultExternalDataSettings(
-  customDefaults?: Partial<ExternalDataSettings>
+  customDefaults?: Partial<ExternalDataSettings>,
 ) {
   return {
     ...defaultExternalDataSettings,

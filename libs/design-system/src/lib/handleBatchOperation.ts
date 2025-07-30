@@ -14,7 +14,7 @@ type Params = {
 
 export async function handleBatchOperation<T>(
   operations: Promise<{ data?: T; error?: string }>[],
-  params: Params
+  params: Params,
 ) {
   const totalCount = operations.length
   let errorCount = 0
@@ -27,11 +27,11 @@ export async function handleBatchOperation<T>(
   const successCount = totalCount - errorCount
   if (errorCount > 0) {
     triggerErrorToast(
-      params.toastError({ totalCount, errorCount, successCount })
+      params.toastError({ totalCount, errorCount, successCount }),
     )
   } else {
     triggerSuccessToast(
-      params.toastSuccess({ totalCount, errorCount, successCount })
+      params.toastSuccess({ totalCount, errorCount, successCount }),
     )
   }
   await params.after?.()

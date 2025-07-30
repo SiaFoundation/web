@@ -46,7 +46,7 @@ export default async function Image({ params }: ExplorerPageProps) {
         initials: 'A',
         values,
       },
-      size
+      size,
     )
   } catch {
     return getOGImage(
@@ -56,7 +56,7 @@ export default async function Image({ params }: ExplorerPageProps) {
         subtitle: 'address',
         initials: 'A',
       },
-      size
+      size,
     )
   }
 }

@@ -52,27 +52,27 @@ export function useMedianPrices() {
       storagePrice
         ? new BigNumber(
             valuePerBytePerBlockToPerTBPerMonth(
-              toSiacoins(storagePrice)
-            ).toFixed(0)
+              toSiacoins(storagePrice),
+            ).toFixed(0),
           )
         : undefined,
-    [storagePrice]
+    [storagePrice],
   )
   const uploadMedian = useMemo(
     () =>
       uploadPrice
         ? new BigNumber(valuePerByteToPerTB(toSiacoins(uploadPrice)).toFixed(0))
         : undefined,
-    [uploadPrice]
+    [uploadPrice],
   )
   const downloadMedian = useMemo(
     () =>
       downloadPrice
         ? new BigNumber(
-            valuePerByteToPerTB(toSiacoins(downloadPrice)).toFixed(0)
+            valuePerByteToPerTB(toSiacoins(downloadPrice)).toFixed(0),
           )
         : undefined,
-    [downloadPrice]
+    [downloadPrice],
   )
 
   const medians = useMemo(() => {

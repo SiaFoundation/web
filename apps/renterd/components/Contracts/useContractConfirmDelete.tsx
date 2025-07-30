@@ -47,6 +47,6 @@ export function useContractConfirmDelete() {
           triggerSuccessToast({ title: 'Deleted contract' })
         },
       }),
-    [openConfirmDialog, deleteContract]
+    [openConfirmDialog, deleteContract],
   )
 }

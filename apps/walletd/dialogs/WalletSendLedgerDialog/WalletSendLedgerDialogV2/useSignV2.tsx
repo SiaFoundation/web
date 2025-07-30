@@ -73,7 +73,7 @@ export function useSignV2() {
         signedTransaction: signResponse.transaction,
       }
     },
-    [device, addresses, consensusState, consensusNetwork]
+    [device, addresses, consensusState, consensusNetwork],
   )
 
   return sign

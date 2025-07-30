@@ -19,11 +19,11 @@ export function useWalletSeedCache() {
     Record<string, number>
   >({})
   const [mnemonicCache, _setMnemonicCache] = useState<Record<string, string>>(
-    {}
+    {},
   )
   const cachedMnemonicCount = useMemo(
     () => Object.keys(mnemonicCache).length,
-    [mnemonicCache]
+    [mnemonicCache],
   )
 
   const updateWalletActivityAt = useCallback(
@@ -33,7 +33,7 @@ export function useWalletSeedCache() {
         [walletId]: new Date().getTime(),
       }))
     },
-    [setWalletActivityAt]
+    [setWalletActivityAt],
   )
 
   const cacheWalletMnemonic = useCallback(
@@ -46,7 +46,7 @@ export function useWalletSeedCache() {
         updateWalletActivityAt(walletId)
       }
     },
-    [_setMnemonicCache, updateWalletActivityAt]
+    [_setMnemonicCache, updateWalletActivityAt],
   )
 
   const evictStale = useCallback(() => {

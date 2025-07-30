@@ -17,7 +17,7 @@ export function ContractsBulkIntegrityCheck() {
 
   const ids = useMemo(
     () => Object.entries(multiSelect.selection).map(([_, item]) => item.id),
-    [multiSelect.selection]
+    [multiSelect.selection],
   )
   const checkAll = useCallback(async () => {
     await handleBatchOperation(
@@ -26,20 +26,20 @@ export function ContractsBulkIntegrityCheck() {
           params: {
             id,
           },
-        })
+        }),
       ),
       {
         toastError: ({ successCount, errorCount, totalCount }) => ({
           title: `Integrity checks started for ${pluralize(
             successCount,
-            'contract'
+            'contract',
           )}`,
           body: `Error starting integrity checks for ${errorCount}/${totalCount} total contracts.`,
         }),
         toastSuccess: ({ totalCount }) => ({
           title: `Integrity checks started for ${pluralize(
             totalCount,
-            'contract'
+            'contract',
           )}`,
           body: (
             <>
@@ -52,7 +52,7 @@ export function ContractsBulkIntegrityCheck() {
         after: () => {
           multiSelect.deselectAll()
         },
-      }
+      },
     )
   }, [multiSelect, ids, integrityCheck])
 

@@ -20,7 +20,7 @@ describe('signLedgerV1', () => {
           siacoinOutputs: mocks.walletOutputsSiacoinResponse.outputs,
           siafundOutputs: mocks.walletOutputsSiafundResponse.outputs,
           addresses: getMockAddresses(mocks),
-        })
+        }),
       ).toMatchSnapshot()
     })
 
@@ -35,7 +35,7 @@ describe('signLedgerV1', () => {
           siafundOutputs: mocks.walletOutputsSiafundResponse.outputs,
           addresses: getMockAddresses(mocks),
           toSign: [mocks.walletFundResponse.toSign[0], 'not in siacoinOutputs'],
-        })
+        }),
       ).toEqual({
         error: 'Missing utxo',
       })
@@ -61,7 +61,7 @@ describe('signLedgerV1', () => {
               },
             },
           ],
-        })
+        }),
       ).toEqual({
         error: 'Missing address',
       })
@@ -87,7 +87,7 @@ describe('signLedgerV1', () => {
               metadata: {},
             },
           ],
-        })
+        }),
       ).toEqual({
         error: 'Missing address index',
       })
@@ -106,7 +106,7 @@ describe('signLedgerV1', () => {
           siacoinOutputs: mocks.walletOutputsSiacoinResponse.outputs,
           siafundOutputs: mocks.walletOutputsSiafundResponse.outputs,
           addresses,
-        })
+        }),
       ).toEqual({
         error: 'Missing address public key',
       })

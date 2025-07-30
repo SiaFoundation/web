@@ -47,8 +47,8 @@ export function ValueSc({
       ? value.isGreaterThan(0)
         ? 'green'
         : value.isLessThan(0)
-        ? 'red'
-        : 'subtle'
+          ? 'red'
+          : 'subtle'
       : 'contrast')
 
   const el = (

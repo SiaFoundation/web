@@ -135,14 +135,14 @@ export function useSendFormV1({ params, step, onConfirm }: Props) {
         // transactionId,
       })
     },
-    [broadcast, txn, basis, onConfirm]
+    [broadcast, txn, basis, onConfirm],
   )
 
   const onInvalid = useOnInvalid(fields)
 
   const handleSubmit = useMemo(
     () => form.handleSubmit(onValid, onInvalid),
-    [form, onValid, onInvalid]
+    [form, onValid, onInvalid],
   )
 
   const runFundAndSign = useCallback(async () => {

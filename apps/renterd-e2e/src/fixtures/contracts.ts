@@ -5,7 +5,7 @@ export const getContractRowById = step(
   'get contract row by ID',
   async (page: Page, id: string) => {
     return page.getByTestId('contractsTable').getByTestId(id)
-  }
+  },
 )
 
 export const getContractsSummaryRow = step(
@@ -16,7 +16,7 @@ export const getContractsSummaryRow = step(
       .locator('thead')
       .getByRole('row')
       .nth(1)
-  }
+  },
 )
 
 export const getContractRowByIndex = step(
@@ -28,9 +28,9 @@ export const getContractRowByIndex = step(
         .locator('tbody')
         .getByRole('row')
         .nth(index),
-      shouldExpect
+      shouldExpect,
     )
-  }
+  },
 )
 
 export function getContractRows(page: Page) {
@@ -41,5 +41,5 @@ export const getContractRowsAll = step(
   'get contract rows',
   async (page: Page) => {
     return getContractRows(page).all()
-  }
+  },
 )

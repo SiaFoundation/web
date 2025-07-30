@@ -22,7 +22,7 @@ const NotFoundImage = (id: string) =>
       subtitle: 'transaction',
       initials: 'T',
     },
-    size
+    size,
   )
 
 export default async function Image({ params }: ExplorerPageProps) {
@@ -78,7 +78,7 @@ export default async function Image({ params }: ExplorerPageProps) {
           initials: 'T',
           values,
         },
-        size
+        size,
       )
     } else if (searchResult === 'v2Transaction') {
       const [
@@ -123,7 +123,7 @@ export default async function Image({ params }: ExplorerPageProps) {
           initials: 'T',
           values,
         },
-        size
+        size,
       )
     } else {
       return NotFoundImage(id)

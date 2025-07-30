@@ -39,7 +39,7 @@ export function useDialogFormHelpers<Values extends FieldValues>({
         }, 0)
       }
     },
-    [closeAndReset, reset, onOpenChange]
+    [closeAndReset, reset, onOpenChange],
   )
 
   // Use an internal key that is memoed on a shallow element comparison

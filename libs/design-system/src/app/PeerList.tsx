@@ -32,7 +32,7 @@ export function PeerList({ peers, isLoading, connectPeer }: Props) {
                 key={i}
                 className={cx(
                   'flex items-center gap-4 p-4',
-                  itemBorderStyles()
+                  itemBorderStyles(),
                 )}
               >
                 <Skeleton className="w-[60px] h-[20px]" />
@@ -44,7 +44,7 @@ export function PeerList({ peers, isLoading, connectPeer }: Props) {
                 key={ip}
                 className={cx(
                   'flex items-center gap-4 p-4',
-                  itemBorderStyles()
+                  itemBorderStyles(),
                 )}
               >
                 <Text size="16" weight="medium" ellipsis>
@@ -56,7 +56,7 @@ export function PeerList({ peers, isLoading, connectPeer }: Props) {
             <div
               className={cx(
                 'flex items-center justify-center h-[84px]',
-                itemBorderStyles()
+                itemBorderStyles(),
               )}
             >
               <Text size="18" color="subtle">
@@ -73,6 +73,6 @@ export function PeerList({ peers, isLoading, connectPeer }: Props) {
 function itemBorderStyles() {
   return cx(
     'border-t border-gray-200 dark:border-graydark-300',
-    'first:border-none'
+    'first:border-none',
   )
 }

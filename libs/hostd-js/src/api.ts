@@ -157,7 +157,7 @@ export function Hostd({ api, password }: { api: string; password?: string }) {
     wallet: buildRequestHandler<WalletParams, WalletPayload, WalletResponse>(
       axios,
       'get',
-      walletRoute
+      walletRoute,
     ),
     walletPending: buildRequestHandler<
       WalletPendingParams,
@@ -232,7 +232,7 @@ export function Hostd({ api, password }: { api: string; password?: string }) {
     volume: buildRequestHandler<VolumeParams, VolumePayload, VolumeResponse>(
       axios,
       'get',
-      volumesIdRoute
+      volumesIdRoute,
     ),
     volumeCreate: buildRequestHandler<
       VolumeCreateParams,
@@ -272,7 +272,7 @@ export function Hostd({ api, password }: { api: string; password?: string }) {
     alerts: buildRequestHandler<AlertsParams, AlertsPayload, AlertsResponse>(
       axios,
       'get',
-      alertsRoute
+      alertsRoute,
     ),
     alertsDismiss: buildRequestHandler<
       AlertsDismissParams,

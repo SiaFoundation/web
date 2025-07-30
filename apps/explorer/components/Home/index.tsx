@@ -93,7 +93,7 @@ export function Home({
             <div className="flex flex-col gap-1 items-baseline">
               <Tooltip
                 content={`${humanBytes(
-                  metrics?.totalStorage - metrics?.remainingStorage
+                  metrics?.totalStorage - metrics?.remainingStorage,
                 )} used storage`}
               >
                 <Text
@@ -102,7 +102,7 @@ export function Home({
                   color="contrast"
                 >
                   {humanBytes(
-                    metrics?.totalStorage - metrics?.remainingStorage
+                    metrics?.totalStorage - metrics?.remainingStorage,
                   )}
                 </Text>
               </Tooltip>
@@ -238,7 +238,7 @@ export function Home({
               </div>
             </Tooltip>
           ),
-        }
+        },
       )
     }
     return list

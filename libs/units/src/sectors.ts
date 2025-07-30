@@ -13,7 +13,7 @@ import {
 
 // Converts sectors to bytes.
 export function sectorsToBytes(
-  sectors: BigNumber | string | number
+  sectors: BigNumber | string | number,
 ): BigNumber {
   return MiBToBytes(sectors).times(4)
 }
