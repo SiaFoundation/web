@@ -228,9 +228,6 @@ export function SettingsDialog({
                         size="medium"
                         disabled
                         checked={daemonExplorer.enabled}
-                        onCheckedChange={(val) =>
-                          setExternalDataSettings({ siascan: val })
-                        }
                       />
                     </div>
                   </div>
