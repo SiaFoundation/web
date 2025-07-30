@@ -42,8 +42,8 @@ describe('SiacoinField', () => {
     fireEvent.blur(scInput)
     expect(scInput.value).toBe('44')
     expect(fiatInput.value).toBe('$44')
-    expect(onChange.mock.calls.length).toBe(3)
-    expect(Number(onChange.mock.calls[2][0])).toBe(44)
+    expect(onChange.mock.calls.length).toBe(4)
+    expect(Number(onChange.mock.calls[3][0])).toBe(44)
     // for some reason after fireEvent.blur, user.click does not trigger a re-focus
     fireEvent.focus(scInput)
     await user.click(scInput)
@@ -51,9 +51,9 @@ describe('SiacoinField', () => {
     fireEvent.blur(scInput)
     expect(scInput.value).toBe('444')
     expect(fiatInput.value).toBe('$444')
-    expect(onChange.mock.calls.length).toBe(4)
-    expect(Number(onChange.mock.calls[3][0])).toBe(444)
-    expectOnChangeValues([undefined, '4', '44', '444'], onChange)
+    expect(onChange.mock.calls.length).toBe(5)
+    expect(Number(onChange.mock.calls[4][0])).toBe(444)
+    expectOnChangeValues(['33', undefined, '4', '44', '444'], onChange)
   })
 
   it('updates value starting with decimal', async () => {
@@ -117,7 +117,17 @@ describe('SiacoinField', () => {
     expect(scInput.value).toBe('4.444,55')
     expect(fiatInput.value).toBe('$4.444,55')
     expectOnChangeValues(
-      [undefined, '4', '44', '444', '4444', '4444', '4444.5', '4444.55'],
+      [
+        '3333',
+        undefined,
+        '4',
+        '44',
+        '444',
+        '4444',
+        '4444',
+        '4444.5',
+        '4444.55',
+      ],
       onChange
     )
   })
@@ -145,7 +155,17 @@ describe('SiacoinField', () => {
     expect(scInput.value).toBe('4.444,55')
     expect(fiatInput.value).toBe('₽4.444,55')
     expectOnChangeValues(
-      [undefined, '4', '44', '444', '4444', '4444', '4444.5', '4444.55'],
+      [
+        '3333',
+        undefined,
+        '4',
+        '44',
+        '444',
+        '4444',
+        '4444',
+        '4444.5',
+        '4444.55',
+      ],
       onChange
     )
   })
@@ -173,7 +193,17 @@ describe('SiacoinField', () => {
     expect(scInput.value).toBe('4.444,55')
     expect(fiatInput.value).toBe('₽4.444,55')
     expectOnChangeValues(
-      [undefined, '4', '44', '444', '4444', '4444', '4444.5', '4444.55'],
+      [
+        '3333',
+        undefined,
+        '4',
+        '44',
+        '444',
+        '4444',
+        '4444',
+        '4444.5',
+        '4444.55',
+      ],
       onChange
     )
   })
@@ -197,10 +227,11 @@ describe('SiacoinField', () => {
     // Either way limits to 6 (not rounding)
     expect(scInput.value).toBe('0.123456')
     expect(fiatInput.value).toBe('$0.123456')
-    expect(onChange.mock.calls.length).toBe(9)
-    expect(Number(onChange.mock.calls[8][0])).toBe(0.123456)
+    expect(onChange.mock.calls.length).toBe(10)
+    expect(Number(onChange.mock.calls[9][0])).toBe(0.123456)
     expectOnChangeValues(
       [
+        '0.123457',
         undefined,
         '0',
         '0',
@@ -232,9 +263,10 @@ describe('SiacoinField', () => {
     fireEvent.blur(fiatInput)
     expect(scInput.value).toBe('0.123')
     expect(fiatInput.value).toBe('$0.123')
-    expect(onChange.mock.calls.length).toBe(11)
+    expect(onChange.mock.calls.length).toBe(12)
     expectOnChangeValues(
       [
+        '0.444',
         undefined,
         undefined,
         '0',
@@ -272,9 +304,10 @@ describe('SiacoinField', () => {
     fireEvent.blur(fiatInput)
     expect(fiatInput.value).toBe('$0.158')
     expect(scInput.value).toBe('45.208347')
-    expect(onChange.mock.calls.length).toBe(6)
+    expect(onChange.mock.calls.length).toBe(7)
     expectOnChangeValues(
       [
+        '45.47473',
         '45.474447',
         '45.474447',
         '45.465863',
@@ -304,9 +337,9 @@ describe('SiacoinField', () => {
     expect(scInput.value).toBe('0.123')
     expect(fiatInput.value).toBe('$0.000446')
     // Fires one more time because the currency inut component fires onValueChange on blur.
-    expect(onChange.mock.calls.length).toBe(6)
+    expect(onChange.mock.calls.length).toBe(7)
     expectOnChangeValues(
-      [undefined, '0', '0', '0.1', '0.12', '0.123'],
+      ['0.444', undefined, '0', '0', '0.1', '0.12', '0.123'],
       onChange
     )
   })
@@ -324,7 +357,8 @@ describe('SiacoinField', () => {
     fireEvent.focus(fiatInput)
     expect(scInput.value).toBe('0.444')
     expect(fiatInput.value).toBe('$0.001609')
-    expect(onChange.mock.calls.length).toBe(0)
+    expect(onChange.mock.calls.length).toBe(1)
+    expectOnChangeValues(['0.444'], onChange)
   })
 })
 

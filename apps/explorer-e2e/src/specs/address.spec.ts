@@ -12,7 +12,7 @@ let cluster: Cluster
 // V2
 test.describe('v2', () => {
   test.beforeEach(async ({ page, context }) => {
-    cluster = await startCluster({ context, networkVersion: 'v2' })
+    cluster = await startCluster({ context, testContracts: 'v2' })
     await exploredStabilization(cluster)
     explorerApp = new ExplorerApp(page)
   })
@@ -71,7 +71,10 @@ test.describe('v2', () => {
 // V1
 test.describe('v1', () => {
   test.beforeEach(async ({ page, context }) => {
-    cluster = await startCluster({ context, networkVersion: 'v1' })
+    cluster = await startCluster({
+      context,
+      testContracts: 'v1',
+    })
     await exploredStabilization(cluster)
     explorerApp = new ExplorerApp(page)
   })
@@ -81,23 +84,25 @@ test.describe('v1', () => {
   })
 
   test('address can be searched by id', async ({ page }) => {
-    const wallet = await cluster.daemons.renterds[0].api.wallet()
+    const { siacoinOutput } = await findTestOutput(cluster, 'v1')
+    const address = siacoinOutput.address
     await explorerApp.goTo('/')
-    await explorerApp.navigateBySearchBar(wallet.data.address)
+    await explorerApp.navigateBySearchBar(address)
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText(`Address ${wallet.data.address.slice(0, 5)}`)
+        .getByText(`Address ${address.slice(0, 5)}`)
     ).toBeVisible()
   })
 
   test('address can be directly navigated to by id', async ({ page }) => {
-    const wallet = await cluster.daemons.renterds[0].api.wallet()
-    await explorerApp.goTo('/address/' + wallet.data.address)
+    const { siacoinOutput } = await findTestOutput(cluster, 'v1')
+    const address = siacoinOutput.address
+    await explorerApp.goTo('/address/' + address)
     await expect(
       page
         .getByTestId('entity-heading')
-        .getByText(`Address ${wallet.data.address.slice(0, 5)}`)
+        .getByText(`Address ${address.slice(0, 5)}`)
     ).toBeVisible()
   })
 

@@ -1,27 +1,27 @@
-import { clusterd, NetworkVersion, setupCluster } from '@siafoundation/clusterd'
+import { clusterd, setupCluster, TestContracts } from '@siafoundation/clusterd'
 import { BrowserContext } from 'playwright'
 
 export type Cluster = Awaited<ReturnType<typeof startCluster>>
 
 export async function startCluster({
+  testContracts = 'none',
   renterdCount = 1,
   walletdCount = 1,
   hostdCount = 1,
   context,
-  networkVersion,
 }: {
+  testContracts?: TestContracts
   renterdCount?: number
   walletdCount?: number
   hostdCount?: number
   context: BrowserContext
-  networkVersion?: NetworkVersion
 }) {
   const cluster = await setupCluster({
+    testContracts,
     exploredCount: 1,
     renterdCount,
     walletdCount,
     hostdCount,
-    networkVersion,
   })
   const daemons = {
     explored: cluster.daemons.exploreds[0],

@@ -11,7 +11,7 @@ export async function findV2TestContractWithResolutionType(
 ) {
   const foundContracts: ExplorerV2FileContract[] = []
 
-  for (let i = 10; i <= 20; i++) {
+  for (let i = 1; i <= 30; i++) {
     // Get the block ID.
     const {
       data: { id: blockID },
@@ -46,7 +46,7 @@ export async function findV1TestContractWithStatus(
 ) {
   const foundContracts: ExplorerFileContract[] = []
 
-  for (let i = 10; i <= 20; i++) {
+  for (let i = 1; i <= 30; i++) {
     // Get the block ID.
     const {
       data: { id: blockID },

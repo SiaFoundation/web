@@ -69,7 +69,7 @@ test('send siacoin between wallets', async ({ page, browserName }) => {
     expectedFee: 0.02,
     expectedVersion: 'v2',
     transactionVersionIndicator:
-      'testCluster - constructing v2 transaction - switched to v2 at allow height 2',
+      'testCluster - constructing v2 transaction - switched to v2 at allow height 1',
   })
 
   await mine(1)

@@ -16,7 +16,7 @@ let cluster: Cluster
 // V2
 test.describe('v2', () => {
   test.beforeEach(async ({ page, context }) => {
-    cluster = await startCluster({ context, networkVersion: 'v2' })
+    cluster = await startCluster({ context, testContracts: 'v2' })
     await exploredStabilization(cluster)
     explorerApp = new ExplorerApp(page)
   })
@@ -91,7 +91,7 @@ test.describe('v2', () => {
 // V1
 test.describe('v1', () => {
   test.beforeEach(async ({ page, context }) => {
-    cluster = await startCluster({ context, networkVersion: 'v1' })
+    cluster = await startCluster({ context, testContracts: 'v1' })
     await exploredStabilization(cluster)
     explorerApp = new ExplorerApp(page)
   })

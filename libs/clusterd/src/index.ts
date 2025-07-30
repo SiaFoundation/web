@@ -41,8 +41,6 @@ export type ClusterNode =
   | ClusterNodeWalletd
   | ClusterNodeExplored
 
-export type NetworkVersion = 'v1' | 'v2'
-
 export const clusterd = {
   process: undefined as child.ChildProcessWithoutNullStreams | undefined,
   managementPort: undefined as number | undefined,
@@ -57,32 +55,34 @@ const randomAddress =
 
 export type Cluster = Awaited<ReturnType<typeof setupCluster>>
 
+export type TestContracts = 'none' | 'v1' | 'v2'
+
 export async function setupCluster({
   renterdCount = 0,
   hostdCount = 0,
   walletdCount = 0,
   exploredCount = 0,
-  networkVersion = 'v2',
   siafundAddr = randomAddress,
+  testContracts = 'none',
 }: {
   renterdCount?: number
   hostdCount?: number
   walletdCount?: number
   exploredCount?: number
-  networkVersion?: NetworkVersion
   siafundAddr?: string
+  testContracts?: TestContracts
 } = {}) {
   clusterd.managementPort = random(10000, 65535)
   console.log('Starting cluster on port', clusterd.managementPort)
 
   clusterd.process = child.spawn('internal/cluster/bin/clusterd', [
-    `-network=${networkVersion}`,
     `-renterd=${renterdCount}`,
     `-hostd=${hostdCount}`,
     `-walletd=${walletdCount}`,
     `-explored=${exploredCount}`,
     `-api=:${clusterd.managementPort}`,
     `-siafund=${siafundAddr}`,
+    `-testContracts=${testContracts}`,
   ])
   // Drain buffer to prevent process from hanging.
   clusterd.process.stdout.on('data', () => null)
@@ -247,11 +247,9 @@ export async function renterdWaitForContracts({
 export async function hostdWaitForContracts({
   hostdNode,
   renterdCount,
-  networkVersion,
 }: {
   hostdNode: ClusterNodeHostd
   renterdCount: number
-  networkVersion: NetworkVersion
 }) {
   const hostdApi = `${hostdNode.apiAddress}/api`
   const hostd = Hostd({
@@ -269,18 +267,11 @@ export async function hostdWaitForContracts({
     waitingForContractsToFormTimer,
     async () => {
       await mine(1)
-      const contracts =
-        networkVersion === 'v2'
-          ? await hostd.contractsV2({
-              data: {
-                limit: renterdCount,
-              },
-            })
-          : await hostd.contracts({
-              data: {
-                limit: renterdCount,
-              },
-            })
+      const contracts = await hostd.contractsV2({
+        data: {
+          limit: renterdCount,
+        },
+      })
       console.log(`contracts: ${contracts.data.count}/${renterdCount}`)
       return contracts.data.count >= renterdCount
     },

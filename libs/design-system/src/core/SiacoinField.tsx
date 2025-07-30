@@ -83,11 +83,9 @@ export function SiacoinField({
   const onScChange = useCallback(
     (sc: string) => {
       setLocalSc(sc)
-      if (active) {
-        updateExternalSc(sc)
-      }
+      updateExternalSc(sc)
     },
-    [active, setLocalSc, updateExternalSc]
+    [setLocalSc, updateExternalSc]
   )
 
   const syncFiatToSc = useCallback(
@@ -160,8 +158,8 @@ export function SiacoinField({
         error
           ? 'border-red-500 dark:border-red-400'
           : changed
-          ? 'border-green-500 dark:border-green-400'
-          : 'border-gray-200 dark:border-graydark-200',
+            ? 'border-green-500 dark:border-green-400'
+            : 'border-gray-200 dark:border-graydark-200',
         'rounded'
       )}
     >
@@ -203,7 +201,7 @@ export function SiacoinField({
           focus="none"
           value={localFiat !== 'NaN' ? localFiat : ''}
           units={settings.currency.label + (unitsFiatPostfix || '')}
-          decimalScale={decimalsLimitSc}
+          decimalScale={decimalsLimitFiat}
           allowNegative={false}
           onValueChange={(value) => {
             setLocalFiat(value.value || '')
