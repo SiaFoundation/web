@@ -30,10 +30,10 @@ import (
 
 func main() {
 	var (
-		dir      string
-		apiAddr  string
-		logLevel string
-		network  string
+		dir           string
+		apiAddr       string
+		logLevel      string
+		testContracts string
 
 		siafundAddr string
 
@@ -46,7 +46,7 @@ func main() {
 	flag.StringVar(&dir, "dir", "", "directory to store renter data")
 	flag.StringVar(&apiAddr, "api", ":3001", "API address")
 	flag.StringVar(&logLevel, "log", "info", "logging level")
-	flag.StringVar(&network, "network", "v2", "network to use (v1, v2)")
+	flag.StringVar(&testContracts, "testContracts", "none", "test contracts to use (none, v1, v2)")
 	flag.StringVar(&siafundAddr, "siafund", "", "address to send siafunds to")
 
 	flag.IntVar(&renterdCount, "renterd", 0, "number of renter daemons to run")
@@ -116,15 +116,16 @@ func main() {
 		genesis.Transactions[0].SiafundOutputs[0].Address = addr
 	}
 
-	switch network {
+	switch testContracts {
 	case "v1":
-		n.HardforkV2.AllowHeight = 10000 // ideally unattainable
-		n.HardforkV2.RequireHeight = 12000
+		n.HardforkV2.AllowHeight = 20
+		n.HardforkV2.RequireHeight = 21
 	case "v2":
-		n.HardforkV2.AllowHeight = 2
-		n.HardforkV2.RequireHeight = 3
+		n.HardforkV2.AllowHeight = 20
+		n.HardforkV2.RequireHeight = 21
 	default:
-		log.Fatal("invalid network", zap.String("network", network))
+		n.HardforkV2.AllowHeight = 1
+		n.HardforkV2.RequireHeight = 1
 	}
 
 	apiListener, err := net.Listen("tcp", apiAddr)
@@ -210,18 +211,38 @@ func main() {
 			log.Panic("Failed to find explored node")
 		}
 
-		switch network {
+		switch testContracts {
 		case "v1":
-			err = setupV1Contracts(nm, w, cm)
-			log.Info("Set up v1 contracts")
+			// Setup v1 contracts and then mine to the v2 hardfork height
+			if err := setupV1Contracts(nm, w, cm); err != nil {
+				log.Panic("Failed to set up v1 contracts", zap.Error(err))
+			}
+			log.Info("setting up v1 contracts...")
+			log.Info("tip height", zap.Uint64("height", cm.TipState().Index.Height))
+			log.Info("mining to hardfork height...")
+			if err := nm.MineBlocks(context.Background(), int(n.HardforkV2.RequireHeight-cm.TipState().Index.Height+1), types.VoidAddress); err != nil {
+				log.Panic("failed to mine blocks", zap.Error(err), zap.Stack("stack"))
+			}
+			log.Info("mined past hardfork height", zap.Uint64("height", cm.TipState().Index.Height))
 		case "v2":
-			err = setupV2Contracts(nm, e, w, cm)
-			log.Info("Set up v2 contracts")
+			// Mine to the v2 hardfork height, and then setup v2 contracts
+			tip := cm.TipState().Index.Height
+			log.Info("tip height", zap.Uint64("height", tip))
+			log.Info("mining to hardfork height...")
+			if err := nm.MineBlocks(context.Background(), int(n.HardforkV2.RequireHeight-tip+1), types.VoidAddress); err != nil {
+				log.Panic("failed to mine blocks", zap.Error(err), zap.Stack("stack"))
+			} else if err := w.Sync(); err != nil {
+				log.Panic("failed to sync wallet after setting up v1 contracts", zap.Error(err))
+			}
+			log.Info("mined past hardfork height", zap.Uint64("height", cm.TipState().Index.Height))
+			if err := setupV2Contracts(nm, e, w, cm); err != nil {
+				log.Panic("failed to set up v2 contracts", zap.Error(err))
+			}
+			log.Info("setting up v2 contracts...")
+			tip = cm.TipState().Index.Height
+			log.Info("tip height", zap.Uint64("height", tip))
 		default:
-			err = fmt.Errorf("invalid network provided: %s", network)
-		}
-		if err != nil {
-			log.Panic("Failed to set up contracts", zap.Error(err))
+			log.Info("no test contracts to set up")
 		}
 	}
 

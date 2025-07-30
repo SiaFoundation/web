@@ -11,7 +11,7 @@ import { useMemo } from 'react'
 
 export function FieldSiacoin<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   name,
   form,
@@ -43,10 +43,10 @@ export function FieldSiacoin<
       _placeholder
         ? new BigNumber(_placeholder)
         : suggestion && typeof suggestion !== 'boolean'
-        ? new BigNumber(suggestion)
-        : median && typeof median !== 'boolean'
-        ? new BigNumber(median)
-        : undefined,
+          ? new BigNumber(suggestion)
+          : median && typeof median !== 'boolean'
+            ? new BigNumber(median)
+            : undefined,
     [_placeholder, suggestion, median]
   )
 
@@ -64,7 +64,6 @@ export function FieldSiacoin<
       changed={getFormStateFieldBoolean(form.formState.dirtyFields, name)}
       placeholder={placeholder}
       onChange={(val) => {
-        console.log('onChange', val?.toString())
         setValue(val as PathValue<Values, Path<Values>>, true)
       }}
       onBlur={onBlur}

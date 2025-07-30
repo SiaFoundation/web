@@ -32,12 +32,12 @@ export const toggleColumnVisibility = step(
     if (visible) {
       await expect(columnToggle).toBeVisible()
       if (!(await columnToggle.isChecked())) {
-        await columnToggle.click()
+        await columnToggle.click({ force: true })
       }
     } else {
       await expect(columnToggle).toBeHidden()
       if (await columnToggle.isChecked()) {
-        await columnToggle.click()
+        await columnToggle.click({ force: true })
       }
     }
     await page.getByLabel('configure view').click()

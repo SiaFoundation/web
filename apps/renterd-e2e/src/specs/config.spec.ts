@@ -56,7 +56,7 @@ test('field change and save behaviours', async ({ page }) => {
     page
       .getByTestId('spendingEstimate')
       .locator('input[name=estimatedSpendingPerMonth-fiat]')
-  ).toHaveValue('$902')
+  ).toHaveValue('$901.87')
 
   await fillSelectInputByName(page, 'spendingEstimateMode', 'tb')
 
@@ -69,7 +69,7 @@ test('field change and save behaviours', async ({ page }) => {
     page
       .getByTestId('spendingEstimate')
       .locator('input[name=estimatedSpendingPerTBPerMonth-fiat]')
-  ).toHaveValue('$129')
+  ).toHaveValue('$128.84')
 })
 
 test('set max prices to fit current spending estimate', async ({ page }) => {
