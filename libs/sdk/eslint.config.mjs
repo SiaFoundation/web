@@ -5,6 +5,10 @@ export default [
   ...baseConfig,
   ...nx.configs['flat/react'],
   {
+    // Ignore the wasm_exec.js files
+    ignores: ['src/utils'],
+  },
+  {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     rules: {},
   },

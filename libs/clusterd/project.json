@@ -28,17 +28,6 @@
         ]
       },
       "configurations": {}
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/libs/clusterd"],
-      "options": {
-        "jestConfig": "libs/clusterd/jest.config.ts"
-      }
     }
   }
 }

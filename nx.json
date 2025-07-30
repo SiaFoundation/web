@@ -2,6 +2,21 @@
   "generators": {},
   "defaultProject": "walletd",
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "plugins": [
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    },
+    {
+      "plugin": "@nx/jest/plugin",
+      "options": {
+        "targetName": "test",
+        "passWithNoTests": true
+      }
+    }
+  ],
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"],
