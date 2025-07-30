@@ -37,7 +37,7 @@ require (
 	go.sia.tech/hostd/v2 v2.3.6-0.20250726204406-0dfdf3ac5070 // indirect
 	go.sia.tech/jape v0.14.0 // indirect
 	go.sia.tech/mux v1.4.0 // indirect
-	go.sia.tech/renterd/v2 v2.5.1-0.20250728115843-9f2dea475f03 // indirect
+	go.sia.tech/renterd/v2 v2.5.1-0.20250730091119-f7380a1bd894 // indirect
 	go.sia.tech/walletd/v2 v2.10.5-0.20250726183218-c57a90a66725 // indirect
 	go.uber.org/mock v0.5.2 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
