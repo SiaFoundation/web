@@ -48,7 +48,7 @@ runs:
         restore-keys: |
           ${{ runner.os }}-nx-
     - name: Install Nx globally
-      run: bun install -g nx@21.3.8
+      run: bun install -g nx@21.4.0-beta.3
       shell: bash
     - name: Install JavaScript dependencies
       run: bun install

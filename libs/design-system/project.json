@@ -43,17 +43,6 @@
         ]
       },
       "configurations": {}
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/libs/design-system"],
-      "options": {
-        "jestConfig": "libs/design-system/jest.config.ts"
-      }
     }
   }
 }

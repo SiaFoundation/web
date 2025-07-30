@@ -5,7 +5,7 @@ export default [
   ...nx.configs['flat/typescript'],
   ...nx.configs['flat/javascript'],
   {
-    ignores: ['node_modules', '**/dist', '**/.next', '**/.next-*'],
+    ignores: ['node_modules', '**/dist', '**/.next', '**/.next-*', '**/output'],
   },
   {
     files: ['**/*.json'],
