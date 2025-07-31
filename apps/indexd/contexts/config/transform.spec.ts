@@ -118,7 +118,7 @@ describe('tansforms', () => {
           foobar: 'value',
           maxEgressPrice: '200000000000000',
           maxIngressPrice: '300000000000000',
-          maxStoragePrice: '92592590000',
+          maxStoragePrice: '92592592593',
           minCollateral: '500000000000000000000000000',
           minProtocolVersion: [1, 7, 0],
         })
@@ -203,7 +203,7 @@ describe('tansforms', () => {
         periodBlocks.toNumber(),
       )
       expect(valuePerMonth).toEqual(
-        new BigNumber('92716244841034.3826578699340245152'),
+        new BigNumber('92716244841034.38265786993402450518378887952'),
       )
       const periodWeeks = new BigNumber(blocksToWeeks(periodBlocks.toNumber()))
       expect(
