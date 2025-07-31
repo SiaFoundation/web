@@ -19,7 +19,7 @@
     "@siafoundation/units": "^3.5.2",
     "@technically/lodash": "^4.17.0",
     "axios": "^1.10.0",
-    "bignumber.js": "^9.3.0",
+    "bignumber.js": "^9.3.1",
     "class-variance-authority": "^0.7.1",
     "cmdk": "0.2.1",
     "date-fns": "^2.30.0",

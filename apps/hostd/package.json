@@ -14,7 +14,7 @@
     "@siafoundation/types": "^0.12.2",
     "@siafoundation/units": "^3.5.2",
     "@technically/lodash": "^4.17.0",
-    "bignumber.js": "^9.0.2",
+    "bignumber.js": "^9.3.1",
     "class-variance-authority": "^0.7.0",
     "cmdk": "0.2.1",
     "date-fns": "^2.28.0",

@@ -12,7 +12,7 @@
     "react-hook-form": "^7.60.0",
     "react": "^19.1.0",
     "@siafoundation/types": "0.12.2",
-    "bignumber.js": "9.3.0",
+    "bignumber.js": "^9.3.1",
     "@siafoundation/react-core": "7.0.0",
     "use-local-storage-state": "19.5.0",
     "@siafoundation/indexd-react": "0.1.0",

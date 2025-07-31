@@ -14,6 +14,6 @@
     "@siafoundation/walletd-js": "^0.4.3",
     "@technically/lodash": "^4.17.0",
     "axios": "^1.10.0",
-    "bignumber.js": "^9.0.2"
+    "bignumber.js": "^9.3.1"
   }
 }

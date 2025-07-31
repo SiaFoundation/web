@@ -18,7 +18,7 @@
     "@siafoundation/walletd-react": "^4.5.4",
     "@siafoundation/walletd-types": "^0.7.3",
     "@technically/lodash": "^4.17.0",
-    "bignumber.js": "^9.3.0",
+    "bignumber.js": "^9.3.1",
     "blakejs": "^1.2.1",
     "class-variance-authority": "^0.7.1",
     "date-fns": "^2.30.0",
