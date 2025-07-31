@@ -54,9 +54,7 @@ export type AccountsParams = {
   limit?: number
 }
 export type AccountsPayload = void
-export type AccountsResponse = {
-  accounts: PublicKey[]
-}
+export type AccountsResponse = PublicKey[]
 
 export const accountRoute = '/account/:accountkey'
 export type AccountAddParams = {
