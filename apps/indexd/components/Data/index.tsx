@@ -3,6 +3,7 @@ import { HostsTab } from './Hosts/HostsTab'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 import { ContractsTab } from './Contracts/ContractsTab'
+import { AccountsTab } from './Accounts/AccountsTab'
 
 export function DataExplorer() {
   const params = useSearchParams()
@@ -22,6 +23,7 @@ export function DataExplorer() {
     <div className="w-full h-full overflow-hidden flex flex-col">
       {view === 'hosts' && <HostsTab />}
       {view === 'contracts' && <ContractsTab />}
+      {view === 'accounts' && <AccountsTab />}
     </div>
   )
 }
