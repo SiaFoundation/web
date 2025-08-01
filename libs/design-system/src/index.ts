@@ -120,6 +120,9 @@ export * from './app/TestnetWarningBanner'
 export * from './app/NextAppSsrAppRouter'
 export * from './app/NextAppCsr'
 export * from './app/HostMap'
+export * from './app/DataTable/DataTable'
+export * from './app/DataTable/useDataTable'
+export * from './app/DataTable/useDataTableParams'
 
 // form
 export * from './form/ConfigurationPanel'
