@@ -13,9 +13,9 @@ import {
   VmdkDisk16,
 } from '@siafoundation/react-icons'
 import {
-  getDownloadCost,
-  getStorageCost,
-  getUploadCost,
+  displayEgressPricePerTBPerMonth,
+  displayIngressPricePerTBPerMonth,
+  displayStoragePricePerTBPerMonth,
   humanBytes,
   sectorsToBytes,
 } from '@siafoundation/units'
@@ -43,13 +43,13 @@ export function HostListItem({ host, exchange, entity }: Props) {
   const storageCost = useMemo(
     () =>
       exchange.currency && exchange.rate ? (
-        getStorageCost({
+        displayStoragePricePerTBPerMonth({
           price: host.v2
             ? host.v2Settings.prices.storagePrice
             : host.settings.storageprice,
           exchange: {
             currency: { prefix: exchange.currency.prefix },
-            rate: exchange.rate.toString(),
+            rate: exchange.rate,
           },
         })
       ) : (
@@ -61,13 +61,13 @@ export function HostListItem({ host, exchange, entity }: Props) {
   const downloadCost = useMemo(
     () =>
       exchange.currency && exchange.rate ? (
-        getDownloadCost({
+        displayEgressPricePerTBPerMonth({
           price: host.v2
             ? host.v2Settings.prices.egressPrice
             : host.settings.downloadbandwidthprice,
           exchange: {
             currency: { prefix: exchange.currency.prefix },
-            rate: exchange.rate.toString(),
+            rate: exchange.rate,
           },
         })
       ) : (
@@ -79,13 +79,13 @@ export function HostListItem({ host, exchange, entity }: Props) {
   const uploadCost = useMemo(
     () =>
       exchange.currency && exchange.rate ? (
-        getUploadCost({
+        displayIngressPricePerTBPerMonth({
           price: host.v2
             ? host.v2Settings.prices.ingressPrice
             : host.settings.uploadbandwidthprice,
           exchange: {
             currency: { prefix: exchange.currency.prefix },
-            rate: exchange.rate.toString(),
+            rate: exchange.rate,
           },
         })
       ) : (

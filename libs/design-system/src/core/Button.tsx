@@ -133,6 +133,7 @@ export const buttonStyles = cva(
         hover:
           '[&>svg]:opacity-50 hover:[&>svg]:opacity-100 transition-opacity',
         subtle: '[&>svg]:opacity-50',
+        verySubtle: '[&>svg]:opacity-20',
       },
       // for overriding the text color, not used often
       color: {

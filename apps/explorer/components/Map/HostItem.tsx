@@ -4,7 +4,6 @@ import { useMemo } from 'react'
 import {
   Button,
   Text,
-  countryCodeEmoji,
   LinkButton,
   webLinks,
   useActiveSiascanExchangeRate,
@@ -13,7 +12,11 @@ import { cx } from 'class-variance-authority'
 import BigNumber from 'bignumber.js'
 import { ExplorerPartialHost } from './types'
 import { Launch16 } from '@siafoundation/react-icons'
-import { monthsToBlocks, TBToBytes } from '@siafoundation/units'
+import {
+  monthsToBlocks,
+  TBToBytes,
+  countryCodeEmoji,
+} from '@siafoundation/units'
 
 type Props = {
   host: ExplorerPartialHost
