@@ -285,6 +285,7 @@
         "bignumber.js": "^9.3.1",
         "class-variance-authority": "^0.7.1",
         "clipboard-polyfill": "^4.1.1",
+        "clsx": "^2.1.1",
         "d3-array": "^3.2.4",
         "formik": "^2.4.6",
         "html-to-image": "^1.11.13",
@@ -295,7 +296,9 @@
         "react-idle-timer": "^5.7.2",
         "react-number-format": "^5.4.4",
         "react-qr-code": "^2.0.18",
+        "react-simple-maps": "3.0.0",
         "sonner": "^2.0.6",
+        "tailwind-merge": "^3.3.1",
         "tailwind-scrollbar": "^2.1.0",
         "tailwindcss": "3.4.3",
         "tailwindcss-shadow-fill": "^1.0.1",
@@ -485,7 +488,6 @@
       "name": "@siafoundation/units",
       "version": "3.5.2",
       "dependencies": {
-        "@siafoundation/explored-types": "^0.19.2",
         "@siafoundation/types": "^0.12.2",
         "@technically/lodash": "^4.17.0",
         "bignumber.js": "^9.3.1",
@@ -4030,6 +4032,8 @@
     "sync-message-port": ["sync-message-port@1.1.3", "", {}, "sha512-GTt8rSKje5FilG+wEdfCkOcLL7LWqpMlr2c3LRuKt/YXxcJ52aGSbGBAdI4L3aaqfrBt6y711El53ItyH1NWzg=="],
 
     "synckit": ["synckit@0.11.11", "", { "dependencies": { "@pkgr/core": "^0.2.9" } }, "sha512-MeQTA1r0litLUf0Rp/iisCaL8761lKAZHaimlbGK4j0HysC4PLfqygQj9srcs0m2RdtDYnF8UuYyKpbjHYp7Jw=="],
+
+    "tailwind-merge": ["tailwind-merge@3.3.1", "", {}, "sha512-gBXpgUm/3rp1lMZZrM/w7D8GKqshif0zAymAhbCyIt8KMe+0v9DQ7cdYLR4FHH/cKpdTXb+A/tKKU3eolfsI+g=="],
 
     "tailwind-scrollbar": ["tailwind-scrollbar@2.1.0", "", { "peerDependencies": { "tailwindcss": "3.x" } }, "sha512-zpvY5mDs0130YzYjZKBiDaw32rygxk5RyJ4KmeHjGnwkvbjm/PszON1m4Bbt2DkMRIXlXsfNevykAESgURN4KA=="],
 

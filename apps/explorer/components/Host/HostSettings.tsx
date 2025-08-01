@@ -14,9 +14,9 @@ import {
   humanBytes,
   humanSiacoin,
   toSiacoins,
-  getDownloadCost,
-  getStorageCost,
-  getUploadCost,
+  displayEgressPricePerTBPerMonth,
+  displayIngressPricePerTBPerMonth,
+  displayStoragePricePerTBPerMonth,
   sectorsToBytes,
 } from '@siafoundation/units'
 import { ExplorerHost } from '@siafoundation/explored-types'
@@ -64,19 +64,19 @@ export function HostSettings({ host }: Props) {
         copyable: false,
         value:
           exchange.currency && exchange.rate ? (
-            `${getStorageCost({
+            `${displayStoragePricePerTBPerMonth({
               price: host.v2
                 ? host.v2Settings.prices.storagePrice
                 : host.settings.storageprice,
               exchange: {
                 currency: { prefix: exchange.currency.prefix },
-                rate: exchange.rate.toString(),
+                rate: exchange.rate,
               },
             })}/month`
           ) : (
             <LoadingCurrency type="perTBMonth" />
           ),
-        comment: `${getStorageCost({
+        comment: `${displayStoragePricePerTBPerMonth({
           price: host.v2
             ? host.v2Settings.prices.storagePrice
             : host.settings.storageprice,
@@ -87,19 +87,19 @@ export function HostSettings({ host }: Props) {
         copyable: false,
         value:
           exchange.currency && exchange.rate ? (
-            getDownloadCost({
+            displayEgressPricePerTBPerMonth({
               price: host.v2
                 ? host.v2Settings.prices.egressPrice
                 : host.settings.downloadbandwidthprice,
               exchange: {
                 currency: { prefix: exchange.currency.prefix },
-                rate: exchange.rate.toString(),
+                rate: exchange.rate,
               },
             })
           ) : (
             <LoadingCurrency type="perTB" />
           ),
-        comment: getDownloadCost({
+        comment: displayEgressPricePerTBPerMonth({
           price: host.v2
             ? host.v2Settings.prices.egressPrice
             : host.settings.downloadbandwidthprice,
@@ -110,19 +110,19 @@ export function HostSettings({ host }: Props) {
         copyable: false,
         value:
           exchange.currency && exchange.rate ? (
-            getUploadCost({
+            displayIngressPricePerTBPerMonth({
               price: host.v2
                 ? host.v2Settings.prices.ingressPrice
                 : host.settings.uploadbandwidthprice,
               exchange: {
                 currency: { prefix: exchange.currency.prefix },
-                rate: exchange.rate.toString(),
+                rate: exchange.rate,
               },
             })
           ) : (
             <LoadingCurrency type="perTB" />
           ),
-        comment: getUploadCost({
+        comment: displayIngressPricePerTBPerMonth({
           price: host.v2
             ? host.v2Settings.prices.ingressPrice
             : host.settings.uploadbandwidthprice,
@@ -133,19 +133,19 @@ export function HostSettings({ host }: Props) {
         copyable: false,
         value:
           exchange.currency && exchange.rate ? (
-            getStorageCost({
+            displayStoragePricePerTBPerMonth({
               price: host.v2
                 ? host.v2Settings.prices.collateral
                 : host.settings.collateral,
               exchange: {
                 currency: { prefix: exchange.currency.prefix },
-                rate: exchange.rate.toString(),
+                rate: exchange.rate,
               },
             })
           ) : (
             <LoadingCurrency type="perTB" />
           ),
-        comment: getStorageCost({
+        comment: displayStoragePricePerTBPerMonth({
           price: host.v2
             ? host.v2Settings.prices.collateral
             : host.settings.collateral,

@@ -1,8 +1,8 @@
 import { getOGImage } from '../../../../components/OGImageEntity'
 import {
-  getDownloadCost,
-  getStorageCost,
-  getUploadCost,
+  displayStoragePricePerTBPerMonth,
+  displayEgressPricePerTBPerMonth,
+  displayIngressPricePerTBPerMonth,
 } from '@siafoundation/units'
 import { truncate } from '@siafoundation/design-system'
 import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
@@ -49,37 +49,37 @@ export default async function Image({ params }: ExplorerPageProps) {
     const values = [
       {
         label: 'storage',
-        value: getStorageCost({
+        value: displayStoragePricePerTBPerMonth({
           price: host.v2
             ? host.v2Settings.prices.storagePrice
             : host.settings.storageprice,
           exchange: {
             currency,
-            rate: rate.toString(),
+            rate,
           },
         }),
       },
       {
         label: 'download',
-        value: getDownloadCost({
+        value: displayEgressPricePerTBPerMonth({
           price: host.v2
             ? host.v2Settings.prices.egressPrice
             : host.settings.downloadbandwidthprice,
           exchange: {
             currency,
-            rate: rate.toString(),
+            rate,
           },
         }),
       },
       {
         label: 'upload',
-        value: getUploadCost({
+        value: displayIngressPricePerTBPerMonth({
           price: host.v2
             ? host.v2Settings.prices.ingressPrice
             : host.settings.uploadbandwidthprice,
           exchange: {
             currency,
-            rate: rate.toString(),
+            rate,
           },
         }),
       },

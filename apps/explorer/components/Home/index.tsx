@@ -15,9 +15,9 @@ import { hashToAvatar } from '../../lib/avatar'
 import {
   humanBytes,
   humanNumber,
-  getDownloadCost,
-  getStorageCost,
-  getUploadCost,
+  displayEgressPricePerTBPerMonth,
+  displayIngressPricePerTBPerMonth,
+  displayStoragePricePerTBPerMonth,
 } from '@siafoundation/units'
 import { HostListItem } from './HostListItem'
 import {
@@ -151,13 +151,13 @@ export function Home({
                   color="contrast"
                 >
                   {exchange.currency && exchange.rate ? (
-                    getStorageCost({
+                    displayStoragePricePerTBPerMonth({
                       price: storagePrice,
                       exchange: {
                         currency: {
                           prefix: exchange.currency.prefix,
                         },
-                        rate: exchange.rate.toString(),
+                        rate: exchange.rate,
                       },
                     })
                   ) : (
@@ -165,7 +165,7 @@ export function Home({
                   )}
                 </Text>
                 <Text color="subtle">
-                  {getStorageCost({
+                  {displayStoragePricePerTBPerMonth({
                     price: storagePrice,
                   })}
                 </Text>
@@ -184,13 +184,13 @@ export function Home({
                   color="contrast"
                 >
                   {exchange.currency && exchange.rate ? (
-                    getDownloadCost({
+                    displayEgressPricePerTBPerMonth({
                       price: downloadPrice,
                       exchange: {
                         currency: {
                           prefix: exchange.currency.prefix,
                         },
-                        rate: exchange.rate.toString(),
+                        rate: exchange.rate,
                       },
                     })
                   ) : (
@@ -198,7 +198,7 @@ export function Home({
                   )}
                 </Text>
                 <Text color="subtle">
-                  {getDownloadCost({
+                  {displayEgressPricePerTBPerMonth({
                     price: downloadPrice,
                   })}
                 </Text>
@@ -217,13 +217,13 @@ export function Home({
                   color="contrast"
                 >
                   {exchange.currency && exchange.rate ? (
-                    getUploadCost({
+                    displayIngressPricePerTBPerMonth({
                       price: uploadPrice,
                       exchange: {
                         currency: {
                           prefix: exchange.currency.prefix,
                         },
-                        rate: exchange.rate.toString(),
+                        rate: exchange.rate,
                       },
                     })
                   ) : (
@@ -231,7 +231,7 @@ export function Home({
                   )}
                 </Text>
                 <Text color="subtle">
-                  {getUploadCost({
+                  {displayIngressPricePerTBPerMonth({
                     price: uploadPrice,
                   })}
                 </Text>

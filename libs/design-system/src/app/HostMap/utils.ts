@@ -1,24 +1,30 @@
+import { countryCodeEmoji } from '@siafoundation/units'
 import {
   monthsToBlocks,
   TBToBytes,
   humanBytes,
   humanSiacoin,
   sectorsToBytes,
-  countryCodeEmoji,
 } from '@siafoundation/units'
-import { HostDataWithLocation } from '../../../contexts/hosts/types'
 import BigNumber from 'bignumber.js'
 import { CurrencyOption } from '@siafoundation/react-core'
+import { HostMapHost } from './types'
 
 export function getHostLabel({
   host,
   currency,
   rate,
 }: {
-  host: HostDataWithLocation
+  host: HostMapHost
   currency?: CurrencyOption
   rate?: BigNumber
 }) {
+  if (host.type === 'group') {
+    return `${countryCodeEmoji(host.location.countryCode)} (${host.groupCount})`
+  }
+  if (!host.v2Settings) {
+    return null
+  }
   const storagePrice = host.v2Settings.prices.storagePrice
   const storageCost = rate
     ? `${currency?.prefix}${new BigNumber(storagePrice || 0)
@@ -34,12 +40,6 @@ export function getHostLabel({
         { fixed: 0 },
       )}/TB`
 
-  const usedStorage = `${humanBytes(
-    host.activeContracts
-      .reduce((acc, c) => acc.plus(c.size), new BigNumber(0))
-      .toNumber(),
-  )} utilized`
-
   const remainingStorage = sectorsToBytes(host.v2Settings.remainingStorage)
   const totalStorage = sectorsToBytes(host.v2Settings.totalStorage)
   const availableStorage = `${humanBytes(remainingStorage || 0)} / ${humanBytes(
@@ -50,5 +50,5 @@ export function getHostLabel({
     ? countryCodeEmoji(host.location.countryCode)
     : '🌍'
 
-  return `${cc} · ${storageCost} · ${usedStorage} · ${availableStorage}`
+  return `${cc} · ${storageCost} · ${availableStorage}`
 }
