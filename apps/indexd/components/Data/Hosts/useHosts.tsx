@@ -7,7 +7,7 @@ import {
   useIndexdState,
   useHosts as useIndexHosts,
 } from '@siafoundation/indexd-react'
-import { HostData } from './types'
+import { transformHost } from './transform'
 
 export function useHosts() {
   const state = useIndexdState()
@@ -39,14 +39,10 @@ export function useHosts() {
   const hosts = useMemo(
     () =>
       rawHosts.data?.map((host) => {
-        const datum: HostData = {
-          ...host,
-          id: host.publicKey,
-          usable: Object.values(host.usability).every((value) => value),
-          location: geo.data?.find((h) => h.publicKey === host.publicKey)
-            ?.location,
+        const datum = transformHost(host, {
+          geo: geo.data,
           exchange,
-        }
+        })
         return datum
       }) || [],
     [rawHosts.data, geo.data, exchange],
