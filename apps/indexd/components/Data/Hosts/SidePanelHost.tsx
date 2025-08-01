@@ -21,7 +21,7 @@ export function SidePanelHost() {
     [selectedId, hosts],
   )
   const mapHost = useMemo(() => {
-    if (!host || !host.location) return null
+    if (!host || host.location.countryCode === 'unknown') return null
     const hostData: HostMapHost = {
       id: host.id,
       publicKey: host.id,
