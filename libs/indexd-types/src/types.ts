@@ -76,6 +76,11 @@ export type Usability = {
   freeSectorPrice: boolean
 }
 
+export type HostAddress = {
+  protocol: 'siamux' | 'quic'
+  address: string
+}
+
 export type Host = {
   publicKey: PublicKey
   lastAnnouncement: string
@@ -84,7 +89,7 @@ export type Host = {
   nextScan: string
   consecutiveFailedScans: number
   recentUptime: number
-  addresses: string[]
+  addresses: HostAddress[]
   networks: string[]
   settings: V2HostSettings
   usability: Usability
