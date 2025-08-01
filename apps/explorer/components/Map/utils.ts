@@ -1,5 +1,5 @@
-import { countryCodeEmoji } from '@siafoundation/design-system'
 import {
+  countryCodeEmoji,
   monthsToBlocks,
   TBToBytes,
   humanBytes,

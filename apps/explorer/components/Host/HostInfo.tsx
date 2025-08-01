@@ -3,7 +3,6 @@ import {
   Text,
   Tooltip,
   ValueCopyable,
-  countryCodeEmoji,
 } from '@siafoundation/design-system'
 import { ExplorerHost } from '@siafoundation/explored-types'
 import {
@@ -12,7 +11,7 @@ import {
   Time16,
   WarningFilled16,
 } from '@siafoundation/react-icons'
-import { humanDate } from '@siafoundation/units'
+import { humanDate, countryCodeEmoji } from '@siafoundation/units'
 import { getHostNetAddress } from '../../lib/hostType'
 import { formatDistance } from 'date-fns'
 

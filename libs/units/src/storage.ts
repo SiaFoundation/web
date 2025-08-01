@@ -1,74 +1,101 @@
 import { TBToBytes } from './bytes'
 import BigNumber from 'bignumber.js'
 import { humanSiacoin, toSiacoins } from './currency'
-import { humanBytes } from './humanUnits'
 import { valuePerBytePerBlockToPerTBPerMonth } from './valuePer'
-import { ExplorerHost } from '@siafoundation/explored-types'
 import { sectorsToBytes } from './sectors'
+import { V2HostSettings } from '@siafoundation/types'
 
-type Hastings = string
-
-type Props = {
-  price: Hastings
-  exchange?: {
-    currency: {
-      prefix: string
-    }
-    rate: string
-  }
+export function storagePriceInHastingsPerTBPerMonth({
+  price,
+}: {
+  price: string
+}): BigNumber {
+  return valuePerBytePerBlockToPerTBPerMonth(new BigNumber(price))
 }
 
-export function getStorageCost({ price, exchange }: Props) {
-  return exchange
-    ? `${exchange.currency.prefix}${valuePerBytePerBlockToPerTBPerMonth(
-        toSiacoins(price),
-      )
-        .times(exchange.rate || 1)
-        .toFormat(2)}/TB`
-    : `${humanSiacoin(
-        valuePerBytePerBlockToPerTBPerMonth(new BigNumber(price)),
-        {
-          fixed: 3,
-        },
-      )}/TB`
+export function ingressPriceInHastingsPerTBPerMonth({
+  price,
+}: {
+  price: string
+}): BigNumber {
+  return new BigNumber(price).times(TBToBytes(1))
 }
 
-function hastingsPerByteToCurrencyPerTBFormatted({ price, exchange }: Props) {
+export function egressPriceInHastingsPerTBPerMonth({
+  price,
+}: {
+  price: string
+}): BigNumber {
+  return new BigNumber(price).times(TBToBytes(1))
+}
+
+export function displayAsCurrencyPerTB({
+  hastings,
+  exchange,
+  perMonth = false,
+}: {
+  hastings: BigNumber
+  exchange?: { currency: { prefix: string }; rate: BigNumber | string | number }
+  perMonth?: boolean
+}) {
   return exchange
-    ? `${exchange.currency.prefix}${toSiacoins(
-        new BigNumber(price).times(TBToBytes(1)),
-      )
+    ? `${exchange.currency.prefix}${toSiacoins(hastings)
         .times(exchange.rate || 1)
-        .toFormat(2)}/TB`
-    : `${humanSiacoin(new BigNumber(price).times(TBToBytes(1)), {
+        .toFormat(2)}/TB${perMonth ? '/month' : ''}`
+    : `${humanSiacoin(hastings, {
         fixed: 3,
-      })}/TB`
+      })}/TB${perMonth ? '/month' : ''}`
 }
 
-export function getDownloadCost({ price, exchange }: Props) {
-  return hastingsPerByteToCurrencyPerTBFormatted({ price, exchange })
+export function displayStoragePricePerTBPerMonth({
+  price,
+  exchange,
+}: {
+  price: string
+  exchange?: { currency: { prefix: string }; rate: BigNumber | string | number }
+}): string {
+  const hastings = storagePriceInHastingsPerTBPerMonth({ price })
+  return displayAsCurrencyPerTB({
+    hastings,
+    exchange,
+    perMonth: true,
+  })
 }
 
-export function getUploadCost({ price, exchange }: Props) {
-  return hastingsPerByteToCurrencyPerTBFormatted({ price, exchange })
+export function displayEgressPricePerTBPerMonth({
+  price,
+  exchange,
+}: {
+  price: string
+  exchange?: { currency: { prefix: string }; rate: BigNumber | string | number }
+}) {
+  const hastings = egressPriceInHastingsPerTBPerMonth({ price })
+  return displayAsCurrencyPerTB({
+    hastings,
+    exchange,
+  })
 }
 
-export function getRemainingOverTotalStorage(host: ExplorerHost) {
-  if (host.v2 === true) {
-    return `${humanBytes(
-      sectorsToBytes(host.v2Settings.remainingStorage),
-    )}/${humanBytes(sectorsToBytes(host.v2Settings.totalStorage))} remaining`
-  }
-  return `${humanBytes(host.settings.remainingstorage)}/${humanBytes(
-    host.settings.totalstorage,
-  )} remaining`
+export function displayIngressPricePerTBPerMonth({
+  price,
+  exchange,
+}: {
+  price: string
+  exchange?: { currency: { prefix: string }; rate: BigNumber | string | number }
+}) {
+  const hastings = ingressPriceInHastingsPerTBPerMonth({ price })
+  return displayAsCurrencyPerTB({
+    hastings,
+    exchange,
+  })
 }
 
-export function getRemainingStorage(host: ExplorerHost) {
-  if (host.v2 === true) {
-    return humanBytes(sectorsToBytes(host.v2Settings.remainingStorage))
-  }
-  return humanBytes(host.settings.remainingstorage)
+export function remainingStorageInBytes({
+  v2Settings,
+}: {
+  v2Settings: V2HostSettings
+}) {
+  return sectorsToBytes(v2Settings.remainingStorage)
 }
 
 export function getRedundancyMultiplier(
