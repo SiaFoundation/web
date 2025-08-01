@@ -19,11 +19,7 @@ import {
   ingressPriceInHastingsPerTBPerMonth,
 } from '@siafoundation/units'
 import { BigNumber } from 'bignumber.js'
-import {
-  UsabilityBadge,
-  UsabilityBadges,
-  UsabilityIndicator,
-} from '../UsabilityBadges'
+import { UsabilityBadges, UsabilityIndicator } from '../UsabilityBadges'
 import { CountryFilter } from '../CountryFilter'
 
 export const columns: ColumnDef<HostData>[] = [

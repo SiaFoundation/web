@@ -2,6 +2,7 @@ import { type DataView } from './Views'
 import { HostsTab } from './Hosts/HostsTab'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
+import { ContractsTab } from './Contracts/ContractsTab'
 
 export function DataExplorer() {
   const params = useSearchParams()
@@ -20,6 +21,7 @@ export function DataExplorer() {
   return (
     <div className="w-full h-full overflow-hidden flex flex-col">
       {view === 'hosts' && <HostsTab />}
+      {view === 'contracts' && <ContractsTab />}
     </div>
   )
 }
