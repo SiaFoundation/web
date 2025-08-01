@@ -13,9 +13,9 @@ import {
 } from '@siafoundation/react-icons'
 import { useMemo } from 'react'
 import {
-  getDownloadCost,
-  getStorageCost,
-  getUploadCost,
+  displayEgressPricePerTBPerMonth,
+  displayIngressPricePerTBPerMonth,
+  displayStoragePricePerTBPerMonth,
 } from '@siafoundation/units'
 import LoadingCurrency from '../LoadingCurrency'
 import { useExploredAddress } from '../../hooks/useExploredAddress'
@@ -37,13 +37,13 @@ export function HostPricing({ host }: Props) {
   const storageCost = useMemo(
     () =>
       exchange.currency && exchange.rate ? (
-        getStorageCost({
+        displayStoragePricePerTBPerMonth({
           price: host.v2
             ? host.v2Settings.prices.storagePrice
             : host.settings.storageprice,
           exchange: {
             currency: { prefix: exchange.currency.prefix },
-            rate: exchange.rate.toString(),
+            rate: exchange.rate,
           },
         })
       ) : (
@@ -55,13 +55,13 @@ export function HostPricing({ host }: Props) {
   const downloadCost = useMemo(
     () =>
       exchange.currency && exchange.rate ? (
-        getDownloadCost({
+        displayEgressPricePerTBPerMonth({
           price: host.v2
             ? host.v2Settings.prices.egressPrice
             : host.settings.downloadbandwidthprice,
           exchange: {
             currency: { prefix: exchange.currency.prefix },
-            rate: exchange.rate.toString(),
+            rate: exchange.rate,
           },
         })
       ) : (
@@ -73,13 +73,13 @@ export function HostPricing({ host }: Props) {
   const uploadCost = useMemo(
     () =>
       exchange.currency && exchange.rate ? (
-        getUploadCost({
+        displayIngressPricePerTBPerMonth({
           price: host.v2
             ? host.v2Settings.prices.ingressPrice
             : host.settings.uploadbandwidthprice,
           exchange: {
             currency: { prefix: exchange.currency.prefix },
-            rate: exchange.rate.toString(),
+            rate: exchange.rate,
           },
         })
       ) : (

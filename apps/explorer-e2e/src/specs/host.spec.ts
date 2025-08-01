@@ -4,9 +4,9 @@ import { Cluster, startCluster } from '../fixtures/cluster'
 import { teardownCluster } from '@siafoundation/clusterd'
 import { exploredStabilization } from '../helpers/exploredStabilization'
 import {
-  getDownloadCost,
-  getStorageCost,
-  getUploadCost,
+  displayEgressPricePerTBPerMonth,
+  displayIngressPricePerTBPerMonth,
+  displayStoragePricePerTBPerMonth,
 } from '@siafoundation/units'
 import { currencyOptions } from '@siafoundation/react-core'
 
@@ -58,25 +58,25 @@ test.describe('v2', () => {
     const { data: rate } = await cluster.daemons.explored.api.exchangeRate({
       params: { currency: usd?.id || 'usd' },
     })
-    const downloadCost = getDownloadCost({
+    const downloadCost = displayEgressPricePerTBPerMonth({
       price: egressPrice,
       exchange: {
         currency: { prefix: usd?.prefix || 'usd' },
-        rate: rate.toString(),
+        rate,
       },
     })
-    const uploadCost = getUploadCost({
+    const uploadCost = displayIngressPricePerTBPerMonth({
       price: ingressPrice,
       exchange: {
         currency: { prefix: usd?.prefix || 'usd' },
-        rate: rate.toString(),
+        rate,
       },
     })
-    const storageCost = getStorageCost({
+    const storageCost = displayStoragePricePerTBPerMonth({
       price: storagePrice,
       exchange: {
         currency: { prefix: usd?.prefix || 'usd' },
-        rate: rate.toString(),
+        rate,
       },
     })
 
@@ -133,25 +133,25 @@ test.describe('v1', () => {
     const { data: rate } = await cluster.daemons.explored.api.exchangeRate({
       params: { currency: usd?.id || 'usd' },
     })
-    const downloadCost = getDownloadCost({
+    const downloadCost = displayEgressPricePerTBPerMonth({
       price: egressPrice,
       exchange: {
         currency: { prefix: usd?.prefix || 'usd' },
-        rate: rate.toString(),
+        rate,
       },
     })
-    const uploadCost = getUploadCost({
+    const uploadCost = displayIngressPricePerTBPerMonth({
       price: ingressPrice,
       exchange: {
         currency: { prefix: usd?.prefix || 'usd' },
-        rate: rate.toString(),
+        rate,
       },
     })
-    const storageCost = getStorageCost({
+    const storageCost = displayStoragePricePerTBPerMonth({
       price: storagePrice,
       exchange: {
         currency: { prefix: usd?.prefix || 'usd' },
-        rate: rate.toString(),
+        rate,
       },
     })
 

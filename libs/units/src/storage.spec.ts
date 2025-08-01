@@ -1,22 +1,35 @@
-import { getDownloadCost, getStorageCost, getUploadCost } from './storage'
+import BigNumber from 'bignumber.js'
+import {
+  displayStoragePricePerTBPerMonth,
+  displayEgressPricePerTBPerMonth,
+  displayIngressPricePerTBPerMonth,
+} from './storage'
 
 test('storage', () => {
-  expect(getStorageCost({ price: (1e9).toString() })).toEqual('4.320 SC/TB')
+  expect(
+    displayStoragePricePerTBPerMonth({
+      price: '1e9',
+    }),
+  ).toEqual('4.320 SC/TB/month')
 })
 
 test('storage fiat', () => {
   expect(
-    getStorageCost({
-      exchange: { currency: { prefix: '$' }, rate: '2' },
-      price: (1e9).toString(),
+    displayStoragePricePerTBPerMonth({
+      price: '1e9',
+      exchange: { currency: { prefix: '$' }, rate: new BigNumber(2) },
     }),
-  ).toEqual('$8.64/TB')
+  ).toEqual('$8.64/TB/month')
 })
 
 test('download', () => {
-  expect(getDownloadCost({ price: (1e9).toString() })).toEqual('1.000 mS/TB')
+  expect(displayEgressPricePerTBPerMonth({ price: '1e9' })).toEqual(
+    '1.000 mS/TB',
+  )
 })
 
 test('upload', () => {
-  expect(getUploadCost({ price: (1e9).toString() })).toEqual('1.000 mS/TB')
+  expect(displayIngressPricePerTBPerMonth({ price: '1e9' })).toEqual(
+    '1.000 mS/TB',
+  )
 })

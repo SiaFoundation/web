@@ -5,7 +5,6 @@
   "license": "MIT",
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@siafoundation/explored-types": "^0.19.2",
     "@siafoundation/types": "^0.12.2",
     "@technically/lodash": "^4.17.0",
     "bignumber.js": "^9.3.1",
