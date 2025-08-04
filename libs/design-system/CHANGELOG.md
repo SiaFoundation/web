@@ -1,5 +1,22 @@
 # Changelog
 
+## 10.1.0
+
+### Minor Changes
+
+- 0217a18: Added cn tailwind class merging helper.
+- 0217a18: ValueCopyable now shows the display value as hover title.
+- 0217a18: Added CountryFlag.
+- 07514b1: Added TanStack-based DataTable.
+- 0217a18: Added HostMap.
+- 0217a18: Added verySubtle variant to icon Button.
+
+### Patch Changes
+
+- Updated dependencies [0217a18]
+- Updated dependencies [0217a18]
+  - @siafoundation/units@3.6.0
+
 ## 10.0.0
 
 ### Major Changes

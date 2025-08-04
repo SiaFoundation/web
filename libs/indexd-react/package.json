@@ -1,13 +1,13 @@
 {
   "name": "@siafoundation/indexd-react",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React hooks for interacting with `indexd`.",
   "license": "MIT",
   "types": "./src/index.d.ts",
   "dependencies": {
     "@siafoundation/indexd-types": "0.1.0",
     "@siafoundation/react-core": "^7.0.0",
-    "@siafoundation/units": "3.5.2",
+    "@siafoundation/units": "3.6.0",
     "swr": "^2.1.1"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@siafoundation/design-system",
-  "version": "10.0.0",
+  "version": "10.1.0",
   "description": "React-based design system used across Sia apps.",
   "license": "MIT",
   "types": "./src/index.d.ts",
@@ -27,7 +27,7 @@
     "@siafoundation/react-core": "^7.0.0",
     "@siafoundation/react-icons": "^0.3.2",
     "@siafoundation/types": "^0.12.2",
-    "@siafoundation/units": "^3.5.2",
+    "@siafoundation/units": "^3.6.0",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tanstack/react-table": "^8.21.3",
     "@tanstack/react-virtual": "^3.13.12",

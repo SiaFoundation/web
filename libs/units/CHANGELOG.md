@@ -1,5 +1,12 @@
 # @siafoundation/units
 
+## 3.6.0
+
+### Minor Changes
+
+- 0217a18: Added country code helpers.
+- 0217a18: Storage helpers refactored for v2-only and modular usage.
+
 ## 3.5.2
 
 ### Patch Changes
