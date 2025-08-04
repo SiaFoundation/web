@@ -1,5 +1,28 @@
 # indexd
 
+## 0.1.0
+
+### Minor Changes
+
+- 4a76bb7: The app now has a contract explorer with contract and related host metadata.
+- fb5af96: The location column now supports filtering by country.
+- fb5af96: The host explorer table can now be sorted by any column.
+- 24e032b: The app now has a host explorer with host metadata, usability, blocklist, pricing, and geolocation features.
+
+### Patch Changes
+
+- Updated dependencies [0217a18]
+- Updated dependencies [0217a18]
+- Updated dependencies [0217a18]
+- Updated dependencies [07514b1]
+- Updated dependencies [0217a18]
+- Updated dependencies [0217a18]
+- Updated dependencies [0217a18]
+- Updated dependencies [0217a18]
+  - @siafoundation/design-system@10.1.0
+  - @siafoundation/units@3.6.0
+  - @siafoundation/indexd-react@0.1.1
+
 ## 0.0.1
 
 ### Patch Changes
