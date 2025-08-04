@@ -23,7 +23,7 @@
     "@radix-ui/react-tabs": "^1.1.12",
     "@radix-ui/react-tooltip": "^1.2.7",
     "@radix-ui/react-visually-hidden": "^1.2.3",
-    "@react-spring/web": "^9.7.5",
+    "@react-spring/web": "^10.0.1",
     "@siafoundation/react-core": "^7.0.0",
     "@siafoundation/react-icons": "^0.3.2",
     "@siafoundation/types": "^0.12.2",
