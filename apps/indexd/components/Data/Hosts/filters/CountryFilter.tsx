@@ -3,7 +3,7 @@ import { countryCodeEmoji, getCountryName } from '@siafoundation/units'
 import { Table } from '@tanstack/react-table'
 import { useMemo } from 'react'
 
-interface CountryFilterProps<T extends { location?: { countryCode: string } }> {
+type CountryFilterProps<T extends { location?: { countryCode: string } }> = {
   table: Table<T>
 }
 
@@ -39,6 +39,7 @@ export function CountryFilter<
   return (
     <div className="flex flex-col gap-1">
       <Select
+        aria-label="country filter"
         value={filterValue || ''}
         onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
           const value = e.target.value

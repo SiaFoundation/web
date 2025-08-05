@@ -9,6 +9,23 @@ import {
 import BigNumber from 'bignumber.js'
 import { CurrencyOption } from '@siafoundation/react-core'
 import { HostMapHost } from './types'
+import { colors } from '../../lib/colors'
+
+export function getHostColor(h: HostMapHost) {
+  if (h.type === 'group') {
+    return {
+      colorHex: colors.blue[600],
+    }
+  }
+  if (h.usable) {
+    return {
+      colorHex: colors.green[600],
+    }
+  }
+  return {
+    colorHex: colors.red[600],
+  }
+}
 
 export function getHostLabel({
   host,

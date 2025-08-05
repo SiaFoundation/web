@@ -6,7 +6,6 @@ import {
 import { useCallback } from 'react'
 import { contractsColumns } from './contractsColumns'
 import { DataViewSelect, type DataView } from '../Views'
-import { SidePanel } from '../SidePanel'
 import { SidePanelContract } from './SidePanelContract'
 import { SidePanelContractList } from './SidePanelContractList'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -68,16 +67,9 @@ export function ContractsTab() {
         </div>
         <div className="py-4 pr-4">
           {selectedId ? (
-            <SidePanel showCloseButton onClose={() => setSelectedId(undefined)}>
-              <SidePanelContract />
-            </SidePanel>
+            <SidePanelContract />
           ) : (
-            <SidePanel
-              showCloseButton={false}
-              onClose={() => setSelectedId(undefined)}
-            >
-              <SidePanelContractList contracts={table.rows} />
-            </SidePanel>
+            <SidePanelContractList table={table} />
           )}
         </div>
       </div>

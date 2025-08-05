@@ -1,4 +1,3 @@
-import { SidePanel } from '../SidePanel'
 import {
   DataTable,
   useDataTable,
@@ -65,18 +64,7 @@ export function HostsTab() {
           />
         </div>
         <div className="py-4 pr-4">
-          {selectedId ? (
-            <SidePanel showCloseButton onClose={() => setSelectedId(undefined)}>
-              <SidePanelHost />
-            </SidePanel>
-          ) : (
-            <SidePanel
-              showCloseButton={false}
-              onClose={() => setSelectedId(undefined)}
-            >
-              <SidePanelHostList hosts={table.rows} />
-            </SidePanel>
-          )}
+          {selectedId ? <SidePanelHost /> : <SidePanelHostList table={table} />}
         </div>
       </div>
     </div>

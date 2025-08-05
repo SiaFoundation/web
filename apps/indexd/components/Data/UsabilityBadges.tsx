@@ -85,7 +85,7 @@ export function UsabilityIndicator({
   const tip = useMemo(
     () => ({
       usable: `${name} is usable`,
-      warning: `${name} is almost usable`,
+      warning: `${name} is almost unusable`,
       unusable: `${name} is unusable`,
     }),
     [name],

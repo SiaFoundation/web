@@ -14,11 +14,13 @@ import {
   getFacetedUniqueValues,
   SortingState,
   getSortedRowModel,
+  RowSelectionState,
+  Row,
 } from '@tanstack/react-table'
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { useCallback, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-interface DataTableProps<T extends { id: string }> {
+type DataTableProps<T extends { id: string }> = {
   columns: ColumnDef<T>[]
   data: T[]
   fixedFilters?: ColumnFiltersState
@@ -32,6 +34,10 @@ interface DataTableProps<T extends { id: string }> {
   setLimit: (limit: number) => void
   onRowClick?: (id: string) => void
 }
+
+export type DataTableState<T extends { id: string }> = ReturnType<
+  typeof useDataTable<T>
+>
 
 export function useDataTable<T extends { id: string }>({
   columns,
@@ -77,6 +83,8 @@ export function useDataTable<T extends { id: string }>({
     [pagination, setOffset, setLimit, limit, offset],
   )
 
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
+
   const table = useReactTable({
     data,
     columns,
@@ -89,7 +97,10 @@ export function useDataTable<T extends { id: string }>({
       pagination,
       columnFilters,
       sorting: columnSorts,
+      rowSelection,
     },
+    getRowId: (row) => row.id,
+    onRowSelectionChange: setRowSelection,
     onPaginationChange: handlePaginationChange,
     onColumnFiltersChange: setColumnFilters,
     onSortingChange: setColumnSorts,
@@ -116,14 +127,34 @@ export function useDataTable<T extends { id: string }>({
   const virtualRows = rowVirtualizer.getVirtualItems()
   const totalSize = rowVirtualizer.getTotalSize()
 
+  const isSelection = useMemo(
+    () => Object.keys(rowSelection).length > 0,
+    [rowSelection],
+  )
+
+  const isFiltered = useMemo(() => columnFilters.length > 0, [columnFilters])
+
+  const [selectedRows, setSelectedRows] = useState<Row<T>[]>([])
+
+  useEffect(() => {
+    setSelectedRows(table.getSelectedRowModel().rows)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rowSelection])
+
   return {
+    data,
     tableContainerRef,
     table,
     rowVirtualizer,
     rows,
+    selectedRows,
     virtualRows,
     totalSize,
     pagination,
+    rowSelection,
+    isSelection,
+    isFiltered,
+    setRowSelection,
     handlePaginationChange,
     columnFilters,
     fixedFilters,
