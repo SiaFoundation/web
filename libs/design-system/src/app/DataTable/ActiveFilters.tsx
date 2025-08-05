@@ -1,7 +1,6 @@
 'use client'
 
 import { Button } from '../../core/Button'
-import { ControlGroup } from '../../core/ControlGroup'
 import { countryCodeEmoji, getCountryName } from '@siafoundation/units'
 import { truncate } from '../../lib/utils'
 import { Close16, Filter20 } from '@siafoundation/react-icons'
@@ -68,6 +67,22 @@ export function ActiveFilters<T>({
     return truncate(String(value), 20)
   }
 
+  const getBooleanDisplayLabel = (columnId: string, value: boolean): string => {
+    const columnName = getColumnDisplayName(columnId)
+
+    // Default boolean display
+    return value ? columnName : `Not ${columnName}`
+  }
+
+  const getDisplayLabel = (columnId: string, value: unknown): string => {
+    const columnName = getColumnDisplayName(columnId)
+    return `${columnName} is ${getValueDisplayName(columnId, value)}`
+  }
+
+  const isBooleanFilter = (value: unknown): value is boolean => {
+    return typeof value === 'boolean'
+  }
+
   const clearFilter = (columnId: string) => {
     const column = table.getColumn(columnId)
     column?.setFilterValue(undefined)
@@ -84,29 +99,28 @@ export function ActiveFilters<T>({
       </Button>
       {heading}
       <div className="flex items-center gap-2 flex-wrap">
-        {columnFilters.map((filter) => (
-          <ControlGroup key={filter.id}>
-            <Button variant="gray" size="small">
-              {getColumnDisplayName(filter.id)}
+        {columnFilters.map((filter) => {
+          const isFixed = fixedFilters?.find((f) => f.id === filter.id)
+
+          return (
+            <Button
+              key={filter.id}
+              variant="gray"
+              size="small"
+              onClick={isFixed ? undefined : () => clearFilter(filter.id)}
+              className={
+                isFixed
+                  ? undefined
+                  : 'hover:bg-red-100 dark:hover:bg-red-900/30 hover:text-red-700 dark:hover:text-red-300'
+              }
+            >
+              {isBooleanFilter(filter.value)
+                ? getBooleanDisplayLabel(filter.id, filter.value)
+                : getDisplayLabel(filter.id, filter.value)}
+              {!isFixed && <Close16 className="ml-1 h-3 w-3" />}
             </Button>
-            <Button variant="gray" size="small">
-              is
-            </Button>
-            <Button variant="gray" size="small">
-              {getValueDisplayName(filter.id, filter.value)}
-            </Button>
-            {fixedFilters?.find((f) => f.id === filter.id) ? null : (
-              <Button
-                variant="gray"
-                size="small"
-                onClick={() => clearFilter(filter.id)}
-                className="hover:bg-red-100 dark:hover:bg-red-900/30 hover:text-red-700 dark:hover:text-red-300"
-              >
-                <Close16 className="h-3 w-3" />
-              </Button>
-            )}
-          </ControlGroup>
-        ))}
+          )
+        })}
 
         {columnFilters.length > 1 &&
           columnFilters.length > (fixedFilters?.length ?? 0) && (

@@ -1,19 +1,20 @@
 import {
-  Heading,
   HostMap,
-  Separator,
   Text,
+  truncate,
   ValueCopyable,
 } from '@siafoundation/design-system'
 import { useDataTableParams } from '@siafoundation/design-system'
 import { useMemo } from 'react'
-import { useContracts } from './useContracts'
 import { UsabilityBadges } from '../UsabilityBadges'
 import { StateBadge, StatusBadge } from './contractsColumns'
 import { InfoRow } from '../InfoRow'
+import { SidePanel } from '../SidePanel'
+import { SidePanelSection } from '../SidePanelSection'
+import { useContracts } from './useContracts'
 
 export function SidePanelContract() {
-  const { selectedId } = useDataTableParams('contractList')
+  const { selectedId, setSelectedId } = useDataTableParams('contractList')
   const contracts = useContracts()
   const contract = useMemo(
     () => contracts.find((c) => c.id === selectedId),
@@ -37,50 +38,53 @@ export function SidePanelContract() {
     )
   }
   return (
-    <div className="flex flex-col overflow-hidden">
-      <Heading size="24" className="mr-[50px] truncate">
-        Contract: {contract?.id}
-      </Heading>
+    <SidePanel
+      onClose={() => setSelectedId(undefined)}
+      heading={
+        <Text size="18" weight="medium" ellipsis>
+          Contract: {truncate(contract?.id, 24)}
+        </Text>
+      }
+    >
       <HostMap
         hosts={mapContract ? [mapContract] : []}
         activeHost={null}
         onHostMapClick={() => null}
-        showLegend={false}
         scale={180}
+        mapClassName="-mt-[20px]"
       />
-      <Separator className="mb-2" />
-      <Text size="16" weight="medium" className="mb-2">
-        Info
-      </Text>
-      <div className="flex flex-col gap-2">
-        <InfoRow label="State" value={<StateBadge value={contract.state} />} />
-        <InfoRow
-          label="Status"
-          value={<StatusBadge value={contract.good ? 'Good' : 'Bad'} />}
-        />
-        <InfoRow
-          label="Host public key"
-          value={
-            <ValueCopyable value={contract.hostKey} type="hostPublicKey" />
-          }
-        />
-        {contract.host?.addresses.map((address) => (
+      <SidePanelSection heading="Info">
+        <div className="flex flex-col gap-2">
           <InfoRow
-            key={address.address}
-            label={address.protocol}
-            value={<ValueCopyable value={address.address} maxLength={24} />}
+            label="State"
+            value={<StateBadge value={contract.state} />}
           />
-        ))}
-      </div>
-      <Separator className="mt-4 mb-2" />
-      <Text size="16" weight="medium" className="mb-2">
-        Usability
-      </Text>
-      <UsabilityBadges
-        usable={contract.host?.usable || false}
-        usability={contract.host?.usability}
-        className="w-full overflow-hidden flex-wrap"
-      />
-    </div>
+          <InfoRow
+            label="Status"
+            value={<StatusBadge variant={contract.good ? 'good' : 'bad'} />}
+          />
+          <InfoRow
+            label="Host public key"
+            value={
+              <ValueCopyable value={contract.hostKey} type="hostPublicKey" />
+            }
+          />
+          {contract.host?.addresses.map((address) => (
+            <InfoRow
+              key={address.address + address.protocol}
+              label={address.protocol}
+              value={<ValueCopyable value={address.address} maxLength={24} />}
+            />
+          ))}
+        </div>
+      </SidePanelSection>
+      <SidePanelSection heading="Usability">
+        <UsabilityBadges
+          usable={contract.host?.usable || false}
+          usability={contract.host?.usability}
+          className="w-full overflow-hidden flex-wrap"
+        />
+      </SidePanelSection>
+    </SidePanel>
   )
 }

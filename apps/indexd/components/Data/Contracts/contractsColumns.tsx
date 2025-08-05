@@ -13,8 +13,10 @@ import { humanBytes } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import { UsabilityBadges } from '../UsabilityBadges'
 import { CheckmarkFilled16, CloseFilled16 } from '@siafoundation/react-icons'
+import { selectColumn } from '../sharedColumns/select'
 
 export const contractsColumns: ColumnDef<ContractData>[] = [
+  selectColumn(),
   {
     id: 'id',
     header: ({ table, column }) => (
@@ -37,7 +39,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     ),
     accessorKey: 'good',
     cell: ({ getValue }) => (
-      <StatusBadge value={getValue<boolean>() ? 'Good' : 'Bad'} />
+      <StatusBadge variant={getValue<boolean>() ? 'good' : 'bad'} />
     ),
     meta: { className: 'justify-end', width: 80 },
   },
@@ -511,10 +513,10 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
   },
 ]
 
-export function StatusBadge({ value }: { value: string }) {
+export function StatusBadge({ variant }: { variant: 'good' | 'bad' }) {
   return (
-    <Badge size="small" variant={value === 'active' ? 'green' : 'red'}>
-      {value}
+    <Badge size="small" variant={variant === 'good' ? 'green' : 'red'}>
+      {variant === 'good' ? 'Good' : 'Bad'}
     </Badge>
   )
 }

@@ -5,6 +5,7 @@ import {
   ValueCopyable,
   CountryFlag,
   ValueScFiat,
+  Badge,
 } from '@siafoundation/design-system'
 import { CheckmarkFilled16, CloseFilled16 } from '@siafoundation/react-icons'
 import { HostData } from './types'
@@ -20,9 +21,13 @@ import {
 } from '@siafoundation/units'
 import { BigNumber } from 'bignumber.js'
 import { UsabilityBadges, UsabilityIndicator } from '../UsabilityBadges'
-import { CountryFilter } from '../CountryFilter'
+import { CountryFilter } from './filters/CountryFilter'
+import { UsableFilter } from './filters/UsableFilter'
+import { BlockedFilter } from './filters/BlockedFilter'
+import { selectColumn } from '../sharedColumns/select'
 
 export const columns: ColumnDef<HostData>[] = [
+  selectColumn(),
   {
     id: 'publicKey',
     header: ({ table, column }) => (
@@ -39,7 +44,12 @@ export const columns: ColumnDef<HostData>[] = [
   {
     id: 'usable',
     header: ({ table, column }) => (
-      <TableHeader table={table} column={column} className="justify-start">
+      <TableHeader
+        table={table}
+        column={column}
+        className="justify-start"
+        filter={<UsableFilter table={table} />}
+      >
         Usable
       </TableHeader>
     ),
@@ -72,7 +82,12 @@ export const columns: ColumnDef<HostData>[] = [
   {
     id: 'blocked',
     header: ({ table, column }) => (
-      <TableHeader table={table} column={column} className="justify-start">
+      <TableHeader
+        table={table}
+        column={column}
+        className="justify-start"
+        filter={<BlockedFilter table={table} />}
+      >
         Blocked
       </TableHeader>
     ),
@@ -80,27 +95,32 @@ export const columns: ColumnDef<HostData>[] = [
     cell: ({ row }) => {
       const isBlocked = row.original.blocked
       return (
-        <div className="flex justify-end">
+        <div className="flex items-center">
           <Tooltip
             content={isBlocked ? 'host is blocked' : 'host is not blocked'}
           >
             {isBlocked ? (
               <CloseFilled16 className="text-red-500" />
             ) : (
-              <CheckmarkFilled16 className="text-neutral-500" />
+              <CheckmarkFilled16 className="text-neutral-300 dark:text-neutral-500" />
             )}
           </Tooltip>
+          {isBlocked && (
+            <Badge size="small" className="ml-1">
+              {row.original.blockedReason}
+            </Badge>
+          )}
         </div>
       )
     },
     meta: {
-      className: 'justify-end',
+      className: 'justify-start',
     },
   },
   {
     id: 'acceptingContracts',
     header: ({ table, column }) => (
-      <TableHeader table={table} column={column} className="justify-start">
+      <TableHeader table={table} column={column}>
         Accepting Contracts
       </TableHeader>
     ),
@@ -120,7 +140,7 @@ export const columns: ColumnDef<HostData>[] = [
   {
     id: 'uptime',
     header: ({ table, column }) => (
-      <TableHeader table={table} column={column} className="justify-start">
+      <TableHeader table={table} column={column}>
         Uptime
       </TableHeader>
     ),
@@ -168,7 +188,7 @@ export const columns: ColumnDef<HostData>[] = [
   {
     id: 'totalStorage',
     header: ({ table, column }) => (
-      <TableHeader table={table} column={column} className="justify-start">
+      <TableHeader table={table} column={column}>
         Total Storage
       </TableHeader>
     ),
@@ -181,7 +201,7 @@ export const columns: ColumnDef<HostData>[] = [
   {
     id: 'remainingStorage',
     header: ({ table, column }) => (
-      <TableHeader table={table} column={column} className="justify-start">
+      <TableHeader table={table} column={column}>
         Remaining Storage
       </TableHeader>
     ),
@@ -210,7 +230,7 @@ export const columns: ColumnDef<HostData>[] = [
   {
     id: 'storagePrice',
     header: ({ table, column }) => (
-      <TableHeader table={table} column={column} className="justify-start">
+      <TableHeader table={table} column={column}>
         Price Storage
       </TableHeader>
     ),
@@ -242,7 +262,7 @@ export const columns: ColumnDef<HostData>[] = [
   {
     id: 'ingressPrice',
     header: ({ table, column }) => (
-      <TableHeader table={table} column={column} className="justify-start">
+      <TableHeader table={table} column={column}>
         Ingress/TB
       </TableHeader>
     ),
@@ -274,7 +294,7 @@ export const columns: ColumnDef<HostData>[] = [
   {
     id: 'egressPrice',
     header: ({ table, column }) => (
-      <TableHeader table={table} column={column} className="justify-start">
+      <TableHeader table={table} column={column}>
         Egress/TB
       </TableHeader>
     ),
@@ -304,7 +324,7 @@ export const columns: ColumnDef<HostData>[] = [
   {
     id: 'freeSectorPrice',
     header: ({ table, column }) => (
-      <TableHeader table={table} column={column} className="justify-start">
+      <TableHeader table={table} column={column}>
         Free Sector Price
       </TableHeader>
     ),
@@ -335,7 +355,7 @@ export const columns: ColumnDef<HostData>[] = [
   {
     id: 'maxContractDuration',
     header: ({ table, column }) => (
-      <TableHeader table={table} column={column} className="justify-start">
+      <TableHeader table={table} column={column}>
         Max Contract Duration
       </TableHeader>
     ),
@@ -356,7 +376,7 @@ export const columns: ColumnDef<HostData>[] = [
   {
     id: 'maxCollateral',
     header: ({ table, column }) => (
-      <TableHeader table={table} column={column} className="justify-start">
+      <TableHeader table={table} column={column}>
         Max Collateral
       </TableHeader>
     ),
@@ -384,7 +404,7 @@ export const columns: ColumnDef<HostData>[] = [
   {
     id: 'protocolVersion',
     header: ({ table, column }) => (
-      <TableHeader table={table} column={column} className="justify-start">
+      <TableHeader table={table} column={column}>
         Protocol Version
       </TableHeader>
     ),
@@ -405,7 +425,7 @@ export const columns: ColumnDef<HostData>[] = [
   {
     id: 'priceValidity',
     header: ({ table, column }) => (
-      <TableHeader table={table} column={column} className="justify-start">
+      <TableHeader table={table} column={column}>
         Price Validity
       </TableHeader>
     ),
@@ -424,7 +444,7 @@ export const columns: ColumnDef<HostData>[] = [
   {
     id: 'release',
     header: ({ table, column }) => (
-      <TableHeader table={table} column={column} className="justify-start">
+      <TableHeader table={table} column={column}>
         Release
       </TableHeader>
     ),

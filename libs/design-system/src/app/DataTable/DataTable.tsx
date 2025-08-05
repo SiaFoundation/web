@@ -60,7 +60,7 @@ export function DataTable<T extends { id: string }>({
         className,
       )}
     >
-      <div className="z-10 flex items-center justify-between gap-4 bg-graydark-200 py-2 px-4 border-b border-gray-200 dark:border-graydark-400">
+      <div className="z-10 flex items-center justify-between gap-4 bg-white dark:bg-graydark-200 py-2 px-1.5 border-b border-gray-200 dark:border-graydark-400">
         <ActiveFilters
           fixedFilters={fixedFilters}
           table={table}
@@ -72,23 +72,24 @@ export function DataTable<T extends { id: string }>({
         <ScrollArea ref={tableContainerRef} className="relative">
           <div className="min-w-fit">
             <table className="text-sm" style={{ display: 'grid' }}>
-              <thead className="sticky top-0 z-10 bg-graydark-200 border-b border-gray-100/60 dark:border-graydark-300">
+              <thead className="sticky top-0 z-10 bg-white dark:bg-graydark-200 border-b border-gray-100 dark:border-graydark-300">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr
                     key={headerGroup.id}
                     style={{ display: 'flex', width: '100%' }}
                   >
                     {headerGroup.headers.map((header) => {
-                      const { width = defaultWidth, className } = header.column
-                        .columnDef.meta as {
+                      const meta = (header.column.columnDef.meta ?? {}) as {
                         width?: number
                         className?: string
+                        onClick?: (e: React.MouseEvent<HTMLElement>) => void
                       }
+                      const { width = defaultWidth, className } = meta
                       return (
                         <th
                           key={header.id}
                           className={cx(
-                            'px-2 py-2 overflow-hidden border-r border-gray-100/60 dark:border-graydark-300/20',
+                            'px-2 py-2 overflow-hidden border-r border-gray-50/50 dark:border-graydark-300/20',
                             className,
                           )}
                           style={{
@@ -131,23 +132,33 @@ export function DataTable<T extends { id: string }>({
                         selectedRowId === row.original.id
                           ? 'bg-blue-50 dark:bg-blue-900/30'
                           : 'hover:bg-blue-100 dark:hover:bg-blue-900/40',
-                        'border-b border-gray-100 dark:border-graydark-300',
+                        'border-b border-gray-50 dark:border-graydark-300',
                       )}
                       onClick={() => onRowClick?.(row.original.id)}
                     >
                       {row.getVisibleCells().map((cell) => {
-                        const { width = defaultWidth, className } = cell.column
-                          .columnDef.meta as {
+                        const meta = (cell.column.columnDef.meta ?? {}) as {
                           width?: number
                           className?: string
+                          stopPropagation?: boolean
                         }
+                        const {
+                          width = defaultWidth,
+                          className,
+                          stopPropagation,
+                        } = meta
                         return (
                           <td
                             key={cell.id}
+                            onClick={(e) => {
+                              if (stopPropagation) {
+                                e.stopPropagation()
+                              }
+                            }}
                             className={cx(
                               'relative overflow-hidden whitespace-nowrap text-ellipsis px-2 py-1',
                               'flex items-center',
-                              'border-r border-gray-100 dark:border-graydark-300/20',
+                              'border-r border-gray-50/50 dark:border-graydark-300/20',
                               className,
                             )}
                             style={{
@@ -169,7 +180,7 @@ export function DataTable<T extends { id: string }>({
           </div>
         </ScrollArea>
       </div>
-      <div className="z-10 flex items-center justify-end gap-4 bg-graydark-200 py-2 px-4 border-t border-gray-200 dark:border-graydark-400">
+      <div className="z-10 flex items-center justify-end gap-4 bg-white dark:bg-graydark-200 py-2 px-4 border-t border-gray-200 dark:border-graydark-400">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-2">
             <Label
