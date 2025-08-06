@@ -2,15 +2,12 @@ import { type ContractData } from './types'
 import {
   Badge,
   Text,
-  CountryFlag,
-  ValueCurrency,
   ValueCopyable,
   Tooltip,
+  ValueWithTooltip,
 } from '@siafoundation/design-system'
 import { type ColumnDef } from '@tanstack/react-table'
 import { TableHeader } from '../columns'
-import { humanBytes } from '@siafoundation/units'
-import BigNumber from 'bignumber.js'
 import { UsabilityBadges } from '../UsabilityBadges'
 import { CheckmarkFilled16, CloseFilled16 } from '@siafoundation/react-icons'
 import { selectColumn } from '../sharedColumns/select'
@@ -75,13 +72,20 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       </TableHeader>
     ),
     accessorKey: 'host.location.countryCode',
-    cell: ({ getValue }) => {
-      const code = getValue<string>()
-      if (code === 'unknown') return <Text color="verySubtle">-</Text>
+    cell: ({ row, getValue }) => {
+      if (row.original.host?.location?.countryCode === 'unknown') {
+        return (
+          <div className="py-1">
+            <Text color="verySubtle">-</Text>
+          </div>
+        )
+      }
       return (
         <span className="flex items-center gap-1">
-          <CountryFlag countryCode={code} />
-          <Text>{code}</Text>
+          <span role="img" aria-label={row.original.displayFields.countryName}>
+            {row.original.displayFields.countryFlag}
+          </span>
+          <Text>{row.original.host?.location.countryCode}</Text>
         </span>
       )
     },
@@ -152,14 +156,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       </TableHeader>
     ),
     accessorKey: 'formation',
-    cell: ({ getValue }) => (
-      <Text>
-        {Intl.DateTimeFormat('en-US', {
-          dateStyle: 'short',
-          timeStyle: 'short',
-        }).format(new Date(getValue<string>()))}
-      </Text>
-    ),
+    cell: ({ row }) => <Text>{row.original.displayFields.formation}</Text>,
     meta: { className: 'justify-end', width: 140 },
   },
   {
@@ -170,7 +167,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       </TableHeader>
     ),
     accessorKey: 'proofHeight',
-    cell: ({ getValue }) => <Text>{getValue<number>().toLocaleString()}</Text>,
+    cell: ({ row }) => <Text>{row.original.displayFields.proofHeight}</Text>,
     meta: { className: 'justify-end' },
   },
   {
@@ -181,7 +178,9 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       </TableHeader>
     ),
     accessorKey: 'expirationHeight',
-    cell: ({ getValue }) => <Text>{getValue<number>().toLocaleString()}</Text>,
+    cell: ({ row }) => (
+      <Text>{row.original.displayFields.expirationHeight}</Text>
+    ),
     meta: { className: 'justify-end' },
   },
   {
@@ -192,14 +191,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       </TableHeader>
     ),
     accessorKey: 'nextPrune',
-    cell: ({ getValue }) => (
-      <Text>
-        {Intl.DateTimeFormat('en-US', {
-          dateStyle: 'short',
-          timeStyle: 'short',
-        }).format(new Date(getValue<string>()))}
-      </Text>
-    ),
+    cell: ({ row }) => <Text>{row.original.displayFields.nextPrune}</Text>,
     meta: { className: 'justify-end', width: 140 },
   },
   {
@@ -210,13 +202,8 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       </TableHeader>
     ),
     accessorKey: 'lastBroadcastAttempt',
-    cell: ({ getValue }) => (
-      <Text>
-        {Intl.DateTimeFormat('en-US', {
-          dateStyle: 'short',
-          timeStyle: 'short',
-        }).format(new Date(getValue<string>()))}
-      </Text>
+    cell: ({ row }) => (
+      <Text>{row.original.displayFields.lastBroadcastAttempt}</Text>
     ),
     meta: { className: 'justify-end', width: 140 },
   },
@@ -228,7 +215,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       </TableHeader>
     ),
     accessorKey: 'size',
-    cell: ({ getValue }) => <Text>{humanBytes(getValue<number>())}</Text>,
+    cell: ({ row }) => <Text>{row.original.displayFields.capacity}</Text>,
     meta: { className: 'justify-end' },
   },
   {
@@ -239,7 +226,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       </TableHeader>
     ),
     accessorKey: 'capacity',
-    cell: ({ getValue }) => <Text>{humanBytes(getValue<number>())}</Text>,
+    cell: ({ row }) => <Text>{row.original.displayFields.dataSize}</Text>,
     meta: { className: 'justify-end' },
   },
   {
@@ -250,12 +237,8 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       </TableHeader>
     ),
     accessorKey: 'spending.sectorRoots',
-    cell: ({ getValue }) => (
-      <ValueCurrency
-        variant="value"
-        font="sans"
-        value={new BigNumber(getValue<string>())}
-      />
+    cell: ({ row }) => (
+      <ValueWithTooltip {...row.original.displayFields.spendSectorRoots} />
     ),
     meta: { className: 'justify-end' },
     sortingFn: (rowA, rowB) => {
@@ -272,12 +255,8 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       </TableHeader>
     ),
     accessorKey: 'spending.appendSector',
-    cell: ({ getValue }) => (
-      <ValueCurrency
-        variant="value"
-        font="sans"
-        value={new BigNumber(getValue<string>())}
-      />
+    cell: ({ row }) => (
+      <ValueWithTooltip {...row.original.displayFields.spendAppendSector} />
     ),
     meta: { className: 'justify-end' },
     sortingFn: (rowA, rowB) => {
@@ -294,12 +273,8 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       </TableHeader>
     ),
     accessorKey: 'spending.freeSector',
-    cell: ({ getValue }) => (
-      <ValueCurrency
-        variant="value"
-        font="sans"
-        value={new BigNumber(getValue<string>())}
-      />
+    cell: ({ row }) => (
+      <ValueWithTooltip {...row.original.displayFields.spendFreeSector} />
     ),
     meta: { className: 'justify-end' },
     sortingFn: (rowA, rowB) => {
@@ -316,12 +291,8 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       </TableHeader>
     ),
     accessorKey: 'spending.fundAccount',
-    cell: ({ getValue }) => (
-      <ValueCurrency
-        variant="value"
-        font="sans"
-        value={new BigNumber(getValue<string>())}
-      />
+    cell: ({ row }) => (
+      <ValueWithTooltip {...row.original.displayFields.spendFundAccount} />
     ),
     meta: { className: 'justify-end' },
     sortingFn: (rowA, rowB) => {
@@ -338,12 +309,8 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       </TableHeader>
     ),
     accessorKey: 'initialAllowance',
-    cell: ({ getValue }) => (
-      <ValueCurrency
-        variant="value"
-        font="sans"
-        value={new BigNumber(getValue<string>())}
-      />
+    cell: ({ row }) => (
+      <ValueWithTooltip {...row.original.displayFields.initialAllowance} />
     ),
     meta: { className: 'justify-end' },
     sortingFn: (rowA, rowB) => {
@@ -360,12 +327,8 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       </TableHeader>
     ),
     accessorKey: 'remainingAllowance',
-    cell: ({ getValue }) => (
-      <ValueCurrency
-        variant="value"
-        font="sans"
-        value={new BigNumber(getValue<string>())}
-      />
+    cell: ({ row }) => (
+      <ValueWithTooltip {...row.original.displayFields.remainingAllowance} />
     ),
     meta: { className: 'justify-end' },
     sortingFn: (rowA, rowB) => {
@@ -382,12 +345,8 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       </TableHeader>
     ),
     accessorKey: 'totalCollateral',
-    cell: ({ getValue }) => (
-      <ValueCurrency
-        variant="value"
-        font="sans"
-        value={new BigNumber(getValue<string>())}
-      />
+    cell: ({ row }) => (
+      <ValueWithTooltip {...row.original.displayFields.totalCollateral} />
     ),
     meta: { className: 'justify-end' },
     sortingFn: (rowA, rowB) => {
@@ -404,12 +363,8 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       </TableHeader>
     ),
     accessorKey: 'usedCollateral',
-    cell: ({ getValue }) => (
-      <ValueCurrency
-        variant="value"
-        font="sans"
-        value={new BigNumber(getValue<string>())}
-      />
+    cell: ({ row }) => (
+      <ValueWithTooltip {...row.original.displayFields.usedCollateral} />
     ),
     meta: { className: 'justify-end' },
     sortingFn: (rowA, rowB) => {
@@ -426,12 +381,8 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       </TableHeader>
     ),
     accessorKey: 'contractPrice',
-    cell: ({ getValue }) => (
-      <ValueCurrency
-        variant="value"
-        font="sans"
-        value={new BigNumber(getValue<string>())}
-      />
+    cell: ({ row }) => (
+      <ValueWithTooltip {...row.original.displayFields.contractPrice} />
     ),
     meta: { className: 'justify-end' },
     sortingFn: (rowA, rowB) => {
@@ -448,12 +399,8 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       </TableHeader>
     ),
     accessorKey: 'minerFee',
-    cell: ({ getValue }) => (
-      <ValueCurrency
-        variant="value"
-        font="sans"
-        value={new BigNumber(getValue<string>())}
-      />
+    cell: ({ row }) => (
+      <ValueWithTooltip {...row.original.displayFields.minerFee} />
     ),
     meta: { className: 'justify-end' },
     sortingFn: (rowA, rowB) => {
@@ -470,7 +417,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       </TableHeader>
     ),
     accessorKey: 'revisionNumber',
-    cell: ({ getValue }) => <Text>{getValue<number>()?.toLocaleString()}</Text>,
+    cell: ({ row }) => <Text>{row.original.displayFields.revisionNumber}</Text>,
     meta: { className: 'justify-end' },
   },
   {
@@ -481,13 +428,11 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       </TableHeader>
     ),
     accessorKey: 'renewedFrom',
-    cell: ({ getValue }) => {
-      const value = getValue<string>()
-      if (
-        value ===
-        '0000000000000000000000000000000000000000000000000000000000000000'
-      )
+    cell: ({ row }) => {
+      const value = row.original.displayFields.renewedFrom
+      if (value === '-') {
         return <Text color="verySubtle">-</Text>
+      }
       return <Text>{value}</Text>
     },
     meta: { className: 'justify-end' },
@@ -500,13 +445,11 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       </TableHeader>
     ),
     accessorKey: 'renewedTo',
-    cell: ({ getValue }) => {
-      const value = getValue<string>()
-      if (
-        value ===
-        '0000000000000000000000000000000000000000000000000000000000000000'
-      )
+    cell: ({ row }) => {
+      const value = row.original.displayFields.renewedTo
+      if (value === '-') {
         return <Text color="verySubtle">-</Text>
+      }
       return <Text>{value}</Text>
     },
     meta: { className: 'justify-end' },

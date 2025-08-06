@@ -35,9 +35,11 @@ export function SidePanelHost() {
   }, [host])
   if (!host) {
     return (
-      <div className="flex flex-col items-center justify-center overflow-hidden">
-        <Text>Host not found</Text>
-      </div>
+      <SidePanel heading={null}>
+        <div className="flex justify-center pt-[50px]">
+          <Text color="subtle">Host not found</Text>
+        </div>
+      </SidePanel>
     )
   }
   return (
@@ -73,15 +75,9 @@ export function SidePanelHost() {
         <div className="flex flex-col gap-2">
           {host.addresses.map((address) => (
             <InfoRow
-              key={address.address}
+              key={address.address + address.protocol}
               label={address.protocol}
-              value={
-                <ValueCopyable
-                  className="justify-end"
-                  value={address.address}
-                  maxLength={24}
-                />
-              }
+              value={<ValueCopyable value={address.address} maxLength={24} />}
             />
           ))}
         </div>

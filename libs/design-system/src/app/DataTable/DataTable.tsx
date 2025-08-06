@@ -10,7 +10,6 @@ import {
 import { type VirtualItem, type Virtualizer } from '@tanstack/react-virtual'
 import { Label } from '../../core/Label'
 import { Panel } from '../../core/Panel'
-import { ScrollArea } from '../../core/ScrollArea'
 import { Select, Option } from '../../core/Select'
 import { DataTablePaginatorKnownTotal } from './DataTablePaginatorKnownTotal'
 import { ActiveFilters } from './ActiveFilters'
@@ -20,6 +19,7 @@ interface DataTableProps<T extends { id: string }> {
   table: Table<T>
   virtualRows: VirtualItem[]
   totalSize: number
+  rowHeight: number
   tableContainerRef: React.RefObject<HTMLDivElement | null>
   rowVirtualizer: Virtualizer<HTMLDivElement, Element>
   rows: Row<T>[]
@@ -40,6 +40,7 @@ export function DataTable<T extends { id: string }>({
   table,
   virtualRows,
   totalSize,
+  rowHeight,
   tableContainerRef,
   rowVirtualizer,
   rows,
@@ -69,7 +70,10 @@ export function DataTable<T extends { id: string }>({
         />
       </div>
       <div className="flex-1 overflow-hidden relative">
-        <ScrollArea ref={tableContainerRef} className="relative">
+        <div
+          ref={tableContainerRef}
+          className="relative w-full h-full overflow-auto"
+        >
           <div className="min-w-fit">
             <table className="text-sm" style={{ display: 'grid' }}>
               <thead className="sticky top-0 z-10 bg-white dark:bg-graydark-200 border-b border-gray-100 dark:border-graydark-300">
@@ -124,7 +128,7 @@ export function DataTable<T extends { id: string }>({
                         display: 'flex',
                         position: 'absolute',
                         transform: `translateY(${virtualRow.start}px)`,
-                        willChange: 'transform',
+                        height: `${rowHeight}px`,
                         width: '100%',
                       }}
                       className={cx(
@@ -178,7 +182,7 @@ export function DataTable<T extends { id: string }>({
               </tbody>
             </table>
           </div>
-        </ScrollArea>
+        </div>
       </div>
       <div className="z-10 flex items-center justify-end gap-4 bg-white dark:bg-graydark-200 py-2 px-4 border-t border-gray-200 dark:border-graydark-400">
         <div className="flex items-center gap-2">

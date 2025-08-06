@@ -1,6 +1,7 @@
 import { Host } from '@siafoundation/indexd-types'
 import { CurrencyOption } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
+import { CurrencyDisplayProps } from '@siafoundation/design-system'
 
 export type HostLocation =
   | {
@@ -28,5 +29,22 @@ export type HostData = Host & {
     egressPrice: BigNumber
     freeSectorPrice: BigNumber
     maxCollateral: BigNumber
+  }
+  displayFields: {
+    uptime: string
+    totalStorage: string
+    remainingStorage: string
+    remainingStorageUsability: 'usable' | 'warning' | 'unusable'
+    storagePrice: CurrencyDisplayProps
+    ingressPrice: CurrencyDisplayProps
+    egressPrice: CurrencyDisplayProps
+    freeSectorPrice: CurrencyDisplayProps
+    maxCollateral: CurrencyDisplayProps
+    maxContractDuration: string
+    protocolVersion: string
+    priceValidity: string
+    release: string
+    countryName: string
+    countryFlag: string
   }
 }
