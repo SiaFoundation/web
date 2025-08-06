@@ -23,6 +23,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 type DataTableProps<T extends { id: string }> = {
   columns: ColumnDef<T>[]
   data: T[]
+  rowHeight?: number
   fixedFilters?: ColumnFiltersState
   columnFilters: ColumnFiltersState
   columnSorts: SortingState
@@ -42,6 +43,7 @@ export type DataTableState<T extends { id: string }> = ReturnType<
 export function useDataTable<T extends { id: string }>({
   columns,
   data,
+  rowHeight = 36,
   columnFilters,
   fixedFilters,
   columnSorts,
@@ -120,8 +122,8 @@ export function useDataTable<T extends { id: string }>({
   const rowVirtualizer = useVirtualizer({
     count: rows.length,
     getScrollElement: () => tableContainerRef.current,
-    estimateSize: () => 36,
-    overscan: 36,
+    estimateSize: () => rowHeight,
+    overscan: 30,
   })
 
   const virtualRows = rowVirtualizer.getVirtualItems()
@@ -144,6 +146,7 @@ export function useDataTable<T extends { id: string }>({
   return {
     data,
     tableContainerRef,
+    rowHeight,
     table,
     rowVirtualizer,
     rows,

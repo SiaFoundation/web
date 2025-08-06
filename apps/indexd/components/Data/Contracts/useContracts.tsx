@@ -9,8 +9,8 @@ import {
   useHosts as useIndexHosts,
 } from '@siafoundation/indexd-react'
 import { ContractData } from './types'
-import { BigNumber } from 'bignumber.js'
-import { transformHost } from '../Hosts/transform'
+import { useAppSettings } from '@siafoundation/react-core'
+import { transformContract } from './transform'
 
 export function useContracts() {
   const state = useIndexdState()
@@ -28,8 +28,16 @@ export function useContracts() {
       online: true,
     },
   })
-  const rawContracts = useIndexContracts()
-  const rawHosts = useIndexHosts()
+  const rawContracts = useIndexContracts({
+    params: {
+      limit: 500,
+    },
+  })
+  const rawHosts = useIndexHosts({
+    params: {
+      limit: 500,
+    },
+  })
   const exchangeRate = useActiveSiascanExchangeRate()
   const exchange = useMemo(
     () =>
@@ -40,37 +48,31 @@ export function useContracts() {
       },
     [exchangeRate.currency, exchangeRate.rate],
   )
+  const { settings } = useAppSettings()
   const contracts = useMemo(
     () =>
       rawContracts.data?.map((contract) => {
         const host = rawHosts.data?.find(
           (h) => h.publicKey === contract.hostKey,
         )
-        const datum: ContractData = {
-          ...contract,
-          id: contract.id,
-          host: host
-            ? transformHost(host, { geo: geo.data, exchange })
-            : undefined,
+        const location = geo.data?.find(
+          (h) => h.publicKey === contract.hostKey,
+        )?.location
+        const datum: ContractData = transformContract(contract, {
+          host,
+          location,
+          currencyDisplay: settings.currencyDisplay,
           exchange,
-          sortingFields: {
-            spending: {
-              appendSector: new BigNumber(contract.spending.appendSector),
-              freeSector: new BigNumber(contract.spending.freeSector),
-              fundAccount: new BigNumber(contract.spending.fundAccount),
-              sectorRoots: new BigNumber(contract.spending.sectorRoots),
-            },
-            remainingAllowance: new BigNumber(contract.remainingAllowance),
-            totalCollateral: new BigNumber(contract.totalCollateral),
-            contractPrice: new BigNumber(contract.contractPrice),
-            minerFee: new BigNumber(contract.minerFee),
-            usedCollateral: new BigNumber(contract.usedCollateral),
-            initialAllowance: new BigNumber(contract.initialAllowance),
-          },
-        }
+        })
         return datum
       }) || [],
-    [rawContracts.data, exchange, geo.data, rawHosts.data],
+    [
+      rawContracts.data,
+      exchange,
+      geo.data,
+      rawHosts.data,
+      settings.currencyDisplay,
+    ],
   )
 
   return contracts

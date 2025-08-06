@@ -8,6 +8,7 @@ import {
   useHosts as useIndexHosts,
 } from '@siafoundation/indexd-react'
 import { transformHost } from './transform'
+import { useAppSettings } from '@siafoundation/react-core'
 
 export function useHosts() {
   const state = useIndexdState()
@@ -25,7 +26,11 @@ export function useHosts() {
       online: true,
     },
   })
-  const rawHosts = useIndexHosts()
+  const rawHosts = useIndexHosts({
+    params: {
+      limit: 500,
+    },
+  })
   const exchangeRate = useActiveSiascanExchangeRate()
   const exchange = useMemo(
     () =>
@@ -36,16 +41,21 @@ export function useHosts() {
       },
     [exchangeRate.currency, exchangeRate.rate],
   )
+  const { settings } = useAppSettings()
   const hosts = useMemo(
     () =>
       rawHosts.data?.map((host) => {
+        const location = geo.data?.find(
+          (h) => h.publicKey === host.publicKey,
+        )?.location
         const datum = transformHost(host, {
-          geo: geo.data,
+          location,
+          currencyDisplay: settings.currencyDisplay,
           exchange,
         })
         return datum
       }) || [],
-    [rawHosts.data, geo.data, exchange],
+    [rawHosts.data, geo.data, exchange, settings.currencyDisplay],
   )
 
   return hosts

@@ -32,9 +32,11 @@ export function SidePanelContract() {
   }, [contract])
   if (!contract) {
     return (
-      <div className="flex flex-col items-center justify-center overflow-hidden">
-        <Text>Contract not found</Text>
-      </div>
+      <SidePanel heading={null}>
+        <div className="flex justify-center pt-[50px]">
+          <Text color="subtle">Contract not found</Text>
+        </div>
+      </SidePanel>
     )
   }
   return (

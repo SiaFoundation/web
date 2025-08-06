@@ -3,23 +3,12 @@ import {
   Text,
   Tooltip,
   ValueCopyable,
-  CountryFlag,
-  ValueCurrency,
   Badge,
+  ValueWithTooltip,
 } from '@siafoundation/design-system'
 import { CheckmarkFilled16, CloseFilled16 } from '@siafoundation/react-icons'
 import { HostData } from './types'
 import { TableHeader } from '../columns'
-import {
-  sectorsToBytes,
-  humanBytes,
-  blocksToWeeks,
-  GBToBytes,
-  storagePriceInHastingsPerTBPerMonth,
-  egressPriceInHastingsPerTBPerMonth,
-  ingressPriceInHastingsPerTBPerMonth,
-} from '@siafoundation/units'
-import { BigNumber } from 'bignumber.js'
 import { UsabilityBadges, UsabilityIndicator } from '../UsabilityBadges'
 import { CountryFilter } from './filters/CountryFilter'
 import { UsableFilter } from './filters/UsableFilter'
@@ -151,7 +140,7 @@ export const columns: ColumnDef<HostData>[] = [
           status={row.original.usability.uptime ? 'usable' : 'unusable'}
           name="recent uptime"
         />
-        <Text>{(row.original.recentUptime * 100).toFixed(1)}%</Text>
+        <Text>{row.original.displayFields.uptime}</Text>
       </div>
     ),
     meta: { className: 'justify-end', width: 100 },
@@ -178,8 +167,10 @@ export const columns: ColumnDef<HostData>[] = [
       }
       return (
         <div className="py-1">
-          <CountryFlag countryCode={row.original.location?.countryCode} />
-          <Text className="ml-1">{row.original.location?.countryCode}</Text>
+          <span role="img" aria-label={row.original.displayFields.countryName}>
+            {row.original.displayFields.countryFlag}
+          </span>
+          <Text className="ml-1">{row.original.location.countryCode}</Text>
         </div>
       )
     },
@@ -193,9 +184,7 @@ export const columns: ColumnDef<HostData>[] = [
       </TableHeader>
     ),
     accessorKey: 'settings.totalStorage',
-    cell: ({ getValue }) => (
-      <Text>{humanBytes(sectorsToBytes(getValue<number>()))}</Text>
-    ),
+    cell: ({ row }) => <Text>{row.original.displayFields.totalStorage}</Text>,
     meta: { className: 'justify-end' },
   },
   {
@@ -206,22 +195,14 @@ export const columns: ColumnDef<HostData>[] = [
       </TableHeader>
     ),
     accessorKey: 'settings.remainingStorage',
-    cell: ({ getValue }) => {
-      const value = sectorsToBytes(getValue<number>())
-      const lowStorageThreshold = GBToBytes(10)
+    cell: ({ row }) => {
       return (
         <div className="flex items-center justify-end gap-1">
           <UsabilityIndicator
-            status={
-              value.eq(0)
-                ? 'unusable'
-                : value.lt(lowStorageThreshold)
-                  ? 'warning'
-                  : 'usable'
-            }
+            status={row.original.displayFields.remainingStorageUsability}
             name="storage"
           />
-          <Text>{humanBytes(value)}</Text>
+          <Text>{row.original.displayFields.remainingStorage}</Text>
         </div>
       )
     },
@@ -241,13 +222,7 @@ export const columns: ColumnDef<HostData>[] = [
           status={row.original.usability.storagePrice ? 'usable' : 'unusable'}
           name="storage price"
         />
-        <ValueCurrency
-          variant="value"
-          font="sans"
-          value={storagePriceInHastingsPerTBPerMonth({
-            price: row.original.settings.prices.storagePrice,
-          })}
-        />
+        <ValueWithTooltip {...row.original.displayFields.storagePrice} />
       </div>
     ),
     meta: {
@@ -274,13 +249,7 @@ export const columns: ColumnDef<HostData>[] = [
             status={row.original.usability.ingressPrice ? 'usable' : 'unusable'}
             name="ingress price"
           />
-          <ValueCurrency
-            variant="value"
-            font="sans"
-            value={ingressPriceInHastingsPerTBPerMonth({
-              price: row.original.settings.prices.ingressPrice,
-            })}
-          />
+          <ValueWithTooltip {...row.original.displayFields.ingressPrice} />
         </div>
       )
     },
@@ -305,13 +274,7 @@ export const columns: ColumnDef<HostData>[] = [
           status={row.original.usability.egressPrice ? 'usable' : 'unusable'}
           name="egress price"
         />
-        <ValueCurrency
-          variant="value"
-          font="sans"
-          value={egressPriceInHastingsPerTBPerMonth({
-            price: row.original.settings.prices.egressPrice,
-          })}
-        />
+        <ValueWithTooltip {...row.original.displayFields.egressPrice} />
       </div>
     ),
     meta: { className: 'justify-end' },
@@ -337,15 +300,10 @@ export const columns: ColumnDef<HostData>[] = [
           }
           name="free sector price"
         />
-        <ValueCurrency
-          variant="value"
-          font="sans"
-          fixed={10}
-          value={new BigNumber(getValue<number>())}
-        />
+        <ValueWithTooltip {...row.original.displayFields.freeSectorPrice} />
       </div>
     ),
-    meta: { className: 'justify-end', width: 160 },
+    meta: { className: 'justify-end' },
     sortingFn: (rowA, rowB) => {
       return rowA.original.sortFields.freeSectorPrice
         .minus(rowB.original.sortFields.freeSectorPrice)
@@ -368,7 +326,7 @@ export const columns: ColumnDef<HostData>[] = [
           }
           name="max contract duration"
         />
-        <Text>{blocksToWeeks(getValue<number>()).toFixed(1)} weeks</Text>
+        <Text>{row.original.displayFields.maxContractDuration}</Text>
       </div>
     ),
     meta: { className: 'justify-end', width: 120 },
@@ -387,11 +345,7 @@ export const columns: ColumnDef<HostData>[] = [
           status={row.original.usability.maxCollateral ? 'usable' : 'unusable'}
           name="max collateral"
         />
-        <ValueCurrency
-          variant="value"
-          font="sans"
-          value={new BigNumber(getValue<string>())}
-        />
+        <ValueWithTooltip {...row.original.displayFields.maxCollateral} />
       </div>
     ),
     meta: { className: 'justify-end', width: 120 },
@@ -417,7 +371,7 @@ export const columns: ColumnDef<HostData>[] = [
           }
           name="protocol version"
         />
-        <Text>{getValue<[number, number, number]>().join('.')}</Text>
+        <Text>{row.original.displayFields.protocolVersion}</Text>
       </div>
     ),
     meta: { className: 'justify-end', width: 120 },
@@ -430,13 +384,13 @@ export const columns: ColumnDef<HostData>[] = [
       </TableHeader>
     ),
     accessorKey: 'settings.prices.validUntil',
-    cell: ({ row, getValue }) => (
+    cell: ({ row }) => (
       <div className="flex items-center justify-end gap-1">
         <UsabilityIndicator
           status={row.original.usability.priceValidity ? 'usable' : 'unusable'}
           name="price validity"
         />
-        <Text>{new Date(getValue<string>()).toLocaleString()}</Text>
+        <Text>{row.original.displayFields.priceValidity}</Text>
       </div>
     ),
     meta: { className: 'justify-end', width: 220 },
@@ -449,7 +403,7 @@ export const columns: ColumnDef<HostData>[] = [
       </TableHeader>
     ),
     accessorKey: 'settings.release',
-    cell: ({ getValue }) => <Text>{getValue<string>()}</Text>,
+    cell: ({ row }) => <Text>{row.original.displayFields.release}</Text>,
     meta: { className: 'justify-end', width: 120 },
   },
 ]

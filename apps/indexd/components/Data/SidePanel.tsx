@@ -40,7 +40,7 @@ export function SidePanel({
           {actions}
         </div>
       )}
-      <div className="p-4">{children}</div>
+      <div className="p-4 h-full w-full">{children}</div>
     </Panel>
   )
 }
