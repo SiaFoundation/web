@@ -3,7 +3,7 @@ import {
   TableColumn,
   ValueCopyable,
   LoadingDots,
-  ValueScFiat,
+  ValueCurrency,
   ValueSf,
   Tooltip,
   Badge,
@@ -135,7 +135,7 @@ export const columns: EventsTableColumn[] = [
       return (
         <div className="flex flex-col gap-2 items-end">
           {!amountSc.isZero() && (
-            <ValueScFiat displayBoth size="12" value={amountSc} />
+            <ValueCurrency displayBoth size="12" value={amountSc} />
           )}
           {!!amountSf && <ValueSf size="12" value={amountSf} />}
         </div>
@@ -151,7 +151,7 @@ export const columns: EventsTableColumn[] = [
       if (!fee) {
         return null
       }
-      return <ValueScFiat displayBoth size="12" variant="value" value={fee} />
+      return <ValueCurrency displayBoth size="12" variant="value" value={fee} />
     },
   },
   {

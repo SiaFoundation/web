@@ -3,7 +3,7 @@ import {
   Badge,
   Text,
   CountryFlag,
-  ValueScFiat,
+  ValueCurrency,
   ValueCopyable,
   Tooltip,
 } from '@siafoundation/design-system'
@@ -251,7 +251,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     ),
     accessorKey: 'spending.sectorRoots',
     cell: ({ getValue }) => (
-      <ValueScFiat
+      <ValueCurrency
         variant="value"
         font="sans"
         value={new BigNumber(getValue<string>())}
@@ -273,7 +273,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     ),
     accessorKey: 'spending.appendSector',
     cell: ({ getValue }) => (
-      <ValueScFiat
+      <ValueCurrency
         variant="value"
         font="sans"
         value={new BigNumber(getValue<string>())}
@@ -295,7 +295,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     ),
     accessorKey: 'spending.freeSector',
     cell: ({ getValue }) => (
-      <ValueScFiat
+      <ValueCurrency
         variant="value"
         font="sans"
         value={new BigNumber(getValue<string>())}
@@ -317,7 +317,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     ),
     accessorKey: 'spending.fundAccount',
     cell: ({ getValue }) => (
-      <ValueScFiat
+      <ValueCurrency
         variant="value"
         font="sans"
         value={new BigNumber(getValue<string>())}
@@ -339,7 +339,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     ),
     accessorKey: 'initialAllowance',
     cell: ({ getValue }) => (
-      <ValueScFiat
+      <ValueCurrency
         variant="value"
         font="sans"
         value={new BigNumber(getValue<string>())}
@@ -361,7 +361,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     ),
     accessorKey: 'remainingAllowance',
     cell: ({ getValue }) => (
-      <ValueScFiat
+      <ValueCurrency
         variant="value"
         font="sans"
         value={new BigNumber(getValue<string>())}
@@ -383,7 +383,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     ),
     accessorKey: 'totalCollateral',
     cell: ({ getValue }) => (
-      <ValueScFiat
+      <ValueCurrency
         variant="value"
         font="sans"
         value={new BigNumber(getValue<string>())}
@@ -405,7 +405,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     ),
     accessorKey: 'usedCollateral',
     cell: ({ getValue }) => (
-      <ValueScFiat
+      <ValueCurrency
         variant="value"
         font="sans"
         value={new BigNumber(getValue<string>())}
@@ -427,7 +427,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     ),
     accessorKey: 'contractPrice',
     cell: ({ getValue }) => (
-      <ValueScFiat
+      <ValueCurrency
         variant="value"
         font="sans"
         value={new BigNumber(getValue<string>())}
@@ -449,7 +449,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     ),
     accessorKey: 'minerFee',
     cell: ({ getValue }) => (
-      <ValueScFiat
+      <ValueCurrency
         variant="value"
         font="sans"
         value={new BigNumber(getValue<string>())}

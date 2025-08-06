@@ -7,7 +7,7 @@ import {
   Text,
   Tooltip,
   ValueCopyable,
-  ValueScFiat,
+  ValueCurrency,
   ValueSf,
 } from '@siafoundation/design-system'
 import { DotMark16, Locked16, Unlocked16 } from '@siafoundation/react-icons'
@@ -113,7 +113,9 @@ export function EntityListItem(entity: EntityListItemProps) {
                     {getTxTypeLabel(entity.txType)}
                   </Badge>
                 )}
-                {!!sc && <ValueScFiat variant={entity.scVariant} value={sc} />}
+                {!!sc && (
+                  <ValueCurrency variant={entity.scVariant} value={sc} />
+                )}
                 {!!sf && <ValueSf variant={entity.sfVariant} value={sf} />}
               </div>
             )}

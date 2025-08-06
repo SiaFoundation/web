@@ -21,6 +21,7 @@ import {
   DropdownMenuItem,
   DropdownMenuLeftSlot,
 } from '../core/DropdownMenu'
+import { useMemo } from 'react'
 
 type Props = {
   labeledBy?: string
@@ -59,14 +60,21 @@ export function ValueCopyable({
   siascanUrl,
   contextMenu,
 }: Props) {
-  const label = customLabel || getEntityTypeCopyLabel(type)
-  const maxLength = customMaxLength || getEntityDisplayLength(type)
-  const cleanValue = stripPrefix(value)
-  // If we pass a defaultValue, use it. An entityType? Format it.
-  const renderValue =
-    displayValue || (type && formatEntityValue(type, cleanValue, maxLength))
-  // If we don't yet have a renderValue, apply some general formatting.
-  const text = renderValue || defaultFormatValue(cleanValue, maxLength)
+  const label = useMemo(
+    () => customLabel || getEntityTypeCopyLabel(type),
+    [customLabel, type],
+  )
+
+  const { text, cleanValue } = useMemo(() => {
+    const maxLength = customMaxLength || getEntityDisplayLength(type)
+    const cleanValue = stripPrefix(value)
+    // If we pass a defaultValue, use it. An entityType? Format it.
+    const renderValue =
+      displayValue || (type && formatEntityValue(type, cleanValue, maxLength))
+    // If we don't yet have a renderValue, apply some general formatting.
+    const text = renderValue || defaultFormatValue(cleanValue, maxLength)
+    return { text, cleanValue }
+  }, [customMaxLength, type, value, displayValue])
 
   return (
     <div data-testid={testId} className={cx('flex items-center', className)}>

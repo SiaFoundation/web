@@ -3,7 +3,7 @@ import {
   Select,
   SiacoinField,
   Text,
-  ValueScFiat,
+  ValueCurrency,
 } from '@siafoundation/design-system'
 import { useConfig } from '../../contexts/config'
 import { Information20, PendingFilled20 } from '@siafoundation/react-icons'
@@ -83,7 +83,7 @@ export function SpendingEstimate() {
             Spending estimate
           </Text>
           {estimatedSpendingPerMonth && (
-            <ValueScFiat
+            <ValueCurrency
               variant="value"
               fixed={0}
               fixedFiat={0}

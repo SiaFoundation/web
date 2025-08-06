@@ -2,7 +2,7 @@ import {
   Button,
   Text,
   Tooltip,
-  ValueScFiat,
+  ValueCurrency,
   Separator,
 } from '@siafoundation/design-system'
 import { UseFormReturn } from 'react-hook-form'
@@ -99,7 +99,7 @@ export function PriceWithRedundancyTip({
         }
         icon={<Calculation16 />}
       >
-        <ValueScFiat
+        <ValueCurrency
           font="sans"
           variant="value"
           size="12"

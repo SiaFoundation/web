@@ -5,7 +5,7 @@ import {
   ValueNum,
   Tooltip,
   LoadingDots,
-  ValueScFiat,
+  ValueCurrency,
   Checkbox,
   Badge,
 } from '@siafoundation/design-system'
@@ -636,7 +636,7 @@ export const columns: HostsTableColumn[] = (
       contentClassName: 'w-[120px] justify-end',
       render: function RenderStoragePrice({ data }) {
         return (
-          <ValueScFiat
+          <ValueCurrency
             displayBoth
             size="12"
             value={new BigNumber(data.v2Settings.prices.storagePrice || 0)
@@ -655,7 +655,7 @@ export const columns: HostsTableColumn[] = (
       contentClassName: 'w-[120px] justify-end',
       render: function RenderIngressPrice({ data }) {
         return (
-          <ValueScFiat
+          <ValueCurrency
             displayBoth
             size="12"
             value={new BigNumber(
@@ -674,7 +674,7 @@ export const columns: HostsTableColumn[] = (
       contentClassName: 'w-[120px] justify-end',
       render: function RenderEgressPrice({ data }) {
         return (
-          <ValueScFiat
+          <ValueCurrency
             displayBoth
             size="12"
             value={new BigNumber(data.v2Settings.prices.egressPrice || 0).times(
@@ -762,7 +762,7 @@ function makeRenderSc(name: Key) {
       return null
     }
     return (
-      <ValueScFiat
+      <ValueCurrency
         displayBoth
         size="12"
         value={new BigNumber((data.v2Settings[name] as string) || 0)}
@@ -812,7 +812,7 @@ function makeRenderV2Price(key: keyof V2HostPrices) {
       return null
     }
     return (
-      <ValueScFiat
+      <ValueCurrency
         displayBoth
         size="12"
         value={new BigNumber(data.v2Settings.prices[key] || 0)}

@@ -28,7 +28,7 @@ type Props = {
   displayBothDirection?: 'row' | 'column'
 }
 
-export function ValueScFiat({
+export function ValueCurrency({
   value,
   size,
   scaleSize,

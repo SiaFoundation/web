@@ -8,7 +8,7 @@ import { DataLabel } from './DataLabel'
 import BigNumber from 'bignumber.js'
 import { Tooltip } from '../core/Tooltip'
 import useLocalStorageState from 'use-local-storage-state'
-import { ValueScFiat } from '../components/ValueScFiat'
+import { ValueCurrency } from '../components/ValueCurrency'
 
 type Mode = 'total' | 'average' | 'latest'
 
@@ -92,7 +92,7 @@ export function DatumCardConfigurable({
       comment={
         sc ? (
           <div className="flex items-center gap-4">
-            <ValueScFiat
+            <ValueCurrency
               tooltip="Net change over time range:"
               fixedTipFiat={10}
               value={new BigNumber(sc.diff)}

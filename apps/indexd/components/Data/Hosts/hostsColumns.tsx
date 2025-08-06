@@ -4,7 +4,7 @@ import {
   Tooltip,
   ValueCopyable,
   CountryFlag,
-  ValueScFiat,
+  ValueCurrency,
   Badge,
 } from '@siafoundation/design-system'
 import { CheckmarkFilled16, CloseFilled16 } from '@siafoundation/react-icons'
@@ -241,7 +241,7 @@ export const columns: ColumnDef<HostData>[] = [
           status={row.original.usability.storagePrice ? 'usable' : 'unusable'}
           name="storage price"
         />
-        <ValueScFiat
+        <ValueCurrency
           variant="value"
           font="sans"
           value={storagePriceInHastingsPerTBPerMonth({
@@ -274,7 +274,7 @@ export const columns: ColumnDef<HostData>[] = [
             status={row.original.usability.ingressPrice ? 'usable' : 'unusable'}
             name="ingress price"
           />
-          <ValueScFiat
+          <ValueCurrency
             variant="value"
             font="sans"
             value={ingressPriceInHastingsPerTBPerMonth({
@@ -305,7 +305,7 @@ export const columns: ColumnDef<HostData>[] = [
           status={row.original.usability.egressPrice ? 'usable' : 'unusable'}
           name="egress price"
         />
-        <ValueScFiat
+        <ValueCurrency
           variant="value"
           font="sans"
           value={egressPriceInHastingsPerTBPerMonth({
@@ -337,7 +337,7 @@ export const columns: ColumnDef<HostData>[] = [
           }
           name="free sector price"
         />
-        <ValueScFiat
+        <ValueCurrency
           variant="value"
           font="sans"
           fixed={10}
@@ -387,7 +387,7 @@ export const columns: ColumnDef<HostData>[] = [
           status={row.original.usability.maxCollateral ? 'usable' : 'unusable'}
           name="max collateral"
         />
-        <ValueScFiat
+        <ValueCurrency
           variant="value"
           font="sans"
           value={new BigNumber(getValue<string>())}

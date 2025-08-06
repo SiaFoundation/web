@@ -1,7 +1,7 @@
 import { Text } from '../core/Text'
 import BigNumber from 'bignumber.js'
 import { Tooltip } from '../core/Tooltip'
-import { ValueScFiat } from '../components/ValueScFiat'
+import { ValueCurrency } from '../components/ValueCurrency'
 import { Separator } from '../core/Separator'
 
 export function WalletBalanceTip({
@@ -35,7 +35,7 @@ export function WalletBalanceTip({
               </Text>
             </div>
             <div className="flex justify-end">
-              <ValueScFiat
+              <ValueCurrency
                 size="12"
                 displayBoth
                 variant="value"
@@ -54,7 +54,7 @@ export function WalletBalanceTip({
                   </Text>
                 </div>
                 <div className="flex justify-end">
-                  <ValueScFiat
+                  <ValueCurrency
                     size="12"
                     displayBoth
                     variant="value"
@@ -73,7 +73,7 @@ export function WalletBalanceTip({
               </Text>
             </div>
             <div className="flex justify-end">
-              <ValueScFiat
+              <ValueCurrency
                 size="12"
                 displayBoth
                 variant="value"
@@ -90,7 +90,7 @@ export function WalletBalanceTip({
               </Text>
             </div>
             <div className="flex justify-end">
-              <ValueScFiat
+              <ValueCurrency
                 size="12"
                 displayBoth
                 variant="value"

@@ -5,7 +5,7 @@ import {
   formatChartData,
   getDataIntervalLabelFormatter,
   getTimeRange,
-  ValueScFiat,
+  ValueCurrency,
 } from '@siafoundation/design-system'
 import {
   MiBToBytes,
@@ -246,7 +246,7 @@ function useMetricsMain() {
           ),
         },
         formatComponent: function ({ value }) {
-          return <ValueScFiat variant="value" value={new BigNumber(value)} />
+          return <ValueCurrency variant="value" value={new BigNumber(value)} />
         },
         formatTickY: (v) =>
           humanSiacoin(v, {
@@ -287,7 +287,7 @@ function useMetricsMain() {
           risked: chartConfigs.risked,
         },
         formatComponent: function ({ value }) {
-          return <ValueScFiat variant="value" value={new BigNumber(value)} />
+          return <ValueCurrency variant="value" value={new BigNumber(value)} />
         },
         formatTimestamp,
         formatTickY: (v) =>
@@ -359,7 +359,7 @@ function useMetricsMain() {
           storage: chartConfigs.storage,
         },
         formatComponent: function ({ value }) {
-          return <ValueScFiat variant="value" value={new BigNumber(value)} />
+          return <ValueCurrency variant="value" value={new BigNumber(value)} />
         },
         formatTimestamp,
         formatTickY: (v) =>

@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js'
 import { Warning16 } from '@siafoundation/react-icons'
 import { Tooltip } from '../core/Tooltip'
 import { WalletBalanceTip } from './WalletBalanceTip'
-import { ValueScFiat } from '../components/ValueScFiat'
+import { ValueCurrency } from '../components/ValueCurrency'
 
 export function WalletBalance({
   balanceSc,
@@ -35,7 +35,7 @@ export function WalletBalance({
           <Text color="amber">
             <Warning16 />
           </Text>
-          <ValueScFiat
+          <ValueCurrency
             variant="value"
             value={balanceSc.spendable.plus(balanceSc.unconfirmed)}
             size="12"
@@ -49,7 +49,7 @@ export function WalletBalance({
   return (
     <WalletBalanceTip side="bottom" balanceSc={balanceSc}>
       <Panel className="hidden sm:flex h-7 px-3 items-center">
-        <ValueScFiat
+        <ValueCurrency
           variant="value"
           value={balanceSc.spendable.plus(balanceSc.unconfirmed)}
           size="12"
