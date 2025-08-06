@@ -64,7 +64,7 @@ export function HostSettings({ host }: Props) {
         copyable: false,
         value:
           exchange.currency && exchange.rate ? (
-            `${displayStoragePricePerTBPerMonth({
+            displayStoragePricePerTBPerMonth({
               price: host.v2
                 ? host.v2Settings.prices.storagePrice
                 : host.settings.storageprice,
@@ -72,15 +72,15 @@ export function HostSettings({ host }: Props) {
                 currency: { prefix: exchange.currency.prefix },
                 rate: exchange.rate,
               },
-            })}/month`
+            })
           ) : (
             <LoadingCurrency type="perTBMonth" />
           ),
-        comment: `${displayStoragePricePerTBPerMonth({
+        comment: displayStoragePricePerTBPerMonth({
           price: host.v2
             ? host.v2Settings.prices.storagePrice
             : host.settings.storageprice,
-        })}/month`,
+        }),
       },
       {
         label: 'download price',
