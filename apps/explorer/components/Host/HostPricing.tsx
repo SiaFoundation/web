@@ -91,7 +91,7 @@ export function HostPricing({ host }: Props) {
   return (
     <div className="flex flex-col" data-testid="explorer-hostPricing">
       <div className="grid grid-cols-3 gap-4">
-        <Tooltip content={`Storage cost ${storageCost}/month`}>
+        <Tooltip content={`Storage cost ${storageCost}`}>
           <div className="flex gap-2 items-center justify-end">
             <Text color="verySubtle" className="hidden sm:block">
               <VmdkDisk16 />
@@ -101,7 +101,7 @@ export function HostPricing({ host }: Props) {
             </Text>
           </div>
         </Tooltip>
-        <Tooltip content={`Download cost ${downloadCost}/month`}>
+        <Tooltip content={`Download cost ${downloadCost}`}>
           <div className="flex gap-2 items-center justify-end">
             <Text color="verySubtle" className="hidden sm:block">
               <CloudDownload16 />
@@ -111,7 +111,7 @@ export function HostPricing({ host }: Props) {
             </Text>
           </div>
         </Tooltip>
-        <Tooltip content={`Upload cost ${uploadCost}/month`}>
+        <Tooltip content={`Upload cost ${uploadCost}`}>
           <div className="flex gap-2 items-center justify-end">
             <Text color="verySubtle" className="hidden sm:block">
               <CloudUpload16 />
