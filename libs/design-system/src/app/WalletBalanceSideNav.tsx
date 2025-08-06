@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { Tooltip } from '../core/Tooltip'
-import { ValueScFiat } from '../components/ValueScFiat'
+import { ValueCurrency } from '../components/ValueCurrency'
 import { WalletBalanceTip } from './WalletBalanceTip'
 
 export function WalletBalanceSideNav({
@@ -22,7 +22,7 @@ export function WalletBalanceSideNav({
   }
 
   const el = (
-    <ValueScFiat
+    <ValueCurrency
       showTooltip={false}
       value={balanceSc.spendable.plus(balanceSc.unconfirmed)}
       variant="value"

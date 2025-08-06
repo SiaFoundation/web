@@ -8,7 +8,7 @@ import { Panel } from '../core/Panel'
 import { EntityType, getEntityTypeLabel } from '@siafoundation/units'
 import { cx } from 'class-variance-authority'
 import { Skeleton } from '../core/Skeleton'
-import { ValueScFiat } from './ValueScFiat'
+import { ValueCurrency } from './ValueCurrency'
 
 // entityType&entityValue | value | values | sc | sf
 type Props = {
@@ -74,7 +74,7 @@ export function DatumCard({
             {!isLoading ? (
               <>
                 {sc !== undefined && (
-                  <ValueScFiat
+                  <ValueCurrency
                     extendedSuffix={extendedSuffix}
                     scaleSize={scaleSize}
                     variant="value"

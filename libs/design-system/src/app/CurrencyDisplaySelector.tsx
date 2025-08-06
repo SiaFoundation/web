@@ -1,7 +1,10 @@
 'use client'
 
 import { Option, Select } from '../core/Select'
-import { CurrencyDisplay, useAppSettings } from '@siafoundation/react-core'
+import {
+  CurrencyDisplayPreference,
+  useAppSettings,
+} from '@siafoundation/react-core'
 
 const displayOptions = [
   { id: 'sc', label: 'Siacoin' },
@@ -21,7 +24,7 @@ export function CurrencyDisplaySelector() {
       value={settings.currencyDisplay}
       onChange={(e) =>
         setExternalDataSettings({
-          currencyDisplay: e.currentTarget.value as CurrencyDisplay,
+          currencyDisplay: e.currentTarget.value as CurrencyDisplayPreference,
         })
       }
     >

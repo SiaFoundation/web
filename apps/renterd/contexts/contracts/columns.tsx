@@ -1,6 +1,6 @@
 import {
   Text,
-  ValueScFiat,
+  ValueCurrency,
   TableColumn,
   ContractTimeline,
   ValueCopyable,
@@ -367,14 +367,18 @@ export const columns: ContractsTableColumn[] = [
     category: 'financial',
     contentClassName: 'w-[120px] justify-end',
     render: ({ data: { initialRenterFunds } }) => (
-      <ValueScFiat displayBoth size="12" value={initialRenterFunds.negated()} />
+      <ValueCurrency
+        displayBoth
+        size="12"
+        value={initialRenterFunds.negated()}
+      />
     ),
     summary: ({ context: { filteredStats } }) => {
       if (!filteredStats.initialRenterFundsTotal) {
         return null
       }
       return (
-        <ValueScFiat
+        <ValueCurrency
           displayBoth
           size="12"
           value={filteredStats.initialRenterFundsTotal.negated()}
@@ -389,14 +393,14 @@ export const columns: ContractsTableColumn[] = [
     category: 'financial',
     contentClassName: 'w-[120px] justify-end',
     render: ({ data: { spendingUploads } }) => (
-      <ValueScFiat displayBoth size="12" value={spendingUploads.negated()} />
+      <ValueCurrency displayBoth size="12" value={spendingUploads.negated()} />
     ),
     summary: ({ context: { filteredStats } }) => {
       if (!filteredStats.spendingUploadsTotal) {
         return null
       }
       return (
-        <ValueScFiat
+        <ValueCurrency
           displayBoth
           size="12"
           value={filteredStats.spendingUploadsTotal.negated()}
@@ -411,14 +415,18 @@ export const columns: ContractsTableColumn[] = [
     category: 'financial',
     contentClassName: 'w-[120px] justify-end',
     render: ({ data: { spendingDeletions } }) => (
-      <ValueScFiat displayBoth size="12" value={spendingDeletions.negated()} />
+      <ValueCurrency
+        displayBoth
+        size="12"
+        value={spendingDeletions.negated()}
+      />
     ),
     summary: ({ context: { filteredStats } }) => {
       if (!filteredStats.spendingDeletionsTotal) {
         return null
       }
       return (
-        <ValueScFiat
+        <ValueCurrency
           displayBoth
           size="12"
           value={filteredStats.spendingDeletionsTotal.negated()}
@@ -433,7 +441,7 @@ export const columns: ContractsTableColumn[] = [
     category: 'financial',
     contentClassName: 'w-[120px] justify-end',
     render: ({ data: { spendingFundAccount } }) => (
-      <ValueScFiat
+      <ValueCurrency
         displayBoth
         size="12"
         value={spendingFundAccount.negated()}
@@ -444,7 +452,7 @@ export const columns: ContractsTableColumn[] = [
         return null
       }
       return (
-        <ValueScFiat
+        <ValueCurrency
           displayBoth
           size="12"
           value={filteredStats.spendingFundAccountTotal.negated()}
@@ -459,7 +467,7 @@ export const columns: ContractsTableColumn[] = [
     category: 'financial',
     contentClassName: 'w-[120px] justify-end',
     render: ({ data: { spendingSectorRoots } }) => (
-      <ValueScFiat
+      <ValueCurrency
         displayBoth
         size="12"
         value={spendingSectorRoots.negated()}
@@ -470,7 +478,7 @@ export const columns: ContractsTableColumn[] = [
         return null
       }
       return (
-        <ValueScFiat
+        <ValueCurrency
           displayBoth
           size="12"
           value={filteredStats.spendingSectorRootsTotal.negated()}

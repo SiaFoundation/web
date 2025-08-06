@@ -2,7 +2,7 @@ import {
   Chart,
   formatChartData,
   computeChartStats,
-  ValueScFiat,
+  ValueCurrency,
   colors,
   getDataIntervalLabelFormatter,
 } from '@siafoundation/design-system'
@@ -123,7 +123,7 @@ export function useContractMetrics({
           },
         },
         formatComponent: function ({ value }) {
-          return <ValueScFiat variant="value" value={new BigNumber(value)} />
+          return <ValueCurrency variant="value" value={new BigNumber(value)} />
         },
         formatTimestamp:
           interval === daysInMilliseconds(1)

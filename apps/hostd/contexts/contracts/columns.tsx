@@ -7,7 +7,7 @@ import {
   Badge,
   ContractTimeline,
   ValueNum,
-  ValueScFiat,
+  ValueCurrency,
   Checkbox,
   MultiSelect,
 } from '@siafoundation/design-system'
@@ -286,7 +286,7 @@ export const columns: ContractsTableColumn[] = (
             </Text>
           )
         }
-        return <ValueScFiat displayBoth size="12" value={payout} />
+        return <ValueCurrency displayBoth size="12" value={payout} />
       },
     },
     {
@@ -295,7 +295,7 @@ export const columns: ContractsTableColumn[] = (
       category: 'financial',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data: { remainingRenterFunds } }) => (
-        <ValueScFiat displayBoth size="12" value={remainingRenterFunds} />
+        <ValueCurrency displayBoth size="12" value={remainingRenterFunds} />
       ),
     },
     {
@@ -304,7 +304,7 @@ export const columns: ContractsTableColumn[] = (
       category: 'financial',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data: { lockedCollateral } }) => (
-        <ValueScFiat displayBoth size="12" value={lockedCollateral} />
+        <ValueCurrency displayBoth size="12" value={lockedCollateral} />
       ),
     },
     {
@@ -313,7 +313,7 @@ export const columns: ContractsTableColumn[] = (
       category: 'financial',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data: { usage } }) => (
-        <ValueScFiat displayBoth size="12" value={usage.riskedCollateral} />
+        <ValueCurrency displayBoth size="12" value={usage.riskedCollateral} />
       ),
     },
     {
@@ -322,7 +322,7 @@ export const columns: ContractsTableColumn[] = (
       category: 'financial',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data: { usage } }) => (
-        <ValueScFiat displayBoth size="12" value={usage.total} />
+        <ValueCurrency displayBoth size="12" value={usage.total} />
       ),
     },
     {
@@ -331,7 +331,7 @@ export const columns: ContractsTableColumn[] = (
       category: 'financial',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data: { usage } }) => (
-        <ValueScFiat displayBoth size="12" value={usage.storage} />
+        <ValueCurrency displayBoth size="12" value={usage.storage} />
       ),
     },
     {
@@ -340,7 +340,7 @@ export const columns: ContractsTableColumn[] = (
       category: 'financial',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data: { usage } }) => (
-        <ValueScFiat displayBoth size="12" value={usage.ingress} />
+        <ValueCurrency displayBoth size="12" value={usage.ingress} />
       ),
     },
     {
@@ -349,7 +349,7 @@ export const columns: ContractsTableColumn[] = (
       category: 'financial',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data: { usage } }) => (
-        <ValueScFiat displayBoth size="12" value={usage.egress} />
+        <ValueCurrency displayBoth size="12" value={usage.egress} />
       ),
     },
     {
@@ -358,7 +358,7 @@ export const columns: ContractsTableColumn[] = (
       category: 'financial',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data: { usage } }) => (
-        <ValueScFiat displayBoth size="12" value={usage.accountFunding} />
+        <ValueCurrency displayBoth size="12" value={usage.accountFunding} />
       ),
     },
     {
@@ -367,7 +367,7 @@ export const columns: ContractsTableColumn[] = (
       category: 'financial',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data: { usage } }) => (
-        <ValueScFiat displayBoth size="12" value={usage.rpc} />
+        <ValueCurrency displayBoth size="12" value={usage.rpc} />
       ),
     },
   ] as ContractsTableColumn[]

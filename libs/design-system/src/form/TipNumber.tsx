@@ -6,7 +6,7 @@ import { Information16 } from '@siafoundation/react-icons'
 import { toFixedMaxString } from '../lib/numbers'
 import BigNumber from 'bignumber.js'
 import { cx } from 'class-variance-authority'
-import { ValueScFiat } from '../components/ValueScFiat'
+import { ValueCurrency } from '../components/ValueCurrency'
 
 type Props = {
   type: 'siacoin' | 'number'
@@ -61,7 +61,7 @@ export function TipNumber({
         }}
       >
         {type === 'siacoin' ? (
-          <ValueScFiat
+          <ValueCurrency
             value={value}
             variant="value"
             size="12"

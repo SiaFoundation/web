@@ -6,7 +6,7 @@ import {
   Tooltip,
   Button,
   ValueSf,
-  ValueScFiat,
+  ValueCurrency,
 } from '@siafoundation/design-system'
 import { Locked16, Unlocked16, CaretDown16 } from '@siafoundation/react-icons'
 import { humanDate } from '@siafoundation/units'
@@ -88,7 +88,7 @@ export const columns: WalletsTableColumn[] = [
       }
       return (
         <div className="flex flex-col gap-2 items-end">
-          <ValueScFiat
+          <ValueCurrency
             displayBoth
             size="12"
             variant="value"
