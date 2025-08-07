@@ -58,6 +58,9 @@ export function getV1TransactionType(txn: {
   if (txn.siacoinOutputs && txn.siacoinOutputs.length > 0) {
     return 'siacoin'
   }
+  if (txn.arbitraryData && txn.arbitraryData.length > 0) {
+    return 'arbitraryData'
+  }
 
   return 'unknown'
 }
