@@ -46,11 +46,7 @@ export function transformUpHosts(
       valuePerTBToPerByte(values.maxEgressPriceTB),
     ).toString(),
     minCollateral: toHastings(values.minCollateral).toString(),
-    minProtocolVersion: values.minProtocolVersion.split('.').map(Number) as [
-      number,
-      number,
-      number,
-    ],
+    minProtocolVersion: `v${values.minProtocolVersion}`,
   }
 }
 

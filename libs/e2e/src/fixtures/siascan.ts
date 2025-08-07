@@ -109,7 +109,7 @@ const response: HostMetrics = {
     registryentriestotal: 3317868,
   },
   v2Settings: {
-    protocolVersion: [1, 0, 0],
+    protocolVersion: 'v1.0.0',
     release: '1.0.0',
     walletAddress: '127.0.0.1:9980',
     acceptingContracts: true,
