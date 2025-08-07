@@ -120,7 +120,7 @@ describe('tansforms', () => {
           maxIngressPrice: '300000000000000',
           maxStoragePrice: '92592592593',
           minCollateral: '500000000000000000000000000',
-          minProtocolVersion: [1, 7, 0],
+          minProtocolVersion: 'v1.7.0',
         })
       })
     })
@@ -243,7 +243,7 @@ function buildAllResponses() {
       renewWindow: 2248,
     } as MaintenanceSettings,
     hosts: {
-      minProtocolVersion: [1, 7, 0],
+      minProtocolVersion: 'v1.7.0',
       maxEgressPrice: '1000000000000000',
       maxIngressPrice: '1000000000000000',
       maxStoragePrice: '200000000000',

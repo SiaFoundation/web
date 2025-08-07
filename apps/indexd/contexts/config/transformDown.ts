@@ -56,8 +56,8 @@ export function transformDownHosts(
       new BigNumber(config.minCollateral),
       scDecimalPlaces,
     ),
-    minProtocolVersion: config.minProtocolVersion.join(
-      '.',
+    minProtocolVersion: config.minProtocolVersion.slice(
+      1,
     ) as `${number}.${number}.${number}`,
   }
 }

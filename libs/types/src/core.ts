@@ -269,7 +269,7 @@ export type V2HostPrices = {
  * HostSettingsV2 are the settings and prices used when interacting with a host.
  */
 export type V2HostSettings = {
-  protocolVersion: [number, number, number]
+  protocolVersion: [number, number, number] | `v${number}.${number}.${number}`
   release: string
   walletAddress: string
   acceptingContracts: boolean

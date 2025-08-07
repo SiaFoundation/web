@@ -112,7 +112,7 @@ export type UsabilitySettings = {
   maxIngressPrice: Currency
   maxStoragePrice: Currency
   minCollateral: Currency
-  minProtocolVersion: [number, number, number]
+  minProtocolVersion: `v${number}.${number}.${number}`
 }
 
 export type PinnedSettings = {
