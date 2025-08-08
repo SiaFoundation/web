@@ -18,7 +18,7 @@ export function SidePanel({
   heading,
 }: Props) {
   return (
-    <Panel className="relative h-full w-[350px] lg:w-[450px]">
+    <Panel className="relative h-full w-full">
       <div className="h-[45px] z-10 flex items-center justify-between gap-4 bg-white dark:bg-graydark-200 py-2 px-4 border-b border-gray-200 dark:border-graydark-400">
         {heading}
         {customCloseAction ||

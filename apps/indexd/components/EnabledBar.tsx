@@ -1,7 +1,7 @@
 import { AppDockedControl, Panel, Text } from '@siafoundation/design-system'
 import { useSettingsContracts } from '@siafoundation/indexd-react'
 import { ConfigEnabledSwitch } from './ConfigEnabledSwitch'
-import { Warning24 } from '@carbon/icons-react'
+import { Warning24 } from '@siafoundation/react-icons'
 
 export function EnabledBar() {
   const settingsContracts = useSettingsContracts()

@@ -11,6 +11,7 @@ import { SidePanelContractList } from './SidePanelContractList'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { ContractData } from './types'
 import { useContracts } from './useContracts'
+import { Layout } from '../Layout'
 
 export function ContractsTab() {
   const params = useSearchParams()
@@ -57,22 +58,20 @@ export function ContractsTab() {
   })
 
   return (
-    <div className="w-full h-full overflow-hidden flex flex-col">
-      <div className="flex flex-row flex-1 overflow-hidden w-full">
-        <div className="flex-1 h-full overflow-hidden p-4">
-          <DataTable
-            {...table}
-            heading={<DataViewSelect value={view} onValueChange={setView} />}
-          />
-        </div>
-        <div className="py-4 pr-4">
-          {selectedId ? (
-            <SidePanelContract />
-          ) : (
-            <SidePanelContractList table={table} />
-          )}
-        </div>
-      </div>
-    </div>
+    <Layout
+      table={
+        <DataTable
+          {...table}
+          heading={<DataViewSelect value={view} onValueChange={setView} />}
+        />
+      }
+      panel={
+        selectedId ? (
+          <SidePanelContract />
+        ) : (
+          <SidePanelContractList table={table} />
+        )
+      }
+    />
   )
 }
