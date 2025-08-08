@@ -1,11 +1,11 @@
 {
   "name": "@siafoundation/renterd-types",
-  "version": "0.17.4",
+  "version": "0.17.5",
   "description": "Types for `renterd`.",
   "license": "MIT",
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@siafoundation/react-core": "^7.0.0",
-    "@siafoundation/types": "^0.12.2"
+    "@siafoundation/react-core": "^8.0.0",
+    "@siafoundation/types": "^0.13.0"
   }
 }

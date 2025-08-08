@@ -1,13 +1,13 @@
 {
   "name": "@siafoundation/walletd-react",
-  "version": "4.5.4",
+  "version": "4.5.5",
   "description": "React hooks for interacting with `walletd`.",
   "license": "MIT",
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@siafoundation/react-core": "^7.0.0",
-    "@siafoundation/units": "^3.5.2",
-    "@siafoundation/walletd-types": "^0.7.3",
+    "@siafoundation/react-core": "^8.0.0",
+    "@siafoundation/units": "^3.7.0",
+    "@siafoundation/walletd-types": "^0.7.4",
     "swr": "^2.1.1"
   }
 }

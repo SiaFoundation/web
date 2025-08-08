@@ -1,5 +1,21 @@
 # explorer
 
+## 0.37.2
+
+### Patch Changes
+
+- 027f727: Fix units in storage, download, and upload display text.
+- Updated dependencies [e95ebb6]
+- Updated dependencies [bd61c9e]
+- Updated dependencies [3c2e5cd]
+- Updated dependencies [7654811]
+- Updated dependencies [8cb68af]
+  - @siafoundation/design-system@10.2.0
+  - @siafoundation/types@0.13.0
+  - @siafoundation/units@3.7.0
+  - @siafoundation/explored-types@0.19.3
+  - @siafoundation/react-core@8.0.0
+
 ## 0.37.1
 
 ### Patch Changes

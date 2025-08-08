@@ -1,5 +1,21 @@
 # hostd
 
+## 0.65.2
+
+### Patch Changes
+
+- Updated dependencies [e95ebb6]
+- Updated dependencies [bd61c9e]
+- Updated dependencies [3c2e5cd]
+- Updated dependencies [7654811]
+- Updated dependencies [8cb68af]
+  - @siafoundation/design-system@10.2.0
+  - @siafoundation/types@0.13.0
+  - @siafoundation/units@3.7.0
+  - @siafoundation/hostd-types@0.10.2
+  - @siafoundation/react-core@8.0.0
+  - @siafoundation/hostd-react@4.6.9
+
 ## 0.65.1
 
 ### Patch Changes

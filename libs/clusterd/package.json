@@ -1,6 +1,6 @@
 {
   "name": "@siafoundation/clusterd",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "private": true,
   "description": "Methods controlling clusterd in e2e testing.",
   "license": "MIT",
@@ -9,8 +9,8 @@
     "@siafoundation/explored-js": "^0.8.2",
     "@siafoundation/hostd-js": "^0.5.7",
     "@siafoundation/renterd-js": "^0.14.7",
-    "@siafoundation/types": "^0.12.2",
-    "@siafoundation/units": "^3.5.2",
+    "@siafoundation/types": "^0.13.0",
+    "@siafoundation/units": "^3.7.0",
     "@siafoundation/walletd-js": "^0.4.3",
     "@technically/lodash": "^4.17.0",
     "axios": "^1.10.0",

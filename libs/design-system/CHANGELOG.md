@@ -1,5 +1,24 @@
 # Changelog
 
+## 10.2.0
+
+### Minor Changes
+
+- e95ebb6: Cleaned up currency components and exposed display props helpers.
+- 3c2e5cd: Fixed the HostMap marker coloring.
+- 7654811: V1 transactions that do not match any other type but have arbitrary data that is not a host announcement are now correctly classified as arbitrary data transactions.
+- 8cb68af: DataTable now supports responsive min max column sizing.
+
+### Patch Changes
+
+- Updated dependencies [bd61c9e]
+- Updated dependencies [7654811]
+  - @siafoundation/types@0.13.0
+  - @siafoundation/units@3.7.0
+  - @siafoundation/explored-types@0.19.3
+  - @siafoundation/react-core@8.0.0
+  - @siafoundation/explored-react@0.8.3
+
 ## 10.1.0
 
 ### Minor Changes

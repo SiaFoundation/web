@@ -1,6 +1,6 @@
 {
   "name": "@siafoundation/design-system",
-  "version": "10.1.0",
+  "version": "10.2.0",
   "description": "React-based design system used across Sia apps.",
   "license": "MIT",
   "types": "./src/index.d.ts",
@@ -24,10 +24,10 @@
     "@radix-ui/react-tooltip": "^1.2.7",
     "@radix-ui/react-visually-hidden": "^1.2.3",
     "@react-spring/web": "^10.0.1",
-    "@siafoundation/react-core": "^7.0.0",
+    "@siafoundation/react-core": "^8.0.0",
     "@siafoundation/react-icons": "^0.3.2",
-    "@siafoundation/types": "^0.12.2",
-    "@siafoundation/units": "^3.6.0",
+    "@siafoundation/types": "^0.13.0",
+    "@siafoundation/units": "^3.7.0",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tanstack/react-table": "^8.21.3",
     "@tanstack/react-virtual": "^3.13.12",
@@ -77,8 +77,8 @@
     "@types/d3-array": "^3.2.1"
   },
   "peerDependencies": {
-    "@siafoundation/explored-react": "^0.8.2",
-    "@siafoundation/explored-types": "^0.19.2",
+    "@siafoundation/explored-react": "^0.8.3",
+    "@siafoundation/explored-types": "^0.19.3",
     "next": "^15.3.5",
     "react": "^19.1.0"
   }

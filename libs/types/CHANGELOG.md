@@ -1,5 +1,11 @@
 # @siafoundation/types
 
+## 0.13.0
+
+### Minor Changes
+
+- bd61c9e: Updated the protocol version type to include both formats and added a helper function.
+
 ## 0.12.2
 
 ### Patch Changes
