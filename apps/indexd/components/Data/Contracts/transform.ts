@@ -1,28 +1,26 @@
 import { ContractData } from './types'
 import { BigNumber } from 'bignumber.js'
-import { transformHost } from '../Hosts/transform'
 import {
   CurrencyDisplayPreference,
   CurrencyOption,
 } from '@siafoundation/react-core'
-import { Contract, Host } from '@siafoundation/indexd-types'
+import { Contract } from '@siafoundation/indexd-types'
 import {
   countryCodeEmoji,
   getCountryName,
   humanBytes,
 } from '@siafoundation/units'
 import { getCurrencyDisplayPropsPreferred } from '@siafoundation/design-system'
+import { HostData } from '../Hosts/types'
 
 export function transformContract(
   contract: Contract,
   {
-    location,
     host,
     exchange,
     currencyDisplay,
   }: {
-    host?: Host
-    location?: { countryCode: string; latitude: number; longitude: number }
+    host?: HostData
     currencyDisplay: CurrencyDisplayPreference
     exchange: { currency: CurrencyOption; rate: BigNumber } | undefined
   },
@@ -30,9 +28,7 @@ export function transformContract(
   const datum: ContractData = {
     ...contract,
     id: contract.id,
-    host: host
-      ? transformHost(host, { location, exchange, currencyDisplay })
-      : undefined,
+    host,
     exchange,
     sortingFields: {
       spending: {
@@ -50,7 +46,7 @@ export function transformContract(
     },
     displayFields: transformContractDisplayFields(
       contract,
-      location,
+      host?.location,
       currencyDisplay,
       exchange,
     ),

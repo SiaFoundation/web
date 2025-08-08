@@ -13,15 +13,11 @@ import { SidePanel } from '../SidePanel'
 import { BulkHostBlocklistAdd } from './bulkActions/BulkHostBlocklistAdd'
 import { BulkHostBlocklistRemove } from './bulkActions/BulkHostBlocklistRemove'
 import { SidePanelSection } from '../SidePanelSection'
-import { useHosts } from './useHosts'
+import { useHost } from './useHost'
 
 export function SidePanelHost() {
   const { selectedId, setSelectedId } = useDataTableParams('hostList')
-  const hosts = useHosts()
-  const host = useMemo(
-    () => hosts.find((h) => h.id === selectedId),
-    [selectedId, hosts],
-  )
+  const host = useHost(selectedId)
   const mapHost = useMemo(() => {
     if (!host || host.location.countryCode === 'unknown') return null
     const hostData: HostMapHost = {
