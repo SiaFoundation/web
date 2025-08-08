@@ -13,6 +13,7 @@ import { useAppSettings } from '@siafoundation/react-core'
 export function useHosts() {
   const state = useIndexdState()
   const geo = useSiascanHostsList({
+    disabled: !state.data,
     api:
       state.data?.network === 'mainnet'
         ? 'https://api.siascan.com'
@@ -32,15 +33,6 @@ export function useHosts() {
     },
   })
   const exchangeRate = useActiveSiascanExchangeRate()
-  const exchange = useMemo(
-    () =>
-      exchangeRate.currency &&
-      exchangeRate.rate && {
-        currency: exchangeRate.currency,
-        rate: exchangeRate.rate,
-      },
-    [exchangeRate.currency, exchangeRate.rate],
-  )
   const { settings } = useAppSettings()
   const hosts = useMemo(
     () =>
@@ -51,11 +43,21 @@ export function useHosts() {
         const datum = transformHost(host, {
           location,
           currencyDisplay: settings.currencyDisplay,
-          exchange,
+          exchange: exchangeRate.currency &&
+            exchangeRate.rate && {
+              currency: exchangeRate.currency,
+              rate: exchangeRate.rate,
+            },
         })
         return datum
       }) || [],
-    [rawHosts.data, geo.data, exchange, settings.currencyDisplay],
+    [
+      rawHosts.data,
+      geo.data,
+      exchangeRate.currency,
+      exchangeRate.rate,
+      settings.currencyDisplay,
+    ],
   )
 
   return hosts
