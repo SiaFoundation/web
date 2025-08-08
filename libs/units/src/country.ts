@@ -10,7 +10,7 @@ const OFFSET = 127397
  * @returns {string} flag emoji
  */
 export function countryCodeEmoji(cc?: string): string {
-  if (!cc) {
+  if (!cc || cc === 'unknown') {
     return ''
   }
   if (!CC_REGEX.test(cc)) {
