@@ -125,17 +125,17 @@
     },
     "apps/indexd": {
       "name": "indexd",
-      "version": "0.0.1",
+      "version": "0.1.0",
       "dependencies": {
         "@carbon/icons-react": "10.49.6",
-        "@siafoundation/design-system": "^10.0.0",
+        "@siafoundation/design-system": "^10.1.0",
         "@siafoundation/fonts": "^0.5.2",
-        "@siafoundation/indexd-react": "^0.1.0",
+        "@siafoundation/indexd-react": "^0.1.1",
         "@siafoundation/indexd-types": "^0.1.0",
         "@siafoundation/react-core": "^7.0.0",
         "@siafoundation/react-icons": "^0.3.2",
         "@siafoundation/types": "^0.12.2",
-        "@siafoundation/units": "^3.5.2",
+        "@siafoundation/units": "^3.6.0",
         "@tanstack/react-table": "8.21.3",
         "bignumber.js": "^9.3.1",
         "class-variance-authority": "0.7.1",
@@ -146,6 +146,7 @@
         "next-themes": "0.2.1",
         "react": "^19.1.0",
         "react-hook-form": "^7.60.0",
+        "react-resizable-panels": "^3.0.4",
         "use-debounce": "9.0.4",
         "use-local-storage-state": "19.5.0",
       },
@@ -239,7 +240,7 @@
     },
     "libs/design-system": {
       "name": "@siafoundation/design-system",
-      "version": "10.0.0",
+      "version": "10.1.0",
       "dependencies": {
         "@dnd-kit/core": "^6.3.1",
         "@radix-ui/react-accordion": "^1.2.11",
@@ -263,7 +264,7 @@
         "@siafoundation/react-core": "^7.0.0",
         "@siafoundation/react-icons": "^0.3.2",
         "@siafoundation/types": "^0.12.2",
-        "@siafoundation/units": "^3.5.2",
+        "@siafoundation/units": "^3.6.0",
         "@tailwindcss/container-queries": "^0.1.1",
         "@tanstack/react-table": "^8.21.3",
         "@tanstack/react-virtual": "^3.13.12",
@@ -397,11 +398,11 @@
     },
     "libs/indexd-react": {
       "name": "@siafoundation/indexd-react",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "dependencies": {
         "@siafoundation/indexd-types": "0.1.0",
         "@siafoundation/react-core": "^7.0.0",
-        "@siafoundation/units": "3.5.2",
+        "@siafoundation/units": "3.6.0",
         "swr": "^2.1.1",
       },
     },
@@ -489,7 +490,7 @@
     },
     "libs/units": {
       "name": "@siafoundation/units",
-      "version": "3.5.2",
+      "version": "3.6.0",
       "dependencies": {
         "@siafoundation/types": "^0.12.2",
         "@technically/lodash": "^4.17.0",
@@ -3707,6 +3708,8 @@
     "react-remove-scroll": ["react-remove-scroll@2.7.1", "", { "dependencies": { "react-remove-scroll-bar": "^2.3.7", "react-style-singleton": "^2.2.3", "tslib": "^2.1.0", "use-callback-ref": "^1.3.3", "use-sidecar": "^1.1.3" }, "peerDependencies": { "@types/react": "*", "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc" }, "optionalPeers": ["@types/react"] }, "sha512-HpMh8+oahmIdOuS5aFKKY6Pyog+FNaZV/XyJOq7b4YFwsFHe5yYfdbIalI4k3vU2nSDql7YskmUseHsRrJqIPA=="],
 
     "react-remove-scroll-bar": ["react-remove-scroll-bar@2.3.8", "", { "dependencies": { "react-style-singleton": "^2.2.2", "tslib": "^2.0.0" }, "peerDependencies": { "@types/react": "*", "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0" }, "optionalPeers": ["@types/react"] }, "sha512-9r+yi9+mgU33AKcj6IbT9oRCO78WriSj6t/cF8DWBZJ9aOGPOTEDvdUDz1FwKim7QXWwmHqtdHnRJfhAxEG46Q=="],
+
+    "react-resizable-panels": ["react-resizable-panels@3.0.4", "", { "peerDependencies": { "react": "^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc", "react-dom": "^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc" } }, "sha512-8Y4KNgV94XhUvI2LeByyPIjoUJb71M/0hyhtzkHaqpVHs+ZQs8b627HmzyhmVYi3C9YP6R+XD1KmG7hHjEZXFQ=="],
 
     "react-simple-maps": ["react-simple-maps@3.0.0", "", { "dependencies": { "d3-geo": "^2.0.2", "d3-selection": "^2.0.0", "d3-zoom": "^2.0.0", "topojson-client": "^3.1.0" }, "peerDependencies": { "prop-types": "^15.7.2", "react": "^16.8.0 || 17.x || 18.x", "react-dom": "^16.8.0 || 17.x || 18.x" } }, "sha512-vKNFrvpPG8Vyfdjnz5Ne1N56rZlDfHXv5THNXOVZMqbX1rWZA48zQuYT03mx6PAKanqarJu/PDLgshIZAfHHqw=="],
 

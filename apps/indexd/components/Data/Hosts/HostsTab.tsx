@@ -11,6 +11,7 @@ import { columns } from './hostsColumns'
 import { DataViewSelect, type DataView } from '../Views'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useHosts } from './useHosts'
+import { Layout } from '../Layout'
 
 export function HostsTab() {
   const params = useSearchParams()
@@ -55,18 +56,16 @@ export function HostsTab() {
   })
 
   return (
-    <div className="w-full h-full overflow-hidden flex flex-col">
-      <div className="flex flex-row flex-1 overflow-hidden w-full">
-        <div className="flex-1 h-full overflow-hidden p-4">
-          <DataTable
-            {...table}
-            heading={<DataViewSelect value={view} onValueChange={setView} />}
-          />
-        </div>
-        <div className="py-4 pr-4">
-          {selectedId ? <SidePanelHost /> : <SidePanelHostList table={table} />}
-        </div>
-      </div>
-    </div>
+    <Layout
+      table={
+        <DataTable
+          {...table}
+          heading={<DataViewSelect value={view} onValueChange={setView} />}
+        />
+      }
+      panel={
+        selectedId ? <SidePanelHost /> : <SidePanelHostList table={table} />
+      }
+    />
   )
 }
