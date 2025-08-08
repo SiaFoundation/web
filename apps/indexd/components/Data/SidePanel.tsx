@@ -24,7 +24,7 @@ export function SidePanel({
         {customCloseAction ||
           (onClose ? (
             <Button
-              className="absolute top-1.5 right-2 p-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-blue-500 z-10"
+              className="p-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-blue-500 z-10"
               onClick={onClose}
               aria-label="Close drawer"
               variant="ghost"

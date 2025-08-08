@@ -14,6 +14,13 @@ import { CountryFilter } from './filters/CountryFilter'
 import { UsableFilter } from './filters/UsableFilter'
 import { BlockedFilter } from './filters/BlockedFilter'
 import { selectColumn } from '../sharedColumns/select'
+import {
+  hostUsableColumnWidth,
+  smallColumnWidth,
+  timestampColumnWidth,
+  hashColumnWidth,
+  hostBlockedColumnWidth,
+} from '../sharedColumns/sizes'
 
 export const columns: ColumnDef<HostData>[] = [
   selectColumn(),
@@ -26,9 +33,13 @@ export const columns: ColumnDef<HostData>[] = [
     ),
     accessorKey: 'id',
     cell: ({ getValue }) => (
-      <ValueCopyable value={getValue<string>()} type="hostPublicKey" />
+      <ValueCopyable
+        maxLength={100}
+        value={getValue<string>()}
+        type="hostPublicKey"
+      />
     ),
-    meta: { width: 150 },
+    meta: { ...hashColumnWidth },
   },
   {
     id: 'usable',
@@ -65,7 +76,7 @@ export const columns: ColumnDef<HostData>[] = [
       )
     },
     meta: {
-      width: 200,
+      ...hostUsableColumnWidth,
     },
   },
   {
@@ -104,6 +115,7 @@ export const columns: ColumnDef<HostData>[] = [
     },
     meta: {
       className: 'justify-start',
+      ...hostBlockedColumnWidth,
     },
   },
   {
@@ -124,7 +136,7 @@ export const columns: ColumnDef<HostData>[] = [
         />
       </div>
     ),
-    meta: { className: 'justify-end', width: 80 },
+    meta: { className: 'justify-end', ...smallColumnWidth },
   },
   {
     id: 'uptime',
@@ -143,7 +155,7 @@ export const columns: ColumnDef<HostData>[] = [
         <Text>{row.original.displayFields.uptime}</Text>
       </div>
     ),
-    meta: { className: 'justify-end', width: 100 },
+    meta: { className: 'justify-end', ...smallColumnWidth },
   },
   {
     id: 'location',
@@ -174,7 +186,7 @@ export const columns: ColumnDef<HostData>[] = [
         </div>
       )
     },
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...smallColumnWidth },
   },
   {
     id: 'totalStorage',
@@ -185,7 +197,7 @@ export const columns: ColumnDef<HostData>[] = [
     ),
     accessorKey: 'settings.totalStorage',
     cell: ({ row }) => <Text>{row.original.displayFields.totalStorage}</Text>,
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...smallColumnWidth },
   },
   {
     id: 'remainingStorage',
@@ -206,7 +218,7 @@ export const columns: ColumnDef<HostData>[] = [
         </div>
       )
     },
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...smallColumnWidth },
   },
   {
     id: 'storagePrice',
@@ -227,6 +239,7 @@ export const columns: ColumnDef<HostData>[] = [
     ),
     meta: {
       className: 'justify-end',
+      ...smallColumnWidth,
     },
     sortingFn: (rowA, rowB) => {
       return rowA.original.sortFields.storagePrice
@@ -253,7 +266,7 @@ export const columns: ColumnDef<HostData>[] = [
         </div>
       )
     },
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...smallColumnWidth },
     sortingFn: (rowA, rowB) => {
       return rowA.original.sortFields.ingressPrice
         .minus(rowB.original.sortFields.ingressPrice)
@@ -277,7 +290,7 @@ export const columns: ColumnDef<HostData>[] = [
         <ValueWithTooltip {...row.original.displayFields.egressPrice} />
       </div>
     ),
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...smallColumnWidth },
     sortingFn: (rowA, rowB) => {
       return rowA.original.sortFields.egressPrice
         .minus(rowB.original.sortFields.egressPrice)
@@ -303,7 +316,7 @@ export const columns: ColumnDef<HostData>[] = [
         <ValueWithTooltip {...row.original.displayFields.freeSectorPrice} />
       </div>
     ),
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...smallColumnWidth },
     sortingFn: (rowA, rowB) => {
       return rowA.original.sortFields.freeSectorPrice
         .minus(rowB.original.sortFields.freeSectorPrice)
@@ -329,7 +342,7 @@ export const columns: ColumnDef<HostData>[] = [
         <Text>{row.original.displayFields.maxContractDuration}</Text>
       </div>
     ),
-    meta: { className: 'justify-end', width: 120 },
+    meta: { className: 'justify-end', ...smallColumnWidth },
   },
   {
     id: 'maxCollateral',
@@ -348,7 +361,7 @@ export const columns: ColumnDef<HostData>[] = [
         <ValueWithTooltip {...row.original.displayFields.maxCollateral} />
       </div>
     ),
-    meta: { className: 'justify-end', width: 120 },
+    meta: { className: 'justify-end', ...smallColumnWidth },
     sortingFn: (rowA, rowB) => {
       return rowA.original.sortFields.maxCollateral
         .minus(rowB.original.sortFields.maxCollateral)
@@ -374,7 +387,7 @@ export const columns: ColumnDef<HostData>[] = [
         <Text>{row.original.displayFields.protocolVersion}</Text>
       </div>
     ),
-    meta: { className: 'justify-end', width: 120 },
+    meta: { className: 'justify-end', ...smallColumnWidth },
   },
   {
     id: 'priceValidity',
@@ -393,7 +406,7 @@ export const columns: ColumnDef<HostData>[] = [
         <Text>{row.original.displayFields.priceValidity}</Text>
       </div>
     ),
-    meta: { className: 'justify-end', width: 220 },
+    meta: { className: 'justify-end', ...timestampColumnWidth },
   },
   {
     id: 'release',
@@ -404,6 +417,6 @@ export const columns: ColumnDef<HostData>[] = [
     ),
     accessorKey: 'settings.release',
     cell: ({ row }) => <Text>{row.original.displayFields.release}</Text>,
-    meta: { className: 'justify-end', width: 120 },
+    meta: { className: 'justify-end', minWidth: 160, maxWidth: 160 },
   },
 ]

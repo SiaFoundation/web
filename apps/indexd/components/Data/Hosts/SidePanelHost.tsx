@@ -46,7 +46,7 @@ export function SidePanelHost() {
     <SidePanel
       onClose={() => setSelectedId(undefined)}
       heading={
-        <Text size="18" weight="medium">
+        <Text size="18" weight="medium" ellipsis>
           {host?.location?.countryCode ? (
             <span className="pr-1">
               <CountryFlag countryCode={host?.location?.countryCode} />
