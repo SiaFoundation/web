@@ -1,11 +1,11 @@
 {
   "name": "@siafoundation/units",
-  "version": "3.6.0",
+  "version": "3.7.0",
   "description": "Methods for converting and formatting Sia units and data types.",
   "license": "MIT",
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@siafoundation/types": "^0.12.2",
+    "@siafoundation/types": "^0.13.0",
     "@technically/lodash": "^4.17.0",
     "bignumber.js": "^9.3.1",
     "blakejs": "^1.2.1"

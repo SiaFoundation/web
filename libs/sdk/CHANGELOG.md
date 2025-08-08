@@ -1,5 +1,12 @@
 # @siafoundation/sdk
 
+## 0.4.4
+
+### Patch Changes
+
+- Updated dependencies [bd61c9e]
+  - @siafoundation/types@0.13.0
+
 ## 0.4.3
 
 ### Patch Changes

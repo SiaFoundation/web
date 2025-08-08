@@ -1,5 +1,32 @@
 # indexd
 
+## 0.2.0
+
+### Minor Changes
+
+- 8cb68af: Data explorer columns now expand when more space is available.
+- bd61c9e: Updated the protocol version type to include both formats and added a helper function.
+- f0cf9bc: The data explorer table rendering performance has been improved.
+- 3c2e5cd: The host explorer now supports blocking and unblocking selected hosts.
+- 3c2e5cd: Improved alignment and styling in the data explorer.
+- 8cb68af: Full IDs and public keys are now displayed in the data explorer cells.
+- 3c2e5cd: The host explorer usable and blocked columns now support filtering.
+- 3c2e5cd: The data tables now support selecting rows.
+
+### Patch Changes
+
+- Updated dependencies [e95ebb6]
+- Updated dependencies [bd61c9e]
+- Updated dependencies [3c2e5cd]
+- Updated dependencies [7654811]
+- Updated dependencies [8cb68af]
+  - @siafoundation/design-system@10.2.0
+  - @siafoundation/indexd-types@0.2.0
+  - @siafoundation/types@0.13.0
+  - @siafoundation/units@3.7.0
+  - @siafoundation/indexd-react@0.1.2
+  - @siafoundation/react-core@8.0.0
+
 ## 0.1.0
 
 ### Minor Changes

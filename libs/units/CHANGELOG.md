@@ -1,5 +1,16 @@
 # @siafoundation/units
 
+## 3.7.0
+
+### Minor Changes
+
+- 7654811: V1 transactions that do not match any other type but have arbitrary data that is not a host announcement are now correctly classified as arbitrary data transactions.
+
+### Patch Changes
+
+- Updated dependencies [bd61c9e]
+  - @siafoundation/types@0.13.0
+
 ## 3.6.0
 
 ### Minor Changes

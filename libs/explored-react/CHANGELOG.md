@@ -1,5 +1,12 @@
 # @siafoundation/explored-react
 
+## 0.8.3
+
+### Patch Changes
+
+- @siafoundation/explored-types@0.19.3
+- @siafoundation/react-core@8.0.0
+
 ## 0.8.2
 
 ### Patch Changes

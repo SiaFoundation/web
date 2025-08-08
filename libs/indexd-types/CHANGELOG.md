@@ -1,5 +1,16 @@
 # @siafoundation/indexd-types
 
+## 0.2.0
+
+### Minor Changes
+
+- bd61c9e: Updated the protocol version type to include both formats and added a helper function.
+
+### Patch Changes
+
+- Updated dependencies [bd61c9e]
+  - @siafoundation/types@0.13.0
+
 ## 0.1.0
 
 ### Minor Changes

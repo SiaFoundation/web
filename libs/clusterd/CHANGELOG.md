@@ -1,5 +1,14 @@
 # @siafoundation/clusterd
 
+## 0.5.2
+
+### Patch Changes
+
+- Updated dependencies [bd61c9e]
+- Updated dependencies [7654811]
+  - @siafoundation/types@0.13.0
+  - @siafoundation/units@3.7.0
+
 ## 0.5.1
 
 ### Patch Changes
