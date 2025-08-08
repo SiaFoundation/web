@@ -11,6 +11,13 @@ import { TableHeader } from '../columns'
 import { UsabilityBadges } from '../UsabilityBadges'
 import { CheckmarkFilled16, CloseFilled16 } from '@siafoundation/react-icons'
 import { selectColumn } from '../sharedColumns/select'
+import {
+  hostUsableColumnWidth,
+  smallColumnWidth,
+  timestampColumnWidth,
+  hashColumnWidth,
+  hostBlockedColumnWidth,
+} from '../sharedColumns/sizes'
 
 export const contractsColumns: ColumnDef<ContractData>[] = [
   selectColumn(),
@@ -23,9 +30,13 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     ),
     accessorKey: 'id',
     cell: ({ getValue }) => (
-      <ValueCopyable value={getValue<string>()} type="contract" />
+      <ValueCopyable
+        maxLength={100}
+        value={getValue<string>()}
+        type="contract"
+      />
     ),
-    meta: { className: 'justify-start', width: 160 },
+    meta: { className: 'justify-start', ...hashColumnWidth },
   },
   {
     id: 'status',
@@ -38,7 +49,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     cell: ({ getValue }) => (
       <StatusBadge variant={getValue<boolean>() ? 'good' : 'bad'} />
     ),
-    meta: { className: 'justify-end', width: 80 },
+    meta: { className: 'justify-end', ...smallColumnWidth },
   },
   {
     id: 'state',
@@ -49,20 +60,24 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     ),
     accessorKey: 'state',
     cell: ({ getValue }) => <StateBadge value={getValue<string>()} />,
-    meta: { className: 'justify-end', width: 80 },
+    meta: { className: 'justify-end', ...smallColumnWidth },
   },
   {
     id: 'hostPublicKey',
     header: ({ table, column }) => (
-      <TableHeader table={table} column={column}>
+      <TableHeader table={table} column={column} className="justify-start">
         Host Public Key
       </TableHeader>
     ),
     accessorKey: 'hostKey',
     cell: ({ getValue }) => (
-      <ValueCopyable value={getValue<string>()} type="hostPublicKey" />
+      <ValueCopyable
+        maxLength={100}
+        value={getValue<string>()}
+        type="hostPublicKey"
+      />
     ),
-    meta: { className: 'justify-end', width: 160 },
+    meta: { className: 'justify-start', ...hashColumnWidth },
   },
   {
     id: 'location',
@@ -89,7 +104,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         </span>
       )
     },
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...smallColumnWidth },
   },
   {
     id: 'hostUsable',
@@ -120,7 +135,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         </div>
       )
     },
-    meta: { className: 'justify-start', width: 160 },
+    meta: { className: 'justify-start', ...hostUsableColumnWidth },
   },
   {
     id: 'hostBlocked',
@@ -146,7 +161,10 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         </div>
       )
     },
-    meta: { className: 'justify-end' },
+    meta: {
+      className: 'justify-end',
+      ...hostBlockedColumnWidth,
+    },
   },
   {
     id: 'formation',
@@ -157,7 +175,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     ),
     accessorKey: 'formation',
     cell: ({ row }) => <Text>{row.original.displayFields.formation}</Text>,
-    meta: { className: 'justify-end', width: 140 },
+    meta: { className: 'justify-end', ...timestampColumnWidth },
   },
   {
     id: 'proofHeight',
@@ -168,7 +186,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     ),
     accessorKey: 'proofHeight',
     cell: ({ row }) => <Text>{row.original.displayFields.proofHeight}</Text>,
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...smallColumnWidth },
   },
   {
     id: 'expirationHeight',
@@ -181,7 +199,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     cell: ({ row }) => (
       <Text>{row.original.displayFields.expirationHeight}</Text>
     ),
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...timestampColumnWidth },
   },
   {
     id: 'nextPrune',
@@ -192,7 +210,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     ),
     accessorKey: 'nextPrune',
     cell: ({ row }) => <Text>{row.original.displayFields.nextPrune}</Text>,
-    meta: { className: 'justify-end', width: 140 },
+    meta: { className: 'justify-end', ...timestampColumnWidth },
   },
   {
     id: 'lastBroadcastAttempt',
@@ -205,7 +223,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     cell: ({ row }) => (
       <Text>{row.original.displayFields.lastBroadcastAttempt}</Text>
     ),
-    meta: { className: 'justify-end', width: 140 },
+    meta: { className: 'justify-end', ...timestampColumnWidth },
   },
   {
     id: 'capacity',
@@ -216,7 +234,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     ),
     accessorKey: 'size',
     cell: ({ row }) => <Text>{row.original.displayFields.capacity}</Text>,
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...smallColumnWidth },
   },
   {
     id: 'dataSize',
@@ -227,7 +245,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     ),
     accessorKey: 'capacity',
     cell: ({ row }) => <Text>{row.original.displayFields.dataSize}</Text>,
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...smallColumnWidth },
   },
   {
     id: 'spendingSectorRoots',
@@ -240,7 +258,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     cell: ({ row }) => (
       <ValueWithTooltip {...row.original.displayFields.spendSectorRoots} />
     ),
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...smallColumnWidth },
     sortingFn: (rowA, rowB) => {
       const a = rowA.original.sortingFields.spending.sectorRoots
       const b = rowB.original.sortingFields.spending.sectorRoots
@@ -258,7 +276,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     cell: ({ row }) => (
       <ValueWithTooltip {...row.original.displayFields.spendAppendSector} />
     ),
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...smallColumnWidth },
     sortingFn: (rowA, rowB) => {
       const a = rowA.original.sortingFields.spending.appendSector
       const b = rowB.original.sortingFields.spending.appendSector
@@ -276,7 +294,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     cell: ({ row }) => (
       <ValueWithTooltip {...row.original.displayFields.spendFreeSector} />
     ),
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...smallColumnWidth },
     sortingFn: (rowA, rowB) => {
       const a = rowA.original.sortingFields.spending.freeSector
       const b = rowB.original.sortingFields.spending.freeSector
@@ -294,7 +312,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     cell: ({ row }) => (
       <ValueWithTooltip {...row.original.displayFields.spendFundAccount} />
     ),
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...smallColumnWidth },
     sortingFn: (rowA, rowB) => {
       const a = rowA.original.sortingFields.spending.fundAccount
       const b = rowB.original.sortingFields.spending.fundAccount
@@ -312,7 +330,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     cell: ({ row }) => (
       <ValueWithTooltip {...row.original.displayFields.initialAllowance} />
     ),
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...smallColumnWidth },
     sortingFn: (rowA, rowB) => {
       const a = rowA.original.sortingFields.spending.sectorRoots
       const b = rowB.original.sortingFields.spending.sectorRoots
@@ -330,7 +348,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     cell: ({ row }) => (
       <ValueWithTooltip {...row.original.displayFields.remainingAllowance} />
     ),
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...smallColumnWidth },
     sortingFn: (rowA, rowB) => {
       const a = rowA.original.sortingFields.remainingAllowance
       const b = rowB.original.sortingFields.remainingAllowance
@@ -348,7 +366,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     cell: ({ row }) => (
       <ValueWithTooltip {...row.original.displayFields.totalCollateral} />
     ),
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...smallColumnWidth },
     sortingFn: (rowA, rowB) => {
       const a = rowA.original.sortingFields.totalCollateral
       const b = rowB.original.sortingFields.totalCollateral
@@ -366,7 +384,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     cell: ({ row }) => (
       <ValueWithTooltip {...row.original.displayFields.usedCollateral} />
     ),
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...smallColumnWidth },
     sortingFn: (rowA, rowB) => {
       const a = rowA.original.sortingFields.usedCollateral
       const b = rowB.original.sortingFields.usedCollateral
@@ -384,7 +402,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     cell: ({ row }) => (
       <ValueWithTooltip {...row.original.displayFields.contractPrice} />
     ),
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...smallColumnWidth },
     sortingFn: (rowA, rowB) => {
       const a = rowA.original.sortingFields.contractPrice
       const b = rowB.original.sortingFields.contractPrice
@@ -402,7 +420,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     cell: ({ row }) => (
       <ValueWithTooltip {...row.original.displayFields.minerFee} />
     ),
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...smallColumnWidth },
     sortingFn: (rowA, rowB) => {
       const a = rowA.original.sortingFields.minerFee
       const b = rowB.original.sortingFields.minerFee
@@ -418,7 +436,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     ),
     accessorKey: 'revisionNumber',
     cell: ({ row }) => <Text>{row.original.displayFields.revisionNumber}</Text>,
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...smallColumnWidth },
   },
   {
     id: 'renewedFrom',
@@ -435,7 +453,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       }
       return <Text>{value}</Text>
     },
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...hashColumnWidth },
   },
   {
     id: 'renewedTo',
@@ -452,7 +470,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       }
       return <Text>{value}</Text>
     },
-    meta: { className: 'justify-end' },
+    meta: { className: 'justify-end', ...hashColumnWidth },
   },
 ]
 

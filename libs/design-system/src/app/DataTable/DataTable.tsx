@@ -1,6 +1,7 @@
 'use client'
 
 import { cx } from 'class-variance-authority'
+import React, { useMemo } from 'react'
 import {
   ColumnFiltersState,
   flexRender,
@@ -35,6 +36,15 @@ interface DataTableProps<T extends { id: string }> {
 
 const defaultWidth = 100
 
+type ColumnMeta = {
+  width?: number | string
+  minWidth?: number | string
+  maxWidth?: number | string
+  className?: string
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void
+  stopPropagation?: boolean
+}
+
 export function DataTable<T extends { id: string }>({
   fixedFilters,
   table,
@@ -53,6 +63,21 @@ export function DataTable<T extends { id: string }>({
   heading,
 }: DataTableProps<T>) {
   const filteredTotal = table.getFilteredRowModel().rows.length
+
+  // Build a shared grid template based on visible columns and their meta.
+  const visibleLeafColumns = table.getVisibleLeafColumns()
+  const gridTemplateColumns = useMemo(() => {
+    return visibleLeafColumns
+      .map((col) => {
+        const meta = (col.columnDef.meta ?? {}) as ColumnMeta
+        const width = toCssSize(meta.width)
+        if (width) return width
+        const min = toCssSize(meta.minWidth) ?? `${defaultWidth}px`
+        const max = toCssSize(meta.maxWidth) ?? '1fr'
+        return `minmax(${min}, ${max})`
+      })
+      .join(' ')
+  }, [visibleLeafColumns])
 
   return (
     <Panel
@@ -80,15 +105,16 @@ export function DataTable<T extends { id: string }>({
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr
                     key={headerGroup.id}
-                    style={{ display: 'flex', width: '100%' }}
+                    style={{
+                      display: 'grid',
+                      width: '100%',
+                      gridTemplateColumns,
+                    }}
                   >
                     {headerGroup.headers.map((header) => {
-                      const meta = (header.column.columnDef.meta ?? {}) as {
-                        width?: number
-                        className?: string
-                        onClick?: (e: React.MouseEvent<HTMLElement>) => void
-                      }
-                      const { width = defaultWidth, className } = meta
+                      const meta = (header.column.columnDef.meta ??
+                        {}) as ColumnMeta
+                      const { className } = meta
                       return (
                         <th
                           key={header.id}
@@ -96,9 +122,6 @@ export function DataTable<T extends { id: string }>({
                             'px-2 py-2 overflow-hidden border-r border-gray-50/50 dark:border-graydark-300/20',
                             className,
                           )}
-                          style={{
-                            width,
-                          }}
                         >
                           {flexRender(
                             header.column.columnDef.header,
@@ -125,11 +148,12 @@ export function DataTable<T extends { id: string }>({
                       data-index={virtualRow.index}
                       ref={(node) => rowVirtualizer.measureElement(node)}
                       style={{
-                        display: 'flex',
+                        display: 'grid',
                         position: 'absolute',
                         transform: `translateY(${virtualRow.start}px)`,
                         height: `${rowHeight}px`,
                         width: '100%',
+                        gridTemplateColumns,
                       }}
                       className={cx(
                         'cursor-pointer transition-colors',
@@ -141,16 +165,9 @@ export function DataTable<T extends { id: string }>({
                       onClick={() => onRowClick?.(row.original.id)}
                     >
                       {row.getVisibleCells().map((cell) => {
-                        const meta = (cell.column.columnDef.meta ?? {}) as {
-                          width?: number
-                          className?: string
-                          stopPropagation?: boolean
-                        }
-                        const {
-                          width = defaultWidth,
-                          className,
-                          stopPropagation,
-                        } = meta
+                        const meta = (cell.column.columnDef.meta ??
+                          {}) as ColumnMeta
+                        const { className, stopPropagation } = meta
                         return (
                           <td
                             key={cell.id}
@@ -165,9 +182,6 @@ export function DataTable<T extends { id: string }>({
                               'border-r border-gray-50/50 dark:border-graydark-300/20',
                               className,
                             )}
-                            style={{
-                              width,
-                            }}
                           >
                             {flexRender(
                               cell.column.columnDef.cell,
@@ -222,4 +236,10 @@ export function DataTable<T extends { id: string }>({
       </div>
     </Panel>
   )
+}
+
+function toCssSize(value: number | string | undefined): string | undefined {
+  if (value === undefined) return undefined
+  if (typeof value === 'number') return `${value}px`
+  return value
 }
