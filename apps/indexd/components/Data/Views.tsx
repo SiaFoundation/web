@@ -1,9 +1,9 @@
 import { Select, Option } from '@siafoundation/design-system'
 
-// TODO: add contracts and accounts
 const VIEWS = [
   { value: 'hosts', label: 'Hosts' },
   { value: 'contracts', label: 'Contracts' },
+  { value: 'accounts', label: 'Accounts' },
 ] as const
 
 export type DataView = (typeof VIEWS)[number]['value']
