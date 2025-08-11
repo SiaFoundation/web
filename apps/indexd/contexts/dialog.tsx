@@ -12,6 +12,7 @@ import { useSyncerConnect, useWallet } from '@siafoundation/indexd-react'
 import { IndexdSendSiacoinDialog } from '../dialogs/IndexdSendSiacoinDialog'
 import { IndexdTransactionDetailsDialog } from '../dialogs/IndexdTransactionDetailsDialog'
 import { DebugDialog } from '../dialogs/DebugDialog'
+import { AccountDeleteDialog } from '../dialogs/AccountDeleteDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -22,6 +23,7 @@ export type DialogType =
   | 'connectPeer'
   | 'bugReport'
   | 'confirm'
+  | 'accountDelete'
 
 type ConfirmProps = {
   title: React.ReactNode
@@ -96,6 +98,7 @@ export function DialogProvider({ children }: Props) {
 
 export function Dialogs() {
   const {
+    id,
     dialog,
     openDialog,
     onOpenChange,
@@ -149,6 +152,11 @@ export function Dialogs() {
         onOpenChange={(val) =>
           val && confirm ? openConfirmDialog(confirm) : closeDialog()
         }
+      />
+      <AccountDeleteDialog
+        id={id}
+        open={dialog === 'accountDelete'}
+        onOpenChange={onOpenChange}
       />
     </>
   )
