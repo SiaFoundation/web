@@ -1,5 +1,12 @@
 # Changelog
 
+## 10.3.0
+
+### Minor Changes
+
+- e5dd1db: DataTable now defaults to server-side operations.
+- ac7017c: Added useSiascanHost and useDaemonExplorerHost.
+
 ## 10.2.0
 
 ### Minor Changes

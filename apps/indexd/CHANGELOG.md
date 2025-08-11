@@ -1,5 +1,22 @@
 # indexd
 
+## 0.3.0
+
+### Minor Changes
+
+- 889ebc4: Accounts can now be deleted.
+- e91b293: The table and panel in the data explorer are now resizable.
+- ac7017c: The host and contract detail panels now fetch their own data.
+- e5dd1db: The data explorer now uses server-side filtering and pagination.
+- 1b89958: Update min collateral units. Closes https://github.com/SiaFoundation/indexd/issues/310
+- dee7386: The data explorer now has an Accounts mode.
+
+### Patch Changes
+
+- Updated dependencies [e5dd1db]
+- Updated dependencies [ac7017c]
+  - @siafoundation/design-system@10.3.0
+
 ## 0.2.0
 
 ### Minor Changes
