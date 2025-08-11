@@ -19,7 +19,7 @@ import { hastingsToFiat } from '../../lib/currency'
 import LoadingCurrency from '../LoadingCurrency'
 import LoadingTimestamp from '../LoadingTimestamp'
 import { useExploredAddress } from '../../hooks/useExploredAddress'
-import { ContractData } from '../../lib/contracts'
+import { ContractData, contractResolutionLabels } from '../../lib/contracts'
 
 type Props = {
   contractRevisions:
@@ -48,6 +48,17 @@ export function Contract({
   })
   const values = useMemo(() => {
     return [
+      'hostPublicKey' in contract && {
+        label: 'host public key',
+        entityType: 'hostPublicKey',
+        entityValue: contract.hostPublicKey,
+      },
+      'renterPublicKey' in contract && {
+        label: 'renter address',
+        entityType: 'address',
+        entityValue: contract.renterPayoutValid.address,
+        copyable: true,
+      },
       {
         label: 'file size',
         copyable: false,
@@ -76,22 +87,32 @@ export function Contract({
         label: 'merkle root',
         value: contract.fileMerkleRoot,
       },
-      !('v2FileContract' in contract) && {
-        label: 'unlock hash',
-        value: contract.unlockHash,
-      },
+      contract.version === 'v1'
+        ? {
+            label: 'unlock hash',
+            value: contract.unlockHash,
+          }
+        : {
+            label: 'resolution type',
+            value:
+              contractResolutionLabels[
+                contract.resolutionType as keyof typeof contractResolutionLabels
+              ] ?? '-',
+            copyable: false,
+          },
       {
-        label: 'proof confirmed',
+        label: 'resolution txn',
         copyable: !!contract.resolutionTransactionID,
-        value: contract.resolutionTransactionID || '-',
+        entityType: 'transaction',
+        entityValue: contract.resolutionTransactionID || '-',
       },
       {
-        label: 'negotiation height',
+        label: 'confirmation height',
         copyable: false,
         value: contract.confirmationIndex.height.toLocaleString() || '-',
       },
       {
-        label: 'negotiation time',
+        label: 'confirmation time',
         copyable: false,
         value: (
           <LoadingTimestamp>
@@ -103,12 +124,12 @@ export function Contract({
         ),
       },
       {
-        label: 'expiration height',
+        label: 'proof window start',
         copyable: false,
         value: contract.resolutionWindowStart.toLocaleString(),
       },
       {
-        label: 'expiration time',
+        label: 'proof window start time',
         copyable: false,
         value: (
           <LoadingTimestamp>
@@ -120,12 +141,12 @@ export function Contract({
         ),
       },
       {
-        label: 'proof height',
+        label: 'resolved at',
         copyable: false,
         value: contract.resolutionIndex?.height.toLocaleString() || '-',
       },
       {
-        label: 'proof time',
+        label: 'resolved at time',
         copyable: false,
         value: contract.resolutionIndex ? (
           <LoadingTimestamp>
@@ -139,12 +160,12 @@ export function Contract({
         ),
       },
       {
-        label: 'proof deadline height',
+        label: 'expiration height',
         copyable: false,
         value: contract.resolutionWindowEnd.toLocaleString(),
       },
       {
-        label: 'proof deadline time',
+        label: 'expiration time',
         copyable: false,
         value: (
           <LoadingTimestamp>
@@ -184,7 +205,7 @@ export function Contract({
           : 0
         ).toLocaleString(),
       },
-    ] as DatumProps[]
+    ].filter(Boolean) as DatumProps[]
   }, [
     contract,
     currentHeight,
