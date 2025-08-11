@@ -41,7 +41,7 @@ describe('tansforms', () => {
         maxIngressPriceTBPinned: new BigNumber(200),
         maxStoragePriceTBMonth: new BigNumber(864),
         maxStoragePriceTBMonthPinned: new BigNumber(300),
-        minCollateral: new BigNumber(50000),
+        minCollateral: new BigNumber(100),
         minCollateralPinned: new BigNumber(400),
         minProtocolVersion: '1.7.0',
         pinnedCurrency: 'usd' as CurrencyId,
@@ -105,7 +105,7 @@ describe('tansforms', () => {
               maxEgressPriceTB: new BigNumber(200),
               maxIngressPriceTB: new BigNumber(300),
               maxStoragePriceTBMonth: new BigNumber(400),
-              minCollateral: new BigNumber(500),
+              minCollateral: new BigNumber(100),
               minProtocolVersion: '1.7.0',
             } as ValuesHosts,
             {
@@ -119,7 +119,7 @@ describe('tansforms', () => {
           maxEgressPrice: '200000000000000',
           maxIngressPrice: '300000000000000',
           maxStoragePrice: '92592592593',
-          minCollateral: '500000000000000000000000000',
+          minCollateral: '23148148148',
           minProtocolVersion: 'v1.7.0',
         })
       })
@@ -247,7 +247,7 @@ function buildAllResponses() {
       maxEgressPrice: '1000000000000000',
       maxIngressPrice: '1000000000000000',
       maxStoragePrice: '200000000000',
-      minCollateral: toHastings(50_000).toString(),
+      minCollateral: '23148148148',
     } as UsabilitySettings,
     pricePinning: {
       currency: 'usd',
