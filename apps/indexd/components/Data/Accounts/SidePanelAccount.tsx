@@ -1,16 +1,16 @@
 import { Text, truncate } from '@siafoundation/design-system'
-import { useDataTableParams } from '@siafoundation/design-system'
 import { useMemo } from 'react'
 import { SidePanel } from '../SidePanel'
 import { useAccounts } from './useAccounts'
+import { useAccountsParams } from './useAccountsParams'
 
 export function SidePanelAccount() {
-  const { selectedId, setSelectedId } = useDataTableParams('accountList')
+  const { panelId, setPanelId } = useAccountsParams()
   // TODO: Temporary until an account detail endpoint is added.
   const accounts = useAccounts()
   const account = useMemo(
-    () => accounts.find((a) => a.id === selectedId),
-    [selectedId, accounts],
+    () => accounts.find((a) => a.id === panelId),
+    [panelId, accounts],
   )
   if (!account) {
     return (
@@ -23,7 +23,7 @@ export function SidePanelAccount() {
   }
   return (
     <SidePanel
-      onClose={() => setSelectedId(undefined)}
+      onClose={() => setPanelId(undefined)}
       heading={
         <Text size="18" weight="medium" ellipsis>
           Account: {truncate(account?.publicKey, 24)}

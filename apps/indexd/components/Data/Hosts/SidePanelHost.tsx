@@ -5,19 +5,19 @@ import {
   CountryFlag,
 } from '@siafoundation/design-system'
 import { HostMapHost } from '@siafoundation/design-system'
-import { useDataTableParams } from '@siafoundation/design-system'
 import { useMemo } from 'react'
 import { UsabilityBadges } from '../UsabilityBadges'
-import { InfoRow } from '../InfoRow'
+import { InfoRow } from '../PanelInfoRow'
 import { SidePanel } from '../SidePanel'
 import { BulkHostBlocklistAdd } from './bulkActions/BulkHostBlocklistAdd'
 import { BulkHostBlocklistRemove } from './bulkActions/BulkHostBlocklistRemove'
 import { SidePanelSection } from '../SidePanelSection'
 import { useHost } from './useHost'
+import { useHostsParams } from './useHostsParams'
 
 export function SidePanelHost() {
-  const { selectedId, setSelectedId } = useDataTableParams('hostList')
-  const host = useHost(selectedId)
+  const { panelId, setPanelId } = useHostsParams()
+  const host = useHost(panelId)
   const mapHost = useMemo(() => {
     if (!host || host.location.countryCode === 'unknown') return null
     const hostData: HostMapHost = {
@@ -40,7 +40,7 @@ export function SidePanelHost() {
   }
   return (
     <SidePanel
-      onClose={() => setSelectedId(undefined)}
+      onClose={() => setPanelId(undefined)}
       heading={
         <Text size="18" weight="medium" ellipsis>
           {host?.location?.countryCode ? (
@@ -60,7 +60,7 @@ export function SidePanelHost() {
       }
     >
       <HostMap
-        key={selectedId}
+        key={panelId}
         hosts={mapHost ? [mapHost] : []}
         activeHost={mapHost}
         onHostMapClick={() => null}

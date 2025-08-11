@@ -8,13 +8,14 @@ import {
   SortingState,
 } from '@tanstack/react-table'
 
-export function useDataTableParams(scope: string) {
+export function useDataTableParams<Filters extends ColumnFiltersState>(
+  scope: string,
+) {
   const params = useSearchParams()
   const pathname = usePathname()
   const router = useRouter()
-  const limit = parseInt(params.get(`${scope}Limit`) || '1000', 10) || 1000
-  const offset = parseInt(params.get(`${scope}Offset`) || '0', 10) || 0
-  const selectedId = params.get(`${scope}Id`) as string | undefined
+  const limit = getNumberParam(params, `${scope}Limit`, 100)
+  const offset = getNumberParam(params, `${scope}Offset`, 0)
 
   const setPage = useCallback(
     (offset: number) => {
@@ -33,19 +34,6 @@ export function useDataTableParams(scope: string) {
       router.push(`${pathname}?${paramsObj.toString()}`)
     },
     [router, params, scope, pathname],
-  )
-
-  const setSelectedId = useCallback(
-    (id: string | undefined) => {
-      const paramsObj = new URLSearchParams(Array.from(params.entries()))
-      if (id) {
-        paramsObj.set(`${scope}Id`, id)
-      } else {
-        paramsObj.delete(`${scope}Id`)
-      }
-      router.push(`${pathname}?${paramsObj.toString()}`)
-    },
-    [router, params, pathname, scope],
   )
 
   const setOffset = useCallback(
@@ -67,13 +55,13 @@ export function useDataTableParams(scope: string) {
   )
 
   const columnFiltersParams = params.get(`${scope}Filters`)
-  const columnFilters = useMemo(() => {
-    return columnFiltersParams
-      ? (JSON.parse(columnFiltersParams) as ColumnFiltersState)
-      : []
+  const columnFilters = useMemo<Filters>(() => {
+    return (
+      columnFiltersParams ? JSON.parse(columnFiltersParams) : []
+    ) as Filters
   }, [columnFiltersParams])
 
-  const setColumnFilters: OnChangeFn<ColumnFiltersState> = useCallback(
+  const setColumnFilters: OnChangeFn<Filters> = useCallback(
     (filtersFn) => {
       const filters =
         typeof filtersFn === 'function' ? filtersFn(columnFilters) : filtersFn
@@ -107,13 +95,31 @@ export function useDataTableParams(scope: string) {
     limit,
     setPage,
     setPageSize,
-    selectedId,
-    setSelectedId,
     setOffset,
     setLimit,
     columnFilters,
     setColumnFilters,
     columnSorts,
     setColumnSorts,
+  }
+}
+
+function getNumberParam(
+  params: URLSearchParams,
+  key: string,
+  defaultValue: number,
+) {
+  const value = params.get(key)
+  if (value === null) {
+    return defaultValue
+  }
+  try {
+    const num = parseInt(value, 10)
+    if (isNaN(num)) {
+      return defaultValue
+    }
+    return num
+  } catch {
+    return defaultValue
   }
 }

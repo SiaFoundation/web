@@ -8,33 +8,14 @@ import {
   type ColumnDef,
   type PaginationState,
   type OnChangeFn,
-  type ColumnFiltersState,
-  getFacetedMinMaxValues,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  SortingState,
   getSortedRowModel,
   RowSelectionState,
   Row,
+  ColumnFiltersState,
+  SortingState,
 } from '@tanstack/react-table'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-
-type DataTableProps<T extends { id: string }> = {
-  columns: ColumnDef<T>[]
-  data: T[]
-  rowHeight?: number
-  fixedFilters?: ColumnFiltersState
-  columnFilters: ColumnFiltersState
-  columnSorts: SortingState
-  setColumnFilters?: OnChangeFn<ColumnFiltersState>
-  setColumnSorts?: OnChangeFn<SortingState>
-  offset: number
-  limit: number
-  setOffset: (offset: number) => void
-  setLimit: (limit: number) => void
-  onRowClick?: (id: string) => void
-}
 
 export type DataTableState<T extends { id: string }> = ReturnType<
   typeof useDataTable<T>
@@ -54,7 +35,21 @@ export function useDataTable<T extends { id: string }>({
   setOffset,
   setLimit,
   onRowClick,
-}: DataTableProps<T>) {
+}: {
+  columns: ColumnDef<T>[]
+  data: T[]
+  rowHeight?: number
+  fixedFilters?: ColumnFiltersState
+  columnFilters: ColumnFiltersState
+  columnSorts: SortingState
+  setColumnFilters?: OnChangeFn<ColumnFiltersState>
+  setColumnSorts?: OnChangeFn<SortingState>
+  offset: number
+  limit: number
+  setOffset: (offset: number) => void
+  setLimit: (limit: number) => void
+  onRowClick?: (id: string) => void
+}) {
   const tableContainerRef = useRef<HTMLDivElement>(null)
 
   // Convert URL offset/limit to TanStack pageIndex/pageSize
@@ -108,12 +103,11 @@ export function useDataTable<T extends { id: string }>({
     onSortingChange: setColumnSorts,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    getFacetedMinMaxValues: getFacetedMinMaxValues(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
-    getFacetedRowModel: getFacetedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    manualPagination: false,
+    manualPagination: true,
+    manualFiltering: true,
+    manualSorting: true,
     debugTable: false,
   })
 
@@ -168,7 +162,6 @@ export function useDataTable<T extends { id: string }>({
     limit,
     setOffset,
     setLimit,
-    datasetTotal: data.length,
     onRowClick,
   }
 }

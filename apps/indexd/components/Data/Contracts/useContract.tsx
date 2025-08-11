@@ -39,5 +39,8 @@ export function useContract(contractId?: string) {
     settings.currencyDisplay,
   ])
 
-  return contract
+  return {
+    contract,
+    host,
+  }
 }

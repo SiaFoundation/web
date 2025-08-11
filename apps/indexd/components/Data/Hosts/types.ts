@@ -3,6 +3,21 @@ import { CurrencyOption } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 import { CurrencyDisplayProps } from '@siafoundation/design-system'
 
+export type HostFilters = (
+  | {
+      id: 'usable'
+      value: boolean
+    }
+  | {
+      id: 'blocked'
+      value: boolean
+    }
+  | {
+      id: 'activecontracts'
+      value: boolean
+    }
+)[]
+
 export type HostLocation =
   | {
       countryCode: 'unknown'
@@ -22,13 +37,6 @@ export type HostData = Host & {
   exchange?: {
     currency: CurrencyOption
     rate: BigNumber
-  }
-  sortFields: {
-    storagePrice: BigNumber
-    ingressPrice: BigNumber
-    egressPrice: BigNumber
-    freeSectorPrice: BigNumber
-    maxCollateral: BigNumber
   }
   displayFields: {
     uptime: string

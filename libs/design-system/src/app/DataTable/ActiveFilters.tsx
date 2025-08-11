@@ -68,8 +68,15 @@ export function ActiveFilters<T>({
   }
 
   const getBooleanDisplayLabel = (columnId: string, value: boolean): string => {
-    const columnName = getColumnDisplayName(columnId)
+    const meta = table.getColumn(columnId)?.columnDef.meta as {
+      filterLabelPositive?: string
+      filterLabelNegative?: string
+    }
+    if (meta?.filterLabelPositive && meta?.filterLabelNegative) {
+      return value ? meta.filterLabelPositive : meta.filterLabelNegative
+    }
 
+    const columnName = getColumnDisplayName(columnId)
     // Default boolean display
     return value ? columnName : `Not ${columnName}`
   }

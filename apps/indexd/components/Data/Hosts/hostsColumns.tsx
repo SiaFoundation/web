@@ -8,9 +8,8 @@ import {
 } from '@siafoundation/design-system'
 import { CheckmarkFilled16, CloseFilled16 } from '@siafoundation/react-icons'
 import { HostData } from './types'
-import { TableHeader } from '../columns'
+import { TableHeader } from '../ColumnHeader'
 import { UsabilityBadges, UsabilityIndicator } from '../UsabilityBadges'
-import { CountryFilter } from './filters/CountryFilter'
 import { UsableFilter } from './filters/UsableFilter'
 import { BlockedFilter } from './filters/BlockedFilter'
 import { selectColumn } from '../sharedColumns/select'
@@ -48,7 +47,7 @@ export const columns: ColumnDef<HostData>[] = [
         table={table}
         column={column}
         className="justify-start"
-        filter={<UsableFilter table={table} />}
+        filter={<UsableFilter />}
       >
         Usable
       </TableHeader>
@@ -77,6 +76,8 @@ export const columns: ColumnDef<HostData>[] = [
     },
     meta: {
       ...hostUsableColumnWidth,
+      filterLabelPositive: 'Usable',
+      filterLabelNegative: 'Unusable',
     },
   },
   {
@@ -86,7 +87,7 @@ export const columns: ColumnDef<HostData>[] = [
         table={table}
         column={column}
         className="justify-start"
-        filter={<BlockedFilter table={table} />}
+        filter={<BlockedFilter />}
       >
         Blocked
       </TableHeader>
@@ -116,6 +117,8 @@ export const columns: ColumnDef<HostData>[] = [
     meta: {
       className: 'justify-start',
       ...hostBlockedColumnWidth,
+      filterLabelPositive: 'Blocked',
+      filterLabelNegative: 'Not Blocked',
     },
   },
   {
@@ -126,7 +129,7 @@ export const columns: ColumnDef<HostData>[] = [
       </TableHeader>
     ),
     accessorKey: 'settings.acceptingContracts',
-    cell: ({ row, getValue }) => (
+    cell: ({ row }) => (
       <div className="flex items-center justify-end gap-1">
         <UsabilityIndicator
           status={
@@ -160,11 +163,7 @@ export const columns: ColumnDef<HostData>[] = [
   {
     id: 'location',
     header: ({ table, column }) => (
-      <TableHeader
-        table={table}
-        column={column}
-        filter={<CountryFilter table={table} />}
-      >
+      <TableHeader table={table} column={column}>
         Location
       </TableHeader>
     ),
@@ -241,11 +240,6 @@ export const columns: ColumnDef<HostData>[] = [
       className: 'justify-end',
       ...smallColumnWidth,
     },
-    sortingFn: (rowA, rowB) => {
-      return rowA.original.sortFields.storagePrice
-        .minus(rowB.original.sortFields.storagePrice)
-        .toNumber()
-    },
   },
   {
     id: 'ingressPrice',
@@ -267,11 +261,6 @@ export const columns: ColumnDef<HostData>[] = [
       )
     },
     meta: { className: 'justify-end', ...smallColumnWidth },
-    sortingFn: (rowA, rowB) => {
-      return rowA.original.sortFields.ingressPrice
-        .minus(rowB.original.sortFields.ingressPrice)
-        .toNumber()
-    },
   },
   {
     id: 'egressPrice',
@@ -291,11 +280,6 @@ export const columns: ColumnDef<HostData>[] = [
       </div>
     ),
     meta: { className: 'justify-end', ...smallColumnWidth },
-    sortingFn: (rowA, rowB) => {
-      return rowA.original.sortFields.egressPrice
-        .minus(rowB.original.sortFields.egressPrice)
-        .toNumber()
-    },
   },
   {
     id: 'freeSectorPrice',
@@ -317,11 +301,6 @@ export const columns: ColumnDef<HostData>[] = [
       </div>
     ),
     meta: { className: 'justify-end', ...smallColumnWidth },
-    sortingFn: (rowA, rowB) => {
-      return rowA.original.sortFields.freeSectorPrice
-        .minus(rowB.original.sortFields.freeSectorPrice)
-        .toNumber()
-    },
   },
   {
     id: 'maxContractDuration',
@@ -331,7 +310,7 @@ export const columns: ColumnDef<HostData>[] = [
       </TableHeader>
     ),
     accessorKey: 'settings.maxContractDuration',
-    cell: ({ row, getValue }) => (
+    cell: ({ row }) => (
       <div className="flex items-center justify-end gap-1">
         <UsabilityIndicator
           status={
@@ -352,7 +331,7 @@ export const columns: ColumnDef<HostData>[] = [
       </TableHeader>
     ),
     accessorKey: 'settings.maxCollateral',
-    cell: ({ row, getValue }) => (
+    cell: ({ row }) => (
       <div className="flex items-center justify-end gap-1">
         <UsabilityIndicator
           status={row.original.usability.maxCollateral ? 'usable' : 'unusable'}
@@ -362,11 +341,6 @@ export const columns: ColumnDef<HostData>[] = [
       </div>
     ),
     meta: { className: 'justify-end', ...smallColumnWidth },
-    sortingFn: (rowA, rowB) => {
-      return rowA.original.sortFields.maxCollateral
-        .minus(rowB.original.sortFields.maxCollateral)
-        .toNumber()
-    },
   },
   {
     id: 'protocolVersion',
@@ -376,7 +350,7 @@ export const columns: ColumnDef<HostData>[] = [
       </TableHeader>
     ),
     accessorKey: 'settings.protocolVersion',
-    cell: ({ row, getValue }) => (
+    cell: ({ row }) => (
       <div className="flex items-center justify-end gap-1">
         <UsabilityIndicator
           status={

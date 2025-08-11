@@ -4,30 +4,25 @@ import {
   truncate,
   ValueCopyable,
 } from '@siafoundation/design-system'
-import { useDataTableParams } from '@siafoundation/design-system'
 import { useMemo } from 'react'
 import { UsabilityBadges } from '../UsabilityBadges'
 import { StateBadge, StatusBadge } from './contractsColumns'
-import { InfoRow } from '../InfoRow'
+import { InfoRow } from '../PanelInfoRow'
 import { SidePanel } from '../SidePanel'
 import { SidePanelSection } from '../SidePanelSection'
-import { useContracts } from './useContracts'
+import { useContract } from './useContract'
+import { useContractsParams } from './useContractsParams'
 
 export function SidePanelContract() {
-  const { selectedId, setSelectedId } = useDataTableParams('contractList')
-  const contracts = useContracts()
-  const contract = useMemo(
-    () => contracts.find((c) => c.id === selectedId),
-    [selectedId, contracts],
-  )
+  const { panelId, setPanelId } = useContractsParams()
+  const { contract, host } = useContract(panelId)
   const mapContract = useMemo(() => {
     if (!contract) return null
     return {
       id: contract.hostKey,
       publicKey: contract.hostKey,
       location: contract.host?.location,
-      v2Settings: contract.host?.settings,
-      usable: contract.host?.usable,
+      v2Settings: contract.host?.v2Settings,
     }
   }, [contract])
   if (!contract) {
@@ -41,7 +36,7 @@ export function SidePanelContract() {
   }
   return (
     <SidePanel
-      onClose={() => setSelectedId(undefined)}
+      onClose={() => setPanelId(undefined)}
       heading={
         <Text size="18" weight="medium" ellipsis>
           Contract: {truncate(contract?.id, 24)}
@@ -71,7 +66,7 @@ export function SidePanelContract() {
               <ValueCopyable value={contract.hostKey} type="hostPublicKey" />
             }
           />
-          {contract.host?.addresses.map((address) => (
+          {host?.addresses?.map((address) => (
             <InfoRow
               key={address.address + address.protocol}
               label={address.protocol}
@@ -82,8 +77,8 @@ export function SidePanelContract() {
       </SidePanelSection>
       <SidePanelSection heading="Usability">
         <UsabilityBadges
-          usable={contract.host?.usable || false}
-          usability={contract.host?.usability}
+          usable={host?.usable || false}
+          usability={host?.usability}
           className="w-full overflow-hidden flex-wrap"
         />
       </SidePanelSection>

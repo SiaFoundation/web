@@ -4,21 +4,34 @@ import { useContracts as useIndexContracts } from '@siafoundation/indexd-react'
 import { ContractData } from './types'
 import { useAppSettings } from '@siafoundation/react-core'
 import { transformContract } from './transform'
-import { useHosts } from '../Hosts/useHosts'
+import { ContractsParams } from '@siafoundation/indexd-types'
+import { useSiascanHosts } from '../useSiascanHosts'
+import { useContractsParams } from './useContractsParams'
 
 export function useContracts() {
+  const { columnFilters, offset, limit } = useContractsParams()
+  const params = useMemo(() => {
+    const filters: ContractsParams = { offset, limit }
+    const good = columnFilters.find((f) => f.id === 'status')?.value
+    if (good !== undefined) {
+      filters.good = good
+    }
+    const revisable = columnFilters.find((f) => f.id === 'revisable')?.value
+    if (revisable !== undefined) {
+      filters.revisable = revisable
+    }
+    return filters
+  }, [columnFilters, offset, limit])
   const rawContracts = useIndexContracts({
-    params: {
-      limit: 500,
-    },
+    params,
   })
-  const hosts = useHosts()
+  const geo = useSiascanHosts()
   const exchangeRate = useActiveSiascanExchangeRate()
   const { settings } = useAppSettings()
   const contracts = useMemo(
     () =>
       rawContracts.data?.map((contract) => {
-        const host = hosts.find((h) => h.id === contract.hostKey)
+        const host = geo.data?.find((h) => h.publicKey === contract.hostKey)
         const datum: ContractData = transformContract(contract, {
           host,
           currencyDisplay: settings.currencyDisplay,
@@ -34,7 +47,7 @@ export function useContracts() {
       rawContracts.data,
       exchangeRate.rate,
       exchangeRate.currency,
-      hosts,
+      geo.data,
       settings.currencyDisplay,
     ],
   )

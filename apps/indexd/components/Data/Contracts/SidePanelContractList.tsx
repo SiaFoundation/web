@@ -1,6 +1,5 @@
 import {
   HostMap,
-  useDataTableParams,
   Text,
   Button,
   DataTableState,
@@ -9,21 +8,21 @@ import { ContractData } from './types'
 import { useMapHosts } from '../useMapHosts'
 import { SidePanel } from '../SidePanel'
 import { useMemo } from 'react'
+import { useContractsParams } from './useContractsParams'
 
 export function SidePanelContractList({
   table,
 }: {
   table: DataTableState<ContractData>
 }) {
-  const { setSelectedId } = useDataTableParams('contractList')
+  const { setPanelId } = useContractsParams()
   const contracts = useMemo(() => {
     return table.isSelection ? table.selectedRows : table.rows
   }, [table.isSelection, table.selectedRows, table.rows])
   const mapHosts = useMapHosts({
     hosts: contracts.map((contract) => ({
       ...contract.original,
-      settings: contract.original.host?.settings,
-      usable: contract.original.host?.usable,
+      settings: contract.original.host?.v2Settings,
       location: contract.original.host?.location,
     })),
   })
@@ -49,7 +48,7 @@ export function SidePanelContractList({
       <HostMap
         hosts={mapHosts}
         activeHost={null}
-        onHostMapClick={(id) => setSelectedId(id)}
+        onHostMapClick={(id) => setPanelId(id)}
         scale={180}
         mapClassName="-mt-[20px]"
       />

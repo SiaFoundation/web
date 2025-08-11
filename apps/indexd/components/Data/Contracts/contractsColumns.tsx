@@ -3,21 +3,17 @@ import {
   Badge,
   Text,
   ValueCopyable,
-  Tooltip,
   ValueWithTooltip,
 } from '@siafoundation/design-system'
 import { type ColumnDef } from '@tanstack/react-table'
-import { TableHeader } from '../columns'
-import { UsabilityBadges } from '../UsabilityBadges'
-import { CheckmarkFilled16, CloseFilled16 } from '@siafoundation/react-icons'
+import { TableHeader } from '../ColumnHeader'
 import { selectColumn } from '../sharedColumns/select'
 import {
-  hostUsableColumnWidth,
   smallColumnWidth,
   timestampColumnWidth,
   hashColumnWidth,
-  hostBlockedColumnWidth,
 } from '../sharedColumns/sizes'
+import { GoodFilter } from './filters/GoodFilter'
 
 export const contractsColumns: ColumnDef<ContractData>[] = [
   selectColumn(),
@@ -41,7 +37,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
   {
     id: 'status',
     header: ({ table, column }) => (
-      <TableHeader table={table} column={column}>
+      <TableHeader table={table} column={column} filter={<GoodFilter />}>
         Status
       </TableHeader>
     ),
@@ -49,7 +45,12 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     cell: ({ getValue }) => (
       <StatusBadge variant={getValue<boolean>() ? 'good' : 'bad'} />
     ),
-    meta: { className: 'justify-end', ...smallColumnWidth },
+    meta: {
+      className: 'justify-end',
+      ...smallColumnWidth,
+      filterLabelPositive: 'Status is good',
+      filterLabelNegative: 'Status is bad',
+    },
   },
   {
     id: 'state',
@@ -105,66 +106,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       )
     },
     meta: { className: 'justify-end', ...smallColumnWidth },
-  },
-  {
-    id: 'hostUsable',
-    header: ({ table, column }) => (
-      <TableHeader table={table} column={column} className="justify-start">
-        Host Usable
-      </TableHeader>
-    ),
-    accessorKey: 'hostUsable',
-    cell: ({ row }) => {
-      return (
-        <div className="flex items-center justify-end gap-1">
-          <Tooltip
-            content={
-              row.original.host?.usable ? 'host is usable' : 'host is unusable'
-            }
-          >
-            {row.original.host?.usable ? (
-              <CheckmarkFilled16 className="text-green-500" />
-            ) : (
-              <CloseFilled16 className="text-red-500" />
-            )}
-          </Tooltip>
-          <UsabilityBadges
-            usable={row.original.host?.usable || false}
-            usability={row.original.host?.usability}
-          />
-        </div>
-      )
-    },
-    meta: { className: 'justify-start', ...hostUsableColumnWidth },
-  },
-  {
-    id: 'hostBlocked',
-    header: ({ table, column }) => (
-      <TableHeader table={table} column={column}>
-        Host Blocked
-      </TableHeader>
-    ),
-    accessorKey: 'host.blocked',
-    cell: ({ row }) => {
-      const isBlocked = row.original.host?.blocked
-      return (
-        <div className="flex justify-end">
-          <Tooltip
-            content={isBlocked ? 'host is blocked' : 'host is not blocked'}
-          >
-            {isBlocked ? (
-              <CloseFilled16 className="text-red-500" />
-            ) : (
-              <CheckmarkFilled16 className="text-neutral-500" />
-            )}
-          </Tooltip>
-        </div>
-      )
-    },
-    meta: {
-      className: 'justify-end',
-      ...hostBlockedColumnWidth,
-    },
   },
   {
     id: 'formation',
@@ -259,11 +200,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       <ValueWithTooltip {...row.original.displayFields.spendSectorRoots} />
     ),
     meta: { className: 'justify-end', ...smallColumnWidth },
-    sortingFn: (rowA, rowB) => {
-      const a = rowA.original.sortingFields.spending.sectorRoots
-      const b = rowB.original.sortingFields.spending.sectorRoots
-      return a.minus(b).toNumber()
-    },
   },
   {
     id: 'spendAppendSector',
@@ -277,11 +213,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       <ValueWithTooltip {...row.original.displayFields.spendAppendSector} />
     ),
     meta: { className: 'justify-end', ...smallColumnWidth },
-    sortingFn: (rowA, rowB) => {
-      const a = rowA.original.sortingFields.spending.appendSector
-      const b = rowB.original.sortingFields.spending.appendSector
-      return a.minus(b).toNumber()
-    },
   },
   {
     id: 'spendFreeSector',
@@ -295,11 +226,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       <ValueWithTooltip {...row.original.displayFields.spendFreeSector} />
     ),
     meta: { className: 'justify-end', ...smallColumnWidth },
-    sortingFn: (rowA, rowB) => {
-      const a = rowA.original.sortingFields.spending.freeSector
-      const b = rowB.original.sortingFields.spending.freeSector
-      return a.minus(b).toNumber()
-    },
   },
   {
     id: 'spendFundAccount',
@@ -313,11 +239,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       <ValueWithTooltip {...row.original.displayFields.spendFundAccount} />
     ),
     meta: { className: 'justify-end', ...smallColumnWidth },
-    sortingFn: (rowA, rowB) => {
-      const a = rowA.original.sortingFields.spending.fundAccount
-      const b = rowB.original.sortingFields.spending.fundAccount
-      return a.minus(b).toNumber()
-    },
   },
   {
     id: 'initialAllowance',
@@ -331,11 +252,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       <ValueWithTooltip {...row.original.displayFields.initialAllowance} />
     ),
     meta: { className: 'justify-end', ...smallColumnWidth },
-    sortingFn: (rowA, rowB) => {
-      const a = rowA.original.sortingFields.spending.sectorRoots
-      const b = rowB.original.sortingFields.spending.sectorRoots
-      return a.minus(b).toNumber()
-    },
   },
   {
     id: 'remainingAllowance',
@@ -349,11 +265,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       <ValueWithTooltip {...row.original.displayFields.remainingAllowance} />
     ),
     meta: { className: 'justify-end', ...smallColumnWidth },
-    sortingFn: (rowA, rowB) => {
-      const a = rowA.original.sortingFields.remainingAllowance
-      const b = rowB.original.sortingFields.remainingAllowance
-      return a.minus(b).toNumber()
-    },
   },
   {
     id: 'totalCollateral',
@@ -367,11 +278,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       <ValueWithTooltip {...row.original.displayFields.totalCollateral} />
     ),
     meta: { className: 'justify-end', ...smallColumnWidth },
-    sortingFn: (rowA, rowB) => {
-      const a = rowA.original.sortingFields.totalCollateral
-      const b = rowB.original.sortingFields.totalCollateral
-      return a.minus(b).toNumber()
-    },
   },
   {
     id: 'usedCollateral',
@@ -385,11 +291,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       <ValueWithTooltip {...row.original.displayFields.usedCollateral} />
     ),
     meta: { className: 'justify-end', ...smallColumnWidth },
-    sortingFn: (rowA, rowB) => {
-      const a = rowA.original.sortingFields.usedCollateral
-      const b = rowB.original.sortingFields.usedCollateral
-      return a.minus(b).toNumber()
-    },
   },
   {
     id: 'contractPrice',
@@ -403,11 +304,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       <ValueWithTooltip {...row.original.displayFields.contractPrice} />
     ),
     meta: { className: 'justify-end', ...smallColumnWidth },
-    sortingFn: (rowA, rowB) => {
-      const a = rowA.original.sortingFields.contractPrice
-      const b = rowB.original.sortingFields.contractPrice
-      return a.minus(b).toNumber()
-    },
   },
   {
     id: 'minerFee',
@@ -421,11 +317,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       <ValueWithTooltip {...row.original.displayFields.minerFee} />
     ),
     meta: { className: 'justify-end', ...smallColumnWidth },
-    sortingFn: (rowA, rowB) => {
-      const a = rowA.original.sortingFields.minerFee
-      const b = rowB.original.sortingFields.minerFee
-      return a.minus(b).toNumber()
-    },
   },
   {
     id: 'revisionNumber',

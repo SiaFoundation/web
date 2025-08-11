@@ -1,36 +1,35 @@
-import {
-  useActiveSiascanExchangeRate,
-  useSiascanHostsList,
-} from '@siafoundation/design-system'
+import { useActiveSiascanExchangeRate } from '@siafoundation/design-system'
 import { useMemo } from 'react'
-import {
-  useIndexdState,
-  useHosts as useIndexHosts,
-} from '@siafoundation/indexd-react'
+import { useHosts as useIndexHosts } from '@siafoundation/indexd-react'
 import { transformHost } from './transform'
 import { useAppSettings } from '@siafoundation/react-core'
+import { HostsParams } from '@siafoundation/indexd-types'
+import { useSiascanHosts } from '../useSiascanHosts'
+import { useHostsParams } from './useHostsParams'
 
 export function useHosts() {
-  const state = useIndexdState()
-  const geo = useSiascanHostsList({
-    disabled: !state.data,
-    api:
-      state.data?.network === 'mainnet'
-        ? 'https://api.siascan.com'
-        : 'https://api.siascan.com/zen',
-    params: {
-      sortBy: 'storage_price',
-      dir: 'asc',
-      limit: 1000,
-    },
-    payload: {
-      online: true,
-    },
-  })
+  const geo = useSiascanHosts()
+  const { columnFilters, offset, limit } = useHostsParams()
+  const params = useMemo(() => {
+    const filters: HostsParams = { offset, limit }
+    const usable = columnFilters.find((f) => f.id === 'usable')?.value
+    if (usable !== undefined) {
+      filters.usable = usable
+    }
+    const blocked = columnFilters.find((f) => f.id === 'blocked')?.value
+    if (blocked !== undefined) {
+      filters.blocked = blocked
+    }
+    const activecontracts = columnFilters.find(
+      (f) => f.id === 'activecontracts',
+    )?.value
+    if (activecontracts !== undefined) {
+      filters.activecontracts = activecontracts
+    }
+    return filters
+  }, [columnFilters, offset, limit])
   const rawHosts = useIndexHosts({
-    params: {
-      limit: 500,
-    },
+    params,
   })
   const exchangeRate = useActiveSiascanExchangeRate()
   const { settings } = useAppSettings()

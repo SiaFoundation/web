@@ -1,8 +1,4 @@
-import {
-  DataTable,
-  useDataTable,
-  useDataTableParams,
-} from '@siafoundation/design-system'
+import { DataTable, useDataTable } from '@siafoundation/design-system'
 import { useCallback } from 'react'
 import { contractsColumns } from './contractsColumns'
 import { DataViewSelect, type DataView } from '../Views'
@@ -12,6 +8,9 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { ContractData } from './types'
 import { useContracts } from './useContracts'
 import { Layout } from '../Layout'
+import { useContractsParams } from './useContractsParams'
+import { OnChangeFn } from '@tanstack/react-table'
+import { ColumnFiltersState } from '@tanstack/react-table'
 
 export function ContractsTab() {
   const params = useSearchParams()
@@ -28,18 +27,18 @@ export function ContractsTab() {
     limit,
     setOffset,
     setLimit,
-    selectedId,
-    setSelectedId,
+    panelId,
+    setPanelId,
     columnFilters,
     setColumnFilters,
     columnSorts,
     setColumnSorts,
-  } = useDataTableParams('contractList')
+  } = useContractsParams()
   const onRowClick = useCallback(
     (id: string) => {
-      setSelectedId(id)
+      setPanelId(id)
     },
-    [setSelectedId],
+    [setPanelId],
   )
 
   const contracts = useContracts()
@@ -47,7 +46,7 @@ export function ContractsTab() {
     data: contracts,
     columns: contractsColumns,
     columnFilters,
-    setColumnFilters,
+    setColumnFilters: setColumnFilters as OnChangeFn<ColumnFiltersState>,
     columnSorts,
     setColumnSorts,
     offset,
@@ -66,7 +65,7 @@ export function ContractsTab() {
         />
       }
       panel={
-        selectedId ? (
+        panelId ? (
           <SidePanelContract />
         ) : (
           <SidePanelContractList table={table} />

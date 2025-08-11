@@ -12,8 +12,8 @@ import { type VirtualItem, type Virtualizer } from '@tanstack/react-virtual'
 import { Label } from '../../core/Label'
 import { Panel } from '../../core/Panel'
 import { Select, Option } from '../../core/Select'
-import { DataTablePaginatorKnownTotal } from './DataTablePaginatorKnownTotal'
 import { ActiveFilters } from './ActiveFilters'
+import { DataTablePaginatorUnknownTotal } from './DataTablePaginatorUnknownTotal'
 
 interface DataTableProps<T extends { id: string }> {
   fixedFilters?: ColumnFiltersState
@@ -24,6 +24,7 @@ interface DataTableProps<T extends { id: string }> {
   tableContainerRef: React.RefObject<HTMLDivElement | null>
   rowVirtualizer: Virtualizer<HTMLDivElement, Element>
   rows: Row<T>[]
+  isLoading?: boolean
   className?: string
   selectedRowId?: string
   onRowClick?: (id: string) => void
@@ -53,6 +54,7 @@ export function DataTable<T extends { id: string }>({
   rowHeight,
   tableContainerRef,
   rowVirtualizer,
+  isLoading,
   rows,
   className,
   selectedRowId,
@@ -62,8 +64,6 @@ export function DataTable<T extends { id: string }>({
   onClickFilterIcon,
   heading,
 }: DataTableProps<T>) {
-  const filteredTotal = table.getFilteredRowModel().rows.length
-
   // Build a shared grid template based on visible columns and their meta.
   const visibleLeafColumns = table.getVisibleLeafColumns()
   const gridTemplateColumns = useMemo(() => {
@@ -221,11 +221,11 @@ export function DataTable<T extends { id: string }>({
             </Select>
           </div>
           <div className="flex items-center gap-2">
-            <DataTablePaginatorKnownTotal
+            <DataTablePaginatorUnknownTotal
               offset={offset}
               limit={limit}
-              total={filteredTotal}
-              isLoading={false}
+              pageTotal={rows.length}
+              isLoading={isLoading}
               firstPage={() => table.firstPage()}
               previousPage={() => table.previousPage()}
               nextPage={() => table.nextPage()}

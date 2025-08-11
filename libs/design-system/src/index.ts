@@ -172,6 +172,7 @@ export * from './hooks/useExternalHost'
 export * from './hooks/useExternalHostsList'
 export * from './hooks/useExternalExchangeRate'
 export * from './hooks/useExternalConsensusNetwork'
+export * from './hooks/useParamId'
 
 // multi
 export * from './multi/useMultiSelect'

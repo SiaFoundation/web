@@ -1,29 +1,33 @@
 import { Contract } from '@siafoundation/indexd-types'
-import { HostData } from '../Hosts/types'
 import { CurrencyOption } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 import { CurrencyDisplayProps } from '@siafoundation/design-system'
+import { V2HostSettings } from '@siafoundation/types'
+
+export type ContractFilters = (
+  | {
+      id: 'status'
+      value: boolean
+    }
+  | {
+      id: 'revisable'
+      value: boolean
+    }
+)[]
 
 export type ContractData = Contract & {
   id: string
-  host?: HostData
+  host?: {
+    location: {
+      countryCode: string
+      latitude: number
+      longitude: number
+    }
+    v2Settings?: V2HostSettings
+  }
   exchange?: {
     currency: CurrencyOption
     rate: BigNumber
-  }
-  sortingFields: {
-    spending: {
-      appendSector: BigNumber
-      freeSector: BigNumber
-      fundAccount: BigNumber
-      sectorRoots: BigNumber
-    }
-    remainingAllowance: BigNumber
-    totalCollateral: BigNumber
-    contractPrice: BigNumber
-    minerFee: BigNumber
-    usedCollateral: BigNumber
-    initialAllowance: BigNumber
   }
   displayFields: {
     contractPrice: CurrencyDisplayProps
