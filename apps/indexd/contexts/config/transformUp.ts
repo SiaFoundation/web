@@ -45,7 +45,9 @@ export function transformUpHosts(
     maxEgressPrice: toHastings(
       valuePerTBToPerByte(values.maxEgressPriceTB),
     ).toString(),
-    minCollateral: toHastings(values.minCollateral).toString(),
+    minCollateral: toHastings(
+      valuePerTBPerMonthToPerBytePerBlock(values.minCollateral),
+    ).toString(),
     minProtocolVersion: `v${values.minProtocolVersion}`,
   }
 }

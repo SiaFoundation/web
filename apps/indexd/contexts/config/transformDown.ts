@@ -53,7 +53,7 @@ export function transformDownHosts(
       scDecimalPlaces,
     ),
     minCollateral: toSiacoins(
-      new BigNumber(config.minCollateral),
+      valuePerBytePerBlockToPerTBPerMonth(new BigNumber(config.minCollateral)),
       scDecimalPlaces,
     ),
     minProtocolVersion: config.minProtocolVersion.slice(
