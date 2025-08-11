@@ -1,8 +1,4 @@
-import {
-  DataTable,
-  useDataTable,
-  useDataTableParams,
-} from '@siafoundation/design-system'
+import { DataTable, useDataTable } from '@siafoundation/design-system'
 import { useCallback } from 'react'
 import { accountsColumns } from './accountsColumns'
 import { DataViewSelect, type DataView } from '../Views'
@@ -12,6 +8,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { AccountData } from './types'
 import { useAccounts } from './useAccounts'
 import { Layout } from '../Layout'
+import { useAccountsParams } from './useAccountsParams'
 
 export function AccountsTab() {
   const params = useSearchParams()
@@ -28,18 +25,18 @@ export function AccountsTab() {
     limit,
     setOffset,
     setLimit,
-    selectedId,
-    setSelectedId,
+    panelId,
+    setPanelId,
     columnFilters,
     setColumnFilters,
     columnSorts,
     setColumnSorts,
-  } = useDataTableParams('accountList')
+  } = useAccountsParams()
   const onRowClick = useCallback(
     (id: string) => {
-      setSelectedId(id)
+      setPanelId(id)
     },
-    [setSelectedId],
+    [setPanelId],
   )
 
   const accounts = useAccounts()
@@ -66,11 +63,7 @@ export function AccountsTab() {
         />
       }
       panel={
-        selectedId ? (
-          <SidePanelAccount />
-        ) : (
-          <SidePanelAccountList table={table} />
-        )
+        panelId ? <SidePanelAccount /> : <SidePanelAccountList table={table} />
       }
     />
   )

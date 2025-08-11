@@ -41,13 +41,6 @@ export function transformHost(
       longitude: 0,
     },
     exchange,
-    sortFields: {
-      storagePrice: new BigNumber(host.settings.prices.storagePrice),
-      ingressPrice: new BigNumber(host.settings.prices.ingressPrice),
-      egressPrice: new BigNumber(host.settings.prices.egressPrice),
-      freeSectorPrice: new BigNumber(host.settings.prices.freeSectorPrice),
-      maxCollateral: new BigNumber(host.settings.prices.collateral),
-    },
     displayFields: transformHostDisplayFields(
       host,
       location,

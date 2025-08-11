@@ -17,6 +17,11 @@ export function getHostColor(h: HostMapHost) {
       colorHex: colors.blue[600],
     }
   }
+  if (h.usable === undefined) {
+    return {
+      colorHex: colors.gray[800],
+    }
+  }
   if (h.usable) {
     return {
       colorHex: colors.green[600],

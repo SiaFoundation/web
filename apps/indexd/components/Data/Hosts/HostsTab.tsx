@@ -1,8 +1,4 @@
-import {
-  DataTable,
-  useDataTable,
-  useDataTableParams,
-} from '@siafoundation/design-system'
+import { DataTable, useDataTable } from '@siafoundation/design-system'
 import { SidePanelHost } from './SidePanelHost'
 import { SidePanelHostList } from './SidePanelHostList'
 import { HostData } from './types'
@@ -12,6 +8,9 @@ import { DataViewSelect, type DataView } from '../Views'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useHosts } from './useHosts'
 import { Layout } from '../Layout'
+import { useHostsParams } from './useHostsParams'
+import { OnChangeFn, SortingState } from '@tanstack/react-table'
+import { ColumnFiltersState } from '@tanstack/react-table'
 
 export function HostsTab() {
   const params = useSearchParams()
@@ -24,20 +23,23 @@ export function HostsTab() {
     router.push(`${pathname}?${paramsObj.toString()}`)
   }
   const {
-    selectedId,
-    setSelectedId,
+    panelId,
+    setPanelId,
     columnFilters,
     setColumnFilters,
     columnSorts,
     setColumnSorts,
-  } = useDataTableParams('hostList')
-  const { offset, limit, setOffset, setLimit } = useDataTableParams('hostList')
+    offset,
+    limit,
+    setOffset,
+    setLimit,
+  } = useHostsParams()
 
   const onRowClick = useCallback(
     (id: string) => {
-      setSelectedId(id)
+      setPanelId(id)
     },
-    [setSelectedId],
+    [setPanelId],
   )
 
   const hosts = useHosts()
@@ -46,8 +48,8 @@ export function HostsTab() {
     columns,
     columnFilters,
     columnSorts,
-    setColumnSorts,
-    setColumnFilters,
+    setColumnSorts: setColumnSorts as OnChangeFn<SortingState>,
+    setColumnFilters: setColumnFilters as OnChangeFn<ColumnFiltersState>,
     offset,
     limit,
     onRowClick,
@@ -63,9 +65,7 @@ export function HostsTab() {
           heading={<DataViewSelect value={view} onValueChange={setView} />}
         />
       }
-      panel={
-        selectedId ? <SidePanelHost /> : <SidePanelHostList table={table} />
-      }
+      panel={panelId ? <SidePanelHost /> : <SidePanelHostList table={table} />}
     />
   )
 }

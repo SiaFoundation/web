@@ -11,7 +11,7 @@ import {
   humanBytes,
 } from '@siafoundation/units'
 import { getCurrencyDisplayPropsPreferred } from '@siafoundation/design-system'
-import { HostData } from '../Hosts/types'
+import { V2HostSettings } from '@siafoundation/types'
 
 export function transformContract(
   contract: Contract,
@@ -20,7 +20,14 @@ export function transformContract(
     exchange,
     currencyDisplay,
   }: {
-    host?: HostData
+    host?: {
+      location: {
+        countryCode: string
+        latitude: number
+        longitude: number
+      }
+      v2Settings?: V2HostSettings
+    }
     currencyDisplay: CurrencyDisplayPreference
     exchange: { currency: CurrencyOption; rate: BigNumber } | undefined
   },
@@ -30,20 +37,6 @@ export function transformContract(
     id: contract.id,
     host,
     exchange,
-    sortingFields: {
-      spending: {
-        appendSector: new BigNumber(contract.spending.appendSector),
-        freeSector: new BigNumber(contract.spending.freeSector),
-        fundAccount: new BigNumber(contract.spending.fundAccount),
-        sectorRoots: new BigNumber(contract.spending.sectorRoots),
-      },
-      remainingAllowance: new BigNumber(contract.remainingAllowance),
-      totalCollateral: new BigNumber(contract.totalCollateral),
-      contractPrice: new BigNumber(contract.contractPrice),
-      minerFee: new BigNumber(contract.minerFee),
-      usedCollateral: new BigNumber(contract.usedCollateral),
-      initialAllowance: new BigNumber(contract.initialAllowance),
-    },
     displayFields: transformContractDisplayFields(
       contract,
       host?.location,

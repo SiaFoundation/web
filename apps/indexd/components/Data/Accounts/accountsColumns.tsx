@@ -1,7 +1,7 @@
 import { AccountData } from './types'
 import { ValueCopyable } from '@siafoundation/design-system'
 import { type ColumnDef } from '@tanstack/react-table'
-import { TableHeader } from '../columns'
+import { TableHeader } from '../ColumnHeader'
 import { selectColumn } from '../sharedColumns/select'
 import { hashColumnWidth } from '../sharedColumns/sizes'
 

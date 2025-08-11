@@ -3,7 +3,6 @@ import {
   DataTableState,
   HostMap,
   Text,
-  useDataTableParams,
 } from '@siafoundation/design-system'
 import { HostData } from './types'
 import { useMapHosts } from '../useMapHosts'
@@ -11,13 +10,14 @@ import { BulkHostBlocklistAdd } from './bulkActions/BulkHostBlocklistAdd'
 import { BulkHostBlocklistRemove } from './bulkActions/BulkHostBlocklistRemove'
 import { SidePanel } from '../SidePanel'
 import { useMemo } from 'react'
+import { useHostsParams } from './useHostsParams'
 
 export function SidePanelHostList({
   table,
 }: {
   table: DataTableState<HostData>
 }) {
-  const { setSelectedId } = useDataTableParams('hostList')
+  const { setPanelId } = useHostsParams()
   const hosts = useMemo(() => {
     return table.isSelection ? table.selectedRows : table.rows
   }, [table.isSelection, table.selectedRows, table.rows])
@@ -54,7 +54,7 @@ export function SidePanelHostList({
       <HostMap
         hosts={mapHosts}
         activeHost={null}
-        onHostMapClick={(id) => setSelectedId(id)}
+        onHostMapClick={(id) => setPanelId(id)}
         scale={180}
         mapClassName="-mt-[20px]"
       />
