@@ -74,8 +74,15 @@ export type ContractData = {
   revisionNumber: number
   status: ContractStatus
   transactionID: string
+
+  // v2
+  hostPublicKey?: string
+  renterPublicKey?: string
   resolutionIndex?: ChainIndex
   resolutionTransactionID?: string
+  resolutionType?: string
+
+  // v1
   unlockHash?: string
 }
 
@@ -95,6 +102,7 @@ export function normalizeContract(
         value: contract.v2FileContract.missedHostValue,
       },
       hostPayoutValid: contract.v2FileContract.hostOutput,
+      hostPublicKey: contract.v2FileContract.hostPublicKey,
       id: contract.id,
       payout: new BigNumber(contract.v2FileContract.hostOutput.value)
         .plus(contract.v2FileContract.renterOutput.value)
@@ -103,6 +111,7 @@ export function normalizeContract(
       renewedToContractID: contract.renewedTo,
       renterPayoutMissed: contract.v2FileContract.renterOutput,
       renterPayoutValid: contract.v2FileContract.renterOutput,
+      renterPublicKey: contract.v2FileContract.renterPublicKey,
       resolutionWindowStart: contract.v2FileContract.proofHeight,
       resolutionWindowEnd: contract.v2FileContract.expirationHeight,
       revisionNumber: contract.v2FileContract.revisionNumber,
@@ -111,6 +120,7 @@ export function normalizeContract(
 
       resolutionIndex: contract.resolutionIndex,
       resolutionTransactionID: contract.resolutionTransactionID,
+      resolutionType: contract.resolutionType,
     }
   }
   return {
