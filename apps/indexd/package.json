@@ -24,7 +24,7 @@
     "react": "^19.1.0",
     "react-hook-form": "^7.60.0",
     "react-resizable-panels": "^3.0.4",
-    "use-debounce": "9.0.4",
+    "use-debounce": "10.0.5",
     "use-local-storage-state": "19.5.0"
   }
 }
