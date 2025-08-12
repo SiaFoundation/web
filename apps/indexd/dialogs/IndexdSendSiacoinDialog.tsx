@@ -2,8 +2,8 @@ import { useCallback, useMemo } from 'react'
 import { WalletSendSiacoinDialog } from '@siafoundation/design-system'
 import {
   useTxpoolRecommendedFee,
-  useWallet,
-  useWalletSend,
+  useAdminWallet,
+  useAdminWalletSend,
 } from '@siafoundation/indexd-react'
 import { useDialog } from '../contexts/dialog'
 import BigNumber from 'bignumber.js'
@@ -12,7 +12,7 @@ const standardTxnSize = 1200 // bytes
 
 export function IndexdSendSiacoinDialog() {
   const { dialog, onOpenChange } = useDialog()
-  const wallet = useWallet()
+  const wallet = useAdminWallet()
 
   const recommendedFee = useTxpoolRecommendedFee()
   const fee = useMemo(
@@ -24,7 +24,7 @@ export function IndexdSendSiacoinDialog() {
     [recommendedFee.data],
   )
 
-  const walletSend = useWalletSend()
+  const walletSend = useAdminWalletSend()
   const send = useCallback(
     async ({
       address,

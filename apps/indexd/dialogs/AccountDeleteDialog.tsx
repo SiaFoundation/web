@@ -11,7 +11,7 @@ import {
   Alert,
   Text,
 } from '@siafoundation/design-system'
-import { useAccountDelete } from '@siafoundation/indexd-react'
+import { useAdminAccountDelete } from '@siafoundation/indexd-react'
 import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDialog } from '../contexts/dialog'
@@ -54,7 +54,7 @@ export function AccountDeleteDialog({
 }: Props) {
   const { closeDialog } = useDialog()
   const { panelId, setPanelId } = useAccountsParams()
-  const accountDelete = useAccountDelete()
+  const accountDelete = useAdminAccountDelete()
 
   const form = useForm({
     mode: 'all',

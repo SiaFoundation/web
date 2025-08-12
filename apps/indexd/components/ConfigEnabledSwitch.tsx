@@ -1,7 +1,7 @@
 import { Switch, Tooltip } from '@siafoundation/design-system'
 import {
-  useSettingsContracts,
-  useSettingsContractsUpdate,
+  useAdminSettingsContracts,
+  useAdminSettingsContractsUpdate,
 } from '@siafoundation/indexd-react'
 import { useCallback } from 'react'
 
@@ -10,8 +10,8 @@ type Props = {
 }
 
 export function ConfigEnabledSwitch({ size }: Props) {
-  const settingsContractsUpdate = useSettingsContractsUpdate()
-  const settingsContracts = useSettingsContracts()
+  const settingsContractsUpdate = useAdminSettingsContractsUpdate()
+  const settingsContracts = useAdminSettingsContracts()
 
   const toggleEnabled = useCallback(() => {
     if (!settingsContracts.data) {

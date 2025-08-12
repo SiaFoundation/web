@@ -10,10 +10,10 @@ import {
   Separator,
 } from '@siafoundation/design-system'
 import {
-  useContracts,
-  useSettingsContracts,
-  useSettingsHosts,
-  useSettingsPricePinning,
+  useAdminContracts,
+  useAdminSettingsContracts,
+  useAdminSettingsHosts,
+  useAdminSettingsPricePinning,
 } from '@siafoundation/indexd-react'
 import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
@@ -71,10 +71,10 @@ type Props = {
 export function DebugDialog({ trigger, open, onOpenChange }: Props) {
   const defaultValues = useMemo(() => getDefaultValues(), [])
 
-  const contracts = useContracts()
-  const contractSettings = useSettingsContracts()
-  const hostSettings = useSettingsHosts()
-  const pricePinningSettings = useSettingsPricePinning()
+  const contracts = useAdminContracts()
+  const contractSettings = useAdminSettingsContracts()
+  const hostSettings = useAdminSettingsHosts()
+  const pricePinningSettings = useAdminSettingsPricePinning()
 
   const form = useForm({
     mode: 'all',

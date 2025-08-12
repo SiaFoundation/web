@@ -1,8 +1,8 @@
 import { webLinks } from '@siafoundation/design-system'
-import { useIndexdState } from '@siafoundation/indexd-react'
+import { useAdminState } from '@siafoundation/indexd-react'
 
 export function useSiascanUrl() {
-  const indexd = useIndexdState()
+  const indexd = useAdminState()
   return indexd.data?.network === 'zen'
     ? webLinks.explore.testnetZen
     : webLinks.explore.mainnet

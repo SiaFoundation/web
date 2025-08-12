@@ -1,9 +1,12 @@
-import { useContracts, useSettingsContracts } from '@siafoundation/indexd-react'
+import {
+  useAdminContracts,
+  useAdminSettingsContracts,
+} from '@siafoundation/indexd-react'
 
 export function useNotEnoughContracts() {
-  const settingsContracts = useSettingsContracts()
+  const settingsContracts = useAdminSettingsContracts()
   // TODO: active contracts
-  const contracts = useContracts()
+  const contracts = useAdminContracts()
 
   const active =
     settingsContracts.data &&

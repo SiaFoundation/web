@@ -3,11 +3,11 @@ import {
   triggerErrorToast,
   triggerSuccessToast,
 } from '@siafoundation/design-system'
-import { useHostsBlocklistUpdate } from '@siafoundation/indexd-react'
+import { useAdminHostsBlocklistUpdate } from '@siafoundation/indexd-react'
 import { useCallback } from 'react'
 import { HostData } from '../types'
 import { pluralize } from '@siafoundation/units'
-import { hostsRoute } from '@siafoundation/indexd-types'
+import { adminHostsRoute } from '@siafoundation/indexd-types'
 import { useMutate } from '@siafoundation/react-core'
 import { Row } from '@tanstack/react-table'
 
@@ -16,7 +16,7 @@ export function BulkHostBlocklistAdd({
 }: {
   hosts: HostData[] | Row<HostData>[]
 }) {
-  const blocklistUpdate = useHostsBlocklistUpdate()
+  const blocklistUpdate = useAdminHostsBlocklistUpdate()
   const mutate = useMutate()
   const operation = useCallback(async () => {
     const { error } = await blocklistUpdate.put({
@@ -37,7 +37,7 @@ export function BulkHostBlocklistAdd({
         title: `Blocked ${pluralize(hosts.length, 'host')}`,
       })
     }
-    await mutate((key) => key.startsWith(hostsRoute))
+    await mutate((key) => key.startsWith(adminHostsRoute))
   }, [hosts, blocklistUpdate, mutate])
   return <Button onClick={operation}>Block</Button>
 }

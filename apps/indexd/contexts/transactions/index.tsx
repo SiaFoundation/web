@@ -1,7 +1,10 @@
 'use client'
 
 import { useDatasetState, useTableState } from '@siafoundation/design-system'
-import { useWalletEvents, useWalletPending } from '@siafoundation/indexd-react'
+import {
+  useAdminWalletEvents,
+  useAdminWalletPending,
+} from '@siafoundation/indexd-react'
 import { createContext, useContext, useMemo } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
@@ -30,7 +33,7 @@ function useTransactionsMain() {
   const searchParams = useSearchParams()
   const limit = Number(searchParams.get('limit') || defaultPageSize)
   const offset = Number(searchParams.get('offset') || 0)
-  const events = useWalletEvents({
+  const events = useAdminWalletEvents({
     params: {
       limit,
       offset,
@@ -41,7 +44,7 @@ function useTransactionsMain() {
       },
     },
   })
-  const pending = useWalletPending({
+  const pending = useAdminWalletPending({
     config: {
       swr: {
         refreshInterval: defaultDatasetRefreshInterval,

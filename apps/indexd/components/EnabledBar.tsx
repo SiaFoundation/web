@@ -1,10 +1,10 @@
 import { AppDockedControl, Panel, Text } from '@siafoundation/design-system'
-import { useSettingsContracts } from '@siafoundation/indexd-react'
+import { useAdminSettingsContracts } from '@siafoundation/indexd-react'
 import { ConfigEnabledSwitch } from './ConfigEnabledSwitch'
 import { Warning24 } from '@siafoundation/react-icons'
 
 export function EnabledBar() {
-  const settingsContracts = useSettingsContracts()
+  const settingsContracts = useAdminSettingsContracts()
 
   if (!settingsContracts.data) {
     return <AppDockedControl />

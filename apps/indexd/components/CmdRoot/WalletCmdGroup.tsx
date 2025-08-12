@@ -3,7 +3,7 @@ import { routes } from '../../config/routes'
 import { useRouter } from 'next/navigation'
 import { useDialog } from '../../contexts/dialog'
 import { CommandGroup, CommandItemNav, CommandItemSearch } from './Item'
-import { useWallet } from '@siafoundation/indexd-react'
+import { useAdminWallet } from '@siafoundation/indexd-react'
 import { Page } from './types'
 
 const commandPage = {
@@ -20,7 +20,7 @@ type Props = {
 export function WalletCmdGroup({ currentPage, parentPage, pushPage }: Props) {
   const { openDialog, closeDialog } = useDialog()
   const router = useRouter()
-  const wallet = useWallet()
+  const wallet = useAdminWallet()
   return (
     <CommandGroup currentPage={currentPage} commandPage={commandPage}>
       <CommandItemNav

@@ -19,7 +19,7 @@ import { useSyncStatus } from '../hooks/useSyncStatus'
 import { routes } from '../config/routes'
 import { useDialog } from '../contexts/dialog'
 import { useNotEnoughContracts } from '../hooks/useNotEnoughContracts'
-import { useWallet } from '@siafoundation/indexd-react'
+import { useAdminWallet } from '@siafoundation/indexd-react'
 import BigNumber from 'bignumber.js'
 import { useAppSettings } from '@siafoundation/react-core'
 import useLocalStorageState from 'use-local-storage-state'
@@ -27,7 +27,7 @@ import useLocalStorageState from 'use-local-storage-state'
 export function OnboardingBar() {
   const { isUnlockedAndAuthedRoute } = useAppSettings()
   const { openDialog } = useDialog()
-  const wallet = useWallet()
+  const wallet = useAdminWallet()
   const [maximized, setMaximized] = useLocalStorageState<boolean>(
     'v0/indexd/onboarding/maximized',
     {

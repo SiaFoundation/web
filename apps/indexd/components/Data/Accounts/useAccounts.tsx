@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useAccounts as useIndexAccounts } from '@siafoundation/indexd-react'
+import { useAdminAccounts as useIndexAccounts } from '@siafoundation/indexd-react'
 import { transformAccount } from './transform'
 import { useAccountsParams } from './useAccountsParams'
 
