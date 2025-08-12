@@ -36,6 +36,7 @@ interface DataTableProps<T extends { id: string }> {
 }
 
 const defaultWidth = 100
+const columnGap = 20
 
 type ColumnMeta = {
   width?: number | string
@@ -109,6 +110,7 @@ export function DataTable<T extends { id: string }>({
                       display: 'grid',
                       width: '100%',
                       gridTemplateColumns,
+                      columnGap,
                     }}
                   >
                     {headerGroup.headers.map((header) => {
@@ -153,6 +155,7 @@ export function DataTable<T extends { id: string }>({
                         transform: `translateY(${virtualRow.start}px)`,
                         height: `${rowHeight}px`,
                         width: '100%',
+                        columnGap,
                         gridTemplateColumns,
                       }}
                       className={cx(
@@ -177,7 +180,7 @@ export function DataTable<T extends { id: string }>({
                               }
                             }}
                             className={cx(
-                              'relative overflow-hidden whitespace-nowrap text-ellipsis px-2 py-1',
+                              'px-2 py-1 relative overflow-hidden whitespace-nowrap text-ellipsis',
                               'flex items-center',
                               'border-r border-gray-50/50 dark:border-graydark-300/20',
                               className,

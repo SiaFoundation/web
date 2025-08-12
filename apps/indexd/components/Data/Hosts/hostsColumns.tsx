@@ -19,6 +19,7 @@ import {
   timestampColumnWidth,
   hashColumnWidth,
   hostBlockedColumnWidth,
+  mediumColumnWidth,
 } from '../sharedColumns/sizes'
 
 export const columns: ColumnDef<HostData>[] = [
@@ -321,7 +322,7 @@ export const columns: ColumnDef<HostData>[] = [
         <Text>{row.original.displayFields.maxContractDuration}</Text>
       </div>
     ),
-    meta: { className: 'justify-end', ...smallColumnWidth },
+    meta: { className: 'justify-end', ...mediumColumnWidth },
   },
   {
     id: 'maxCollateral',
