@@ -1,4 +1,4 @@
-import { stateRoute } from '@siafoundation/indexd-types'
+import { adminStateRoute } from '@siafoundation/indexd-types'
 
 export const routes = {
   home: '/',
@@ -17,4 +17,4 @@ export const routes = {
   login: '/login',
 }
 
-export const connectivityRoute = stateRoute
+export const connectivityRoute = adminStateRoute

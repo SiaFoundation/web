@@ -1,8 +1,8 @@
 import { TestnetWarningBanner } from '@siafoundation/design-system'
-import { useIndexdState } from '@siafoundation/indexd-react'
+import { useAdminState } from '@siafoundation/indexd-react'
 
 export function IndexdTestnetWarningBanner() {
-  const state = useIndexdState({
+  const state = useAdminState({
     config: {
       swr: {
         revalidateOnFocus: false,

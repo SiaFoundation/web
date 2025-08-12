@@ -1,13 +1,13 @@
 import { secondsInMilliseconds } from '@siafoundation/units'
 import { useAppSettings } from '@siafoundation/react-core'
 import {
-  useIndexdState,
-  useEstimatedNetworkBlockHeight,
+  useAdminState,
+  useAdminEstimatedNetworkBlockHeight,
 } from '@siafoundation/indexd-react'
 
 export function useSyncStatus() {
   const { isUnlockedAndAuthedRoute } = useAppSettings()
-  const state = useIndexdState({
+  const state = useAdminState({
     config: {
       swr: {
         refreshInterval: (data) =>
@@ -15,7 +15,7 @@ export function useSyncStatus() {
       },
     },
   })
-  const estimatedBlockHeight = useEstimatedNetworkBlockHeight()
+  const estimatedBlockHeight = useAdminEstimatedNetworkBlockHeight()
   const nodeBlockHeight = state.data ? state.data?.syncHeight : 0
   const walletScanHeight = state.data ? state.data?.scanHeight : 0
 

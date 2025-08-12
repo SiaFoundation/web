@@ -6,20 +6,20 @@ import {
   ValueCopyable,
 } from '@siafoundation/design-system'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
-import { useIndexdState, useWallet } from '@siafoundation/indexd-react'
+import { useAdminState, useAdminWallet } from '@siafoundation/indexd-react'
 import { useDialog } from '../../contexts/dialog'
 import { humanTime } from '@siafoundation/units'
 
 export function Profile() {
   const { openDialog } = useDialog()
-  const state = useIndexdState({
+  const state = useAdminState({
     config: {
       swr: {
         revalidateOnFocus: false,
       },
     },
   })
-  const wallet = useWallet({
+  const wallet = useAdminWallet({
     config: {
       swr: {
         revalidateOnFocus: false,

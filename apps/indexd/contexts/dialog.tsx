@@ -8,7 +8,10 @@ import {
   WalletSingleAddressDetailsDialog,
 } from '@siafoundation/design-system'
 import { CmdKDialog } from '../components/CmdKDialog'
-import { useSyncerConnect, useWallet } from '@siafoundation/indexd-react'
+import {
+  useAdminSyncerConnect,
+  useAdminWallet,
+} from '@siafoundation/indexd-react'
 import { IndexdSendSiacoinDialog } from '../dialogs/IndexdSendSiacoinDialog'
 import { IndexdTransactionDetailsDialog } from '../dialogs/IndexdTransactionDetailsDialog'
 import { DebugDialog } from '../dialogs/DebugDialog'
@@ -106,8 +109,8 @@ export function Dialogs() {
     confirm,
     openConfirmDialog,
   } = useDialog()
-  const connect = useSyncerConnect()
-  const wallet = useWallet()
+  const connect = useAdminSyncerConnect()
+  const wallet = useAdminWallet()
 
   return (
     <>

@@ -1,10 +1,10 @@
 import { Button, handleBatchOperation } from '@siafoundation/design-system'
-import { useHostsBlocklistDelete } from '@siafoundation/indexd-react'
+import { useAdminHostsBlocklistDelete } from '@siafoundation/indexd-react'
 import { useCallback } from 'react'
 import { pluralize } from '@siafoundation/units'
 import { HostData } from '../types'
 import { useMutate } from '@siafoundation/react-core'
-import { hostsRoute } from '@siafoundation/indexd-types'
+import { adminHostsRoute } from '@siafoundation/indexd-types'
 import { Row } from '@tanstack/react-table'
 
 export function BulkHostBlocklistRemove({
@@ -12,7 +12,7 @@ export function BulkHostBlocklistRemove({
 }: {
   hosts: HostData[] | Row<HostData>[]
 }) {
-  const blocklistDelete = useHostsBlocklistDelete()
+  const blocklistDelete = useAdminHostsBlocklistDelete()
   const mutate = useMutate()
   const operation = useCallback(async () => {
     await handleBatchOperation(
@@ -34,7 +34,7 @@ export function BulkHostBlocklistRemove({
         }),
       },
     )
-    await mutate((key) => key.startsWith(hostsRoute))
+    await mutate((key) => key.startsWith(adminHostsRoute))
   }, [hosts, blocklistDelete, mutate])
   return <Button onClick={operation}>Unblock</Button>
 }

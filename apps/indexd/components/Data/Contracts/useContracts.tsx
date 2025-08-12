@@ -1,17 +1,17 @@
 import { useActiveSiascanExchangeRate } from '@siafoundation/design-system'
 import { useMemo } from 'react'
-import { useContracts as useIndexContracts } from '@siafoundation/indexd-react'
+import { useAdminContracts as useIndexContracts } from '@siafoundation/indexd-react'
 import { ContractData } from './types'
 import { useAppSettings } from '@siafoundation/react-core'
 import { transformContract } from './transform'
-import { ContractsParams } from '@siafoundation/indexd-types'
+import { AdminContractsParams } from '@siafoundation/indexd-types'
 import { useSiascanHosts } from '../useSiascanHosts'
 import { useContractsParams } from './useContractsParams'
 
 export function useContracts() {
   const { columnFilters, offset, limit } = useContractsParams()
   const params = useMemo(() => {
-    const filters: ContractsParams = { offset, limit }
+    const filters: AdminContractsParams = { offset, limit }
     const good = columnFilters.find((f) => f.id === 'status')?.value
     if (good !== undefined) {
       filters.good = good

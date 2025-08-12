@@ -1,8 +1,8 @@
 import { useSiascanHostsList } from '@siafoundation/design-system'
-import { useIndexdState } from '@siafoundation/indexd-react'
+import { useAdminState } from '@siafoundation/indexd-react'
 
 export function useSiascanHosts() {
-  const state = useIndexdState()
+  const state = useAdminState()
   return useSiascanHostsList({
     disabled: !state.data,
     api:

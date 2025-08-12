@@ -4,11 +4,11 @@ import {
 } from '@siafoundation/design-system'
 import { delay, useMutate } from '@siafoundation/react-core'
 import {
-  useSettingsContractsUpdate,
-  useSettingsHostsUpdate,
-  useSettingsPricePinningUpdate,
+  useAdminSettingsContractsUpdate,
+  useAdminSettingsHostsUpdate,
+  useAdminSettingsPricePinningUpdate,
 } from '@siafoundation/indexd-react'
-import { hostsRoute } from '@siafoundation/indexd-types'
+import { adminHostsRoute } from '@siafoundation/indexd-types'
 import { useCallback } from 'react'
 import { ResourcesMaybeLoaded, checkIfAllResourcesLoaded } from './useResources'
 import { transformUp } from './transformUp'
@@ -21,9 +21,9 @@ export function useOnValid({
   resources: ResourcesMaybeLoaded
   revalidateAndResetForm: () => Promise<void>
 }) {
-  const settingsContractsUpdate = useSettingsContractsUpdate()
-  const settingsHostsUpdate = useSettingsHostsUpdate()
-  const settingsPricePinningUpdate = useSettingsPricePinningUpdate()
+  const settingsContractsUpdate = useAdminSettingsContractsUpdate()
+  const settingsHostsUpdate = useAdminSettingsHostsUpdate()
+  const settingsPricePinningUpdate = useAdminSettingsPricePinningUpdate()
   const mutate = useMutate()
   const onValid = useCallback(
     async (values: InputValues) => {
@@ -64,7 +64,7 @@ export function useOnValid({
 
       const refreshHostsAfterDelay = async () => {
         await delay(5_000)
-        mutate((key) => key.startsWith(hostsRoute))
+        mutate((key) => key.startsWith(adminHostsRoute))
       }
       refreshHostsAfterDelay()
 

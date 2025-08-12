@@ -4,14 +4,14 @@ import {
 } from '@siafoundation/design-system'
 import { useMemo } from 'react'
 import {
-  useIndexdState,
-  useHost as useIndexHost,
+  useAdminState,
+  useAdminHost as useIndexHost,
 } from '@siafoundation/indexd-react'
 import { transformHost } from './transform'
 import { useAppSettings } from '@siafoundation/react-core'
 
 export function useHost(publicKey?: string) {
-  const state = useIndexdState()
+  const state = useAdminState()
   const geo = useSiascanHost({
     disabled: !state.data || !publicKey,
     api:

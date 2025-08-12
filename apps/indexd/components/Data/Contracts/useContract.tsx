@@ -1,6 +1,6 @@
 import { useActiveSiascanExchangeRate } from '@siafoundation/design-system'
 import { useMemo } from 'react'
-import { useContract as useIndexContract } from '@siafoundation/indexd-react'
+import { useAdminContract as useIndexContract } from '@siafoundation/indexd-react'
 import { ContractData } from './types'
 import { useAppSettings } from '@siafoundation/react-core'
 import { transformContract } from './transform'

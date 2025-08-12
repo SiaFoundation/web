@@ -1,9 +1,9 @@
 import { useActiveSiascanExchangeRate } from '@siafoundation/design-system'
 import { useMemo } from 'react'
-import { useHosts as useIndexHosts } from '@siafoundation/indexd-react'
+import { useAdminHosts as useIndexHosts } from '@siafoundation/indexd-react'
 import { transformHost } from './transform'
 import { useAppSettings } from '@siafoundation/react-core'
-import { HostsParams } from '@siafoundation/indexd-types'
+import { AdminHostsParams } from '@siafoundation/indexd-types'
 import { useSiascanHosts } from '../useSiascanHosts'
 import { useHostsParams } from './useHostsParams'
 
@@ -11,7 +11,7 @@ export function useHosts() {
   const geo = useSiascanHosts()
   const { columnFilters, offset, limit } = useHostsParams()
   const params = useMemo(() => {
-    const filters: HostsParams = { offset, limit }
+    const filters: AdminHostsParams = { offset, limit }
     const usable = columnFilters.find((f) => f.id === 'usable')?.value
     if (usable !== undefined) {
       filters.usable = usable

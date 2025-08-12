@@ -7,93 +7,93 @@ import {
   HookArgsCallback,
 } from '@siafoundation/react-core'
 import {
-  AccountsParams,
-  AccountsResponse,
-  accountsRoute,
-  StateParams,
-  StateResponse,
-  stateRoute,
-  accountRoute,
-  AccountAddParams,
-  AccountAddPayload,
-  AccountAddResponse,
-  AccountRotateKeyResponse,
-  AccountRotateKeyPayload,
-  AccountRotateKeyParams,
-  AccountDeleteParams,
-  AccountDeletePayload,
-  AccountDeleteResponse,
-  contractRoute,
-  ContractParams,
-  ContractResponse,
-  ContractsParams,
-  ContractsResponse,
-  contractsRoute,
-  explorerExchangeRateSiacoinRoute,
-  ExplorerExchangeRateSiacoinParams,
-  ExplorerExchangeRateSiacoinResponse,
-  HostParams,
-  HostResponse,
-  hostRoute,
-  HostsParams,
-  HostsResponse,
-  hostsRoute,
-  hostsBlocklistRoute,
-  HostsBlocklistParams,
-  HostsBlocklistResponse,
-  hostsBlocklistUpdateRoute,
-  HostsBlocklistUpdateParams,
-  HostsBlocklistUpdatePayload,
-  HostsBlocklistUpdateResponse,
-  hostsBlocklistDeleteRoute,
-  HostsBlocklistDeleteParams,
-  HostsBlocklistDeletePayload,
-  HostsBlocklistDeleteResponse,
-  settingsContractsRoute,
-  SettingsContractsParams,
-  SettingsContractsResponse,
-  settingsContractsUpdateRoute,
-  SettingsContractsUpdateParams,
-  SettingsContractsUpdatePayload,
-  SettingsContractsUpdateResponse,
-  settingsHostsRoute,
-  SettingsHostsParams,
-  SettingsHostsResponse,
-  settingsHostsUpdateRoute,
-  SettingsHostsUpdateParams,
-  SettingsHostsUpdatePayload,
-  SettingsHostsUpdateResponse,
-  settingsPricePinningRoute,
-  SettingsPricePinningParams,
-  SettingsPricePinningResponse,
-  SettingsPricePinningUpdateResponse,
-  settingsPricePinningUpdateRoute,
-  SettingsPricePinningUpdateParams,
-  SettingsPricePinningUpdatePayload,
-  WalletParams,
-  WalletResponse,
-  walletRoute,
-  WalletEventsParams,
-  WalletEventsResponse,
-  walletEventsRoute,
-  WalletPendingParams,
-  WalletPendingResponse,
-  walletPendingRoute,
-  WalletSendParams,
-  WalletSendPayload,
-  WalletSendResponse,
-  walletSendRoute,
-  SyncerConnectResponse,
-  SyncerConnectParams,
-  SyncerConnectPayload,
-  syncerConnectRoute,
-  TxpoolRecommendedFeeParams,
-  TxpoolRecommendedFeeResponse,
-  txpoolRecommendedFeeRoute,
-  HostScanParams,
-  HostScanPayload,
-  HostScanResponse,
-  hostScanRoute,
+  AdminAccountsParams,
+  AdminAccountsResponse,
+  adminAccountsRoute,
+  AdminStateParams,
+  AdminStateResponse,
+  adminStateRoute,
+  adminAccountRoute,
+  AdminAccountAddParams,
+  AdminAccountAddPayload,
+  AdminAccountAddResponse,
+  AdminAccountRotateKeyResponse,
+  AdminAccountRotateKeyPayload,
+  AdminAccountRotateKeyParams,
+  AdminAccountDeleteParams,
+  AdminAccountDeletePayload,
+  AdminAccountDeleteResponse,
+  adminContractRoute,
+  AdminContractParams,
+  AdminContractResponse,
+  AdminContractsParams,
+  AdminContractsResponse,
+  adminContractsRoute,
+  adminExplorerExchangeRateSiacoinRoute,
+  AdminExplorerExchangeRateSiacoinParams,
+  AdminExplorerExchangeRateSiacoinResponse,
+  adminHostRoute,
+  AdminHostParams,
+  AdminHostResponse,
+  AdminHostsParams,
+  AdminHostsResponse,
+  adminHostsRoute,
+  adminHostsBlocklistRoute,
+  AdminHostsBlocklistParams,
+  AdminHostsBlocklistResponse,
+  adminHostsBlocklistUpdateRoute,
+  AdminHostsBlocklistUpdateParams,
+  AdminHostsBlocklistUpdatePayload,
+  AdminHostsBlocklistUpdateResponse,
+  adminHostsBlocklistDeleteRoute,
+  AdminHostsBlocklistDeleteParams,
+  AdminHostsBlocklistDeletePayload,
+  AdminHostsBlocklistDeleteResponse,
+  adminSettingsContractsRoute,
+  AdminSettingsContractsParams,
+  AdminSettingsContractsResponse,
+  adminSettingsContractsUpdateRoute,
+  AdminSettingsContractsUpdateParams,
+  AdminSettingsContractsUpdatePayload,
+  AdminSettingsContractsUpdateResponse,
+  adminSettingsHostsRoute,
+  AdminSettingsHostsParams,
+  AdminSettingsHostsResponse,
+  adminSettingsHostsUpdateRoute,
+  AdminSettingsHostsUpdateParams,
+  AdminSettingsHostsUpdatePayload,
+  AdminSettingsHostsUpdateResponse,
+  adminSettingsPricePinningRoute,
+  AdminSettingsPricePinningParams,
+  AdminSettingsPricePinningResponse,
+  AdminSettingsPricePinningUpdateResponse,
+  adminSettingsPricePinningUpdateRoute,
+  AdminSettingsPricePinningUpdateParams,
+  AdminSettingsPricePinningUpdatePayload,
+  AdminWalletParams,
+  AdminWalletResponse,
+  adminWalletRoute,
+  AdminWalletEventsParams,
+  AdminWalletEventsResponse,
+  adminWalletEventsRoute,
+  AdminWalletPendingParams,
+  AdminWalletPendingResponse,
+  adminWalletPendingRoute,
+  AdminWalletSendParams,
+  AdminWalletSendPayload,
+  AdminWalletSendResponse,
+  adminWalletSendRoute,
+  AdminSyncerConnectResponse,
+  AdminSyncerConnectParams,
+  AdminSyncerConnectPayload,
+  adminSyncerConnectRoute,
+  AdminTxpoolRecommendedFeeParams,
+  AdminTxpoolRecommendedFeeResponse,
+  adminTxpoolRecommendedFeeRoute,
+  AdminHostScanParams,
+  AdminHostScanPayload,
+  AdminHostScanResponse,
+  adminHostScanRoute,
 } from '@siafoundation/indexd-types'
 import useSWR from 'swr'
 import {
@@ -103,15 +103,17 @@ import {
 
 // state
 
-export function useIndexdState(args?: HookArgsSwr<StateParams, StateResponse>) {
+export function useAdminState(
+  args?: HookArgsSwr<AdminStateParams, AdminStateResponse>,
+) {
   return useGetSwr({
     ...args,
-    route: stateRoute,
+    route: adminStateRoute,
   })
 }
 
-export function useEstimatedNetworkBlockHeight(): number {
-  const state = useIndexdState({
+export function useAdminEstimatedNetworkBlockHeight(): number {
+  const state = useAdminState({
     config: {
       swr: {
         revalidateOnFocus: false,
@@ -136,276 +138,295 @@ export function useEstimatedNetworkBlockHeight(): number {
 
 // syncer
 
-export function useSyncerConnect(
+export function useAdminSyncerConnect(
   args?: HookArgsCallback<
-    SyncerConnectParams,
-    SyncerConnectPayload,
-    SyncerConnectResponse
+    AdminSyncerConnectParams,
+    AdminSyncerConnectPayload,
+    AdminSyncerConnectResponse
   >,
 ) {
   return usePostFunc({
     ...args,
-    route: syncerConnectRoute,
+    route: adminSyncerConnectRoute,
   })
 }
 
 // txpool
 
 export function useTxpoolRecommendedFee(
-  args?: HookArgsSwr<TxpoolRecommendedFeeParams, TxpoolRecommendedFeeResponse>,
+  args?: HookArgsSwr<
+    AdminTxpoolRecommendedFeeParams,
+    AdminTxpoolRecommendedFeeResponse
+  >,
 ) {
   return useGetSwr({
     ...args,
-    route: txpoolRecommendedFeeRoute,
+    route: adminTxpoolRecommendedFeeRoute,
   })
 }
 
 // accounts
 
-export function useAccounts(
-  args?: HookArgsSwr<AccountsParams, AccountsResponse>,
+export function useAdminAccounts(
+  args?: HookArgsSwr<AdminAccountsParams, AdminAccountsResponse>,
 ) {
   return useGetSwr({
     ...args,
-    route: accountsRoute,
+    route: adminAccountsRoute,
   })
 }
 
-export function useAccountAdd(
+export function useAdminAccountAdd(
   args?: HookArgsCallback<
-    AccountAddParams,
-    AccountAddPayload,
-    AccountAddResponse
+    AdminAccountAddParams,
+    AdminAccountAddPayload,
+    AdminAccountAddResponse
   >,
 ) {
   return usePostFunc({
     ...args,
-    route: accountRoute,
+    route: adminAccountRoute,
   })
 }
 
-export function useAccountRotateKey(
+export function useAdminAccountRotateKey(
   args?: HookArgsCallback<
-    AccountRotateKeyParams,
-    AccountRotateKeyPayload,
-    AccountRotateKeyResponse
+    AdminAccountRotateKeyParams,
+    AdminAccountRotateKeyPayload,
+    AdminAccountRotateKeyResponse
   >,
 ) {
   return usePutFunc({
     ...args,
-    route: accountRoute,
+    route: adminAccountRoute,
   })
 }
 
-export function useAccountDelete(
+export function useAdminAccountDelete(
   args?: HookArgsCallback<
-    AccountDeleteParams,
-    AccountDeletePayload,
-    AccountDeleteResponse
+    AdminAccountDeleteParams,
+    AdminAccountDeletePayload,
+    AdminAccountDeleteResponse
   >,
 ) {
   return useDeleteFunc({
     ...args,
-    route: accountRoute,
+    route: adminAccountRoute,
   })
 }
 
 // contract
 
-export function useContract(
-  args?: HookArgsSwr<ContractParams, ContractResponse>,
+export function useAdminContract(
+  args?: HookArgsSwr<AdminContractParams, AdminContractResponse>,
 ) {
   return useGetSwr({
     ...args,
-    route: contractRoute,
+    route: adminContractRoute,
   })
 }
 
-export function useContracts(
-  args?: HookArgsSwr<ContractsParams, ContractsResponse>,
+export function useAdminContracts(
+  args?: HookArgsSwr<AdminContractsParams, AdminContractsResponse>,
 ) {
   return useGetSwr({
     ...args,
-    route: contractsRoute,
+    route: adminContractsRoute,
   })
 }
 
-export function useExplorerExchangeRateSiacoin(
+export function useAdminExplorerExchangeRateSiacoin(
   args?: HookArgsSwr<
-    ExplorerExchangeRateSiacoinParams,
-    ExplorerExchangeRateSiacoinResponse
+    AdminExplorerExchangeRateSiacoinParams,
+    AdminExplorerExchangeRateSiacoinResponse
   >,
 ) {
   return useGetSwr({
     ...args,
-    route: explorerExchangeRateSiacoinRoute,
+    route: adminExplorerExchangeRateSiacoinRoute,
   })
 }
 
 // host
 
-export function useHost(args?: HookArgsSwr<HostParams, HostResponse>) {
+export function useAdminHost(
+  args?: HookArgsSwr<AdminHostParams, AdminHostResponse>,
+) {
   return useGetSwr({
     ...args,
-    route: hostRoute,
+    route: adminHostRoute,
   })
 }
 
-export function useHostScan(
-  args?: HookArgsCallback<HostScanParams, HostScanPayload, HostScanResponse>,
+export function useAdminHostScan(
+  args?: HookArgsCallback<
+    AdminHostScanParams,
+    AdminHostScanPayload,
+    AdminHostScanResponse
+  >,
 ) {
   return usePostFunc({
     ...args,
-    route: hostScanRoute,
+    route: adminHostScanRoute,
   })
 }
 
-export function useHosts(args?: HookArgsSwr<HostsParams, HostsResponse>) {
-  return useGetSwr({
-    ...args,
-    route: hostsRoute,
-  })
-}
-
-export function useHostsBlocklist(
-  args?: HookArgsSwr<HostsBlocklistParams, HostsBlocklistResponse>,
+export function useAdminHosts(
+  args?: HookArgsSwr<AdminHostsParams, AdminHostsResponse>,
 ) {
   return useGetSwr({
     ...args,
-    route: hostsBlocklistRoute,
+    route: adminHostsRoute,
   })
 }
 
-export function useHostsBlocklistUpdate(
+export function useAdminHostsBlocklist(
+  args?: HookArgsSwr<AdminHostsBlocklistParams, AdminHostsBlocklistResponse>,
+) {
+  return useGetSwr({
+    ...args,
+    route: adminHostsBlocklistRoute,
+  })
+}
+
+export function useAdminHostsBlocklistUpdate(
   args?: HookArgsCallback<
-    HostsBlocklistUpdateParams,
-    HostsBlocklistUpdatePayload,
-    HostsBlocklistUpdateResponse
+    AdminHostsBlocklistUpdateParams,
+    AdminHostsBlocklistUpdatePayload,
+    AdminHostsBlocklistUpdateResponse
   >,
 ) {
   return usePutFunc({
     ...args,
-    route: hostsBlocklistUpdateRoute,
+    route: adminHostsBlocklistUpdateRoute,
   })
 }
 
-export function useHostsBlocklistDelete(
+export function useAdminHostsBlocklistDelete(
   args?: HookArgsCallback<
-    HostsBlocklistDeleteParams,
-    HostsBlocklistDeletePayload,
-    HostsBlocklistDeleteResponse
+    AdminHostsBlocklistDeleteParams,
+    AdminHostsBlocklistDeletePayload,
+    AdminHostsBlocklistDeleteResponse
   >,
 ) {
   return useDeleteFunc({
     ...args,
-    route: hostsBlocklistDeleteRoute,
+    route: adminHostsBlocklistDeleteRoute,
   })
 }
 
 // settings
 
-export function useSettingsContracts(
-  args?: HookArgsSwr<SettingsContractsParams, SettingsContractsResponse>,
+export function useAdminSettingsContracts(
+  args?: HookArgsSwr<
+    AdminSettingsContractsParams,
+    AdminSettingsContractsResponse
+  >,
 ) {
   return useGetSwr({
     ...args,
-    route: settingsContractsRoute,
+    route: adminSettingsContractsRoute,
   })
 }
 
-export function useSettingsContractsUpdate(
+export function useAdminSettingsContractsUpdate(
   args?: HookArgsCallback<
-    SettingsContractsUpdateParams,
-    SettingsContractsUpdatePayload,
-    SettingsContractsUpdateResponse
+    AdminSettingsContractsUpdateParams,
+    AdminSettingsContractsUpdatePayload,
+    AdminSettingsContractsUpdateResponse
   >,
 ) {
   return usePutFunc({
     ...args,
-    route: settingsContractsUpdateRoute,
+    route: adminSettingsContractsUpdateRoute,
   })
 }
 
-export function useSettingsHosts(
-  args?: HookArgsSwr<SettingsHostsParams, SettingsHostsResponse>,
+export function useAdminSettingsHosts(
+  args?: HookArgsSwr<AdminSettingsHostsParams, AdminSettingsHostsResponse>,
 ) {
   return useGetSwr({
     ...args,
-    route: settingsHostsRoute,
+    route: adminSettingsHostsRoute,
   })
 }
 
-export function useSettingsHostsUpdate(
+export function useAdminSettingsHostsUpdate(
   args?: HookArgsCallback<
-    SettingsHostsUpdateParams,
-    SettingsHostsUpdatePayload,
-    SettingsHostsUpdateResponse
+    AdminSettingsHostsUpdateParams,
+    AdminSettingsHostsUpdatePayload,
+    AdminSettingsHostsUpdateResponse
   >,
 ) {
   return usePutFunc({
     ...args,
-    route: settingsHostsUpdateRoute,
+    route: adminSettingsHostsUpdateRoute,
   })
 }
 
-export function useSettingsPricePinning(
-  args?: HookArgsSwr<SettingsPricePinningParams, SettingsPricePinningResponse>,
+export function useAdminSettingsPricePinning(
+  args?: HookArgsSwr<
+    AdminSettingsPricePinningParams,
+    AdminSettingsPricePinningResponse
+  >,
 ) {
   return useGetSwr({
     ...args,
-    route: settingsPricePinningRoute,
+    route: adminSettingsPricePinningRoute,
   })
 }
 
-export function useSettingsPricePinningUpdate(
+export function useAdminSettingsPricePinningUpdate(
   args?: HookArgsCallback<
-    SettingsPricePinningUpdateParams,
-    SettingsPricePinningUpdatePayload,
-    SettingsPricePinningUpdateResponse
+    AdminSettingsPricePinningUpdateParams,
+    AdminSettingsPricePinningUpdatePayload,
+    AdminSettingsPricePinningUpdateResponse
   >,
 ) {
   return usePutFunc({
     ...args,
-    route: settingsPricePinningUpdateRoute,
+    route: adminSettingsPricePinningUpdateRoute,
   })
 }
 
 // wallet
 
-export function useWallet(args?: HookArgsSwr<WalletParams, WalletResponse>) {
-  return useGetSwr({
-    ...args,
-    route: walletRoute,
-  })
-}
-
-export function useWalletEvents(
-  args?: HookArgsSwr<WalletEventsParams, WalletEventsResponse>,
+export function useAdminWallet(
+  args?: HookArgsSwr<AdminWalletParams, AdminWalletResponse>,
 ) {
   return useGetSwr({
     ...args,
-    route: walletEventsRoute,
+    route: adminWalletRoute,
   })
 }
 
-export function useWalletPending(
-  args?: HookArgsSwr<WalletPendingParams, WalletPendingResponse>,
+export function useAdminWalletEvents(
+  args?: HookArgsSwr<AdminWalletEventsParams, AdminWalletEventsResponse>,
 ) {
   return useGetSwr({
     ...args,
-    route: walletPendingRoute,
+    route: adminWalletEventsRoute,
   })
 }
 
-export function useWalletSend(
+export function useAdminWalletPending(
+  args?: HookArgsSwr<AdminWalletPendingParams, AdminWalletPendingResponse>,
+) {
+  return useGetSwr({
+    ...args,
+    route: adminWalletPendingRoute,
+  })
+}
+
+export function useAdminWalletSend(
   args?: HookArgsCallback<
-    WalletSendParams,
-    WalletSendPayload,
-    WalletSendResponse
+    AdminWalletSendParams,
+    AdminWalletSendPayload,
+    AdminWalletSendResponse
   >,
 ) {
   return usePostFunc({
     ...args,
-    route: walletSendRoute,
+    route: adminWalletSendRoute,
   })
 }

@@ -5,29 +5,29 @@ import {
   UsabilitySettings,
 } from '@siafoundation/indexd-types'
 import {
-  useSettingsContracts,
-  useSettingsHosts,
-  useSettingsPricePinning,
+  useAdminSettingsContracts,
+  useAdminSettingsHosts,
+  useAdminSettingsPricePinning,
 } from '@siafoundation/indexd-react'
 import { minutesInMilliseconds } from '@siafoundation/units'
 import { useMemo } from 'react'
 
 export function useResources() {
-  const contracts = useSettingsContracts({
+  const contracts = useAdminSettingsContracts({
     config: {
       swr: {
         refreshInterval: minutesInMilliseconds(1),
       },
     },
   })
-  const hosts = useSettingsHosts({
+  const hosts = useAdminSettingsHosts({
     config: {
       swr: {
         refreshInterval: minutesInMilliseconds(1),
       },
     },
   })
-  const pricePinning = useSettingsPricePinning({
+  const pricePinning = useAdminSettingsPricePinning({
     config: {
       swr: {
         refreshInterval: minutesInMilliseconds(1),

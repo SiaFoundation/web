@@ -1,7 +1,7 @@
 'use client'
 
 import BigNumber from 'bignumber.js'
-import { useWallet } from '@siafoundation/indexd-react'
+import { useAdminWallet } from '@siafoundation/indexd-react'
 import { AppRouterAppAuthedLayout } from '@siafoundation/design-system'
 import { Profile } from '../../components/Profile'
 import { connectivityRoute, routes } from '../../config/routes'
@@ -14,7 +14,7 @@ import { IndexdSidenav } from '../../components/IndexdSidenav'
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { isSynced } = useSyncStatus()
   const { openDialog } = useDialog()
-  const wallet = useWallet()
+  const wallet = useAdminWallet()
   return (
     <AppRouterAppAuthedLayout
       profile={<Profile />}
