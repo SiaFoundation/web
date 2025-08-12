@@ -99,18 +99,18 @@
       "name": "hostd",
       "version": "0.65.2",
       "dependencies": {
-        "@siafoundation/design-system": "^10.0.0",
+        "@siafoundation/design-system": "^10.2.0",
         "@siafoundation/fonts": "^0.5.2",
-        "@siafoundation/hostd-react": "^4.6.8",
-        "@siafoundation/hostd-types": "^0.10.1",
-        "@siafoundation/react-core": "^7.0.0",
+        "@siafoundation/hostd-react": "^4.6.9",
+        "@siafoundation/hostd-types": "^0.10.2",
+        "@siafoundation/react-core": "^8.0.0",
         "@siafoundation/react-icons": "^0.3.2",
-        "@siafoundation/types": "^0.12.2",
-        "@siafoundation/units": "^3.5.2",
+        "@siafoundation/types": "^0.13.0",
+        "@siafoundation/units": "^3.7.0",
         "@technically/lodash": "^4.17.0",
         "bignumber.js": "^9.3.1",
         "class-variance-authority": "^0.7.0",
-        "cmdk": "0.2.1",
+        "cmdk": "1.1.1",
         "date-fns": "^2.28.0",
         "formik": "^2.2.9",
         "next": "^15.3.5",
@@ -125,9 +125,9 @@
     },
     "apps/indexd": {
       "name": "indexd",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "dependencies": {
-        "@siafoundation/design-system": "^10.2.0",
+        "@siafoundation/design-system": "^10.3.0",
         "@siafoundation/fonts": "^0.5.2",
         "@siafoundation/indexd-react": "^0.1.2",
         "@siafoundation/indexd-types": "^0.2.0",
@@ -138,7 +138,7 @@
         "@tanstack/react-table": "8.21.3",
         "bignumber.js": "^9.3.1",
         "class-variance-authority": "0.7.1",
-        "cmdk": "0.2.1",
+        "cmdk": "1.1.1",
         "file-saver": "2.0.5",
         "jszip": "3.10.1",
         "next": "^15.3.5",
@@ -156,21 +156,21 @@
       "dependencies": {
         "@carbon/icons-react": "^10.49.6",
         "@dnd-kit/core": "^6.3.1",
-        "@siafoundation/design-system": "^10.0.0",
-        "@siafoundation/explored-types": "^0.19.2",
+        "@siafoundation/design-system": "^10.2.0",
+        "@siafoundation/explored-types": "^0.19.3",
         "@siafoundation/fonts": "^0.5.2",
-        "@siafoundation/react-core": "^7.0.0",
+        "@siafoundation/react-core": "^8.0.0",
         "@siafoundation/react-icons": "^0.3.2",
         "@siafoundation/renterd-js": "^0.14.7",
-        "@siafoundation/renterd-react": "^4.15.8",
-        "@siafoundation/renterd-types": "^0.17.4",
-        "@siafoundation/types": "^0.12.2",
-        "@siafoundation/units": "^3.5.2",
+        "@siafoundation/renterd-react": "^4.15.9",
+        "@siafoundation/renterd-types": "^0.17.5",
+        "@siafoundation/types": "^0.13.0",
+        "@siafoundation/units": "^3.7.0",
         "@technically/lodash": "^4.17.0",
         "axios": "^1.10.0",
         "bignumber.js": "^9.3.1",
         "class-variance-authority": "^0.7.1",
-        "cmdk": "0.2.1",
+        "cmdk": "1.1.1",
         "date-fns": "^2.30.0",
         "file-saver": "^2.0.5",
         "formik": "^2.4.6",
@@ -239,7 +239,7 @@
     },
     "libs/design-system": {
       "name": "@siafoundation/design-system",
-      "version": "10.2.0",
+      "version": "10.3.0",
       "dependencies": {
         "@dnd-kit/core": "^6.3.1",
         "@radix-ui/react-accordion": "^1.2.11",
@@ -374,9 +374,9 @@
       "name": "@siafoundation/hostd-react",
       "version": "4.6.9",
       "dependencies": {
-        "@siafoundation/hostd-types": "^0.10.1",
-        "@siafoundation/react-core": "^7.0.0",
-        "@siafoundation/units": "^3.5.2",
+        "@siafoundation/hostd-types": "^0.10.2",
+        "@siafoundation/react-core": "^8.0.0",
+        "@siafoundation/units": "^3.7.0",
         "swr": "^2.1.1",
       },
     },
@@ -384,7 +384,7 @@
       "name": "@siafoundation/hostd-types",
       "version": "0.10.2",
       "dependencies": {
-        "@siafoundation/types": "^0.12.2",
+        "@siafoundation/types": "^0.13.0",
       },
     },
     "libs/indexd-js": {
@@ -451,9 +451,9 @@
       "name": "@siafoundation/renterd-react",
       "version": "4.15.9",
       "dependencies": {
-        "@siafoundation/react-core": "^7.0.0",
-        "@siafoundation/renterd-types": "^0.17.4",
-        "@siafoundation/units": "^3.5.2",
+        "@siafoundation/react-core": "^8.0.0",
+        "@siafoundation/renterd-types": "^0.17.5",
+        "@siafoundation/units": "^3.7.0",
         "swr": "^2.1.1",
       },
     },
@@ -461,8 +461,8 @@
       "name": "@siafoundation/renterd-types",
       "version": "0.17.5",
       "dependencies": {
-        "@siafoundation/react-core": "^7.0.0",
-        "@siafoundation/types": "^0.12.2",
+        "@siafoundation/react-core": "^8.0.0",
+        "@siafoundation/types": "^0.13.0",
       },
     },
     "libs/request": {
@@ -2292,7 +2292,7 @@
 
     "clsx": ["clsx@2.1.1", "", {}, "sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA=="],
 
-    "cmdk": ["cmdk@0.2.1", "", { "dependencies": { "@radix-ui/react-dialog": "1.0.0" }, "peerDependencies": { "react": "^18.0.0", "react-dom": "^18.0.0" } }, "sha512-U6//9lQ6JvT47+6OF6Gi8BvkxYQ8SCRRSKIJkthIMsFsLZRG0cKvTtuTaefyIKMQb8rvvXy0wGdpTNq/jPtm+g=="],
+    "cmdk": ["cmdk@1.1.1", "", { "dependencies": { "@radix-ui/react-compose-refs": "^1.1.1", "@radix-ui/react-dialog": "^1.1.6", "@radix-ui/react-id": "^1.1.0", "@radix-ui/react-primitive": "^2.0.2" }, "peerDependencies": { "react": "^18 || ^19 || ^19.0.0-rc", "react-dom": "^18 || ^19 || ^19.0.0-rc" } }, "sha512-Vsv7kFaXm+ptHDMZ7izaRsP70GgrW9NBNGswt9OZaVBLlE0SNpDq8eu/VGXyF9r7M0azK3Wy7OlYXsuyYLFzHg=="],
 
     "co": ["co@4.6.0", "", {}, "sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ=="],
 
@@ -4646,8 +4646,6 @@
 
     "clone-deep/is-plain-object": ["is-plain-object@2.0.4", "", { "dependencies": { "isobject": "^3.0.1" } }, "sha512-h5PpgXkWitc38BBMYawTYMWJHFZJVnBquFE57xFpjB8pJFiF6gZ+bU+WyI/yqXiFR5mdLsgYNaPe8uao6Uv9Og=="],
 
-    "cmdk/@radix-ui/react-dialog": ["@radix-ui/react-dialog@1.0.0", "", { "dependencies": { "@babel/runtime": "^7.13.10", "@radix-ui/primitive": "1.0.0", "@radix-ui/react-compose-refs": "1.0.0", "@radix-ui/react-context": "1.0.0", "@radix-ui/react-dismissable-layer": "1.0.0", "@radix-ui/react-focus-guards": "1.0.0", "@radix-ui/react-focus-scope": "1.0.0", "@radix-ui/react-id": "1.0.0", "@radix-ui/react-portal": "1.0.0", "@radix-ui/react-presence": "1.0.0", "@radix-ui/react-primitive": "1.0.0", "@radix-ui/react-slot": "1.0.0", "@radix-ui/react-use-controllable-state": "1.0.0", "aria-hidden": "^1.1.1", "react-remove-scroll": "2.5.4" }, "peerDependencies": { "react": "^16.8 || ^17.0 || ^18.0", "react-dom": "^16.8 || ^17.0 || ^18.0" } }, "sha512-Yn9YU+QlHYLWwV1XfKiqnGVpWYWk6MeBVM6x/bcoyPvxgjQGoeT35482viLPctTMWoMw0PoHgqfSox7Ig+957Q=="],
-
     "compression/debug": ["debug@2.6.9", "", { "dependencies": { "ms": "2.0.0" } }, "sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA=="],
 
     "compression/negotiator": ["negotiator@0.6.4", "", {}, "sha512-myRT3DiWPHqho5PrJaIRyaMv2kgYf0mUVgBNOYMuCH5Ki1yEiQaf/ZJuQ62nvpc44wL5WDbTX7yGJi1Neevw8w=="],
@@ -5290,32 +5288,6 @@
 
     "body-parser/debug/ms": ["ms@2.0.0", "", {}, "sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A=="],
 
-    "cmdk/@radix-ui/react-dialog/@radix-ui/primitive": ["@radix-ui/primitive@1.0.0", "", { "dependencies": { "@babel/runtime": "^7.13.10" } }, "sha512-3e7rn8FDMin4CgeL7Z/49smCA3rFYY3Ha2rUQ7HRWFadS5iCRw08ZgVT1LaNTCNqgvrUiyczLflrVrF0SRQtNA=="],
-
-    "cmdk/@radix-ui/react-dialog/@radix-ui/react-compose-refs": ["@radix-ui/react-compose-refs@1.0.0", "", { "dependencies": { "@babel/runtime": "^7.13.10" }, "peerDependencies": { "react": "^16.8 || ^17.0 || ^18.0" } }, "sha512-0KaSv6sx787/hK3eF53iOkiSLwAGlFMx5lotrqD2pTjB18KbybKoEIgkNZTKC60YECDQTKGTRcDBILwZVqVKvA=="],
-
-    "cmdk/@radix-ui/react-dialog/@radix-ui/react-context": ["@radix-ui/react-context@1.0.0", "", { "dependencies": { "@babel/runtime": "^7.13.10" }, "peerDependencies": { "react": "^16.8 || ^17.0 || ^18.0" } }, "sha512-1pVM9RfOQ+n/N5PJK33kRSKsr1glNxomxONs5c49MliinBY6Yw2Q995qfBUUo0/Mbg05B/sGA0gkgPI7kmSHBg=="],
-
-    "cmdk/@radix-ui/react-dialog/@radix-ui/react-dismissable-layer": ["@radix-ui/react-dismissable-layer@1.0.0", "", { "dependencies": { "@babel/runtime": "^7.13.10", "@radix-ui/primitive": "1.0.0", "@radix-ui/react-compose-refs": "1.0.0", "@radix-ui/react-primitive": "1.0.0", "@radix-ui/react-use-callback-ref": "1.0.0", "@radix-ui/react-use-escape-keydown": "1.0.0" }, "peerDependencies": { "react": "^16.8 || ^17.0 || ^18.0", "react-dom": "^16.8 || ^17.0 || ^18.0" } }, "sha512-n7kDRfx+LB1zLueRDvZ1Pd0bxdJWDUZNQ/GWoxDn2prnuJKRdxsjulejX/ePkOsLi2tTm6P24mDqlMSgQpsT6g=="],
-
-    "cmdk/@radix-ui/react-dialog/@radix-ui/react-focus-guards": ["@radix-ui/react-focus-guards@1.0.0", "", { "dependencies": { "@babel/runtime": "^7.13.10" }, "peerDependencies": { "react": "^16.8 || ^17.0 || ^18.0" } }, "sha512-UagjDk4ijOAnGu4WMUPj9ahi7/zJJqNZ9ZAiGPp7waUWJO0O1aWXi/udPphI0IUjvrhBsZJGSN66dR2dsueLWQ=="],
-
-    "cmdk/@radix-ui/react-dialog/@radix-ui/react-focus-scope": ["@radix-ui/react-focus-scope@1.0.0", "", { "dependencies": { "@babel/runtime": "^7.13.10", "@radix-ui/react-compose-refs": "1.0.0", "@radix-ui/react-primitive": "1.0.0", "@radix-ui/react-use-callback-ref": "1.0.0" }, "peerDependencies": { "react": "^16.8 || ^17.0 || ^18.0", "react-dom": "^16.8 || ^17.0 || ^18.0" } }, "sha512-C4SWtsULLGf/2L4oGeIHlvWQx7Rf+7cX/vKOAD2dXW0A1b5QXwi3wWeaEgW+wn+SEVrraMUk05vLU9fZZz5HbQ=="],
-
-    "cmdk/@radix-ui/react-dialog/@radix-ui/react-id": ["@radix-ui/react-id@1.0.0", "", { "dependencies": { "@babel/runtime": "^7.13.10", "@radix-ui/react-use-layout-effect": "1.0.0" }, "peerDependencies": { "react": "^16.8 || ^17.0 || ^18.0" } }, "sha512-Q6iAB/U7Tq3NTolBBQbHTgclPmGWE3OlktGGqrClPozSw4vkQ1DfQAOtzgRPecKsMdJINE05iaoDUG8tRzCBjw=="],
-
-    "cmdk/@radix-ui/react-dialog/@radix-ui/react-portal": ["@radix-ui/react-portal@1.0.0", "", { "dependencies": { "@babel/runtime": "^7.13.10", "@radix-ui/react-primitive": "1.0.0" }, "peerDependencies": { "react": "^16.8 || ^17.0 || ^18.0", "react-dom": "^16.8 || ^17.0 || ^18.0" } }, "sha512-a8qyFO/Xb99d8wQdu4o7qnigNjTPG123uADNecz0eX4usnQEj7o+cG4ZX4zkqq98NYekT7UoEQIjxBNWIFuqTA=="],
-
-    "cmdk/@radix-ui/react-dialog/@radix-ui/react-presence": ["@radix-ui/react-presence@1.0.0", "", { "dependencies": { "@babel/runtime": "^7.13.10", "@radix-ui/react-compose-refs": "1.0.0", "@radix-ui/react-use-layout-effect": "1.0.0" }, "peerDependencies": { "react": "^16.8 || ^17.0 || ^18.0", "react-dom": "^16.8 || ^17.0 || ^18.0" } }, "sha512-A+6XEvN01NfVWiKu38ybawfHsBjWum42MRPnEuqPsBZ4eV7e/7K321B5VgYMPv3Xx5An6o1/l9ZuDBgmcmWK3w=="],
-
-    "cmdk/@radix-ui/react-dialog/@radix-ui/react-primitive": ["@radix-ui/react-primitive@1.0.0", "", { "dependencies": { "@babel/runtime": "^7.13.10", "@radix-ui/react-slot": "1.0.0" }, "peerDependencies": { "react": "^16.8 || ^17.0 || ^18.0", "react-dom": "^16.8 || ^17.0 || ^18.0" } }, "sha512-EyXe6mnRlHZ8b6f4ilTDrXmkLShICIuOTTj0GX4w1rp+wSxf3+TD05u1UOITC8VsJ2a9nwHvdXtOXEOl0Cw/zQ=="],
-
-    "cmdk/@radix-ui/react-dialog/@radix-ui/react-slot": ["@radix-ui/react-slot@1.0.0", "", { "dependencies": { "@babel/runtime": "^7.13.10", "@radix-ui/react-compose-refs": "1.0.0" }, "peerDependencies": { "react": "^16.8 || ^17.0 || ^18.0" } }, "sha512-3mrKauI/tWXo1Ll+gN5dHcxDPdm/Df1ufcDLCecn+pnCIVcdWE7CujXo8QaXOWRJyZyQWWbpB8eFwHzWXlv5mQ=="],
-
-    "cmdk/@radix-ui/react-dialog/@radix-ui/react-use-controllable-state": ["@radix-ui/react-use-controllable-state@1.0.0", "", { "dependencies": { "@babel/runtime": "^7.13.10", "@radix-ui/react-use-callback-ref": "1.0.0" }, "peerDependencies": { "react": "^16.8 || ^17.0 || ^18.0" } }, "sha512-FohDoZvk3mEXh9AWAVyRTYR4Sq7/gavuofglmiXB2g1aKyboUD4YtgWxKj8O5n+Uak52gXQ4wKz5IFST4vtJHg=="],
-
-    "cmdk/@radix-ui/react-dialog/react-remove-scroll": ["react-remove-scroll@2.5.4", "", { "dependencies": { "react-remove-scroll-bar": "^2.3.3", "react-style-singleton": "^2.2.1", "tslib": "^2.1.0", "use-callback-ref": "^1.3.0", "use-sidecar": "^1.1.2" }, "peerDependencies": { "@types/react": "^16.8.0 || ^17.0.0 || ^18.0.0", "react": "^16.8.0 || ^17.0.0 || ^18.0.0" }, "optionalPeers": ["@types/react"] }, "sha512-xGVKJJr0SJGQVirVFAUZ2k1QLyO6m+2fy0l8Qawbp5Jgrv3DeLalrfMNBFSlmz5kriGGzsVBtGVnf4pTKIhhWA=="],
-
     "compression/debug/ms": ["ms@2.0.0", "", {}, "sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A=="],
 
     "copy-webpack-plugin/globby/array-union": ["array-union@3.0.1", "", {}, "sha512-1OvF9IbWwaeiM9VhzYXVQacMibxpXOMYVNIvMtKRyX9SImBXpKcFr8XvFDeEslCyuH/t6KRt7HEO94AlP8Iatw=="],
@@ -5707,18 +5679,6 @@
     "@typescript-eslint/utils/@typescript-eslint/typescript-estree/minimatch/brace-expansion": ["brace-expansion@2.0.2", "", { "dependencies": { "balanced-match": "^1.0.0" } }, "sha512-Jt0vHyM+jmUBqojB7E1NIYadt0vI0Qxjxd2TErW94wDz+E2LAm5vKMXXwg6ZZBTHPuUlDgQHKXvjGBdfcF1ZDQ=="],
 
     "babel-loader/find-cache-dir/pkg-dir/find-up": ["find-up@6.3.0", "", { "dependencies": { "locate-path": "^7.1.0", "path-exists": "^5.0.0" } }, "sha512-v2ZsoEuVHYy8ZIlYqwPe/39Cy+cFDzp4dXPaxNvkEuouymu+2Jbz0PxpKarJHYJTmv2HWT3O382qY8l4jMWthw=="],
-
-    "cmdk/@radix-ui/react-dialog/@radix-ui/react-dismissable-layer/@radix-ui/react-use-callback-ref": ["@radix-ui/react-use-callback-ref@1.0.0", "", { "dependencies": { "@babel/runtime": "^7.13.10" }, "peerDependencies": { "react": "^16.8 || ^17.0 || ^18.0" } }, "sha512-GZtyzoHz95Rhs6S63D2t/eqvdFCm7I+yHMLVQheKM7nBD8mbZIt+ct1jz4536MDnaOGKIxynJ8eHTkVGVVkoTg=="],
-
-    "cmdk/@radix-ui/react-dialog/@radix-ui/react-dismissable-layer/@radix-ui/react-use-escape-keydown": ["@radix-ui/react-use-escape-keydown@1.0.0", "", { "dependencies": { "@babel/runtime": "^7.13.10", "@radix-ui/react-use-callback-ref": "1.0.0" }, "peerDependencies": { "react": "^16.8 || ^17.0 || ^18.0" } }, "sha512-JwfBCUIfhXRxKExgIqGa4CQsiMemo1Xt0W/B4ei3fpzpvPENKpMKQ8mZSB6Acj3ebrAEgi2xiQvcI1PAAodvyg=="],
-
-    "cmdk/@radix-ui/react-dialog/@radix-ui/react-focus-scope/@radix-ui/react-use-callback-ref": ["@radix-ui/react-use-callback-ref@1.0.0", "", { "dependencies": { "@babel/runtime": "^7.13.10" }, "peerDependencies": { "react": "^16.8 || ^17.0 || ^18.0" } }, "sha512-GZtyzoHz95Rhs6S63D2t/eqvdFCm7I+yHMLVQheKM7nBD8mbZIt+ct1jz4536MDnaOGKIxynJ8eHTkVGVVkoTg=="],
-
-    "cmdk/@radix-ui/react-dialog/@radix-ui/react-id/@radix-ui/react-use-layout-effect": ["@radix-ui/react-use-layout-effect@1.0.0", "", { "dependencies": { "@babel/runtime": "^7.13.10" }, "peerDependencies": { "react": "^16.8 || ^17.0 || ^18.0" } }, "sha512-6Tpkq+R6LOlmQb1R5NNETLG0B4YP0wc+klfXafpUCj6JGyaUc8il7/kUZ7m59rGbXGczE9Bs+iz2qloqsZBduQ=="],
-
-    "cmdk/@radix-ui/react-dialog/@radix-ui/react-presence/@radix-ui/react-use-layout-effect": ["@radix-ui/react-use-layout-effect@1.0.0", "", { "dependencies": { "@babel/runtime": "^7.13.10" }, "peerDependencies": { "react": "^16.8 || ^17.0 || ^18.0" } }, "sha512-6Tpkq+R6LOlmQb1R5NNETLG0B4YP0wc+klfXafpUCj6JGyaUc8il7/kUZ7m59rGbXGczE9Bs+iz2qloqsZBduQ=="],
-
-    "cmdk/@radix-ui/react-dialog/@radix-ui/react-use-controllable-state/@radix-ui/react-use-callback-ref": ["@radix-ui/react-use-callback-ref@1.0.0", "", { "dependencies": { "@babel/runtime": "^7.13.10" }, "peerDependencies": { "react": "^16.8 || ^17.0 || ^18.0" } }, "sha512-GZtyzoHz95Rhs6S63D2t/eqvdFCm7I+yHMLVQheKM7nBD8mbZIt+ct1jz4536MDnaOGKIxynJ8eHTkVGVVkoTg=="],
 
     "create-jest/jest-config/@jest/test-sequencer/@jest/test-result": ["@jest/test-result@29.7.0", "", { "dependencies": { "@jest/console": "^29.7.0", "@jest/types": "^29.6.3", "@types/istanbul-lib-coverage": "^2.0.0", "collect-v8-coverage": "^1.0.0" } }, "sha512-Fdx+tv6x1zlkJPcWXmMDAG2HBnaR9XPSd5aDWQVsfrZmLVT3lU1cwyxLgRmXR9yrq4NBoEm9BMsfgFzTQAbJYA=="],
 
