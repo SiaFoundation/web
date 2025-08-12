@@ -18,7 +18,7 @@ const config = [
   ...nx.configs['flat/react-typescript'],
   {
     rules: {
-      '@next/next/no-html-link-for-pages': ['error', 'apps/indexd/pages'],
+      '@next/next/no-html-link-for-pages': ['error', 'apps/indexd-admin/pages'],
     },
   },
 ]

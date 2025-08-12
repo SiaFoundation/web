@@ -1,4 +1,4 @@
-package indexd
+package app
 
 import (
 	"io/fs"

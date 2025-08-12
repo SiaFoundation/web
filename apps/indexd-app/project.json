@@ -1,7 +1,7 @@
 {
-  "name": "indexd",
+  "name": "indexd-app",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/indexd",
+  "sourceRoot": "apps/indexd-app",
   "projectType": "application",
   "targets": {
     "build": {
@@ -9,15 +9,15 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/apps/indexd",
-        "postcssConfig": "apps/indexd/postcss.config.js"
+        "outputPath": "dist/apps/indexd-app",
+        "postcssConfig": "apps/indexd-app/postcss.config.js"
       },
       "configurations": {
         "development": {},
         "production": {},
         "local": {},
         "export": {
-          "outputPath": "dist/apps/indexd-export"
+          "outputPath": "dist/apps/indexd-app-export"
         }
       }
     },
@@ -25,17 +25,17 @@
       "executor": "@nx/next:server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "indexd:build",
+        "buildTarget": "indexd-app:build",
         "port": 3009,
         "turbo": true
       },
       "configurations": {
         "development": {
-          "buildTarget": "indexd:build:development",
+          "buildTarget": "indexd-app:build:development",
           "dev": true
         },
         "production": {
-          "buildTarget": "indexd:build:production",
+          "buildTarget": "indexd-app:build:production",
           "dev": false
         }
       }
@@ -47,15 +47,15 @@
       "options": {
         "engine": "docker",
         "context": "./",
-        "file": "apps/indexd/Dockerfile"
+        "file": "apps/indexd-app/Dockerfile"
       },
       "configurations": {
         "local": {
-          "tags": ["siafoundation/web-indexd:latest"],
+          "tags": ["siafoundation/web-indexd-app:latest"],
           "push": false
         },
         "production": {
-          "tags": ["ghcr.io/siafoundation/web-indexd:latest"],
+          "tags": ["ghcr.io/siafoundation/web-indexd-app:latest"],
           "push": true
         }
       }

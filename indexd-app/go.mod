@@ -1,4 +1,4 @@
-module go.sia.tech/web/indexd
+module go.sia.tech/web/indexd-app
 
 go 1.24.3
 

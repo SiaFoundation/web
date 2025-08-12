@@ -1,4 +1,4 @@
-APPS="renterd,hostd,walletd,indexd"
+APPS="renterd,hostd,walletd,indexd-admin,indexd-app"
 go_releases=()
 for app in $(echo $APPS | tr ',' ' ')
 do

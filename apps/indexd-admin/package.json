@@ -1,8 +1,8 @@
 {
-  "name": "indexd",
+  "name": "indexd-admin",
   "version": "0.3.0",
   "private": true,
-  "description": "The `indexd` user interface, dedicated to indexer related functionality.",
+  "description": "The `indexd` user interface, dedicated to admin related functionality.",
   "license": "MIT",
   "dependencies": {
     "@siafoundation/design-system": "^10.3.0",

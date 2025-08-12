@@ -1,0 +1,65 @@
+{
+  "name": "indexd-admin",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/indexd-admin",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/indexd-admin",
+        "postcssConfig": "apps/indexd-admin/postcss.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {},
+        "local": {},
+        "export": {
+          "outputPath": "dist/apps/indexd-admin-export"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "indexd-admin:build",
+        "port": 3009,
+        "turbo": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "indexd-admin:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "indexd-admin:build:production",
+          "dev": false
+        }
+      }
+    },
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "dependsOn": ["build"],
+      "defaultConfiguration": "local",
+      "options": {
+        "engine": "docker",
+        "context": "./",
+        "file": "apps/indexd-admin/Dockerfile"
+      },
+      "configurations": {
+        "local": {
+          "tags": ["siafoundation/web-indexd-admin:latest"],
+          "push": false
+        },
+        "production": {
+          "tags": ["ghcr.io/siafoundation/web-indexd-admin:latest"],
+          "push": true
+        }
+      }
+    }
+  },
+  "tags": []
+}

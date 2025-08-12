@@ -1,4 +1,4 @@
-package indexd
+package admin
 
 import (
 	"embed"
