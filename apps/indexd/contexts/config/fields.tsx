@@ -266,12 +266,14 @@ export function getFields(): ConfigFields<InputValues, Categories> {
       title: 'Min collateral',
       description: (
         <>
-          The min allowed collateral a contract must have. Choose whether to set
-          the collateral in siacoin or to pin the collateral to a fixed fiat
-          value.
+          The minimum amount of collateral indexd expects a host to lock up per
+          TB per month. Additionally, we expect hosts to lock up at least 2x
+          their storage price. Whichever value is higher is the absolute
+          minimum. Choose whether to set the minimum collateral in siacoin or to
+          pin the minimum collateral to a fixed fiat value.
         </>
       ),
-      units: 'SC',
+      units: 'SC/TB/month',
       decimalsLimitSc: scDecimalPlaces,
       validation: {
         required: 'required',
@@ -282,6 +284,7 @@ export function getFields(): ConfigFields<InputValues, Categories> {
       description: '',
       type: 'fiat',
       category: 'pricing',
+      units: '/TB/month',
       validation: {
         validate: {
           required: requiredIfPinningEnabled(
