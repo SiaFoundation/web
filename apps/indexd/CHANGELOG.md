@@ -1,5 +1,20 @@
 # indexd
 
+## 0.4.0
+
+### Minor Changes
+
+- e7fa79d: The data explorer tables now have more space between columns.
+
+### Patch Changes
+
+- 4308fa2: The min collateral inputs now show the /TB/month label.
+- Updated dependencies [4982f21]
+- Updated dependencies [e7fa79d]
+  - @siafoundation/indexd-react@0.2.0
+  - @siafoundation/indexd-types@0.3.0
+  - @siafoundation/design-system@10.4.0
+
 ## 0.3.0
 
 ### Minor Changes

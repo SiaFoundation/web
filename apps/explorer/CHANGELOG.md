@@ -1,5 +1,17 @@
 # explorer
 
+## 0.38.0
+
+### Minor Changes
+
+- fe82f54: Contract page data labels have been renamed for greater clarity.
+- fe82f54: V2 contracts now display host public key and renter address.
+
+### Patch Changes
+
+- Updated dependencies [e7fa79d]
+  - @siafoundation/design-system@10.4.0
+
 ## 0.37.2
 
 ### Patch Changes
