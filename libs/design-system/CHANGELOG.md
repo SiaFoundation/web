@@ -1,5 +1,11 @@
 # Changelog
 
+## 10.4.0
+
+### Minor Changes
+
+- e7fa79d: DataTable now has a column gap of 20px.
+
 ## 10.3.0
 
 ### Minor Changes

@@ -1,5 +1,16 @@
 # @siafoundation/indexd-react
 
+## 0.2.0
+
+### Minor Changes
+
+- 4982f21: Added all app APIs.
+
+### Patch Changes
+
+- Updated dependencies [4982f21]
+  - @siafoundation/indexd-types@0.3.0
+
 ## 0.1.2
 
 ### Patch Changes

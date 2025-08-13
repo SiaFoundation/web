@@ -1,14 +1,14 @@
 {
   "name": "indexd",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "description": "The `indexd` user interface, dedicated to indexer related functionality.",
   "license": "MIT",
   "dependencies": {
-    "@siafoundation/design-system": "^10.3.0",
+    "@siafoundation/design-system": "^10.4.0",
     "@siafoundation/fonts": "^0.5.2",
-    "@siafoundation/indexd-react": "^0.1.2",
-    "@siafoundation/indexd-types": "^0.2.0",
+    "@siafoundation/indexd-react": "^0.2.0",
+    "@siafoundation/indexd-types": "^0.3.0",
     "@siafoundation/react-core": "^8.0.0",
     "@siafoundation/react-icons": "^0.3.2",
     "@siafoundation/types": "^0.13.0",
