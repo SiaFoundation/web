@@ -8,6 +8,6 @@
     "@siafoundation/indexd-types": "0.3.0",
     "@siafoundation/react-core": "^8.0.0",
     "@siafoundation/units": "3.7.0",
-    "swr": "^2.1.1"
+    "swr": "^2.3.6"
   }
 }
