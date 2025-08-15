@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { ContractsTab } from './Contracts/ContractsTab'
 import { AccountsTab } from './Accounts/AccountsTab'
 import { KeysTab } from './Keys/KeysTab'
+import { AlertsTab } from './Alerts/AlertsTab'
 
 export function DataExplorer() {
   const params = useSearchParams()
@@ -25,6 +26,7 @@ export function DataExplorer() {
       {view === 'hosts' && <HostsTab />}
       {view === 'contracts' && <ContractsTab />}
       {view === 'accounts' && <AccountsTab />}
+      {view === 'alerts' && <AlertsTab />}
       {view === 'keys' && <KeysTab />}
     </div>
   )
