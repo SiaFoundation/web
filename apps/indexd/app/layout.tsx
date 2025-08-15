@@ -3,6 +3,7 @@ import { NextAppCsr } from '@siafoundation/design-system'
 import { rootFontClasses } from '@siafoundation/fonts'
 import { routes } from '../config/routes'
 import { Providers } from '../config/providers'
+import { adminStateRoute } from '@siafoundation/indexd-types'
 
 export const metadata = {
   title: 'indexd',
@@ -17,7 +18,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={rootFontClasses}>
       <body>
-        <NextAppCsr passwordProtectRequestHooks lockRoutes={routes}>
+        <NextAppCsr
+          passwordProtectRequestHooks
+          lockRoutes={routes}
+          daemonExplorerInfoRoute={adminStateRoute}
+        >
           <Providers>{children}</Providers>
         </NextAppCsr>
       </body>
