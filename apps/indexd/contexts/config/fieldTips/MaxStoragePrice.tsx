@@ -24,7 +24,7 @@ export function MaxStoragePriceTips({
         <TipNumber
           type="siacoin"
           label="Network median price"
-          tip="Data provided by SiaScan."
+          tip="Data provided by explorer."
           decimalsLimit={0}
           value={toHastings(storageMedian)}
           onClick={() => {
@@ -58,7 +58,7 @@ export function MaxStoragePricePinnedTips({
         <TipNumber
           type="siacoin"
           label="Network median price"
-          tip="Data provided by SiaScan."
+          tip="Data provided by explorer."
           decimalsLimit={0}
           value={toHastings(storageMedian)}
           onClick={() => {

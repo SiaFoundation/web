@@ -24,7 +24,7 @@ export function MaxEgressPriceTips({
         <TipNumber
           type="siacoin"
           label="Network median price"
-          tip="Data provided by SiaScan."
+          tip="Data provided by explorer."
           decimalsLimit={0}
           value={toHastings(egressMedian)}
           onClick={() => {
@@ -57,7 +57,7 @@ export function MaxEgressPricePinnedTips({
         <TipNumber
           type="siacoin"
           label="Network median price"
-          tip="Data provided by SiaScan."
+          tip="Data provided by explorer."
           decimalsLimit={0}
           value={toHastings(egressMedian)}
           onClick={() => {

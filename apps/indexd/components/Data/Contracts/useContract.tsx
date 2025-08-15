@@ -1,4 +1,4 @@
-import { useActiveSiascanExchangeRate } from '@siafoundation/design-system'
+import { useActiveDaemonExplorerExchangeRate } from '@siafoundation/design-system'
 import { useMemo } from 'react'
 import { useAdminContract as useIndexContract } from '@siafoundation/indexd-react'
 import { ContractData } from './types'
@@ -15,7 +15,7 @@ export function useContract(contractId?: string) {
   })
   const hostKey = rawContract.data?.hostKey
   const host = useHost(hostKey)
-  const exchangeRate = useActiveSiascanExchangeRate()
+  const exchangeRate = useActiveDaemonExplorerExchangeRate()
   const { settings } = useAppSettings()
   const contract = useMemo(() => {
     if (!rawContract.data) {

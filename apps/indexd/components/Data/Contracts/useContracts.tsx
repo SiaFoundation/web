@@ -1,11 +1,11 @@
-import { useActiveSiascanExchangeRate } from '@siafoundation/design-system'
+import { useActiveDaemonExplorerExchangeRate } from '@siafoundation/design-system'
 import { useMemo } from 'react'
 import { useAdminContracts as useIndexContracts } from '@siafoundation/indexd-react'
 import { ContractData } from './types'
 import { useAppSettings } from '@siafoundation/react-core'
 import { transformContract } from './transform'
 import { AdminContractsParams } from '@siafoundation/indexd-types'
-import { useSiascanHosts } from '../useSiascanHosts'
+import { useExplorerHosts } from '../useExplorerHosts'
 import { useContractsParams } from './useContractsParams'
 
 export function useContracts() {
@@ -25,8 +25,8 @@ export function useContracts() {
   const rawContracts = useIndexContracts({
     params,
   })
-  const geo = useSiascanHosts()
-  const exchangeRate = useActiveSiascanExchangeRate()
+  const geo = useExplorerHosts()
+  const exchangeRate = useActiveDaemonExplorerExchangeRate()
   const { settings } = useAppSettings()
   const contracts = useMemo(
     () =>
