@@ -41,8 +41,12 @@ export function useDaemonExplorerMetadata({
   const api = useMemo(() => {
     if (url) {
       try {
-        const { origin } = new URL(url)
-        return origin
+        const { origin, pathname } = new URL(url)
+        const api = `${origin}${pathname}`
+        if (api.endsWith('/')) {
+          return api.slice(0, -1)
+        }
+        return api
       } catch (e) {
         console.error(e)
       }
