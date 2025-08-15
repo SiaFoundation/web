@@ -125,6 +125,10 @@ import {
   AdminAlertsDismissPayload,
   AdminAlertsDismissResponse,
   adminAlertsDismissRoute,
+  AdminStatsSectorsParams,
+  AdminStatsSectorsPayload,
+  AdminStatsSectorsResponse,
+  adminStatsSectorsRoute,
 } from '@siafoundation/indexd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
@@ -292,5 +296,10 @@ export function Admin({ api, password }: { api: string; password?: string }) {
       AdminAlertsDismissPayload,
       AdminAlertsDismissResponse
     >(axios, 'post', adminAlertsDismissRoute),
+    statsSectors: buildRequestHandler<
+      AdminStatsSectorsParams,
+      AdminStatsSectorsPayload,
+      AdminStatsSectorsResponse
+    >(axios, 'get', adminStatsSectorsRoute),
   }
 }

@@ -267,3 +267,12 @@ export const adminAlertsDismissRoute = '/alerts/dismiss'
 export type AdminAlertsDismissParams = void
 export type AdminAlertsDismissPayload = Hash256[]
 export type AdminAlertsDismissResponse = void
+
+// stats
+
+export const adminStatsSectorsRoute = '/stats/sectors'
+export type AdminStatsSectorsParams = void
+export type AdminStatsSectorsPayload = void
+export type AdminStatsSectorsResponse = {
+  numSectors: number
+}
