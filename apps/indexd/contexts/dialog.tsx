@@ -17,6 +17,7 @@ import { IndexdTransactionDetailsDialog } from '../dialogs/IndexdTransactionDeta
 import { DebugDialog } from '../dialogs/DebugDialog'
 import { AccountDeleteDialog } from '../dialogs/AccountDeleteDialog'
 import { ConnectKeyDeleteDialog } from '../dialogs/ConnectKeyDeleteDialog'
+import { ConnectKeyCreateDialog } from '../dialogs/ConnectKeyCreateDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -29,6 +30,7 @@ export type DialogType =
   | 'confirm'
   | 'accountDelete'
   | 'connectKeyDelete'
+  | 'connectKeyCreate'
 
 type ConfirmProps = {
   title: React.ReactNode
@@ -166,6 +168,10 @@ export function Dialogs() {
       <ConnectKeyDeleteDialog
         id={id}
         open={dialog === 'connectKeyDelete'}
+        onOpenChange={onOpenChange}
+      />
+      <ConnectKeyCreateDialog
+        open={dialog === 'connectKeyCreate'}
         onOpenChange={onOpenChange}
       />
     </>
