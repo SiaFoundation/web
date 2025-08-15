@@ -16,6 +16,7 @@ import { IndexdSendSiacoinDialog } from '../dialogs/IndexdSendSiacoinDialog'
 import { IndexdTransactionDetailsDialog } from '../dialogs/IndexdTransactionDetailsDialog'
 import { DebugDialog } from '../dialogs/DebugDialog'
 import { AccountDeleteDialog } from '../dialogs/AccountDeleteDialog'
+import { ConnectKeyDeleteDialog } from '../dialogs/ConnectKeyDeleteDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -27,6 +28,7 @@ export type DialogType =
   | 'bugReport'
   | 'confirm'
   | 'accountDelete'
+  | 'connectKeyDelete'
 
 type ConfirmProps = {
   title: React.ReactNode
@@ -159,6 +161,11 @@ export function Dialogs() {
       <AccountDeleteDialog
         id={id}
         open={dialog === 'accountDelete'}
+        onOpenChange={onOpenChange}
+      />
+      <ConnectKeyDeleteDialog
+        id={id}
+        open={dialog === 'connectKeyDelete'}
         onOpenChange={onOpenChange}
       />
     </>

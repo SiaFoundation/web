@@ -8,6 +8,11 @@ export const mediumColumnWidth = {
   maxWidth: 150,
 }
 
+export const largeColumnWidth = {
+  minWidth: 150,
+  maxWidth: 600,
+}
+
 export const timestampColumnWidth = {
   minWidth: 200,
   maxWidth: 220,

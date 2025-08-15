@@ -1,0 +1,5 @@
+---
+'indexd': minor
+---
+
+The data explorer now includes connect keys.

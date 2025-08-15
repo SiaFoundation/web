@@ -4,6 +4,7 @@ const VIEWS = [
   { value: 'hosts', label: 'Hosts' },
   { value: 'contracts', label: 'Contracts' },
   { value: 'accounts', label: 'Accounts' },
+  { value: 'keys', label: 'Connect Keys' },
 ] as const
 
 export type DataView = (typeof VIEWS)[number]['value']

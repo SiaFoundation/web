@@ -1,6 +1,6 @@
 import { useActiveSiascanExchangeRate } from '@siafoundation/design-system'
 import { useMemo } from 'react'
-import { useAdminContracts as useIndexContracts } from '@siafoundation/indexd-react'
+import { useAdminContracts } from '@siafoundation/indexd-react'
 import { ContractData } from './types'
 import { useAppSettings } from '@siafoundation/react-core'
 import { transformContract } from './transform'
@@ -22,7 +22,7 @@ export function useContracts() {
     }
     return filters
   }, [columnFilters, offset, limit])
-  const rawContracts = useIndexContracts({
+  const rawContracts = useAdminContracts({
     params,
   })
   const geo = useSiascanHosts()
