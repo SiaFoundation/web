@@ -5,6 +5,7 @@ import type {
   Address,
   WalletEvent,
   TransactionID,
+  Hash256,
 } from '@siafoundation/types'
 import type {
   Contract,
@@ -13,6 +14,7 @@ import type {
   PinnedSettings,
   WalletBalance,
   ConnectKey,
+  Alert,
 } from './types'
 import type { Host } from '../types'
 
@@ -246,3 +248,18 @@ export type AdminConnectKeyDeleteParams = {
 }
 export type AdminConnectKeyDeletePayload = void
 export type AdminConnectKeyDeleteResponse = void
+
+// alerts
+
+export const adminAlertsRoute = '/alerts'
+export type AdminAlertsParams = {
+  offset?: number
+  limit?: number
+}
+export type AdminAlertsPayload = void
+export type AdminAlertsResponse = Alert[]
+
+export const adminAlertsDismissRoute = '/alerts/dismiss'
+export type AdminAlertsDismissParams = void
+export type AdminAlertsDismissPayload = Hash256[]
+export type AdminAlertsDismissResponse = void

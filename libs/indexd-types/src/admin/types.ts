@@ -1,4 +1,9 @@
-import { Currency, FileContractID, PublicKey } from '@siafoundation/types'
+import {
+  Currency,
+  FileContractID,
+  Hash256,
+  PublicKey,
+} from '@siafoundation/types'
 
 export type WalletBalance = {
   confirmed: Currency
@@ -88,4 +93,14 @@ export type ConnectKey = {
   lastUpdated: string
   lastUsed: string
   maxPinnedData: number
+}
+
+export type AlertSeverity = 'info' | 'warning' | 'error' | 'critical'
+
+export type Alert = {
+  id: Hash256
+  severity: AlertSeverity
+  message: string
+  data?: Record<string, unknown>
+  timestamp: string
 }
