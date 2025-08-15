@@ -4,6 +4,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 import { ContractsTab } from './Contracts/ContractsTab'
 import { AccountsTab } from './Accounts/AccountsTab'
+import { KeysTab } from './Keys/KeysTab'
 
 export function DataExplorer() {
   const params = useSearchParams()
@@ -24,6 +25,7 @@ export function DataExplorer() {
       {view === 'hosts' && <HostsTab />}
       {view === 'contracts' && <ContractsTab />}
       {view === 'accounts' && <AccountsTab />}
+      {view === 'keys' && <KeysTab />}
     </div>
   )
 }
