@@ -1,6 +1,7 @@
 import { SidenavItem } from '@siafoundation/design-system'
 import {
   BarsProgressIcon,
+  ChartIcon,
   BugIcon,
   DatabaseIcon,
 } from '@siafoundation/react-icons'
@@ -16,6 +17,9 @@ export function IndexdSidenav() {
       </SidenavItem>
       <SidenavItem title="Configuration" route={routes.config.index}>
         <BarsProgressIcon />
+      </SidenavItem>
+      <SidenavItem title="Metrics" route={routes.metrics.index}>
+        <ChartIcon />
       </SidenavItem>
       <SidenavItem title="Bug report" onClick={() => openDialog('bugReport')}>
         <BugIcon />

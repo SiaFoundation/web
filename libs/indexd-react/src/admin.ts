@@ -116,6 +116,9 @@ import {
   AdminAlertsDismissParams,
   AdminAlertsDismissPayload,
   AdminAlertsDismissResponse,
+  adminStatsSectorsRoute,
+  AdminStatsSectorsParams,
+  AdminStatsSectorsResponse,
 } from '@siafoundation/indexd-types'
 import useSWR from 'swr'
 import {
@@ -524,5 +527,16 @@ export function useAdminAlertsDismiss(
   return usePostFunc({
     ...args,
     route: adminAlertsDismissRoute,
+  })
+}
+
+// stats
+
+export function useAdminStatsSectors(
+  args?: HookArgsSwr<AdminStatsSectorsParams, AdminStatsSectorsResponse>,
+) {
+  return useGetSwr({
+    ...args,
+    route: adminStatsSectorsRoute,
   })
 }

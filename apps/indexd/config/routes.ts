@@ -14,6 +14,9 @@ export const routes = {
   node: {
     index: '/node',
   },
+  metrics: {
+    index: '/metrics',
+  },
   login: '/login',
 }
 
