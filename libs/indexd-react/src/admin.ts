@@ -94,6 +94,21 @@ import {
   AdminHostScanPayload,
   AdminHostScanResponse,
   adminHostScanRoute,
+  adminConnectKeysRoute,
+  AdminConnectKeysParams,
+  AdminConnectKeysResponse,
+  adminConnectKeyAddRoute,
+  AdminConnectKeyAddParams,
+  AdminConnectKeyAddPayload,
+  AdminConnectKeyAddResponse,
+  AdminConnectKeyUpdateParams,
+  adminConnectKeyUpdateRoute,
+  AdminConnectKeyUpdatePayload,
+  AdminConnectKeyUpdateResponse,
+  AdminConnectKeyDeleteParams,
+  AdminConnectKeyDeletePayload,
+  AdminConnectKeyDeleteResponse,
+  adminConnectKeyDeleteRoute,
 } from '@siafoundation/indexd-types'
 import useSWR from 'swr'
 import {
@@ -428,5 +443,55 @@ export function useAdminWalletSend(
   return usePostFunc({
     ...args,
     route: adminWalletSendRoute,
+  })
+}
+
+// connect
+
+export function useAdminConnectKeys(
+  args?: HookArgsSwr<AdminConnectKeysParams, AdminConnectKeysResponse>,
+) {
+  return useGetSwr({
+    ...args,
+    route: adminConnectKeysRoute,
+  })
+}
+
+export function useAdminConnectKeyAdd(
+  args?: HookArgsCallback<
+    AdminConnectKeyAddParams,
+    AdminConnectKeyAddPayload,
+    AdminConnectKeyAddResponse
+  >,
+) {
+  return usePostFunc({
+    ...args,
+    route: adminConnectKeyAddRoute,
+  })
+}
+
+export function useAdminConnectKeyUpdate(
+  args?: HookArgsCallback<
+    AdminConnectKeyUpdateParams,
+    AdminConnectKeyUpdatePayload,
+    AdminConnectKeyUpdateResponse
+  >,
+) {
+  return usePutFunc({
+    ...args,
+    route: adminConnectKeyUpdateRoute,
+  })
+}
+
+export function useAdminConnectKeyDelete(
+  args?: HookArgsCallback<
+    AdminConnectKeyDeleteParams,
+    AdminConnectKeyDeletePayload,
+    AdminConnectKeyDeleteResponse
+  >,
+) {
+  return useDeleteFunc({
+    ...args,
+    route: adminConnectKeyDeleteRoute,
   })
 }

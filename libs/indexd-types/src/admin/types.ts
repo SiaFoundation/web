@@ -78,3 +78,14 @@ export type PinnedSettings = {
   maxStoragePrice: Pin
   minCollateral: Pin
 }
+
+export type ConnectKey = {
+  key: string
+  description: string
+  totalUses: number
+  remainingUses: number
+  dateCreated: string
+  lastUpdated: string
+  lastUsed: string
+  maxPinnedData: number
+}

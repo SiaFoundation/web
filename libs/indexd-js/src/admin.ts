@@ -101,6 +101,22 @@ import {
   AdminHostScanPayload,
   AdminHostScanResponse,
   adminHostScanRoute,
+  AdminConnectKeysParams,
+  AdminConnectKeysPayload,
+  AdminConnectKeysResponse,
+  adminConnectKeysRoute,
+  AdminConnectKeyAddParams,
+  AdminConnectKeyAddPayload,
+  AdminConnectKeyAddResponse,
+  adminConnectKeyAddRoute,
+  AdminConnectKeyUpdateParams,
+  AdminConnectKeyUpdatePayload,
+  AdminConnectKeyUpdateResponse,
+  adminConnectKeyUpdateRoute,
+  AdminConnectKeyDeleteParams,
+  AdminConnectKeyDeletePayload,
+  AdminConnectKeyDeleteResponse,
+  adminConnectKeyDeleteRoute,
 } from '@siafoundation/indexd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
@@ -238,5 +254,25 @@ export function Admin({ api, password }: { api: string; password?: string }) {
       AdminWalletSendPayload,
       AdminWalletSendResponse
     >(axios, 'post', adminWalletSendRoute),
+    connectKeys: buildRequestHandler<
+      AdminConnectKeysParams,
+      AdminConnectKeysPayload,
+      AdminConnectKeysResponse
+    >(axios, 'get', adminConnectKeysRoute),
+    connectKeyAdd: buildRequestHandler<
+      AdminConnectKeyAddParams,
+      AdminConnectKeyAddPayload,
+      AdminConnectKeyAddResponse
+    >(axios, 'post', adminConnectKeyAddRoute),
+    connectKeyUpdate: buildRequestHandler<
+      AdminConnectKeyUpdateParams,
+      AdminConnectKeyUpdatePayload,
+      AdminConnectKeyUpdateResponse
+    >(axios, 'put', adminConnectKeyUpdateRoute),
+    connectKeyDelete: buildRequestHandler<
+      AdminConnectKeyDeleteParams,
+      AdminConnectKeyDeletePayload,
+      AdminConnectKeyDeleteResponse
+    >(axios, 'delete', adminConnectKeyDeleteRoute),
   }
 }
