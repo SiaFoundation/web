@@ -12,6 +12,7 @@ import type {
   UsabilitySettings,
   PinnedSettings,
   WalletBalance,
+  ConnectKey,
 } from './types'
 import type { Host } from '../types'
 
@@ -209,3 +210,39 @@ export type AdminWalletSendPayload = {
   useUnconfirmed: boolean
 }
 export type AdminWalletSendResponse = TransactionID
+
+// connect
+
+export const adminConnectKeysRoute = '/apps/connect/keys'
+export type AdminConnectKeysParams = {
+  offset?: number
+  limit?: number
+}
+export type AdminConnectKeysPayload = void
+export type AdminConnectKeysResponse = ConnectKey[]
+
+export const adminConnectKeyAddRoute = '/apps/connect/keys'
+export type AdminConnectKeyAddParams = void
+export type AdminConnectKeyAddPayload = {
+  description: string
+  maxPinnedData: number
+  remainingUses: number
+}
+export type AdminConnectKeyAddResponse = ConnectKey
+
+export const adminConnectKeyUpdateRoute = '/apps/connect/keys'
+export type AdminConnectKeyUpdateParams = void
+export type AdminConnectKeyUpdatePayload = {
+  key: string
+  description: string
+  maxPinnedData?: number
+  remainingUses: number
+}
+export type AdminConnectKeyUpdateResponse = void
+
+export const adminConnectKeyDeleteRoute = '/apps/connect/keys/:key'
+export type AdminConnectKeyDeleteParams = {
+  key: string
+}
+export type AdminConnectKeyDeletePayload = void
+export type AdminConnectKeyDeleteResponse = void
