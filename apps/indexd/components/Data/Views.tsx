@@ -4,6 +4,7 @@ const VIEWS = [
   { value: 'hosts', label: 'Hosts' },
   { value: 'contracts', label: 'Contracts' },
   { value: 'accounts', label: 'Accounts' },
+  { value: 'alerts', label: 'Alerts' },
   { value: 'keys', label: 'Connect Keys' },
 ] as const
 
