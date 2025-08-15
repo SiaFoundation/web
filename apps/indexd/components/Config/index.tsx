@@ -5,7 +5,7 @@ import {
   ConfigurationSiacoin,
   PanelMenuSection,
   PanelMenuSetting,
-  useSiascanExchangeRate,
+  useDaemonExplorerExchangeRate,
 } from '@siafoundation/design-system'
 import { useConfig } from '../../contexts/config'
 import { StateConnError } from './StateConnError'
@@ -21,7 +21,7 @@ export function Config() {
   const shouldPinMaxEgressPrice = form.watch('shouldPinMaxEgressPrice')
   const shouldPinMinCollateral = form.watch('shouldPinMinCollateral')
 
-  const { rate } = useSiascanExchangeRate({
+  const { rate } = useDaemonExplorerExchangeRate({
     currency: pinnedCurrency || undefined,
   })
   const canUseExchangeRates = !!rate

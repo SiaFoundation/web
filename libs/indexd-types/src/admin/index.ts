@@ -31,6 +31,10 @@ export type AdminStateResponse = {
   syncHeight: number
   synced: boolean
   network: 'mainnet' | 'zen'
+  explorer: {
+    enabled: boolean
+    url?: string
+  }
 }
 
 // syncer

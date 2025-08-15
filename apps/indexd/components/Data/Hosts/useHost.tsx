@@ -1,34 +1,26 @@
 import {
-  useActiveSiascanExchangeRate,
-  useSiascanHost,
+  useActiveDaemonExplorerExchangeRate,
+  useDaemonExplorerHost,
 } from '@siafoundation/design-system'
 import { useMemo } from 'react'
-import {
-  useAdminState,
-  useAdminHost as useIndexHost,
-} from '@siafoundation/indexd-react'
+import { useAdminHost } from '@siafoundation/indexd-react'
 import { transformHost } from './transform'
 import { useAppSettings } from '@siafoundation/react-core'
 
 export function useHost(publicKey?: string) {
-  const state = useAdminState()
-  const geo = useSiascanHost({
-    disabled: !state.data || !publicKey,
-    api:
-      state.data?.network === 'mainnet'
-        ? 'https://api.siascan.com'
-        : 'https://api.siascan.com/zen',
+  const geo = useDaemonExplorerHost({
+    disabled: !publicKey,
     params: {
       id: publicKey || '',
     },
   })
-  const rawHost = useIndexHost({
+  const rawHost = useAdminHost({
     disabled: !publicKey,
     params: {
       hostkey: publicKey || '',
     },
   })
-  const exchangeRate = useActiveSiascanExchangeRate()
+  const exchangeRate = useActiveDaemonExplorerExchangeRate()
   const { settings } = useAppSettings()
   const host = useMemo(() => {
     if (!rawHost.data) {

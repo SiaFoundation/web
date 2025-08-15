@@ -5,10 +5,10 @@ import {
   toSiacoins,
   valuePerByteToPerTB,
 } from '@siafoundation/units'
-import { useSiascanHostMetrics } from '@siafoundation/design-system'
+import { useDaemonExplorerHostMetrics } from '@siafoundation/design-system'
 
 export function useMedianPrices() {
-  const explorerMedians = useSiascanHostMetrics({
+  const explorerMedians = useDaemonExplorerHostMetrics({
     config: {
       swr: {
         revalidateOnFocus: false,
