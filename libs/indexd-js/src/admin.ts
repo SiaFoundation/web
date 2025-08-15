@@ -117,6 +117,14 @@ import {
   AdminConnectKeyDeletePayload,
   AdminConnectKeyDeleteResponse,
   adminConnectKeyDeleteRoute,
+  AdminAlertsParams,
+  AdminAlertsPayload,
+  AdminAlertsResponse,
+  adminAlertsRoute,
+  AdminAlertsDismissParams,
+  AdminAlertsDismissPayload,
+  AdminAlertsDismissResponse,
+  adminAlertsDismissRoute,
 } from '@siafoundation/indexd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
@@ -274,5 +282,15 @@ export function Admin({ api, password }: { api: string; password?: string }) {
       AdminConnectKeyDeletePayload,
       AdminConnectKeyDeleteResponse
     >(axios, 'delete', adminConnectKeyDeleteRoute),
+    alerts: buildRequestHandler<
+      AdminAlertsParams,
+      AdminAlertsPayload,
+      AdminAlertsResponse
+    >(axios, 'get', adminAlertsRoute),
+    alertsDismiss: buildRequestHandler<
+      AdminAlertsDismissParams,
+      AdminAlertsDismissPayload,
+      AdminAlertsDismissResponse
+    >(axios, 'post', adminAlertsDismissRoute),
   }
 }

@@ -109,6 +109,13 @@ import {
   AdminConnectKeyDeletePayload,
   AdminConnectKeyDeleteResponse,
   adminConnectKeyDeleteRoute,
+  adminAlertsRoute,
+  AdminAlertsParams,
+  AdminAlertsResponse,
+  adminAlertsDismissRoute,
+  AdminAlertsDismissParams,
+  AdminAlertsDismissPayload,
+  AdminAlertsDismissResponse,
 } from '@siafoundation/indexd-types'
 import useSWR from 'swr'
 import {
@@ -493,5 +500,29 @@ export function useAdminConnectKeyDelete(
   return useDeleteFunc({
     ...args,
     route: adminConnectKeyDeleteRoute,
+  })
+}
+
+// alerts
+
+export function useAdminAlerts(
+  args?: HookArgsSwr<AdminAlertsParams, AdminAlertsResponse>,
+) {
+  return useGetSwr({
+    ...args,
+    route: adminAlertsRoute,
+  })
+}
+
+export function useAdminAlertsDismiss(
+  args?: HookArgsCallback<
+    AdminAlertsDismissParams,
+    AdminAlertsDismissPayload,
+    AdminAlertsDismissResponse
+  >,
+) {
+  return usePostFunc({
+    ...args,
+    route: adminAlertsDismissRoute,
   })
 }
