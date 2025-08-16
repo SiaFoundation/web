@@ -1,6 +1,6 @@
 {
   "name": "@siafoundation/react-core",
-  "version": "8.0.0",
+  "version": "8.1.0",
   "description": "Core library for building React hooks for interacting with a Sia daemon.",
   "license": "MIT",
   "types": "./src/index.d.ts",

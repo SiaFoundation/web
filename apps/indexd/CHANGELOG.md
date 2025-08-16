@@ -1,5 +1,31 @@
 # indexd
 
+## 0.5.0
+
+### Minor Changes
+
+- 174f989: There is now a metrics page with the number of sectors stat.
+- c43a8d0: Alerts can be dismissed from the detail panel.
+- f13c5af: Connect keys can now be deleted from the detail panel.
+- c43a8d0: The data explorer now includes alerts.
+- f13c5af: The data explorer now includes connect keys.
+- 6a85009: New connect keys can now be created.
+- 3b0183d: The app now uses the daemon configured explorer for exchange rates, metrics, and geolocation.
+
+### Patch Changes
+
+- Updated dependencies [3b0183d]
+- Updated dependencies [174f989]
+- Updated dependencies [476f23f]
+- Updated dependencies [feb07e3]
+- Updated dependencies [174f989]
+- Updated dependencies [baa83d1]
+  - @siafoundation/indexd-types@0.4.0
+  - @siafoundation/indexd-react@0.3.0
+  - @siafoundation/react-core@8.1.0
+  - @siafoundation/react-icons@0.4.0
+  - @siafoundation/design-system@10.4.1
+
 ## 0.4.0
 
 ### Minor Changes
