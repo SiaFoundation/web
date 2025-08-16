@@ -1,5 +1,14 @@
 # @siafoundation/indexd-types
 
+## 0.4.0
+
+### Minor Changes
+
+- 3b0183d: Added explorer config to state response.
+- 174f989: Added stats sector API.
+- feb07e3: Added connect key APIs.
+- baa83d1: Add alerts APIs.
+
 ## 0.3.0
 
 ### Minor Changes

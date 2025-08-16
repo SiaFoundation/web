@@ -1,5 +1,14 @@
 # Changelog
 
+## 10.4.1
+
+### Patch Changes
+
+- Updated dependencies [476f23f]
+- Updated dependencies [174f989]
+  - @siafoundation/react-core@8.1.0
+  - @siafoundation/react-icons@0.4.0
+
 ## 10.4.0
 
 ### Minor Changes

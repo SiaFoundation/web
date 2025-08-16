@@ -1,5 +1,11 @@
 # @siafoundation/react-core
 
+## 8.1.0
+
+### Minor Changes
+
+- 476f23f: Daemon explorer info route now supports paths.
+
 ## 8.0.0
 
 ### Patch Changes

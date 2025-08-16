@@ -1,5 +1,23 @@
 # @siafoundation/indexd-react
 
+## 0.3.0
+
+### Minor Changes
+
+- 174f989: Added stats sector API.
+- feb07e3: Added connect key APIs.
+- baa83d1: Add alerts APIs.
+
+### Patch Changes
+
+- Updated dependencies [3b0183d]
+- Updated dependencies [174f989]
+- Updated dependencies [476f23f]
+- Updated dependencies [feb07e3]
+- Updated dependencies [baa83d1]
+  - @siafoundation/indexd-types@0.4.0
+  - @siafoundation/react-core@8.1.0
+
 ## 0.2.0
 
 ### Minor Changes

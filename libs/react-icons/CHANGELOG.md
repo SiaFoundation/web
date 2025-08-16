@@ -1,5 +1,11 @@
 # @siafoundation/react-icons
 
+## 0.4.0
+
+### Minor Changes
+
+- 174f989: Added ChartIcon.
+
 ## 0.3.2
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # renterd
 
+## 0.84.3
+
+### Patch Changes
+
+- Updated dependencies [476f23f]
+- Updated dependencies [174f989]
+  - @siafoundation/react-core@8.1.0
+  - @siafoundation/react-icons@0.4.0
+  - @siafoundation/design-system@10.4.1
+
 ## 0.84.2
 
 ### Patch Changes
