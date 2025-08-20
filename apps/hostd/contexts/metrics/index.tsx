@@ -250,7 +250,7 @@ function useMetricsMain() {
         },
         formatTickY: (v) =>
           humanSiacoin(v, {
-            fixed: 0,
+            fixed: 1,
             dynamicUnits: true,
           }),
         formatTimestamp,
@@ -292,7 +292,7 @@ function useMetricsMain() {
         formatTimestamp,
         formatTickY: (v) =>
           humanSiacoin(v, {
-            fixed: 0,
+            fixed: 1,
             dynamicUnits: true,
           }),
         disableAnimations,
@@ -364,7 +364,7 @@ function useMetricsMain() {
         formatTimestamp,
         formatTickY: (v) =>
           humanSiacoin(v, {
-            fixed: 0,
+            fixed: 1,
             dynamicUnits: true,
           }),
         disableAnimations,
@@ -491,7 +491,7 @@ function useMetricsMain() {
         },
         format: (v) => humanBytes(v),
         formatTimestamp,
-        formatTickY: (v) => humanBytes(v, { fixed: 0 }),
+        formatTickY: (v) => humanBytes(v, { fixed: 1 }),
         disableAnimations,
         chartType: 'line',
         curveType: 'linear',
@@ -557,7 +557,7 @@ function useMetricsMain() {
         formatTimestamp,
         formatTickY: (v) =>
           humanBytes(v, {
-            fixed: 0,
+            fixed: 1,
           }),
         disableAnimations,
         chartType: 'line',

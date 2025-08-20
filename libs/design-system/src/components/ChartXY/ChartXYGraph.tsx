@@ -237,6 +237,7 @@ export function ChartXYGraph<Key extends string, Cat extends string>({
         // tickFormat={stackOffset === 'wiggle' ? () => '' : undefined}
         tickFormat={config.formatTickY}
         tickLabelProps={(p) => ({
+          width: 70,
           ...p,
           fill: theme.labels.color,
           fontFamily: theme.labels.fontFamily,
