@@ -46,6 +46,10 @@ export function SidePanelKey() {
           <InfoRow label="Description" value={key.description} />
           <InfoRow label="Total uses" value={key.totalUses} />
           <InfoRow label="Remaining uses" value={key.remainingUses} />
+          <InfoRow
+            label="Max pinned data"
+            value={key.displayFields.maxPinnedData}
+          />
           <InfoRow label="Date created" value={key.displayFields.dateCreated} />
           <InfoRow label="Last updated" value={key.displayFields.lastUpdated} />
           <InfoRow label="Last used" value={key.displayFields.lastUsed} />

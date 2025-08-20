@@ -5,6 +5,8 @@ import { useAccounts } from './useAccounts'
 import { useDialog } from '../../../contexts/dialog'
 import { TrashCan16 } from '@siafoundation/react-icons'
 import { useAccountsParams } from './useAccountsParams'
+import { InfoRow } from '../PanelInfoRow'
+import { SidePanelSection } from '../SidePanelSection'
 
 export function SidePanelAccount() {
   const { panelId, setPanelId } = useAccountsParams()
@@ -42,9 +44,18 @@ export function SidePanelAccount() {
         </Button>
       }
     >
-      <Text color="subtle" className="flex justify-center pt-[50px]">
-        No further information on accounts yet
-      </Text>
+      <SidePanelSection heading="Info">
+        <div className="flex flex-col gap-2">
+          <InfoRow
+            label="Service account"
+            value={account.serviceAccount ? 'Yes' : 'No'}
+          />
+          <InfoRow
+            label="Max pinned data"
+            value={account.displayFields.maxPinnedData}
+          />
+        </div>
+      </SidePanelSection>
     </SidePanel>
   )
 }
