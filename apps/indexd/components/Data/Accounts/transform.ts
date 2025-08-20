@@ -1,10 +1,16 @@
+import { Account } from '@siafoundation/indexd-types'
 import { AccountData } from './types'
-import { PublicKey } from '@siafoundation/types'
+import { humanBytes } from '@siafoundation/units'
 
-export function transformAccount(account: PublicKey): AccountData {
+export function transformAccount(account: Account): AccountData {
   const datum: AccountData = {
-    id: account,
-    publicKey: account,
+    id: account.accountKey,
+    publicKey: account.accountKey,
+    serviceAccount: account.serviceAccount,
+    maxPinnedData: account.maxPinnedData,
+    displayFields: {
+      maxPinnedData: humanBytes(account.maxPinnedData),
+    },
   }
   return datum
 }

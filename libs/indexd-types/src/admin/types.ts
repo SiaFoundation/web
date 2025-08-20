@@ -104,3 +104,9 @@ export type Alert = {
   data?: Record<string, unknown>
   timestamp: string
 }
+
+export type Account = {
+  accountKey: string
+  maxPinnedData: number
+  serviceAccount: boolean
+}

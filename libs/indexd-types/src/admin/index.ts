@@ -15,6 +15,7 @@ import type {
   WalletBalance,
   ConnectKey,
   Alert,
+  Account,
 } from './types'
 import type { Host } from '../types'
 
@@ -61,7 +62,7 @@ export type AdminAccountsParams = {
   limit?: number
 }
 export type AdminAccountsPayload = void
-export type AdminAccountsResponse = PublicKey[]
+export type AdminAccountsResponse = Account[]
 
 export const adminAccountRoute = '/account/:accountkey'
 export type AdminAccountAddParams = {

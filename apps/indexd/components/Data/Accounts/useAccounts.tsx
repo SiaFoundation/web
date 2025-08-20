@@ -13,8 +13,8 @@ export function useAccounts() {
   })
   const accounts = useMemo(
     () =>
-      rawAccounts.data?.map((publicKey) => {
-        return transformAccount(publicKey)
+      rawAccounts.data?.map((account) => {
+        return transformAccount(account)
       }) || [],
     [rawAccounts.data],
   )
