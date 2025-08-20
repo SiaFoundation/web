@@ -181,8 +181,8 @@ export function getFields({
             validationContext,
             (value: BigNumber, values) =>
               !values.shouldPinStoragePrice ||
-              value?.gt(0) ||
-              'storage price must be greater than 0',
+              value?.gte(0) ||
+              'storage price must not be negative',
           ),
         },
       },
@@ -238,8 +238,8 @@ export function getFields({
             validationContext,
             (value: BigNumber, values) =>
               !values.shouldPinEgressPrice ||
-              value?.gt(0) ||
-              'egress price must be greater than 0',
+              value?.gte(0) ||
+              'egress price must not be negative',
           ),
         },
       },
@@ -294,8 +294,8 @@ export function getFields({
             validationContext,
             (value: BigNumber, values) =>
               !values.shouldPinIngressPrice ||
-              value?.gt(0) ||
-              'ingress price must be greater than 0',
+              value?.gte(0) ||
+              'ingress price must not be negative',
           ),
         },
       },
@@ -366,8 +366,8 @@ export function getFields({
             validationContext,
             (value: BigNumber, values) =>
               !values.shouldPinMaxCollateral ||
-              value?.gt(0) ||
-              'max collateral must be greater than 0',
+              value?.gte(0) ||
+              'max collateral must not be negative',
           ),
         },
       },
