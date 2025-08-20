@@ -1,5 +1,11 @@
 # Changelog
 
+## 10.4.2
+
+### Patch Changes
+
+- 3fc9176: Increased the ChartXY y axis label width.
+
 ## 10.4.1
 
 ### Patch Changes
