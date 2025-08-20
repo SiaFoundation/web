@@ -1,5 +1,17 @@
 # hostd
 
+## 0.66.0
+
+### Minor Changes
+
+- ad8f614: Pinned configuration settings can now be set to zero.
+- 3fc9176: Y-axis numeric labels on metrics charts now show 1 decimal place. Closes https://github.com/SiaFoundation/hostd/issues/811
+
+### Patch Changes
+
+- Updated dependencies [3fc9176]
+  - @siafoundation/design-system@10.4.2
+
 ## 0.65.3
 
 ### Patch Changes

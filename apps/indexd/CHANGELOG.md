@@ -1,5 +1,20 @@
 # indexd
 
+## 0.6.0
+
+### Minor Changes
+
+- d2d4a81: Added max pinned data to connect key detail panel.
+- d2d4a81: Added account fields: service account, max pinned data.
+
+### Patch Changes
+
+- Updated dependencies [d2d4a81]
+- Updated dependencies [3fc9176]
+  - @siafoundation/indexd-types@0.5.0
+  - @siafoundation/design-system@10.4.2
+  - @siafoundation/indexd-react@0.3.1
+
 ## 0.5.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @siafoundation/indexd-types
 
+## 0.5.0
+
+### Minor Changes
+
+- d2d4a81: The accounts response is now account objects with more fields.
+
 ## 0.4.0
 
 ### Minor Changes

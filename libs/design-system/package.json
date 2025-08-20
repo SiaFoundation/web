@@ -1,6 +1,6 @@
 {
   "name": "@siafoundation/design-system",
-  "version": "10.4.1",
+  "version": "10.4.2",
   "description": "React-based design system used across Sia apps.",
   "license": "MIT",
   "types": "./src/index.d.ts",
