@@ -1,5 +1,11 @@
 # explorer
 
+## 0.39.0
+
+### Minor Changes
+
+- 26dd240: Removed the v2 hardfork countdown banner.
+
 ## 0.38.1
 
 ### Patch Changes
