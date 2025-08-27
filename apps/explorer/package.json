@@ -15,6 +15,7 @@
     "@siafoundation/types": "^0.13.0",
     "@siafoundation/units": "^3.7.0",
     "@technically/lodash": "^4.17.0",
+    "@vercel/otel": "^1.13.0",
     "bignumber.js": "^9.3.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
