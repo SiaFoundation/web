@@ -275,5 +275,5 @@ export const adminStatsSectorsRoute = '/stats/sectors'
 export type AdminStatsSectorsParams = void
 export type AdminStatsSectorsPayload = void
 export type AdminStatsSectorsResponse = {
-  numSectors: number
+  numSlabs: number
 }
