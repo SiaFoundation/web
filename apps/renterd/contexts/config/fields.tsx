@@ -691,6 +691,12 @@ export function getFields({
               new BigNumber(value || 0).gte(values.minShards || 0) ||
               'must be at least equal to min shards',
           ),
+          lteNumHosts: requiredIfAdvanced(
+            validationContext,
+            (value: Maybe<BigNumber>, values) =>
+              new BigNumber(value || 0).lte(values.amountHosts || 0) ||
+              'must be less than or equal to number of hosts',
+          ),
           max: requiredIfAdvanced(
             validationContext,
             (value: Maybe<BigNumber>) =>
