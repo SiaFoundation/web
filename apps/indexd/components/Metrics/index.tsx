@@ -16,8 +16,8 @@ export function Metrics() {
       ) : (
         <div className="flex flex-wrap gap-7">
           <DatumCard
-            label="Sectors"
-            value={state.data?.numSectors?.toLocaleString()}
+            label="Slabs"
+            value={state.data?.numSlabs?.toLocaleString()}
           />
         </div>
       )}
