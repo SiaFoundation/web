@@ -1,5 +1,19 @@
 # Changelog
 
+## 10.5.0
+
+### Minor Changes
+
+- 89f2d87: Added dataset actions to DataTable header.
+- 716520e: Added fitWidth mode to ValueCopyable.
+- 716520e: ValueCopyable now displays the copy icon inline if its the only available action.
+- e58460d: Adjusted the SidenavItem active logic to support search params.
+
+### Patch Changes
+
+- Updated dependencies [e58460d]
+  - @siafoundation/react-icons@0.5.0
+
 ## 10.4.2
 
 ### Patch Changes

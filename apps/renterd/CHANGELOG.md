@@ -1,5 +1,21 @@
 # renterd
 
+## 0.85.0
+
+### Minor Changes
+
+- 3ad512c: Total shards field validation now checks that the value is less than or equal to the number of hosts / contracts. Closes https://github.com/SiaFoundation/renterd/issues/1625
+
+### Patch Changes
+
+- Updated dependencies [e58460d]
+- Updated dependencies [89f2d87]
+- Updated dependencies [716520e]
+- Updated dependencies [716520e]
+- Updated dependencies [e58460d]
+  - @siafoundation/react-icons@0.5.0
+  - @siafoundation/design-system@10.5.0
+
 ## 0.84.3
 
 ### Patch Changes

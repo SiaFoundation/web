@@ -1,5 +1,12 @@
 # @siafoundation/indexd-react
 
+## 0.3.2
+
+### Patch Changes
+
+- Updated dependencies [86c8e35]
+  - @siafoundation/indexd-types@0.6.0
+
 ## 0.3.1
 
 ### Patch Changes

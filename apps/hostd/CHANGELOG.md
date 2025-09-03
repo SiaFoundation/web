@@ -1,5 +1,17 @@
 # hostd
 
+## 0.66.1
+
+### Patch Changes
+
+- Updated dependencies [e58460d]
+- Updated dependencies [89f2d87]
+- Updated dependencies [716520e]
+- Updated dependencies [716520e]
+- Updated dependencies [e58460d]
+  - @siafoundation/react-icons@0.5.0
+  - @siafoundation/design-system@10.5.0
+
 ## 0.66.0
 
 ### Minor Changes

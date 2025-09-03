@@ -1,5 +1,22 @@
 # explorer
 
+## 0.39.0
+
+### Minor Changes
+
+- 26dd240: Removed the v2 hardfork countdown banner.
+- 59ef97a: Added support for otel traces and metrics.
+
+### Patch Changes
+
+- Updated dependencies [e58460d]
+- Updated dependencies [89f2d87]
+- Updated dependencies [716520e]
+- Updated dependencies [716520e]
+- Updated dependencies [e58460d]
+  - @siafoundation/react-icons@0.5.0
+  - @siafoundation/design-system@10.5.0
+
 ## 0.38.1
 
 ### Patch Changes

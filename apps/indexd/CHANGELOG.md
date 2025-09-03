@@ -1,5 +1,28 @@
 # indexd
 
+## 0.7.0
+
+### Minor Changes
+
+- 89f2d87: Added dataset actions to DataTable header.
+- 89f2d87: Adjusted data explorer layout sizing, padding, and action icons.
+- 86c8e35: Renamed sectors metrics to slabs.
+- 716520e: The detail panel headers now have a copy value action.
+- e58460d: Each data explorer now has its own tab icon in the sidenav.
+
+### Patch Changes
+
+- Updated dependencies [e58460d]
+- Updated dependencies [89f2d87]
+- Updated dependencies [716520e]
+- Updated dependencies [716520e]
+- Updated dependencies [86c8e35]
+- Updated dependencies [e58460d]
+  - @siafoundation/react-icons@0.5.0
+  - @siafoundation/design-system@10.5.0
+  - @siafoundation/indexd-types@0.6.0
+  - @siafoundation/indexd-react@0.3.2
+
 ## 0.6.0
 
 ### Minor Changes
