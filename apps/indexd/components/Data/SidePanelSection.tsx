@@ -10,7 +10,7 @@ export function SidePanelSection({
 }) {
   return (
     <>
-      <Separator className="mt-4 mb-2" />
+      <Separator className="first-of-type:hidden mt-4 mb-2" />
       <Text size="16" weight="medium" className="mb-2">
         {heading}
       </Text>

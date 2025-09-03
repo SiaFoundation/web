@@ -6,6 +6,7 @@ import { HostData } from '../types'
 import { useMutate } from '@siafoundation/react-core'
 import { adminHostsRoute } from '@siafoundation/indexd-types'
 import { Row } from '@tanstack/react-table'
+import { CheckmarkOutline16 } from '@siafoundation/react-icons'
 
 export function BulkHostBlocklistRemove({
   hosts,
@@ -36,5 +37,10 @@ export function BulkHostBlocklistRemove({
     )
     await mutate((key) => key.startsWith(adminHostsRoute))
   }, [hosts, blocklistDelete, mutate])
-  return <Button onClick={operation}>Unblock</Button>
+  return (
+    <Button onClick={operation}>
+      <CheckmarkOutline16 />
+      Unblock {hosts.length === 1 ? 'host' : 'hosts'}
+    </Button>
+  )
 }

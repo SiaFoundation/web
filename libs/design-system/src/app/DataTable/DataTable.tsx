@@ -33,6 +33,7 @@ interface DataTableProps<T extends { id: string }> {
   onClickFilterIcon?: () => void
   /** Optional heading to render after the filter icon. */
   heading?: React.ReactNode
+  actions?: React.ReactNode
 }
 
 const defaultWidth = 100
@@ -64,6 +65,7 @@ export function DataTable<T extends { id: string }>({
   limit,
   onClickFilterIcon,
   heading,
+  actions,
 }: DataTableProps<T>) {
   // Build a shared grid template based on visible columns and their meta.
   const visibleLeafColumns = table.getVisibleLeafColumns()
@@ -87,13 +89,14 @@ export function DataTable<T extends { id: string }>({
         className,
       )}
     >
-      <div className="z-10 flex items-center justify-between gap-4 bg-white dark:bg-graydark-200 py-2 px-1.5 border-b border-gray-200 dark:border-graydark-400">
+      <div className="z-10 h-[45px] flex items-center justify-between gap-4 bg-white dark:bg-graydark-200 py-2 pl-1.5 pr-2 border-b border-gray-200 dark:border-graydark-400">
         <ActiveFilters
           fixedFilters={fixedFilters}
           table={table}
           onClickFilterIcon={onClickFilterIcon}
           heading={heading}
         />
+        {actions}
       </div>
       <div className="flex-1 overflow-hidden relative">
         <div
@@ -201,7 +204,7 @@ export function DataTable<T extends { id: string }>({
           </div>
         </div>
       </div>
-      <div className="z-10 flex items-center justify-end gap-4 bg-white dark:bg-graydark-200 py-2 px-4 border-t border-gray-200 dark:border-graydark-400">
+      <div className="z-10 flex items-center justify-end gap-4 bg-white dark:bg-graydark-200 py-2 px-2 border-t border-gray-200 dark:border-graydark-400">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-2">
             <Label

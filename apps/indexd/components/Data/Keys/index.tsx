@@ -7,6 +7,7 @@ import { KeyData } from './types'
 import { useKeys } from './useKeys'
 import { Layout } from '../Layout'
 import { useKeysParams } from './useKeysParams'
+import { CreateKeyButton } from './CreateKeyButton'
 
 export function Keys() {
   const {
@@ -42,10 +43,9 @@ export function Keys() {
     setOffset,
     setLimit,
   })
-
   return (
     <Layout
-      table={<DataTable {...table} />}
+      table={<DataTable {...table} actions={<CreateKeyButton />} />}
       panel={panelId ? <SidePanelKey /> : <SidePanelKeyList table={table} />}
     />
   )
