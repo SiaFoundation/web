@@ -19,7 +19,7 @@ export function SidePanel({
 }: Props) {
   return (
     <Panel className="relative h-full w-full">
-      <div className="h-[45px] z-10 flex items-center justify-between gap-4 bg-white dark:bg-graydark-200 py-2 px-3 border-b border-gray-200 dark:border-graydark-400">
+      <div className="h-[45px] z-10 flex items-center justify-between gap-2 bg-white dark:bg-graydark-200 py-2 px-2 border-b border-gray-200 dark:border-graydark-400">
         {heading}
         {customCloseAction ||
           (onClose ? (

@@ -15,6 +15,7 @@ import { SidePanelSection } from '../SidePanelSection'
 import { InfoRow } from '../PanelInfoRow'
 import { useAdminAlertsDismiss } from '@siafoundation/indexd-react'
 import { getAlertTypeLabel } from './utils'
+import { SidePanelHeadingCopyable } from '../SidePanelHeadingCopyable'
 
 export function SidePanelAccount() {
   const { panelId, setPanelId } = useAlertsParams()
@@ -38,9 +39,15 @@ export function SidePanelAccount() {
     <SidePanel
       onClose={() => setPanelId(undefined)}
       heading={
-        <Text size="18" weight="medium" ellipsis>
-          {getAlertTypeLabel(alert)} alert
-        </Text>
+        <SidePanelHeadingCopyable
+          heading={
+            <Text size="18" weight="medium" ellipsis>
+              {getAlertTypeLabel(alert)}
+            </Text>
+          }
+          value={alert.id}
+          label="alert"
+        />
       }
       actions={
         <Button

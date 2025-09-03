@@ -1,9 +1,4 @@
-import {
-  HostMap,
-  Text,
-  truncate,
-  ValueCopyable,
-} from '@siafoundation/design-system'
+import { HostMap, Text, ValueCopyable } from '@siafoundation/design-system'
 import { useMemo } from 'react'
 import { UsabilityBadges } from '../UsabilityBadges'
 import { StateBadge, StatusBadge } from './contractsColumns'
@@ -12,6 +7,7 @@ import { SidePanel } from '../SidePanel'
 import { SidePanelSection } from '../SidePanelSection'
 import { useContract } from './useContract'
 import { useContractsParams } from './useContractsParams'
+import { SidePanelHeadingCopyable } from '../SidePanelHeadingCopyable'
 
 export function SidePanelContract() {
   const { panelId, setPanelId } = useContractsParams()
@@ -38,9 +34,11 @@ export function SidePanelContract() {
     <SidePanel
       onClose={() => setPanelId(undefined)}
       heading={
-        <Text size="18" weight="medium" ellipsis>
-          Contract: {truncate(contract?.id, 24)}
-        </Text>
+        <SidePanelHeadingCopyable
+          heading="Contract"
+          value={contract?.id}
+          label="contract"
+        />
       }
     >
       <HostMap
