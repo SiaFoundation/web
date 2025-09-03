@@ -141,10 +141,7 @@ import {
   AdminConsensusNetworkResponse,
 } from '@siafoundation/indexd-types'
 import useSWR from 'swr'
-import {
-  getMainnetBlockHeight,
-  getTestnetZenBlockHeight,
-} from '@siafoundation/units'
+import { getBlockHeightFromGenesis } from '@siafoundation/units'
 
 // state
 
@@ -158,7 +155,7 @@ export function useAdminState(
 }
 
 export function useAdminEstimatedNetworkBlockHeight(): number {
-  const state = useAdminState({
+  const network = useAdminConsensusNetwork({
     config: {
       swr: {
         revalidateOnFocus: false,
@@ -166,13 +163,8 @@ export function useAdminEstimatedNetworkBlockHeight(): number {
     },
   })
   const res = useSWR(
-    state,
-    () => {
-      if (state.data?.network === 'zen') {
-        return getTestnetZenBlockHeight()
-      }
-      return getMainnetBlockHeight()
-    },
+    network,
+    () => getBlockHeightFromGenesis(network.data?.hardforkOak.genesisTimestamp),
     {
       refreshInterval: 60_000,
       keepPreviousData: true,

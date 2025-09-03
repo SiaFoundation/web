@@ -127,10 +127,7 @@ import {
   V2ContractsResponse,
   v2ContractsRoute,
 } from '@siafoundation/hostd-types'
-import {
-  getMainnetBlockHeight,
-  getTestnetZenBlockHeight,
-} from '@siafoundation/units'
+import { getBlockHeightFromGenesis } from '@siafoundation/units'
 
 // state
 
@@ -189,12 +186,7 @@ export function useEstimatedNetworkBlockHeight(): number {
   })
   const res = useSWR(
     state,
-    () => {
-      if (state.data?.name === 'zen') {
-        return getTestnetZenBlockHeight()
-      }
-      return getMainnetBlockHeight()
-    },
+    () => getBlockHeightFromGenesis(state.data?.hardforkOak.genesisTimestamp),
     {
       refreshInterval: 60_000,
       keepPreviousData: true,
