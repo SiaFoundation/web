@@ -1,5 +1,11 @@
 # @siafoundation/indexd-types
 
+## 0.6.0
+
+### Minor Changes
+
+- 86c8e35: Updated numSectors to numSlabs.
+
 ## 0.5.0
 
 ### Minor Changes
