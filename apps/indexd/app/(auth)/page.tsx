@@ -1,7 +1,8 @@
 'use client'
 
-import { DataExplorer } from '../../components/Data'
+import { Redirect } from '../../components/Redirect'
+import { routes } from '../../config/routes'
 
 export default function Page() {
-  return <DataExplorer />
+  return <Redirect route={routes.hosts.index} />
 }

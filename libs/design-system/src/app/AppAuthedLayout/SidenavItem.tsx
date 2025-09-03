@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo } from 'react'
 import { Button } from '../../core/Button'
 import { Link } from '../../core/Link'
 import { Tooltip } from '../../core/Tooltip'
@@ -14,8 +15,12 @@ type Props = {
 
 export function SidenavItem({ title, children, route, onClick }: Props) {
   const pathname = usePathname()
-  const state =
-    route && (route === '/' ? pathname === route : pathname?.startsWith(route))
+  const routePathname = useMemo(() => {
+    return route?.split('?')[0] || '-'
+  }, [route])
+  const isActive =
+    route &&
+    (route === '/' ? pathname === route : pathname?.startsWith(routePathname))
 
   if (!route) {
     return (
@@ -31,7 +36,7 @@ export function SidenavItem({ title, children, route, onClick }: Props) {
           icon="contrast"
           size="none"
           variant="state"
-          data-state={state ? 'open' : 'closed'}
+          data-state={isActive ? 'open' : 'closed'}
           onClick={onClick}
         >
           {children}
@@ -50,11 +55,12 @@ export function SidenavItem({ title, children, route, onClick }: Props) {
         content={title}
       >
         <Button
+          tabIndex={-1}
           aria-label={title}
           icon="contrast"
           size="none"
           variant="state"
-          data-state={state ? 'open' : 'closed'}
+          data-state={isActive ? 'open' : 'closed'}
           onClick={onClick}
         >
           {children}
