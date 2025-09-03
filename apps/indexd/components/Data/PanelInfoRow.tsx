@@ -27,9 +27,11 @@ export function InfoRow({
         </Text>
       </div>
       <div className="flex-1 flex justify-end items-center">
-        <Text color="subtle" className="truncate">
-          {value}
-        </Text>
+        {typeof value === 'string' ? (
+          <Text className="truncate">{value}</Text>
+        ) : (
+          value
+        )}
       </div>
     </div>
   )

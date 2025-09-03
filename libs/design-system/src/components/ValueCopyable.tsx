@@ -40,6 +40,7 @@ type Props = {
   className?: string
   siascanUrl?: string
   contextMenu?: React.ReactNode
+  fitWidth?: boolean
 }
 
 export function ValueCopyable({
@@ -59,6 +60,7 @@ export function ValueCopyable({
   className,
   siascanUrl,
   contextMenu,
+  fitWidth,
 }: Props) {
   const label = useMemo(
     () => customLabel || getEntityTypeCopyLabel(type),
@@ -77,7 +79,14 @@ export function ValueCopyable({
   }, [customMaxLength, type, value, displayValue])
 
   return (
-    <div data-testid={testId} className={cx('flex items-center', className)}>
+    <div
+      data-testid={testId}
+      className={cx(
+        'flex items-center',
+        fitWidth && 'w-full overflow-hidden',
+        className,
+      )}
+    >
       {href ? (
         <Link
           aria-labelledby={labeledBy}
@@ -114,7 +123,9 @@ export function ValueCopyable({
           {text}
         </Text>
       )}
-      <div className="ml-1 flex items-center">
+      <div
+        className={cx('ml-1 flex items-center', fitWidth && 'flex-none pr-1')}
+      >
         {contextMenu || (
           <ValueContextMenu
             cleanValue={cleanValue}
@@ -142,6 +153,20 @@ export function ValueContextMenu({
   size?: React.ComponentProps<typeof Text>['size']
   siascanUrl?: string
 }) {
+  if (!siascanUrl) {
+    return (
+      <Button
+        size="none"
+        variant="ghost"
+        onClick={(e) => {
+          e.stopPropagation()
+          copyToClipboard(cleanValue, label)
+        }}
+      >
+        <Copy16 className={size === '10' ? 'scale-75' : 'scale-90'} />
+      </Button>
+    )
+  }
   return (
     <DropdownMenu
       trigger={

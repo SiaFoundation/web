@@ -14,6 +14,7 @@ import { BulkHostBlocklistRemove } from './bulkActions/BulkHostBlocklistRemove'
 import { SidePanelSection } from '../SidePanelSection'
 import { useHost } from './useHost'
 import { useHostsParams } from './useHostsParams'
+import { SidePanelHeadingCopyable } from '../SidePanelHeadingCopyable'
 
 export function SidePanelHost() {
   const { panelId, setPanelId } = useHostsParams()
@@ -42,14 +43,19 @@ export function SidePanelHost() {
     <SidePanel
       onClose={() => setPanelId(undefined)}
       heading={
-        <Text size="18" weight="medium" ellipsis>
-          {host?.location?.countryCode ? (
-            <span className="pr-1">
-              <CountryFlag countryCode={host?.location?.countryCode} />
-            </span>
-          ) : null}
-          {host?.addresses[0].address}
-        </Text>
+        <SidePanelHeadingCopyable
+          heading={
+            <Text size="18" weight="medium" ellipsis>
+              {host?.location?.countryCode ? (
+                <span className="pr-1">
+                  <CountryFlag countryCode={host?.location?.countryCode} />
+                </span>
+              ) : null}
+            </Text>
+          }
+          value={host?.addresses[0].address}
+          label="host"
+        />
       }
       actions={
         host.blocked ? (

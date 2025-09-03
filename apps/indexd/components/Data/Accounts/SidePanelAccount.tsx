@@ -1,4 +1,4 @@
-import { Button, Text, truncate } from '@siafoundation/design-system'
+import { Button, Text } from '@siafoundation/design-system'
 import { useMemo } from 'react'
 import { SidePanel } from '../SidePanel'
 import { useAccounts } from './useAccounts'
@@ -7,6 +7,7 @@ import { TrashCan16 } from '@siafoundation/react-icons'
 import { useAccountsParams } from './useAccountsParams'
 import { InfoRow } from '../PanelInfoRow'
 import { SidePanelSection } from '../SidePanelSection'
+import { SidePanelHeadingCopyable } from '../SidePanelHeadingCopyable'
 
 export function SidePanelAccount() {
   const { panelId, setPanelId } = useAccountsParams()
@@ -30,9 +31,11 @@ export function SidePanelAccount() {
     <SidePanel
       onClose={() => setPanelId(undefined)}
       heading={
-        <Text size="18" weight="medium" ellipsis>
-          Account: {truncate(account?.publicKey, 24)}
-        </Text>
+        <SidePanelHeadingCopyable
+          heading="Account"
+          value={account?.publicKey}
+          label="account"
+        />
       }
       actions={
         <Button

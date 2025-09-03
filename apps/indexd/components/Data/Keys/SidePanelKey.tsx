@@ -1,4 +1,4 @@
-import { Button, Text, truncate } from '@siafoundation/design-system'
+import { Button, Text } from '@siafoundation/design-system'
 import { useMemo } from 'react'
 import { SidePanel } from '../SidePanel'
 import { useKeys } from './useKeys'
@@ -7,6 +7,7 @@ import { TrashCan16 } from '@siafoundation/react-icons'
 import { useKeysParams } from './useKeysParams'
 import { SidePanelSection } from '../SidePanelSection'
 import { InfoRow } from '../PanelInfoRow'
+import { SidePanelHeadingCopyable } from '../SidePanelHeadingCopyable'
 
 export function SidePanelKey() {
   const { panelId, setPanelId } = useKeysParams()
@@ -27,9 +28,7 @@ export function SidePanelKey() {
     <SidePanel
       onClose={() => setPanelId(undefined)}
       heading={
-        <Text size="18" weight="medium" ellipsis>
-          Key: {truncate(key?.key, 24)}
-        </Text>
+        <SidePanelHeadingCopyable heading="Key" value={key?.key} label="key" />
       }
       actions={
         <Button
