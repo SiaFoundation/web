@@ -19,7 +19,7 @@ export function SidePanel({
 }: Props) {
   return (
     <Panel className="relative h-full w-full">
-      <div className="h-[45px] z-10 flex items-center justify-between gap-4 bg-white dark:bg-graydark-200 py-2 px-4 border-b border-gray-200 dark:border-graydark-400">
+      <div className="h-[45px] z-10 flex items-center justify-between gap-4 bg-white dark:bg-graydark-200 py-2 px-3 border-b border-gray-200 dark:border-graydark-400">
         {heading}
         {customCloseAction ||
           (onClose ? (
@@ -36,7 +36,7 @@ export function SidePanel({
           ) : null)}
       </div>
       {actions && (
-        <div className="z-10 flex items-center justify-start gap-1 bg-white dark:bg-graydark-200 py-1.5 px-2">
+        <div className="z-10 flex items-center justify-end gap-1 bg-white dark:bg-graydark-200 py-2 px-2 border-b border-gray-200 dark:border-graydark-400">
           {actions}
         </div>
       )}

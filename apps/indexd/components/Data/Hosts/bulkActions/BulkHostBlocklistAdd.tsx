@@ -10,6 +10,7 @@ import { pluralize } from '@siafoundation/units'
 import { adminHostsRoute } from '@siafoundation/indexd-types'
 import { useMutate } from '@siafoundation/react-core'
 import { Row } from '@tanstack/react-table'
+import { CloseOutline16 } from '@siafoundation/react-icons'
 
 export function BulkHostBlocklistAdd({
   hosts,
@@ -39,5 +40,10 @@ export function BulkHostBlocklistAdd({
     }
     await mutate((key) => key.startsWith(adminHostsRoute))
   }, [hosts, blocklistUpdate, mutate])
-  return <Button onClick={operation}>Block</Button>
+  return (
+    <Button onClick={operation}>
+      <CloseOutline16 />
+      Block {hosts.length === 1 ? 'host' : 'hosts'}
+    </Button>
+  )
 }
