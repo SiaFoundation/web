@@ -1,5 +1,11 @@
 # explorer
 
+## 0.40.0
+
+### Minor Changes
+
+- c7e0716: Added troubleshooter tool. Closes https://github.com/SiaFoundation/web/issues/1120
+
 ## 0.39.0
 
 ### Minor Changes
