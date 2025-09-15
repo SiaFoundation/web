@@ -159,6 +159,14 @@ import {
   AddressUnconfirmedEventsParams,
   AddressUnconfirmedEventsPayload,
   AddressUnconfirmedEventsResponse,
+  DifficultyMetricsParams,
+  DifficultyMetricsPayload,
+  DifficultyMetricsResponse,
+  difficultyMetricsRoute,
+  BlockTimeMetricsParams,
+  BlockTimeMetricsPayload,
+  BlockTimeMetricsResponse,
+  blockTimeMetricsRoute,
 } from '@siafoundation/explored-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
@@ -357,6 +365,16 @@ export function Explored({
       HostMetricsPayload,
       HostMetricsResponse
     >(axios, 'get', hostMetricsRoute),
+    blockTimeMetrics: buildRequestHandler<
+      BlockTimeMetricsParams,
+      BlockTimeMetricsPayload,
+      BlockTimeMetricsResponse
+    >(axios, 'get', blockTimeMetricsRoute),
+    difficultyMetrics: buildRequestHandler<
+      DifficultyMetricsParams,
+      DifficultyMetricsPayload,
+      DifficultyMetricsResponse
+    >(axios, 'get', difficultyMetricsRoute),
     // Search
     searchResultType: buildRequestHandler<
       SearchResultTypeParams,
