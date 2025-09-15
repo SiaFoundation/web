@@ -20,6 +20,9 @@ import {
   BlockMetricsParams,
   BlockMetricsResponse,
   blockMetricsRoute,
+  BlockTimeMetricsParams,
+  BlockTimeMetricsResponse,
+  blockTimeMetricsRoute,
   ConsensusNetworkParams,
   ConsensusNetworkResponse,
   consensusNetworkRoute,
@@ -42,6 +45,9 @@ import {
   ContractsByIDsPayload,
   ContractsByIDsResponse,
   contractsByIDsRoute,
+  DifficultyMetricsParams,
+  DifficultyMetricsResponse,
+  difficultyMetricsRoute,
   ExchangeRateParams,
   ExchangeRateResponse,
   exchangeRateRoute,
@@ -491,6 +497,24 @@ export function useHostMetrics(
   return useGetSwr({
     ...args,
     route: hostMetricsRoute,
+  })
+}
+
+export function useBlockTimeMetrics(
+  args: HookArgsSwr<BlockTimeMetricsParams, BlockTimeMetricsResponse>,
+) {
+  return useGetSwr({
+    ...args,
+    route: blockTimeMetricsRoute,
+  })
+}
+
+export function useDifficultyMetrics(
+  args: HookArgsSwr<DifficultyMetricsParams, DifficultyMetricsResponse>,
+) {
+  return useGetSwr({
+    ...args,
+    route: difficultyMetricsRoute,
   })
 }
 
