@@ -234,6 +234,19 @@ export type Location = {
   longitude: number
 }
 
+export type BlockTimeMetrics = {
+  day: number
+  week: number
+  month: number
+}
+
+export type DifficultyMetrics = {
+  blocksPerStep: number
+  difficulties: string[]
+  blockTimes: number[]
+  drifts: number[]
+}
+
 // Novel Explored Types
 
 /**
