@@ -68,11 +68,12 @@
     },
     "apps/explorer": {
       "name": "explorer",
-      "version": "0.39.0",
+      "version": "0.40.1",
       "dependencies": {
-        "@siafoundation/design-system": "^10.5.0",
-        "@siafoundation/explored-js": "^0.8.2",
-        "@siafoundation/explored-types": "^0.19.3",
+        "@siafoundation/design-system": "^11.0.0",
+        "@siafoundation/explored-js": "^0.9.0",
+        "@siafoundation/explored-react": "^0.9.0",
+        "@siafoundation/explored-types": "^0.20.0",
         "@siafoundation/fonts": "^0.5.2",
         "@siafoundation/react-core": "^8.1.0",
         "@siafoundation/react-icons": "^0.5.0",
@@ -81,6 +82,11 @@
         "@siafoundation/units": "^3.7.0",
         "@technically/lodash": "^4.17.0",
         "@vercel/otel": "^1.13.0",
+        "@visx/axis": "^3.12.0",
+        "@visx/grid": "^3.12.0",
+        "@visx/group": "^3.12.0",
+        "@visx/scale": "^3.12.0",
+        "@visx/shape": "^3.12.0",
         "axios": "^1.10.0",
         "bignumber.js": "^9.3.1",
         "class-variance-authority": "^0.7.1",
@@ -99,7 +105,7 @@
     },
     "apps/hostd": {
       "name": "hostd",
-      "version": "0.66.1",
+      "version": "0.66.2",
       "dependencies": {
         "@siafoundation/design-system": "^10.5.0",
         "@siafoundation/fonts": "^0.5.2",
@@ -127,7 +133,7 @@
     },
     "apps/indexd": {
       "name": "indexd",
-      "version": "0.7.0",
+      "version": "0.9.0",
       "dependencies": {
         "@siafoundation/design-system": "^10.5.0",
         "@siafoundation/fonts": "^0.5.2",
@@ -154,7 +160,7 @@
     },
     "apps/renterd": {
       "name": "renterd",
-      "version": "0.85.0",
+      "version": "0.85.1",
       "dependencies": {
         "@carbon/icons-react": "^10.49.6",
         "@dnd-kit/core": "^6.3.1",
@@ -196,7 +202,7 @@
     },
     "apps/walletd": {
       "name": "walletd",
-      "version": "0.34.4",
+      "version": "0.34.5",
       "dependencies": {
         "@ledgerhq/hw-transport-web-ble": "^6.29.7",
         "@ledgerhq/hw-transport-webhid": "^6.30.3",
@@ -226,7 +232,7 @@
     },
     "libs/clusterd": {
       "name": "@siafoundation/clusterd",
-      "version": "0.5.2",
+      "version": "0.5.3",
       "dependencies": {
         "@siafoundation/explored-js": "^0.8.2",
         "@siafoundation/hostd-js": "^0.5.7",
@@ -241,7 +247,7 @@
     },
     "libs/design-system": {
       "name": "@siafoundation/design-system",
-      "version": "10.5.0",
+      "version": "11.0.0",
       "dependencies": {
         "@dnd-kit/core": "^6.3.1",
         "@radix-ui/react-accordion": "^1.2.11",
@@ -315,15 +321,15 @@
         "@types/d3-array": "^3.2.1",
       },
       "peerDependencies": {
-        "@siafoundation/explored-react": "^0.8.3",
-        "@siafoundation/explored-types": "^0.19.3",
+        "@siafoundation/explored-react": "^0.9.0",
+        "@siafoundation/explored-types": "^0.20.0",
         "next": "^15.3.5",
         "react": "^19.1.0",
       },
     },
     "libs/e2e": {
       "name": "@siafoundation/e2e",
-      "version": "0.6.9",
+      "version": "0.6.10",
       "dependencies": {
         "@playwright/test": "^1.54.1",
         "@siafoundation/explored-types": "^0.19.3",
@@ -333,23 +339,23 @@
     },
     "libs/explored-js": {
       "name": "@siafoundation/explored-js",
-      "version": "0.8.2",
+      "version": "0.9.0",
       "dependencies": {
-        "@siafoundation/explored-types": "^0.19.2",
+        "@siafoundation/explored-types": "^0.20.0",
         "@siafoundation/request": "^0.3.2",
       },
     },
     "libs/explored-react": {
       "name": "@siafoundation/explored-react",
-      "version": "0.8.3",
+      "version": "0.9.0",
       "dependencies": {
-        "@siafoundation/explored-types": "^0.19.3",
+        "@siafoundation/explored-types": "^0.20.0",
         "@siafoundation/react-core": "^8.0.0",
       },
     },
     "libs/explored-types": {
       "name": "@siafoundation/explored-types",
-      "version": "0.19.3",
+      "version": "0.20.0",
       "dependencies": {
         "@siafoundation/types": "^0.13.0",
       },
@@ -391,7 +397,7 @@
     },
     "libs/indexd-js": {
       "name": "@siafoundation/indexd-js",
-      "version": "0.3.2",
+      "version": "0.5.0",
       "dependencies": {
         "@siafoundation/indexd-types": "0.6.0",
         "@siafoundation/request": "0.3.2",
@@ -399,7 +405,7 @@
     },
     "libs/indexd-react": {
       "name": "@siafoundation/indexd-react",
-      "version": "0.3.2",
+      "version": "0.5.0",
       "dependencies": {
         "@siafoundation/indexd-types": "0.6.0",
         "@siafoundation/react-core": "^8.1.0",
@@ -409,7 +415,7 @@
     },
     "libs/indexd-types": {
       "name": "@siafoundation/indexd-types",
-      "version": "0.6.0",
+      "version": "0.8.0",
       "dependencies": {
         "@siafoundation/types": "^0.13.0",
       },
