@@ -12,7 +12,6 @@ import {
   weeksToBlocks,
   valuePerPeriodToPerMonth,
   valuePerMonthToPerPeriod,
-  toHastings,
 } from '@siafoundation/units'
 import { CurrencyId } from '@siafoundation/react-core'
 import {

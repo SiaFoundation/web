@@ -60,4 +60,10 @@ export default [
       '@typescript-eslint/triple-slash-reference': ['off'],
     },
   },
+  {
+    rules: {
+      // Our data fetching hooks often require non-null assertions.
+      '@typescript-eslint/no-non-null-assertion': ['off'],
+    },
+  },
 ]

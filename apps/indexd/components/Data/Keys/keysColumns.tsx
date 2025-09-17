@@ -1,4 +1,4 @@
-import { KeyData } from './types'
+import { KeyData } from '../../../lib/connectKey'
 import { Text, ValueCopyable } from '@siafoundation/design-system'
 import { type ColumnDef } from '@tanstack/react-table'
 import { TableHeader } from '../ColumnHeader'

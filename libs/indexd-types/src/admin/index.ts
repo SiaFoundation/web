@@ -220,6 +220,13 @@ export type AdminWalletSendResponse = TransactionID
 
 // connect
 
+export const adminConnectKeyRoute = '/apps/connect/keys/:key'
+export type AdminConnectKeyParams = {
+  key: string
+}
+export type AdminConnectKeyPayload = void
+export type AdminConnectKeyResponse = ConnectKey
+
 export const adminConnectKeysRoute = '/apps/connect/keys'
 export type AdminConnectKeysParams = {
   offset?: number

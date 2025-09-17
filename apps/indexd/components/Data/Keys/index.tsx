@@ -3,11 +3,11 @@ import { useCallback } from 'react'
 import { keysColumns } from './keysColumns'
 import { SidePanelKeyList } from './SidePanelKeyList'
 import { SidePanelKey } from './SidePanelKey'
-import { KeyData } from './types'
 import { useKeys } from './useKeys'
 import { Layout } from '../Layout'
 import { useKeysParams } from './useKeysParams'
 import { CreateKeyButton } from './CreateKeyButton'
+import { KeyData } from '../../../lib/connectKey'
 
 export function Keys() {
   const {

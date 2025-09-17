@@ -1,7 +1,7 @@
 import { Text, Button, DataTableState } from '@siafoundation/design-system'
-import { KeyData } from './types'
 import { SidePanel } from '../SidePanel'
 import { useMemo } from 'react'
+import { KeyData } from '../../../lib/connectKey'
 
 export function SidePanelKeyList({
   table,
