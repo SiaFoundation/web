@@ -1,38 +1,16 @@
 import { Switch, Tooltip } from '@siafoundation/design-system'
-import {
-  useAdminSettingsContracts,
-  useAdminSettingsContractsUpdate,
-} from '@siafoundation/indexd-react'
-import { useCallback } from 'react'
+import { useConfigEnabled } from './useConfigEnabled'
 
 type Props = {
   size: 'small' | 'medium'
 }
 
 export function ConfigEnabledSwitch({ size }: Props) {
-  const settingsContractsUpdate = useAdminSettingsContractsUpdate()
-  const settingsContracts = useAdminSettingsContracts()
-
-  const toggleEnabled = useCallback(() => {
-    if (!settingsContracts.data) {
-      return
-    }
-    settingsContractsUpdate.put({
-      payload: {
-        ...settingsContracts.data,
-        enabled: !settingsContracts.data?.enabled,
-      },
-    })
-  }, [settingsContracts.data, settingsContractsUpdate])
-
+  const { toggleEnabled, enabled } = useConfigEnabled()
   return (
     <Tooltip content="Enable or disable forming contracts and maintaining data.">
       <div>
-        <Switch
-          size={size}
-          checked={!!settingsContracts.data?.enabled}
-          onCheckedChange={toggleEnabled}
-        />
+        <Switch size={size} checked={enabled} onCheckedChange={toggleEnabled} />
       </div>
     </Tooltip>
   )

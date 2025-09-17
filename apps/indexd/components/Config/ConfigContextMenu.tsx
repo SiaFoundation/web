@@ -11,6 +11,7 @@ import {
   OverflowMenuHorizontal16,
 } from '@siafoundation/react-icons'
 import { useConfig } from '../../contexts/config'
+import { ConfigEnabledMenuItem } from './ConfigEnabledMenuItem'
 
 export function ConfigContextMenu() {
   const { takeScreenshot } = useConfig()
@@ -24,6 +25,8 @@ export function ConfigContextMenu() {
       contentProps={{ align: 'end' }}
     >
       <DropdownMenuLabel>Actions</DropdownMenuLabel>
+      <ConfigEnabledMenuItem />
+      <DropdownMenuLabel>Sharing</DropdownMenuLabel>
       <DropdownMenuItem
         onSelect={() => {
           takeScreenshot({ name: 'config image', copy: true })
