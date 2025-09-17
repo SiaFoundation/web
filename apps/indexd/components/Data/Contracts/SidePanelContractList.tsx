@@ -24,6 +24,7 @@ export function SidePanelContractList({
       ...contract.original,
       settings: contract.original.host?.v2Settings,
       location: contract.original.host?.location,
+      usable: contract.original.good,
     })),
   })
   return (
