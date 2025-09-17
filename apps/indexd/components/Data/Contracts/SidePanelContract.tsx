@@ -1,4 +1,9 @@
-import { HostMap, Text, ValueCopyable } from '@siafoundation/design-system'
+import {
+  HostMap,
+  HostMapHost,
+  Text,
+  ValueCopyable,
+} from '@siafoundation/design-system'
 import { useMemo } from 'react'
 import { UsabilityBadges } from '../UsabilityBadges'
 import { StateBadge, StatusBadge } from './contractsColumns'
@@ -14,12 +19,14 @@ export function SidePanelContract() {
   const { contract, host } = useContract(panelId)
   const mapContract = useMemo(() => {
     if (!contract) return null
-    return {
+    const data: HostMapHost = {
       id: contract.hostKey,
       publicKey: contract.hostKey,
       location: contract.host?.location,
       v2Settings: contract.host?.v2Settings,
+      usable: contract.good,
     }
+    return data
   }, [contract])
   if (!contract) {
     return (
@@ -43,7 +50,7 @@ export function SidePanelContract() {
     >
       <HostMap
         hosts={mapContract ? [mapContract] : []}
-        activeHost={null}
+        activeHost={mapContract}
         onHostMapClick={() => null}
         scale={180}
         mapClassName="-mt-[20px]"
