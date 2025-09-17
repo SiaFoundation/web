@@ -105,6 +105,7 @@ type FormSubmitProps = {
   variant?: React.ComponentProps<typeof Button>['variant']
   children: React.ReactNode
   className?: string
+  requireChanges?: boolean
 }
 
 export function FormSubmitButton({
@@ -113,12 +114,14 @@ export function FormSubmitButton({
   variant = 'accent',
   className,
   children,
+  requireChanges = false,
 }: FormSubmitProps) {
   return (
     <Button
       className={className}
       size={size}
       variant={variant}
+      disabled={requireChanges && !form.formState.isDirty}
       state={form.formState.isSubmitting ? 'waiting' : undefined}
       type="submit"
     >

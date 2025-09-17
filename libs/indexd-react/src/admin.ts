@@ -119,6 +119,9 @@ import {
   adminStatsSectorsRoute,
   AdminStatsSectorsParams,
   AdminStatsSectorsResponse,
+  AdminConnectKeyParams,
+  AdminConnectKeyResponse,
+  adminConnectKeyRoute,
 } from '@siafoundation/indexd-types'
 import useSWR from 'swr'
 import {
@@ -457,6 +460,15 @@ export function useAdminWalletSend(
 }
 
 // connect
+
+export function useAdminConnectKey(
+  args?: HookArgsSwr<AdminConnectKeyParams, AdminConnectKeyResponse>,
+) {
+  return useGetSwr({
+    ...args,
+    route: adminConnectKeyRoute,
+  })
+}
 
 export function useAdminConnectKeys(
   args?: HookArgsSwr<AdminConnectKeysParams, AdminConnectKeysResponse>,

@@ -1,21 +1,76 @@
 import { Button, Text } from '@siafoundation/design-system'
-import { useMemo } from 'react'
-import { SidePanel } from '../SidePanel'
-import { useKeys } from './useKeys'
+import { useCallback } from 'react'
 import { useDialog } from '../../../contexts/dialog'
 import { TrashCan16 } from '@siafoundation/react-icons'
 import { useKeysParams } from './useKeysParams'
-import { SidePanelSection } from '../SidePanelSection'
 import { InfoRow } from '../PanelInfoRow'
 import { SidePanelHeadingCopyable } from '../SidePanelHeadingCopyable'
+import {
+  useAdminConnectKey,
+  useAdminConnectKeyUpdate,
+} from '@siafoundation/indexd-react'
+import {
+  FieldNumber,
+  FieldText,
+  triggerErrorToast,
+  triggerSuccessToast,
+} from '@siafoundation/design-system'
+import { useMutate } from '@siafoundation/react-core'
+import { adminConnectKeysRoute } from '@siafoundation/indexd-types'
+import { EditablePanel } from '../EditablePanel'
+import { SidePanel } from '../SidePanel'
+import { SidePanelSkeleton } from '../SidePanelSkeleton'
+import { useDataState } from '../useDataState'
+import {
+  getFields,
+  transformDown,
+  transformUpForm,
+  Values,
+} from '../../../lib/connectKey'
+import { SidePanelSection } from '../SidePanelSection'
+
+const fields = getFields()
 
 export function SidePanelKey() {
   const { panelId, setPanelId } = useKeysParams()
   const { openDialog } = useDialog()
-  // TODO: Temporary until a key detail endpoint is added.
-  const keys = useKeys()
-  const key = useMemo(() => keys.find((k) => k.id === panelId), [panelId, keys])
-  if (!key) {
+  const keyUpdate = useAdminConnectKeyUpdate()
+  const mutate = useMutate()
+  const response = useAdminConnectKey({
+    disabled: !panelId,
+    params: {
+      key: panelId!,
+    },
+  })
+
+  const dataState = useDataState({ response, transform: transformDown })
+
+  const onSave = useCallback(
+    async (values: Values) => {
+      if (!dataState.data) {
+        return
+      }
+      const response = await keyUpdate.put({
+        payload: {
+          ...dataState.data.connectKey,
+          ...transformUpForm(values),
+        },
+      })
+      if (response.error) {
+        triggerErrorToast({ title: 'Error saving key', body: response.error })
+      } else {
+        triggerSuccessToast({ title: 'Key updated' })
+        await mutate((key) => key.startsWith(adminConnectKeysRoute))
+      }
+    },
+    [keyUpdate, mutate, dataState.data],
+  )
+
+  if (dataState.state === 'loading') {
+    return <SidePanelSkeleton onClose={() => setPanelId(undefined)} />
+  }
+
+  if (dataState.state === 'notFound') {
     return (
       <SidePanel heading={null}>
         <div className="flex justify-center pt-[50px]">
@@ -24,36 +79,58 @@ export function SidePanelKey() {
       </SidePanel>
     )
   }
+
+  const { connectKey, values } = dataState.data
+
   return (
-    <SidePanel
-      onClose={() => setPanelId(undefined)}
+    <EditablePanel
+      key={connectKey.key}
       heading={
-        <SidePanelHeadingCopyable heading="Key" value={key?.key} label="key" />
+        <SidePanelHeadingCopyable
+          heading="Key"
+          value={connectKey.key}
+          label="key"
+        />
       }
-      actions={
+      onClose={() => setPanelId(undefined)}
+      remoteValues={values}
+      fields={fields}
+      onSave={onSave}
+      actionsLeft={
         <Button
-          onClick={() => openDialog('connectKeyDelete', key.id)}
-          variant="red"
+          onClick={() => openDialog('connectKeyDelete', connectKey.key)}
+          variant="ghost"
         >
           <TrashCan16 />
-          Delete key
         </Button>
       }
-    >
-      <SidePanelSection heading="Info">
-        <div className="flex flex-col gap-2">
-          <InfoRow label="Description" value={key.description} />
-          <InfoRow label="Total uses" value={key.totalUses} />
-          <InfoRow label="Remaining uses" value={key.remainingUses} />
-          <InfoRow
-            label="Max pinned data"
-            value={key.displayFields.maxPinnedData}
-          />
-          <InfoRow label="Date created" value={key.displayFields.dateCreated} />
-          <InfoRow label="Last updated" value={key.displayFields.lastUpdated} />
-          <InfoRow label="Last used" value={key.displayFields.lastUsed} />
-        </div>
-      </SidePanelSection>
-    </SidePanel>
+      render={(form, fields) => {
+        return (
+          <SidePanelSection heading="Info">
+            <div className="flex flex-col gap-2">
+              <FieldText name="description" form={form} fields={fields} />
+              <FieldNumber name="maxPinnedDataGB" form={form} fields={fields} />
+              <FieldNumber name="remainingUses" form={form} fields={fields} />
+              <InfoRow
+                label="Total uses"
+                value={connectKey.displayFields.totalUses}
+              />
+              <InfoRow
+                label="Date created"
+                value={connectKey.displayFields.dateCreated}
+              />
+              <InfoRow
+                label="Last updated"
+                value={connectKey.displayFields.lastUpdated}
+              />
+              <InfoRow
+                label="Last used"
+                value={connectKey.displayFields.lastUsed}
+              />
+            </div>
+          </SidePanelSection>
+        )
+      }}
+    />
   )
 }

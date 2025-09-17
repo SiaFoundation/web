@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useAdminConnectKeys } from '@siafoundation/indexd-react'
-import { transformKey } from './transform'
 import { useKeysParams } from './useKeysParams'
+import { transformDownData } from '../../../lib/connectKey'
 
 export function useKeys() {
   const { limit, offset } = useKeysParams()
@@ -14,7 +14,7 @@ export function useKeys() {
   const keys = useMemo(
     () =>
       rawKeys.data?.map((key) => {
-        return transformKey(key)
+        return transformDownData(key)
       }) || [],
     [rawKeys.data],
   )

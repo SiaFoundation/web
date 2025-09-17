@@ -22,7 +22,7 @@ export function InfoRow({
   return (
     <div className="flex gap-1">
       <div className="flex-1 flex justify-start items-center">
-        <Text color="subtle" className="truncate">
+        <Text color="verySubtle" size="14" weight="medium" className="truncate">
           {label}
         </Text>
       </div>
