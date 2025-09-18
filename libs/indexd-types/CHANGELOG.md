@@ -1,5 +1,11 @@
 # @siafoundation/indexd-types
 
+## 0.7.0
+
+### Minor Changes
+
+- 19650c8: Added connect key API.
+
 ## 0.6.0
 
 ### Minor Changes

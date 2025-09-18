@@ -1,5 +1,16 @@
 # @siafoundation/indexd-js
 
+## 0.4.0
+
+### Minor Changes
+
+- 19650c8: Added connect key API.
+
+### Patch Changes
+
+- Updated dependencies [19650c8]
+  - @siafoundation/indexd-types@0.7.0
+
 ## 0.3.2
 
 ### Patch Changes
