@@ -1,6 +1,6 @@
 'use client'
 
-import { useDatasetState, useTableState } from '@siafoundation/design-system'
+import { useRemoteDataset, useTableState } from '@siafoundation/design-system'
 import {
   useAdminWalletEvents,
   useAdminWalletPending,
@@ -24,7 +24,6 @@ import {
   defaultSortField,
   sortOptions,
 } from './types'
-import { Maybe } from '@siafoundation/types'
 
 const defaultPageSize = 50
 const filters = [] as string[]
@@ -53,51 +52,61 @@ function useTransactionsMain() {
   })
 
   const syncStatus = useSyncStatus()
-  const datasetPage = useMemo<Maybe<EventData[]>>(() => {
-    if (!events.data || !pending.data) {
-      return undefined
-    }
-    const dataPending: EventData[] = pending.data.map((e) => {
-      const amountSc = calculateScValue(e)
-      const fee = getEventFee(e)
-      const event: EventData = {
-        id: e.id,
-        timestamp: 0,
-        pending: true,
-        type: e.type,
-        txType: getEventTxType(e),
-        isMature: false,
-        amountSc,
-        fee,
+  const dataset = useRemoteDataset(
+    {
+      events: events,
+      pending: pending,
+    },
+    ({ events, pending }) => {
+      if (!events || !pending) {
+        return []
       }
-      return event
-    })
-    const dataEvents: EventData[] = events.data.map((e) => {
-      const amountSc = calculateScValue(e)
-      const fee = getEventFee(e)
-      const contractId = getEventContractId(e)
-      const isMature = e.maturityHeight <= syncStatus.nodeBlockHeight
-      const res: EventData = {
-        id: e.id,
-        type: e.type,
-        txType: getEventTxType(e),
-        timestamp: new Date(e.timestamp).getTime(),
-        maturityHeight: e.maturityHeight,
-        isMature,
-        height: e.index.height,
-        pending: false,
-        amountSc,
-        fee,
-        contractId,
+      const dataPending: EventData[] = pending.map((e) => {
+        const amountSc = calculateScValue(e)
+        const fee = getEventFee(e)
+        const event: EventData = {
+          id: e.id,
+          timestamp: 0,
+          pending: true,
+          type: e.type,
+          txType: getEventTxType(e),
+          isMature: false,
+          amountSc,
+          fee,
+        }
+        return event
+      })
+      const dataEvents: EventData[] = events.map((e) => {
+        const amountSc = calculateScValue(e)
+        const fee = getEventFee(e)
+        const contractId = getEventContractId(e)
+        const isMature = e.maturityHeight <= syncStatus.nodeBlockHeight
+        const res: EventData = {
+          id: e.id,
+          type: e.type,
+          txType: getEventTxType(e),
+          timestamp: new Date(e.timestamp).getTime(),
+          maturityHeight: e.maturityHeight,
+          isMature,
+          height: e.index.height,
+          pending: false,
+          amountSc,
+          fee,
+          contractId,
+        }
+        return res
+      })
+      if (offset === 0) {
+        return [...dataPending.reverse(), ...dataEvents]
+      } else {
+        return [...dataEvents]
       }
-      return res
-    })
-    if (offset === 0) {
-      return [...dataPending.reverse(), ...dataEvents]
-    } else {
-      return [...dataEvents]
-    }
-  }, [events.data, pending.data, syncStatus.nodeBlockHeight, offset])
+    },
+    {
+      offset,
+      filters,
+    },
+  )
 
   const {
     configurableColumns,
@@ -120,17 +129,6 @@ function useTransactionsMain() {
     defaultSortField,
   })
 
-  const isValidating = events.isValidating || pending.isValidating
-  const error = events.error || pending.error
-
-  const datasetState = useDatasetState({
-    datasetPage,
-    isValidating,
-    error,
-    offset,
-    filters,
-  })
-
   const siascanUrl = useSiascanUrl()
   const cellContext = useMemo<CellContext>(
     () => ({
@@ -140,12 +138,10 @@ function useTransactionsMain() {
   )
 
   return {
-    datasetPage,
-    error,
-    datasetState,
+    dataset,
     offset,
     limit,
-    datasetPageTotal: datasetPage?.length || 0,
+    datasetPageTotal: dataset.data?.length || 0,
     defaultPageSize,
     cellContext,
     configurableColumns,

@@ -6,8 +6,7 @@ import { StateError } from './StateError'
 
 export function Wallet() {
   const {
-    datasetPage,
-    datasetState,
+    dataset,
     visibleColumns,
     cellContext,
     sortableColumns,
@@ -21,17 +20,17 @@ export function Wallet() {
     <div className="flex flex-col gap-4 px-6 py-7 min-w-fit">
       <Table
         testId="eventsTable"
-        isLoading={datasetState === 'loading'}
+        isLoading={dataset.state === 'loading'}
         emptyState={
           <EmptyState
-            datasetState={datasetState}
+            datasetState={dataset.state}
             noneMatching={<StateNoneMatching />}
             noneYet={<StateNoneYet />}
             error={<StateError />}
           />
         }
         pageSize={defaultPageSize}
-        data={datasetPage}
+        data={dataset.data}
         context={cellContext}
         columns={visibleColumns}
         sortableColumns={sortableColumns}

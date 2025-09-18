@@ -1,4 +1,11 @@
-import { DataTable, useDataTable } from '@siafoundation/design-system'
+import {
+  DataTable,
+  StateNoneOnPage,
+  StateNoneYet,
+  StateNoneMatching,
+  StateError,
+  useDataTable,
+} from '@siafoundation/design-system'
 import { useCallback } from 'react'
 import { accountsColumns } from './accountsColumns'
 import { SidePanelAccountList } from './SidePanelAccountList'
@@ -30,7 +37,7 @@ export function Accounts() {
 
   const accounts = useAccounts()
   const table = useDataTable<AccountData>({
-    data: accounts,
+    dataset: accounts,
     columns: accountsColumns,
     columnFilters,
     setColumnFilters,
@@ -45,7 +52,21 @@ export function Accounts() {
 
   return (
     <Layout
-      table={<DataTable {...table} />}
+      table={
+        <DataTable
+          {...table}
+          noneOnPage={
+            <StateNoneOnPage message="No accounts on this page, reset pagination to continue." />
+          }
+          noneYet={<StateNoneYet message="There are no accounts yet." />}
+          noneMatchingFilters={
+            <StateNoneMatching message="No accounts matching filters." />
+          }
+          error={
+            <StateError message="Error loading accounts. Please try again later." />
+          }
+        />
+      }
       panel={
         panelId ? <SidePanelAccount /> : <SidePanelAccountList table={table} />
       }

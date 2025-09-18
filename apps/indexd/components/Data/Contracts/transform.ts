@@ -13,25 +13,24 @@ import {
 import { getCurrencyDisplayPropsPreferred } from '@siafoundation/design-system'
 import { V2HostSettings } from '@siafoundation/types'
 
-export function transformContract(
-  contract: Contract,
-  {
-    host,
-    exchange,
-    currencyDisplay,
-  }: {
-    host?: {
-      location: {
-        countryCode: string
-        latitude: number
-        longitude: number
-      }
-      v2Settings?: V2HostSettings
+export function transformContract({
+  contract,
+  host,
+  exchange,
+  currencyDisplay,
+}: {
+  contract: Contract
+  host?: {
+    location: {
+      countryCode: string
+      latitude: number
+      longitude: number
     }
-    currencyDisplay: CurrencyDisplayPreference
-    exchange: { currency: CurrencyOption; rate: BigNumber } | undefined
-  },
-): ContractData {
+    v2Settings?: V2HostSettings
+  }
+  currencyDisplay: CurrencyDisplayPreference
+  exchange: { currency: CurrencyOption; rate: BigNumber } | undefined
+}): ContractData {
   const datum: ContractData = {
     ...contract,
     id: contract.id,

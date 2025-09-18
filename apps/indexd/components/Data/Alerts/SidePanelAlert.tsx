@@ -23,7 +23,7 @@ export function SidePanelAccount() {
   // TODO: Temporary until a alert detail endpoint is added.
   const alerts = useAlerts()
   const alert = useMemo(
-    () => alerts.find((k) => k.id === panelId),
+    () => alerts.data?.find((k) => k.id === panelId),
     [panelId, alerts],
   )
   if (!alert) {
