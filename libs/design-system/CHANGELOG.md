@@ -1,5 +1,11 @@
 # Changelog
 
+## 10.6.0
+
+### Minor Changes
+
+- 19650c8: Added requireChanges prop to FormSubmitButton.
+
 ## 10.5.0
 
 ### Minor Changes

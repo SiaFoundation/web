@@ -1,5 +1,22 @@
 # indexd
 
+## 0.8.0
+
+### Minor Changes
+
+- 1467fd8: The contracts host map now shows colored pins based on good state.
+- 19650c8: Connect key metadata can now be updated from the details panel.
+
+### Patch Changes
+
+- 6b1bfb8: Fixed an issue where the enable contracts toggle would not respond right away.
+- 6b1bfb8: Move the enable contracts toggle to the configuration page context menu.
+- Updated dependencies [19650c8]
+- Updated dependencies [19650c8]
+  - @siafoundation/indexd-react@0.4.0
+  - @siafoundation/indexd-types@0.7.0
+  - @siafoundation/design-system@10.6.0
+
 ## 0.7.0
 
 ### Minor Changes
