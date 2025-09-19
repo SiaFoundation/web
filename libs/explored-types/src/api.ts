@@ -4,11 +4,13 @@ import {
   Block,
   BlockID,
   BlockMetrics,
+  BlockTimeMetrics,
   ChainIndex,
   ConsensusNetwork,
   ConsensusState,
   Currency,
   CurrencyID,
+  DifficultyMetrics,
   ExplorerBlock,
   ExplorerEvent,
   ExplorerFileContract,
@@ -281,6 +283,21 @@ export const hostMetricsRoute = '/metrics/host'
 export type HostMetricsParams = void
 export type HostMetricsPayload = void
 export type HostMetricsResponse = HostMetrics
+
+// Returns the average block time during various intervals.
+export const blockTimeMetricsRoute = '/metrics/blocktime'
+export type BlockTimeMetricsParams = void
+export type BlockTimeMetricsPayload = void
+export type BlockTimeMetricsResponse = BlockTimeMetrics
+
+// Returns various difficulty-related metrics.
+export const difficultyMetricsRoute = '/metrics/difficulty'
+export type DifficultyMetricsParams = {
+  start: number
+  end: number
+}
+export type DifficultyMetricsPayload = void
+export type DifficultyMetricsResponse = DifficultyMetrics
 
 // Search
 
