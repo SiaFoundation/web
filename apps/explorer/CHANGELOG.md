@@ -1,5 +1,18 @@
 # explorer
 
+## 0.40.0
+
+### Minor Changes
+
+- c7e0716: Added troubleshooter tool. Closes https://github.com/SiaFoundation/web/issues/1120
+
+### Patch Changes
+
+- Updated dependencies [3dc8e12]
+- Updated dependencies [19650c8]
+- Updated dependencies [20d54b9]
+  - @siafoundation/design-system@10.6.0
+
 ## 0.39.0
 
 ### Minor Changes

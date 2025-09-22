@@ -1,5 +1,13 @@
 # Changelog
 
+## 10.6.0
+
+### Minor Changes
+
+- 3dc8e12: DataTable is now based on the RemoteDataset type.
+- 19650c8: Added requireChanges prop to FormSubmitButton.
+- 20d54b9: Added remote data and dataset hooks and components.
+
 ## 10.5.0
 
 ### Minor Changes
