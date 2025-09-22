@@ -6,7 +6,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { Reset32 } from '@siafoundation/react-icons'
 import { useCallback } from 'react'
 
-export function StateNoneOnPage() {
+export function StateNoneOnPage({ message }: { message?: string }) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -22,7 +22,7 @@ export function StateNoneOnPage() {
         <Reset32 className="scale-[200%]" />
       </Text>
       <Text color="subtle" className="text-center max-w-[500px]">
-        No data on this page, reset pagination to continue.
+        {message ?? 'No data on this page, reset pagination to continue.'}
       </Text>
       <Button onClick={back}>Back to first page</Button>
     </div>
