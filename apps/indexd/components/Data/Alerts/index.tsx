@@ -1,4 +1,11 @@
-import { DataTable, useDataTable } from '@siafoundation/design-system'
+import {
+  DataTable,
+  StateNoneMatching,
+  StateError,
+  StateNoneYet,
+  useDataTable,
+  StateNoneOnPage,
+} from '@siafoundation/design-system'
 import { useCallback } from 'react'
 import { alertsColumns } from './alertsColumns'
 import { SidePanelAlertList } from './SidePanelAlertList'
@@ -30,7 +37,7 @@ export function Alerts() {
 
   const alerts = useAlerts()
   const table = useDataTable<AlertData>({
-    data: alerts,
+    dataset: alerts,
     columns: alertsColumns,
     columnFilters,
     setColumnFilters,
@@ -45,7 +52,21 @@ export function Alerts() {
 
   return (
     <Layout
-      table={<DataTable {...table} />}
+      table={
+        <DataTable
+          {...table}
+          noneOnPage={
+            <StateNoneOnPage message="No alerts on this page, reset pagination to continue." />
+          }
+          noneYet={<StateNoneYet message="There are currently no alerts." />}
+          noneMatchingFilters={
+            <StateNoneMatching message="No alerts matching filters." />
+          }
+          error={
+            <StateError message="Error loading alerts. Please try again later." />
+          }
+        />
+      }
       panel={
         panelId ? <SidePanelAccount /> : <SidePanelAlertList table={table} />
       }

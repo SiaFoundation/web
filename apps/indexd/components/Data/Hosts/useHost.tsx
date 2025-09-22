@@ -1,11 +1,17 @@
 import {
   useActiveDaemonExplorerExchangeRate,
   useDaemonExplorerHost,
+  useRemoteData,
 } from '@siafoundation/design-system'
-import { useMemo } from 'react'
 import { useAdminHost } from '@siafoundation/indexd-react'
 import { transformHost } from './transform'
-import { useAppSettings } from '@siafoundation/react-core'
+import {
+  AppSettings,
+  CurrencyOption,
+  useAppSettings,
+} from '@siafoundation/react-core'
+import { HostData } from './types'
+import { Host } from '@siafoundation/indexd-types'
 
 export function useHost(publicKey?: string) {
   const geo = useDaemonExplorerHost({
@@ -14,7 +20,7 @@ export function useHost(publicKey?: string) {
       id: publicKey || '',
     },
   })
-  const rawHost = useAdminHost({
+  const host = useAdminHost({
     disabled: !publicKey,
     params: {
       hostkey: publicKey || '',
@@ -22,27 +28,47 @@ export function useHost(publicKey?: string) {
   })
   const exchangeRate = useActiveDaemonExplorerExchangeRate()
   const { settings } = useAppSettings()
-  const host = useMemo(() => {
-    if (!rawHost.data) {
-      return undefined
-    }
-    const datum = transformHost(rawHost.data, {
-      location: geo.data?.location,
-      currencyDisplay: settings.currencyDisplay,
-      exchange: exchangeRate.currency &&
-        exchangeRate.rate && {
-          currency: exchangeRate.currency,
-          rate: exchangeRate.rate,
-        },
-    })
-    return datum
-  }, [
-    rawHost.data,
-    geo.data,
-    exchangeRate.currency,
-    exchangeRate.rate,
-    settings.currencyDisplay,
-  ])
+  return useRemoteData(
+    {
+      host,
+    },
+    ({ host }) => transformDown({ host, geo, exchangeRate, settings }),
+  )
+}
 
-  return host
+function transformDown({
+  host,
+  geo,
+  exchangeRate,
+  settings,
+}: {
+  host: Host
+  geo: {
+    isLoading: boolean
+    isValidating: boolean
+    data?: {
+      location: {
+        countryCode: string
+        latitude: number
+        longitude: number
+      }
+    }
+  }
+  exchangeRate: {
+    currency: CurrencyOption | undefined
+    rate: BigNumber | undefined
+  }
+  settings: AppSettings
+}): HostData {
+  const datum = transformHost({
+    host,
+    location: geo.data?.location,
+    currencyDisplay: settings.currencyDisplay,
+    exchange: exchangeRate.currency &&
+      exchangeRate.rate && {
+        currency: exchangeRate.currency,
+        rate: exchangeRate.rate,
+      },
+  })
+  return datum
 }

@@ -1,4 +1,11 @@
-import { DataTable, useDataTable } from '@siafoundation/design-system'
+import {
+  DataTable,
+  StateError,
+  StateNoneMatching,
+  StateNoneOnPage,
+  StateNoneYet,
+  useDataTable,
+} from '@siafoundation/design-system'
 import { SidePanelHost } from './SidePanelHost'
 import { SidePanelHostList } from './SidePanelHostList'
 import { HostData } from './types'
@@ -33,7 +40,7 @@ export function Hosts() {
 
   const hosts = useHosts()
   const table = useDataTable<HostData>({
-    data: hosts,
+    dataset: hosts,
     columns,
     columnFilters,
     columnSorts,
@@ -48,7 +55,23 @@ export function Hosts() {
 
   return (
     <Layout
-      table={<DataTable {...table} />}
+      table={
+        <DataTable
+          {...table}
+          noneOnPage={
+            <StateNoneOnPage message="No hosts on this page, reset pagination to continue." />
+          }
+          noneYet={
+            <StateNoneYet message="There are no hosts in the database." />
+          }
+          noneMatchingFilters={
+            <StateNoneMatching message="No hosts matching filters." />
+          }
+          error={
+            <StateError message="Error loading hosts. Please try again later." />
+          }
+        />
+      }
       panel={panelId ? <SidePanelHost /> : <SidePanelHostList table={table} />}
     />
   )

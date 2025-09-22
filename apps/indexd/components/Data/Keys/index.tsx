@@ -1,4 +1,11 @@
-import { DataTable, useDataTable } from '@siafoundation/design-system'
+import {
+  DataTable,
+  StateNoneYet,
+  StateError,
+  StateNoneMatching,
+  useDataTable,
+  StateNoneOnPage,
+} from '@siafoundation/design-system'
 import { useCallback } from 'react'
 import { keysColumns } from './keysColumns'
 import { SidePanelKeyList } from './SidePanelKeyList'
@@ -31,7 +38,7 @@ export function Keys() {
 
   const keys = useKeys()
   const table = useDataTable<KeyData>({
-    data: keys,
+    dataset: keys,
     columns: keysColumns,
     columnFilters,
     setColumnFilters,
@@ -45,7 +52,22 @@ export function Keys() {
   })
   return (
     <Layout
-      table={<DataTable {...table} actions={<CreateKeyButton />} />}
+      table={
+        <DataTable
+          {...table}
+          actions={<CreateKeyButton />}
+          noneOnPage={
+            <StateNoneOnPage message="No keys on this page, reset pagination to continue." />
+          }
+          noneYet={<StateNoneYet message="There are no keys yet." />}
+          noneMatchingFilters={
+            <StateNoneMatching message="No keys matching filters." />
+          }
+          error={
+            <StateError message="Error loading keys. Please try again later." />
+          }
+        />
+      }
       panel={panelId ? <SidePanelKey /> : <SidePanelKeyList table={table} />}
     />
   )

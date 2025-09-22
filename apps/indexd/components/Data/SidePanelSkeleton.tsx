@@ -1,8 +1,16 @@
-import { Skeleton } from '@siafoundation/design-system'
+import { HostMap, Skeleton } from '@siafoundation/design-system'
 import { SidePanel } from './SidePanel'
 import { SidePanelSection } from './SidePanelSection'
 
-export function SidePanelSkeleton({ onClose }: { onClose?: () => void }) {
+export function SidePanelSkeleton({
+  withMap,
+  withActions,
+  onClose,
+}: {
+  withMap?: boolean
+  withActions?: boolean
+  onClose?: () => void
+}) {
   return (
     <SidePanel
       onClose={onClose}
@@ -14,18 +22,29 @@ export function SidePanelSkeleton({ onClose }: { onClose?: () => void }) {
         </div>
       }
       actions={
-        <div className="flex items-center justify-between gap-2 w-full">
-          <div className="flex items-center gap-2">
-            <Skeleton className="h-4 w-24" />
+        withActions ? (
+          <div className="flex items-center justify-between gap-2 w-full">
+            <div className="flex items-center gap-2">
+              <Skeleton className="h-4 w-24" />
+            </div>
+            <div className="flex items-center gap-2">
+              <Skeleton className="h-7 w-8 rounded" />
+              <Skeleton className="h-7 w-8 rounded" />
+              <Skeleton className="h-7 w-20 rounded" />
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Skeleton className="h-8 w-8 rounded" />
-            <Skeleton className="h-8 w-8 rounded" />
-            <Skeleton className="h-8 w-20 rounded" />
-          </div>
-        </div>
+        ) : null
       }
     >
+      {withMap && (
+        <HostMap
+          hosts={[]}
+          activeHost={null}
+          onHostMapClick={() => null}
+          scale={180}
+          mapClassName="-mt-[20px]"
+        />
+      )}
       <SidePanelSection
         heading={
           <div className="flex items-center gap-2 py-1">
