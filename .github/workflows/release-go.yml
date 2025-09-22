@@ -7,10 +7,9 @@ on:
     types: [release-go]
   # Enable manual trigger
   workflow_dispatch:
-
 jobs:
   release-go:
-    runs-on: ubuntu-latest
+    runs-on: tenki-standard-autoscale
     steps:
       - name: Checkout all commits
         uses: actions/checkout@v3
