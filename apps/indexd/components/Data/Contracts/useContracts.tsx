@@ -1,4 +1,7 @@
-import { useActiveDaemonExplorerExchangeRate } from '@siafoundation/design-system'
+import {
+  useActiveDaemonExplorerExchangeRate,
+  useRemoteDataset,
+} from '@siafoundation/design-system'
 import { useMemo } from 'react'
 import { useAdminContracts } from '@siafoundation/indexd-react'
 import { ContractData } from './types'
@@ -22,17 +25,21 @@ export function useContracts() {
     }
     return filters
   }, [columnFilters, offset, limit])
-  const rawContracts = useAdminContracts({
+  const contracts = useAdminContracts({
     params,
   })
   const geo = useExplorerHosts()
   const exchangeRate = useActiveDaemonExplorerExchangeRate()
   const { settings } = useAppSettings()
-  const contracts = useMemo(
-    () =>
-      rawContracts.data?.map((contract) => {
+  return useRemoteDataset(
+    {
+      contracts,
+    },
+    ({ contracts }) =>
+      contracts.map((contract) => {
         const host = geo.data?.find((h) => h.publicKey === contract.hostKey)
-        const datum: ContractData = transformContract(contract, {
+        const datum: ContractData = transformContract({
+          contract,
           host,
           currencyDisplay: settings.currencyDisplay,
           exchange: exchangeRate.currency &&
@@ -42,15 +49,10 @@ export function useContracts() {
             },
         })
         return datum
-      }) || [],
-    [
-      rawContracts.data,
-      exchangeRate.rate,
-      exchangeRate.currency,
-      geo.data,
-      settings.currencyDisplay,
-    ],
+      }),
+    {
+      offset,
+      filters: columnFilters,
+    },
   )
-
-  return contracts
 }

@@ -1,23 +1,23 @@
-import { useMemo } from 'react'
 import { useAdminAccounts } from '@siafoundation/indexd-react'
 import { transformAccount } from './transform'
 import { useAccountsParams } from './useAccountsParams'
+import { useRemoteDataset } from '@siafoundation/design-system'
 
 export function useAccounts() {
   const { limit, offset } = useAccountsParams()
-  const rawAccounts = useAdminAccounts({
+  const accounts = useAdminAccounts({
     params: {
       limit,
       offset,
     },
   })
-  const accounts = useMemo(
-    () =>
-      rawAccounts.data?.map((account) => {
-        return transformAccount(account)
-      }) || [],
-    [rawAccounts.data],
+  return useRemoteDataset(
+    {
+      accounts,
+    },
+    ({ accounts }) => accounts.map(transformAccount),
+    {
+      offset,
+    },
   )
-
-  return accounts
 }

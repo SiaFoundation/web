@@ -15,7 +15,7 @@ export function SidePanelAccount() {
   // TODO: Temporary until an account detail endpoint is added.
   const accounts = useAccounts()
   const account = useMemo(
-    () => accounts.find((a) => a.id === panelId),
+    () => accounts.data?.find((a) => a.id === panelId),
     [panelId, accounts],
   )
   if (!account) {

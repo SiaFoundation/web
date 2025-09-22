@@ -14,10 +14,18 @@ import { Panel } from '../../core/Panel'
 import { Select, Option } from '../../core/Select'
 import { ActiveFilters } from './ActiveFilters'
 import { DataTablePaginatorUnknownTotal } from './DataTablePaginatorUnknownTotal'
+import { RemoteDatasetStates } from '../../remoteData/RemoteDatasetStates'
+import { StateNoneOnPage } from '../../components/EmptyState/StateNoneOnPage'
+import { StateNoneYet } from '../../components/EmptyState/StateNoneYet'
+import { StateNoneMatching } from '../../components/EmptyState/StateNoneMatching'
+import { StateError } from '../../components/EmptyState/StateError'
+import { times } from '@technically/lodash'
+import { RemoteDataset } from '../../remoteData/types'
 
 interface DataTableProps<T extends { id: string }> {
   fixedFilters?: ColumnFiltersState
   table: Table<T>
+  dataset: RemoteDataset<T[]>
   virtualRows: VirtualItem[]
   totalSize: number
   rowHeight: number
@@ -34,6 +42,11 @@ interface DataTableProps<T extends { id: string }> {
   /** Optional heading to render after the filter icon. */
   heading?: React.ReactNode
   actions?: React.ReactNode
+  // custom state for loading, error, etc.
+  noneOnPage?: React.ReactNode
+  noneYet?: React.ReactNode
+  noneMatchingFilters?: React.ReactNode
+  error?: React.ReactNode
 }
 
 const defaultWidth = 100
@@ -66,6 +79,11 @@ export function DataTable<T extends { id: string }>({
   onClickFilterIcon,
   heading,
   actions,
+  dataset,
+  noneOnPage,
+  noneYet,
+  noneMatchingFilters,
+  error,
 }: DataTableProps<T>) {
   // Build a shared grid template based on visible columns and their meta.
   const visibleLeafColumns = table.getVisibleLeafColumns()
@@ -138,68 +156,89 @@ export function DataTable<T extends { id: string }>({
                   </tr>
                 ))}
               </thead>
-              <tbody
-                style={{
-                  display: 'grid',
-                  height: `${totalSize}px`,
-                  position: 'relative',
-                }}
-              >
-                {virtualRows.map((virtualRow) => {
-                  const row = rows[virtualRow.index]
-                  return (
-                    <tr
-                      key={row.id}
-                      data-index={virtualRow.index}
-                      ref={(node) => rowVirtualizer.measureElement(node)}
-                      style={{
-                        display: 'grid',
-                        position: 'absolute',
-                        transform: `translateY(${virtualRow.start}px)`,
-                        height: `${rowHeight}px`,
-                        width: '100%',
-                        columnGap,
-                        gridTemplateColumns,
-                      }}
-                      className={cx(
-                        'cursor-pointer transition-colors',
-                        selectedRowId === row.original.id
-                          ? 'bg-blue-50 dark:bg-blue-900/30'
-                          : 'hover:bg-blue-100 dark:hover:bg-blue-900/40',
-                        'border-b border-gray-50 dark:border-graydark-300',
-                      )}
-                      onClick={() => onRowClick?.(row.original.id)}
-                    >
-                      {row.getVisibleCells().map((cell) => {
-                        const meta = (cell.column.columnDef.meta ??
-                          {}) as ColumnMeta
-                        const { className, stopPropagation } = meta
-                        return (
-                          <td
-                            key={cell.id}
-                            onClick={(e) => {
-                              if (stopPropagation) {
-                                e.stopPropagation()
-                              }
-                            }}
-                            className={cx(
-                              'px-2 py-1 relative overflow-hidden whitespace-nowrap text-ellipsis',
-                              'flex items-center',
-                              'border-r border-gray-50/50 dark:border-graydark-300/20',
-                              className,
-                            )}
-                          >
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext(),
-                            )}
-                          </td>
-                        )
-                      })}
-                    </tr>
-                  )
-                })}
-              </tbody>
+              <RemoteDatasetStates
+                loaded={
+                  <tbody
+                    style={{
+                      display: 'grid',
+                      height: `${totalSize}px`,
+                      position: 'relative',
+                    }}
+                  >
+                    {virtualRows.map((virtualRow) => {
+                      const row = rows[virtualRow.index]
+                      return (
+                        <tr
+                          key={row.id}
+                          data-index={virtualRow.index}
+                          ref={(node) => rowVirtualizer.measureElement(node)}
+                          style={{
+                            display: 'grid',
+                            position: 'absolute',
+                            transform: `translateY(${virtualRow.start}px)`,
+                            height: `${rowHeight}px`,
+                            width: '100%',
+                            columnGap,
+                            gridTemplateColumns,
+                          }}
+                          className={cx(
+                            'cursor-pointer',
+                            selectedRowId === row.original.id
+                              ? 'bg-blue-50 dark:bg-blue-900/30'
+                              : 'hover:bg-blue-100 dark:hover:bg-blue-900/40',
+                            'border-b border-gray-50 dark:border-graydark-300',
+                          )}
+                          onClick={() => onRowClick?.(row.original.id)}
+                        >
+                          {row.getVisibleCells().map((cell) => {
+                            const meta = (cell.column.columnDef.meta ??
+                              {}) as ColumnMeta
+                            const { className, stopPropagation } = meta
+                            return (
+                              <td
+                                key={cell.id}
+                                onClick={(e) => {
+                                  if (stopPropagation) {
+                                    e.stopPropagation()
+                                  }
+                                }}
+                                className={cx(
+                                  'px-2 py-1 relative overflow-hidden whitespace-nowrap text-ellipsis',
+                                  'flex items-center',
+                                  'border-r border-gray-50/50 dark:border-graydark-300/20',
+                                  className,
+                                )}
+                              >
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )}
+                              </td>
+                            )
+                          })}
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                }
+                loading={
+                  <SkeletonRows
+                    table={table}
+                    pageSize={table.getState().pagination.pageSize}
+                    rowHeight={rowHeight}
+                    columnGap={columnGap}
+                    gridTemplateColumns={gridTemplateColumns}
+                    row={rows[0]}
+                  />
+                }
+                noneOnPage={noneOnPage ?? <StateNoneOnPage />}
+                noneYet={noneYet ?? <StateNoneYet />}
+                noneMatchingFilters={
+                  noneMatchingFilters ?? <StateNoneMatching />
+                }
+                error={error ?? <StateError />}
+                dataset={dataset}
+              />
             </table>
           </div>
         </div>
@@ -248,4 +287,68 @@ function toCssSize(value: number | string | undefined): string | undefined {
   if (value === undefined) return undefined
   if (typeof value === 'number') return `${value}px`
   return value
+}
+
+function SkeletonRows<T extends { id: string }>({
+  table,
+  pageSize,
+  rowHeight,
+  columnGap,
+  gridTemplateColumns,
+  row,
+}: {
+  table: Table<T>
+  pageSize: number
+  rowHeight: number
+  columnGap: number
+  gridTemplateColumns: string
+  row: Row<T>
+}) {
+  return (
+    <tbody
+      style={{
+        display: 'grid',
+        position: 'relative',
+      }}
+    >
+      {times(pageSize).map((i) => (
+        <tr
+          key={String(i)}
+          style={{
+            display: 'grid',
+            height: `${rowHeight}px`,
+            width: '100%',
+            columnGap,
+            gridTemplateColumns,
+          }}
+          className={cx(
+            'cursor-pointer',
+            'hover:bg-blue-100 dark:hover:bg-blue-900/40',
+            'border-b border-gray-50 dark:border-graydark-300',
+          )}
+        >
+          {table.getVisibleLeafColumns().map((column) => {
+            const meta = (column.columnDef.meta ?? {}) as ColumnMeta
+            const { className, stopPropagation } = meta
+            return (
+              <td
+                key={column.id}
+                onClick={(e) => {
+                  if (stopPropagation) {
+                    e.stopPropagation()
+                  }
+                }}
+                className={cx(
+                  'px-2 py-1 relative overflow-hidden whitespace-nowrap text-ellipsis',
+                  'flex items-center',
+                  'border-r border-gray-50/50 dark:border-graydark-300/20',
+                  className,
+                )}
+              />
+            )
+          })}
+        </tr>
+      ))}
+    </tbody>
+  )
 }

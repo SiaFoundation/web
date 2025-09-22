@@ -1,4 +1,9 @@
-import { Button, Text } from '@siafoundation/design-system'
+import {
+  Button,
+  Text,
+  useRemoteData,
+  RemoteDataStates,
+} from '@siafoundation/design-system'
 import { useCallback } from 'react'
 import { useDialog } from '../../../contexts/dialog'
 import { TrashCan16 } from '@siafoundation/react-icons'
@@ -20,7 +25,6 @@ import { adminConnectKeysRoute } from '@siafoundation/indexd-types'
 import { EditablePanel } from '../EditablePanel'
 import { SidePanel } from '../SidePanel'
 import { SidePanelSkeleton } from '../SidePanelSkeleton'
-import { useDataState } from '../useDataState'
 import {
   getFields,
   transformDown,
@@ -36,14 +40,19 @@ export function SidePanelKey() {
   const { openDialog } = useDialog()
   const keyUpdate = useAdminConnectKeyUpdate()
   const mutate = useMutate()
-  const response = useAdminConnectKey({
+  const connectKey = useAdminConnectKey({
     disabled: !panelId,
     params: {
       key: panelId!,
     },
   })
 
-  const dataState = useDataState({ response, transform: transformDown })
+  const dataState = useRemoteData(
+    {
+      connectKey,
+    },
+    ({ connectKey }) => transformDown(connectKey),
+  )
 
   const onSave = useCallback(
     async (values: Values) => {
@@ -66,71 +75,78 @@ export function SidePanelKey() {
     [keyUpdate, mutate, dataState.data],
   )
 
-  if (dataState.state === 'loading') {
-    return <SidePanelSkeleton onClose={() => setPanelId(undefined)} />
-  }
-
-  if (dataState.state === 'notFound') {
-    return (
-      <SidePanel heading={null}>
-        <div className="flex justify-center pt-[50px]">
-          <Text color="subtle">Key not found</Text>
-        </div>
-      </SidePanel>
-    )
-  }
-
-  const { connectKey, values } = dataState.data
-
   return (
-    <EditablePanel
-      key={connectKey.key}
-      heading={
-        <SidePanelHeadingCopyable
-          heading="Key"
-          value={connectKey.key}
-          label="key"
+    <RemoteDataStates
+      data={dataState}
+      loading={
+        <SidePanelSkeleton withActions onClose={() => setPanelId(undefined)} />
+      }
+      notFound={
+        <SidePanel heading={null}>
+          <div className="flex justify-center pt-[50px]">
+            <Text color="subtle">Key not found</Text>
+          </div>
+        </SidePanel>
+      }
+      loaded={({ connectKey, values }) => (
+        <EditablePanel
+          key={connectKey.key}
+          heading={
+            <SidePanelHeadingCopyable
+              heading="Key"
+              value={connectKey.key}
+              label="key"
+            />
+          }
+          onClose={() => setPanelId(undefined)}
+          remoteValues={values}
+          fields={fields}
+          onSave={onSave}
+          actionsLeft={
+            <Button
+              onClick={() => openDialog('connectKeyDelete', connectKey.key)}
+              variant="ghost"
+            >
+              <TrashCan16 />
+            </Button>
+          }
+          render={(form, fields) => {
+            return (
+              <SidePanelSection heading="Info">
+                <div className="flex flex-col gap-2">
+                  <FieldText name="description" form={form} fields={fields} />
+                  <FieldNumber
+                    name="maxPinnedDataGB"
+                    form={form}
+                    fields={fields}
+                  />
+                  <FieldNumber
+                    name="remainingUses"
+                    form={form}
+                    fields={fields}
+                  />
+                  <InfoRow
+                    label="Total uses"
+                    value={connectKey.displayFields.totalUses}
+                  />
+                  <InfoRow
+                    label="Date created"
+                    value={connectKey.displayFields.dateCreated}
+                  />
+                  <InfoRow
+                    label="Last updated"
+                    value={connectKey.displayFields.lastUpdated}
+                  />
+                  <InfoRow
+                    label="Last used"
+                    value={connectKey.displayFields.lastUsed}
+                  />
+                </div>
+              </SidePanelSection>
+            )
+          }}
         />
-      }
-      onClose={() => setPanelId(undefined)}
-      remoteValues={values}
-      fields={fields}
-      onSave={onSave}
-      actionsLeft={
-        <Button
-          onClick={() => openDialog('connectKeyDelete', connectKey.key)}
-          variant="ghost"
-        >
-          <TrashCan16 />
-        </Button>
-      }
-      render={(form, fields) => {
-        return (
-          <SidePanelSection heading="Info">
-            <div className="flex flex-col gap-2">
-              <FieldText name="description" form={form} fields={fields} />
-              <FieldNumber name="maxPinnedDataGB" form={form} fields={fields} />
-              <FieldNumber name="remainingUses" form={form} fields={fields} />
-              <InfoRow
-                label="Total uses"
-                value={connectKey.displayFields.totalUses}
-              />
-              <InfoRow
-                label="Date created"
-                value={connectKey.displayFields.dateCreated}
-              />
-              <InfoRow
-                label="Last updated"
-                value={connectKey.displayFields.lastUpdated}
-              />
-              <InfoRow
-                label="Last used"
-                value={connectKey.displayFields.lastUsed}
-              />
-            </div>
-          </SidePanelSection>
-        )
-      }}
+      )}
     />
   )
 }

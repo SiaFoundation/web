@@ -16,6 +16,7 @@ import {
 } from '@tanstack/react-table'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { RemoteDataset } from '../../remoteData/types'
 
 export type DataTableState<T extends { id: string }> = ReturnType<
   typeof useDataTable<T>
@@ -23,7 +24,7 @@ export type DataTableState<T extends { id: string }> = ReturnType<
 
 export function useDataTable<T extends { id: string }>({
   columns,
-  data,
+  dataset,
   rowHeight = 36,
   columnFilters,
   fixedFilters,
@@ -37,7 +38,7 @@ export function useDataTable<T extends { id: string }>({
   onRowClick,
 }: {
   columns: ColumnDef<T>[]
-  data: T[]
+  dataset: RemoteDataset<T[]>
   rowHeight?: number
   fixedFilters?: ColumnFiltersState
   columnFilters: ColumnFiltersState
@@ -83,7 +84,7 @@ export function useDataTable<T extends { id: string }>({
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
 
   const table = useReactTable({
-    data,
+    data: 'data' in dataset ? (dataset.data ?? []) : [],
     columns,
     defaultColumn: {
       size: 200,
@@ -138,7 +139,7 @@ export function useDataTable<T extends { id: string }>({
   }, [rowSelection])
 
   return {
-    data,
+    dataset,
     tableContainerRef,
     rowHeight,
     table,

@@ -1,4 +1,7 @@
-import { useActiveDaemonExplorerExchangeRate } from '@siafoundation/design-system'
+import {
+  useActiveDaemonExplorerExchangeRate,
+  useRemoteDataset,
+} from '@siafoundation/design-system'
 import { useMemo } from 'react'
 import { useAdminHosts } from '@siafoundation/indexd-react'
 import { transformHost } from './transform'
@@ -28,18 +31,22 @@ export function useHosts() {
     }
     return filters
   }, [columnFilters, offset, limit])
-  const rawHosts = useAdminHosts({
+  const hosts = useAdminHosts({
     params,
   })
   const exchangeRate = useActiveDaemonExplorerExchangeRate()
   const { settings } = useAppSettings()
-  const hosts = useMemo(
-    () =>
-      rawHosts.data?.map((host) => {
+  return useRemoteDataset(
+    {
+      hosts,
+    },
+    ({ hosts }) =>
+      hosts.map((host) => {
         const location = geo.data?.find(
           (h) => h.publicKey === host.publicKey,
         )?.location
-        const datum = transformHost(host, {
+        const datum = transformHost({
+          host,
           location,
           currencyDisplay: settings.currencyDisplay,
           exchange: exchangeRate.currency &&
@@ -49,15 +56,10 @@ export function useHosts() {
             },
         })
         return datum
-      }) || [],
-    [
-      rawHosts.data,
-      geo.data,
-      exchangeRate.currency,
-      exchangeRate.rate,
-      settings.currencyDisplay,
-    ],
+      }),
+    {
+      offset,
+      filters: columnFilters,
+    },
   )
-
-  return hosts
 }

@@ -19,18 +19,17 @@ import {
 import { getCurrencyDisplayPropsPreferred } from '@siafoundation/design-system'
 import { getV2HostSettingsProtcolVersion } from '@siafoundation/types'
 
-export function transformHost(
-  host: Host,
-  {
-    location,
-    currencyDisplay,
-    exchange,
-  }: {
-    location?: { countryCode: string; latitude: number; longitude: number }
-    currencyDisplay: CurrencyDisplayPreference
-    exchange?: { currency: CurrencyOption; rate: BigNumber }
-  },
-): HostData {
+export function transformHost({
+  host,
+  location,
+  currencyDisplay,
+  exchange,
+}: {
+  host: Host
+  location?: { countryCode: string; latitude: number; longitude: number }
+  currencyDisplay: CurrencyDisplayPreference
+  exchange?: { currency: CurrencyOption; rate: BigNumber }
+}): HostData {
   const datum: HostData = {
     ...host,
     id: host.publicKey,
