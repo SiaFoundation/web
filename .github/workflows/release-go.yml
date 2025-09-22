@@ -1,11 +1,13 @@
 name: Release Go modules
 
+permissions:
+  contents: read # Read is sufficient because pushes use PAT, not GITHUB_TOKEN perms.
+
 concurrency: commits-to-main
 
 on:
   repository_dispatch:
     types: [release-go]
-  # Enable manual trigger
   workflow_dispatch:
 
 jobs:
@@ -40,23 +42,3 @@ jobs:
           git push origin main --tags
           # cleanup
           git branch -D release
-      # Disabled in favor of Dependabot.
-      # Leaving here in case we ever want to re-enable.
-      # - name: Create UI PR on renterd repo
-      #   uses: peter-evans/repository-dispatch@v3
-      #   with:
-      #     token: ${{ secrets.PAT_REPOSITORY_DISPATCH }}
-      #     repository: siafoundation/renterd
-      #     event-type: update-ui
-      # - name: Create UI PR on hostd repo
-      #   uses: peter-evans/repository-dispatch@v3
-      #   with:
-      #     token: ${{ secrets.PAT_REPOSITORY_DISPATCH }}
-      #     repository: siafoundation/hostd
-      #     event-type: update-ui
-      # - name: Create UI PR on walletd repo
-      #   uses: peter-evans/repository-dispatch@v3
-      #   with:
-      #     token: ${{ secrets.PAT_REPOSITORY_DISPATCH }}
-      #     repository: siafoundation/walletd
-      #     event-type: update-ui

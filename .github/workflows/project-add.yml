@@ -1,5 +1,8 @@
 name: Add issues and PRs to Sia project
 
+permissions:
+  contents: read
+
 on:
   issues:
     types:

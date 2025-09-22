@@ -1,5 +1,10 @@
 name: Release Versions and Publish
 
+permissions:
+  contents: write # Required for changesets/action to publish releases and tags.
+  pull-requests: write # Allows updating release PRs if needed.
+  packages: write # Allows pushing Docker images to GHCR if containers are built.
+
 on:
   workflow_dispatch:
 

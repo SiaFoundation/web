@@ -1,5 +1,9 @@
 name: Merge e2e test reports
 
+permissions:
+  contents: read
+  actions: write # Needed for actions/upload-artifact to upload the merged HTML report.
+
 on:
   workflow_call:
     inputs:

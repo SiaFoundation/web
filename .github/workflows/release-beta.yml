@@ -1,5 +1,8 @@
 name: Manually Release a Beta Tag to NPM and GitHub
 
+permissions:
+  contents: write # Needed by changesets/action to create releases and update tags.
+
 on:
   push:
     branches:
