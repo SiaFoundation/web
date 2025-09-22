@@ -4,16 +4,28 @@ import BigNumber from 'bignumber.js'
 import { CurrencyDisplayProps } from '@siafoundation/design-system'
 import { V2HostSettings } from '@siafoundation/types'
 
-export type ContractFilters = (
-  | {
-      id: 'status'
-      value: boolean
-    }
-  | {
-      id: 'revisable'
-      value: boolean
-    }
-)[]
+export type ContractFilterStatus = {
+  id: 'status'
+  value: boolean
+}
+
+export type ContractFilterRevisable = {
+  id: 'revisable'
+  value: boolean
+}
+
+export type ContractFilter = ContractFilterStatus | ContractFilterRevisable
+export type ContractFilters = ContractFilter[]
+
+export function getFilterLabel(filter: ContractFilter): string {
+  if (filter.id === 'status') {
+    return filter.value ? 'Status is good' : 'Status is bad'
+  }
+  if (filter.id === 'revisable') {
+    return filter.value ? 'Revisable' : 'Not revisable'
+  }
+  return ''
+}
 
 export type ContractData = Contract & {
   id: string

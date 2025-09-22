@@ -1,7 +1,7 @@
 import { useContractsParams } from '../useContractsParams'
 import { ColumnBooleanFilter } from '../../ColumnBooleanFilter'
 
-export function GoodFilter() {
+export function ColumnGoodFilter() {
   const { columnFilters, setColumnFilters } = useContractsParams()
 
   return (

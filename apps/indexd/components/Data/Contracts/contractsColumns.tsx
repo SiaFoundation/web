@@ -13,7 +13,7 @@ import {
   timestampColumnWidth,
   hashColumnWidth,
 } from '../sharedColumns/sizes'
-import { GoodFilter } from './filters/GoodFilter'
+import { ColumnGoodFilter } from './columnFilters/ColumnGoodFilter'
 
 export const contractsColumns: ColumnDef<ContractData>[] = [
   selectColumn(),
@@ -37,7 +37,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
   {
     id: 'status',
     header: ({ table, column }) => (
-      <TableHeader table={table} column={column} filter={<GoodFilter />}>
+      <TableHeader table={table} column={column} filter={<ColumnGoodFilter />}>
         Status
       </TableHeader>
     ),

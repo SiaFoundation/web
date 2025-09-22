@@ -12,10 +12,10 @@ export function InfoRow({
   if (variant === 'column') {
     return (
       <div className="flex flex-col gap-1">
-        <Text color="subtle" className="truncate">
+        <Text color="verySubtle" size="14" weight="medium" className="truncate">
           {label}
         </Text>
-        <Text color="subtle">{value}</Text>
+        <Text color="contrast">{value}</Text>
       </div>
     )
   }

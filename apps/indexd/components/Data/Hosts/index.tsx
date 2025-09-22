@@ -16,6 +16,7 @@ import { Layout } from '../Layout'
 import { useHostsParams } from './useHostsParams'
 import { OnChangeFn, SortingState } from '@tanstack/react-table'
 import { ColumnFiltersState } from '@tanstack/react-table'
+import { HostsFilterMenu } from './HostsFilterMenu'
 
 export function Hosts() {
   const {
@@ -58,6 +59,7 @@ export function Hosts() {
       table={
         <DataTable
           {...table}
+          header={<HostsFilterMenu />}
           noneOnPage={
             <StateNoneOnPage message="No hosts on this page, reset pagination to continue." />
           }

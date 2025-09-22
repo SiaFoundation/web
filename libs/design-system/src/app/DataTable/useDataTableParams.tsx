@@ -72,6 +72,32 @@ export function useDataTableParams<Filters extends ColumnFiltersState>(
     [router, params, pathname, scope, columnFilters],
   )
 
+  const removeColumnFilter = useCallback(
+    (id: string) => {
+      setColumnFilters(
+        (columnFilters) => columnFilters.filter((f) => f.id !== id) as Filters,
+      )
+    },
+    [setColumnFilters],
+  )
+
+  const removeLastColumnFilter = useCallback(() => {
+    setColumnFilters((columnFilters) => columnFilters.slice(0, -1) as Filters)
+  }, [setColumnFilters])
+
+  const addColumnFilter = useCallback(
+    (filter: Filters[number]) => {
+      setColumnFilters(
+        (columnFilters) =>
+          [
+            ...columnFilters.filter((f) => f.id !== filter.id),
+            filter,
+          ] as Filters,
+      )
+    },
+    [setColumnFilters],
+  )
+
   const columnSortsParams = params.get(`${scope}Sorts`)
   const columnSorts = useMemo(() => {
     return columnSortsParams
@@ -99,6 +125,9 @@ export function useDataTableParams<Filters extends ColumnFiltersState>(
     setLimit,
     columnFilters,
     setColumnFilters,
+    removeColumnFilter,
+    removeLastColumnFilter,
+    addColumnFilter,
     columnSorts,
     setColumnSorts,
   }

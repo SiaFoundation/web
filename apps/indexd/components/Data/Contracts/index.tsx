@@ -16,6 +16,7 @@ import { Layout } from '../Layout'
 import { useContractsParams } from './useContractsParams'
 import { OnChangeFn } from '@tanstack/react-table'
 import { ColumnFiltersState } from '@tanstack/react-table'
+import { ContractsFilterMenu } from './ContractsFilterMenu'
 
 export function Contracts() {
   const {
@@ -57,6 +58,7 @@ export function Contracts() {
       table={
         <DataTable
           {...table}
+          header={<ContractsFilterMenu />}
           noneOnPage={
             <StateNoneOnPage message="No contracts on this page, reset pagination to continue." />
           }
