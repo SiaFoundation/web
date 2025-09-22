@@ -12,7 +12,6 @@ import { type VirtualItem, type Virtualizer } from '@tanstack/react-virtual'
 import { Label } from '../../core/Label'
 import { Panel } from '../../core/Panel'
 import { Select, Option } from '../../core/Select'
-import { ActiveFilters } from './ActiveFilters'
 import { DataTablePaginatorUnknownTotal } from './DataTablePaginatorUnknownTotal'
 import { RemoteDatasetStates } from '../../remoteData/RemoteDatasetStates'
 import { StateNoneOnPage } from '../../components/EmptyState/StateNoneOnPage'
@@ -39,8 +38,7 @@ interface DataTableProps<T extends { id: string }> {
   offset: number
   limit: number
   onClickFilterIcon?: () => void
-  /** Optional heading to render after the filter icon. */
-  heading?: React.ReactNode
+  header?: React.ReactNode
   actions?: React.ReactNode
   // custom state for loading, error, etc.
   noneOnPage?: React.ReactNode
@@ -62,7 +60,6 @@ type ColumnMeta = {
 }
 
 export function DataTable<T extends { id: string }>({
-  fixedFilters,
   table,
   virtualRows,
   totalSize,
@@ -76,8 +73,7 @@ export function DataTable<T extends { id: string }>({
   onRowClick,
   offset,
   limit,
-  onClickFilterIcon,
-  heading,
+  header,
   actions,
   dataset,
   noneOnPage,
@@ -107,14 +103,9 @@ export function DataTable<T extends { id: string }>({
         className,
       )}
     >
-      <div className="z-10 h-[45px] flex items-center justify-between gap-4 bg-white dark:bg-graydark-200 py-2 pl-1.5 pr-2 border-b border-gray-200 dark:border-graydark-400">
-        <ActiveFilters
-          fixedFilters={fixedFilters}
-          table={table}
-          onClickFilterIcon={onClickFilterIcon}
-          heading={heading}
-        />
-        {actions}
+      <div className="z-20 h-[45px] flex items-center justify-between gap-4 bg-white dark:bg-graydark-200 py-2 pl-1.5 pr-2 border-b border-gray-200 dark:border-graydark-400">
+        <div className="flex items-center gap-2">{header}</div>
+        <div className="flex items-center gap-2">{actions}</div>
       </div>
       <div className="flex-1 overflow-hidden relative">
         <div

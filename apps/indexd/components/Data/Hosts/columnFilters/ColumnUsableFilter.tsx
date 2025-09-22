@@ -1,14 +1,14 @@
 import { useHostsParams } from '../useHostsParams'
 import { ColumnBooleanFilter } from '../../ColumnBooleanFilter'
 
-export function ActiveContractsFilter() {
+export function ColumnUsableFilter() {
   const { columnFilters, setColumnFilters } = useHostsParams()
 
   return (
     <ColumnBooleanFilter
-      id="activecontracts"
-      labelPositive="Has Active Contracts"
-      labelNegative="Has No Active Contracts"
+      id="usable"
+      labelPositive="Usable"
+      labelNegative="Unusable"
       columnFilters={columnFilters}
       setColumnFilters={setColumnFilters}
     />

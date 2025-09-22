@@ -1,7 +1,7 @@
 import { useHostsParams } from '../useHostsParams'
 import { ColumnBooleanFilter } from '../../ColumnBooleanFilter'
 
-export function BlockedFilter() {
+export function ColumnBlockedFilter() {
   const { columnFilters, setColumnFilters } = useHostsParams()
   return (
     <ColumnBooleanFilter

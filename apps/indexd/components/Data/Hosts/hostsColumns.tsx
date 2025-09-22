@@ -10,8 +10,8 @@ import { CheckmarkFilled16, CloseFilled16 } from '@siafoundation/react-icons'
 import { HostData } from './types'
 import { TableHeader } from '../ColumnHeader'
 import { UsabilityBadges, UsabilityIndicator } from '../UsabilityBadges'
-import { UsableFilter } from './filters/UsableFilter'
-import { BlockedFilter } from './filters/BlockedFilter'
+import { ColumnUsableFilter } from './columnFilters/ColumnUsableFilter'
+import { ColumnBlockedFilter } from './columnFilters/ColumnBlockedFilter'
 import { selectColumn } from '../sharedColumns/select'
 import {
   hostUsableColumnWidth,
@@ -48,7 +48,7 @@ export const columns: ColumnDef<HostData>[] = [
         table={table}
         column={column}
         className="justify-start"
-        filter={<UsableFilter />}
+        filter={<ColumnUsableFilter />}
       >
         Usable
       </TableHeader>
@@ -88,7 +88,7 @@ export const columns: ColumnDef<HostData>[] = [
         table={table}
         column={column}
         className="justify-start"
-        filter={<BlockedFilter />}
+        filter={<ColumnBlockedFilter />}
       >
         Blocked
       </TableHeader>

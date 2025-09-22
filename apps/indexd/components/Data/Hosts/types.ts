@@ -3,20 +3,38 @@ import { CurrencyOption } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 import { CurrencyDisplayProps } from '@siafoundation/design-system'
 
-export type HostFilters = (
-  | {
-      id: 'usable'
-      value: boolean
-    }
-  | {
-      id: 'blocked'
-      value: boolean
-    }
-  | {
-      id: 'activecontracts'
-      value: boolean
-    }
-)[]
+export type HostFilterUsable = {
+  id: 'usable'
+  value: boolean
+}
+export type HostFilterBlocked = {
+  id: 'blocked'
+  value: boolean
+}
+
+export type HostFilterActiveContracts = {
+  id: 'activecontracts'
+  value: boolean
+}
+
+export type HostFilter =
+  | HostFilterUsable
+  | HostFilterBlocked
+  | HostFilterActiveContracts
+export type HostFilters = HostFilter[]
+
+export function getFilterLabel(filter: HostFilter): string {
+  switch (filter.id) {
+    case 'usable':
+      return filter.value ? 'Usable' : 'Unusable'
+    case 'blocked':
+      return filter.value ? 'Blocked' : 'Not Blocked'
+    case 'activecontracts':
+      return filter.value ? 'Active Contracts' : 'No Active Contracts'
+    default:
+      return ''
+  }
+}
 
 export type HostLocation =
   | {
