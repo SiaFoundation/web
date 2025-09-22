@@ -2,7 +2,6 @@ name: Release Versions and Publish
 
 on:
   workflow_dispatch:
-
 # This is for .npmrc. Nx automatically creates an .npmrc before changesets runs
 # and creates one itself, so we need to explicitly have one.
 env:
@@ -12,7 +11,7 @@ concurrency: commits-to-main
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    runs-on: tenki-standard-autoscale
     steps:
       - name: Checkout all commits
         uses: actions/checkout@v3
@@ -54,7 +53,7 @@ jobs:
           repository: siafoundation/web
           event-type: release-go
   release-docker:
-    runs-on: ubuntu-latest
+    runs-on: tenki-standard-autoscale
     steps:
       - name: Checkout all commits
         uses: actions/checkout@v3
