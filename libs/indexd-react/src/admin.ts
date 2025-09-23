@@ -125,6 +125,11 @@ import {
   adminStatsAccountsRoute,
   AdminStatsAccountsParams,
   AdminStatsAccountsResponse,
+  adminAlertsIdRoute,
+  AdminAlertParams,
+  AdminAlertResponse,
+  AdminAccountParams,
+  AdminAccountResponse,
 } from '@siafoundation/indexd-types'
 import useSWR from 'swr'
 import {
@@ -197,6 +202,15 @@ export function useTxpoolRecommendedFee(
 }
 
 // accounts
+
+export function useAdminAccount(
+  args?: HookArgsSwr<AdminAccountParams, AdminAccountResponse>,
+) {
+  return useGetSwr({
+    ...args,
+    route: adminAccountRoute,
+  })
+}
 
 export function useAdminAccounts(
   args?: HookArgsSwr<AdminAccountsParams, AdminAccountsResponse>,
@@ -522,6 +536,15 @@ export function useAdminConnectKeyDelete(
 }
 
 // alerts
+
+export function useAdminAlert(
+  args?: HookArgsSwr<AdminAlertParams, AdminAlertResponse>,
+) {
+  return useGetSwr({
+    ...args,
+    route: adminAlertsIdRoute,
+  })
+}
 
 export function useAdminAlerts(
   args?: HookArgsSwr<AdminAlertsParams, AdminAlertsResponse>,

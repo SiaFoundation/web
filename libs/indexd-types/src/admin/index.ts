@@ -65,6 +65,13 @@ export type AdminAccountsPayload = void
 export type AdminAccountsResponse = Account[]
 
 export const adminAccountRoute = '/account/:accountkey'
+
+export type AdminAccountParams = {
+  accountkey: PublicKey
+}
+export type AdminAccountPayload = void
+export type AdminAccountResponse = Account
+
 export type AdminAccountAddParams = {
   accountkey: PublicKey
 }
@@ -270,6 +277,13 @@ export type AdminAlertsParams = {
 }
 export type AdminAlertsPayload = void
 export type AdminAlertsResponse = Alert[]
+
+export const adminAlertsIdRoute = '/alerts/:id'
+export type AdminAlertParams = {
+  id: Hash256
+}
+export type AdminAlertPayload = void
+export type AdminAlertResponse = Alert
 
 export const adminAlertsDismissRoute = '/alerts/dismiss'
 export type AdminAlertsDismissParams = void
