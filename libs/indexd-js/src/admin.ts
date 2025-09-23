@@ -133,6 +133,10 @@ import {
   AdminConnectKeyPayload,
   AdminConnectKeyResponse,
   adminConnectKeyRoute,
+  adminStatsAccountsRoute,
+  AdminStatsAccountsResponse,
+  AdminStatsAccountsPayload,
+  AdminStatsAccountsParams,
 } from '@siafoundation/indexd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
@@ -310,5 +314,10 @@ export function Admin({ api, password }: { api: string; password?: string }) {
       AdminStatsSectorsPayload,
       AdminStatsSectorsResponse
     >(axios, 'get', adminStatsSectorsRoute),
+    statsAccounts: buildRequestHandler<
+      AdminStatsAccountsParams,
+      AdminStatsAccountsPayload,
+      AdminStatsAccountsResponse
+    >(axios, 'get', adminStatsAccountsRoute),
   }
 }

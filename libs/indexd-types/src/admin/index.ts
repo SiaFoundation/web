@@ -283,4 +283,15 @@ export type AdminStatsSectorsParams = void
 export type AdminStatsSectorsPayload = void
 export type AdminStatsSectorsResponse = {
   numSlabs: number
+  numMigratedSectors: number
+  numPinnedSectors: number
+  numUnpinnableSectors: number
+  numUnpinnedSectors: number
+}
+
+export const adminStatsAccountsRoute = '/stats/accounts'
+export type AdminStatsAccountsParams = void
+export type AdminStatsAccountsPayload = void
+export type AdminStatsAccountsResponse = {
+  registered: number
 }

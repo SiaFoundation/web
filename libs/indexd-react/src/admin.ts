@@ -122,6 +122,9 @@ import {
   AdminConnectKeyParams,
   AdminConnectKeyResponse,
   adminConnectKeyRoute,
+  adminStatsAccountsRoute,
+  AdminStatsAccountsParams,
+  AdminStatsAccountsResponse,
 } from '@siafoundation/indexd-types'
 import useSWR from 'swr'
 import {
@@ -550,5 +553,14 @@ export function useAdminStatsSectors(
   return useGetSwr({
     ...args,
     route: adminStatsSectorsRoute,
+  })
+}
+
+export function useAdminStatsAccounts(
+  args?: HookArgsSwr<AdminStatsAccountsParams, AdminStatsAccountsResponse>,
+) {
+  return useGetSwr({
+    ...args,
+    route: adminStatsAccountsRoute,
   })
 }
