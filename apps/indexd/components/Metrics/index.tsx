@@ -1,26 +1,91 @@
-import { Warning32 } from '@siafoundation/react-icons'
-import { DatumCard, Text } from '@siafoundation/design-system'
-import { useAdminStatsSectors } from '@siafoundation/indexd-react'
+import {
+  DatumCard,
+  RemoteDataStates,
+  StateError,
+  StateNoneYet,
+  useRemoteData,
+  Skeleton,
+} from '@siafoundation/design-system'
+import {
+  useAdminStatsSectors,
+  useAdminStatsAccounts,
+} from '@siafoundation/indexd-react'
 
 export function Metrics() {
-  const state = useAdminStatsSectors()
+  const sectors = useAdminStatsSectors()
+  const accounts = useAdminStatsAccounts()
+  const stats = useRemoteData(
+    {
+      sectors,
+      accounts,
+    },
+    (data) => ({
+      ...data.sectors,
+      ...data.accounts,
+    }),
+  )
   return (
     <div className="flex flex-col gap-5 p-5">
-      {state.error ? (
-        <div className="flex flex-col gap-6 items-center justify-center pt-[100px]">
-          <Warning32 className="scale-150" />
-          <Text size="20" color="subtle">
-            Error loading stats
-          </Text>
-        </div>
-      ) : (
-        <div className="flex flex-wrap gap-7">
-          <DatumCard
-            label="Slabs"
-            value={state.data?.numSlabs?.toLocaleString()}
-          />
-        </div>
-      )}
+      <RemoteDataStates
+        data={stats}
+        error={
+          <StateError message="Error loading metrics. Please try again later." />
+        }
+        loading={
+          <div className="flex flex-wrap gap-7">
+            <DatumCard
+              label="Slabs"
+              value={<Skeleton className="h-12 w-[150px]" />}
+            />
+            <DatumCard
+              label="Migrated Sectors"
+              value={<Skeleton className="h-12 w-[150px]" />}
+            />
+            <DatumCard
+              label="Pinned Sectors"
+              value={<Skeleton className="h-12 w-[150px]" />}
+            />
+            <DatumCard
+              label="Unpinnable Sectors"
+              value={<Skeleton className="h-12 w-[150px]" />}
+            />
+            <DatumCard
+              label="Unpinned Sectors"
+              value={<Skeleton className="h-12 w-[150px]" />}
+            />
+            <DatumCard
+              label="Registered Accounts"
+              value={<Skeleton className="h-12 w-[150px]" />}
+            />
+          </div>
+        }
+        notFound={<StateNoneYet message="No metrics found." />}
+        loaded={(stats) => (
+          <div className="flex flex-wrap gap-7">
+            <DatumCard label="Slabs" value={stats.numSlabs.toLocaleString()} />
+            <DatumCard
+              label="Migrated Sectors"
+              value={stats.numMigratedSectors.toLocaleString()}
+            />
+            <DatumCard
+              label="Pinned Sectors"
+              value={stats.numPinnedSectors.toLocaleString()}
+            />
+            <DatumCard
+              label="Unpinnable Sectors"
+              value={stats.numUnpinnableSectors.toLocaleString()}
+            />
+            <DatumCard
+              label="Unpinned Sectors"
+              value={stats.numUnpinnedSectors.toLocaleString()}
+            />
+            <DatumCard
+              label="Registered Accounts"
+              value={stats.registered.toLocaleString()}
+            />
+          </div>
+        )}
+      />
     </div>
   )
 }
