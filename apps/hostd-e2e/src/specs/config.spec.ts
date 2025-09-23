@@ -85,7 +85,7 @@ test('dynamic max collateral suggestion', async ({ page }) => {
     page
       .getByTestId('maxCollateralGroup')
       .getByLabel('Suggestion')
-      .getByText('60 SC'),
+      .getByText('600 SC'),
   ).toBeVisible()
 
   // Set all values that affect the max collateral calculation.
@@ -95,6 +95,6 @@ test('dynamic max collateral suggestion', async ({ page }) => {
     page
       .getByTestId('maxCollateralGroup')
       .getByLabel('Suggestion')
-      .getByText('300 SC'),
+      .getByText('3,000 SC'),
   ).toBeVisible()
 })

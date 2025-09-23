@@ -268,7 +268,7 @@ describe('data transforms', () => {
 
   it('max collateral', () => {
     expect(
-      calculateMaxCollateral(new BigNumber('400'), new BigNumber(2)),
-    ).toEqual(new BigNumber('2400'))
+      calculateMaxCollateral(new BigNumber('400'), new BigNumber(2), 10),
+    ).toEqual(new BigNumber('24000'))
   })
 })
