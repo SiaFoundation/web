@@ -137,6 +137,13 @@ import {
   AdminStatsAccountsResponse,
   AdminStatsAccountsPayload,
   AdminStatsAccountsParams,
+  AdminAlertParams,
+  AdminAlertPayload,
+  AdminAlertResponse,
+  adminAlertsIdRoute,
+  AdminAccountParams,
+  AdminAccountPayload,
+  AdminAccountResponse,
 } from '@siafoundation/indexd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
@@ -159,6 +166,11 @@ export function Admin({ api, password }: { api: string; password?: string }) {
       AdminTxpoolRecommendedFeePayload,
       AdminTxpoolRecommendedFeeResponse
     >(axios, 'get', adminTxpoolRecommendedFeeRoute),
+    account: buildRequestHandler<
+      AdminAccountParams,
+      AdminAccountPayload,
+      AdminAccountResponse
+    >(axios, 'get', adminAccountRoute),
     accounts: buildRequestHandler<
       AdminAccountsParams,
       AdminAccountsPayload,
@@ -299,6 +311,11 @@ export function Admin({ api, password }: { api: string; password?: string }) {
       AdminConnectKeyDeletePayload,
       AdminConnectKeyDeleteResponse
     >(axios, 'delete', adminConnectKeyDeleteRoute),
+    alert: buildRequestHandler<
+      AdminAlertParams,
+      AdminAlertPayload,
+      AdminAlertResponse
+    >(axios, 'get', adminAlertsIdRoute),
     alerts: buildRequestHandler<
       AdminAlertsParams,
       AdminAlertsPayload,
