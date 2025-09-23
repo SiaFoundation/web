@@ -332,7 +332,8 @@ export function getFields({
         <>
           The host's maximum collateral. Choose whether to set your max
           collateral price in siacoin or to pin the max collateral to a fixed
-          fiat value.
+          fiat value. The suggested value for max collateral is the configured
+          storage price * collateral multiplier * 10.
         </>
       ),
       type: 'siacoin',
@@ -340,10 +341,10 @@ export function getFields({
       decimalsLimitSc: scDecimalPlaces,
       suggestion:
         storageTBMonth && collateralMultiplier
-          ? calculateMaxCollateral(storageTBMonth, collateralMultiplier)
+          ? calculateMaxCollateral(storageTBMonth, collateralMultiplier, 10)
           : undefined,
       suggestionTip:
-        'The suggested maximum collateral, calculated based on the configured storage price and collateral multiplier.',
+        'The suggested maximum collateral, which is the configured storage price * collateral multiplier * 10.',
       validation: {
         required: 'required',
       },

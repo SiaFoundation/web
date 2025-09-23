@@ -281,9 +281,17 @@ export function transformDown({
   }
 }
 
+/**
+ * Calculates the max collateral based on the storage price, collateral multiplier, and factor.
+ * @param storage - The storage price.
+ * @param collateralMultiplier - The collateral multiplier.
+ * @param factor - The factor which defaults to 10. The suggested value can be found in the documentation: https://docs.sia.tech/provide-storage/configuring-your-host#pricing.
+ * @returns The max collateral.
+ */
 export function calculateMaxCollateral(
   storage: BigNumber,
   collateralMultiplier: BigNumber,
+  factor = 10,
 ) {
   if (!storage || !collateralMultiplier) {
     return new BigNumber(0)
@@ -295,4 +303,5 @@ export function calculateMaxCollateral(
     .times(storage)
     .div(monthsToBlocks(1))
     .times(collateralMultiplier)
+    .times(factor)
 }
