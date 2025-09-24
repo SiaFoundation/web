@@ -1,5 +1,18 @@
 # Changelog
 
+## 11.0.0
+
+### Minor Changes
+
+- 8cbecde: DataTable now supports arbitrary header props.
+- 8459baf: The wallet balance components now do not have a tooltip.
+
+### Patch Changes
+
+- Updated dependencies [6e0dd2f]
+  - @siafoundation/explored-react@0.9.0
+  - @siafoundation/explored-types@0.20.0
+
 ## 10.6.0
 
 ### Minor Changes

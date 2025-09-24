@@ -1,12 +1,12 @@
 {
   "name": "@siafoundation/clusterd",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "private": true,
   "description": "Methods controlling clusterd in e2e testing.",
   "license": "MIT",
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@siafoundation/explored-js": "^0.8.2",
+    "@siafoundation/explored-js": "^0.9.0",
     "@siafoundation/hostd-js": "^0.5.7",
     "@siafoundation/renterd-js": "^0.14.7",
     "@siafoundation/types": "^0.13.0",

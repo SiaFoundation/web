@@ -1,5 +1,12 @@
 # @siafoundation/e2e
 
+## 0.6.10
+
+### Patch Changes
+
+- Updated dependencies [6e0dd2f]
+  - @siafoundation/explored-types@0.20.0
+
 ## 0.6.9
 
 ### Patch Changes

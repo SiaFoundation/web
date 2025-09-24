@@ -1,5 +1,12 @@
 # @siafoundation/indexd-types
 
+## 0.8.0
+
+### Minor Changes
+
+- 094ac33: Added new sector and account stats APIs.
+- 8d67d8e: Added account and alert by ID APIs.
+
 ## 0.7.0
 
 ### Minor Changes

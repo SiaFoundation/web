@@ -1,5 +1,23 @@
 # indexd
 
+## 0.9.0
+
+### Minor Changes
+
+- 8cbecde: The host and contract explorers now have in input menu for adding filters.
+- 094ac33: The metrics page now includes more sector and account stats.
+- 8d67d8e: The account and alert detail panel data loading has been refined. Closes https://github.com/SiaFoundation/indexd/issues/390 Closes https://github.com/SiaFoundation/indexd/issues/394
+
+### Patch Changes
+
+- Updated dependencies [8cbecde]
+- Updated dependencies [094ac33]
+- Updated dependencies [8459baf]
+- Updated dependencies [8d67d8e]
+  - @siafoundation/design-system@11.0.0
+  - @siafoundation/indexd-react@0.5.0
+  - @siafoundation/indexd-types@0.8.0
+
 ## 0.8.0
 
 ### Minor Changes

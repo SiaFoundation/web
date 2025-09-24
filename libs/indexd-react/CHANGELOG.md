@@ -1,5 +1,18 @@
 # @siafoundation/indexd-react
 
+## 0.5.0
+
+### Minor Changes
+
+- 094ac33: Added new sector and account stats APIs.
+- 8d67d8e: Added account and alert by ID APIs.
+
+### Patch Changes
+
+- Updated dependencies [094ac33]
+- Updated dependencies [8d67d8e]
+  - @siafoundation/indexd-types@0.8.0
+
 ## 0.4.0
 
 ### Minor Changes

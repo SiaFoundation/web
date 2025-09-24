@@ -1,5 +1,14 @@
 # hostd
 
+## 0.66.2
+
+### Patch Changes
+
+- f7ecf40: The suggested max collateral value has been updated to configured storage price _ collateral multiplier _ 10.
+- Updated dependencies [8cbecde]
+- Updated dependencies [8459baf]
+  - @siafoundation/design-system@11.0.0
+
 ## 0.66.1
 
 ### Patch Changes

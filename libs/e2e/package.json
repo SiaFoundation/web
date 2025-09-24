@@ -1,12 +1,12 @@
 {
   "name": "@siafoundation/e2e",
-  "version": "0.6.9",
+  "version": "0.6.10",
   "description": "Shared e2e testing code.",
   "license": "MIT",
   "types": "./src/index.d.ts",
   "dependencies": {
     "@playwright/test": "^1.54.1",
-    "@siafoundation/explored-types": "^0.19.3",
+    "@siafoundation/explored-types": "^0.20.0",
     "@siafoundation/react-core": "^8.0.0",
     "playwright": "^1.54.1"
   }

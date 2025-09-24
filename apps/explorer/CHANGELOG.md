@@ -1,5 +1,16 @@
 # explorer
 
+## 0.40.1
+
+### Patch Changes
+
+- Updated dependencies [8cbecde]
+- Updated dependencies [6e0dd2f]
+- Updated dependencies [8459baf]
+  - @siafoundation/design-system@11.0.0
+  - @siafoundation/explored-types@0.20.0
+  - @siafoundation/explored-js@0.9.0
+
 ## 0.40.0
 
 ### Minor Changes
