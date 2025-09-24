@@ -121,8 +121,8 @@ function transformContractDisplayFields(
       dateStyle: 'short',
       timeStyle: 'short',
     }).format(new Date(contract.lastBroadcastAttempt)),
-    capacity: humanBytes(contract.size),
-    dataSize: humanBytes(contract.capacity),
+    capacity: humanBytes(contract.capacity),
+    dataSize: humanBytes(contract.size),
     renewedFrom:
       contract.renewedFrom ===
       '0000000000000000000000000000000000000000000000000000000000000000'
