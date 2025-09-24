@@ -24,13 +24,8 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         ID
       </TableHeader>
     ),
-    accessorKey: 'id',
-    cell: ({ getValue }) => (
-      <ValueCopyable
-        maxLength={100}
-        value={getValue<string>()}
-        type="contract"
-      />
+    cell: ({ row }) => (
+      <ValueCopyable maxLength={100} value={row.original.id} type="contract" />
     ),
     meta: { className: 'justify-start', ...hashColumnWidth },
   },
@@ -41,9 +36,8 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Status
       </TableHeader>
     ),
-    accessorKey: 'good',
-    cell: ({ getValue }) => (
-      <StatusBadge variant={getValue<boolean>() ? 'good' : 'bad'} />
+    cell: ({ row }) => (
+      <StatusBadge variant={row.original.good ? 'good' : 'bad'} />
     ),
     meta: {
       className: 'justify-end',
@@ -59,8 +53,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         State
       </TableHeader>
     ),
-    accessorKey: 'state',
-    cell: ({ getValue }) => <StateBadge value={getValue<string>()} />,
+    cell: ({ row }) => <StateBadge value={row.original.state} />,
     meta: { className: 'justify-end', ...smallColumnWidth },
   },
   {
@@ -70,11 +63,10 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Host Public Key
       </TableHeader>
     ),
-    accessorKey: 'hostKey',
-    cell: ({ getValue }) => (
+    cell: ({ row }) => (
       <ValueCopyable
         maxLength={100}
-        value={getValue<string>()}
+        value={row.original.hostKey}
         type="hostPublicKey"
       />
     ),
@@ -87,8 +79,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Host Location
       </TableHeader>
     ),
-    accessorKey: 'host.location.countryCode',
-    cell: ({ row, getValue }) => {
+    cell: ({ row }) => {
       if (row.original.host?.location?.countryCode === 'unknown') {
         return (
           <div className="py-1">
@@ -114,7 +105,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Formation
       </TableHeader>
     ),
-    accessorKey: 'formation',
     cell: ({ row }) => <Text>{row.original.displayFields.formation}</Text>,
     meta: { className: 'justify-end', ...timestampColumnWidth },
   },
@@ -125,7 +115,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Proof Height
       </TableHeader>
     ),
-    accessorKey: 'proofHeight',
     cell: ({ row }) => <Text>{row.original.displayFields.proofHeight}</Text>,
     meta: { className: 'justify-end', ...smallColumnWidth },
   },
@@ -136,7 +125,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Expiration Height
       </TableHeader>
     ),
-    accessorKey: 'expirationHeight',
     cell: ({ row }) => (
       <Text>{row.original.displayFields.expirationHeight}</Text>
     ),
@@ -149,7 +137,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Next Prune
       </TableHeader>
     ),
-    accessorKey: 'nextPrune',
     cell: ({ row }) => <Text>{row.original.displayFields.nextPrune}</Text>,
     meta: { className: 'justify-end', ...timestampColumnWidth },
   },
@@ -160,7 +147,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Last Broadcast Attempt
       </TableHeader>
     ),
-    accessorKey: 'lastBroadcastAttempt',
     cell: ({ row }) => (
       <Text>{row.original.displayFields.lastBroadcastAttempt}</Text>
     ),
@@ -173,7 +159,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Capacity
       </TableHeader>
     ),
-    accessorKey: 'size',
     cell: ({ row }) => <Text>{row.original.displayFields.capacity}</Text>,
     meta: { className: 'justify-end', ...smallColumnWidth },
   },
@@ -184,7 +169,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Data Size
       </TableHeader>
     ),
-    accessorKey: 'capacity',
     cell: ({ row }) => <Text>{row.original.displayFields.dataSize}</Text>,
     meta: { className: 'justify-end', ...smallColumnWidth },
   },
@@ -195,7 +179,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Spend Sector Roots
       </TableHeader>
     ),
-    accessorKey: 'spending.sectorRoots',
     cell: ({ row }) => (
       <ValueWithTooltip {...row.original.displayFields.spendSectorRoots} />
     ),
@@ -208,7 +191,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Spend Append Sector
       </TableHeader>
     ),
-    accessorKey: 'spending.appendSector',
     cell: ({ row }) => (
       <ValueWithTooltip {...row.original.displayFields.spendAppendSector} />
     ),
@@ -221,7 +203,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Spend Free Sector
       </TableHeader>
     ),
-    accessorKey: 'spending.freeSector',
     cell: ({ row }) => (
       <ValueWithTooltip {...row.original.displayFields.spendFreeSector} />
     ),
@@ -234,7 +215,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Spend Fund Account
       </TableHeader>
     ),
-    accessorKey: 'spending.fundAccount',
     cell: ({ row }) => (
       <ValueWithTooltip {...row.original.displayFields.spendFundAccount} />
     ),
@@ -247,7 +227,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Initial Allowance
       </TableHeader>
     ),
-    accessorKey: 'initialAllowance',
     cell: ({ row }) => (
       <ValueWithTooltip {...row.original.displayFields.initialAllowance} />
     ),
@@ -260,7 +239,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Remaining Allowance
       </TableHeader>
     ),
-    accessorKey: 'remainingAllowance',
     cell: ({ row }) => (
       <ValueWithTooltip {...row.original.displayFields.remainingAllowance} />
     ),
@@ -273,7 +251,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Total Collateral
       </TableHeader>
     ),
-    accessorKey: 'totalCollateral',
     cell: ({ row }) => (
       <ValueWithTooltip {...row.original.displayFields.totalCollateral} />
     ),
@@ -286,7 +263,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Used Collateral
       </TableHeader>
     ),
-    accessorKey: 'usedCollateral',
     cell: ({ row }) => (
       <ValueWithTooltip {...row.original.displayFields.usedCollateral} />
     ),
@@ -299,7 +275,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Contract Price
       </TableHeader>
     ),
-    accessorKey: 'contractPrice',
     cell: ({ row }) => (
       <ValueWithTooltip {...row.original.displayFields.contractPrice} />
     ),
@@ -312,7 +287,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Miner Fee
       </TableHeader>
     ),
-    accessorKey: 'minerFee',
     cell: ({ row }) => (
       <ValueWithTooltip {...row.original.displayFields.minerFee} />
     ),
@@ -325,7 +299,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Revision Number
       </TableHeader>
     ),
-    accessorKey: 'revisionNumber',
     cell: ({ row }) => <Text>{row.original.displayFields.revisionNumber}</Text>,
     meta: { className: 'justify-end', ...smallColumnWidth },
   },
@@ -336,7 +309,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Renewed From
       </TableHeader>
     ),
-    accessorKey: 'renewedFrom',
     cell: ({ row }) => {
       const value = row.original.displayFields.renewedFrom
       if (value === '-') {
@@ -353,7 +325,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
         Renewed To
       </TableHeader>
     ),
-    accessorKey: 'renewedTo',
     cell: ({ row }) => {
       const value = row.original.displayFields.renewedTo
       if (value === '-') {

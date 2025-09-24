@@ -31,11 +31,10 @@ export const columns: ColumnDef<HostData>[] = [
         Public Key
       </TableHeader>
     ),
-    accessorKey: 'id',
-    cell: ({ getValue }) => (
+    cell: ({ row }) => (
       <ValueCopyable
         maxLength={100}
-        value={getValue<string>()}
+        value={row.original.id}
         type="hostPublicKey"
       />
     ),
@@ -53,7 +52,6 @@ export const columns: ColumnDef<HostData>[] = [
         Usable
       </TableHeader>
     ),
-    accessorKey: 'usable',
     cell: ({ row }) => {
       return (
         <div className="flex items-center justify-end gap-1">
@@ -93,7 +91,6 @@ export const columns: ColumnDef<HostData>[] = [
         Blocked
       </TableHeader>
     ),
-    accessorKey: 'blocked',
     cell: ({ row }) => {
       const isBlocked = row.original.blocked
       return (
@@ -129,7 +126,6 @@ export const columns: ColumnDef<HostData>[] = [
         Accepting Contracts
       </TableHeader>
     ),
-    accessorKey: 'settings.acceptingContracts',
     cell: ({ row }) => (
       <div className="flex items-center justify-end gap-1">
         <UsabilityIndicator
@@ -149,7 +145,6 @@ export const columns: ColumnDef<HostData>[] = [
         Uptime
       </TableHeader>
     ),
-    accessorKey: 'recentUptime',
     cell: ({ row }) => (
       <div className="flex items-center justify-end gap-1">
         <UsabilityIndicator
@@ -168,7 +163,6 @@ export const columns: ColumnDef<HostData>[] = [
         Location
       </TableHeader>
     ),
-    accessorKey: 'location.countryCode',
     cell: ({ row }) => {
       if (row.original.location.countryCode === 'unknown') {
         return (
@@ -195,7 +189,6 @@ export const columns: ColumnDef<HostData>[] = [
         Total Storage
       </TableHeader>
     ),
-    accessorKey: 'settings.totalStorage',
     cell: ({ row }) => <Text>{row.original.displayFields.totalStorage}</Text>,
     meta: { className: 'justify-end', ...smallColumnWidth },
   },
@@ -206,7 +199,6 @@ export const columns: ColumnDef<HostData>[] = [
         Remaining Storage
       </TableHeader>
     ),
-    accessorKey: 'settings.remainingStorage',
     cell: ({ row }) => {
       return (
         <div className="flex items-center justify-end gap-1">
@@ -227,7 +219,6 @@ export const columns: ColumnDef<HostData>[] = [
         Price Storage
       </TableHeader>
     ),
-    accessorKey: 'settings.prices.storagePrice',
     cell: ({ row }) => (
       <div className="flex items-center justify-end gap-1">
         <UsabilityIndicator
@@ -249,7 +240,6 @@ export const columns: ColumnDef<HostData>[] = [
         Ingress/TB
       </TableHeader>
     ),
-    accessorKey: 'settings.prices.ingressPrice',
     cell: ({ row }) => {
       return (
         <div className="flex items-center justify-end gap-1">
@@ -270,7 +260,6 @@ export const columns: ColumnDef<HostData>[] = [
         Egress/TB
       </TableHeader>
     ),
-    accessorKey: 'settings.prices.egressPrice',
     cell: ({ row }) => (
       <div className="flex items-center justify-end gap-1">
         <UsabilityIndicator
@@ -289,8 +278,7 @@ export const columns: ColumnDef<HostData>[] = [
         Free Sector Price
       </TableHeader>
     ),
-    accessorKey: 'settings.prices.freeSectorPrice',
-    cell: ({ row, getValue }) => (
+    cell: ({ row }) => (
       <div className="flex items-center justify-end gap-1">
         <UsabilityIndicator
           status={
@@ -310,7 +298,6 @@ export const columns: ColumnDef<HostData>[] = [
         Max Contract Duration
       </TableHeader>
     ),
-    accessorKey: 'settings.maxContractDuration',
     cell: ({ row }) => (
       <div className="flex items-center justify-end gap-1">
         <UsabilityIndicator
@@ -331,7 +318,6 @@ export const columns: ColumnDef<HostData>[] = [
         Max Collateral
       </TableHeader>
     ),
-    accessorKey: 'settings.maxCollateral',
     cell: ({ row }) => (
       <div className="flex items-center justify-end gap-1">
         <UsabilityIndicator
@@ -350,7 +336,6 @@ export const columns: ColumnDef<HostData>[] = [
         Protocol Version
       </TableHeader>
     ),
-    accessorKey: 'settings.protocolVersion',
     cell: ({ row }) => (
       <div className="flex items-center justify-end gap-1">
         <UsabilityIndicator
@@ -371,7 +356,6 @@ export const columns: ColumnDef<HostData>[] = [
         Price Validity
       </TableHeader>
     ),
-    accessorKey: 'settings.prices.validUntil',
     cell: ({ row }) => (
       <div className="flex items-center justify-end gap-1">
         <UsabilityIndicator
@@ -390,7 +374,6 @@ export const columns: ColumnDef<HostData>[] = [
         Release
       </TableHeader>
     ),
-    accessorKey: 'settings.release',
     cell: ({ row }) => <Text>{row.original.displayFields.release}</Text>,
     meta: { className: 'justify-end', minWidth: 160, maxWidth: 160 },
   },

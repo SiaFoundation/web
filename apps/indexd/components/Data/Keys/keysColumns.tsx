@@ -18,9 +18,8 @@ export const keysColumns: ColumnDef<KeyData>[] = [
         Key
       </TableHeader>
     ),
-    accessorKey: 'key',
-    cell: ({ getValue }) => (
-      <ValueCopyable maxLength={100} value={getValue<string>()} label="key" />
+    cell: ({ row }) => (
+      <ValueCopyable maxLength={100} value={row.original.key} label="key" />
     ),
     meta: { className: 'justify-start', ...hashColumnWidth },
   },
@@ -71,7 +70,6 @@ export const keysColumns: ColumnDef<KeyData>[] = [
         Date created
       </TableHeader>
     ),
-    accessorKey: 'dateCreated',
     cell: ({ row }) => <Text>{row.original.displayFields.dateCreated}</Text>,
     meta: { className: 'justify-end', ...timestampColumnWidth },
   },
@@ -82,7 +80,6 @@ export const keysColumns: ColumnDef<KeyData>[] = [
         Last updated
       </TableHeader>
     ),
-    accessorKey: 'lastUpdated',
     cell: ({ row }) => <Text>{row.original.displayFields.lastUpdated}</Text>,
     meta: { className: 'justify-end', ...timestampColumnWidth },
   },
@@ -93,7 +90,6 @@ export const keysColumns: ColumnDef<KeyData>[] = [
         Last used
       </TableHeader>
     ),
-    accessorKey: 'lastUsed',
     cell: ({ row }) => <Text>{row.original.displayFields.lastUsed}</Text>,
     meta: { className: 'justify-end', ...timestampColumnWidth },
   },

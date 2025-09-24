@@ -18,9 +18,8 @@ export const alertsColumns: ColumnDef<AlertData>[] = [
         ID
       </TableHeader>
     ),
-    accessorKey: 'id',
-    cell: ({ getValue }) => (
-      <ValueCopyable maxLength={100} value={getValue<string>()} label="ID" />
+    cell: ({ row }) => (
+      <ValueCopyable maxLength={100} value={row.original.id} label="ID" />
     ),
     meta: { className: 'justify-start', ...hashColumnWidth },
   },
@@ -61,7 +60,6 @@ export const alertsColumns: ColumnDef<AlertData>[] = [
         Timestamp
       </TableHeader>
     ),
-    accessorKey: 'timestamp',
     cell: ({ row }) => <Text>{row.original.displayFields.timestamp}</Text>,
     meta: { className: 'justify-end', ...timestampColumnWidth },
   },

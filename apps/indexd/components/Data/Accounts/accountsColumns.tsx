@@ -14,11 +14,10 @@ export const accountsColumns: ColumnDef<AccountData>[] = [
         Public key
       </TableHeader>
     ),
-    accessorKey: 'publicKey',
-    cell: ({ getValue }) => (
+    cell: ({ row }) => (
       <ValueCopyable
         maxLength={100}
-        value={getValue<string>()}
+        value={row.original.publicKey}
         label="account"
       />
     ),
