@@ -1,5 +1,6 @@
 import { cva } from 'class-variance-authority'
 import { VariantProps } from '../types'
+import { cn } from '../lib/ui'
 
 export const textFieldStyles = cva(
   [
@@ -80,15 +81,17 @@ export function TextField({
   return (
     <input
       ref={ref}
-      className={textFieldStyles({
-        variant,
-        size,
-        state,
-        noSpin,
-        cursor,
-        focus,
+      className={cn(
+        textFieldStyles({
+          variant,
+          size,
+          state,
+          noSpin,
+          cursor,
+          focus,
+        }),
         className,
-      })}
+      )}
       {...props}
     />
   )
