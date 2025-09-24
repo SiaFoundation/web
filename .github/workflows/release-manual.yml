@@ -4,6 +4,7 @@ permissions:
   contents: write # Required for changesets/action to publish releases and tags.
   pull-requests: write # Allows updating release PRs if needed.
   packages: write # Allows pushing Docker images to GHCR if containers are built.
+  actions: write # Needed for called e2e workflows to upload/download artifacts.
 
 on:
   workflow_dispatch:

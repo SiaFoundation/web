@@ -2,6 +2,7 @@ name: e2e
 
 permissions:
   contents: read
+  actions: write # Needed because this workflow calls reusable e2e workflows that use actions/upload-artifact and actions/download-artifact.
 
 on:
   workflow_call:

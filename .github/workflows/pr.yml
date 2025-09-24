@@ -2,6 +2,7 @@ name: PR
 
 permissions:
   contents: read
+  actions: write # Needed because this workflow calls the e2e reusable workflow, which uploads/downloads artifacts.
 
 on:
   pull_request:
