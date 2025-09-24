@@ -1,7 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { Tooltip } from '../core/Tooltip'
 import { ValueCurrency } from '../components/ValueCurrency'
-import { WalletBalanceTip } from './WalletBalanceTip'
 
 export function WalletBalanceSideNav({
   balanceSc,
@@ -45,9 +44,5 @@ export function WalletBalanceSideNav({
     )
   }
 
-  return (
-    <WalletBalanceTip side="right" balanceSc={balanceSc}>
-      {el}
-    </WalletBalanceTip>
-  )
+  return el
 }
