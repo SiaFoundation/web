@@ -1,13 +1,13 @@
 {
   "name": "explorer",
-  "version": "0.40.0",
+  "version": "0.40.1",
   "private": true,
   "description": "The `explorer` user interface, a Sia blockchain explorer interface that powers siascan.com.",
   "license": "MIT",
   "dependencies": {
-    "@siafoundation/design-system": "^10.6.0",
-    "@siafoundation/explored-js": "^0.8.2",
-    "@siafoundation/explored-types": "^0.19.3",
+    "@siafoundation/design-system": "^11.0.0",
+    "@siafoundation/explored-js": "^0.9.0",
+    "@siafoundation/explored-types": "^0.20.0",
     "@siafoundation/fonts": "^0.5.2",
     "@siafoundation/react-core": "^8.1.0",
     "@siafoundation/react-icons": "^0.5.0",

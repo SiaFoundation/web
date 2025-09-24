@@ -1,6 +1,6 @@
 {
   "name": "walletd",
-  "version": "0.34.4",
+  "version": "0.34.5",
   "private": true,
   "description": "The `walletd` user interface, includes a wallet with support for hot, cold, and hardware wallets.",
   "license": "MIT",
@@ -8,7 +8,7 @@
     "@ledgerhq/hw-transport-web-ble": "^6.29.7",
     "@ledgerhq/hw-transport-webhid": "^6.30.3",
     "@siacentral/ledgerjs-sia": "^1.2.9",
-    "@siafoundation/design-system": "^10.5.0",
+    "@siafoundation/design-system": "^11.0.0",
     "@siafoundation/fonts": "^0.5.2",
     "@siafoundation/react-core": "^8.1.0",
     "@siafoundation/react-icons": "^0.5.0",

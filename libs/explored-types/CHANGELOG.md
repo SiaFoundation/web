@@ -1,5 +1,11 @@
 # @siafoundation/explored-types
 
+## 0.20.0
+
+### Minor Changes
+
+- 6e0dd2f: Added block time and difficulty metrics APIs.
+
 ## 0.19.3
 
 ### Patch Changes

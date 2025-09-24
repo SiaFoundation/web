@@ -1,5 +1,16 @@
 # @siafoundation/explored-react
 
+## 0.9.0
+
+### Minor Changes
+
+- 6e0dd2f: Added block time and difficulty metrics APIs.
+
+### Patch Changes
+
+- Updated dependencies [6e0dd2f]
+  - @siafoundation/explored-types@0.20.0
+
 ## 0.8.3
 
 ### Patch Changes

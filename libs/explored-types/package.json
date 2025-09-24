@@ -1,6 +1,6 @@
 {
   "name": "@siafoundation/explored-types",
-  "version": "0.19.3",
+  "version": "0.20.0",
   "description": "Types for `explored`.",
   "license": "MIT",
   "types": "./src/index.d.ts",

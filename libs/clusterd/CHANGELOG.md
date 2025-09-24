@@ -1,5 +1,12 @@
 # @siafoundation/clusterd
 
+## 0.5.3
+
+### Patch Changes
+
+- Updated dependencies [6e0dd2f]
+  - @siafoundation/explored-js@0.9.0
+
 ## 0.5.2
 
 ### Patch Changes
