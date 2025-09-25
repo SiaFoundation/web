@@ -9,6 +9,7 @@ import { useMapHosts } from '../useMapHosts'
 import { SidePanel } from '../SidePanel'
 import { useMemo } from 'react'
 import { useContractsParams } from './useContractsParams'
+import { MetricsContracts } from '../../Metrics/MetricsContracts'
 
 export function SidePanelContractList({
   table,
@@ -53,6 +54,7 @@ export function SidePanelContractList({
         scale={180}
         mapClassName="-mt-[20px]"
       />
+      {!table.isFiltered && !table.isSelection && <MetricsContracts />}
     </SidePanel>
   )
 }

@@ -130,6 +130,9 @@ import {
   AdminAlertResponse,
   AdminAccountParams,
   AdminAccountResponse,
+  adminStatsContractsRoute,
+  AdminStatsContractsParams,
+  AdminStatsContractsResponse,
 } from '@siafoundation/indexd-types'
 import useSWR from 'swr'
 import {
@@ -585,5 +588,14 @@ export function useAdminStatsAccounts(
   return useGetSwr({
     ...args,
     route: adminStatsAccountsRoute,
+  })
+}
+
+export function useAdminStatsContracts(
+  args?: HookArgsSwr<AdminStatsContractsParams, AdminStatsContractsResponse>,
+) {
+  return useGetSwr({
+    ...args,
+    route: adminStatsContractsRoute,
   })
 }

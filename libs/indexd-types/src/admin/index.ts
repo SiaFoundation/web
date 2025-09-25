@@ -296,11 +296,11 @@ export const adminStatsSectorsRoute = '/stats/sectors'
 export type AdminStatsSectorsParams = void
 export type AdminStatsSectorsPayload = void
 export type AdminStatsSectorsResponse = {
-  numSlabs: number
-  numMigratedSectors: number
-  numPinnedSectors: number
-  numUnpinnableSectors: number
-  numUnpinnedSectors: number
+  slabs: number
+  migrated: number
+  pinned: number
+  unpinnable: number
+  unpinned: number
 }
 
 export const adminStatsAccountsRoute = '/stats/accounts'
@@ -308,4 +308,15 @@ export type AdminStatsAccountsParams = void
 export type AdminStatsAccountsPayload = void
 export type AdminStatsAccountsResponse = {
   registered: number
+}
+
+export const adminStatsContractsRoute = '/stats/contracts'
+export type AdminStatsContractsParams = void
+export type AdminStatsContractsPayload = void
+export type AdminStatsContractsResponse = {
+  contracts: number
+  badContracts: number
+  renewing: number
+  totalCapacity: number
+  totalSize: number
 }
