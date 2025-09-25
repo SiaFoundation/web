@@ -2,6 +2,7 @@ import { Text, Button, DataTableState } from '@siafoundation/design-system'
 import { AccountData } from './types'
 import { SidePanel } from '../SidePanel'
 import { useMemo } from 'react'
+import { MetricsAccounts } from '../../Metrics/MetricsAccounts'
 
 export function SidePanelAccountList({
   table,
@@ -30,9 +31,17 @@ export function SidePanelAccountList({
         ) : null
       }
     >
-      <Text color="subtle" className="flex justify-center pt-[50px]">
-        No information on accounts yet
-      </Text>
+      {table.isSelection ? (
+        <Text color="subtle" className="flex justify-center pt-[50px]">
+          No information on selected accounts yet
+        </Text>
+      ) : table.isFiltered ? (
+        <Text color="subtle" className="flex justify-center pt-[50px]">
+          No information on filtered accounts yet
+        </Text>
+      ) : (
+        <MetricsAccounts />
+      )}
     </SidePanel>
   )
 }

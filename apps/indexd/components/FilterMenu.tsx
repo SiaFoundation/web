@@ -36,7 +36,6 @@ export function FilterMenu<Filters extends ColumnFiltersState>({
   const [search, setSearch] = useState('')
   const [pages, setPages] = useState<Page[]>([])
   const currentPage = pages[pages.length - 1]
-  const rootPage = pages.length === 0
   const rootRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 

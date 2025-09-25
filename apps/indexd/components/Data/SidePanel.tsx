@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react'
-import { Button, Panel } from '@siafoundation/design-system'
+import { Button, Panel, ScrollArea } from '@siafoundation/design-system'
 import { Close16 } from '@siafoundation/react-icons'
 
 type Props = {
@@ -22,7 +22,10 @@ export function SidePanel({
   const Tag = onSubmit ? 'form' : 'div'
   return (
     <Panel className="relative h-full w-full">
-      <Tag className="relative h-full w-full" onSubmit={onSubmit}>
+      <Tag
+        className="relative h-full w-full overflow-hidden flex flex-col"
+        onSubmit={onSubmit}
+      >
         <div className="h-[45px] z-10 flex items-center justify-between gap-2 bg-white dark:bg-graydark-200 py-2 px-2 border-b border-gray-200 dark:border-graydark-400">
           {heading}
           {customCloseAction ||
@@ -44,7 +47,9 @@ export function SidePanel({
             {actions}
           </div>
         )}
-        <div className="p-4 h-full w-full">{children}</div>
+        <ScrollArea className="flex-1">
+          <div className="p-4 h-full w-full">{children}</div>
+        </ScrollArea>
       </Tag>
     </Panel>
   )
