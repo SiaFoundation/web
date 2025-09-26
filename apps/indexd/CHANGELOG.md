@@ -1,5 +1,22 @@
 # indexd
 
+## 0.10.0
+
+### Minor Changes
+
+- 543df1d: Added contract and account metrics to data panels.
+- 543df1d: Added contract stats to metrics page.
+
+### Patch Changes
+
+- 619dfcc: Fix contract capacity and data size column values. Closes https://github.com/SiaFoundation/indexd/issues/486
+- Updated dependencies [543df1d]
+- Updated dependencies [543df1d]
+- Updated dependencies [373d852]
+  - @siafoundation/indexd-react@0.6.0
+  - @siafoundation/indexd-types@0.9.0
+  - @siafoundation/design-system@11.1.0
+
 ## 0.9.0
 
 ### Minor Changes
