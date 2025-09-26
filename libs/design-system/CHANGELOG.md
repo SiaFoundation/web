@@ -1,5 +1,11 @@
 # Changelog
 
+## 11.1.0
+
+### Minor Changes
+
+- 373d852: The TextField component now properly merges its className prop.
+
 ## 11.0.0
 
 ### Minor Changes

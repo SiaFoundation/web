@@ -1,5 +1,12 @@
 # @siafoundation/indexd-types
 
+## 0.9.0
+
+### Minor Changes
+
+- 543df1d: Added contract stats API.
+- 543df1d: Updated the sector stats key names.
+
 ## 0.8.0
 
 ### Minor Changes

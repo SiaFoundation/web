@@ -1,5 +1,17 @@
 # @siafoundation/indexd-react
 
+## 0.6.0
+
+### Minor Changes
+
+- 543df1d: Added contract stats API.
+
+### Patch Changes
+
+- Updated dependencies [543df1d]
+- Updated dependencies [543df1d]
+  - @siafoundation/indexd-types@0.9.0
+
 ## 0.5.0
 
 ### Minor Changes
