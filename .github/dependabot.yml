@@ -21,3 +21,11 @@ updates:
         patterns:
           - '*'
 
+  - package-ecosystem: 'bun'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    groups:
+      dependencies:
+        patterns:
+          - '*'
