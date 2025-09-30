@@ -64,7 +64,7 @@ export function BalanceEvolution({
         formatTimestamp: getDataIntervalLabelFormatter('default'),
         formatTickY: (v) =>
           humanSiacoin(v, {
-            fixed: 0,
+            fixed: 1,
             dynamicUnits: true,
           }),
         disableAnimations: true,
