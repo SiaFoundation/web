@@ -11,6 +11,7 @@ import { groupBy } from '@technically/lodash'
 import { ChartConfig, ChartPoint } from './types'
 import { humanDate } from '@siafoundation/units'
 import { AnimationTrajectory } from '@visx/react-spring'
+import { BigNumber } from 'bignumber.js'
 
 export function ChartXYGraph<Key extends string, Cat extends string>({
   id,
@@ -235,7 +236,12 @@ export function ChartXYGraph<Key extends string, Cat extends string>({
         // rangePadding={0}
         // values don't make sense in stream graph
         // tickFormat={stackOffset === 'wiggle' ? () => '' : undefined}
-        tickFormat={config.formatTickY}
+        tickFormat={
+          config.formatTickY
+            ? (v) =>
+                config.formatTickY!(removeFloatingPointArtifacts(v as number))
+            : undefined
+        }
         tickLabelProps={(p) => ({
           width: 70,
           ...p,
@@ -435,4 +441,12 @@ function getAnimationProps({
     : {
         key,
       }
+}
+
+// Maximum precision for JavaScript's double-precision floating point numbers is ~15-17 decimal digits.
+const FLOAT_PRECISION = 15
+
+// Remove floating point artifacts (e.g. 4.9999999999999994e+29 -> 5e+29).
+function removeFloatingPointArtifacts(value: number) {
+  return Number(new BigNumber(value).toPrecision(FLOAT_PRECISION))
 }
