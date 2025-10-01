@@ -1,5 +1,11 @@
 # Changelog
 
+## 11.1.1
+
+### Patch Changes
+
+- 7c5c88e: Fixed rounding and precision of y-axis values on the wallet balance evolution graph.
+
 ## 11.1.0
 
 ### Minor Changes
