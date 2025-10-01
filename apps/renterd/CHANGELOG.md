@@ -1,5 +1,13 @@
 # renterd
 
+## 0.85.2
+
+### Patch Changes
+
+- 7c5c88e: Fixed rounding and precision of y-axis values on the wallet balance evolution graph.
+- Updated dependencies [7c5c88e]
+  - @siafoundation/design-system@11.1.1
+
 ## 0.85.1
 
 ### Patch Changes

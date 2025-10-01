@@ -1,11 +1,11 @@
 {
   "name": "hostd",
-  "version": "0.66.2",
+  "version": "0.66.3",
   "private": true,
   "description": "The `hostd` user interface, dedicated to hosting related functionality.",
   "license": "MIT",
   "dependencies": {
-    "@siafoundation/design-system": "^11.0.0",
+    "@siafoundation/design-system": "^11.1.1",
     "@siafoundation/fonts": "^0.5.2",
     "@siafoundation/hostd-react": "^4.6.9",
     "@siafoundation/hostd-types": "^0.10.2",
