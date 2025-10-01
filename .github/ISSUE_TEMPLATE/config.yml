@@ -1,20 +1,26 @@
 blank_issues_enabled: false
 contact_links:
-  - name: indexd issues
+  - name: For indexd bugs and feature requests
     url: https://github.com/SiaFoundation/indexd/issues/new/choose
-    about: Please create indexd UI issues on the indexd repo.
-  - name: renterd issues
+    about: Follow instructions found on the indexd repo.
+  - name: For renterd bugs and feature requests
     url: https://github.com/SiaFoundation/renterd/issues/new/choose
-    about: Please create renterd UI issues on the renterd repo.
-  - name: hostd issues
+    about: Follow instructions found on the renterd repo.
+  - name: For hostd bugs and feature requests
     url: https://github.com/SiaFoundation/hostd/issues/new/choose
-    about: Please create hostd UI issues on the hostd repo.
-  - name: walletd issues
+    about: Follow instructions found on the hostd repo.
+  - name: For walletd bugs and feature requests
     url: https://github.com/SiaFoundation/walletd/issues/new/choose
-    about: Please create walletd UI issues on the walletd repo.
-  - name: other issues
+    about: Follow instructions found on the walletd repo.
+  - name: For general suggestions or feature requests that apply to all our apps
+    url: https://github.com/SiaFoundation/web/discussions/categories/feature-requests
+    about: Create a discussion. Check the feature-requests category for existing discussions before creating a new one.
+  - name: For general bug reports that apply to all our apps
     url: https://github.com/SiaFoundation/web/issues/new?template=blank.md
-    about: Create other issues on the web repo.
+    about: Create an issue on the web repo.
+  - name: For general questions & support
+    url: https://github.com/SiaFoundation/web/discussions/categories/questions-support
+    about: Create a discussion. Check the support category for existing answers before creating a new discussion.
   - name: Sia Community Discord
     url: https://discord.gg/sia
-    about: Join the Sia community discord for more help with Sia.
+    about: Join the Sia community discord for more help with Sia or renterd.
