@@ -88,17 +88,11 @@ export function DifficultyMetricsChart({
     return [baseYMin, baseYMax + span * 0.06]
   }, [baseYMin, baseYMax, anyControls])
 
-  // This handles what may be a bug on the backend.
-  const firstHeight =
-    xFirstBlock > 0 && blocksPerStep > 1
-      ? xFirstBlock + blocksPerStep
-      : xFirstBlock
-
   const xDomain = useMemo<[number, number]>(() => {
-    const min = firstHeight
-    const max = firstHeight + (data.length - 1) * blocksPerStep
+    const min = xFirstBlock
+    const max = xFirstBlock + (data.length - 1) * blocksPerStep
     return [min, max]
-  }, [firstHeight, data.length, blocksPerStep])
+  }, [xFirstBlock, data.length, blocksPerStep])
 
   const xScale = useMemo(
     () =>
@@ -125,9 +119,9 @@ export function DifficultyMetricsChart({
     const clampHeight = (h: number) =>
       Math.max(xDomain[0], Math.min(xDomain[1], h))
 
-    const indexToHeight = (i: number) => firstHeight + i * blocksPerStep
+    const indexToHeight = (i: number) => xFirstBlock + i * blocksPerStep
     const heightToIndex = (h: number) => {
-      const i = Math.round((h - firstHeight) * invStep)
+      const i = Math.round((h - xFirstBlock) * invStep)
       return Math.max(0, Math.min(data.length - 1, i))
     }
     const pxToHeight = (px: number) => xScale.invert(px)
@@ -135,7 +129,7 @@ export function DifficultyMetricsChart({
       clampHeight(indexToHeight(heightToIndex(h)))
 
     return { indexToHeight, heightToIndex, pxToHeight, snapHeight }
-  }, [blocksPerStep, firstHeight, xDomain, xScale, data.length])
+  }, [blocksPerStep, xFirstBlock, xDomain, xScale, data.length])
 
   const xForIndex = useCallback((i: number) => xGeom.indexToHeight(i), [xGeom])
 
@@ -178,11 +172,11 @@ export function DifficultyMetricsChart({
     const base = sampleAlignedTicks(
       data.length,
       desiredXTicks,
-      firstHeight,
+      xFirstBlock,
       blocksPerStep,
     )
     return enforceMinPixelSpacingOnTicks(base, xScale, 56)
-  }, [data.length, desiredXTicks, firstHeight, blocksPerStep, xScale])
+  }, [data.length, desiredXTicks, xFirstBlock, blocksPerStep, xScale])
 
   const zeroLineY = useMemo(() => {
     if (yDomainMin < 0 && yDomainMax > 0) return yScale(0)

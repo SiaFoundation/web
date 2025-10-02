@@ -26,12 +26,15 @@ const ValidationIndicator = () => {
   )
 }
 
-export function DifficultyMetrics() {
-  const [hasSetInitialTip, setHasSetInitialTip] = useState(false)
-  const [proposedStart, setProposedStart] = useState(1)
-  const [proposedEnd, setProposedEnd] = useState(100)
-  const [start, setStart] = useState(1)
-  const [end, setEnd] = useState(100)
+type Props = {
+  currentTip: number
+}
+
+export function DifficultyMetrics({ currentTip }: Props) {
+  const [proposedStart, setProposedStart] = useState(0)
+  const [proposedEnd, setProposedEnd] = useState(currentTip + 1)
+  const [start, setStart] = useState(0)
+  const [end, setEnd] = useState(currentTip + 1)
   const [lastUpdateTime, setLastUpdateTime] = useState<Date>()
 
   const {
@@ -45,15 +48,8 @@ export function DifficultyMetrics() {
       swr: {
         refreshInterval: 60000,
         keepPreviousData: true,
-        onSuccess: ({ height }) => {
+        onSuccess: () => {
           setLastUpdateTime(new Date())
-          if (!hasSetInitialTip) {
-            setProposedEnd(height)
-            setEnd(height)
-            setProposedStart(1)
-            setStart(1)
-            setHasSetInitialTip(true)
-          }
         },
       },
     },
@@ -61,7 +57,7 @@ export function DifficultyMetrics() {
 
   const { data, error, isValidating } = useDifficultyMetrics({
     api: exploredApi,
-    params: { start, end: end + 1 },
+    params: { start, end },
     config: { swr: { refreshInterval: 60000, keepPreviousData: true } },
   })
 
@@ -72,10 +68,10 @@ export function DifficultyMetrics() {
   const stableData = data ?? prevDataRef.current
 
   const handleManualRangeUpdate = useCallback(() => {
-    if (proposedStart < 1 || proposedEnd < 1 || proposedStart >= proposedEnd) {
+    if (proposedStart < 0 || proposedEnd < 0 || proposedStart >= proposedEnd) {
       return triggerErrorToast({
         title: 'Range Error',
-        body: 'Start and end must be sequential and greater than 0',
+        body: 'Start and end must be sequential and greater than or equal to 0',
       })
     }
     setStart(proposedStart)
@@ -174,7 +170,7 @@ export function DifficultyMetrics() {
               )}
               <div className="flex gap-2 items-center">
                 <div className="flex gap-2">
-                  <Text>First</Text>
+                  <Text>Start</Text>
                   <TextField
                     type="number"
                     className="w-[100px]"
@@ -188,7 +184,7 @@ export function DifficultyMetrics() {
                   />
                 </div>
                 <div className="flex gap-2">
-                  <Text>Last</Text>
+                  <Text>End</Text>
                   <TextField
                     type="number"
                     className="w-[100px]"
@@ -212,19 +208,16 @@ export function DifficultyMetrics() {
             </div>
             <div className="flex justify-end">
               <Text color="subtle">
-                {(end - start + 1).toLocaleString()} blocks across{' '}
+                {(end - start).toLocaleString()} blocks across{' '}
                 {stableData?.blockTimes.length ?? 0} data points
               </Text>
             </div>
           </div>
         </div>
-
-        {/* First-load skeleton; after that, always render charts (using stableData) */}
         {!stableData ? (
           <Skeleton className="h-[515px]" />
         ) : (
           <>
-            {/* Block Times */}
             <div className="flex flex-col gap-4 relative">
               <div className="flex justify-between">
                 <Heading size="24">Block Times</Heading>
@@ -243,8 +236,6 @@ export function DifficultyMetrics() {
                 {isValidating && <ValidationIndicator />}
               </div>
             </div>
-
-            {/* Difficulty */}
             <div className="flex flex-col gap-4 relative">
               <div className="flex justify-between">
                 <Heading size="24">Difficulty</Heading>
@@ -262,8 +253,6 @@ export function DifficultyMetrics() {
                 {isValidating && <ValidationIndicator />}
               </div>
             </div>
-
-            {/* Drifts */}
             <div className="flex flex-col gap-4 relative">
               <div className="flex justify-between">
                 <Heading size="24">Drifts</Heading>
