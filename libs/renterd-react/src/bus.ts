@@ -11,10 +11,7 @@ import {
   delay,
   throttle,
 } from '@siafoundation/react-core'
-import {
-  getMainnetBlockHeight,
-  getTestnetZenBlockHeight,
-} from '@siafoundation/units'
+import { getBlockHeightFromGenesis } from '@siafoundation/units'
 import {
   AlertsDismissParams,
   AlertsDismissPayload,
@@ -299,12 +296,7 @@ export function useEstimatedNetworkBlockHeight(): number {
   })
   const res = useSWR(
     state,
-    () => {
-      if (state.data?.network === 'zen') {
-        return getTestnetZenBlockHeight()
-      }
-      return getMainnetBlockHeight()
-    },
+    () => getBlockHeightFromGenesis(state.data?.hardforkOak.genesisTimestamp),
     {
       refreshInterval: 60_000,
       keepPreviousData: true,
