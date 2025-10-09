@@ -4,8 +4,8 @@ go 1.24.3
 
 require (
 	go.sia.tech/cluster v0.1.3-0.20250917220329-32cb00568dd2
-	go.sia.tech/core v0.17.5
-	go.sia.tech/coreutils v0.18.4
+	go.sia.tech/core v0.18.0
+	go.sia.tech/coreutils v0.18.5
 	go.sia.tech/explored v1.0.0-beta.1.0.20250918073825-1927325c84df
 	go.uber.org/zap v1.27.0
 )
@@ -43,13 +43,13 @@ require (
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/crypto v0.42.0 // indirect
 	golang.org/x/exp v0.0.0-20250606033433-dcc06ee1d476 // indirect
-	golang.org/x/mod v0.27.0 // indirect
-	golang.org/x/net v0.43.0 // indirect
+	golang.org/x/mod v0.28.0 // indirect
+	golang.org/x/net v0.44.0 // indirect
 	golang.org/x/sync v0.17.0 // indirect
 	golang.org/x/sys v0.36.0 // indirect
 	golang.org/x/text v0.29.0 // indirect
 	golang.org/x/time v0.13.0 // indirect
-	golang.org/x/tools v0.36.0 // indirect
+	golang.org/x/tools v0.37.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	lukechampine.com/frand v1.5.1 // indirect
 )
