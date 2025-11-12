@@ -3,7 +3,6 @@ import {
   ScrollArea,
   Separator,
   Text,
-  truncate,
 } from '@siafoundation/design-system'
 import { useObject } from '@siafoundation/renterd-react'
 import { cx } from 'class-variance-authority'
@@ -86,14 +85,6 @@ export function FilesHealthColumnContents({
     >
       {slabs.map((slab) => (
         <div key={slab.id} className="flex justify-between gap-2">
-          <Text
-            size="12"
-            color="subtle"
-            className="flex items-center"
-            font="mono"
-          >
-            Slab {truncate(slab.encryptionKey, 4, false)}:
-          </Text>
           <Text size="12" className="flex items-center">
             {slab.isPartialSlab
               ? `${slab.contractSetShards}/${slab.shards?.length}`
