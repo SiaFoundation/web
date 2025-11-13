@@ -32,6 +32,9 @@ export type Host = {
   recentUptime: number
   addresses: HostAddress[]
   networks: string[]
+  countryCode: string
+  latitude: number
+  longitude: number
   settings: V2HostSettings
   usability: Usability
   blocked: boolean
