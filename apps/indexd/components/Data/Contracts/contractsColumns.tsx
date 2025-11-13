@@ -73,32 +73,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     meta: { className: 'justify-start', ...hashColumnWidth },
   },
   {
-    id: 'location',
-    header: ({ table, column }) => (
-      <TableHeader table={table} column={column}>
-        Host Location
-      </TableHeader>
-    ),
-    cell: ({ row }) => {
-      if (row.original.host?.location?.countryCode === 'unknown') {
-        return (
-          <div className="py-1">
-            <Text color="verySubtle">-</Text>
-          </div>
-        )
-      }
-      return (
-        <span className="flex items-center gap-1">
-          <span role="img" aria-label={row.original.displayFields.countryName}>
-            {row.original.displayFields.countryFlag}
-          </span>
-          <Text>{row.original.host?.location.countryCode}</Text>
-        </span>
-      )
-    },
-    meta: { className: 'justify-end', ...smallColumnWidth },
-  },
-  {
     id: 'formation',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column}>

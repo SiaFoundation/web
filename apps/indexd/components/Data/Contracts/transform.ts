@@ -5,40 +5,24 @@ import {
   CurrencyOption,
 } from '@siafoundation/react-core'
 import { Contract } from '@siafoundation/indexd-types'
-import {
-  countryCodeEmoji,
-  getCountryName,
-  humanBytes,
-} from '@siafoundation/units'
+import { humanBytes } from '@siafoundation/units'
 import { getCurrencyDisplayPropsPreferred } from '@siafoundation/design-system'
-import { V2HostSettings } from '@siafoundation/types'
 
 export function transformContract({
   contract,
-  host,
   exchange,
   currencyDisplay,
 }: {
   contract: Contract
-  host?: {
-    location: {
-      countryCode: string
-      latitude: number
-      longitude: number
-    }
-    v2Settings?: V2HostSettings
-  }
   currencyDisplay: CurrencyDisplayPreference
   exchange: { currency: CurrencyOption; rate: BigNumber } | undefined
 }): ContractData {
   const datum: ContractData = {
     ...contract,
     id: contract.id,
-    host,
     exchange,
     displayFields: transformContractDisplayFields(
       contract,
-      host?.location,
       currencyDisplay,
       exchange,
     ),
@@ -48,9 +32,6 @@ export function transformContract({
 
 function transformContractDisplayFields(
   contract: Contract,
-  location:
-    | { countryCode: string; latitude: number; longitude: number }
-    | undefined,
   currencyDisplay: CurrencyDisplayPreference,
   exchange: { currency: CurrencyOption; rate: BigNumber } | undefined,
 ) {
@@ -105,8 +86,6 @@ function transformContractDisplayFields(
       currencyDisplay,
       exchange,
     }),
-    countryFlag: countryCodeEmoji(location?.countryCode),
-    countryName: getCountryName(location?.countryCode),
     formation: Intl.DateTimeFormat('en-US', {
       dateStyle: 'short',
       timeStyle: 'short',

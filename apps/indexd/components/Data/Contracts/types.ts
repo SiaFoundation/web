@@ -2,7 +2,6 @@ import { Contract } from '@siafoundation/indexd-types'
 import { CurrencyOption } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 import { CurrencyDisplayProps } from '@siafoundation/design-system'
-import { V2HostSettings } from '@siafoundation/types'
 
 export type ContractFilterStatus = {
   id: 'status'
@@ -29,14 +28,6 @@ export function getFilterLabel(filter: ContractFilter): string {
 
 export type ContractData = Contract & {
   id: string
-  host?: {
-    location: {
-      countryCode: string
-      latitude: number
-      longitude: number
-    }
-    v2Settings?: V2HostSettings
-  }
   exchange?: {
     currency: CurrencyOption
     rate: BigNumber
@@ -52,8 +43,6 @@ export type ContractData = Contract & {
     spendAppendSector: CurrencyDisplayProps
     spendFreeSector: CurrencyDisplayProps
     spendFundAccount: CurrencyDisplayProps
-    countryFlag: string
-    countryName: string
     formation: string
     proofHeight: string
     expirationHeight: string
