@@ -1,6 +1,5 @@
 import {
   useActiveDaemonExplorerExchangeRate,
-  useDaemonExplorerHost,
   useRemoteData,
 } from '@siafoundation/design-system'
 import { useAdminHost } from '@siafoundation/indexd-react'
@@ -14,12 +13,6 @@ import { HostData } from './types'
 import { Host } from '@siafoundation/indexd-types'
 
 export function useHost(publicKey?: string) {
-  const geo = useDaemonExplorerHost({
-    disabled: !publicKey,
-    params: {
-      id: publicKey || '',
-    },
-  })
   const host = useAdminHost({
     disabled: !publicKey,
     params: {
@@ -32,28 +25,16 @@ export function useHost(publicKey?: string) {
     {
       host,
     },
-    ({ host }) => transformDown({ host, geo, exchangeRate, settings }),
+    ({ host }) => transformDown({ host, exchangeRate, settings }),
   )
 }
 
 function transformDown({
   host,
-  geo,
   exchangeRate,
   settings,
 }: {
   host: Host
-  geo: {
-    isLoading: boolean
-    isValidating: boolean
-    data?: {
-      location: {
-        countryCode: string
-        latitude: number
-        longitude: number
-      }
-    }
-  }
   exchangeRate: {
     currency: CurrencyOption | undefined
     rate: BigNumber | undefined
@@ -62,7 +43,6 @@ function transformDown({
 }): HostData {
   const datum = transformHost({
     host,
-    location: geo.data?.location,
     currencyDisplay: settings.currencyDisplay,
     exchange: exchangeRate.currency &&
       exchangeRate.rate && {

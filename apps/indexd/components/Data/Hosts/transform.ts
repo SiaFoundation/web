@@ -21,24 +21,23 @@ import { getV2HostSettingsProtcolVersion } from '@siafoundation/types'
 
 export function transformHost({
   host,
-  location,
   currencyDisplay,
   exchange,
 }: {
   host: Host
-  location?: { countryCode: string; latitude: number; longitude: number }
   currencyDisplay: CurrencyDisplayPreference
   exchange?: { currency: CurrencyOption; rate: BigNumber }
 }): HostData {
+  const location = {
+    countryCode: host.countryCode,
+    latitude: host.latitude,
+    longitude: host.longitude,
+  }
   const datum: HostData = {
     ...host,
     id: host.publicKey,
     usable: Object.values(host.usability).every((value) => value),
-    location: location || {
-      countryCode: 'unknown',
-      latitude: 0,
-      longitude: 0,
-    },
+    location,
     exchange,
     displayFields: transformHostDisplayFields(
       host,
