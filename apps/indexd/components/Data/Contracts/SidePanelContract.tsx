@@ -14,20 +14,22 @@ import { useContract } from './useContract'
 import { useContractsParams } from './useContractsParams'
 import { SidePanelHeadingCopyable } from '../SidePanelHeadingCopyable'
 import { SidePanelSkeleton } from '../SidePanelSkeleton'
+import { useHost } from '../Hosts/useHost'
+import { countryCodeEmoji } from '@siafoundation/units'
 
 export function SidePanelContract() {
   const { panelId, setPanelId } = useContractsParams()
   const contract = useContract(panelId)
+  const host = useHost(contract.data?.contract.hostKey)
   const mapContract = useMemo(() => {
     if (!contract.data?.contract) return null
     return {
       id: contract.data.contract.hostKey,
       publicKey: contract.data.contract.hostKey,
-      location: contract.data.contract.host?.location,
-      v2Settings: contract.data.contract.host?.v2Settings,
+      location: host.data?.location,
       usable: contract.data.contract.good,
     }
-  }, [contract])
+  }, [contract, host])
   if (!contract) {
     return (
       <SidePanel heading={null}>
@@ -81,6 +83,14 @@ export function SidePanelContract() {
               <InfoRow
                 label="Status"
                 value={<StatusBadge variant={contract.good ? 'good' : 'bad'} />}
+              />
+              <InfoRow
+                label="Host Country"
+                value={
+                  host.location.countryCode === 'unknown'
+                    ? '-'
+                    : `${countryCodeEmoji(host.location.countryCode)} ${host.location.countryCode}`
+                }
               />
               <InfoRow
                 label="Host public key"

@@ -56,7 +56,6 @@ function transformDown({
 }) {
   const contractData = transformContract({
     contract,
-    host,
     currencyDisplay,
     exchange: exchangeRate.currency &&
       exchangeRate.rate && {

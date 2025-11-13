@@ -8,7 +8,6 @@ import { ContractData } from './types'
 import { useAppSettings } from '@siafoundation/react-core'
 import { transformContract } from './transform'
 import { AdminContractsParams } from '@siafoundation/indexd-types'
-import { useExplorerHosts } from '../useExplorerHosts'
 import { useContractsParams } from './useContractsParams'
 
 export function useContracts() {
@@ -28,7 +27,6 @@ export function useContracts() {
   const contracts = useAdminContracts({
     params,
   })
-  const geo = useExplorerHosts()
   const exchangeRate = useActiveDaemonExplorerExchangeRate()
   const { settings } = useAppSettings()
   return useRemoteDataset(
@@ -37,10 +35,8 @@ export function useContracts() {
     },
     ({ contracts }) =>
       contracts.map((contract) => {
-        const host = geo.data?.find((h) => h.publicKey === contract.hostKey)
         const datum: ContractData = transformContract({
           contract,
-          host,
           currencyDisplay: settings.currencyDisplay,
           exchange: exchangeRate.currency &&
             exchangeRate.rate && {
