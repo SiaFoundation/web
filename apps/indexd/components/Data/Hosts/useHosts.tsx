@@ -7,11 +7,9 @@ import { useAdminHosts } from '@siafoundation/indexd-react'
 import { transformHost } from './transform'
 import { useAppSettings } from '@siafoundation/react-core'
 import { AdminHostsParams } from '@siafoundation/indexd-types'
-import { useExplorerHosts } from '../useExplorerHosts'
 import { useHostsParams } from './useHostsParams'
 
 export function useHosts() {
-  const geo = useExplorerHosts()
   const { columnFilters, offset, limit } = useHostsParams()
   const params = useMemo(() => {
     const filters: AdminHostsParams = { offset, limit }
@@ -42,12 +40,8 @@ export function useHosts() {
     },
     ({ hosts }) =>
       hosts.map((host) => {
-        const location = geo.data?.find(
-          (h) => h.publicKey === host.publicKey,
-        )?.location
         const datum = transformHost({
           host,
-          location,
           currencyDisplay: settings.currencyDisplay,
           exchange: exchangeRate.currency &&
             exchangeRate.rate && {
