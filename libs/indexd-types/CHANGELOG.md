@@ -1,5 +1,11 @@
 # @siafoundation/indexd-types
 
+## 0.10.0
+
+### Minor Changes
+
+- 8701eee: Added Host location typings.
+
 ## 0.9.0
 
 ### Minor Changes

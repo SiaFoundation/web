@@ -1,5 +1,11 @@
 # renterd
 
+## 0.86.0
+
+### Minor Changes
+
+- a2a5d0c: Removed slab key label from health tooltip.
+
 ## 0.85.2
 
 ### Patch Changes
