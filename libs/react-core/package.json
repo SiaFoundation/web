@@ -6,7 +6,7 @@
   "types": "./src/index.d.ts",
   "dependencies": {
     "@siafoundation/request": "^0.3.2",
-    "axios": "^1.10.0",
+    "axios": "^1.13.2",
     "detect-gpu": "^5.0.34",
     "swr": "^2.1.1",
     "use-local-storage-state": "^19.5.0"
