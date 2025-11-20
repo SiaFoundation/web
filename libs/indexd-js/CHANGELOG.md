@@ -1,5 +1,12 @@
 # @siafoundation/indexd-js
 
+## 0.6.1
+
+### Patch Changes
+
+- Updated dependencies [8701eee]
+  - @siafoundation/indexd-types@0.10.0
+
 ## 0.6.0
 
 ### Minor Changes

@@ -1,5 +1,19 @@
 # indexd
 
+## 0.11.0
+
+### Minor Changes
+
+- c14e70c: Use native Host location data.
+- e8a4b12: Removed contracts list host location column and multi-contract host map.
+- e8a4b12: Added host country and flag to single contract side panel.
+
+### Patch Changes
+
+- Updated dependencies [8701eee]
+  - @siafoundation/indexd-types@0.10.0
+  - @siafoundation/indexd-react@0.6.1
+
 ## 0.10.1
 
 ### Patch Changes
