@@ -8,10 +8,7 @@ import {
   delay,
   useDeleteFunc,
 } from '@siafoundation/react-core'
-import {
-  getMainnetBlockHeight,
-  getTestnetZenBlockHeight,
-} from '@siafoundation/units'
+import { getBlockHeightFromGenesis } from '@siafoundation/units'
 import {
   WalletAddressOutputsSiacoinParams,
   WalletAddressOutputsSiacoinResponse,
@@ -166,12 +163,7 @@ export function useEstimatedNetworkBlockHeight(): number {
   })
   const res = useSWR(
     network,
-    () => {
-      if (network.data?.name === 'zen') {
-        return getTestnetZenBlockHeight()
-      }
-      return getMainnetBlockHeight()
-    },
+    () => getBlockHeightFromGenesis(network.data?.hardforkOak.genesisTimestamp),
     {
       refreshInterval: 60_000,
       keepPreviousData: true,
