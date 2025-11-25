@@ -38,6 +38,6 @@ export type Host = {
   settings: V2HostSettings
   usability: Usability
   blocked: boolean
-  blockedReason: string
+  blockedReasons?: string[]
   lostSectors: number
 }

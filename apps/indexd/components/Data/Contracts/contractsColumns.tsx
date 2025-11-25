@@ -83,16 +83,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     meta: { className: 'justify-end', ...timestampColumnWidth },
   },
   {
-    id: 'proofHeight',
-    header: ({ table, column }) => (
-      <TableHeader table={table} column={column}>
-        Proof Height
-      </TableHeader>
-    ),
-    cell: ({ row }) => <Text>{row.original.displayFields.proofHeight}</Text>,
-    meta: { className: 'justify-end', ...smallColumnWidth },
-  },
-  {
     id: 'expirationHeight',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column}>
@@ -104,28 +94,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
     ),
     meta: { className: 'justify-end', ...timestampColumnWidth },
   },
-  {
-    id: 'nextPrune',
-    header: ({ table, column }) => (
-      <TableHeader table={table} column={column}>
-        Next Prune
-      </TableHeader>
-    ),
-    cell: ({ row }) => <Text>{row.original.displayFields.nextPrune}</Text>,
-    meta: { className: 'justify-end', ...timestampColumnWidth },
-  },
-  {
-    id: 'lastBroadcastAttempt',
-    header: ({ table, column }) => (
-      <TableHeader table={table} column={column}>
-        Last Broadcast Attempt
-      </TableHeader>
-    ),
-    cell: ({ row }) => (
-      <Text>{row.original.displayFields.lastBroadcastAttempt}</Text>
-    ),
-    meta: { className: 'justify-end', ...timestampColumnWidth },
-  },
+
   {
     id: 'capacity',
     header: ({ table, column }) => (
@@ -144,54 +113,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       </TableHeader>
     ),
     cell: ({ row }) => <Text>{row.original.displayFields.dataSize}</Text>,
-    meta: { className: 'justify-end', ...smallColumnWidth },
-  },
-  {
-    id: 'spendingSectorRoots',
-    header: ({ table, column }) => (
-      <TableHeader table={table} column={column}>
-        Spend Sector Roots
-      </TableHeader>
-    ),
-    cell: ({ row }) => (
-      <ValueWithTooltip {...row.original.displayFields.spendSectorRoots} />
-    ),
-    meta: { className: 'justify-end', ...smallColumnWidth },
-  },
-  {
-    id: 'spendAppendSector',
-    header: ({ table, column }) => (
-      <TableHeader table={table} column={column}>
-        Spend Append Sector
-      </TableHeader>
-    ),
-    cell: ({ row }) => (
-      <ValueWithTooltip {...row.original.displayFields.spendAppendSector} />
-    ),
-    meta: { className: 'justify-end', ...smallColumnWidth },
-  },
-  {
-    id: 'spendFreeSector',
-    header: ({ table, column }) => (
-      <TableHeader table={table} column={column}>
-        Spend Free Sector
-      </TableHeader>
-    ),
-    cell: ({ row }) => (
-      <ValueWithTooltip {...row.original.displayFields.spendFreeSector} />
-    ),
-    meta: { className: 'justify-end', ...smallColumnWidth },
-  },
-  {
-    id: 'spendFundAccount',
-    header: ({ table, column }) => (
-      <TableHeader table={table} column={column}>
-        Spend Fund Account
-      </TableHeader>
-    ),
-    cell: ({ row }) => (
-      <ValueWithTooltip {...row.original.displayFields.spendFundAccount} />
-    ),
     meta: { className: 'justify-end', ...smallColumnWidth },
   },
   {
@@ -241,72 +162,6 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
       <ValueWithTooltip {...row.original.displayFields.usedCollateral} />
     ),
     meta: { className: 'justify-end', ...smallColumnWidth },
-  },
-  {
-    id: 'contractPrice',
-    header: ({ table, column }) => (
-      <TableHeader table={table} column={column}>
-        Contract Price
-      </TableHeader>
-    ),
-    cell: ({ row }) => (
-      <ValueWithTooltip {...row.original.displayFields.contractPrice} />
-    ),
-    meta: { className: 'justify-end', ...smallColumnWidth },
-  },
-  {
-    id: 'minerFee',
-    header: ({ table, column }) => (
-      <TableHeader table={table} column={column}>
-        Miner Fee
-      </TableHeader>
-    ),
-    cell: ({ row }) => (
-      <ValueWithTooltip {...row.original.displayFields.minerFee} />
-    ),
-    meta: { className: 'justify-end', ...smallColumnWidth },
-  },
-  {
-    id: 'revisionNumber',
-    header: ({ table, column }) => (
-      <TableHeader table={table} column={column}>
-        Revision Number
-      </TableHeader>
-    ),
-    cell: ({ row }) => <Text>{row.original.displayFields.revisionNumber}</Text>,
-    meta: { className: 'justify-end', ...smallColumnWidth },
-  },
-  {
-    id: 'renewedFrom',
-    header: ({ table, column }) => (
-      <TableHeader table={table} column={column}>
-        Renewed From
-      </TableHeader>
-    ),
-    cell: ({ row }) => {
-      const value = row.original.displayFields.renewedFrom
-      if (value === '-') {
-        return <Text color="verySubtle">-</Text>
-      }
-      return <Text>{value}</Text>
-    },
-    meta: { className: 'justify-end', ...hashColumnWidth },
-  },
-  {
-    id: 'renewedTo',
-    header: ({ table, column }) => (
-      <TableHeader table={table} column={column}>
-        Renewed To
-      </TableHeader>
-    ),
-    cell: ({ row }) => {
-      const value = row.original.displayFields.renewedTo
-      if (value === '-') {
-        return <Text color="verySubtle">-</Text>
-      }
-      return <Text>{value}</Text>
-    },
-    meta: { className: 'justify-end', ...hashColumnWidth },
   },
 ]
 

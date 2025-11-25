@@ -93,6 +93,7 @@ export type ConnectKey = {
   lastUpdated: string
   lastUsed: string
   maxPinnedData: number
+  pinnedData: number
 }
 
 export type AlertSeverity = 'info' | 'warning' | 'error' | 'critical'
@@ -107,6 +108,11 @@ export type Alert = {
 
 export type Account = {
   accountKey: string
+  description: string
+  pinnedData: number
   maxPinnedData: number
   serviceAccount: boolean
+  lastUsed: string
+  logoURL: string
+  serviceURL: string
 }

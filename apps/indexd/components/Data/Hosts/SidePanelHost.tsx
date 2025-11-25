@@ -4,7 +4,11 @@ import {
   ValueCopyable,
   CountryFlag,
   RemoteDataStates,
+  ValueWithTooltip,
+  Badge,
+  Tooltip,
 } from '@siafoundation/design-system'
+import { CheckmarkFilled16, CloseFilled16 } from '@siafoundation/react-icons'
 import { HostMapHost } from '@siafoundation/design-system'
 import { useMemo } from 'react'
 import { UsabilityBadges } from '../UsabilityBadges'
@@ -17,6 +21,7 @@ import { useHost } from './useHost'
 import { useHostsParams } from './useHostsParams'
 import { SidePanelHeadingCopyable } from '../SidePanelHeadingCopyable'
 import { SidePanelSkeleton } from '../SidePanelSkeleton'
+import { BlockReasons } from './BlockReasons'
 
 export function SidePanelHost() {
   const { panelId, setPanelId } = useHostsParams()
@@ -87,6 +92,57 @@ export function SidePanelHost() {
             scale={180}
             mapClassName="-mt-[20px]"
           />
+          <SidePanelSection heading="Info">
+            <div className="flex flex-col gap-2">
+              <InfoRow
+                label="Public Key"
+                value={<ValueCopyable value={host.id} type="hostPublicKey" />}
+              />
+              <InfoRow
+                label="Location"
+                value={
+                  host.location.countryCode !== 'unknown' && (
+                    <Text>
+                      {host.displayFields.countryFlag}{' '}
+                      {host.location.countryCode}
+                    </Text>
+                  )
+                }
+              />
+              <InfoRow label="Uptime" value={host.displayFields.uptime} />
+              <InfoRow label="Release" value={host.displayFields.release} />
+              <div className="flex flex-col gap-1">
+                <InfoRow
+                  label="Blocked"
+                  value={
+                    <div className="flex items-center gap-1">
+                      <Tooltip
+                        content={
+                          host.blocked
+                            ? 'host is blocked'
+                            : 'host is not blocked'
+                        }
+                      >
+                        {host.blocked ? (
+                          <CloseFilled16 className="text-red-500" />
+                        ) : (
+                          <CheckmarkFilled16 className="text-neutral-300 dark:text-neutral-500" />
+                        )}
+                      </Tooltip>
+                    </div>
+                  }
+                />
+                <BlockReasons host={host} />
+              </div>
+            </div>
+          </SidePanelSection>
+          <SidePanelSection heading="Usability">
+            <UsabilityBadges
+              usable={host.usable}
+              usability={host.usability}
+              className="w-full overflow-hidden flex-wrap"
+            />
+          </SidePanelSection>
           <SidePanelSection heading="Addresses">
             <div className="flex flex-col gap-2">
               {host.addresses.map((address) => (
@@ -100,12 +156,61 @@ export function SidePanelHost() {
               ))}
             </div>
           </SidePanelSection>
-          <SidePanelSection heading="Usability">
-            <UsabilityBadges
-              usable={host.usable}
-              usability={host.usability}
-              className="w-full overflow-hidden flex-wrap"
-            />
+          <SidePanelSection heading="Storage">
+            <div className="flex flex-col gap-2">
+              <InfoRow
+                label="Total Storage"
+                value={host.displayFields.totalStorage}
+              />
+              <InfoRow
+                label="Remaining Storage"
+                value={host.displayFields.remainingStorage}
+              />
+            </div>
+          </SidePanelSection>
+          <SidePanelSection heading="Pricing & Limits">
+            <div className="flex flex-col gap-2">
+              <InfoRow
+                label="Storage Price"
+                value={
+                  <ValueWithTooltip {...host.displayFields.storagePrice} />
+                }
+              />
+              <InfoRow
+                label="Ingress Price"
+                value={
+                  <ValueWithTooltip {...host.displayFields.ingressPrice} />
+                }
+              />
+              <InfoRow
+                label="Egress Price"
+                value={<ValueWithTooltip {...host.displayFields.egressPrice} />}
+              />
+              <InfoRow
+                label="Free Sector Price"
+                value={
+                  <ValueWithTooltip {...host.displayFields.freeSectorPrice} />
+                }
+              />
+              <InfoRow
+                label="Max Collateral"
+                value={
+                  <ValueWithTooltip {...host.displayFields.maxCollateral} />
+                }
+              />
+              <InfoRow
+                label="Max Contract Duration"
+                value={host.displayFields.maxContractDuration}
+              />
+              <InfoRow
+                label="Protocol Version"
+                value={host.displayFields.protocolVersion}
+              />
+              <InfoRow
+                label="Price Validity"
+                value={host.displayFields.priceValidity}
+              />
+            </div>
           </SidePanelSection>
         </SidePanel>
       )}

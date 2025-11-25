@@ -3,7 +3,11 @@ import { Text, ValueCopyable } from '@siafoundation/design-system'
 import { type ColumnDef } from '@tanstack/react-table'
 import { TableHeader } from '../ColumnHeader'
 import { selectColumn } from '../sharedColumns/select'
-import { hashColumnWidth, smallColumnWidth } from '../sharedColumns/sizes'
+import {
+  hashColumnWidth,
+  smallColumnWidth,
+  timestampColumnWidth,
+} from '../sharedColumns/sizes'
 
 export const accountsColumns: ColumnDef<AccountData>[] = [
   selectColumn(),
@@ -21,6 +25,16 @@ export const accountsColumns: ColumnDef<AccountData>[] = [
         label="account"
       />
     ),
+    meta: { className: 'justify-start', ...hashColumnWidth },
+  },
+  {
+    id: 'description',
+    header: ({ table, column }) => (
+      <TableHeader table={table} column={column} className="justify-start">
+        Description
+      </TableHeader>
+    ),
+    cell: ({ row }) => <Text>{row.original.description}</Text>,
     meta: { className: 'justify-start', ...hashColumnWidth },
   },
   {
@@ -44,5 +58,27 @@ export const accountsColumns: ColumnDef<AccountData>[] = [
     ),
     cell: ({ row }) => <Text>{row.original.displayFields.maxPinnedData}</Text>,
     meta: { className: 'justify-end', ...smallColumnWidth },
+  },
+  {
+    id: 'pinnedData',
+    header: ({ table, column }) => (
+      <TableHeader table={table} column={column} className="justify-end">
+        Pinned data
+      </TableHeader>
+    ),
+    cell: ({ row }) => <Text>{row.original.displayFields.pinnedData}</Text>,
+    meta: { className: 'justify-end', ...smallColumnWidth },
+  },
+  {
+    id: 'lastUsed',
+    header: ({ table, column }) => (
+      <TableHeader table={table} column={column} className="justify-end">
+        Last used
+      </TableHeader>
+    ),
+    cell: ({ row }) => (
+      <Text>{row.original.displayFields.lastUsed || '-'}</Text>
+    ),
+    meta: { className: 'justify-end', ...timestampColumnWidth },
   },
 ]

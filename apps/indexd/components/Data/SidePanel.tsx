@@ -48,7 +48,7 @@ export function SidePanel({
           </div>
         )}
         <ScrollArea className="flex-1">
-          <div className="p-4 h-full w-full">{children}</div>
+          <div className="p-4">{children}</div>
         </ScrollArea>
       </Tag>
     </Panel>

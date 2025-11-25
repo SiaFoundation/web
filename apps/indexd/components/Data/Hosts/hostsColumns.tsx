@@ -3,7 +3,6 @@ import {
   Text,
   Tooltip,
   ValueCopyable,
-  Badge,
   ValueWithTooltip,
 } from '@siafoundation/design-system'
 import { CheckmarkFilled16, CloseFilled16 } from '@siafoundation/react-icons'
@@ -16,11 +15,10 @@ import { selectColumn } from '../sharedColumns/select'
 import {
   hostUsableColumnWidth,
   smallColumnWidth,
-  timestampColumnWidth,
   hashColumnWidth,
   hostBlockedColumnWidth,
-  mediumColumnWidth,
 } from '../sharedColumns/sizes'
+import { BlockReasons } from './BlockReasons'
 
 export const columns: ColumnDef<HostData>[] = [
   selectColumn(),
@@ -94,7 +92,7 @@ export const columns: ColumnDef<HostData>[] = [
     cell: ({ row }) => {
       const isBlocked = row.original.blocked
       return (
-        <div className="flex items-center">
+        <div className="flex items-center gap-1">
           <Tooltip
             content={isBlocked ? 'host is blocked' : 'host is not blocked'}
           >
@@ -104,11 +102,7 @@ export const columns: ColumnDef<HostData>[] = [
               <CheckmarkFilled16 className="text-neutral-300 dark:text-neutral-500" />
             )}
           </Tooltip>
-          {isBlocked && (
-            <Badge size="small" className="ml-1">
-              {row.original.blockedReason}
-            </Badge>
-          )}
+          <BlockReasons host={row.original} />
         </div>
       )
     },
@@ -270,102 +264,6 @@ export const columns: ColumnDef<HostData>[] = [
       </div>
     ),
     meta: { className: 'justify-end', ...smallColumnWidth },
-  },
-  {
-    id: 'freeSectorPrice',
-    header: ({ table, column }) => (
-      <TableHeader table={table} column={column}>
-        Free Sector Price
-      </TableHeader>
-    ),
-    cell: ({ row }) => (
-      <div className="flex items-center justify-end gap-1">
-        <UsabilityIndicator
-          status={
-            row.original.usability.freeSectorPrice ? 'usable' : 'unusable'
-          }
-          name="free sector price"
-        />
-        <ValueWithTooltip {...row.original.displayFields.freeSectorPrice} />
-      </div>
-    ),
-    meta: { className: 'justify-end', ...smallColumnWidth },
-  },
-  {
-    id: 'maxContractDuration',
-    header: ({ table, column }) => (
-      <TableHeader table={table} column={column}>
-        Max Contract Duration
-      </TableHeader>
-    ),
-    cell: ({ row }) => (
-      <div className="flex items-center justify-end gap-1">
-        <UsabilityIndicator
-          status={
-            row.original.usability.maxContractDuration ? 'usable' : 'unusable'
-          }
-          name="max contract duration"
-        />
-        <Text>{row.original.displayFields.maxContractDuration}</Text>
-      </div>
-    ),
-    meta: { className: 'justify-end', ...mediumColumnWidth },
-  },
-  {
-    id: 'maxCollateral',
-    header: ({ table, column }) => (
-      <TableHeader table={table} column={column}>
-        Max Collateral
-      </TableHeader>
-    ),
-    cell: ({ row }) => (
-      <div className="flex items-center justify-end gap-1">
-        <UsabilityIndicator
-          status={row.original.usability.maxCollateral ? 'usable' : 'unusable'}
-          name="max collateral"
-        />
-        <ValueWithTooltip {...row.original.displayFields.maxCollateral} />
-      </div>
-    ),
-    meta: { className: 'justify-end', ...smallColumnWidth },
-  },
-  {
-    id: 'protocolVersion',
-    header: ({ table, column }) => (
-      <TableHeader table={table} column={column}>
-        Protocol Version
-      </TableHeader>
-    ),
-    cell: ({ row }) => (
-      <div className="flex items-center justify-end gap-1">
-        <UsabilityIndicator
-          status={
-            row.original.usability.protocolVersion ? 'usable' : 'unusable'
-          }
-          name="protocol version"
-        />
-        <Text>{row.original.displayFields.protocolVersion}</Text>
-      </div>
-    ),
-    meta: { className: 'justify-end', ...smallColumnWidth },
-  },
-  {
-    id: 'priceValidity',
-    header: ({ table, column }) => (
-      <TableHeader table={table} column={column}>
-        Price Validity
-      </TableHeader>
-    ),
-    cell: ({ row }) => (
-      <div className="flex items-center justify-end gap-1">
-        <UsabilityIndicator
-          status={row.original.usability.priceValidity ? 'usable' : 'unusable'}
-          name="price validity"
-        />
-        <Text>{row.original.displayFields.priceValidity}</Text>
-      </div>
-    ),
-    meta: { className: 'justify-end', ...timestampColumnWidth },
   },
   {
     id: 'release',

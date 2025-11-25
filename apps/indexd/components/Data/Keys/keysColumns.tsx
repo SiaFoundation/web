@@ -54,6 +54,16 @@ export const keysColumns: ColumnDef<KeyData>[] = [
     meta: { className: 'justify-end', ...smallColumnWidth },
   },
   {
+    id: 'pinnedData',
+    header: ({ table, column }) => (
+      <TableHeader table={table} column={column} className="justify-end">
+        Pinned data
+      </TableHeader>
+    ),
+    cell: ({ row }) => <Text>{row.original.displayFields.pinnedData}</Text>,
+    meta: { className: 'justify-end', ...smallColumnWidth },
+  },
+  {
     id: 'maxPinnedData',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column} className="justify-end">
@@ -90,7 +100,9 @@ export const keysColumns: ColumnDef<KeyData>[] = [
         Last used
       </TableHeader>
     ),
-    cell: ({ row }) => <Text>{row.original.displayFields.lastUsed}</Text>,
+    cell: ({ row }) => (
+      <Text>{row.original.displayFields.lastUsed || '-'}</Text>
+    ),
     meta: { className: 'justify-end', ...timestampColumnWidth },
   },
 ]

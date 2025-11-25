@@ -50,8 +50,8 @@ export type ContractData = Contract & {
     lastBroadcastAttempt: string
     capacity: string
     dataSize: string
-    renewedFrom: string
-    renewedTo: string
+    renewedFrom: string | null
+    renewedTo: string | null
     revisionNumber: string
   }
 }

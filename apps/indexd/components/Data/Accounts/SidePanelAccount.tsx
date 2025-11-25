@@ -66,6 +66,11 @@ export function SidePanelAccount() {
           <SidePanelSection heading="Info">
             <div className="flex flex-col gap-2">
               <InfoRow
+                label="Description"
+                value={account.description}
+                variant="column"
+              />
+              <InfoRow
                 label="Service account"
                 value={account.serviceAccount ? 'Yes' : 'No'}
               />
@@ -73,6 +78,16 @@ export function SidePanelAccount() {
                 label="Max pinned data"
                 value={account.displayFields.maxPinnedData}
               />
+              <InfoRow
+                label="Pinned data"
+                value={account.displayFields.pinnedData}
+              />
+              <InfoRow
+                label="Last used"
+                value={account.displayFields.lastUsed}
+              />
+              <InfoRow label="Logo URL" value={account.logoURL} />
+              <InfoRow label="Service URL" value={account.serviceURL} />
             </div>
           </SidePanelSection>
         </SidePanel>

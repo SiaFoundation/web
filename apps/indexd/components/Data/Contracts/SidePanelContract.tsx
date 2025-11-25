@@ -3,6 +3,7 @@ import {
   Text,
   ValueCopyable,
   RemoteDataStates,
+  ValueWithTooltip,
 } from '@siafoundation/design-system'
 import { useMemo } from 'react'
 import { UsabilityBadges } from '../UsabilityBadges'
@@ -88,7 +89,7 @@ export function SidePanelContract() {
                 label="Host Country"
                 value={
                   host.location.countryCode === 'unknown'
-                    ? '-'
+                    ? null
                     : `${countryCodeEmoji(host.location.countryCode)} ${host.location.countryCode}`
                 }
               />
@@ -118,6 +119,156 @@ export function SidePanelContract() {
               usability={host?.usability}
               className="w-full overflow-hidden flex-wrap"
             />
+          </SidePanelSection>
+          <SidePanelSection heading="Storage">
+            <div className="flex flex-col gap-2">
+              <InfoRow
+                label="Capacity"
+                value={contract.displayFields.capacity}
+              />
+              <InfoRow
+                label="Data Size"
+                value={contract.displayFields.dataSize}
+              />
+            </div>
+          </SidePanelSection>
+          <SidePanelSection heading="Allowance">
+            <div className="flex flex-col gap-2">
+              <InfoRow
+                label="Initial Allowance"
+                value={
+                  <ValueWithTooltip
+                    {...contract.displayFields.initialAllowance}
+                  />
+                }
+              />
+              <InfoRow
+                label="Remaining Allowance"
+                value={
+                  <ValueWithTooltip
+                    {...contract.displayFields.remainingAllowance}
+                  />
+                }
+              />
+            </div>
+          </SidePanelSection>
+          <SidePanelSection heading="Collateral">
+            <div className="flex flex-col gap-2">
+              <InfoRow
+                label="Total Collateral"
+                value={
+                  <ValueWithTooltip
+                    {...contract.displayFields.totalCollateral}
+                  />
+                }
+              />
+              <InfoRow
+                label="Used Collateral"
+                value={
+                  <ValueWithTooltip
+                    {...contract.displayFields.usedCollateral}
+                  />
+                }
+              />
+            </div>
+          </SidePanelSection>
+          <SidePanelSection heading="Lifecycle">
+            <div className="flex flex-col gap-2">
+              <InfoRow
+                label="Formation"
+                value={contract.displayFields.formation}
+              />
+              <InfoRow
+                label="Expiration Height"
+                value={contract.displayFields.expirationHeight}
+              />
+              <InfoRow
+                label="Proof Height"
+                value={contract.displayFields.proofHeight}
+              />
+              <InfoRow
+                label="Next Prune"
+                value={contract.displayFields.nextPrune}
+              />
+              <InfoRow
+                label="Last Broadcast Attempt"
+                value={contract.displayFields.lastBroadcastAttempt}
+              />
+              <InfoRow
+                label="Renewed From"
+                value={
+                  contract.displayFields.renewedFrom && (
+                    <ValueCopyable
+                      value={contract.displayFields.renewedFrom}
+                      type="contract"
+                    />
+                  )
+                }
+              />
+              <InfoRow
+                label="Renewed To"
+                value={
+                  contract.displayFields.renewedTo && (
+                    <ValueCopyable
+                      value={contract.displayFields.renewedTo}
+                      type="contract"
+                    />
+                  )
+                }
+              />
+              <InfoRow
+                label="Revision Number"
+                value={contract.displayFields.revisionNumber}
+              />
+            </div>
+          </SidePanelSection>
+          <SidePanelSection heading="Spending">
+            <div className="flex flex-col gap-2">
+              <InfoRow
+                label="Contract Price"
+                value={
+                  <ValueWithTooltip {...contract.displayFields.contractPrice} />
+                }
+              />
+              <InfoRow
+                label="Miner Fee"
+                value={
+                  <ValueWithTooltip {...contract.displayFields.minerFee} />
+                }
+              />
+              <InfoRow
+                label="Spend Sector Roots"
+                value={
+                  <ValueWithTooltip
+                    {...contract.displayFields.spendSectorRoots}
+                  />
+                }
+              />
+              <InfoRow
+                label="Spend Append Sector"
+                value={
+                  <ValueWithTooltip
+                    {...contract.displayFields.spendAppendSector}
+                  />
+                }
+              />
+              <InfoRow
+                label="Spend Free Sector"
+                value={
+                  <ValueWithTooltip
+                    {...contract.displayFields.spendFreeSector}
+                  />
+                }
+              />
+              <InfoRow
+                label="Spend Fund Account"
+                value={
+                  <ValueWithTooltip
+                    {...contract.displayFields.spendFundAccount}
+                  />
+                }
+              />
+            </div>
           </SidePanelSection>
         </SidePanel>
       )}
