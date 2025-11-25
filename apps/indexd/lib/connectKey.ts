@@ -115,15 +115,9 @@ export function getFields(): ConfigFields<typeof defaultValues, never> {
       validation: {
         required: 'required',
         validate: {
-          max: (value: Maybe<BigNumber>) => {
-            if (value && value.gt(10_000)) {
-              return 'Max value is 10,000 GB'
-            }
-            return true
-          },
-          min: (value: Maybe<BigNumber>) => {
-            if (value && value.lt(10)) {
-              return 'Min value is 10 GB'
+          number: (value: Maybe<BigNumber>) => {
+            if (!value || value.isNaN()) {
+              return 'Must be a number'
             }
             return true
           },
