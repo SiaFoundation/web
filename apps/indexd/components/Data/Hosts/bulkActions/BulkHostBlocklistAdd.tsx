@@ -25,7 +25,7 @@ export function BulkHostBlocklistAdd({
         hostKeys: hosts.map((host) =>
           'publicKey' in host ? host.publicKey : host.original.publicKey,
         ),
-        reason: 'blocked by user',
+        reasons: ['blocked by user'],
       },
     })
     if (error) {

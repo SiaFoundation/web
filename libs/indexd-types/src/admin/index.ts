@@ -154,7 +154,7 @@ export const adminHostsBlocklistUpdateRoute = '/hosts/blocklist'
 export type AdminHostsBlocklistUpdateParams = void
 export type AdminHostsBlocklistUpdatePayload = {
   hostKeys: PublicKey[]
-  reason: string
+  reasons: string[]
 }
 export type AdminHostsBlocklistUpdateResponse = void
 

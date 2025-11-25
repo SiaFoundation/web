@@ -10,6 +10,7 @@ export type KeyData = {
   key: string
   description: string
   maxPinnedData: number
+  pinnedData: number
   totalUses: number
   remainingUses: number
   dateCreated: string
@@ -18,6 +19,7 @@ export type KeyData = {
   displayFields: {
     totalUses: string
     maxPinnedData: string
+    pinnedData: string
     dateCreated: string
     lastUpdated: string
     lastUsed?: string
@@ -30,6 +32,7 @@ export function transformDownData(key: ConnectKey): KeyData {
     key: key.key,
     description: key.description,
     maxPinnedData: key.maxPinnedData,
+    pinnedData: key.pinnedData,
     totalUses: key.totalUses,
     remainingUses: key.remainingUses,
     dateCreated: key.dateCreated,
@@ -38,6 +41,7 @@ export function transformDownData(key: ConnectKey): KeyData {
     displayFields: {
       totalUses: key.totalUses.toString(),
       maxPinnedData: humanBytes(key.maxPinnedData),
+      pinnedData: humanBytes(key.pinnedData),
       dateCreated: Intl.DateTimeFormat('en-US', {
         dateStyle: 'short',
         timeStyle: 'short',

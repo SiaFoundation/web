@@ -130,6 +130,10 @@ export function SidePanelKey() {
                     value={connectKey.displayFields.totalUses}
                   />
                   <InfoRow
+                    label="Pinned data"
+                    value={connectKey.displayFields.pinnedData}
+                  />
+                  <InfoRow
                     label="Date created"
                     value={connectKey.displayFields.dateCreated}
                   />

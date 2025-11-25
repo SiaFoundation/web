@@ -105,12 +105,12 @@ function transformContractDisplayFields(
     renewedFrom:
       contract.renewedFrom ===
       '0000000000000000000000000000000000000000000000000000000000000000'
-        ? '-'
+        ? null
         : contract.renewedFrom,
     renewedTo:
       contract.renewedTo ===
       '0000000000000000000000000000000000000000000000000000000000000000'
-        ? '-'
+        ? null
         : contract.renewedTo,
     revisionNumber: contract.revisionNumber.toLocaleString(),
   }
