@@ -102,11 +102,38 @@ export type AdminContractPayload = void
 export type AdminContractResponse = Contract
 
 export const adminContractsRoute = '/contracts'
+export type AdminContractsSortBy =
+  | 'id'
+  | 'hostKey'
+  | 'formation'
+  | 'renewedFrom'
+  | 'nextPrune'
+  | 'lastBroadcastAttempt'
+  | 'revisionNumber'
+  | 'proofHeight'
+  | 'expirationHeight'
+  | 'capacity'
+  | 'size'
+  | 'initialAllowance'
+  | 'remainingAllowance'
+  | 'totalCollateral'
+  | 'renewedTo'
+  | 'usedCollateral'
+  | 'contractPrice'
+  | 'minerFee'
+  | 'good'
+  | 'state'
+  | 'spending.appendSector'
+  | 'spending.freeSector'
+  | 'spending.fundAccount'
+  | 'spending.sectorRoots'
 export type AdminContractsParams = {
   offset?: number
   limit?: number
   revisable?: boolean
   good?: boolean
+  sortby?: AdminContractsSortBy[]
+  desc?: boolean[]
 }
 export type AdminContractsPayload = void
 export type AdminContractsResponse = Contract[]
@@ -134,12 +161,28 @@ export type AdminHostScanPayload = void
 export type AdminHostScanResponse = Host
 
 export const adminHostsRoute = '/hosts'
+export type AdminHostsSortBy =
+  | 'recentUptime'
+  | 'settings.protocolVersion'
+  | 'settings.acceptingContracts'
+  | 'settings.maxCollateral'
+  | 'settings.maxContractDuration'
+  | 'settings.remainingStorage'
+  | 'settings.totalStorage'
+  | 'settings.prices.contractPrice'
+  | 'settings.prices.collateral'
+  | 'settings.prices.storagePrice'
+  | 'settings.prices.ingressPrice'
+  | 'settings.prices.egressPrice'
+  | 'settings.prices.freeSectorPrice'
 export type AdminHostsParams = {
   offset?: number
   limit?: number
   usable?: boolean
   blocked?: boolean
   activecontracts?: boolean
+  sortby?: AdminHostsSortBy[]
+  desc?: boolean[]
 }
 export type AdminHostsPayload = void
 export type AdminHostsResponse = Host[]

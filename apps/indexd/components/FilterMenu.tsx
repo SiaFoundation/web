@@ -129,7 +129,7 @@ export function FilterMenu<Filters extends ColumnFiltersState>({
           placeholder={`Filter ${name}`}
         />
         {open && (
-          <Panel className="absolute z-20 min-w-[200px] max-h-[400px] overflow-auto p-1">
+          <Panel className="absolute z-10 min-w-[200px] max-h-[400px] overflow-auto p-1">
             <ScrollArea>
               {currentPage && (
                 <Label className="px-1.5 py-1">{currentPage.label}</Label>

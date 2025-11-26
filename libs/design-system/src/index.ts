@@ -124,6 +124,7 @@ export * from './app/HostMap'
 export * from './app/DataTable/DataTable'
 export * from './app/DataTable/useDataTable'
 export * from './app/DataTable/useDataTableParams'
+export * from './app/DataTable/types'
 
 // form
 export * from './form/ConfigurationPanel'

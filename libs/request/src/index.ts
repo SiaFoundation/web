@@ -9,7 +9,7 @@ import axios, {
 
 export type RequestParams = Record<
   string,
-  string | string[] | number | boolean
+  string | string[] | number | number[] | boolean | boolean[]
 > | void
 
 export function parameterizeRoute(
@@ -19,14 +19,33 @@ export function parameterizeRoute(
   if (route && params) {
     const paramKeys = Object.keys(params)
     for (const key of paramKeys) {
-      const value = String(params[key])
+      const value = params[key]
       if (route.includes(`:${key}`)) {
-        route = route.replace(`:${key}`, value)
+        // Path parameter: convert to string
+        const stringValue = Array.isArray(value)
+          ? String(value[0])
+          : String(value)
+        route = route.replace(`:${key}`, stringValue)
       } else {
-        if (!route.includes('?')) {
-          route += `?${key}=${encodeURIComponent(value)}`
+        // Query parameter: handle arrays as multiple params
+        if (Array.isArray(value)) {
+          // For arrays, add multiple query params with the same name
+          for (const item of value) {
+            const encodedValue = encodeURIComponent(String(item))
+            if (!route.includes('?')) {
+              route += `?${key}=${encodedValue}`
+            } else {
+              route += `&${key}=${encodedValue}`
+            }
+          }
         } else {
-          route += `&${key}=${encodeURIComponent(value)}`
+          // For non-arrays, add single query param
+          const encodedValue = encodeURIComponent(String(value))
+          if (!route.includes('?')) {
+            route += `?${key}=${encodedValue}`
+          } else {
+            route += `&${key}=${encodedValue}`
+          }
         }
       }
     }

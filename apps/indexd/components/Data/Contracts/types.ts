@@ -1,7 +1,11 @@
-import { Contract } from '@siafoundation/indexd-types'
+import { AdminContractsSortBy, Contract } from '@siafoundation/indexd-types'
 import { CurrencyOption } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
-import { CurrencyDisplayProps } from '@siafoundation/design-system'
+import {
+  CurrencyDisplayProps,
+  DataTableSortColumn,
+  DataTableState,
+} from '@siafoundation/design-system'
 
 export type ContractFilterStatus = {
   id: 'status'
@@ -15,6 +19,8 @@ export type ContractFilterRevisable = {
 
 export type ContractFilter = ContractFilterStatus | ContractFilterRevisable
 export type ContractFilters = ContractFilter[]
+
+export type ContractSorts = DataTableSortColumn<AdminContractsSortBy>[]
 
 export function getFilterLabel(filter: ContractFilter): string {
   if (filter.id === 'status') {
@@ -55,3 +61,9 @@ export type ContractData = Contract & {
     revisionNumber: string
   }
 }
+
+export type ContractDataTableState = DataTableState<
+  ContractData,
+  ContractFilters,
+  ContractSorts
+>

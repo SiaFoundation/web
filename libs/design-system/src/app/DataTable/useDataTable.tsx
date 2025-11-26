@@ -18,11 +18,11 @@ import { useVirtualizer } from '@tanstack/react-virtual'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { RemoteDataset } from '../../remoteData/types'
 
-export type DataTableState<T extends { id: string }> = ReturnType<
-  typeof useDataTable<T>
->
-
-export function useDataTable<T extends { id: string }>({
+export function useDataTable<
+  T extends { id: string },
+  TFilters extends ColumnFiltersState = ColumnFiltersState,
+  TSorts extends SortingState = SortingState,
+>({
   columns,
   dataset,
   rowHeight = 36,
@@ -36,20 +36,22 @@ export function useDataTable<T extends { id: string }>({
   setOffset,
   setLimit,
   onRowClick,
+  enableMultiSort = false,
 }: {
   columns: ColumnDef<T>[]
   dataset: RemoteDataset<T[]>
   rowHeight?: number
   fixedFilters?: ColumnFiltersState
-  columnFilters: ColumnFiltersState
-  columnSorts: SortingState
-  setColumnFilters?: OnChangeFn<ColumnFiltersState>
-  setColumnSorts?: OnChangeFn<SortingState>
+  columnFilters: TFilters
+  columnSorts: TSorts
+  setColumnFilters?: OnChangeFn<TFilters>
+  setColumnSorts?: OnChangeFn<TSorts>
   offset: number
   limit: number
   setOffset: (offset: number) => void
   setLimit: (limit: number) => void
   onRowClick?: (id: string) => void
+  enableMultiSort?: boolean
 }) {
   const tableContainerRef = useRef<HTMLDivElement>(null)
 
@@ -93,15 +95,17 @@ export function useDataTable<T extends { id: string }>({
     },
     state: {
       pagination,
-      columnFilters,
-      sorting: columnSorts,
+      columnFilters: columnFilters as ColumnFiltersState,
+      sorting: columnSorts as SortingState,
       rowSelection,
     },
     getRowId: (row) => row.id,
     onRowSelectionChange: setRowSelection,
     onPaginationChange: handlePaginationChange,
-    onColumnFiltersChange: setColumnFilters,
-    onSortingChange: setColumnSorts,
+    onColumnFiltersChange: setColumnFilters as
+      | OnChangeFn<ColumnFiltersState>
+      | undefined,
+    onSortingChange: setColumnSorts as OnChangeFn<SortingState> | undefined,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -109,6 +113,8 @@ export function useDataTable<T extends { id: string }>({
     manualPagination: true,
     manualFiltering: true,
     manualSorting: true,
+    enableSorting: true,
+    enableMultiSort,
     debugTable: false,
   })
 

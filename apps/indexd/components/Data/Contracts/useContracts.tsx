@@ -7,11 +7,15 @@ import { useAdminContracts } from '@siafoundation/indexd-react'
 import { ContractData } from './types'
 import { useAppSettings } from '@siafoundation/react-core'
 import { transformContract } from './transform'
-import { AdminContractsParams } from '@siafoundation/indexd-types'
+import {
+  AdminContractsParams,
+  AdminContractsSortBy,
+} from '@siafoundation/indexd-types'
 import { useContractsParams } from './useContractsParams'
+import { contractsColumns } from './contractsColumns'
 
 export function useContracts() {
-  const { columnFilters, offset, limit } = useContractsParams()
+  const { columnFilters, columnSorts, offset, limit } = useContractsParams()
   const params = useMemo(() => {
     const filters: AdminContractsParams = { offset, limit }
     const good = columnFilters.find((f) => f.id === 'status')?.value
@@ -22,8 +26,25 @@ export function useContracts() {
     if (revisable !== undefined) {
       filters.revisable = revisable
     }
+    // Map all active sorts to API sortby and desc arrays.
+    if (columnSorts.length > 0) {
+      const sortby: AdminContractsSortBy[] = []
+      const desc: boolean[] = []
+      for (const sort of columnSorts) {
+        const column = contractsColumns.find((col) => col.id === sort.id)
+        const sortKey = column?.sortKey
+        if (sortKey !== undefined) {
+          sortby.push(sortKey)
+          desc.push(sort.desc ?? false)
+        }
+      }
+      if (sortby.length > 0) {
+        filters.sortby = sortby
+        filters.desc = desc
+      }
+    }
     return filters
-  }, [columnFilters, offset, limit])
+  }, [columnFilters, columnSorts, offset, limit])
   const contracts = useAdminContracts({
     params,
   })
