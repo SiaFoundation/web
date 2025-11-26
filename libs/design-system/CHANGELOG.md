@@ -1,5 +1,11 @@
 # Changelog
 
+## 11.2.0
+
+### Minor Changes
+
+- 825ea2e: Moved to new foundation twitter handle.
+
 ## 11.1.1
 
 ### Patch Changes

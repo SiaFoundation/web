@@ -1,5 +1,16 @@
 # renterd
 
+## 0.86.0
+
+### Minor Changes
+
+- a2a5d0c: Removed slab key label from health tooltip.
+
+### Patch Changes
+
+- Updated dependencies [825ea2e]
+  - @siafoundation/design-system@11.2.0
+
 ## 0.85.2
 
 ### Patch Changes
