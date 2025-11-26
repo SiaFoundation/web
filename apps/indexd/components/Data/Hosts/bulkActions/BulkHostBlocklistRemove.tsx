@@ -4,7 +4,7 @@ import { useCallback } from 'react'
 import { pluralize } from '@siafoundation/units'
 import { HostData } from '../types'
 import { useMutate } from '@siafoundation/react-core'
-import { adminHostsRoute } from '@siafoundation/indexd-types'
+import { adminHostRoute, adminHostsRoute } from '@siafoundation/indexd-types'
 import { Row } from '@tanstack/react-table'
 import { CheckmarkOutline16 } from '@siafoundation/react-icons'
 
@@ -36,6 +36,18 @@ export function BulkHostBlocklistRemove({
       },
     )
     await mutate((key) => key.startsWith(adminHostsRoute))
+    await Promise.all(
+      hosts.map((host) =>
+        mutate((key) =>
+          key.startsWith(
+            adminHostRoute.replace(
+              ':hostkey',
+              'publicKey' in host ? host.publicKey : host.original.publicKey,
+            ),
+          ),
+        ),
+      ),
+    )
   }, [hosts, blocklistDelete, mutate])
   return (
     <Button onClick={operation}>

@@ -5,7 +5,6 @@ import {
   CountryFlag,
   RemoteDataStates,
   ValueWithTooltip,
-  Badge,
   Tooltip,
 } from '@siafoundation/design-system'
 import { CheckmarkFilled16, CloseFilled16 } from '@siafoundation/react-icons'

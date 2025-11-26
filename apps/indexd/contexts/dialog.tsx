@@ -12,12 +12,14 @@ import {
   useAdminSyncerConnect,
   useAdminWallet,
 } from '@siafoundation/indexd-react'
+import { HostData } from '../components/Data/Hosts/types'
 import { IndexdSendSiacoinDialog } from '../dialogs/IndexdSendSiacoinDialog'
 import { IndexdTransactionDetailsDialog } from '../dialogs/IndexdTransactionDetailsDialog'
 import { DebugDialog } from '../dialogs/DebugDialog'
 import { AccountDeleteDialog } from '../dialogs/AccountDeleteDialog'
 import { ConnectKeyDeleteDialog } from '../dialogs/ConnectKeyDeleteDialog'
 import { ConnectKeyCreateDialog } from '../dialogs/ConnectKeyCreateDialog'
+import { HostBlocklistAddDialog } from '../dialogs/HostBlocklistAddDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -31,6 +33,13 @@ export type DialogType =
   | 'accountDelete'
   | 'connectKeyDelete'
   | 'connectKeyCreate'
+  | 'hostBlocklistAdd'
+
+type DialogData = {
+  hostBlocklistAdd?: {
+    hosts: HostData[]
+  }
+}
 
 type ConfirmProps = {
   title: React.ReactNode
@@ -43,13 +52,15 @@ type ConfirmProps = {
 function useDialogMain() {
   const [dialog, setDialog] = useState<DialogType>()
   const [id, setId] = useState<string>()
+  const [data, setData] = useState<DialogData>()
 
   const openDialog = useCallback(
-    (dialog: DialogType, id?: string) => {
+    (dialog: DialogType, id?: string, data?: DialogData) => {
       setDialog(dialog)
       setId(id)
+      setData(data)
     },
-    [setDialog, setId],
+    [setDialog, setId, setData],
   )
 
   const [confirm, setConfirm] = useState<ConfirmProps>()
@@ -64,8 +75,9 @@ function useDialogMain() {
   const closeDialog = useCallback(() => {
     setDialog(undefined)
     setId(undefined)
+    setData(undefined)
     setConfirm(undefined)
-  }, [setDialog, setId, setConfirm])
+  }, [setDialog, setId, setData, setConfirm])
 
   const onOpenChange = useCallback(
     (open: boolean) => {
@@ -79,6 +91,7 @@ function useDialogMain() {
   return {
     dialog,
     id,
+    data,
     openDialog,
     confirm,
     openConfirmDialog,
@@ -107,6 +120,7 @@ export function Dialogs() {
   const {
     id,
     dialog,
+    data,
     openDialog,
     onOpenChange,
     closeDialog,
@@ -172,6 +186,15 @@ export function Dialogs() {
       />
       <ConnectKeyCreateDialog
         open={dialog === 'connectKeyCreate'}
+        onOpenChange={onOpenChange}
+      />
+      <HostBlocklistAddDialog
+        hosts={
+          dialog === 'hostBlocklistAdd'
+            ? data?.hostBlocklistAdd?.hosts
+            : undefined
+        }
+        open={dialog === 'hostBlocklistAdd'}
         onOpenChange={onOpenChange}
       />
     </>
