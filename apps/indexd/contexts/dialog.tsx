@@ -18,6 +18,7 @@ import { DebugDialog } from '../dialogs/DebugDialog'
 import { AccountDeleteDialog } from '../dialogs/AccountDeleteDialog'
 import { ConnectKeyDeleteDialog } from '../dialogs/ConnectKeyDeleteDialog'
 import { ConnectKeyCreateDialog } from '../dialogs/ConnectKeyCreateDialog'
+import { AccountFilterConnectKeyDialog } from '../dialogs/AccountFilterConnectKeyDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -31,6 +32,7 @@ export type DialogType =
   | 'accountDelete'
   | 'connectKeyDelete'
   | 'connectKeyCreate'
+  | 'accountFilterConnectKey'
 
 type ConfirmProps = {
   title: React.ReactNode
@@ -172,6 +174,10 @@ export function Dialogs() {
       />
       <ConnectKeyCreateDialog
         open={dialog === 'connectKeyCreate'}
+        onOpenChange={onOpenChange}
+      />
+      <AccountFilterConnectKeyDialog
+        open={dialog === 'accountFilterConnectKey'}
         onOpenChange={onOpenChange}
       />
     </>
