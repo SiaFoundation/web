@@ -14,6 +14,8 @@ import { AccountData } from './types'
 import { useAccounts } from './useAccounts'
 import { Layout } from '../Layout'
 import { useAccountsParams } from './useAccountsParams'
+import { AccountsFilterMenu } from './AccountsFilterMenu'
+import { ColumnFiltersState, OnChangeFn } from '@tanstack/react-table'
 
 export function Accounts() {
   const {
@@ -40,7 +42,7 @@ export function Accounts() {
     dataset: accounts,
     columns: accountsColumns,
     columnFilters,
-    setColumnFilters,
+    setColumnFilters: setColumnFilters as OnChangeFn<ColumnFiltersState>,
     columnSorts,
     setColumnSorts,
     offset,
@@ -55,6 +57,7 @@ export function Accounts() {
       table={
         <DataTable
           {...table}
+          header={<AccountsFilterMenu />}
           noneOnPage={
             <StateNoneOnPage message="No accounts on this page, reset pagination to continue." />
           }

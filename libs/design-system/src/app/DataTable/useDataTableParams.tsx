@@ -1,11 +1,17 @@
 'use client'
 
 import { useCallback, useMemo } from 'react'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import {
+  ReadonlyURLSearchParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from 'next/navigation'
 import {
   ColumnFiltersState,
   OnChangeFn,
   SortingState,
+  Updater,
 } from '@tanstack/react-table'
 
 export function useDataTableParams<Filters extends ColumnFiltersState>(
@@ -61,15 +67,30 @@ export function useDataTableParams<Filters extends ColumnFiltersState>(
     ) as Filters
   }, [columnFiltersParams])
 
-  const setColumnFilters: OnChangeFn<Filters> = useCallback(
-    (filtersFn) => {
+  const buildColumnFiltersParams = useCallback(
+    (filtersFn: Updater<Filters>): ReadonlyURLSearchParams => {
       const filters =
         typeof filtersFn === 'function' ? filtersFn(columnFilters) : filtersFn
       const paramsObj = new URLSearchParams(Array.from(params.entries()))
       paramsObj.set(`${scope}Filters`, JSON.stringify(filters))
-      router.push(`${pathname}?${paramsObj.toString()}`)
+      return new ReadonlyURLSearchParams(paramsObj.toString())
     },
-    [router, params, pathname, scope, columnFilters],
+    [params, scope, columnFilters],
+  )
+
+  const setParams: (params: ReadonlyURLSearchParams) => void = useCallback(
+    (params: ReadonlyURLSearchParams) => {
+      router.push(`${pathname}?${params.toString()}`)
+    },
+    [router, pathname],
+  )
+
+  const setColumnFilters: OnChangeFn<Filters> = useCallback(
+    (filtersFn) => {
+      const paramsObj = buildColumnFiltersParams(filtersFn)
+      setParams(paramsObj)
+    },
+    [setParams, buildColumnFiltersParams],
   )
 
   const removeColumnFilter = useCallback(
@@ -85,9 +106,9 @@ export function useDataTableParams<Filters extends ColumnFiltersState>(
     setColumnFilters((columnFilters) => columnFilters.slice(0, -1) as Filters)
   }, [setColumnFilters])
 
-  const addColumnFilter = useCallback(
+  const buildAddColumnFilterParams = useCallback(
     (filter: Filters[number]) => {
-      setColumnFilters(
+      return buildColumnFiltersParams(
         (columnFilters) =>
           [
             ...columnFilters.filter((f) => f.id !== filter.id),
@@ -95,7 +116,15 @@ export function useDataTableParams<Filters extends ColumnFiltersState>(
           ] as Filters,
       )
     },
-    [setColumnFilters],
+    [buildColumnFiltersParams],
+  )
+
+  const addColumnFilter = useCallback(
+    (filter: Filters[number]) => {
+      const paramsObj = buildAddColumnFilterParams(filter)
+      setParams(paramsObj)
+    },
+    [setParams, buildAddColumnFilterParams],
   )
 
   const columnSortsParams = params.get(`${scope}Sorts`)
@@ -130,6 +159,8 @@ export function useDataTableParams<Filters extends ColumnFiltersState>(
     addColumnFilter,
     columnSorts,
     setColumnSorts,
+    buildColumnFiltersParams,
+    buildAddColumnFilterParams,
   }
 }
 

@@ -11,7 +11,8 @@ import {
 } from '@siafoundation/react-icons'
 import { routes } from '../config/routes'
 import { useDialog } from '../contexts/dialog'
-import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
+import { routeWithParams } from '../lib/navigation'
 
 export function IndexdSidenav() {
   const { openDialog } = useDialog()
@@ -65,8 +66,4 @@ export function IndexdSidenav() {
       </SidenavItem>
     </>
   )
-}
-
-function routeWithParams(route: string, params: ReadonlyURLSearchParams) {
-  return `${route}?${new URLSearchParams(params).toString()}`
 }
