@@ -11,6 +11,7 @@ import { Command } from 'cmdk'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Page } from './CmdRoot/types'
 import { ColumnFiltersState } from '@tanstack/react-table'
+import { useDialog } from '../contexts/dialog'
 
 export function FilterMenu<Filters extends ColumnFiltersState>({
   name,
@@ -70,6 +71,14 @@ export function FilterMenu<Filters extends ColumnFiltersState>({
     setSearch('')
     resetPage()
   }, [resetPage])
+
+  // If a dialog opens, close the filter menu.
+  const { dialog } = useDialog()
+  useEffect(() => {
+    if (dialog) {
+      setOpen(false)
+    }
+  }, [dialog])
 
   return (
     <div className="flex gap-1">

@@ -20,6 +20,7 @@ import { AccountDeleteDialog } from '../dialogs/AccountDeleteDialog'
 import { ConnectKeyDeleteDialog } from '../dialogs/ConnectKeyDeleteDialog'
 import { ConnectKeyCreateDialog } from '../dialogs/ConnectKeyCreateDialog'
 import { HostBlocklistAddDialog } from '../dialogs/HostBlocklistAddDialog'
+import { AccountFilterConnectKeyDialog } from '../dialogs/AccountFilterConnectKeyDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -31,6 +32,7 @@ export type DialogType =
   | 'bugReport'
   | 'confirm'
   | 'accountDelete'
+  | 'accountFilterConnectKey'
   | 'connectKeyDelete'
   | 'connectKeyCreate'
   | 'hostBlocklistAdd'
@@ -195,6 +197,10 @@ export function Dialogs() {
             : undefined
         }
         open={dialog === 'hostBlocklistAdd'}
+        onOpenChange={onOpenChange}
+      />
+      <AccountFilterConnectKeyDialog
+        open={dialog === 'accountFilterConnectKey'}
         onOpenChange={onOpenChange}
       />
     </>
