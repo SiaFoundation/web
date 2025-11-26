@@ -6,7 +6,7 @@ import {
 } from '@siafoundation/design-system'
 import { useCallback } from 'react'
 import { useDialog } from '../../../contexts/dialog'
-import { TrashCan16 } from '@siafoundation/react-icons'
+import { Filter16, TrashCan16 } from '@siafoundation/react-icons'
 import { useKeysParams } from './useKeysParams'
 import { InfoRow } from '../PanelInfoRow'
 import { SidePanelHeadingCopyable } from '../SidePanelHeadingCopyable'
@@ -32,11 +32,17 @@ import {
   Values,
 } from '../../../lib/connectKey'
 import { SidePanelSection } from '../SidePanelSection'
+import { useAccountsParams } from '../Accounts/useAccountsParams'
+import { routes } from '../../../config/routes'
+import { useNavigateWithParams } from '../../../lib/navigation'
 
 const fields = getFields()
 
 export function SidePanelKey() {
   const { panelId, setPanelId } = useKeysParams()
+  const { buildAddColumnFilterParams: buildAccountAddColumnFilterParams } =
+    useAccountsParams()
+  const navigate = useNavigateWithParams()
   const { openDialog } = useDialog()
   const keyUpdate = useAdminConnectKeyUpdate()
   const mutate = useMutate()
@@ -103,12 +109,27 @@ export function SidePanelKey() {
           fields={fields}
           onSave={onSave}
           actionsLeft={
-            <Button
-              onClick={() => openDialog('connectKeyDelete', connectKey.key)}
-              variant="ghost"
-            >
-              <TrashCan16 />
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                onClick={() => openDialog('connectKeyDelete', connectKey.key)}
+              >
+                <TrashCan16 />
+              </Button>
+              <Button
+                onClick={() => {
+                  navigate(
+                    routes.accounts.index,
+                    buildAccountAddColumnFilterParams({
+                      id: 'connectkey',
+                      value: connectKey.key,
+                    }),
+                  )
+                }}
+              >
+                <Filter16 />
+                Accounts
+              </Button>
+            </div>
           }
           render={(form, fields) => {
             return (
