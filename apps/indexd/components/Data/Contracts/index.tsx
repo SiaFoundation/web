@@ -10,13 +10,14 @@ import { useCallback } from 'react'
 import { contractsColumns } from './contractsColumns'
 import { SidePanelContract } from './SidePanelContract'
 import { SidePanelContractList } from './SidePanelContractList'
-import { ContractData } from './types'
+import { ContractData, ContractSorts } from './types'
 import { useContracts } from './useContracts'
 import { Layout } from '../Layout'
 import { useContractsParams } from './useContractsParams'
 import { OnChangeFn } from '@tanstack/react-table'
 import { ColumnFiltersState } from '@tanstack/react-table'
 import { ContractsFilterMenu } from './ContractsFilterMenu'
+import { SortControl } from '../SortControl'
 
 export function Contracts() {
   const {
@@ -45,7 +46,8 @@ export function Contracts() {
     columnFilters,
     setColumnFilters: setColumnFilters as OnChangeFn<ColumnFiltersState>,
     columnSorts,
-    setColumnSorts,
+    setColumnSorts: setColumnSorts as OnChangeFn<ContractSorts>,
+    enableMultiSort: true,
     offset,
     limit,
     onRowClick,
@@ -59,6 +61,9 @@ export function Contracts() {
         <DataTable
           {...table}
           header={<ContractsFilterMenu />}
+          actions={
+            <SortControl table={table.table} columns={contractsColumns} />
+          }
           noneOnPage={
             <StateNoneOnPage message="No contracts on this page, reset pagination to continue." />
           }

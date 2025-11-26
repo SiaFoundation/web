@@ -17,6 +17,7 @@ import { useHostsParams } from './useHostsParams'
 import { OnChangeFn, SortingState } from '@tanstack/react-table'
 import { ColumnFiltersState } from '@tanstack/react-table'
 import { HostsFilterMenu } from './HostsFilterMenu'
+import { SortControl } from '../SortControl'
 
 export function Hosts() {
   const {
@@ -47,6 +48,7 @@ export function Hosts() {
     columnSorts,
     setColumnSorts: setColumnSorts as OnChangeFn<SortingState>,
     setColumnFilters: setColumnFilters as OnChangeFn<ColumnFiltersState>,
+    enableMultiSort: true,
     offset,
     limit,
     onRowClick,
@@ -60,6 +62,9 @@ export function Hosts() {
         <DataTable
           {...table}
           header={<HostsFilterMenu />}
+          actions={
+            <SortControl table={table.table} columns={columns} />
+          }
           noneOnPage={
             <StateNoneOnPage message="No hosts on this page, reset pagination to continue." />
           }

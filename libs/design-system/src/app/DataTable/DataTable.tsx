@@ -133,7 +133,7 @@ export function DataTable<T extends { id: string }>({
                         <th
                           key={header.id}
                           className={cx(
-                            'px-2 py-2 overflow-hidden border-r border-gray-50/50 dark:border-graydark-300/20',
+                            'px-2 py-2 border-r border-gray-50/50 dark:border-graydark-300/20',
                             className,
                           )}
                         >

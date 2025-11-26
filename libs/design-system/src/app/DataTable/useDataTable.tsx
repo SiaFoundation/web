@@ -36,6 +36,7 @@ export function useDataTable<T extends { id: string }>({
   setOffset,
   setLimit,
   onRowClick,
+  enableMultiSort = false,
 }: {
   columns: ColumnDef<T>[]
   dataset: RemoteDataset<T[]>
@@ -50,6 +51,7 @@ export function useDataTable<T extends { id: string }>({
   setOffset: (offset: number) => void
   setLimit: (limit: number) => void
   onRowClick?: (id: string) => void
+  enableMultiSort?: boolean
 }) {
   const tableContainerRef = useRef<HTMLDivElement>(null)
 
@@ -109,6 +111,8 @@ export function useDataTable<T extends { id: string }>({
     manualPagination: true,
     manualFiltering: true,
     manualSorting: true,
+    enableSorting: true,
+    enableMultiSort,
     debugTable: false,
   })
 
