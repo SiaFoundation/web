@@ -1,5 +1,5 @@
-import { Text, Button, DataTableState } from '@siafoundation/design-system'
-import { ContractData } from './types'
+import { Text, Button } from '@siafoundation/design-system'
+import { ContractDataTableState } from './types'
 import { SidePanel } from '../SidePanel'
 import { useMemo } from 'react'
 import { MetricsContracts } from '../../Metrics/MetricsContracts'
@@ -7,7 +7,7 @@ import { MetricsContracts } from '../../Metrics/MetricsContracts'
 export function SidePanelContractList({
   table,
 }: {
-  table: DataTableState<ContractData>
+  table: ContractDataTableState
 }) {
   const contracts = useMemo(() => {
     return table.isSelection ? table.selectedRows : table.rows

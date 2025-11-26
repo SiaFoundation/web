@@ -1,7 +1,11 @@
-import { Host } from '@siafoundation/indexd-types'
+import { AdminHostsSortBy, Host } from '@siafoundation/indexd-types'
 import { CurrencyOption } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
-import { CurrencyDisplayProps } from '@siafoundation/design-system'
+import {
+  CurrencyDisplayProps,
+  DataTableSortColumn,
+  DataTableState,
+} from '@siafoundation/design-system'
 
 export type HostFilterUsable = {
   id: 'usable'
@@ -22,6 +26,8 @@ export type HostFilter =
   | HostFilterBlocked
   | HostFilterActiveContracts
 export type HostFilters = HostFilter[]
+
+export type HostSorts = DataTableSortColumn<AdminHostsSortBy>[]
 
 export function getFilterLabel(filter: HostFilter): string {
   switch (filter.id) {
@@ -74,3 +80,9 @@ export type HostData = Host & {
     countryFlag: string
   }
 }
+
+export type HostDataTableState = DataTableState<
+  HostData,
+  HostFilters,
+  HostSorts
+>

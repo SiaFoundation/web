@@ -1,5 +1,5 @@
-import { cn, Text } from '@siafoundation/design-system'
-import { Column, Table } from '@tanstack/react-table'
+import { cn, DataTableColumn, Text } from '@siafoundation/design-system'
+import { Table } from '@tanstack/react-table'
 import { ColumnFilter } from './ColumnFilter'
 import { ColumnSort } from './ColumnSort'
 
@@ -8,27 +8,31 @@ export function TableHeader<T>({
   table,
   column,
   filter,
-  sortable,
   className,
 }: {
   children: React.ReactNode
   table?: Table<T>
-  column?: Column<T>
+  column?: DataTableColumn<T>
   filter?: React.ReactNode
-  sortable?: boolean
   className?: string
 }) {
+  const hasSortKey = !!column?.columnDef?.sortKey
+
   return (
-    <div className={cn('flex items-center gap-0.5 justify-end', className)}>
+    <div
+      className={cn('flex items-center gap-1 justify-end min-w-0', className)}
+    >
       <Text className="truncate">{children}</Text>
-      {table && column && filter && (
-        <ColumnFilter columnId={column.id} table={table}>
-          {filter}
-        </ColumnFilter>
-      )}
-      {table && column && sortable && (
-        <ColumnSort columnId={column.id} table={table} />
-      )}
+      <div className="flex items-center gap-0.5 shrink-0">
+        {table && column && filter && (
+          <ColumnFilter columnId={column.id} table={table}>
+            {filter}
+          </ColumnFilter>
+        )}
+        {table && column && hasSortKey && (
+          <ColumnSort columnId={column.id} table={table} />
+        )}
+      </div>
     </div>
   )
 }

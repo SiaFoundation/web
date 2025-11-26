@@ -1,10 +1,5 @@
-import {
-  Button,
-  DataTableState,
-  HostMap,
-  Text,
-} from '@siafoundation/design-system'
-import { HostData } from './types'
+import { Button, HostMap, Text } from '@siafoundation/design-system'
+import { HostDataTableState } from './types'
 import { useMapHosts } from '../useMapHosts'
 import { BulkHostBlocklistAdd } from './bulkActions/BulkHostBlocklistAdd'
 import { BulkHostBlocklistRemove } from './bulkActions/BulkHostBlocklistRemove'
@@ -12,11 +7,7 @@ import { SidePanel } from '../SidePanel'
 import { useMemo } from 'react'
 import { useHostsParams } from './useHostsParams'
 
-export function SidePanelHostList({
-  table,
-}: {
-  table: DataTableState<HostData>
-}) {
+export function SidePanelHostList({ table }: { table: HostDataTableState }) {
   const { setPanelId } = useHostsParams()
   const hosts = useMemo(() => {
     return table.isSelection ? table.selectedRows : table.rows

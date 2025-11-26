@@ -25,6 +25,7 @@ export function useAccounts() {
     ({ accounts }) => accounts.map(transformAccount),
     {
       offset,
+      filters: columnFilters,
     },
   )
 }

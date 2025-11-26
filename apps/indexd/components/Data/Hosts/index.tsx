@@ -8,15 +8,14 @@ import {
 } from '@siafoundation/design-system'
 import { SidePanelHost } from './SidePanelHost'
 import { SidePanelHostList } from './SidePanelHostList'
-import { HostData } from './types'
+import { HostData, HostFilters, HostSorts } from './types'
 import { useCallback } from 'react'
 import { columns } from './hostsColumns'
 import { useHosts } from './useHosts'
 import { Layout } from '../Layout'
 import { useHostsParams } from './useHostsParams'
-import { OnChangeFn, SortingState } from '@tanstack/react-table'
-import { ColumnFiltersState } from '@tanstack/react-table'
 import { HostsFilterMenu } from './HostsFilterMenu'
+import { SortControl } from '../SortControl'
 
 export function Hosts() {
   const {
@@ -40,13 +39,14 @@ export function Hosts() {
   )
 
   const hosts = useHosts()
-  const table = useDataTable<HostData>({
+  const table = useDataTable<HostData, HostFilters, HostSorts>({
     dataset: hosts,
     columns,
     columnFilters,
     columnSorts,
-    setColumnSorts: setColumnSorts as OnChangeFn<SortingState>,
-    setColumnFilters: setColumnFilters as OnChangeFn<ColumnFiltersState>,
+    setColumnFilters,
+    setColumnSorts,
+    enableMultiSort: true,
     offset,
     limit,
     onRowClick,
@@ -60,6 +60,7 @@ export function Hosts() {
         <DataTable
           {...table}
           header={<HostsFilterMenu />}
+          actions={<SortControl table={table.table} columns={columns} />}
           noneOnPage={
             <StateNoneOnPage message="No hosts on this page, reset pagination to continue." />
           }

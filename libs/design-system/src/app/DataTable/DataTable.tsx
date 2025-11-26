@@ -103,7 +103,7 @@ export function DataTable<T extends { id: string }>({
         className,
       )}
     >
-      <div className="z-20 h-[45px] flex items-center justify-between gap-4 bg-white dark:bg-graydark-200 py-2 pl-1.5 pr-2 border-b border-gray-200 dark:border-graydark-400">
+      <div className="z-10 h-[45px] flex items-center justify-between gap-4 bg-white dark:bg-graydark-200 py-2 pl-1.5 pr-2 border-b border-gray-200 dark:border-graydark-400">
         <div className="flex items-center gap-2">{header}</div>
         <div className="flex items-center gap-2">{actions}</div>
       </div>
@@ -114,7 +114,7 @@ export function DataTable<T extends { id: string }>({
         >
           <div className="min-w-fit">
             <table className="text-sm" style={{ display: 'grid' }}>
-              <thead className="sticky top-0 z-10 bg-white dark:bg-graydark-200 border-b border-gray-100 dark:border-graydark-300">
+              <thead className="sticky top-0 z-[1] bg-white dark:bg-graydark-200 border-b border-gray-100 dark:border-graydark-300">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr
                     key={headerGroup.id}
