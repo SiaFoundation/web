@@ -14,9 +14,10 @@ import {
   Updater,
 } from '@tanstack/react-table'
 
-export function useDataTableParams<Filters extends ColumnFiltersState>(
-  scope: string,
-) {
+export function useDataTableParams<
+  Filters extends ColumnFiltersState,
+  Sorts extends SortingState = SortingState,
+>(scope: string) {
   const params = useSearchParams()
   const pathname = usePathname()
   const router = useRouter()
@@ -128,13 +129,11 @@ export function useDataTableParams<Filters extends ColumnFiltersState>(
   )
 
   const columnSortsParams = params.get(`${scope}Sorts`)
-  const columnSorts = useMemo(() => {
-    return columnSortsParams
-      ? (JSON.parse(columnSortsParams) as SortingState)
-      : []
+  const columnSorts = useMemo<Sorts>(() => {
+    return (columnSortsParams ? JSON.parse(columnSortsParams) : []) as Sorts
   }, [columnSortsParams])
 
-  const setColumnSorts: OnChangeFn<SortingState> = useCallback(
+  const setColumnSorts: OnChangeFn<Sorts> = useCallback(
     (sortsFn) => {
       const sorts =
         typeof sortsFn === 'function' ? sortsFn(columnSorts) : sortsFn

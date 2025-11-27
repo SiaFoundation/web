@@ -4,8 +4,8 @@ import {
   Text,
   ValueCopyable,
   ValueWithTooltip,
+  DataTableColumnDef,
 } from '@siafoundation/design-system'
-import { type ColumnDef } from '@tanstack/react-table'
 import { TableHeader } from '../ColumnHeader'
 import { selectColumn } from '../sharedColumns/select'
 import {
@@ -14,11 +14,16 @@ import {
   hashColumnWidth,
 } from '../sharedColumns/sizes'
 import { ColumnGoodFilter } from './columnFilters/ColumnGoodFilter'
+import { type AdminContractsSortBy } from '@siafoundation/indexd-types'
 
-export const contractsColumns: ColumnDef<ContractData>[] = [
+export const contractsColumns: DataTableColumnDef<
+  ContractData,
+  AdminContractsSortBy
+>[] = [
   selectColumn(),
   {
     id: 'id',
+    sortKey: 'id',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column} className="justify-start">
         ID
@@ -48,6 +53,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
   },
   {
     id: 'state',
+    sortKey: 'state',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column}>
         State
@@ -58,6 +64,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
   },
   {
     id: 'hostPublicKey',
+    sortKey: 'hostKey',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column} className="justify-start">
         Host Public Key
@@ -74,6 +81,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
   },
   {
     id: 'formation',
+    sortKey: 'formation',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column}>
         Formation
@@ -84,6 +92,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
   },
   {
     id: 'expirationHeight',
+    sortKey: 'expirationHeight',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column}>
         Expiration Height
@@ -97,6 +106,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
 
   {
     id: 'capacity',
+    sortKey: 'capacity',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column}>
         Capacity
@@ -107,6 +117,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
   },
   {
     id: 'dataSize',
+    sortKey: 'size',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column}>
         Data Size
@@ -117,6 +128,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
   },
   {
     id: 'initialAllowance',
+    sortKey: 'initialAllowance',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column}>
         Initial Allowance
@@ -129,6 +141,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
   },
   {
     id: 'remainingAllowance',
+    sortKey: 'remainingAllowance',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column}>
         Remaining Allowance
@@ -141,6 +154,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
   },
   {
     id: 'totalCollateral',
+    sortKey: 'totalCollateral',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column}>
         Total Collateral
@@ -153,6 +167,7 @@ export const contractsColumns: ColumnDef<ContractData>[] = [
   },
   {
     id: 'usedCollateral',
+    sortKey: 'usedCollateral',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column}>
         Used Collateral

@@ -1,5 +1,5 @@
-import { ColumnDef } from '@tanstack/react-table'
 import {
+  DataTableColumnDef,
   Text,
   Tooltip,
   ValueCopyable,
@@ -19,8 +19,9 @@ import {
   hostBlockedColumnWidth,
 } from '../sharedColumns/sizes'
 import { BlockReasons } from './BlockReasons'
+import { type AdminHostsSortBy } from '@siafoundation/indexd-types'
 
-export const columns: ColumnDef<HostData>[] = [
+export const columns: DataTableColumnDef<HostData, AdminHostsSortBy>[] = [
   selectColumn(),
   {
     id: 'publicKey',
@@ -115,6 +116,7 @@ export const columns: ColumnDef<HostData>[] = [
   },
   {
     id: 'acceptingContracts',
+    sortKey: 'settings.acceptingContracts',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column}>
         Accepting Contracts
@@ -134,6 +136,7 @@ export const columns: ColumnDef<HostData>[] = [
   },
   {
     id: 'uptime',
+    sortKey: 'recentUptime',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column}>
         Uptime
@@ -178,6 +181,7 @@ export const columns: ColumnDef<HostData>[] = [
   },
   {
     id: 'totalStorage',
+    sortKey: 'settings.totalStorage',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column}>
         Total Storage
@@ -188,6 +192,7 @@ export const columns: ColumnDef<HostData>[] = [
   },
   {
     id: 'remainingStorage',
+    sortKey: 'settings.remainingStorage',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column}>
         Remaining Storage
@@ -208,6 +213,7 @@ export const columns: ColumnDef<HostData>[] = [
   },
   {
     id: 'storagePrice',
+    sortKey: 'settings.prices.storagePrice',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column}>
         Price Storage
@@ -229,6 +235,7 @@ export const columns: ColumnDef<HostData>[] = [
   },
   {
     id: 'ingressPrice',
+    sortKey: 'settings.prices.ingressPrice',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column}>
         Ingress/TB
@@ -249,6 +256,7 @@ export const columns: ColumnDef<HostData>[] = [
   },
   {
     id: 'egressPrice',
+    sortKey: 'settings.prices.egressPrice',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column}>
         Egress/TB

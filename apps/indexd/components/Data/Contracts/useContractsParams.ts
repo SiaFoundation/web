@@ -1,8 +1,10 @@
 import { useDataTableParams, useParamStr } from '@siafoundation/design-system'
-import { ContractFilters } from './types'
+import { ContractFilters, ContractSorts } from './types'
 
 export function useContractsParams() {
-  const tableParams = useDataTableParams<ContractFilters>('contractList')
+  const tableParams = useDataTableParams<ContractFilters, ContractSorts>(
+    'contractList',
+  )
   const [panelId, setPanelId] = useParamStr('contractsPanelId')
   return {
     ...tableParams,
