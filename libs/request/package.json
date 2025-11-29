@@ -6,6 +6,6 @@
   "types": "./src/index.d.ts",
   "dependencies": {
     "@technically/lodash": "^4.17.0",
-    "axios": "^1.10.0"
+    "axios": "^1.13.2"
   }
 }
