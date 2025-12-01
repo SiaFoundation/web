@@ -1,6 +1,7 @@
 name: Update Release PR or Release Versions and Publish
 
 permissions:
+  id-token: write # Required for OIDC: https://docs.npmjs.com/trusted-publishers
   contents: write # Required for changesets/action to commit/version and create releases.
   pull-requests: write # Needed to update the release PR during versioning.
   packages: write # Needed to push Docker images to GHCR via docker/login-action.
