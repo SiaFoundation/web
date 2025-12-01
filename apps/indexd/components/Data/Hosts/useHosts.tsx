@@ -6,10 +6,7 @@ import { useMemo } from 'react'
 import { useAdminHosts } from '@siafoundation/indexd-react'
 import { transformHost } from './transform'
 import { useAppSettings } from '@siafoundation/react-core'
-import {
-  AdminHostsParams,
-  AdminHostsSortBy,
-} from '@siafoundation/indexd-types'
+import { AdminHostsParams, AdminHostsSortBy } from '@siafoundation/indexd-types'
 import { useHostsParams } from './useHostsParams'
 import { columns } from './hostsColumns'
 
@@ -18,9 +15,8 @@ export function useHosts() {
   const params = useMemo(() => {
     const filters: AdminHostsParams = { offset, limit }
     const usable = columnFilters.find((f) => f.id === 'usable')?.value
-    if (usable !== undefined) {
-      filters.usable = usable
-    }
+    // Default to usable: true unless user explicitly sets it to false.
+    filters.usable = usable !== undefined ? usable : true
     const blocked = columnFilters.find((f) => f.id === 'blocked')?.value
     if (blocked !== undefined) {
       filters.blocked = blocked
