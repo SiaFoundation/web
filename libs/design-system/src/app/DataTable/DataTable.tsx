@@ -222,17 +222,28 @@ export function DataTable<T extends { id: string }>({
                     row={rows[0]}
                   />
                 }
-                noneOnPage={noneOnPage ?? <StateNoneOnPage />}
-                noneYet={noneYet ?? <StateNoneYet />}
-                noneMatchingFilters={
-                  noneMatchingFilters ?? <StateNoneMatching />
-                }
-                error={error ?? <StateError />}
+                noneOnPage={null}
+                noneYet={null}
+                noneMatchingFilters={null}
+                error={null}
                 dataset={dataset}
               />
             </table>
           </div>
         </div>
+        {/* Empty state overlay - positioned over the table so its centered regardless of horizontal scroll */}
+        {dataset.state !== 'loaded' && dataset.state !== 'loading' && (
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="w-full flex items-center justify-center">
+              {dataset.state === 'noneOnPage' &&
+                (noneOnPage ?? <StateNoneOnPage />)}
+              {dataset.state === 'noneYet' && (noneYet ?? <StateNoneYet />)}
+              {dataset.state === 'noneMatchingFilters' &&
+                (noneMatchingFilters ?? <StateNoneMatching />)}
+              {dataset.state === 'error' && (error ?? <StateError />)}
+            </div>
+          </div>
+        )}
       </div>
       <div className="z-10 flex items-center justify-end gap-4 bg-white dark:bg-graydark-200 py-2 px-2 border-t border-gray-200 dark:border-graydark-400">
         <div className="flex items-center gap-2">
