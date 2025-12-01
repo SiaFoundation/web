@@ -42,8 +42,6 @@ jobs:
         run: nx affected --target=build --configuration=production --parallel=5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-          CCRI_TOKEN: ${{ secrets.CCRI_TOKEN }}
       - name: Export
         shell: bash
         # issue with parallelism
