@@ -55,6 +55,7 @@ export function Alerts() {
       table={
         <DataTable
           {...table}
+          localStorage="indexd/alerts"
           noneOnPage={
             <StateNoneOnPage message="No alerts on this page, reset pagination to continue." />
           }

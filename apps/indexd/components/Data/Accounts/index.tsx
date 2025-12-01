@@ -57,6 +57,7 @@ export function Accounts() {
       table={
         <DataTable
           {...table}
+          localStorage="indexd/accounts"
           header={<AccountsFilterMenu />}
           noneOnPage={
             <StateNoneOnPage message="No accounts on this page, reset pagination to continue." />

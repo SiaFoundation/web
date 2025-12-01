@@ -281,6 +281,6 @@ export const columns: DataTableColumnDef<HostData, AdminHostsSortBy>[] = [
       </TableHeader>
     ),
     cell: ({ row }) => <Text>{row.original.displayFields.release}</Text>,
-    meta: { className: 'justify-end', minWidth: 160, maxWidth: 160 },
+    meta: { className: 'justify-end', width: 160 },
   },
 ]
