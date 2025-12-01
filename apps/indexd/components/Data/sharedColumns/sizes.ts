@@ -1,34 +1,27 @@
 export const smallColumnWidth = {
-  minWidth: 100,
-  maxWidth: 100,
+  width: 100,
 }
 
 export const mediumColumnWidth = {
-  minWidth: 150,
-  maxWidth: 150,
+  width: 150,
 }
 
 export const largeColumnWidth = {
-  minWidth: 150,
-  maxWidth: 600,
+  width: 150,
 }
 
 export const timestampColumnWidth = {
-  minWidth: 200,
-  maxWidth: 220,
+  width: 200,
 }
 
 export const hostUsableColumnWidth = {
-  minWidth: 200,
-  maxWidth: 1500,
+  width: 200,
 }
 
 export const hashColumnWidth = {
-  minWidth: 140,
-  maxWidth: 650,
+  width: 140,
 }
 
 export const hostBlockedColumnWidth = {
-  minWidth: 140,
-  maxWidth: 160,
+  width: 140,
 }

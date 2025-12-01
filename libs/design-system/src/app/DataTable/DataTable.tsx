@@ -1,7 +1,7 @@
 'use client'
 
 import { cx } from 'class-variance-authority'
-import React, { useMemo } from 'react'
+import React, { useMemo, useState, useEffect, useCallback, useRef } from 'react'
 import {
   ColumnFiltersState,
   flexRender,
@@ -20,6 +20,7 @@ import { StateNoneMatching } from '../../components/EmptyState/StateNoneMatching
 import { StateError } from '../../components/EmptyState/StateError'
 import { times } from '@technically/lodash'
 import { RemoteDataset } from '../../remoteData/types'
+import useLocalStorageState from 'use-local-storage-state'
 
 interface DataTableProps<T extends { id: string }> {
   fixedFilters?: ColumnFiltersState
@@ -45,10 +46,20 @@ interface DataTableProps<T extends { id: string }> {
   noneYet?: React.ReactNode
   noneMatchingFilters?: React.ReactNode
   error?: React.ReactNode
+  /** Namespace for localStorage, will be used to store column widths. */
+  localStorage: string
 }
 
 const defaultWidth = 100
 const columnGap = 20
+
+const borders = {
+  headingBottom: 'border-b border-gray-300 dark:border-graydark-400',
+  headingVertical: 'border-r border-gray-500/20 dark:border-graydark-500/20',
+  rowBottom: 'border-b border-gray-500/30 dark:border-graydark-500/30',
+  rowVertical: 'border-r border-gray-500/20 dark:border-graydark-500/20',
+  footerTop: 'border-t border-gray-300 dark:border-graydark-400',
+} as const
 
 type ColumnMeta = {
   width?: number | string
@@ -57,6 +68,10 @@ type ColumnMeta = {
   className?: string
   onClick?: (e: React.MouseEvent<HTMLElement>) => void
   stopPropagation?: boolean
+}
+
+function getColumnWidthsKey(localStorage: string): string {
+  return `${localStorage}/columnWidths`
 }
 
 export function DataTable<T extends { id: string }>({
@@ -80,21 +95,175 @@ export function DataTable<T extends { id: string }>({
   noneYet,
   noneMatchingFilters,
   error,
+  localStorage,
 }: DataTableProps<T>) {
-  // Build a shared grid template based on visible columns and their meta.
   const visibleLeafColumns = table.getVisibleLeafColumns()
+
+  // Get default widths from column meta
+  const defaultColumnWidths = useMemo(() => {
+    const defaults: Record<string, number> = {}
+    visibleLeafColumns.forEach((col) => {
+      const meta = (col.columnDef.meta ?? {}) as ColumnMeta
+      defaults[col.id] =
+        typeof meta.width === 'number'
+          ? meta.width
+          : typeof meta.minWidth === 'number'
+            ? meta.minWidth
+            : defaultWidth
+    })
+    return defaults
+  }, [visibleLeafColumns])
+
+  // Store column widths in localStorage
+  const [storedWidths, setStoredWidths] = useLocalStorageState<
+    Record<string, number>
+  >(getColumnWidthsKey(localStorage), {
+    defaultValue: {},
+  })
+
+  // Merge stored widths with defaults, prioritizing stored values
+  const columnWidths = useMemo(() => {
+    const merged: Record<string, number> = {}
+    visibleLeafColumns.forEach((col) => {
+      merged[col.id] = storedWidths[col.id] ?? defaultColumnWidths[col.id]
+    })
+    return merged
+  }, [visibleLeafColumns, storedWidths, defaultColumnWidths])
+
+  // Resizing state - only for UI feedback, not for width updates
+  const [resizingColumnId, setResizingColumnId] = useState<string | null>(null)
+
+  // Use refs for resize state to avoid React re-renders during drag
+  const resizeStateRef = useRef({
+    columnId: null as string | null,
+    startX: 0,
+    startWidth: 0,
+    columnIndex: -1,
+  })
+  const tableRef = useRef<HTMLTableElement | null>(null)
+
+  const handleResizeStart = useCallback(
+    (e: React.MouseEvent, columnId: string) => {
+      e.preventDefault()
+      e.stopPropagation()
+      const currentWidth = columnWidths[columnId] ?? defaultWidth
+      const columnIndex = visibleLeafColumns.findIndex(
+        (col) => col.id === columnId,
+      )
+
+      if (columnIndex === -1 || !tableRef.current) return
+
+      tableRef.current.style.setProperty(
+        `--col-width-${columnIndex}`,
+        `${currentWidth}px`,
+      )
+
+      // Prevent text selection during resize
+      document.body.style.userSelect = 'none'
+      document.body.style.cursor = 'col-resize'
+
+      setResizingColumnId(columnId)
+
+      // Store in ref for use in mousemove handler
+      resizeStateRef.current = {
+        columnId,
+        startX: e.clientX,
+        startWidth: currentWidth,
+        columnIndex,
+      }
+    },
+    [columnWidths, visibleLeafColumns],
+  )
+
+  const handleResizeMove = useCallback((e: MouseEvent) => {
+    const state = resizeStateRef.current
+    if (!state.columnId || state.columnIndex === -1 || !tableRef.current) return
+
+    // Calculate new width
+    const delta = e.clientX - state.startX
+    const newWidth = Math.max(50, state.startWidth + delta)
+
+    // Directly update CSS width variable
+    tableRef.current.style.setProperty(
+      `--col-width-${state.columnIndex}`,
+      `${newWidth}px`,
+    )
+  }, [])
+
+  const handleResizeEnd = useCallback(() => {
+    // Restore cursor and user selection
+    document.body.style.userSelect = ''
+    document.body.style.cursor = ''
+
+    const state = resizeStateRef.current
+    if (state.columnId && state.columnIndex !== -1 && tableRef.current) {
+      // Get the final width from the CSS variable
+      const finalWidthStr = tableRef.current.style.getPropertyValue(
+        `--col-width-${state.columnIndex}`,
+      )
+      const finalWidth = finalWidthStr
+        ? parseFloat(finalWidthStr)
+        : state.startWidth
+
+      // Only write to localStorage on mouseup
+      setStoredWidths((prev) => {
+        const updated = { ...prev }
+        // Only store if different from default
+        if (finalWidth !== defaultColumnWidths[state.columnId!]) {
+          updated[state.columnId!] = finalWidth
+        } else {
+          // Remove from stored if it matches default
+          delete updated[state.columnId!]
+        }
+        return updated
+      })
+    }
+
+    // Clear resize state
+    setResizingColumnId(null)
+    resizeStateRef.current = {
+      columnId: null,
+      startX: 0,
+      startWidth: 0,
+      columnIndex: -1,
+    }
+  }, [setStoredWidths, defaultColumnWidths])
+
+  // Set CSS variables when column widths change
+  useEffect(() => {
+    // Not during resize
+    if (!tableRef.current || resizingColumnId) return
+
+    visibleLeafColumns.forEach((col, index) => {
+      const width = columnWidths[col.id] ?? defaultWidth
+      tableRef.current!.style.setProperty(`--col-width-${index}`, `${width}px`)
+    })
+  }, [visibleLeafColumns, columnWidths, resizingColumnId])
+
+  // Set up resize event listeners
+  useEffect(() => {
+    if (!resizingColumnId) return
+    document.addEventListener('mousemove', handleResizeMove, { passive: true })
+    document.addEventListener('mouseup', handleResizeEnd)
+    return () => {
+      document.removeEventListener('mousemove', handleResizeMove)
+      document.removeEventListener('mouseup', handleResizeEnd)
+      // Cleanup cursor and user-select in case component unmounts during resize
+      document.body.style.userSelect = ''
+      document.body.style.cursor = ''
+    }
+  }, [resizingColumnId, handleResizeMove, handleResizeEnd])
+
+  // Build a shared grid template based on visible columns and their stored widths.
+  // During resize, we can update these CSS variables directly.
   const gridTemplateColumns = useMemo(() => {
     return visibleLeafColumns
-      .map((col) => {
-        const meta = (col.columnDef.meta ?? {}) as ColumnMeta
-        const width = toCssSize(meta.width)
-        if (width) return width
-        const min = toCssSize(meta.minWidth) ?? `${defaultWidth}px`
-        const max = toCssSize(meta.maxWidth) ?? '1fr'
-        return `minmax(${min}, ${max})`
+      .map((col, index) => {
+        const width = columnWidths[col.id] ?? defaultWidth
+        return `var(--col-width-${index}, ${width}px)`
       })
       .join(' ')
-  }, [visibleLeafColumns])
+  }, [visibleLeafColumns, columnWidths])
 
   return (
     <Panel
@@ -103,7 +272,12 @@ export function DataTable<T extends { id: string }>({
         className,
       )}
     >
-      <div className="z-10 h-[45px] flex items-center justify-between gap-4 bg-white dark:bg-graydark-200 py-2 pl-1.5 pr-2 border-b border-gray-200 dark:border-graydark-400">
+      <div
+        className={cx(
+          'z-10 h-[45px] flex items-center justify-between gap-4 bg-white dark:bg-graydark-200 py-2 pl-1.5 pr-2',
+          borders.headingBottom,
+        )}
+      >
         <div className="flex items-center gap-2">{header}</div>
         <div className="flex items-center gap-2">{actions}</div>
       </div>
@@ -113,8 +287,17 @@ export function DataTable<T extends { id: string }>({
           className="relative w-full h-full overflow-auto"
         >
           <div className="min-w-fit">
-            <table className="text-sm" style={{ display: 'grid' }}>
-              <thead className="sticky top-0 z-[1] bg-white dark:bg-graydark-200 border-b border-gray-100 dark:border-graydark-300">
+            <table
+              ref={tableRef}
+              className="text-sm"
+              style={{ display: 'grid' }}
+            >
+              <thead
+                className={cx(
+                  'sticky top-0 z-[1] bg-white dark:bg-graydark-200',
+                  borders.headingBottom,
+                )}
+              >
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr
                     key={headerGroup.id}
@@ -125,21 +308,41 @@ export function DataTable<T extends { id: string }>({
                       columnGap,
                     }}
                   >
-                    {headerGroup.headers.map((header) => {
+                    {headerGroup.headers.map((header, index) => {
                       const meta = (header.column.columnDef.meta ??
                         {}) as ColumnMeta
                       const { className } = meta
+                      const isLast = index === headerGroup.headers.length - 1
                       return (
                         <th
                           key={header.id}
                           className={cx(
-                            'px-2 py-2 overflow-hidden border-r border-gray-50/50 dark:border-graydark-300/20',
+                            'px-2 py-2 overflow-hidden relative group',
+                            borders.headingVertical,
                             className,
                           )}
                         >
                           {flexRender(
                             header.column.columnDef.header,
                             header.getContext(),
+                          )}
+                          {!isLast && (
+                            <div
+                              onMouseDown={(e) =>
+                                handleResizeStart(e, header.id)
+                              }
+                              className={cx(
+                                'absolute top-0 right-0 h-full cursor-col-resize transition-colors',
+                                resizingColumnId === header.id
+                                  ? 'bg-blue-500/80 dark:bg-blue-400/80'
+                                  : 'hover:bg-blue-500 dark:hover:bg-blue-400',
+                              )}
+                              style={{
+                                width: '8px',
+                                transform: 'translateX(50%)',
+                                zIndex: 10,
+                              }}
+                            />
                           )}
                         </th>
                       )
@@ -177,7 +380,7 @@ export function DataTable<T extends { id: string }>({
                             selectedRowId === row.original.id
                               ? 'bg-blue-50 dark:bg-blue-900/30'
                               : 'hover:bg-blue-100 dark:hover:bg-blue-900/40',
-                            'border-b border-gray-50 dark:border-graydark-300',
+                            borders.rowBottom,
                           )}
                           onClick={() => onRowClick?.(row.original.id)}
                         >
@@ -196,7 +399,7 @@ export function DataTable<T extends { id: string }>({
                                 className={cx(
                                   'px-2 py-1 relative overflow-hidden whitespace-nowrap text-ellipsis',
                                   'flex items-center',
-                                  'border-r border-gray-50/50 dark:border-graydark-300/20',
+                                  borders.rowVertical,
                                   className,
                                 )}
                               >
@@ -245,7 +448,12 @@ export function DataTable<T extends { id: string }>({
           </div>
         )}
       </div>
-      <div className="z-10 flex items-center justify-end gap-4 bg-white dark:bg-graydark-200 py-2 px-2 border-t border-gray-200 dark:border-graydark-400">
+      <div
+        className={cx(
+          'z-10 flex items-center justify-end gap-4 bg-white dark:bg-graydark-200 py-2 px-2',
+          borders.footerTop,
+        )}
+      >
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-2">
             <Label
@@ -260,7 +468,7 @@ export function DataTable<T extends { id: string }>({
               value={table.getState().pagination.pageSize.toString()}
               onChange={(e) => table.setPageSize(Number(e.target.value))}
             >
-              {[25, 50, 100, 1000, 10000].map((size) => (
+              {[25, 50, 100, 500].map((size) => (
                 <Option key={size} value={size.toString()}>
                   {size.toLocaleString()}
                 </Option>
@@ -283,12 +491,6 @@ export function DataTable<T extends { id: string }>({
       </div>
     </Panel>
   )
-}
-
-function toCssSize(value: number | string | undefined): string | undefined {
-  if (value === undefined) return undefined
-  if (typeof value === 'number') return `${value}px`
-  return value
 }
 
 function SkeletonRows<T extends { id: string }>({
@@ -326,7 +528,7 @@ function SkeletonRows<T extends { id: string }>({
           className={cx(
             'cursor-pointer',
             'hover:bg-blue-100 dark:hover:bg-blue-900/40',
-            'border-b border-gray-50 dark:border-graydark-300',
+            borders.rowBottom,
           )}
         >
           {table.getVisibleLeafColumns().map((column) => {
@@ -343,7 +545,7 @@ function SkeletonRows<T extends { id: string }>({
                 className={cx(
                   'px-2 py-1 relative overflow-hidden whitespace-nowrap text-ellipsis',
                   'flex items-center',
-                  'border-r border-gray-50/50 dark:border-graydark-300/20',
+                  borders.rowVertical,
                   className,
                 )}
               />

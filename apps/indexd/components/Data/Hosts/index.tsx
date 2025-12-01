@@ -59,6 +59,7 @@ export function Hosts() {
       table={
         <DataTable
           {...table}
+          localStorage="indexd/hosts"
           header={<HostsFilterMenu />}
           actions={<SortControl table={table.table} columns={columns} />}
           noneOnPage={

@@ -58,6 +58,7 @@ export function Contracts() {
       table={
         <DataTable
           {...table}
+          localStorage="indexd/contracts"
           header={<ContractsFilterMenu />}
           actions={
             <SortControl table={table.table} columns={contractsColumns} />

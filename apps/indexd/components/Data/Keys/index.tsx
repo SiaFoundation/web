@@ -55,6 +55,7 @@ export function Keys() {
       table={
         <DataTable
           {...table}
+          localStorage="indexd/keys"
           actions={<CreateKeyButton />}
           noneOnPage={
             <StateNoneOnPage message="No keys on this page, reset pagination to continue." />
