@@ -7,6 +7,7 @@ import {
   ScrollArea,
   Text,
   Tooltip,
+  useRemoteData,
 } from '@siafoundation/design-system'
 import {
   RadioButton16,
@@ -41,12 +42,32 @@ export function OnboardingBar() {
   const notEnoughContracts = useNotEnoughContracts()
   const { estimatedSpendingPerMonth } = useSpendingEstimate()
 
+  // Use useRemoteData to ensure all required data is loaded before showing
+  // the onboarding bar.
+  // Ideally this should also include syncStatus and notEnoughContracts,
+  // but neither exposes a loading state.
+  const onboarding = useRemoteData(
+    {
+      wallet,
+    },
+    ({ wallet }) => ({
+      wallet,
+    }),
+  )
+
   if (!isUnlockedAndAuthedRoute) {
     return null
   }
 
+  // Don't show setup message while data is still loading to avoid flickering.
+  if (onboarding.state !== 'loaded') {
+    return null
+  }
+
   const walletBalance = new BigNumber(
-    wallet.data ? wallet.data.confirmed + wallet.data.unconfirmed : 0,
+    onboarding.data.wallet
+      ? onboarding.data.wallet.confirmed + onboarding.data.wallet.unconfirmed
+      : 0,
   )
 
   const step1Configured = true

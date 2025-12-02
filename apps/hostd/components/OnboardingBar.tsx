@@ -7,6 +7,7 @@ import {
   Text,
   Tooltip,
   AppDockedControl,
+  useRemoteData,
 } from '@siafoundation/design-system'
 import {
   RadioButton16,
@@ -28,7 +29,7 @@ import useLocalStorageState from 'use-local-storage-state'
 export function OnboardingBar() {
   const { isUnlockedAndAuthedRoute } = useAppSettings()
   const { openDialog } = useDialog()
-  const { dataset: volumes } = useVolumes()
+  const volumes = useVolumes()
   const settings = useSettings()
   const wallet = useWallet()
   const [maximized, setMaximized] = useLocalStorageState<boolean>(
@@ -39,17 +40,45 @@ export function OnboardingBar() {
   )
   const syncStatus = useSyncStatus()
 
+  // Use useRemoteData to ensure all required data is loaded before showing
+  // the onboarding bar.
+  // Ideally this should also include syncStatus, but it does not expose
+  // a loading state.
+  const onboarding = useRemoteData(
+    {
+      wallet,
+      settings,
+      volumes: {
+        data: volumes.dataset,
+        isValidating: volumes.isLoading,
+        isLoading: volumes.datasetState === 'loading',
+      },
+    },
+    ({ wallet, settings, volumes }) => ({
+      wallet,
+      settings,
+      volumes,
+    }),
+  )
+
   if (!isUnlockedAndAuthedRoute) {
     return null
   }
 
+  // Don't show setup message while data is still loading to avoid flickering.
+  if (onboarding.state !== 'loaded') {
+    return null
+  }
+
   const walletBalance = new BigNumber(
-    wallet.data ? wallet.data.confirmed + wallet.data.unconfirmed : 0,
+    onboarding.data.wallet
+      ? onboarding.data.wallet.confirmed + onboarding.data.wallet.unconfirmed
+      : 0,
   )
   const minimumBalance = toHastings(0)
-  const step1Funded = wallet.data && walletBalance.gt(minimumBalance)
-  const step2Volumes = volumes?.length > 0
-  const step3Configured = settings.data?.acceptingContracts
+  const step1Funded = onboarding.data.wallet && walletBalance.gt(minimumBalance)
+  const step2Volumes = onboarding.data.volumes?.length > 0
+  const step3Configured = onboarding.data.settings?.acceptingContracts
   const step4Synced = syncStatus.isSynced
   const steps = [step1Funded, step2Volumes, step3Configured, step4Synced]
   const totalSteps = steps.length
