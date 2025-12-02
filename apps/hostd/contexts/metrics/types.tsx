@@ -42,6 +42,7 @@ export type StorageKeys =
   | 'physicalSectors'
   | 'tempSectors'
   | 'contractSectors'
+  | 'lostSectors'
 
 export type StorageCategories = 'storage used' | 'storage capacity'
 

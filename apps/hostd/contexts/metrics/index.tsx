@@ -454,6 +454,7 @@ function useMetricsMain() {
           contractSectors: MiBToBytes(m.storage.contractSectors)
             .times(4)
             .toNumber(),
+          lostSectors: MiBToBytes(m.storage.lostSectors).times(4).toNumber(),
           timestamp: new Date(m.timestamp).getTime(),
         }))
         .slice(1),
@@ -468,12 +469,14 @@ function useMetricsMain() {
           'contractSectors',
           'physicalSectors',
           'tempSectors',
+          'lostSectors',
           'maxSectors',
         ],
         enabledTip: [
           'contractSectors',
           'physicalSectors',
           'tempSectors',
+          'lostSectors',
           'maxSectors',
         ],
         categories: ['storage used', 'storage capacity'],
@@ -497,6 +500,11 @@ function useMetricsMain() {
             chartConfigs.storage,
             'storage used',
             'sectors contract',
+          ),
+          lostSectors: configCategoryLabel<StorageCategories>(
+            chartConfigs.sectorsLost,
+            'storage used',
+            'sectors lost',
           ),
         },
         format: (v) => humanBytes(v),

@@ -44,6 +44,16 @@ export function HomeStorage() {
           enabledModes={['latest', 'average']}
           valueFormat={humanBytes}
         />
+        <DatumCardConfigurable
+          category="storage"
+          label="storage - lost"
+          color={storage.config.data['lostSectors'].color}
+          value={storage.stats['lostSectors']}
+          defaultMode="latest"
+          isLoading={storage.isLoading}
+          enabledModes={['latest', 'average']}
+          valueFormat={humanBytes}
+        />
       </DatumScrollArea>
       <ChartXY
         id="hostd/v0/metrics/graphs/storage"
