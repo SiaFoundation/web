@@ -52,6 +52,7 @@ export function doesEntityHaveSiascanUrl(type?: EntityType) {
     'address',
     'transaction',
     'block',
+    'output',
   ]
   return type && includeList.includes(type)
 }
@@ -70,6 +71,8 @@ export function getEntitySiascanUrl(
       return `${baseUrl}/contract/${value}`
     case 'transaction':
       return `${baseUrl}/tx/${value}`
+    case 'output':
+      return `${baseUrl}/output/${value}`
     case 'address':
       return `${baseUrl}/address/${value}`
     case 'block':

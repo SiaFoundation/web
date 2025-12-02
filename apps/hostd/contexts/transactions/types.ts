@@ -1,4 +1,4 @@
-import { TxType } from '@siafoundation/units'
+import { EntityType, TxType } from '@siafoundation/units'
 import { WalletEventType } from '@siafoundation/types'
 import BigNumber from 'bignumber.js'
 
@@ -8,7 +8,7 @@ export type CellContext = {
 
 export type EventData = {
   id: string
-  transactionId?: string
+  entityType: EntityType
   timestamp: number
   height?: number
   maturityHeight?: number
@@ -24,17 +24,16 @@ export type EventData = {
 }
 
 export type TableColumnId =
-  | 'transactionId'
+  | 'id'
   | 'type'
   | 'height'
   | 'timestamp'
   | 'amount'
   | 'fee'
-  | 'transactionId'
   | 'contractId'
 
 export const columnsDefaultVisible: TableColumnId[] = [
-  'transactionId',
+  'id',
   'type',
   'height',
   'timestamp',

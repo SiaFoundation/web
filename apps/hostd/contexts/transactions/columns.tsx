@@ -19,19 +19,18 @@ type EventsTableColumn = TableColumn<TableColumnId, EventData, CellContext> & {
 
 export const columns: EventsTableColumn[] = [
   {
-    id: 'transactionId',
-    label: 'transaction ID',
+    id: 'id',
+    label: 'ID',
     category: 'general',
-    render: ({ data: { id }, context }) => {
-      if (!id) {
+    render: ({ data, context }) => {
+      if (!data.id) {
         return null
       }
       return (
         <ValueCopyable
           size="12"
-          value={id}
-          label="transaction ID"
-          type="transaction"
+          value={data.id}
+          type={data.entityType}
           siascanUrl={context.siascanUrl}
         />
       )

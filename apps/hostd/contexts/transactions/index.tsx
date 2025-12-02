@@ -20,6 +20,7 @@ import {
   getEventFee,
   getEventTxType,
   daysInMilliseconds,
+  getEventIdEntityType,
 } from '@siafoundation/units'
 import {
   CellContext,
@@ -68,10 +69,11 @@ function useTransactionsMain() {
       const fee = getEventFee(e)
       const event: EventData = {
         id: e.id,
-        timestamp: 0,
-        pending: true,
         type: e.type,
         txType: getEventTxType(e),
+        entityType: getEventIdEntityType(e),
+        timestamp: 0,
+        pending: true,
         isMature: false,
         amountSc,
         fee,
@@ -87,6 +89,7 @@ function useTransactionsMain() {
         id: e.id,
         type: e.type,
         txType: getEventTxType(e),
+        entityType: getEventIdEntityType(e),
         timestamp: new Date(e.timestamp).getTime(),
         maturityHeight: e.maturityHeight,
         isMature,
@@ -119,7 +122,7 @@ function useTransactionsMain() {
     sortField,
     sortDirection,
     resetDefaultColumnVisibility,
-  } = useTableState('hostd/v0/events', {
+  } = useTableState('hostd/v2/events', {
     columns,
     columnsDefaultVisible,
     sortOptions,
