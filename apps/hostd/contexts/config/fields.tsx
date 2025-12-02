@@ -1,6 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
 import { blocksToMonths } from '@siafoundation/units'
-import { ConfigFields } from '@siafoundation/design-system'
+import {
+  Code,
+  ConfigFields,
+  Text,
+  Tooltip,
+  ValueCopyable,
+} from '@siafoundation/design-system'
+import { Information16 } from '@siafoundation/react-icons'
 import BigNumber from 'bignumber.js'
 import {
   ConfigViewMode,
@@ -11,6 +18,7 @@ import {
 import { calculateMaxCollateral } from './transform'
 import { currencyOptions } from '@siafoundation/react-core'
 import { Maybe } from '@siafoundation/types'
+import { useHostState } from '@siafoundation/hostd-react'
 
 type Categories = 'host' | 'pricing' | 'DNS' | 'bandwidth' | 'RHP3'
 
@@ -46,7 +54,12 @@ export function getFields({
       type: 'text',
       category: 'host',
       title: 'Address',
-      description: <>The network address of the host.</>,
+      description: (
+        <>
+          The network address of the host without a port. Ports must be
+          configured in the <Code>hostd.yml</Code> config file.
+        </>
+      ),
       placeholder: 'my.host.com',
       validation: {
         required: 'required',
@@ -57,6 +70,67 @@ export function getFields({
           noPort: (value: Maybe<string>) =>
             !/:\d+$/.test(value || '') || 'must not include port',
         },
+      },
+      after: function After() {
+        const state = useHostState()
+        const lastAnnouncementAddress = state.data?.lastAnnouncement?.address
+        return (
+          <div className="flex flex-col gap-3">
+            <Tooltip
+              align="start"
+              side="bottom"
+              content="Do not include a port in the address."
+            >
+              <div className="flex gap-1 items-center">
+                <Text className="flex">
+                  <Information16 />
+                </Text>
+                <Text size="12" color="contrast">
+                  Configure ports in <Code>hostd.yml</Code>
+                </Text>
+              </div>
+            </Tooltip>
+            {lastAnnouncementAddress ? (
+              <Tooltip
+                align="start"
+                side="bottom"
+                content="The last announced address for the host."
+              >
+                <div className="flex gap-1 items-start">
+                  <Text className="flex">
+                    <Information16 />
+                  </Text>
+                  <div className="flex flex-col gap-1">
+                    <Text size="12" color="contrast">
+                      Last announcement
+                    </Text>
+                    <ValueCopyable
+                      type="address"
+                      size="12"
+                      maxLength={100}
+                      value={lastAnnouncementAddress}
+                    />
+                  </div>
+                </div>
+              </Tooltip>
+            ) : (
+              <Tooltip
+                align="start"
+                side="bottom"
+                content="The host has not been announced yet. Once an address is configured, it will be announced automatically."
+              >
+                <div className="flex gap-1 items-start">
+                  <Text className="flex">
+                    <Information16 />
+                  </Text>
+                  <Text size="12" color="contrast">
+                    The host has not been announced yet
+                  </Text>
+                </div>
+              </Tooltip>
+            )}
+          </div>
+        )
       },
     },
     maxContractDuration: {

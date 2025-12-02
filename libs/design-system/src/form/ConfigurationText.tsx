@@ -17,12 +17,13 @@ export function ConfigurationText<
   type?: 'password'
 }) {
   const field = fields[name]
-  const { suggestionLabel, suggestion, suggestionTip } = field
+  const { suggestionLabel, suggestion, suggestionTip, after } = field
   const setField = useFormSetField({
     form,
     name,
     fields,
   })
+  const After = after || (() => null)
   return (
     <div className="flex flex-col gap-3 items-end">
       <div className="flex flex-col gap-3 w-[260px]">
@@ -43,6 +44,7 @@ export function ConfigurationText<
             }}
           />
         )}
+        <After name={name} form={form} fields={fields} />
       </div>
       <div className="h-[20px]">
         <FieldError form={form} name={name} />
