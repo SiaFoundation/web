@@ -91,6 +91,10 @@ export const chartConfigs = {
     label: 'contract sectors',
     color: colors.green[600],
   },
+  sectorsLost: {
+    label: 'lost sectors',
+    color: colors.red[600],
+  },
   sectorAccess: {
     label: 'sector access',
     color: colors.blue[600],
