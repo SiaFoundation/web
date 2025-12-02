@@ -1,5 +1,12 @@
 # @siafoundation/hostd-js
 
+## 0.5.8
+
+### Patch Changes
+
+- Updated dependencies [15f073b]
+  - @siafoundation/request@0.4.0
+
 ## 0.5.7
 
 ### Patch Changes

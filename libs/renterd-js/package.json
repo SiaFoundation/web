@@ -1,12 +1,12 @@
 {
   "name": "@siafoundation/renterd-js",
-  "version": "0.14.7",
+  "version": "0.14.8",
   "description": "SDK for interacting with `renterd`.",
   "license": "MIT",
   "types": "./src/index.d.ts",
   "dependencies": {
     "@siafoundation/renterd-types": "^0.17.4",
-    "@siafoundation/request": "^0.3.2"
+    "@siafoundation/request": "^0.4.0"
   },
   "devDependencies": {
     "axios-mock-adapter": "^2.1.0"

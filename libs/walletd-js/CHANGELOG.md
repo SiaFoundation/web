@@ -1,5 +1,12 @@
 # @siafoundation/walletd-js
 
+## 0.4.4
+
+### Patch Changes
+
+- Updated dependencies [15f073b]
+  - @siafoundation/request@0.4.0
+
 ## 0.4.3
 
 ### Patch Changes

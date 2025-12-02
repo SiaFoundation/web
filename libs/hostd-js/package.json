@@ -1,11 +1,11 @@
 {
   "name": "@siafoundation/hostd-js",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "description": "SDK for interacting with `hostd`.",
   "license": "MIT",
   "types": "./src/index.d.ts",
   "dependencies": {
     "@siafoundation/hostd-types": "^0.10.1",
-    "@siafoundation/request": "^0.3.2"
+    "@siafoundation/request": "^0.4.0"
   }
 }

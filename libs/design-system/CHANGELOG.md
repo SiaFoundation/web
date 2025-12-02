@@ -1,5 +1,21 @@
 # Changelog
 
+## 11.2.0
+
+### Minor Changes
+
+- 2242e5d: Added resizable column width support to DataTable.
+- 15f073b: Add optional Sorts type to useDataTableParams.
+- 825ea2e: Moved to new foundation twitter handle.
+- 26c718f: Added buildColumnFiltersParams and buildAddColumnFilterParams to useDataTableParams.
+
+### Patch Changes
+
+- addece5: The data table empty states are now overlayed and centered regardless of horizontal scroll position.
+- Updated dependencies [ec8973f]
+  - @siafoundation/units@3.8.0
+  - @siafoundation/react-core@8.1.1
+
 ## 11.1.1
 
 ### Patch Changes

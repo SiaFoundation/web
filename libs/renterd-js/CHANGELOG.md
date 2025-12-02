@@ -1,5 +1,12 @@
 # @siafoundation/renterd-js
 
+## 0.14.8
+
+### Patch Changes
+
+- Updated dependencies [15f073b]
+  - @siafoundation/request@0.4.0
+
 ## 0.14.7
 
 ### Patch Changes

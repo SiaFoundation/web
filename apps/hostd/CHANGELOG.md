@@ -1,5 +1,23 @@
 # hostd
 
+## 0.66.4
+
+### Patch Changes
+
+- 3321c40: Copying the net address from the node profile now includes the port when available. Closes https://github.com/SiaFoundation/hostd/issues/596
+- 8dd6c0a: Pressing contract menu actions no longer selects the contract row. Closes https://github.com/SiaFoundation/hostd/issues/683
+- 7a2668e: Fixed an issue where there was a dead area and duplicated point at the right of every graph. Closes https://github.com/SiaFoundation/hostd/issues/276
+- ec8973f: Wallet events now correctly link to a siascan output vs transaction when applicable. Closes https://github.com/SiaFoundation/hostd/issues/877
+- Updated dependencies [addece5]
+- Updated dependencies [2242e5d]
+- Updated dependencies [15f073b]
+- Updated dependencies [825ea2e]
+- Updated dependencies [ec8973f]
+- Updated dependencies [26c718f]
+  - @siafoundation/design-system@11.2.0
+  - @siafoundation/units@3.8.0
+  - @siafoundation/react-core@8.1.1
+
 ## 0.66.3
 
 ### Patch Changes

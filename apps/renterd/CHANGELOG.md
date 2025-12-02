@@ -1,5 +1,24 @@
 # renterd
 
+## 0.86.0
+
+### Minor Changes
+
+- a2a5d0c: Removed slab key label from health tooltip.
+
+### Patch Changes
+
+- Updated dependencies [addece5]
+- Updated dependencies [2242e5d]
+- Updated dependencies [15f073b]
+- Updated dependencies [825ea2e]
+- Updated dependencies [ec8973f]
+- Updated dependencies [26c718f]
+  - @siafoundation/design-system@11.2.0
+  - @siafoundation/units@3.8.0
+  - @siafoundation/react-core@8.1.1
+  - @siafoundation/renterd-js@0.14.8
+
 ## 0.85.2
 
 ### Patch Changes

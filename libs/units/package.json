@@ -1,6 +1,6 @@
 {
   "name": "@siafoundation/units",
-  "version": "3.7.0",
+  "version": "3.8.0",
   "description": "Methods for converting and formatting Sia units and data types.",
   "license": "MIT",
   "types": "./src/index.d.ts",
