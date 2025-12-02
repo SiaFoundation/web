@@ -77,7 +77,11 @@ export function ContractContextMenu({
           <CaretDown16 />
         </Button>
       }
-      contentProps={{ align: 'start', ...contentProps }}
+      contentProps={{
+        onClick: (e) => e.stopPropagation(),
+        align: 'start',
+        ...contentProps,
+      }}
     >
       <div className="px-1.5 py-1">
         <Text size="14" weight="medium" color="subtle">
