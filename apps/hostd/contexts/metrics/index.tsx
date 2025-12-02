@@ -56,14 +56,15 @@ type TimeRange = {
 const defaultTimeSpan = dataTimeSpanOptions.find((o) => o.value === '7')
 const disableAnimations = true
 
-// TODO: does not reach current time
-// function getPeriods(timeRange: TimeRange, dataInterval: DataInterval) {
-//   const intervalMs = getDataIntervalInMs(dataInterval)
-//   if (!intervalMs) {
-//     return 0
-//   }
-//   return Math.ceil((timeRange.end - timeRange.start) / intervalMs) + 1
-// }
+function getPeriods(start: number, end: number, dataInterval: DataInterval) {
+  const intervalMs = getDataIntervalInMs(dataInterval)
+  if (!intervalMs) {
+    return 0
+  }
+  // Calculate periods needed from start to end.
+  // Math.ceil ensures we get enough periods to cover up to end.
+  return Math.ceil((end - start) / intervalMs)
+}
 
 function useMetricsMain() {
   const [dataTimeSpan, _setDataTimeSpan] = useLocalStorageState<DataTimeSpan>(
@@ -101,15 +102,24 @@ function useMetricsMain() {
     [dataInterval],
   )
 
+  // Subtract 1 data interval so that one previous datum is available for
+  // calculating the first delta. This is needed for charts that use delta mode
+  // (revenue, operations, bandwidth) which require the previous datum to calculate deltas.
+  const adjustedStart = useMemo(
+    () => timeRange.start - getDataIntervalInMs(dataInterval),
+    [timeRange.start, dataInterval],
+  )
+
+  const periods = useMemo(
+    () => getPeriods(adjustedStart, timeRange.end, dataInterval),
+    [adjustedStart, timeRange.end, dataInterval],
+  )
+
   const metricsPeriod = useMetricsPeriod({
     params: {
       interval: dataInterval,
-      // subtract 1 data interval so that one previous datum is available for
-      // calculating the first delta
-      start: formatISO(
-        new Date(timeRange.start - getDataIntervalInMs(dataInterval)),
-      ),
-      // periods: getPeriods(timeRange, dataInterval),
+      start: formatISO(new Date(adjustedStart)),
+      periods,
     },
     config: {
       swr: {
