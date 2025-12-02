@@ -5,6 +5,7 @@ import {
   getV1TransactionType,
   getV2TransactionType,
 } from './transactionTypes'
+import { EntityType } from './entityTypes'
 
 export function getEventFee(e: WalletEvent) {
   if (e.type === 'v2Transaction') {
@@ -45,5 +46,18 @@ export function getEventTxType(e: WalletEvent): TxType {
   if (eventType === 'foundation') {
     return 'foundationSubsidy'
   }
+  if (eventType === 'siafundClaim') {
+    return 'siafundClaim'
+  }
   return eventType
+}
+
+/**
+ * Returns whether the event ID refers to a transaction or an output.
+ */
+export function getEventIdEntityType(e: WalletEvent): EntityType {
+  if (e.type === 'v1Transaction' || e.type === 'v2Transaction') {
+    return 'transaction'
+  }
+  return 'output'
 }

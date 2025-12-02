@@ -1,5 +1,17 @@
 import { V2FileContractResolution } from '@siafoundation/types'
 
+/**
+ * The synthetic transaction types that map to an output rather than a transaction.
+ */
+export type TxOutputType =
+  | 'contractPayout'
+  | 'minerPayout'
+  | 'foundationSubsidy'
+  | 'siafundClaim'
+
+/**
+ * All the synthetic transaction types that an event may represent.
+ */
 export type TxType =
   | 'siacoin'
   | 'siafund'
@@ -10,13 +22,10 @@ export type TxType =
   | 'contractRefresh'
   | 'contractExpiration'
   | 'contractFinalization'
-  | 'contractPayout'
-  | 'minerPayout'
-  | 'siafundClaim'
-  | 'foundationSubsidy'
   | 'hostAnnouncement'
   | 'arbitraryData'
   | 'unknown'
+  | TxOutputType
 
 export function getV1TransactionType(txn: {
   storageProofs?: unknown[]
