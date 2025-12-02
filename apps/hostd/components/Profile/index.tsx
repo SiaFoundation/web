@@ -60,6 +60,11 @@ export function Profile() {
     ? new Date().getTime() - new Date(state.data?.startTime).getTime()
     : 0
 
+  // If lastAnnouncement.address is available, use it, otherwise use netAddress
+  // lastAnnouncement.address includes the port, netAddress does not.
+  const netAddress =
+    state.data?.lastAnnouncement?.address || settings.data?.netAddress
+
   return (
     <DaemonProfile
       name="hostd"
@@ -79,7 +84,8 @@ export function Profile() {
         <div className="flex-1 flex justify-end overflow-hidden -mr-0.5 pr-0.5">
           <ValueCopyable
             size="14"
-            value={settings.data?.netAddress}
+            value={netAddress}
+            displayValue={netAddress}
             maxLength={24}
             label="network address"
             type="hostIp"
