@@ -1,5 +1,11 @@
 # @siafoundation/request
 
+## 0.4.0
+
+### Minor Changes
+
+- 15f073b: Added multiple parameter array support to parameterizeRoute.
+
 ## 0.3.2
 
 ### Patch Changes

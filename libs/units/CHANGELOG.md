@@ -1,5 +1,11 @@
 # @siafoundation/units
 
+## 3.8.0
+
+### Minor Changes
+
+- ec8973f: Added getEventIdEntityType.
+
 ## 3.7.0
 
 ### Minor Changes

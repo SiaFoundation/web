@@ -1,5 +1,41 @@
 # indexd
 
+## 0.11.0
+
+### Minor Changes
+
+- 2242e5d: All data table columns can now be resized using a handle at the right side of each heading.
+- c14e70c: Use native Host location data.
+- e8a4b12: Removed contracts list host location column and multi-contract host map.
+- 3ef1a06: Added a dialog to specify reasons to block hosts.
+- 15f073b: The contract and host tables now have a variety of column sorting options and support for applying multiple at once. Closes https://github.com/SiaFoundation/indexd/issues/570
+- a213105: Less important table columns have been removed and all fields are now shown in each side panel. Closes https://github.com/SiaFoundation/indexd/issues/498 Closes https://github.com/SiaFoundation/indexd/issues/606
+- e8a4b12: Added host country and flag to single contract side panel.
+- 26c718f: Accounts can now be filtered by connect key. Closes https://github.com/SiaFoundation/indexd/issues/607
+- 033b447: The hosts table now defaults to showing usable hosts unless the not usable filter is explicitly applied.
+- 26c718f: Accounts can now be filtered by connect key from the connect key side panel.
+
+### Patch Changes
+
+- addece5: The data table empty states are now overlayed and centered regardless of horizontal scroll position.
+- e5d391f: The client-side min/max validation on connect key pinned data was removed. Closes https://github.com/SiaFoundation/indexd/issues/643
+- Updated dependencies [addece5]
+- Updated dependencies [26c718f]
+- Updated dependencies [8701eee]
+- Updated dependencies [2242e5d]
+- Updated dependencies [a213105]
+- Updated dependencies [15f073b]
+- Updated dependencies [825ea2e]
+- Updated dependencies [a213105]
+- Updated dependencies [ec8973f]
+- Updated dependencies [26c718f]
+- Updated dependencies [15f073b]
+  - @siafoundation/design-system@11.2.0
+  - @siafoundation/indexd-types@0.10.0
+  - @siafoundation/units@3.8.0
+  - @siafoundation/indexd-react@0.6.1
+  - @siafoundation/react-core@8.1.1
+
 ## 0.10.1
 
 ### Patch Changes

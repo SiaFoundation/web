@@ -1,5 +1,18 @@
 # @siafoundation/indexd-types
 
+## 0.10.0
+
+### Minor Changes
+
+- 26c718f: Added serviceaccount and connectkey to admin accounts API.
+- 8701eee: Added Host location typings.
+- 15f073b: Added sort parameters to contracts and hosts APIs.
+
+### Patch Changes
+
+- a213105: Updated blocklist types with reasons array.
+- a213105: Added new fields to Account and ConnectKey.
+
 ## 0.9.0
 
 ### Minor Changes

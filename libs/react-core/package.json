@@ -1,11 +1,11 @@
 {
   "name": "@siafoundation/react-core",
-  "version": "8.1.0",
+  "version": "8.1.1",
   "description": "Core library for building React hooks for interacting with a Sia daemon.",
   "license": "MIT",
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@siafoundation/request": "^0.3.2",
+    "@siafoundation/request": "^0.4.0",
     "axios": "^1.10.0",
     "detect-gpu": "^5.0.34",
     "swr": "^2.1.1",

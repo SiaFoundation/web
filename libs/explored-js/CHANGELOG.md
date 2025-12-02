@@ -1,5 +1,12 @@
 # @siafoundation/explored-js
 
+## 0.9.1
+
+### Patch Changes
+
+- Updated dependencies [15f073b]
+  - @siafoundation/request@0.4.0
+
 ## 0.9.0
 
 ### Minor Changes

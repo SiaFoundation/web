@@ -1,5 +1,12 @@
 # @siafoundation/react-core
 
+## 8.1.1
+
+### Patch Changes
+
+- Updated dependencies [15f073b]
+  - @siafoundation/request@0.4.0
+
 ## 8.1.0
 
 ### Minor Changes
