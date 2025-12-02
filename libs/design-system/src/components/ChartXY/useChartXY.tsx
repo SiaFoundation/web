@@ -17,7 +17,6 @@ import {
   CurveType,
   StackOffset,
 } from './types'
-import { daysInMilliseconds } from '@siafoundation/units'
 import { usePrefersReducedMotion } from '@siafoundation/react-core'
 import useLocalStorageState from 'use-local-storage-state'
 
@@ -26,7 +25,11 @@ const defaultChartType = 'areastack'
 const defaultCurveType = 'linear'
 const defaultStackOffset = 'none'
 
-type SimpleScaleConfig = { type: 'band' | 'linear'; paddingInner?: number }
+type SimpleScaleConfig = {
+  type: 'band' | 'linear'
+  paddingInner?: number
+  paddingOuter?: number
+}
 
 export function useChartXY<Key extends string, Cat extends string>(
   id: string,
@@ -154,25 +157,8 @@ export function useChartXY<Key extends string, Cat extends string>(
 
   const data = useMemo(() => {
     chartData.sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1))
-    if (chartData.length === 0) {
-      return []
-    }
-    const lastEl = chartData[chartData.length - 1]
-    // visx XYChart essentially clips the last datum. It seems like the tooltips
-    // nearestDatum calculation prioritizes the datum to the left and therefore
-    // never snaps to the final data point.
-    // This is an open issue: https://github.com/airbnb/visx/issues?q=is%3Aissue+nearestDatum
-    // To get around this, we simply add an extra point which makes the last real datum
-    // appear as the final visible/hoverable datum.
-    // barstack and bargroup do not have this issue and show all datums.
-    if (chartType !== 'barstack' && chartType !== 'bargroup') {
-      return [
-        ...chartData,
-        { ...lastEl, timestamp: lastEl.timestamp + daysInMilliseconds(1) },
-      ]
-    }
-    return chartData
-  }, [chartType, chartData])
+    return [...chartData]
+  }, [chartData])
   const todayOffset = useMemo(() => {
     if (data.length < 2) {
       return 0
@@ -223,6 +209,9 @@ export function useChartXY<Key extends string, Cat extends string>(
       x: {
         type: 'band',
         paddingInner: isLine ? 1 : 0.3,
+        // Add paddingOuter to ensure the last data point is hoverable.
+        // Without this, the last point is too close to the edge and tooltips don't work.
+        paddingOuter: 0.1,
       } as SimpleScaleConfig,
       y: { type: 'linear' } as SimpleScaleConfig,
     }),
