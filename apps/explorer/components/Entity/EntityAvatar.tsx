@@ -1,6 +1,11 @@
 'use client'
 
-import { Avatar, Link, Tooltip } from '@siafoundation/design-system'
+import {
+  Avatar,
+  PublicKeyAvatar,
+  Link,
+  Tooltip,
+} from '@siafoundation/design-system'
 import { EntityType, getEntityTypeLabel } from '@siafoundation/units'
 
 type Props = {
@@ -9,6 +14,7 @@ type Props = {
   label?: string
   href?: string
   src?: string
+  publicKey?: string
   shape?: 'square' | 'circle'
 }
 
@@ -18,17 +24,21 @@ export function EntityAvatar({
   initials,
   href,
   src,
+  publicKey,
   shape,
 }: Props) {
-  const avatarEl = (
+  const avatarShape =
+    shape ||
+    (!type || type === 'address' || type === 'block' ? 'square' : 'circle')
+
+  const avatarEl = publicKey ? (
+    <PublicKeyAvatar publicKey={publicKey} interactive={!!href} />
+  ) : (
     <Avatar
       interactive={!!href}
       fallback={initials || (type && initializeWords(type || label || ''))}
       src={src}
-      shape={
-        shape ||
-        (!type || type === 'address' || type === 'block' ? 'square' : 'circle')
-      }
+      shape={avatarShape}
     />
   )
   const linkEl = href && (
