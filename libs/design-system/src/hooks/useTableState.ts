@@ -24,7 +24,11 @@ type Params<Col extends TableColumn, SortField extends string> = {
 export function useTableState<
   Column extends TableColumn,
   SortField extends string,
->(scope: string, params: Params<Column, SortField>) {
+>(
+  scope: string,
+  params: Params<Column, SortField>,
+  scrollId = 'app-scroll-area',
+) {
   const {
     columns,
     columnsDefaultVisible,
@@ -102,12 +106,16 @@ export function useTableState<
     setSortField,
     setSortDirection,
     toggleSort,
-  } = useSorting(scope, {
-    defaultSortField,
-    defaultSortDirection,
-    sortOptions,
-    visibleColumnIds,
-  })
+  } = useSorting(
+    scope,
+    {
+      defaultSortField,
+      defaultSortDirection,
+      sortOptions,
+      visibleColumnIds,
+    },
+    scrollId,
+  )
 
   const sortableColumns = useMemo(() => {
     if (!sortOptions) {

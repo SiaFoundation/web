@@ -110,7 +110,7 @@ export function AppAuthedLayout({
               after={after}
             />
             {scroll ? (
-              <ScrollArea className="z-0">
+              <ScrollArea id="app-scroll-area" className="z-0">
                 <Container size={size} pad={false}>
                   <div className="flex flex-col gap-5">{children}</div>
                 </Container>

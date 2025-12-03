@@ -7,6 +7,7 @@ import {
   useRouter,
   useSearchParams,
 } from 'next/navigation'
+import { useScrollReset } from '../../hooks/useScrollReset'
 import {
   ColumnFiltersState,
   OnChangeFn,
@@ -23,42 +24,47 @@ export function useDataTableParams<
   const router = useRouter()
   const limit = getNumberParam(params, `${scope}Limit`, 100)
   const offset = getNumberParam(params, `${scope}Offset`, 0)
+  const resetScroll = useScrollReset('data-table-scroll-area')
 
   const setPage = useCallback(
     (offset: number) => {
+      resetScroll()
       const paramsObj = new URLSearchParams(Array.from(params.entries()))
       paramsObj.set(`${scope}Offset`, String(offset))
       router.push(`${pathname}?${paramsObj.toString()}`)
     },
-    [router, params, scope, pathname],
+    [router, params, scope, pathname, resetScroll],
   )
 
   const setPageSize = useCallback(
     (size: number) => {
+      resetScroll()
       const paramsObj = new URLSearchParams(Array.from(params.entries()))
       paramsObj.set(`${scope}Limit`, String(size))
       paramsObj.set(`${scope}Offset`, '0') // reset to first page
       router.push(`${pathname}?${paramsObj.toString()}`)
     },
-    [router, params, scope, pathname],
+    [router, params, scope, pathname, resetScroll],
   )
 
   const setOffset = useCallback(
     (offset: number) => {
+      resetScroll()
       const paramsObj = new URLSearchParams(Array.from(params.entries()))
       paramsObj.set(`${scope}Offset`, String(offset))
       router.push(`${pathname}?${paramsObj.toString()}`)
     },
-    [router, params, pathname, scope],
+    [router, params, pathname, scope, resetScroll],
   )
 
   const setLimit = useCallback(
     (limit: number) => {
+      resetScroll()
       const paramsObj = new URLSearchParams(Array.from(params.entries()))
       paramsObj.set(`${scope}Limit`, String(limit))
       router.push(`${pathname}?${paramsObj.toString()}`)
     },
-    [router, params, pathname, scope],
+    [router, params, pathname, scope, resetScroll],
   )
 
   const columnFiltersParams = params.get(`${scope}Filters`)
@@ -88,24 +94,27 @@ export function useDataTableParams<
 
   const setColumnFilters: OnChangeFn<Filters> = useCallback(
     (filtersFn) => {
+      resetScroll()
       const paramsObj = buildColumnFiltersParams(filtersFn)
       setParams(paramsObj)
     },
-    [setParams, buildColumnFiltersParams],
+    [setParams, buildColumnFiltersParams, resetScroll],
   )
 
   const removeColumnFilter = useCallback(
     (id: string) => {
+      resetScroll()
       setColumnFilters(
         (columnFilters) => columnFilters.filter((f) => f.id !== id) as Filters,
       )
     },
-    [setColumnFilters],
+    [setColumnFilters, resetScroll],
   )
 
   const removeLastColumnFilter = useCallback(() => {
+    resetScroll()
     setColumnFilters((columnFilters) => columnFilters.slice(0, -1) as Filters)
-  }, [setColumnFilters])
+  }, [setColumnFilters, resetScroll])
 
   const buildAddColumnFilterParams = useCallback(
     (filter: Filters[number]) => {
@@ -122,10 +131,11 @@ export function useDataTableParams<
 
   const addColumnFilter = useCallback(
     (filter: Filters[number]) => {
+      resetScroll()
       const paramsObj = buildAddColumnFilterParams(filter)
       setParams(paramsObj)
     },
-    [setParams, buildAddColumnFilterParams],
+    [setParams, buildAddColumnFilterParams, resetScroll],
   )
 
   const columnSortsParams = params.get(`${scope}Sorts`)
@@ -135,13 +145,14 @@ export function useDataTableParams<
 
   const setColumnSorts: OnChangeFn<Sorts> = useCallback(
     (sortsFn) => {
+      resetScroll()
       const sorts =
         typeof sortsFn === 'function' ? sortsFn(columnSorts) : sortsFn
       const paramsObj = new URLSearchParams(Array.from(params.entries()))
       paramsObj.set(`${scope}Sorts`, JSON.stringify(sorts))
       router.push(`${pathname}?${paramsObj.toString()}`)
     },
-    [router, params, pathname, scope, columnSorts],
+    [router, params, pathname, scope, columnSorts, resetScroll],
   )
 
   return {

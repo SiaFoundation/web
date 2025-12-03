@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from 'react'
 import { useResetPagination } from './useResetPagination'
+import { useScrollReset } from './useScrollReset'
 
 export type ClientFilterItem<Datum> = {
   id: string
@@ -10,9 +11,10 @@ export type ClientFilterItem<Datum> = {
   fn: (datum: Datum) => boolean
 }
 
-export function useClientFilters<Datum>() {
+export function useClientFilters<Datum>(scrollId = 'app-scroll-area') {
   const [filters, _setFilters] = useState<ClientFilterItem<Datum>[]>([])
   const resetPaginationParams = useResetPagination()
+  const resetScroll = useScrollReset(scrollId)
 
   const setFilter = useCallback(
     (item: ClientFilterItem<Datum>) => {
@@ -21,21 +23,24 @@ export function useClientFilters<Datum>() {
         return nextFilters.concat(item)
       })
       resetPaginationParams()
+      resetScroll()
     },
-    [_setFilters, resetPaginationParams],
+    [_setFilters, resetPaginationParams, resetScroll],
   )
 
   const resetFilters = useCallback(() => {
     _setFilters([])
     resetPaginationParams()
-  }, [_setFilters, resetPaginationParams])
+    resetScroll()
+  }, [_setFilters, resetPaginationParams, resetScroll])
 
   const removeFilter = useCallback(
     (id: string) => {
       _setFilters((filters) => filters.filter((f) => f.id !== id))
       resetPaginationParams()
+      resetScroll()
     },
-    [_setFilters, resetPaginationParams],
+    [_setFilters, resetPaginationParams, resetScroll],
   )
 
   const removeLastFilter = useCallback(() => {
@@ -44,7 +49,8 @@ export function useClientFilters<Datum>() {
     }
     _setFilters((filters) => filters.slice(0, -1))
     resetPaginationParams()
-  }, [_setFilters, filters, resetPaginationParams])
+    resetScroll()
+  }, [_setFilters, filters, resetPaginationParams, resetScroll])
 
   return {
     filters,
