@@ -76,7 +76,7 @@ describe('rhp', () => {
             hostKey:
               'ed25519:1b6793e900df020dc9a43c6df5f5d10dc5793956d44831ca5bbfec659021b75e',
             account:
-              '1b6793e900df020dc9a43c6df5f5d10dc5793956d44831ca5bbfec659021b75e',
+              'ed25519:1b6793e900df020dc9a43c6df5f5d10dc5793956d44831ca5bbfec659021b75e',
             validUntil: '2022-12-31T00:00:00Z',
             signature:
               '457256d6a1603bef7fa957a70b5ba96a9def2fea8b4c1483060d7ba5cf8a072cfddf242a1ef033dd7d669c711e846c59cb916f804a03d72d279ffef7e6583404',
@@ -109,7 +109,7 @@ describe('rhp', () => {
         }
         expectError(
           sdk.rhp.encodeReadSectorRequest(json),
-          "decoding acct:<hex> failed: encoding/hex: invalid byte: U+0069 'i'",
+          "decoding ed25519:<hex> failed: encoding/hex: invalid byte: U+0069 'i'",
         )
       })
     })
@@ -155,7 +155,7 @@ describe('rhp', () => {
             hostKey:
               'ed25519:1b6793e900df020dc9a43c6df5f5d10dc5793956d44831ca5bbfec659021b75e',
             account:
-              '1b6793e900df020dc9a43c6df5f5d10dc5793956d44831ca5bbfec659021b75e',
+              'ed25519:1b6793e900df020dc9a43c6df5f5d10dc5793956d44831ca5bbfec659021b75e',
             validUntil: '2022-12-31T00:00:00Z',
             signature:
               '457256d6a1603bef7fa957a70b5ba96a9def2fea8b4c1483060d7ba5cf8a072cfddf242a1ef033dd7d669c711e846c59cb916f804a03d72d279ffef7e6583404',
@@ -184,7 +184,7 @@ describe('rhp', () => {
         } as RPCWriteSectorRequest
         expectError(
           sdk.rhp.encodeWriteSectorRequest(json),
-          "decoding acct:<hex> failed: encoding/hex: invalid byte: U+0069 'i'",
+          "decoding ed25519:<hex> failed: encoding/hex: invalid byte: U+0069 'i'",
         )
       })
     })
@@ -237,7 +237,7 @@ function getSampleHostPrices(): HostPrices {
 function getSampleRPCSettingsResponse(): RPCSettingsResponse {
   const prices = getSampleHostPrices()
   const settings: HostSettings = {
-    protocolVersion: [1, 2, 3],
+    protocolVersion: 'v1.2.3',
     release: 'xxx',
     // 32 bytes
     walletAddress:

@@ -38,7 +38,7 @@ export type NetAddress = {
 }
 
 export type HostSettings = {
-  protocolVersion: [number, number, number] // 3 bytes
+  protocolVersion: string // 'v1.2.3'
   release: string
   walletAddress: Address // 32 bytes
   acceptingContracts: boolean
