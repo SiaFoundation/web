@@ -10,6 +10,7 @@ export type EntityListItemLayoutProps = {
   initials?: string
   avatarShape?: 'square' | 'circle'
   avatar?: string
+  publicKey?: string
   children?: React.ReactNode
 }
 
@@ -20,6 +21,7 @@ export function EntityListItemLayout({
   avatarShape,
   initials,
   href,
+  publicKey,
   onClick,
   children,
 }: EntityListItemLayoutProps) {
@@ -30,6 +32,7 @@ export function EntityListItemLayout({
         type={type}
         shape={avatarShape}
         src={avatar}
+        publicKey={publicKey}
         initials={initials || initializeWords(type || label || '')}
         href={href}
       />

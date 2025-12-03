@@ -11,7 +11,6 @@ import { useMemo } from 'react'
 import { routes } from '../../config/routes'
 import { ContentLayout } from '../ContentLayout'
 import { reverse, sortBy } from '@technically/lodash'
-import { hashToAvatar } from '../../lib/avatar'
 import {
   humanBytes,
   humanNumber,
@@ -294,7 +293,7 @@ export function Home({
                   entity={{
                     label: getHostNetAddress(host),
                     initials: 'H',
-                    avatar: hashToAvatar(host.publicKey),
+                    publicKey: host.publicKey,
                     href: routes.host.view.replace(':id', host.publicKey),
                   }}
                 />
