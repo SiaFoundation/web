@@ -394,7 +394,6 @@ function useMetricsMain() {
           rejected: m.contracts.rejected,
           failed: m.contracts.failed,
           renewed: m.contracts.renewed,
-          finalized: m.contracts.finalized,
           successful: m.contracts.successful,
           timestamp: new Date(m.timestamp).getTime(),
         }))
@@ -406,28 +405,13 @@ function useMetricsMain() {
       data,
       stats,
       config: {
-        enabledGraph: [
-          'active',
-          'rejected',
-          'failed',
-          'renewed',
-          'finalized',
-          'successful',
-        ],
-        enabledTip: [
-          'active',
-          'rejected',
-          'failed',
-          'renewed',
-          'finalized',
-          'successful',
-        ],
+        enabledGraph: ['active', 'rejected', 'failed', 'renewed', 'successful'],
+        enabledTip: ['active', 'rejected', 'failed', 'renewed', 'successful'],
         data: {
           active: chartConfigs.active,
           rejected: chartConfigs.rejected,
           failed: chartConfigs.failed,
           renewed: chartConfigs.renewed,
-          finalized: chartConfigs.finalized,
           successful: chartConfigs.successful,
         },
         format: (v) => `${v} contracts`,
