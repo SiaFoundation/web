@@ -16,7 +16,7 @@ import { Maybe } from '@siafoundation/types'
 import { useUploadsManager } from '../uploadsManager'
 
 type Props = {
-  id: string
+  id: 'filesDirectory' | 'filesFlat'
   objects: {
     isValidating: boolean
     data?: ObjectMetadata[]
@@ -80,52 +80,55 @@ export function useDataset({ id, objects, tableState }: Props) {
         })
         // Find intermediate directories that may not exist yet and add them
         // so that they show up before the files are fully uploaded.
-        for (const upload of uploadsList) {
-          if (upload.path.startsWith(activeDirectoryPath)) {
-            // Must be a child of the active directory.
-            if (!upload.path.startsWith(activeDirectoryPath)) {
-              continue
-            }
-            const nestedPath = upload.path.slice(activeDirectoryPath.length)
-            const parts = nestedPath.split('/')
-            // Must be a directory with nested children.
-            if (parts.length <= 1) {
-              continue
-            }
-            const newDirName = parts[0]
-            const newDirPath = join(activeDirectoryPath, newDirName) + '/'
-            // Must not already exist.
-            if (dataMap[newDirPath]) {
-              continue
-            }
-            dataMap[newDirPath] = {
-              id: newDirPath,
-              path: newDirPath,
-              bucket: activeBucket,
-              key: getKeyFromPath(newDirPath),
-              size: 0,
-              health: 0,
-              name: newDirName + '/',
-              type: 'directory',
+        // Skip this in flat mode - we only want to show files with their full paths.
+        if (id !== 'filesFlat') {
+          for (const upload of uploadsList) {
+            if (upload.path.startsWith(activeDirectoryPath)) {
+              // Must be a child of the active directory.
+              if (!upload.path.startsWith(activeDirectoryPath)) {
+                continue
+              }
+              const nestedPath = upload.path.slice(activeDirectoryPath.length)
+              const parts = nestedPath.split('/')
+              // Must be a directory with nested children.
+              if (parts.length <= 1) {
+                continue
+              }
+              const newDirName = parts[0]
+              const newDirPath = join(activeDirectoryPath, newDirName) + '/'
+              // Must not already exist.
+              if (dataMap[newDirPath]) {
+                continue
+              }
+              dataMap[newDirPath] = {
+                id: newDirPath,
+                path: newDirPath,
+                bucket: activeBucket,
+                key: getKeyFromPath(newDirPath),
+                size: 0,
+                health: 0,
+                name: newDirName + '/',
+                type: 'directory',
+              }
             }
           }
+          // Add file uploads. Adds any direct children of the active directory.
+          uploadsList
+            .filter(({ path }) => {
+              if (!path.startsWith(activeDirectoryPath)) {
+                return false
+              }
+              const parts = path.slice(activeDirectoryPath.length).split('/')
+              const isDirectChild = parts.length === 1
+              const prefix = fileNamePrefixFilter
+                ? join(activeDirectoryPath, fileNamePrefixFilter)
+                : activeDirectoryPath
+              return isDirectChild && path.startsWith(prefix)
+            })
+            .forEach((upload) => {
+              dataMap[upload.path] = upload
+            })
         }
-        // Add file uploads that are direct children of the active directory.
-        uploadsList
-          .filter(({ path }) => {
-            if (!path.startsWith(activeDirectoryPath)) {
-              return false
-            }
-            const parts = path.slice(activeDirectoryPath.length).split('/')
-            const isDirectChild = parts.length === 1
-            const prefix = fileNamePrefixFilter
-              ? join(activeDirectoryPath, fileNamePrefixFilter)
-              : activeDirectoryPath
-            return isDirectChild && path.startsWith(prefix)
-          })
-          .forEach((upload) => {
-            dataMap[upload.path] = upload
-          })
       }
       // Re-apply sort on the client so that uploads are included.
       const sortInfo = sortOptions.find((s) => s.id === tableState.sortField)

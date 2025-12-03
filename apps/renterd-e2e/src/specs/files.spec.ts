@@ -546,6 +546,37 @@ test('deselects file after deleting it in directory mode', async ({ page }) => {
   await expect(menu).toBeHidden()
 })
 
+test('deselects file after deleting it in all files mode', async ({ page }) => {
+  const bucketName = 'files-test'
+  const fileName = 'sample.txt'
+  const filePath = `${bucketName}/${fileName}`
+
+  await navigateToBuckets({ page })
+  await createBucket(page, bucketName)
+  await openBucket(page, bucketName)
+  await changeExplorerMode(page, 'all files')
+
+  // Upload a file.
+  await dragAndDropFileFromSystem(page, fileName)
+  await expect(page.getByText('100%')).toBeVisible()
+  await fileInList(page, filePath)
+
+  // Select the file.
+  const fileRow = await getFileRowById(page, filePath)
+  await fileRow.click({ modifiers: ['ControlOrMeta'] })
+
+  // Verify it's selected.
+  const menu = page.getByLabel('file multi-select menu')
+  await expect(menu.getByText('1 file selected')).toBeVisible()
+
+  // Delete the file via context menu.
+  await deleteFile(page, filePath)
+
+  // Verify the file is deleted and no longer selected.
+  await fileNotInList(page, filePath)
+  await expect(menu).toBeHidden()
+})
+
 test('deselects directory and nested files after deleting it in directory mode', async ({
   page,
 }) => {
@@ -617,4 +648,84 @@ test('deselects directory and nested files after deleting directory', async ({
   await fileNotInList(page, dirPath)
   await fileNotInList(page, filePath)
   await expect(menu).toBeHidden()
+})
+
+test('switching to all files mode from nested directory resets directory path to root', async ({
+  page,
+}) => {
+  const bucketName = 'files-test'
+  const dirName = 'test-dir'
+  const nestedDirName = 'nested-dir'
+  const dirPath = `${bucketName}/${dirName}/`
+  const nestedDirPath = `${bucketName}/${dirName}/${nestedDirName}/`
+
+  await navigateToBuckets({ page })
+  await createBucket(page, bucketName)
+  await openBucket(page, bucketName)
+
+  // Create nested directories.
+  await createDirectory(page, dirName)
+  await openDirectory(page, dirPath)
+  await createDirectory(page, nestedDirName)
+  await openDirectory(page, nestedDirPath)
+
+  // Verify we're in the nested directory by checking breadcrumb.
+  await expect(
+    page.getByTestId('navbar').getByText(dirName, { exact: true }),
+  ).toBeVisible()
+  await expect(
+    page.getByTestId('navbar').getByText(nestedDirName, { exact: true }),
+  ).toBeVisible()
+
+  // Switch to all files mode.
+  await changeExplorerMode(page, 'all files')
+
+  // Verify the breadcrumb only shows the bucket name (directory path reset to root).
+  await expect(
+    page.getByTestId('navbar').getByText(bucketName, { exact: true }),
+  ).toBeVisible()
+  // Verify nested directory names are not in breadcrumb.
+  await expect(
+    page.getByTestId('navbar').getByText(dirName, { exact: true }),
+  ).toBeHidden()
+  await expect(
+    page.getByTestId('navbar').getByText(nestedDirName, { exact: true }),
+  ).toBeHidden()
+  // Verify "All files" indicator is shown.
+  await expect(page.getByTestId('navbar').getByText('All files')).toBeVisible()
+})
+
+test('uploading file with nested path in all files mode shows full nested path without intermediate directories', async ({
+  page,
+}) => {
+  const bucketName = 'files-test'
+  const dirName = 'test-dir/nest'
+  const fileName = 'sample.txt'
+  const nestedFilePath = `${dirName}/${fileName}`
+  const fullFilePath = `${bucketName}/${dirName}/${fileName}`
+
+  await navigateToBuckets({ page })
+  await createBucket(page, bucketName)
+  await openBucket(page, bucketName)
+
+  // Switch to all files mode.
+  await changeExplorerMode(page, 'all files')
+
+  // Upload a file with a nested directory path.
+  await dragAndDropFileFromSystem(page, nestedFilePath)
+  await expect(page.getByText('100%')).toBeVisible()
+
+  // Wait for the file to appear in the list (after upload completes).
+  await fileInList(page, fullFilePath)
+
+  // Verify the file shows up with the full nested path.
+  const fileRow = await getFileRowById(page, fullFilePath)
+  await expect(fileRow).toBeVisible()
+  // The file should show the nested path structure.
+  await expect(fileRow.getByText(fileName)).toBeVisible()
+
+  // Verify intermediate directories do NOT appear as separate entries in flat mode.
+  // Only the file with its full path should be visible.
+  const intermediateDirPath = `${bucketName}/test-dir/`
+  await fileNotInList(page, intermediateDirPath)
 })
