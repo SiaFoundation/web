@@ -49,8 +49,6 @@ jobs:
   e2e:
     if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed' }}
     uses: ./.github/workflows/e2e.yml
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   test-go:
     # Run matrix since Go modules are used across all platforms
     runs-on: ${{ matrix.os }}

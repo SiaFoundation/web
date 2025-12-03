@@ -6,9 +6,6 @@ permissions:
 
 on:
   workflow_call:
-    secrets:
-      NPM_TOKEN:
-        required: true
 
 jobs:
   renterd-e2e-shard-tests:
@@ -23,8 +20,6 @@ jobs:
       project: renterd-e2e
       shardIndex: ${{ matrix.shardIndex }}
       shardTotal: ${{ matrix.shardTotal }}
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   renterd-e2e-merge-reports:
     if: ${{ !cancelled() }}
     needs: [renterd-e2e-shard-tests]
@@ -43,8 +38,6 @@ jobs:
       project: hostd-e2e
       shardIndex: ${{ matrix.shardIndex }}
       shardTotal: ${{ matrix.shardTotal }}
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   hostd-e2e-merge-reports:
     if: ${{ !cancelled() }}
     needs: [hostd-e2e-shard-tests]
@@ -63,8 +56,6 @@ jobs:
       project: walletd-e2e
       shardIndex: ${{ matrix.shardIndex }}
       shardTotal: ${{ matrix.shardTotal }}
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   walletd-e2e-merge-reports:
     if: ${{ !cancelled() }}
     needs: [walletd-e2e-shard-tests]
@@ -83,8 +74,6 @@ jobs:
       project: explorer-e2e
       shardIndex: ${{ matrix.shardIndex }}
       shardTotal: ${{ matrix.shardTotal }}
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   explorer-e2e-merge-reports:
     if: ${{ !cancelled() }}
     needs: [explorer-e2e-shard-tests]
