@@ -8,10 +8,12 @@ import { useDialog } from '../../contexts/dialog'
 import { useCallback } from 'react'
 import { useObjectsRemove } from '@siafoundation/renterd-react'
 import { getBucketFromPath, getKeyFromPath } from '../../lib/paths'
+import { useFilesActiveMode } from '../../contexts/filesManager/useFilesActiveMode'
 
 export function useFileDelete() {
   const { openConfirmDialog } = useDialog()
   const deleteObjects = useObjectsRemove()
+  const { multiSelect } = useFilesActiveMode()
 
   return useCallback(
     (path: string) =>
@@ -51,9 +53,13 @@ export function useFileDelete() {
             })
           } else {
             triggerSuccessToast({ title: 'Deleted file' })
+            // Deselect the deleted file if it's currently selected.
+            if (multiSelect?.selection[path]) {
+              multiSelect.deselect([path])
+            }
           }
         },
       }),
-    [openConfirmDialog, deleteObjects],
+    [openConfirmDialog, deleteObjects, multiSelect],
   )
 }

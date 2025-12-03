@@ -515,3 +515,106 @@ test('bulk selecting the entire page ignores the .. parent directory nav row', a
   const menu = page.getByLabel('file multi-select menu')
   await expect(menu.getByText('5 files selected')).toBeVisible()
 })
+
+test('deselects file after deleting it in directory mode', async ({ page }) => {
+  const bucketName = 'files-test'
+  const fileName = 'sample.txt'
+  const filePath = `${bucketName}/${fileName}`
+
+  await navigateToBuckets({ page })
+  await createBucket(page, bucketName)
+  await openBucket(page, bucketName)
+
+  // Upload a file.
+  await dragAndDropFileFromSystem(page, fileName)
+  await expect(page.getByText('100%')).toBeVisible()
+  await fileInList(page, filePath)
+
+  // Select the file.
+  const fileRow = await getFileRowById(page, filePath)
+  await fileRow.click({ modifiers: ['ControlOrMeta'] })
+
+  // Verify it's selected.
+  const menu = page.getByLabel('file multi-select menu')
+  await expect(menu.getByText('1 file selected')).toBeVisible()
+
+  // Delete the file via context menu.
+  await deleteFile(page, filePath)
+
+  // Verify the file is deleted and no longer selected.
+  await fileNotInList(page, filePath)
+  await expect(menu).toBeHidden()
+})
+
+test('deselects directory and nested files after deleting it in directory mode', async ({
+  page,
+}) => {
+  const bucketName = 'files-test'
+  const dirName = 'test-dir'
+  const dirPath = `${bucketName}/${dirName}/`
+
+  await navigateToBuckets({ page })
+  await createBucket(page, bucketName)
+  await openBucket(page, bucketName)
+
+  // Create a directory.
+  await createDirectory(page, dirName)
+  await fileInList(page, dirPath)
+
+  // Select the directory.
+  const dirRow = await getFileRowById(page, dirPath)
+  await dirRow.click({ modifiers: ['ControlOrMeta'] })
+
+  // Verify it's selected.
+  const menu = page.getByLabel('file multi-select menu')
+  await expect(menu.getByText('1 file selected')).toBeVisible()
+
+  // Delete the directory via context menu.
+  await deleteDirectory(page, dirPath)
+
+  // Verify the directory is deleted and no longer selected.
+  await fileNotInList(page, dirPath)
+  await expect(menu).toBeHidden()
+})
+
+test('deselects directory and nested files after deleting directory', async ({
+  page,
+}) => {
+  const bucketName = 'files-test'
+  const dirName = 'test-dir'
+  const fileName = 'sample.txt'
+  const dirPath = `${bucketName}/${dirName}/`
+  const filePath = `${bucketName}/${dirName}/${fileName}`
+
+  await navigateToBuckets({ page })
+  await createBucket(page, bucketName)
+  await openBucket(page, bucketName)
+
+  // Create a directory and add a file.
+  await createDirectory(page, dirName)
+  await openDirectory(page, dirPath)
+  await dragAndDropFileFromSystem(page, fileName)
+  await expect(page.getByText('100%')).toBeVisible()
+  await fileInList(page, filePath)
+
+  // Navigate back and select both the directory and the file.
+  await navigateToParentDirectory(page)
+  const dirRow = await getFileRowById(page, dirPath)
+  await dirRow.click({ modifiers: ['ControlOrMeta'] })
+  await openDirectory(page, dirPath)
+  const fileRow = await getFileRowById(page, filePath)
+  await fileRow.click({ modifiers: ['ControlOrMeta'] })
+
+  // Verify both are selected.
+  const menu = page.getByLabel('file multi-select menu')
+  await expect(menu.getByText('2 files selected')).toBeVisible()
+
+  // Navigate back and delete the directory via context menu.
+  await navigateToParentDirectory(page)
+  await deleteDirectory(page, dirPath)
+
+  // Verify the directory and file are deleted and no longer selected.
+  await fileNotInList(page, dirPath)
+  await fileNotInList(page, filePath)
+  await expect(menu).toBeHidden()
+})

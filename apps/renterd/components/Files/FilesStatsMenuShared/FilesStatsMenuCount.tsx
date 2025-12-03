@@ -1,15 +1,11 @@
 import { LoadingDots, Text, Tooltip } from '@siafoundation/design-system'
 import { useObjectStats } from '@siafoundation/renterd-react'
 import { useFilesManager } from '../../../contexts/filesManager'
-import { useFilesDirectory } from '../../../contexts/filesDirectory'
-import { useFilesFlat } from '../../../contexts/filesFlat'
+import { useFilesActiveMode } from '../../../contexts/filesManager/useFilesActiveMode'
 
 export function FilesStatsMenuCount() {
-  const { isViewingABucket, activeExplorerMode } = useFilesManager()
-  const { datasetPageTotal: directoryPageTotal } = useFilesDirectory()
-  const { datasetPageTotal: flatPageTotal } = useFilesFlat()
-  const datasetPageTotal =
-    activeExplorerMode === 'flat' ? flatPageTotal : directoryPageTotal
+  const { isViewingABucket } = useFilesManager()
+  const { datasetPageTotal } = useFilesActiveMode()
 
   const stats = useObjectStats({
     config: {

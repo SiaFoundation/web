@@ -8,11 +8,17 @@ import { useDialog } from '../../contexts/dialog'
 import { useCallback } from 'react'
 import { useObjectsRemove } from '@siafoundation/renterd-react'
 import { humanBytes } from '@siafoundation/units'
-import { getBucketFromPath, getKeyFromPath } from '../../lib/paths'
+import {
+  getBucketFromPath,
+  getKeyFromPath,
+  ensureDirectory,
+} from '../../lib/paths'
+import { useFilesActiveMode } from '../../contexts/filesManager/useFilesActiveMode'
 
 export function useDirectoryDelete() {
   const { openConfirmDialog } = useDialog()
   const deleteObjects = useObjectsRemove()
+  const { multiSelect } = useFilesActiveMode()
 
   return useCallback(
     (path: string, size: number) =>
@@ -52,9 +58,21 @@ export function useDirectoryDelete() {
             })
           } else {
             triggerSuccessToast({ title: 'Deleted directory' })
+            // Deselect the deleted directory and all files within it.
+            if (multiSelect) {
+              // Ensure path ends with / for proper matching to avoid matching sibling directories.
+              // e.g., without this, 'bucket/dir' would match 'bucket/dir2/file.txt'
+              const normalizedPath = ensureDirectory(path)
+              const idsToDeselect = Object.keys(multiSelect.selection).filter(
+                (id) => id === path || id.startsWith(normalizedPath),
+              )
+              if (idsToDeselect.length > 0) {
+                multiSelect.deselect(idsToDeselect)
+              }
+            }
           }
         },
       }),
-    [openConfirmDialog, deleteObjects],
+    [openConfirmDialog, deleteObjects, multiSelect],
   )
 }
