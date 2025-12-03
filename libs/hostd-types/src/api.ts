@@ -280,7 +280,6 @@ type ContractMetrics = {
   rejected: number
   failed: number
   renewed: number
-  finalized: number
   successful: number
   lockedCollateral: string
   riskedCollateral: string

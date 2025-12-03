@@ -16,9 +16,6 @@ export const chartConfigs = {
   renewed: {
     color: colors.blue[600],
   },
-  finalized: {
-    color: colors.yellow[600],
-  },
   successful: {
     color: colors.green[600],
   },

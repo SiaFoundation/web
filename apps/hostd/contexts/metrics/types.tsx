@@ -34,7 +34,6 @@ export type ContractsKeys =
   | 'rejected'
   | 'failed'
   | 'renewed'
-  | 'finalized'
   | 'successful'
 
 export type StorageKeys =
