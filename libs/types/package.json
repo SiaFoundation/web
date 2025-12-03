@@ -3,5 +3,9 @@
   "version": "0.13.0",
   "description": "Core Sia types and library methods.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SiaFoundation/web"
+  },
   "types": "./src/index.d.ts"
 }

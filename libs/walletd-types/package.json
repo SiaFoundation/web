@@ -3,6 +3,10 @@
   "version": "0.7.4",
   "description": "Types for `walletd`.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SiaFoundation/web"
+  },
   "types": "./src/index.d.ts",
   "dependencies": {
     "@siafoundation/types": "^0.13.0"

@@ -3,6 +3,10 @@
   "version": "8.1.1",
   "description": "Core library for building React hooks for interacting with a Sia daemon.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SiaFoundation/web"
+  },
   "types": "./src/index.d.ts",
   "dependencies": {
     "@siafoundation/request": "^0.4.0",

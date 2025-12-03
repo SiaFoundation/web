@@ -3,6 +3,10 @@
   "version": "0.6.1",
   "description": "React hooks for interacting with `indexd`.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SiaFoundation/web"
+  },
   "types": "./src/index.d.ts",
   "dependencies": {
     "@siafoundation/indexd-types": "0.10.0",

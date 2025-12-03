@@ -3,6 +3,10 @@
   "version": "0.6.10",
   "description": "Shared e2e testing code.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SiaFoundation/web"
+  },
   "types": "./src/index.d.ts",
   "dependencies": {
     "@playwright/test": "^1.54.1",

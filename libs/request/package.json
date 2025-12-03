@@ -3,6 +3,10 @@
   "version": "0.4.0",
   "description": "Core library for building request APIs.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SiaFoundation/web"
+  },
   "types": "./src/index.d.ts",
   "dependencies": {
     "@technically/lodash": "^4.17.0",

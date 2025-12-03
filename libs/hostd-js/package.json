@@ -3,6 +3,10 @@
   "version": "0.5.8",
   "description": "SDK for interacting with `hostd`.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SiaFoundation/web"
+  },
   "types": "./src/index.d.ts",
   "dependencies": {
     "@siafoundation/hostd-types": "^0.10.1",

@@ -3,6 +3,10 @@
   "version": "4.5.5",
   "description": "React hooks for interacting with `walletd`.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SiaFoundation/web"
+  },
   "types": "./src/index.d.ts",
   "dependencies": {
     "@siafoundation/react-core": "^8.0.0",

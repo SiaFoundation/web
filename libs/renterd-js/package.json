@@ -3,6 +3,10 @@
   "version": "0.14.8",
   "description": "SDK for interacting with `renterd`.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SiaFoundation/web"
+  },
   "types": "./src/index.d.ts",
   "dependencies": {
     "@siafoundation/renterd-types": "^0.17.4",
