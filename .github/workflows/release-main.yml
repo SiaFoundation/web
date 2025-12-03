@@ -21,7 +21,8 @@ concurrency: commits-to-main
 
 jobs:
   release:
-    runs-on: tenki-standard-autoscale
+    # Release workflow must run on a GitHub-hosted runner since it uses OIDC trusted publisher authentication.
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout all commits
         uses: actions/checkout@v3
@@ -61,7 +62,6 @@ jobs:
           publish: bun run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Release Go modules
         # If a release was published, release the Go modules
         if: steps.changesets_release.outputs.published == 'true'
