@@ -4,9 +4,12 @@ import { useAppSettings } from '@siafoundation/react-core'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import { cx } from 'class-variance-authority'
+import { Warning16 } from '@siafoundation/react-icons'
 import { toFixedMaxString } from '../lib/numbers'
 import { BaseNumberField } from './BaseNumberField'
 import { useExternalActiveExchangeRate } from '../hooks/useExternalExchangeRate'
+import { Text } from './Text'
+import { Tooltip } from './Tooltip'
 
 type Props = Omit<
   React.ComponentProps<typeof BaseNumberField>,
@@ -48,7 +51,7 @@ export function SiacoinField({
   )
   const { settings } = useAppSettings()
   const exchangeRate = useExternalActiveExchangeRate()
-  const rate = exchangeRate ? exchangeRate.rate : undefined
+  const rate = exchangeRate?.rate
   const [active, setActive] = useState<'sc' | 'fiat'>()
   const [localSc, setLocalSc] = useState<string>('')
   const [localFiat, setLocalFiat] = useState<string>('')
@@ -191,39 +194,67 @@ export function SiacoinField({
           }
         }}
       />
-      {showFiat && rate && (
-        <BaseNumberField
-          {...props}
-          data-testid="fiatInput"
-          name={`${name}-fiat`}
-          size={size}
-          variant="ghost"
-          focus="none"
-          value={localFiat !== 'NaN' ? localFiat : ''}
-          units={settings.currency.label + (unitsFiatPostfix || '')}
-          decimalScale={decimalsLimitFiat}
-          allowNegative={false}
-          onValueChange={(value) => {
-            setLocalFiat(value.value || '')
-          }}
-          placeholder={`${settings.currency.prefix}${rate
-            .times(placeholder)
-            .toFixed(decimalsLimitFiat)}`}
-          prefix={prefix || settings.currency.prefix}
-          onFocus={(e) => {
-            setActive('fiat')
-            if (onFocus) {
-              onFocus(e)
-            }
-          }}
-          onBlur={(e) => {
-            setActive(undefined)
-            if (onBlur) {
-              onBlur(e)
-            }
-          }}
-        />
-      )}
+      {showFiat && !exchangeRate.isLoading ? (
+        rate ? (
+          <BaseNumberField
+            {...props}
+            data-testid="fiatInput"
+            name={`${name}-fiat`}
+            size={size}
+            variant="ghost"
+            focus="none"
+            value={localFiat !== 'NaN' ? localFiat : ''}
+            units={settings.currency.label + (unitsFiatPostfix || '')}
+            decimalScale={decimalsLimitFiat}
+            allowNegative={false}
+            onValueChange={(value) => {
+              setLocalFiat(value.value || '')
+            }}
+            placeholder={`${settings.currency.prefix}${rate
+              .times(placeholder)
+              .toFixed(decimalsLimitFiat)}`}
+            prefix={prefix || settings.currency.prefix}
+            onFocus={(e) => {
+              setActive('fiat')
+              if (onFocus) {
+                onFocus(e)
+              }
+            }}
+            onBlur={(e) => {
+              setActive(undefined)
+              if (onBlur) {
+                onBlur(e)
+              }
+            }}
+          />
+        ) : (
+          <Tooltip
+            content="Exchange rate is currently unavailable. Fiat conversion cannot be displayed."
+            side="bottom"
+          >
+            <div
+              className={cx(
+                'relative flex items-center gap-1.5',
+                'border-t border-gray-200 dark:border-graydark-200',
+                size === 'small' ? 'h-8 px-2' : 'h-10 px-3',
+              )}
+              data-testid="fiatRateUnavailable"
+            >
+              <Text color="amber">
+                <Warning16 />
+              </Text>
+              <Text size="12" color="contrast">
+                Exchange rate unavailable
+              </Text>
+              <div className="flex items-center absolute top-0 h-full right-2">
+                <Text size="12" weight="medium" color="subtle">
+                  {settings.currency.label + (unitsFiatPostfix || '')}
+                </Text>
+              </div>
+            </div>
+          </Tooltip>
+        )
+      ) : null}
     </div>
   )
 }

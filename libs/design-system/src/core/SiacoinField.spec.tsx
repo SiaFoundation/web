@@ -10,6 +10,7 @@ import userEvent from '@testing-library/user-event'
 import { useState, act } from 'react'
 import { setupServer } from 'msw/node'
 import { HttpResponse, http } from 'msw'
+import { TooltipProvider } from '../hooks/tooltip'
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn().mockReturnValue({
@@ -33,6 +34,10 @@ describe('SiacoinField', () => {
       sc: new BigNumber(33),
       onChange,
     })
+
+    if (!fiatInput) {
+      throw new Error('Fiat input not found')
+    }
 
     expect(scInput.value).toBe('33')
     expect(fiatInput.value).toBe('$33')
@@ -66,6 +71,9 @@ describe('SiacoinField', () => {
     })
 
     expect(scInput.value).toBe('33')
+    if (!fiatInput) {
+      throw new Error('Fiat input not found')
+    }
     expect(fiatInput.value).toBe('$33')
     await user.click(scInput)
     await user.clear(scInput)
@@ -86,6 +94,9 @@ describe('SiacoinField', () => {
     })
 
     expect(scInput.value).toBe('33')
+    if (!fiatInput) {
+      throw new Error('Fiat input not found')
+    }
     expect(fiatInput.value).toBe('$33')
     await user.click(scInput)
     await user.clear(scInput)
@@ -106,6 +117,9 @@ describe('SiacoinField', () => {
     })
 
     expect(scInput.value).toBe('3.333')
+    if (!fiatInput) {
+      throw new Error('Fiat input not found')
+    }
     expect(fiatInput.value).toBe('$3.333')
     await user.click(scInput)
     await user.clear(scInput)
@@ -144,6 +158,9 @@ describe('SiacoinField', () => {
     })
 
     expect(scInput.value).toBe('3.333')
+    if (!fiatInput) {
+      throw new Error('Fiat input not found')
+    }
     expect(fiatInput.value).toBe('₽3.333')
     await user.click(scInput)
     await user.clear(scInput)
@@ -182,6 +199,9 @@ describe('SiacoinField', () => {
     })
 
     expect(scInput.value).toBe('3.333')
+    if (!fiatInput) {
+      throw new Error('Fiat input not found')
+    }
     expect(fiatInput.value).toBe('₽3.333')
     await user.click(scInput)
     await user.clear(scInput)
@@ -218,6 +238,9 @@ describe('SiacoinField', () => {
     })
 
     expect(scInput.value).toBe('0.123457')
+    if (!fiatInput) {
+      throw new Error('Fiat input not found')
+    }
     expect(fiatInput.value).toBe('$0.123457')
     await user.click(scInput)
     await user.clear(scInput)
@@ -256,6 +279,9 @@ describe('SiacoinField', () => {
     })
 
     expect(scInput.value).toBe('0.444')
+    if (!fiatInput) {
+      throw new Error('Fiat input not found')
+    }
     expect(fiatInput.value).toBe('$0.444')
     await user.click(fiatInput)
     await user.clear(fiatInput)
@@ -295,6 +321,10 @@ describe('SiacoinField', () => {
       onChange,
     })
 
+    if (!fiatInput) {
+      throw new Error('Fiat input not found')
+    }
+
     expect(fiatInput.value).toBe('$0.158931')
     expect(scInput.value).toBe('45.47473')
     await user.click(fiatInput)
@@ -329,6 +359,9 @@ describe('SiacoinField', () => {
     })
 
     expect(scInput.value).toBe('0.444')
+    if (!fiatInput) {
+      throw new Error('Fiat input not found')
+    }
     expect(fiatInput.value).toBe('$0.001609')
     await user.click(scInput)
     await user.clear(scInput)
@@ -353,12 +386,73 @@ describe('SiacoinField', () => {
     })
 
     expect(scInput.value).toBe('0.444')
+    if (!fiatInput) {
+      throw new Error('Fiat input not found')
+    }
     expect(fiatInput.value).toBe('$0.001609')
     fireEvent.focus(fiatInput)
     expect(scInput.value).toBe('0.444')
     expect(fiatInput.value).toBe('$0.001609')
     expect(onChange.mock.calls.length).toBe(1)
     expectOnChangeValues(['0.444'], onChange)
+  })
+
+  it('shows visual indicator when fiat is enabled but rate is unavailable', async () => {
+    mockEndpointsWithError()
+    const onChange = jest.fn()
+    const { scInput, node } = await renderNode({
+      sc: new BigNumber(100),
+      onChange,
+      showFiat: true,
+    })
+
+    expect(scInput.value).toBe('100')
+
+    const indicator = node.getByTestId('fiatRateUnavailable')
+    expect(indicator).toBeTruthy()
+
+    // Verify fiat input is not shown
+    const fiatInput = node.queryByTestId('fiatInput')
+    expect(fiatInput).toBeNull()
+
+    // Verify indicator text is present
+    expect(indicator.textContent).toContain('Exchange rate unavailable')
+  })
+
+  it('does not show indicator when showFiat is false', async () => {
+    mockEndpointsWithError()
+    const onChange = jest.fn()
+    const { scInput, node } = await renderNode({
+      sc: new BigNumber(100),
+      onChange,
+      showFiat: false,
+    })
+
+    expect(scInput.value).toBe('100')
+
+    const indicator = node.queryByTestId('fiatRateUnavailable')
+    expect(indicator).toBeNull()
+
+    const fiatInput = node.queryByTestId('fiatInput')
+    expect(fiatInput).toBeNull()
+  })
+
+  it('does not show indicator when rate is available', async () => {
+    mockEndpoints('1')
+    const onChange = jest.fn()
+    const { scInput, fiatInput, node } = await renderNode({
+      sc: new BigNumber(100),
+      onChange,
+      showFiat: true,
+    })
+
+    expect(scInput.value).toBe('100')
+    if (!fiatInput) {
+      throw new Error('Fiat input not found')
+    }
+    expect(fiatInput.value).toBe('$100')
+    const indicator = node.queryByTestId('fiatRateUnavailable')
+    expect(indicator).toBeNull()
   })
 })
 
@@ -384,23 +478,37 @@ async function renderNode({
   const node = render(
     <CoreProvider cacheProvider={() => new Map()}>
       <AppSettingsProvider daemonExplorerInfoRoute={daemonExplorerInfoRoute}>
-        <Component sc={sc} {...props} />
+        <TooltipProvider>
+          <Component sc={sc} {...props} />
+        </TooltipProvider>
       </AppSettingsProvider>
     </CoreProvider>,
   )
 
   const scInput = node.getByTestId('scInput') as HTMLInputElement
-  await waitFor(() => {
-    const fiatInput = node.getByTestId('fiatInput') as HTMLInputElement
-    expect(fiatInput).toBeTruthy()
-  })
-  const fiatInput = node.getByTestId('fiatInput') as HTMLInputElement
-  await waitFor(() => expect(fiatInput.value).toBeTruthy())
+
+  if (props.showFiat) {
+    // Wait for either fiat input (when rate is available) or indicator (when rate is unavailable)
+    await waitFor(
+      () => {
+        const fiatInput = node.queryByTestId('fiatInput') as HTMLInputElement
+        const indicator = node.queryByTestId('fiatRateUnavailable')
+        expect(fiatInput || indicator).toBeTruthy()
+        if (fiatInput) {
+          expect(fiatInput?.value).toBeTruthy()
+        }
+      },
+      { timeout: 3000 },
+    )
+  }
+
   // Let the component set state and finish the next render pass.
   await act(async () => {
     await delay(100)
   })
-  return { scInput, fiatInput }
+
+  const fiatInput = node.queryByTestId('fiatInput') as HTMLInputElement | null
+  return { scInput, fiatInput, node }
 }
 
 function mockDaemonExplorerEndpoint() {
@@ -427,6 +535,17 @@ function mockSiascanExchangeRateEndpoint(rate = '1') {
 function mockEndpoints(rate = '1') {
   mockDaemonExplorerEndpoint()
   mockSiascanExchangeRateEndpoint(rate)
+}
+
+function mockEndpointsWithError() {
+  mockDaemonExplorerEndpoint()
+  // Mock exchange rate endpoint to return an error
+  // This simulates the rate being unavailable
+  server.use(
+    http.get('https://api.siascan.com/exchange-rate/siacoin/*', () => {
+      return HttpResponse.json(null, { status: 500 })
+    }),
+  )
 }
 
 function expectOnChangeValues(values: (string | undefined)[], fn: jest.Mock) {
