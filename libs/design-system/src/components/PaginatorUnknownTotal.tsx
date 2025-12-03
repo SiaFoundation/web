@@ -9,12 +9,14 @@ import {
 } from '@siafoundation/react-icons'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { LoadingDots } from './LoadingDots'
+import { useScrollReset } from '../hooks/useScrollReset'
 
 type Props = {
   offset: number
   limit: number
   pageTotal: number
   isLoading: boolean
+  scrollId?: string
 }
 
 export function PaginatorUnknownTotal({
@@ -22,10 +24,13 @@ export function PaginatorUnknownTotal({
   limit,
   pageTotal,
   isLoading,
+  scrollId = 'app-scroll-area',
 }: Props) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const resetScroll = useScrollReset(scrollId)
+
   const isMore = pageTotal >= limit
   const from = offset + 1
   const to = Math.min(offset + limit, offset + pageTotal)
@@ -39,6 +44,7 @@ export function PaginatorUnknownTotal({
         variant="gray"
         className="rounded-r-none"
         onClick={() => {
+          resetScroll()
           const query = new URLSearchParams(searchParams.toString())
           query.set('offset', '0')
           router.push(`${pathname}?${query.toString()}`)
@@ -56,6 +62,7 @@ export function PaginatorUnknownTotal({
         variant="gray"
         className="rounded-none"
         onClick={() => {
+          resetScroll()
           const query = new URLSearchParams(searchParams.toString())
           query.set('offset', Math.max(offset - limit, 0).toString())
           router.push(`${pathname}?${query.toString()}`)
@@ -84,6 +91,7 @@ export function PaginatorUnknownTotal({
         variant="gray"
         className="rounded-none"
         onClick={() => {
+          resetScroll()
           const query = new URLSearchParams(searchParams.toString())
           query.set('offset', (offset + limit).toString())
           router.push(`${pathname}?${query.toString()}`)

@@ -10,12 +10,14 @@ import {
 } from '@siafoundation/react-icons'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { LoadingDots } from '../components/LoadingDots'
+import { useScrollReset } from '../hooks/useScrollReset'
 
 type Props = {
   offset: number
   limit: number
   isLoading: boolean
   total: number
+  scrollId?: string
 }
 
 export function PaginatorKnownTotal({
@@ -23,10 +25,13 @@ export function PaginatorKnownTotal({
   limit,
   total,
   isLoading,
+  scrollId = 'app-scroll-area',
 }: Props) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const resetScroll = useScrollReset(scrollId)
+
   return (
     <ControlGroup>
       <Button
@@ -37,6 +42,7 @@ export function PaginatorKnownTotal({
         variant="gray"
         className="rounded-r-none"
         onClick={() => {
+          resetScroll()
           const query = new URLSearchParams(searchParams.toString())
           query.set('offset', '0')
           router.push(`${pathname}?${query.toString()}`)
@@ -54,6 +60,7 @@ export function PaginatorKnownTotal({
         variant="gray"
         className="rounded-none"
         onClick={() => {
+          resetScroll()
           const query = new URLSearchParams(searchParams.toString())
           query.set('offset', Math.max(offset - limit, 0).toString())
           router.push(`${pathname}?${query.toString()}`)
@@ -80,6 +87,7 @@ export function PaginatorKnownTotal({
         variant="gray"
         className="rounded-none"
         onClick={() => {
+          resetScroll()
           const query = new URLSearchParams(searchParams.toString())
           query.set('offset', Math.min(offset + limit, total).toString())
           router.push(`${pathname}?${query.toString()}`)
@@ -95,6 +103,7 @@ export function PaginatorKnownTotal({
         variant="gray"
         className="rounded-l-none"
         onClick={() => {
+          resetScroll()
           const query = new URLSearchParams(searchParams.toString())
           query.set('offset', (Math.floor(total / limit) * limit).toString())
           router.push(`${pathname}?${query.toString()}`)

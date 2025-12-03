@@ -284,6 +284,7 @@ export function DataTable<T extends { id: string }>({
       <div className="flex-1 overflow-hidden relative">
         <div
           ref={tableContainerRef}
+          id="data-table-scroll-area"
           className="relative w-full h-full overflow-auto"
         >
           <div className="min-w-fit">

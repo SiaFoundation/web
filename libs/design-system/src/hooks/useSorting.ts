@@ -3,6 +3,7 @@
 import { intersection } from '@technically/lodash'
 import { useCallback, useMemo } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
+import { useScrollReset } from './useScrollReset'
 
 type Params<ColumnId extends string, SortField extends string> = {
   visibleColumnIds: ColumnId[]
@@ -14,6 +15,7 @@ type Params<ColumnId extends string, SortField extends string> = {
 export function useSorting<ColumnId extends string, SortField extends string>(
   scope: string,
   params: Params<ColumnId, SortField>,
+  scrollId = 'app-scroll-area',
 ) {
   const {
     defaultSortField,
@@ -35,16 +37,37 @@ export function useSorting<ColumnId extends string, SortField extends string>(
     defaultValue: defaultSortDirection || 'desc',
   })
 
+  const resetScroll = useScrollReset(scrollId)
+
+  const setSortFieldWithScroll = useCallback(
+    (field: SortField) => {
+      resetScroll()
+      setSortField(field)
+    },
+    [setSortField, resetScroll],
+  )
+
+  const setSortDirectionWithScroll = useCallback(
+    (
+      direction: 'desc' | 'asc' | ((prev: 'desc' | 'asc') => 'desc' | 'asc'),
+    ) => {
+      resetScroll()
+      setSortDirection(direction)
+    },
+    [setSortDirection, resetScroll],
+  )
+
   const toggleSort = useCallback(
     (field: SortField) => {
       if (sortField !== field) {
         setSortField(field)
         setSortDirection('asc')
-        return
+      } else {
+        setSortDirection((dir) => (dir === 'desc' ? 'asc' : 'desc'))
       }
-      setSortDirection((dir) => (dir === 'desc' ? 'asc' : 'desc'))
+      resetScroll()
     },
-    [sortField, setSortField, setSortDirection],
+    [sortField, setSortField, setSortDirection, resetScroll],
   )
 
   const sortableColumns = useMemo(() => {
@@ -60,8 +83,8 @@ export function useSorting<ColumnId extends string, SortField extends string>(
 
   return {
     toggleSort,
-    setSortDirection,
-    setSortField,
+    setSortDirection: setSortDirectionWithScroll,
+    setSortField: setSortFieldWithScroll,
     sortableColumns,
     sortField,
     sortDirection,

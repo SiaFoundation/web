@@ -6,6 +6,7 @@ import { CaretRight16, PageFirst16 } from '@siafoundation/react-icons'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { LoadingDots } from './LoadingDots'
 import { pluralize } from '@siafoundation/units'
+import { useScrollReset } from '../hooks/useScrollReset'
 
 type Props = {
   marker?: string | null
@@ -14,6 +15,7 @@ type Props = {
   limit: number
   pageTotal: number
   isLoading: boolean
+  scrollId?: string
 }
 
 export function PaginatorMarker({
@@ -22,10 +24,13 @@ export function PaginatorMarker({
   isMore,
   pageTotal,
   isLoading,
+  scrollId = 'app-scroll-area',
 }: Props) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const resetScroll = useScrollReset(scrollId)
+
   // If no marker is provided, we do not know if we are on the first or any other page
   // so leave the control enabled. If the marker is null, we are on the first page.
   const previousDisabled = marker === undefined ? false : marker === null
@@ -39,6 +44,7 @@ export function PaginatorMarker({
         variant="gray"
         className="rounded-r-none"
         onClick={() => {
+          resetScroll()
           const query = new URLSearchParams(searchParams.toString())
           query.set('marker', '')
           router.push(`${pathname}?${query.toString()}`)
@@ -73,6 +79,7 @@ export function PaginatorMarker({
         variant="gray"
         className="rounded-none"
         onClick={() => {
+          resetScroll()
           const query = new URLSearchParams(searchParams.toString())
           query.set('marker', nextMarker ?? '')
           router.push(`${pathname}?${query.toString()}`)
