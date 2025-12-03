@@ -12,6 +12,6 @@
     "@siafoundation/react-core": "^8.0.0",
     "@siafoundation/renterd-types": "^0.17.5",
     "@siafoundation/units": "^3.7.0",
-    "swr": "^2.1.1"
+    "swr": "^2.3.7"
   }
 }
