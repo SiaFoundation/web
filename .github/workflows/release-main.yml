@@ -12,10 +12,7 @@ on:
     branches:
       - main
 
-# This is for .npmrc. Nx automatically creates an .npmrc before changesets runs
-# and creates one itself, so we need to explicitly have one.
-env:
-  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+# Note: this workflow does not require an NPM_TOKEN since it uses OIDC trusted publisher authentication.
 
 concurrency: commits-to-main
 
@@ -126,8 +123,6 @@ jobs:
   # not actually block the release if job fails.
   e2e:
     uses: ./.github/workflows/e2e.yml
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   # This job should always pass because the workflow is running run against code that
   # was already linted and tested in PR.
   # This runs in parallel to the build and release process as an extra check but does
