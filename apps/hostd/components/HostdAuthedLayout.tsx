@@ -1,5 +1,5 @@
-import { AppAuthedLayout } from '@siafoundation/design-system'
-import { useWallet } from '@siafoundation/hostd-react'
+import { AppAuthedLayout, PublicKeyShard } from '@siafoundation/design-system'
+import { useWallet, useHostState } from '@siafoundation/hostd-react'
 import BigNumber from 'bignumber.js'
 import { connectivityRoute } from '../config/routes'
 import { useSyncStatus } from '../hooks/useSyncStatus'
@@ -15,11 +15,26 @@ type Props = Omit<
 export function HostdAuthedLayout({ dockedControls, ...props }: Props) {
   const wallet = useWallet()
   const { isSynced } = useSyncStatus()
+  const state = useHostState()
   return (
     <AppAuthedLayout
       appName="hostd"
       connectivityRoute={connectivityRoute}
-      profile={<Profile />}
+      profile={
+        <Profile
+          trigger={
+            state.data?.publicKey ? (
+              <div className="py-2">
+                <PublicKeyShard
+                  publicKey={state.data.publicKey}
+                  size={24}
+                  interactive
+                />
+              </div>
+            ) : undefined
+          }
+        />
+      }
       banner={<HostdTestnetWarningBanner />}
       isSynced={isSynced}
       walletBalanceSc={
