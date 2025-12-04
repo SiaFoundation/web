@@ -16,6 +16,7 @@ type Props = {
   firstTimeSyncing: boolean
   moreThan100BlocksToSync: boolean
   children?: React.ReactNode
+  trigger?: React.ReactNode
 }
 
 export function DaemonProfile({
@@ -29,6 +30,7 @@ export function DaemonProfile({
   firstTimeSyncing,
   moreThan100BlocksToSync,
   children,
+  trigger,
 }: Props) {
   return (
     <HoverCard
@@ -54,7 +56,7 @@ export function DaemonProfile({
               </Text>
             </div>
           )}
-          <Logo size={24} />
+          {trigger || <Logo size={24} />}
         </div>
       }
     >
