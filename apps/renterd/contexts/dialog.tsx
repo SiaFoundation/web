@@ -21,6 +21,7 @@ import { FilesBucketCreateDialog } from '../dialogs/FilesBucketCreateDialog'
 import { FileRenameDialog } from '../dialogs/FileRenameDialog'
 import { KeysCreateDialog } from '../components/Keys/KeysCreateDialog'
 import { DebugDialog } from '../dialogs/DebugDialog'
+import { SystemBackupDialog } from '../dialogs/SystemBackupDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -45,6 +46,7 @@ export type DialogType =
   | 'fileRename'
   | 'keysCreate'
   | 'bugReport'
+  | 'backup'
   | 'confirm'
 
 type ConfirmProps = {
@@ -204,6 +206,10 @@ export function Dialogs() {
         onOpenChange={onOpenChange}
       />
       <DebugDialog open={dialog === 'bugReport'} onOpenChange={onOpenChange} />
+      <SystemBackupDialog
+        open={dialog === 'backup'}
+        onOpenChange={onOpenChange}
+      />
       <ConfirmDialog
         open={dialog === 'confirm'}
         params={confirm}
