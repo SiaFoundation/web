@@ -3,7 +3,11 @@ import { navigateToWallet } from '../fixtures/navigate'
 import { random } from '@technically/lodash'
 import { beforeTest } from '../fixtures/beforeTest'
 import BigNumber from 'bignumber.js'
-import { setSwitchByLabel, fillTextInputByName } from '@siafoundation/e2e'
+import {
+  setSwitchByLabel,
+  fillTextInputByName,
+  valueFromCopyToClipboardButton,
+} from '@siafoundation/e2e'
 import {
   Cluster,
   mine,
@@ -77,36 +81,24 @@ test('send siacoin with include fee off', async ({ page }) => {
     sendDialog.getByTestId('total').getByText(amountWithFeeString),
   ).toBeVisible()
   await expect(sendDialog.getByTestId('transactionId')).toBeVisible()
+  const transactionId = await valueFromCopyToClipboardButton(
+    page,
+    sendDialog.getByTestId('transactionId').locator('button').first(),
+  )
 
   // List.
   await sendDialog.getByRole('button', { name: 'Close' }).click()
   await expect(page.getByTestId('eventsTable')).toBeVisible()
+  const transactionRow = page.getByTestId(transactionId)
+  await expect(transactionRow).toBeVisible()
   await expect(
-    page.getByTestId('eventsTable').locator('tbody tr').first(),
+    transactionRow.getByTestId('amount').getByText(`-${amountWithFeeString}`),
   ).toBeVisible()
   await expect(
-    page
-      .getByTestId('eventsTable')
-      .locator('tbody tr')
-      .first()
-      .getByTestId('amount')
-      .getByText(`-${amountWithFeeString}`),
+    transactionRow.getByTestId('type').getByText('siacoin transfer'),
   ).toBeVisible()
   await expect(
-    page
-      .getByTestId('eventsTable')
-      .locator('tbody tr')
-      .first()
-      .getByTestId('type')
-      .getByText('siacoin transfer'),
-  ).toBeVisible()
-  await expect(
-    page
-      .getByTestId('eventsTable')
-      .locator('tbody tr')
-      .first()
-      .getByTestId('fee')
-      .getByText('12.000 mS'),
+    transactionRow.getByTestId('fee').getByText('12.000 mS'),
   ).toBeVisible()
 })
 
@@ -165,35 +157,23 @@ test('send siacoin with include fee on', async ({ page }) => {
     sendDialog.getByTestId('total').getByText(amountString),
   ).toBeVisible()
   await expect(sendDialog.getByTestId('transactionId')).toBeVisible()
+  const transactionId = await valueFromCopyToClipboardButton(
+    page,
+    sendDialog.getByTestId('transactionId').locator('button').first(),
+  )
 
   // List.
   await sendDialog.getByRole('button', { name: 'Close' }).click()
   await expect(page.getByTestId('eventsTable')).toBeVisible()
+  const transactionRow = page.getByTestId(transactionId)
+  await expect(transactionRow).toBeVisible()
   await expect(
-    page.getByTestId('eventsTable').locator('tbody tr').first(),
+    transactionRow.getByTestId('amount').getByText(`-${amountString}`),
   ).toBeVisible()
   await expect(
-    page
-      .getByTestId('eventsTable')
-      .locator('tbody tr')
-      .first()
-      .getByTestId('amount')
-      .getByText(`-${amountString}`),
+    transactionRow.getByTestId('type').getByText('siacoin transfer'),
   ).toBeVisible()
   await expect(
-    page
-      .getByTestId('eventsTable')
-      .locator('tbody tr')
-      .first()
-      .getByTestId('type')
-      .getByText('siacoin transfer'),
-  ).toBeVisible()
-  await expect(
-    page
-      .getByTestId('eventsTable')
-      .locator('tbody tr')
-      .first()
-      .getByTestId('fee')
-      .getByText('12.000 mS'),
+    transactionRow.getByTestId('fee').getByText('12.000 mS'),
   ).toBeVisible()
 })
