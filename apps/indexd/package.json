@@ -19,7 +19,7 @@
     "cmdk": "0.2.1",
     "file-saver": "2.0.5",
     "jszip": "3.10.1",
-    "next": "^15.3.5",
+    "next": "^15.3.6",
     "next-themes": "0.2.1",
     "react": "^19.1.0",
     "react-hook-form": "^7.60.0",
