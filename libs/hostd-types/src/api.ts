@@ -32,6 +32,7 @@ export const volumesIdRoute = '/volumes/:id'
 export const volumesIdResizeRoute = '/volumes/:id/resize'
 export const volumesIdCancelRoute = '/volumes/:id/cancel'
 export const systemDirRoute = '/system/dir'
+export const systemBackupRoute = '/system/sqlite3/backup'
 export const alertsRoute = '/alerts'
 export const alertsDismissRoute = '/alerts/dismiss'
 
@@ -608,3 +609,12 @@ export type AlertsResponse = Alert[]
 export type AlertsDismissParams = void
 export type AlertsDismissPayload = string[]
 export type AlertsDismissResponse = void
+
+// backup
+
+export type SystemBackupParams = void
+export type SystemBackupPayload = {
+  database: string
+  path: string
+}
+export type SystemBackupResponse = void

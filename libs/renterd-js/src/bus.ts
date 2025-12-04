@@ -240,6 +240,7 @@ import {
   busSettingsS3Route,
   busSettingsUploadRoute,
   busObjectsRemoveRoute,
+  busSystemBackupRoute,
   ConsensusNetworkParams,
   ConsensusNetworkPayload,
   ConsensusNetworkResponse,
@@ -263,6 +264,9 @@ import {
   ContractsFormParams,
   ContractsFormPayload,
   ContractsFormResponse,
+  SystemBackupParams,
+  SystemBackupPayload,
+  SystemBackupResponse,
 } from '@siafoundation/renterd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
@@ -615,5 +619,10 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       AuthTokenPayload,
       AuthTokenResponse
     >(axios, 'post', authRoute),
+    systemBackup: buildRequestHandler<
+      SystemBackupParams,
+      SystemBackupPayload,
+      SystemBackupResponse
+    >(axios, 'post', busSystemBackupRoute),
   }
 }
