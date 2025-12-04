@@ -1,6 +1,7 @@
 export * from './fixtures/clearToasts'
 export * from './fixtures/click'
 export * from './fixtures/cmdk'
+export * from './fixtures/clipboard'
 export * from './fixtures/configViewMode'
 export * from './fixtures/preferences'
 export * from './fixtures/selectInput'
