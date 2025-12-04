@@ -6,9 +6,9 @@ import {
 } from '@siafoundation/design-system'
 import { useRescanStatus } from '@siafoundation/walletd-react'
 import { useSyncStatus } from '../hooks/useSyncStatus'
-import { formatRelative } from 'date-fns'
+import { formatRelative, isValid } from 'date-fns'
 import { defaultDatasetRefreshInterval } from '../config/swr'
-import { secondsInMilliseconds } from '@siafoundation/units'
+import { daysInMilliseconds, secondsInMilliseconds } from '@siafoundation/units'
 import { useEffect, useState } from 'react'
 import { useMutate } from '@siafoundation/react-core'
 import { walletsRoute } from '@siafoundation/walletd-types'
@@ -29,14 +29,19 @@ export function RescanStatus() {
   const isScanning =
     rescanStatus.data?.index.height < syncStatus.nodeBlockHeight
   const showAsRescanning = syncStatus.isSynced && isScanning
+  const hasError = !!rescanStatus.data?.error
+  // Show status bar if scanning or if there's an error to display
+  const shouldShow = showAsRescanning || hasError
 
-  useRefreshWalletDataWhenScanningFinishes({ isScanning: showAsRescanning })
+  useRefreshWalletDataWhenScanningFinishes({
+    isScanning: showAsRescanning,
+  })
 
   if (!rescanStatus.data) {
     return null
   }
 
-  if (!showAsRescanning) {
+  if (!shouldShow) {
     return null
   }
 
@@ -73,8 +78,7 @@ export function RescanStatus() {
           )}
           <div className="flex-1" />
           <Text color="subtle" size="12">
-            Started{' '}
-            {formatRelative(new Date(rescanStatus.data.startTime), new Date())}
+            Started {formatRelativeOrDate(rescanStatus.data.startTime)}
           </Text>
         </div>
         {rescanStatus.data.error && (
@@ -87,6 +91,36 @@ export function RescanStatus() {
       </Panel>
     </div>
   )
+}
+
+/**
+ * Format a date as relative time if within 3 days, otherwise use Intl date format.
+ */
+function formatRelativeOrDate(dateString?: string): string {
+  if (!dateString) {
+    return 'at unknown time'
+  }
+  const date = new Date(dateString)
+  if (!isValid(date) || date.getFullYear() < 1970) {
+    return 'at unknown time'
+  }
+
+  const now = new Date()
+  const diffInMs = now.getTime() - date.getTime()
+  const threeDaysInMs = daysInMilliseconds(3)
+
+  if (diffInMs > threeDaysInMs) {
+    // More than 3 days ago, use Intl date format.
+    const language =
+      typeof window !== 'undefined' ? navigator.language : undefined
+    return new Intl.DateTimeFormat(language, {
+      dateStyle: 'short',
+      timeStyle: 'short',
+    }).format(date)
+  }
+
+  // Within 3 days, use relative format.
+  return formatRelative(date, now)
 }
 
 /**
