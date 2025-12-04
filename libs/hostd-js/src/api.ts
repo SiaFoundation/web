@@ -53,6 +53,9 @@ import {
   SystemDirectoryParams,
   SystemDirectoryPayload,
   SystemDirectoryResponse,
+  SystemBackupParams,
+  SystemBackupPayload,
+  SystemBackupResponse,
   TxPoolFeeParams,
   TxPoolFeePayload,
   TxPoolFeeResponse,
@@ -104,6 +107,7 @@ import {
   hostStateRoute,
   syncerPeersRoute,
   systemDirRoute,
+  systemBackupRoute,
   tpoolFeeRoute,
   volumesIdCancelRoute,
   volumesIdResizeRoute,
@@ -279,5 +283,10 @@ export function Hostd({ api, password }: { api: string; password?: string }) {
       AlertsDismissPayload,
       AlertsDismissResponse
     >(axios, 'post', alertsDismissRoute),
+    systemBackup: buildRequestHandler<
+      SystemBackupParams,
+      SystemBackupPayload,
+      SystemBackupResponse
+    >(axios, 'post', systemBackupRoute),
   }
 }

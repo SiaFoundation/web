@@ -7,6 +7,7 @@ import {
   BellIcon,
   KeyIcon,
   BugIcon,
+  BackupIcon,
 } from '@siafoundation/react-icons'
 import { cx } from 'class-variance-authority'
 import { routes } from '../config/routes'
@@ -66,6 +67,12 @@ export function RenterdSidenav() {
       </div>
       <SidenavItem title="Bug report" onClick={() => openDialog('bugReport')}>
         <BugIcon />
+      </SidenavItem>
+      <SidenavItem
+        title="Backup databases"
+        onClick={() => openDialog('backup')}
+      >
+        <BackupIcon />
       </SidenavItem>
     </>
   )

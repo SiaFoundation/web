@@ -55,6 +55,9 @@ import {
   SystemDirectoryCreateResponse,
   SystemDirectoryParams,
   SystemDirectoryResponse,
+  SystemBackupParams,
+  SystemBackupPayload,
+  SystemBackupResponse,
   TxPoolFeeParams,
   TxPoolFeeResponse,
   VolumeCancelParams,
@@ -95,6 +98,7 @@ import {
   hostStateRoute,
   syncerPeersRoute,
   systemDirRoute,
+  systemBackupRoute,
   tpoolFeeRoute,
   volumesIdCancelRoute,
   volumesIdResizeRoute,
@@ -531,4 +535,16 @@ export function useAlertsDismiss(
       return key.startsWith(alertsRoute)
     })
   })
+}
+
+// backup
+
+export function useSystemBackup(
+  args?: HookArgsCallback<
+    SystemBackupParams,
+    SystemBackupPayload,
+    SystemBackupResponse
+  >,
+) {
+  return usePostFunc({ ...args, route: systemBackupRoute })
 }

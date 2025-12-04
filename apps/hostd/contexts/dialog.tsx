@@ -13,6 +13,7 @@ import { HostdSendSiacoinDialog } from '../dialogs/HostdSendSiacoinDialog'
 import { HostdTransactionDetailsDialog } from '../dialogs/HostdTransactionDetailsDialog'
 import { ContractsFilterContractIdDialog } from '../dialogs/ContractsFilterContractIdDialog'
 import { CmdKDialog } from '../components/CmdKDialog'
+import { SystemBackupDialog } from '../dialogs/SystemBackupDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -26,6 +27,7 @@ export type DialogType =
   | 'volumeResize'
   | 'volumeDelete'
   | 'contractsFilterContractId'
+  | 'backup'
   | 'confirm'
 
 type ConfirmProps = {
@@ -154,6 +156,10 @@ export function Dialogs() {
       />
       <ContractsFilterContractIdDialog
         open={dialog === 'contractsFilterContractId'}
+        onOpenChange={onOpenChange}
+      />
+      <SystemBackupDialog
+        open={dialog === 'backup'}
         onOpenChange={onOpenChange}
       />
       <ConfirmDialog

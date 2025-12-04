@@ -126,7 +126,7 @@ export const navigateToParentDirectory = step(
       .getByText('The current directory does not contain any files yet')
       .isVisible()
     if (isEmpty) {
-      await page.getByRole('button', { name: 'Back' }).click()
+      await page.getByRole('button', { name: 'Back', exact: true }).click()
     } else {
       await page.getByRole('cell', { name: '..' }).click()
     }
