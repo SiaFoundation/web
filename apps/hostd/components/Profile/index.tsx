@@ -17,7 +17,11 @@ import { useDialog } from '../../contexts/dialog'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 import { humanTime } from '@siafoundation/units'
 
-export function Profile() {
+type ProfileProps = {
+  trigger?: React.ReactNode
+}
+
+export function Profile({ trigger }: ProfileProps = {}) {
   const { openDialog } = useDialog()
   const state = useHostState({
     config: {
@@ -76,6 +80,7 @@ export function Profile() {
       estimatedBlockHeight={syncStatus.estimatedBlockHeight}
       firstTimeSyncing={syncStatus.firstTimeSyncing}
       moreThan100BlocksToSync={syncStatus.moreThan100BlocksToSync}
+      trigger={trigger}
     >
       <div className="flex gap-2 justify-between items-center">
         <Label size="14" color="subtle" noWrap className="w-[100px]">
