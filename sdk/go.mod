@@ -3,8 +3,8 @@ module go.sia.tech/web/sdk
 go 1.24.0
 
 require (
-	go.sia.tech/core v0.18.1
-	go.sia.tech/coreutils v0.18.7
+	go.sia.tech/core v0.19.0
+	go.sia.tech/coreutils v0.19.0
 )
 
 require (
