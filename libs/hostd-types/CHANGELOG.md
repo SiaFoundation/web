@@ -1,5 +1,11 @@
 # @siafoundation/hostd-types
 
+## 0.11.0
+
+### Minor Changes
+
+- 4d6cec1: Removed the unused finalized field from ContractMetrics.
+
 ## 0.10.2
 
 ### Patch Changes

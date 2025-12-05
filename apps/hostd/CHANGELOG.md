@@ -1,5 +1,28 @@
 # hostd
 
+## 0.67.0
+
+### Minor Changes
+
+- 86e119a: The page title and browser tab now shows the current net address.
+- 901f547: The storage metrics graph now shows lost sectors.
+- bf2e73c: The address configuration setting now has a tip that explains the port must be configured in the hostd.yml and a tip that shows the last announced address. Closes https://github.com/SiaFoundation/hostd/issues/578
+- a8e7956: Updated Next in response to https://react.dev/blog/2025/12/03/critical-security-vulnerability-in-react-server-components.
+- d2b19ce: Adjusting filters, sorting, or pagination controls now resets the scroll position. Closes https://github.com/SiaFoundation/hostd/issues/591 Closes https://github.com/SiaFoundation/hostd/issues/206
+
+### Patch Changes
+
+- 3eeb7a1: Fixed an issue where the onboarding wizard would show for a split second on initial load even if onboarding was complete. Closes https://github.com/SiaFoundation/hostd/issues/660
+- Updated dependencies [a8e7956]
+- Updated dependencies [4d6cec1]
+- Updated dependencies [bf2e73c]
+- Updated dependencies [bf49561]
+- Updated dependencies [d2b19ce]
+  - @siafoundation/design-system@11.3.0
+  - @siafoundation/react-core@8.2.0
+  - @siafoundation/hostd-types@0.11.0
+  - @siafoundation/hostd-react@4.6.10
+
 ## 0.66.4
 
 ### Patch Changes
