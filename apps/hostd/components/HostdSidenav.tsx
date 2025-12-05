@@ -5,13 +5,16 @@ import {
   HouseIcon,
   HardDriveIcon,
   BellIcon,
+  BackupIcon,
 } from '@siafoundation/react-icons'
 import { useAlerts } from '@siafoundation/hostd-react'
 import { cx } from 'class-variance-authority'
 import { routes } from '../config/routes'
+import { useDialog } from '../contexts/dialog'
 
 export function HostdSidenav() {
   const alerts = useAlerts()
+  const { openDialog } = useDialog()
 
   const onlyInfoAlerts = !alerts.data?.find((a) => a.severity !== 'info')
   const alertCount = alerts.data?.length || 0
@@ -58,6 +61,9 @@ export function HostdSidenav() {
           <BellIcon />
         </SidenavItem>
       </div>
+      <SidenavItem title="Backup database" onClick={() => openDialog('backup')}>
+        <BackupIcon />
+      </SidenavItem>
     </>
   )
 }

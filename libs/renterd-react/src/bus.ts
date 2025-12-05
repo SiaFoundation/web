@@ -218,6 +218,7 @@ import {
   busSettingsPinnedRoute,
   busSettingsS3Route,
   busSettingsUploadRoute,
+  busSystemBackupRoute,
   SettingsGougingParams,
   SettingsGougingResponse,
   SettingsPinnedParams,
@@ -256,6 +257,9 @@ import {
   ContractsFormPayload,
   ContractsFormResponse,
   busContractsFormRoute,
+  SystemBackupParams,
+  SystemBackupPayload,
+  SystemBackupResponse,
 } from '@siafoundation/renterd-types'
 
 // state
@@ -1077,4 +1081,16 @@ export function useAuthToken(
   args?: HookArgsCallback<AuthTokenParams, AuthTokenPayload, AuthTokenResponse>,
 ) {
   return usePostFunc({ ...args, route: authRoute })
+}
+
+// backup
+
+export function useSystemBackup(
+  args?: HookArgsCallback<
+    SystemBackupParams,
+    SystemBackupPayload,
+    SystemBackupResponse
+  >,
+) {
+  return usePostFunc({ ...args, route: busSystemBackupRoute })
 }

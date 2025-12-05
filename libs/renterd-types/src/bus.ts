@@ -87,6 +87,7 @@ export const busMultipartAbortRoute = '/bus/multipart/abort'
 export const busMultipartListpartsRoute = '/bus/multipart/listparts'
 export const busMultipartListuploadsRoute = '/bus/multipart/listuploads'
 export const busMultipartPartRoute = '/bus/multipart/part'
+export const busSystemBackupRoute = '/bus/system/sqlite3/backup'
 
 // state
 
@@ -697,3 +698,12 @@ export type SettingsS3UpdateResponse = void
 export type SettingsUploadUpdateParams = void
 export type SettingsUploadUpdatePayload = SettingsUpload
 export type SettingsUploadUpdateResponse = void
+
+// backup
+
+export type SystemBackupParams = void
+export type SystemBackupPayload = {
+  database: string
+  path: string
+}
+export type SystemBackupResponse = void
