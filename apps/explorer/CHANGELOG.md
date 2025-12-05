@@ -1,5 +1,20 @@
 # explorer
 
+## 0.41.0
+
+### Minor Changes
+
+- a8e7956: Updated Next in response to https://react.dev/blog/2025/12/03/critical-security-vulnerability-in-react-server-components.
+
+### Patch Changes
+
+- Updated dependencies [a8e7956]
+- Updated dependencies [bf2e73c]
+- Updated dependencies [bf49561]
+- Updated dependencies [d2b19ce]
+  - @siafoundation/design-system@11.3.0
+  - @siafoundation/react-core@8.2.0
+
 ## 0.40.2
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@siafoundation/sdk",
-  "version": "0.4.4",
+  "version": "0.5.0",
   "description": "SDK for interacting directly with the Sia network from browsers and web clients.",
   "license": "MIT",
   "repository": {
