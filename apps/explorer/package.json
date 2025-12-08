@@ -27,7 +27,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^2.30.0",
     "identicon.js": "^2.3.3",
-    "next": "~15.3.6",
+    "next": "~16.0.7",
     "react": "^19.1.0",
     "react-globe.gl": "^2.34.0",
     "react-hook-form": "^7.60.0",
