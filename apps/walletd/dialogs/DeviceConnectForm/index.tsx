@@ -124,12 +124,10 @@ export function DeviceConnectForm({
             shouldVerify={shouldVerify}
             title={device.transport.deviceModel.productName}
             actions={
-              <>
-                <Button variant="accent" onClick={runVerify}>
+              <Button variant="accent" onClick={runVerify}>
                   <Password16 />
                   Verify
                 </Button>
-              </>
             }
             details={
               waitingForUser ? (

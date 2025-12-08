@@ -17,6 +17,7 @@ export async function findTestOutput(cluster: Cluster, version: 'v1' | 'v2') {
     })
 
     if (version === 'v2') {
+      // eslint-disable-next-line no-loop-func
       block.v2?.transactions?.forEach((tx) =>
         tx.siacoinOutputs?.forEach((output) => {
           if (!foundOutput) {
@@ -27,6 +28,7 @@ export async function findTestOutput(cluster: Cluster, version: 'v1' | 'v2') {
     }
 
     if (version === 'v1') {
+      // eslint-disable-next-line no-loop-func
       block.transactions?.forEach((tx) =>
         tx.siacoinOutputs?.forEach((output) => {
           if (!foundOutput) {

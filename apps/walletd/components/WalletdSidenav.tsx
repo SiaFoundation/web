@@ -4,10 +4,8 @@ import { routes } from '../config/routes'
 
 export function WalletdSidenav() {
   return (
-    <>
-      <SidenavItem title="Dashboard" route={routes.home}>
-        <HouseIcon />
-      </SidenavItem>
-    </>
+    <SidenavItem title="Dashboard" route={routes.home}>
+      <HouseIcon />
+    </SidenavItem>
   )
 }

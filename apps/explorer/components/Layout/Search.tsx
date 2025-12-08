@@ -16,7 +16,7 @@ import { Search16 } from '@siafoundation/react-icons'
 import { to } from '@siafoundation/request'
 
 import { routes } from '../../config/routes'
-import { useExplored } from '../../hooks/useExplored'
+import { useApi } from '../../contexts/api'
 
 const defaultValues = {
   query: '',
@@ -40,7 +40,7 @@ export function Search() {
     defaultValues,
   })
 
-  const explored = useExplored()
+  const { explored } = useApi()
 
   const onSubmit = useCallback(
     async (values: { query: string }) => {

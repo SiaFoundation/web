@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Result } from '@siafoundation/types'
 import { initSDKTest } from './initTest'
 import {

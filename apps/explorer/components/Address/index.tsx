@@ -25,7 +25,7 @@ import { EntityListItemProps } from '../Entity/EntityListItem'
 import { ExplorerDatum, DatumProps } from '../ExplorerDatum'
 import { EntityHeading } from '../EntityHeading'
 import { ContentLayout } from '../ContentLayout'
-import { useExplored } from '../../hooks/useExplored'
+import { useApi } from '../../contexts/api'
 
 type Tab = 'events' | 'utxos'
 
@@ -50,7 +50,7 @@ export function Address({
 }: Props) {
   const [tab, setTab] = useState<Tab>('events')
   const [exhausted, setExhausted] = useState(false)
-  const explored = useExplored()
+  const { explored } = useApi()
 
   const getKey = (
     pageIndex: number,

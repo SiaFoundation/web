@@ -4,6 +4,8 @@ export default [
   ...nx.configs['flat/base'],
   ...nx.configs['flat/typescript'],
   ...nx.configs['flat/javascript'],
+  ...nx.configs['flat/react'],
+  ...nx.configs['flat/react-typescript'],
   {
     ignores: ['node_modules', '**/dist', '**/.next', '**/.next-*', '**/output'],
   },
@@ -18,6 +20,7 @@ export default [
   },
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
+    ignores: ['**/next-env.d.ts'],
     rules: {
       '@nx/enforce-module-boundaries': [
         'error',
@@ -32,6 +35,9 @@ export default [
           ],
         },
       ],
+      // TODO: Re-enable these rules.
+      'react-hooks/set-state-in-effect': 'off',
+      'react-hooks/refs': 'off',
     },
   },
   {

@@ -8,8 +8,6 @@ type Props = {
 
 export function AccountFilterCmdGroups({ select, currentPage }: Props) {
   return (
-    <>
-      <ConnectKeyCmdGroup currentPage={currentPage} select={select} />
-    </>
+    <ConnectKeyCmdGroup currentPage={currentPage} select={select} />
   )
 }

@@ -58,11 +58,9 @@ export function HomeContracts() {
       <ChartXY
         id="hostd/v0/metrics/graphs/contracts"
         actionsLeft={
-          <>
-            <Text font="mono" weight="semibold">
+          <Text font="mono" weight="semibold">
               Contracts
             </Text>
-          </>
         }
         data={contracts.data}
         config={contracts.config}

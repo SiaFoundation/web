@@ -15,13 +15,11 @@ type Props = {
 
 export function AccountFilterNav({ currentPage, parentPage, select }: Props) {
   return (
-    <>
-      <ConnectKeyCmdNav
+    <ConnectKeyCmdNav
         currentPage={currentPage}
         parentPage={parentPage}
         commandPage={commandPage}
         select={select}
       />
-    </>
   )
 }

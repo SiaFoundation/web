@@ -18,8 +18,8 @@ import { blockHeightToHumanDate } from '../../lib/time'
 import { hastingsToFiat } from '../../lib/currency'
 import LoadingCurrency from '../LoadingCurrency'
 import LoadingTimestamp from '../LoadingTimestamp'
-import { useExploredAddress } from '../../hooks/useExploredAddress'
 import { ContractData, contractResolutionLabels } from '../../lib/contracts'
+import { useApi } from '../../contexts/api'
 
 type Props = {
   contractRevisions:
@@ -37,7 +37,7 @@ export function Contract({
   contract,
   formationTxnChainIndex,
 }: Props) {
-  const api = useExploredAddress()
+  const { api } = useApi()
   const exchange = useActiveSiascanExchangeRate({
     api,
     config: {

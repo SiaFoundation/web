@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/globals */
 import { AppSettingsProvider } from './appSettings'
 import { render, waitFor } from '@testing-library/react'
 import { CoreProvider } from './coreProvider'

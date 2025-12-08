@@ -9,6 +9,8 @@ import { useExternalExchangeRate } from '../hooks/useExternalExchangeRate'
 import BigNumber from 'bignumber.js'
 import { useMemo } from 'react'
 
+const noop = () => null
+
 export function ConfigurationFiat<
   Values extends FieldValues,
   Categories extends string,
@@ -30,8 +32,8 @@ export function ConfigurationFiat<
     before,
     after,
   } = field
-  const Before = before || (() => null)
-  const After = after || (() => null)
+  const Before = before || noop
+  const After = after || noop
   const setField = useFormSetField({
     form,
     fields,

@@ -6,6 +6,8 @@ import { FieldError } from '../components/Form'
 import { FieldNumber } from './FieldNumber'
 import { useFormSetField } from './useFormSetField'
 
+const noop = () => null
+
 type Props<Values extends FieldValues, Categories extends string> = {
   name: Path<Values>
   form: UseFormReturn<Values>
@@ -32,7 +34,7 @@ export function ConfigurationNumber<
     fields,
     name,
   })
-  const After = after || (() => null)
+  const After = after || noop
 
   return (
     <div className="flex flex-col gap-3 items-end">

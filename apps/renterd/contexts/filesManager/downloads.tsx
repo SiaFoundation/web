@@ -21,6 +21,7 @@ export function useDownloads() {
         workerPath += `&apikey=${token}`
       }
       // Parse settings.api if its set otherwise URL.
+      // eslint-disable-next-line no-restricted-globals
       const origin = settings.api || location.origin
       const scheme = origin.startsWith('https') ? 'https' : 'http'
       const host = origin.replace('https://', '').replace('http://', '')
@@ -37,6 +38,7 @@ export function useDownloads() {
         key,
       )}?bucket=${bucket}`
       // Parse settings.api if its set otherwise URL.
+      // eslint-disable-next-line no-restricted-globals
       const origin = settings.api || location.origin
       const scheme = origin.startsWith('https') ? 'https' : 'http'
       const host = origin.replace('https://', '').replace('http://', '')

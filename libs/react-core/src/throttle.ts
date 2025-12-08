@@ -28,6 +28,5 @@ export function throttle<T extends (...args: any[]) => any>(
       }),
     )
   }
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return wrapperRegistry.get(fullKey)!(fn)
 }

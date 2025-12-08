@@ -62,11 +62,9 @@ export function HomeStorage() {
         config={storage.config}
         isLoading={storage.isLoading}
         actionsLeft={
-          <>
-            <Text font="mono" weight="semibold">
+          <Text font="mono" weight="semibold">
               Storage
             </Text>
-          </>
         }
       />
     </div>

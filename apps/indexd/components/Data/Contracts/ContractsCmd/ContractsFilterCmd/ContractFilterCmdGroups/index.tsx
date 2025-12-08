@@ -9,8 +9,6 @@ type Props = {
 
 export function ContractFilterCmdGroups({ currentPage, select }: Props) {
   return (
-    <>
-      <StatusCmdGroup currentPage={currentPage} select={select} />
-    </>
+    <StatusCmdGroup currentPage={currentPage} select={select} />
   )
 }

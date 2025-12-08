@@ -26,8 +26,7 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "renterd:build",
-        "port": 3007,
-        "turbo": true
+        "port": 3007
       },
       "configurations": {
         "development": {

@@ -26,8 +26,7 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "indexd:build",
-        "port": 3009,
-        "turbo": true
+        "port": 3009
       },
       "configurations": {
         "development": {

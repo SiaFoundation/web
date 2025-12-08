@@ -5,6 +5,8 @@ import { FieldText } from './FieldText'
 import { TipText } from './TipText'
 import { useFormSetField } from './useFormSetField'
 
+const noop = () => null
+
 export function ConfigurationText<
   Values extends FieldValues,
   Categories extends string,
@@ -23,7 +25,7 @@ export function ConfigurationText<
     name,
     fields,
   })
-  const After = after || (() => null)
+  const After = after || noop
   return (
     <div className="flex flex-col gap-3 items-end">
       <div className="flex flex-col gap-3 w-[260px]">

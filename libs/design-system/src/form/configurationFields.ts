@@ -111,7 +111,24 @@ export function useRegisterForm<
   form: UseFormReturn<Values>
   field: ConfigField<Values, Categories>
   name: Path<Values>
-}) {
+}): {
+  ref: (instance: HTMLElement | null) => void
+  name: Path<Values>
+  value: PathValue<Values, Path<Values>>
+  error: boolean
+  onBlur: () => void
+  onChange: (e: { target: unknown; type: unknown }) => void
+  setValue: (
+    val: PathValue<Values, Path<Values>>,
+    options?:
+      | boolean
+      | {
+          shouldValidate: boolean
+          shouldDirty: boolean
+          shouldTouch: boolean
+        },
+  ) => void
+} {
   const value = form.watch(name)
   const error =
     getFormStateFieldBoolean(form.formState.touchedFields, name) &&

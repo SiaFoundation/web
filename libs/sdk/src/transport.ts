@@ -132,5 +132,5 @@ function base64ToArrayBuffer(base64: string): ArrayBuffer {
   return buffer.buffer.slice(
     buffer.byteOffset,
     buffer.byteOffset + buffer.byteLength,
-  )
+  ) as ArrayBuffer
 }

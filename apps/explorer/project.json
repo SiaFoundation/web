@@ -32,8 +32,7 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "explorer:build",
-        "port": 3003,
-        "turbo": true
+        "port": 3003
       },
       "configurations": {
         "development": {

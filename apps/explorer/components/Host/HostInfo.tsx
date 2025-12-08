@@ -22,7 +22,7 @@ type Props = {
 
 export function HostInfo({ host }: Props) {
   const estimatedUptime = (
-    host.totalScans == 0
+    host.totalScans === 0
       ? 0
       : (host.successfulInteractions / host.totalScans) * 100
   ).toFixed(2)

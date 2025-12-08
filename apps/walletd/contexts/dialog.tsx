@@ -143,7 +143,6 @@ function useDialogMain() {
     dialog,
     params,
     openDialog,
-    confirm,
     closeDialog,
     onOpenChange,
   }

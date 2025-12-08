@@ -26,8 +26,8 @@ import {
 } from '@siafoundation/explored-types'
 import { Information20 } from '@siafoundation/react-icons'
 import LoadingCurrency from '../LoadingCurrency'
-import { useExploredAddress } from '../../hooks/useExploredAddress'
 import { getHostNetAddress } from '../../lib/hostType'
+import { useApi } from '../../contexts/api'
 
 export function Home({
   version,
@@ -44,7 +44,7 @@ export function Home({
   hosts: ExplorerHost[]
   totalHosts?: number
 }) {
-  const api = useExploredAddress()
+  const { api } = useApi()
   const exchange = useActiveSiascanExchangeRate({
     api,
     config: {

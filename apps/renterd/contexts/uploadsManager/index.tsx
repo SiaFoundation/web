@@ -373,19 +373,9 @@ function useUploadsManagerMain() {
     mutate,
   })
 
-  useEffect(() => {
-    ref.current = {
-      checkAndStartUploads,
-      busUploadAbort,
-      busUploadComplete,
-      busUploadCreate,
-      workerUploadPart,
-      mutate,
-      removeUpload,
-      updateUploadProgress,
-      updateStatusToUploading: updateStatus,
-    }
-  }, [
+  // Update ref with latest function values for use in closures
+  // eslint-disable-next-line react-hooks/immutability -- ref.current is intentionally mutable to provide latest function values to closures
+  ref.current = {
     checkAndStartUploads,
     busUploadAbort,
     busUploadComplete,
@@ -394,8 +384,8 @@ function useUploadsManagerMain() {
     mutate,
     removeUpload,
     updateUploadProgress,
-    updateStatus,
-  ])
+    updateStatusToUploading: updateStatus,
+  }
 
   useEffect(() => {
     if (hasUploads) {

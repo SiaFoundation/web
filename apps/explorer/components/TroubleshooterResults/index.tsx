@@ -32,7 +32,7 @@ import {
   sectorsToBytes,
 } from '@siafoundation/units'
 
-import { useExploredAddress } from '../../hooks/useExploredAddress'
+import { useApi } from '../../contexts/api'
 import { routes } from '../../config/routes'
 import { hastingsToFiat } from '../../lib/currency'
 import { TroubleshooterResponse } from '../../lib/troubleshooter'
@@ -48,7 +48,7 @@ type ResultsProps = {
 }
 
 export function TroubleshooterResults({ troubleshooterData }: ResultsProps) {
-  const api = useExploredAddress()
+  const { api } = useApi()
   const exchange = useActiveSiascanExchangeRate({
     api,
     config: {
