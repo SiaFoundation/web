@@ -19,5 +19,5 @@ export function AutoRefresh({ children, interval }: AutoRefreshProps) {
     return () => clearInterval(timer)
   }, [router, interval])
 
-  return <>{children}</>
+  return children
 }

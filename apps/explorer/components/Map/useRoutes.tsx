@@ -40,6 +40,7 @@ export function useDecRoutes({ activeHost, hosts }: Props) {
       const closest = hostRoutes.slice(4, 6)
       routes.push(...closest)
 
+      // eslint-disable-next-line react-hooks/purity
       const addExtra = Math.random() < 0.1
       if (addExtra) {
         const randomDistantIndex = random(

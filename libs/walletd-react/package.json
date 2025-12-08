@@ -12,6 +12,6 @@
     "@siafoundation/react-core": "^8.0.0",
     "@siafoundation/units": "^3.7.0",
     "@siafoundation/walletd-types": "^0.7.4",
-    "swr": "^2.1.1"
+    "swr": "^2.3.7"
   }
 }

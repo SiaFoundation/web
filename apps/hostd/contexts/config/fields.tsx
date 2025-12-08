@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import { blocksToMonths } from '@siafoundation/units'
 import {
   Code,

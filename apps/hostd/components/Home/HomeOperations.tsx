@@ -42,11 +42,9 @@ export function HomeOperations() {
         config={operations.config}
         isLoading={operations.isLoading}
         actionsLeft={
-          <>
-            <Text font="mono" weight="semibold">
+          <Text font="mono" weight="semibold">
               Operations
             </Text>
-          </>
         }
       />
     </div>

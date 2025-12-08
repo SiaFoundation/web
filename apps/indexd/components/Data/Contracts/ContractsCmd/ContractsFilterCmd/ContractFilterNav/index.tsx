@@ -21,8 +21,7 @@ export function ContractFilterNav({
   pushPage,
 }: Props) {
   return (
-    <>
-      <CommandItemNav
+    <CommandItemNav
         currentPage={currentPage}
         parentPage={parentPage}
         commandPage={commandPage}
@@ -32,6 +31,5 @@ export function ContractFilterNav({
       >
         {contractsFilterStatusPage.label}
       </CommandItemNav>
-    </>
   )
 }

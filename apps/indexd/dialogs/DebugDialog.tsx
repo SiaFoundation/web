@@ -85,7 +85,6 @@ export function DebugDialog({ trigger, open, onOpenChange }: Props) {
     form,
     onOpenChange,
     defaultValues,
-    initKey: [name],
   })
 
   const onValid = useCallback(

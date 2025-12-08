@@ -36,11 +36,9 @@ export function HomeCollateral() {
       <ChartXY
         id="hostd/v0/metrics/graphs/collateral"
         actionsLeft={
-          <>
-            <Text font="mono" weight="semibold">
+          <Text font="mono" weight="semibold">
               Collateral
             </Text>
-          </>
         }
         data={collateral.data}
         config={collateral.config}

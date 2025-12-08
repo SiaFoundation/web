@@ -18,7 +18,7 @@ import { to } from '@siafoundation/request'
 
 import { network } from '../../config/index'
 import { routes } from '../../config/routes'
-import { useExplored } from '../../hooks/useExplored'
+import { useApi } from '../../contexts/api'
 
 import { ContentLayout } from '../ContentLayout'
 import { Launch16 } from '@siafoundation/react-icons'
@@ -44,7 +44,7 @@ const fields: ConfigFields<typeof defaultValues, never> = {
 
 export function TroubleshooterForm() {
   const router = useRouter()
-  const explored = useExplored()
+  const { explored } = useApi()
 
   const form = useForm({
     defaultValues: defaultValues,

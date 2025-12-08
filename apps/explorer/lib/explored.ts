@@ -1,10 +1,7 @@
 import { Explored } from '@siafoundation/explored-js'
 import { exploredApi } from '../config'
 import { cookies } from 'next/headers'
-import {
-  exploredCustomApiCookieName,
-  exploredCustomApiSwrKey,
-} from '../config/explored'
+import { exploredCustomApiCookieName } from '../config/explored'
 
 // Allow passing a custom explored address via a cookie for testing purposes.
 async function getExploredAddressCookie() {
@@ -13,18 +10,6 @@ async function getExploredAddressCookie() {
     exploredCustomApiCookieName,
   )?.value
   return customExploredAddress
-}
-
-export async function buildFallbackDataExploredAddress() {
-  if (process.env.NODE_ENV === 'development') {
-    return {
-      [exploredCustomApiSwrKey]:
-        (await getExploredAddressCookie()) || exploredApi,
-    }
-  }
-  return {
-    [exploredCustomApiSwrKey]: exploredApi,
-  }
 }
 
 export async function getExploredAddress() {

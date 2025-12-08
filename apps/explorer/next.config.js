@@ -10,11 +10,7 @@ const isZen = runningTargetConfiguration.includes('testnet-zen')
 const nextConfig = {
   // Use downstream webserver compression in production
   compress: process.env.NODE_ENV === 'development',
-  nx: {
-    // Set this to true if you would like to to use SVGR
-    // See: https://github.com/gregberge/svgr
-    svgr: false,
-  },
+  nx: {},
   output: 'standalone',
   // Since explorer is built for multiple networks, we need to use the target
   // name to ensure the next build directory is unique to avoid conflicts when

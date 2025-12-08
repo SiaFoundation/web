@@ -157,19 +157,18 @@ export function Transaction({
         })
       },
     )
-    {
-      'fileContractResolutions' in transaction &&
-        transaction.fileContractResolutions?.forEach((resolution) => {
-          return operations.push({
-            label: contractResolutionLabels[resolution.type],
-            type: 'contract',
-            href: routes.contract.view.replace(
-              ':id',
-              stripPrefix(resolution.parent.id),
-            ),
-            hash: resolution.parent.id,
-          })
+    if ('fileContractResolutions' in transaction) {
+      transaction.fileContractResolutions?.forEach((resolution) => {
+        return operations.push({
+          label: contractResolutionLabels[resolution.type],
+          type: 'contract',
+          href: routes.contract.view.replace(
+            ':id',
+            stripPrefix(resolution.parent.id),
+          ),
+          hash: resolution.parent.id,
         })
+      })
     }
     transaction.hostAnnouncements?.forEach((host) => {
       return operations.push({
@@ -183,14 +182,13 @@ export function Transaction({
               )[0].address,
       })
     })
-    {
-      'storageProofs' in transaction &&
-        transaction.storageProofs?.forEach((proof) => {
-          return operations.push({
-            label: 'storage proof',
-            hash: proof.parentID,
-          })
+    if ('storageProofs' in transaction) {
+      transaction.storageProofs?.forEach((proof) => {
+        return operations.push({
+          label: 'storage proof',
+          hash: proof.parentID,
         })
+      })
     }
     return operations
   }, [transaction])

@@ -356,7 +356,6 @@ function getRecommendationItem({
     rec.targetLabel = format(targetValue)
   }
   if (fields[key].type === 'fiat') {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const currency = currencyOptions.find((c) => c.id === currencyId)!
     const format = (val: BigNumber) =>
       `${currency?.prefix}${humanNumber(val, {

@@ -40,11 +40,9 @@ export function HomeBandwidth() {
         config={bandwidth.config}
         isLoading={bandwidth.isLoading}
         actionsLeft={
-          <>
-            <Text font="mono" weight="semibold">
+          <Text font="mono" weight="semibold">
               Bandwidth
             </Text>
-          </>
         }
       />
     </div>

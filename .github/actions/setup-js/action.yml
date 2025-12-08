@@ -43,7 +43,7 @@ runs:
           ${{ runner.os }}-bun-${{ inputs.bun_version }}-
           ${{ runner.os }}-bun-
     - name: Install Nx globally
-      run: bun install -g nx@21.4.0-beta.3
+      run: bun install -g nx@22.1.3
       shell: bash
     - name: Install JavaScript dependencies
       run: bun install

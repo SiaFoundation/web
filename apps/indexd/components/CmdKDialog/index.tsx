@@ -31,8 +31,7 @@ export function CmdKDialog({ open, onOpenChange, setOpen }: Props) {
   }, [isUnlockedAndAuthedRoute, isConnected, setOpen])
 
   return (
-    <>
-      <Dialog
+    <Dialog
         open={open}
         title="Command palette"
         titleVisuallyHidden
@@ -45,6 +44,5 @@ export function CmdKDialog({ open, onOpenChange, setOpen }: Props) {
       >
         <CmdRoot />
       </Dialog>
-    </>
   )
 }

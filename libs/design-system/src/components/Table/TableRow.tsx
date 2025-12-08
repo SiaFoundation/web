@@ -195,6 +195,7 @@ export function TableRowDraggable<
   const TableRow = useMemo(() => createTableRow<Columns, D, Context>(), [])
 
   return (
+    // eslint-disable-next-line react-hooks/static-components
     <TableRow
       ref={setNodeRef}
       style={style}
@@ -233,6 +234,7 @@ export function TableRowDroppable<
   const className = isOver ? 'bg-blue-200/20 dark:bg-blue-300/20' : ''
 
   return (
+    // eslint-disable-next-line react-hooks/static-components
     <TableRow
       ref={setNodeRef}
       className={className}

@@ -12,18 +12,22 @@ export function HostHeader({ host }: Props) {
     <div className="flex flex-col gap-x-4 gap-y-4">
       <PublicKeyAvatar
         publicKey={host.publicKey}
-        size={32}
+        size={48}
         className="block sm:hidden relative top-0.5"
       />
       <div className="flex gap-x-4 gap-y-4 items-center">
         <PublicKeyAvatar
           publicKey={host.publicKey}
-          size={48}
+          size={112}
           className="hidden sm:block"
         />
         <div className="flex flex-wrap gap-3 items-start justify-between w-full">
           <HostInfo host={host} />
-          {host.successfulInteractions > 0 && <HostPricing host={host} />}
+          {host.successfulInteractions > 0 && (
+            <div className="hidden sm:block">
+              <HostPricing host={host} />
+            </div>
+          )}
         </div>
       </div>
     </div>

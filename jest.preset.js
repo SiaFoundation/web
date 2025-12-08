@@ -13,4 +13,12 @@ module.exports = {
    */
   snapshotFormat: { escapeString: true, printBasicPrototype: true },
   passWithNoTests: true,
+  moduleNameMapper: {
+    ...(nxPreset.moduleNameMapper || {}),
+    // Force all React/ReactDOM imports to use the same version
+    // This prevents conflicts when packages like @visx/xychart bundle their own React
+    // Use path relative to workspace root (../../node_modules from project root)
+    '^react$': '<rootDir>/../../node_modules/react',
+    '^react-dom$': '<rootDir>/../../node_modules/react-dom',
+  },
 }

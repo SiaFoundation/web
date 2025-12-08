@@ -99,11 +99,9 @@ export function HomePricing() {
         config={pricing.config}
         isLoading={pricing.isLoading}
         actionsLeft={
-          <>
-            <Text font="mono" weight="semibold">
+          <Text font="mono" weight="semibold">
               Pricing
             </Text>
-          </>
         }
       />
     </div>

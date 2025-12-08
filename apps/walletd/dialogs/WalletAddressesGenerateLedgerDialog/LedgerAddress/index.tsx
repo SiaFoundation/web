@@ -94,11 +94,9 @@ export function LedgerAddress({
           isNew={isNew}
           remove={remove}
           actions={
-            <>
-              <Button size="small" onClick={generateAddresses}>
+            <Button size="small" onClick={generateAddresses}>
                 Generate
               </Button>
-            </>
           }
         />
       )}

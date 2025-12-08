@@ -7,6 +7,8 @@ import BigNumber from 'bignumber.js'
 import { FieldSiacoin } from './FieldSiacoin'
 import { useFormSetField } from './useFormSetField'
 
+const noop = () => null
+
 export function ConfigurationSiacoin<
   Values extends FieldValues,
   Categories extends string,
@@ -27,8 +29,8 @@ export function ConfigurationSiacoin<
     fields,
     form,
   })
-  const Before = before || (() => null)
-  const After = after || (() => null)
+  const Before = before || noop
+  const After = after || noop
   return (
     <div className="flex flex-col gap-3 items-end">
       <div className="flex flex-col w-[260px]">

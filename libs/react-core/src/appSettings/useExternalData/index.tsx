@@ -4,30 +4,26 @@ import { createContext, useContext, useEffect, useMemo } from 'react'
 import { useCallback } from 'react'
 import { CurrencyId, currencyOptions } from './currency'
 import { useDaemonExplorerMetadata } from './useDaemonExplorerMetadata'
-import {
-  swrKeyForDefaultCurrencyId,
-  ExternalDataSettings,
-  getDefaultExternalDataSettings,
-} from './types'
+import { ExternalDataSettings, getDefaultExternalDataSettings } from './types'
 import useLocalStorageState from 'use-local-storage-state'
-import useSWR from 'swr'
 
 export type ExternalDataProviderProps = {
   children?: React.ReactNode
+  serverCurrencyId?: CurrencyId
   daemonExplorerInfoRoute?: string
   defaultSettings?: Partial<ExternalDataSettings>
 }
 
 function useExternalDataMain({
+  serverCurrencyId,
   daemonExplorerInfoRoute,
   defaultSettings: overrideDefaultSettings,
 }: ExternalDataProviderProps) {
   // In SSR apps the server may pass fallback data for the default currency id.
   // This allows the local storage settings to server-render with the correct value.
-  const serverCurrencyId = useSWR(swrKeyForDefaultCurrencyId)
   const customDefaultSettings = useMemo(() => {
-    const serverCurrency = serverCurrencyId.data
-      ? currencyOptions.find((i) => i.id === serverCurrencyId.data)
+    const serverCurrency = serverCurrencyId
+      ? currencyOptions.find((i) => i.id === serverCurrencyId)
       : null
     const custom = serverCurrency
       ? {
@@ -36,7 +32,7 @@ function useExternalDataMain({
         }
       : overrideDefaultSettings
     return getDefaultExternalDataSettings(custom)
-  }, [overrideDefaultSettings, serverCurrencyId.data])
+  }, [overrideDefaultSettings, serverCurrencyId])
   const [_settings, _setSettings] = useLocalStorageState('v1/externalData', {
     defaultValue: customDefaultSettings,
   })

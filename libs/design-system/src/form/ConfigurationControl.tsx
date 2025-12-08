@@ -6,12 +6,14 @@ import { ConfigurationSelect } from './ConfigurationSelect'
 import { FieldValues } from 'react-hook-form'
 import { FieldProps } from './configurationFields'
 
+const noop = () => null
+
 export function ConfigurationControl<
   Values extends FieldValues,
   Categories extends string,
 >({ name, form, fields }: FieldProps<Values, Categories>) {
   const field = fields[name]
-  const Custom = field.custom || (() => null)
+  const Custom = field.custom || noop
   return field.type === 'custom' ? (
     <Custom form={form} name={name} fields={fields} />
   ) : field.type === 'number' ? (

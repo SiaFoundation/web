@@ -1,4 +1,4 @@
-import { CurrencyId, CurrencyOption, currencyOptions } from './currency'
+import { CurrencyOption, currencyOptions } from './currency'
 
 export type CurrencyDisplayPreference =
   | 'sc'
@@ -24,12 +24,5 @@ export function getDefaultExternalDataSettings(
   return {
     ...defaultExternalDataSettings,
     ...customDefaults,
-  }
-}
-
-export const swrKeyForDefaultCurrencyId = 'currencyDefault'
-export function buildFallbackDataDefaultCurrencyId(id: CurrencyId) {
-  return {
-    [swrKeyForDefaultCurrencyId]: id,
   }
 }

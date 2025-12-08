@@ -65,11 +65,9 @@ export function HomeRevenue() {
         config={revenue.config}
         isLoading={revenue.isLoading}
         actionsLeft={
-          <>
-            <Text font="mono" weight="semibold">
+          <Text font="mono" weight="semibold">
               Revenue
             </Text>
-          </>
         }
       />
     </div>

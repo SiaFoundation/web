@@ -40,11 +40,9 @@ export function LedgerSignTxn({
           isSigned={isSigned}
           title="Transaction"
           actions={
-            <>
-              <Button size="small" onClick={sign}>
+            <Button size="small" onClick={sign}>
                 Sign
               </Button>
-            </>
           }
         />
       ) : (
