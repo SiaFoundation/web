@@ -83,7 +83,7 @@
   "peerDependencies": {
     "@siafoundation/explored-react": "^0.9.0",
     "@siafoundation/explored-types": "^0.20.0",
-    "next": "^15.3.6",
-    "react": "^19.1.0"
+    "next": "^16.0.7",
+    "react": "^19.2.1"
   }
 }

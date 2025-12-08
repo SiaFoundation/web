@@ -5,7 +5,7 @@ export const config = {
   matcher: ['/:entity(address|block|contract|host|tx)/:path*'],
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // If the caught path contains uppercase characters, lowercase the URL.
@@ -19,3 +19,4 @@ export function middleware(request: NextRequest) {
 
   return NextResponse.next()
 }
+
