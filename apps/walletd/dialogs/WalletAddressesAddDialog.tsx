@@ -11,7 +11,7 @@ import {
 import { WalletAddressMetadata } from '@siafoundation/walletd-types'
 import { useWalletAddressAdd } from '@siafoundation/walletd-react'
 import { useCallback } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { useWallets } from '../contexts/wallets'
 import { isValidAddress, pluralize } from '@siafoundation/units'
 import { uniq } from '@technically/lodash'
@@ -177,8 +177,8 @@ export function WalletAddressesAddDialog({
     [addAllAddresses, closeAndReset, triggerRescan],
   )
 
-  const addressesText = form.watch('addresses')
-  const shouldRescan = form.watch('shouldRescan')
+  const addressesText = useWatch({ control: form.control, name: 'addresses' })
+  const shouldRescan = useWatch({ control: form.control, name: 'shouldRescan' })
   const addressCount = formatAddresses(addressesText).length
 
   return (

@@ -12,7 +12,7 @@ import {
   FieldSelect,
   Tooltip,
 } from '@siafoundation/design-system'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { useCallback, useEffect, useMemo } from 'react'
 import { SendParamsV1 } from './typesV1'
 import { Information16 } from '@siafoundation/react-icons'
@@ -267,11 +267,17 @@ export function useComposeFormV1({
     [form, onValid],
   )
 
-  const siacoin = form.watch('siacoin')
-  const mode = form.watch('mode')
-  const customChangeAddress = form.watch('customChangeAddress')
-  const customClaimAddress = form.watch('customClaimAddress')
-  const includeFee = form.watch('includeFee')
+  const siacoin = useWatch({ control: form.control, name: 'siacoin' })
+  const mode = useWatch({ control: form.control, name: 'mode' })
+  const customChangeAddress = useWatch({
+    control: form.control,
+    name: 'customChangeAddress',
+  })
+  const customClaimAddress = useWatch({
+    control: form.control,
+    name: 'customClaimAddress',
+  })
+  const includeFee = useWatch({ control: form.control, name: 'includeFee' })
   const sc = toHastings(siacoin || 0)
 
   // Reset the siacoin or siafund field when the mode changes.

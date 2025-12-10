@@ -4,7 +4,7 @@ import {
   formSetField,
 } from '@siafoundation/design-system'
 import { fiatToSiacoin, toHastings } from '@siafoundation/units'
-import { UseFormReturn } from 'react-hook-form'
+import { UseFormReturn, useWatch } from 'react-hook-form'
 import { Categories, RecommendationItem, InputValues } from '../types'
 import { useFormExchangeRate } from '../useFormExchangeRate'
 import { PriceWithRedundancyTip, recommendationTipContent } from './Tip'
@@ -20,7 +20,10 @@ export function MaxUploadPriceTips({
   recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
 }) {
   const { uploadMedian } = useMedianPrices()
-  const maxUploadPriceTB = form.watch('maxUploadPriceTB')
+  const maxUploadPriceTB = useWatch({
+    control: form.control,
+    name: 'maxUploadPriceTB',
+  })
   const recommendationPrice = recommendations?.maxUploadPriceTB?.targetValue
 
   return (
@@ -81,7 +84,10 @@ export function MaxUploadPricePinnedTips({
 }) {
   const { rate } = useFormExchangeRate(form)
   const { uploadMedian } = useMedianPrices()
-  const maxUploadPriceTBPinned = form.watch('maxUploadPriceTBPinned')
+  const maxUploadPriceTBPinned = useWatch({
+    control: form.control,
+    name: 'maxUploadPriceTBPinned',
+  })
   const currentPriceInSiacoin =
     maxUploadPriceTBPinned && rate
       ? fiatToSiacoin(maxUploadPriceTBPinned, rate)

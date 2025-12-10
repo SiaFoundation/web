@@ -4,7 +4,7 @@ import {
   formSetField,
 } from '@siafoundation/design-system'
 import { fiatToSiacoin, toHastings } from '@siafoundation/units'
-import { UseFormReturn } from 'react-hook-form'
+import { UseFormReturn, useWatch } from 'react-hook-form'
 import { Categories, RecommendationItem, InputValues } from '../types'
 import { useFormExchangeRate } from '../useFormExchangeRate'
 import { PriceWithRedundancyTip, recommendationTipContent } from './Tip'
@@ -20,7 +20,10 @@ export function MaxStoragePriceTips({
   recommendations: Partial<Record<keyof InputValues, RecommendationItem>>
 }) {
   const { storageMedian } = useMedianPrices()
-  const maxStoragePriceTBMonth = form.watch('maxStoragePriceTBMonth')
+  const maxStoragePriceTBMonth = useWatch({
+    control: form.control,
+    name: 'maxStoragePriceTBMonth',
+  })
   const recommendationPrice =
     recommendations?.maxStoragePriceTBMonth?.targetValue
 
@@ -82,9 +85,10 @@ export function MaxStoragePricePinnedTips({
 }) {
   const { storageMedian } = useMedianPrices()
   const { rate } = useFormExchangeRate(form)
-  const maxStoragePriceTBMonthPinned = form.watch(
-    'maxStoragePriceTBMonthPinned',
-  )
+  const maxStoragePriceTBMonthPinned = useWatch({
+    control: form.control,
+    name: 'maxStoragePriceTBMonthPinned',
+  })
   const currentPriceInSiacoin =
     maxStoragePriceTBMonthPinned && rate
       ? fiatToSiacoin(maxStoragePriceTBMonthPinned, rate)

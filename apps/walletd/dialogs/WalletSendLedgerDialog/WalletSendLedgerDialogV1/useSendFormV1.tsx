@@ -1,5 +1,5 @@
 import { SendReceiptV1 } from '../../_sharedWalletSendV1/SendReceiptV1'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   ConfigFields,
@@ -59,8 +59,8 @@ export function useSendFormV1({ params, step, onConfirm }: Props) {
     mode: 'all',
     defaultValues,
   })
-  const isConnected = form.watch('isConnected')
-  const isSigned = form.watch('isSigned')
+  const isConnected = useWatch({ control: form.control, name: 'isConnected' })
+  const isSigned = useWatch({ control: form.control, name: 'isSigned' })
   const { device, error: ledgerError } = useLedger()
   const cancel = useCancelV1()
   const sign = useSignV1({ cancel })
@@ -73,6 +73,7 @@ export function useSendFormV1({ params, step, onConfirm }: Props) {
 
   useEffect(() => {
     if (step === 'compose') {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setTxn(undefined)
       setBasis(undefined)
     }
@@ -82,6 +83,7 @@ export function useSendFormV1({ params, step, onConfirm }: Props) {
     if (device) {
       form.setValue('isConnected', true)
     } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setWaitingForUser(false)
       form.setValue('isConnected', false)
     }

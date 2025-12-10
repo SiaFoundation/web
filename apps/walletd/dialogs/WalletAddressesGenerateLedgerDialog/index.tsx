@@ -14,7 +14,7 @@ import {
 import { WalletAddressMetadata } from '@siafoundation/walletd-types'
 import { useWalletAddressAdd } from '@siafoundation/walletd-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { useWallets } from '../../contexts/wallets'
 import BigNumber from 'bignumber.js'
 import { DeviceConnectForm } from '../DeviceConnectForm'
@@ -156,9 +156,9 @@ export function WalletAddressesGenerateLedgerDialog({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nextIndex])
 
-  const formIndex = form.watch('index')
-  const formCount = form.watch('count')
-  const shouldRescan = form.watch('shouldRescan')
+  const formIndex = useWatch({ control: form.control, name: 'index' })
+  const formCount = useWatch({ control: form.control, name: 'count' })
+  const shouldRescan = useWatch({ control: form.control, name: 'shouldRescan' })
 
   const fields = getFields()
 

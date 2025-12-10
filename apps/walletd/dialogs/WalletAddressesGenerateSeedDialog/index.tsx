@@ -11,7 +11,7 @@ import {
 import { WalletAddressMetadata } from '@siafoundation/walletd-types'
 import { useWalletAddressAdd } from '@siafoundation/walletd-react'
 import { useCallback, useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { useWallets } from '../../contexts/wallets'
 import BigNumber from 'bignumber.js'
 import { getFieldMnemonic, MnemonicFieldType } from '../../lib/fieldMnemonic'
@@ -130,10 +130,10 @@ export function WalletAddressesGenerateSeedDialog({
     defaultValues,
   })
 
-  const mnemonic = form.watch('mnemonic')
-  const index = form.watch('index')
-  const count = form.watch('count')
-  const shouldRescan = form.watch('shouldRescan')
+  const mnemonic = useWatch({ control: form.control, name: 'mnemonic' })
+  const index = useWatch({ control: form.control, name: 'index' })
+  const count = useWatch({ control: form.control, name: 'count' })
+  const shouldRescan = useWatch({ control: form.control, name: 'shouldRescan' })
 
   const fields = getFields({
     mnemonicHash: wallet?.metadata.mnemonicHash,

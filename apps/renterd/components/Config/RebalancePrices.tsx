@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { useWatch } from 'react-hook-form'
 import { Scales16 } from '@siafoundation/react-icons'
 import { useConfig } from '../../contexts/config'
 import {
@@ -88,12 +89,18 @@ function useSpendingDerivedPricingFromEnabledFields({
   maxUploadPriceTBPinned?: BigNumber
 }> {
   const { form } = useConfig()
-  const storageTB = form.watch('storageTB')
-  const downloadTBMonth = form.watch('downloadTBMonth')
-  const uploadTBMonth = form.watch('uploadTBMonth')
+  const storageTB = useWatch({ control: form.control, name: 'storageTB' })
+  const downloadTBMonth = useWatch({
+    control: form.control,
+    name: 'downloadTBMonth',
+  })
+  const uploadTBMonth = useWatch({
+    control: form.control,
+    name: 'uploadTBMonth',
+  })
   const redundancyMultiplier = useRedundancyMultiplier({
-    minShards: form.watch('minShards'),
-    totalShards: form.watch('totalShards'),
+    minShards: useWatch({ control: form.control, name: 'minShards' }),
+    totalShards: useWatch({ control: form.control, name: 'totalShards' }),
   })
   const { rate } = useFormExchangeRate(form)
   const values = useMemo(() => {
@@ -133,9 +140,18 @@ function useSpendingDerivedPricingFromEnabledFields({
     redundancyMultiplier,
     rate,
   ])
-  const shouldPinMaxStoragePrice = form.watch('shouldPinMaxStoragePrice')
-  const shouldPinMaxUploadPrice = form.watch('shouldPinMaxUploadPrice')
-  const shouldPinMaxDownloadPrice = form.watch('shouldPinMaxDownloadPrice')
+  const shouldPinMaxStoragePrice = useWatch({
+    control: form.control,
+    name: 'shouldPinMaxStoragePrice',
+  })
+  const shouldPinMaxUploadPrice = useWatch({
+    control: form.control,
+    name: 'shouldPinMaxUploadPrice',
+  })
+  const shouldPinMaxDownloadPrice = useWatch({
+    control: form.control,
+    name: 'shouldPinMaxDownloadPrice',
+  })
   const results: Partial<InputValues> = {}
   if (!values) {
     return undefined
@@ -164,12 +180,18 @@ function useIsEnabledAndDifferentEnough() {
     form,
   })
   const { estimatedSpendingPerMonth } = useSpendingEstimate()
-  const storageTB = form.watch('storageTB')
-  const downloadTBMonth = form.watch('downloadTBMonth')
-  const uploadTBMonth = form.watch('uploadTBMonth')
+  const storageTB = useWatch({ control: form.control, name: 'storageTB' })
+  const downloadTBMonth = useWatch({
+    control: form.control,
+    name: 'downloadTBMonth',
+  })
+  const uploadTBMonth = useWatch({
+    control: form.control,
+    name: 'uploadTBMonth',
+  })
   const redundancyMultiplier = useRedundancyMultiplier({
-    minShards: form.watch('minShards'),
-    totalShards: form.watch('totalShards'),
+    minShards: useWatch({ control: form.control, name: 'minShards' }),
+    totalShards: useWatch({ control: form.control, name: 'totalShards' }),
   })
   const canCalculatePrices = useMemo(
     () => estimatedSpendingPerMonth?.gt(0),

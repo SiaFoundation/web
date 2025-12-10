@@ -1,3 +1,5 @@
+'use client'
+
 import BigNumber from 'bignumber.js'
 import { entries } from '@technically/lodash'
 import { MouseEvent, useCallback } from 'react'
@@ -11,6 +13,7 @@ import {
   ValidationRule,
   UseFormReturn,
   Message,
+  useWatch,
 } from 'react-hook-form'
 import { triggerErrorToast } from '../lib/toast'
 
@@ -129,7 +132,7 @@ export function useRegisterForm<
         },
   ) => void
 } {
-  const value = form.watch(name)
+  const value = useWatch({ control: form.control, name })
   const error =
     getFormStateFieldBoolean(form.formState.touchedFields, name) &&
     !!form.formState.errors[name]

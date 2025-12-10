@@ -26,7 +26,7 @@ import {
 } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import { useCallback, useMemo } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { useDialog } from '../contexts/dialog'
 import { useHostOSPathSeparator } from '../hooks/useHostOSPathSeparator'
 import { VolumeSizeDiff } from './VolumeSizeDiff'
@@ -102,7 +102,7 @@ export function VolumeResizeDialog({ trigger, open, onOpenChange }: Props) {
     defaultValues,
   })
 
-  const size = form.watch('size')
+  const size = useWatch({ control: form.control, name: 'size' })
 
   const { closeAndReset, handleOpenChange } = useDialogFormHelpers({
     form,

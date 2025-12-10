@@ -17,7 +17,7 @@ import {
 } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import { useCallback, useEffect, useMemo } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { useDebouncedCallback } from 'use-debounce'
 import { DirectorySelectMenu } from '../components/DirectorySelectMenu'
 import { useDialog } from '../contexts/dialog'
@@ -107,10 +107,13 @@ export function VolumeCreateDialog({ trigger, open, onOpenChange }: Props) {
     defaultValues,
   })
 
-  const path = form.watch('path')
-  const immediatePath = form.watch('immediatePath')
-  const name = form.watch('name')
-  const size = form.watch('size')
+  const path = useWatch({ control: form.control, name: 'path' })
+  const immediatePath = useWatch({
+    control: form.control,
+    name: 'immediatePath',
+  })
+  const name = useWatch({ control: form.control, name: 'name' })
+  const size = useWatch({ control: form.control, name: 'size' })
 
   // after typing stops update path to immediate path value
   const syncPath = useDebouncedCallback(() => {

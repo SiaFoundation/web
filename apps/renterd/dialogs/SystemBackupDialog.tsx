@@ -15,7 +15,7 @@ import {
 } from '@siafoundation/design-system'
 import { useSystemBackup } from '@siafoundation/renterd-react'
 import { useCallback, useMemo } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import useLocalStorageState from 'use-local-storage-state'
 
 function getDefaultValues(
@@ -123,8 +123,11 @@ export function SystemBackupDialog({ trigger, open, onOpenChange }: Props) {
     defaultValues,
   })
 
-  const backupMain = form.watch('backupMain')
-  const backupMetrics = form.watch('backupMetrics')
+  const backupMain = useWatch({ control: form.control, name: 'backupMain' })
+  const backupMetrics = useWatch({
+    control: form.control,
+    name: 'backupMetrics',
+  })
 
   const fields = useMemo(
     () => getFields(backupMain, backupMetrics),

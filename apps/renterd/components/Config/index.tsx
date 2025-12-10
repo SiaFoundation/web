@@ -7,6 +7,7 @@ import {
   PanelMenuSetting,
   useDaemonExplorerExchangeRate,
 } from '@siafoundation/design-system'
+import { useWatch } from 'react-hook-form'
 import { useConfig } from '../../contexts/config'
 import { StateConnError } from './StateConnError'
 import { ShouldPinSwitch } from './ShouldPinSwitch'
@@ -15,10 +16,22 @@ import { PinnedCurrencyWarning } from './PinnedCurrencyWarning'
 export function Config() {
   const { form, fields, remoteError, configRef } = useConfig()
 
-  const pinnedCurrency = form.watch('pinnedCurrency')
-  const shouldPinMaxStoragePrice = form.watch('shouldPinMaxStoragePrice')
-  const shouldPinMaxUploadPrice = form.watch('shouldPinMaxUploadPrice')
-  const shouldPinMaxDownloadPrice = form.watch('shouldPinMaxDownloadPrice')
+  const pinnedCurrency = useWatch({
+    control: form.control,
+    name: 'pinnedCurrency',
+  })
+  const shouldPinMaxStoragePrice = useWatch({
+    control: form.control,
+    name: 'shouldPinMaxStoragePrice',
+  })
+  const shouldPinMaxUploadPrice = useWatch({
+    control: form.control,
+    name: 'shouldPinMaxUploadPrice',
+  })
+  const shouldPinMaxDownloadPrice = useWatch({
+    control: form.control,
+    name: 'shouldPinMaxDownloadPrice',
+  })
 
   const { rate } = useDaemonExplorerExchangeRate({
     currency: pinnedCurrency || undefined,

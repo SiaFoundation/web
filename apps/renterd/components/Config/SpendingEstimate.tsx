@@ -14,10 +14,11 @@ import { RebalancePrices } from './RebalancePrices'
 import { useRedundancyMultiplier } from '../../contexts/config/useRedundancyMultiplier'
 import { HangingNavItem } from './HangingNavItem'
 import { toHastings } from '@siafoundation/units'
+import { useWatch } from 'react-hook-form'
 
 export function SpendingEstimate() {
   const { form } = useConfig()
-  const storageTB = form.watch('storageTB')
+  const storageTB = useWatch({ control: form.control, name: 'storageTB' })
   const [mode, setMode] = useLocalStorageState<'total' | 'tb'>(
     'v0/renterd/config/spendingEstimateMode',
     {
@@ -25,8 +26,8 @@ export function SpendingEstimate() {
     },
   )
 
-  const minShards = form.watch('minShards')
-  const totalShards = form.watch('totalShards')
+  const minShards = useWatch({ control: form.control, name: 'minShards' })
+  const totalShards = useWatch({ control: form.control, name: 'totalShards' })
   const { estimatedSpendingPerMonth, estimatedSpendingPerTB } =
     useSpendingEstimate()
   const redundancy = useRedundancyMultiplier({

@@ -8,7 +8,7 @@ import {
   triggerErrorToast,
   triggerSuccessToast,
 } from '@siafoundation/design-system'
-import { Path, UseFormReturn } from 'react-hook-form'
+import { Path, UseFormReturn, useWatch } from 'react-hook-form'
 import BigNumber from 'bignumber.js'
 import { useRescanStart } from '@siafoundation/walletd-react'
 import { CalloutWarning } from './CalloutWarning'
@@ -48,7 +48,10 @@ type Props<V extends Values> = {
 }
 
 export function FieldRescan<V extends Values>({ form, fields }: Props<V>) {
-  const shouldRescan = form.watch('shouldRescan' as Path<V>)
+  const shouldRescan = useWatch({
+    control: form.control,
+    name: 'shouldRescan' as Path<V>,
+  })
   const showDetails = shouldRescan
   return (
     <div className="flex flex-col gap-1 pt-4">

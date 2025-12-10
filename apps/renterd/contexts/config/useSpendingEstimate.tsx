@@ -1,5 +1,6 @@
 import { useConfig } from '.'
 import { useMemo } from 'react'
+import { useWatch } from 'react-hook-form'
 import { Maybe } from '@siafoundation/types'
 import BigNumber from 'bignumber.js'
 import { useRedundancyMultiplier } from './useRedundancyMultiplier'
@@ -10,7 +11,7 @@ export function useSpendingEstimate() {
   const { form } = useConfig()
   const estimatedSpendingPerMonth =
     useSpendingEstimateFromEnabledPricingValues()
-  const storageTB = form.watch('storageTB')
+  const storageTB = useWatch({ control: form.control, name: 'storageTB' })
 
   const estimatedSpendingPerTB: Maybe<BigNumber> = useMemo(() => {
     if (!estimatedSpendingPerMonth?.gt(0) || !storageTB?.gt(0)) {
@@ -29,11 +30,17 @@ export function useSpendingEstimate() {
 // Use the current enabled pricing values to calculate the estimated spending in siacoin.
 function useSpendingEstimateFromEnabledPricingValues(): Maybe<BigNumber> {
   const { form } = useConfig()
-  const minShards = form.watch('minShards')
-  const totalShards = form.watch('totalShards')
-  const storageTB = form.watch('storageTB')
-  const downloadTBMonth = form.watch('downloadTBMonth')
-  const uploadTBMonth = form.watch('uploadTBMonth')
+  const minShards = useWatch({ control: form.control, name: 'minShards' })
+  const totalShards = useWatch({ control: form.control, name: 'totalShards' })
+  const storageTB = useWatch({ control: form.control, name: 'storageTB' })
+  const downloadTBMonth = useWatch({
+    control: form.control,
+    name: 'downloadTBMonth',
+  })
+  const uploadTBMonth = useWatch({
+    control: form.control,
+    name: 'uploadTBMonth',
+  })
   const redundancyMultiplier = useRedundancyMultiplier({
     minShards,
     totalShards,

@@ -18,7 +18,7 @@ import {
   useSettingsUpload,
 } from '@siafoundation/renterd-react'
 import { useCallback, useMemo } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import JSZip from 'jszip'
 import { saveAs } from 'file-saver'
 
@@ -158,7 +158,7 @@ export function DebugDialog({ trigger, open, onOpenChange }: Props) {
 
   const onInvalid = useOnInvalid(fields)
 
-  const openGithub = form.watch('openGithub')
+  const openGithub = useWatch({ control: form.control, name: 'openGithub' })
 
   return (
     <Dialog
