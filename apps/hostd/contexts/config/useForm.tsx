@@ -1,4 +1,4 @@
-import { useForm as useHookForm } from 'react-hook-form'
+import { useForm as useHookForm, useWatch } from 'react-hook-form'
 import { ConfigViewMode, defaultValues } from './types'
 import { useEffect, useMemo, useRef } from 'react'
 import { getFields } from './fields'
@@ -12,8 +12,11 @@ export function useForm() {
     mode: 'all',
     defaultValues,
   })
-  const storagePrice = form.watch('storagePrice')
-  const collateralMultiplier = form.watch('collateralMultiplier')
+  const storagePrice = useWatch({ control: form.control, name: 'storagePrice' })
+  const collateralMultiplier = useWatch({
+    control: form.control,
+    name: 'collateralMultiplier',
+  })
 
   const [configViewMode, setConfigViewMode] =
     useLocalStorageState<ConfigViewMode>('v0/config/mode', {
@@ -45,6 +48,7 @@ export function useForm() {
         storageTBMonth: storagePrice,
         collateralMultiplier,
         exchangeRateUSD: exchangeRateUSD.rate,
+        // eslint-disable-next-line react-hooks/refs
         validationContext: validationContext.current,
       }),
     [

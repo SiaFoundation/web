@@ -11,7 +11,7 @@ import {
 } from '@siafoundation/design-system'
 import { Redo16, Copy16 } from '@siafoundation/react-icons'
 import { MouseEvent, useCallback, useEffect } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { WalletMetadata } from '@siafoundation/walletd-types'
 import { useWalletAdd } from '@siafoundation/walletd-react'
 import { useDialog } from '../../contexts/dialog'
@@ -105,7 +105,7 @@ export function WalletAddNewDialog({ trigger, open, onOpenChange }: Props) {
     mode: 'all',
     defaultValues,
   })
-  const mnemonic = form.watch('mnemonic')
+  const mnemonic = useWatch({ control: form.control, name: 'mnemonic' })
 
   const copySeed = useCallback(() => {
     copyToClipboard(mnemonic, 'seed')

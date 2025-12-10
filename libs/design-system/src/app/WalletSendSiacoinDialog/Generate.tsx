@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import BigNumber from 'bignumber.js'
 import { isValidAddress, toHastings } from '@siafoundation/units'
 import { Text } from '../../core/Text'
@@ -121,8 +121,8 @@ export function useSendSiacoinGenerateForm({
 
   const submit = form.handleSubmit(onValid)
 
-  const includeFee = form.watch('includeFee')
-  const siacoin = form.watch('siacoin')
+  const includeFee = useWatch({ control: form.control, name: 'includeFee' })
+  const siacoin = useWatch({ control: form.control, name: 'siacoin' })
   const hastings = toHastings(siacoin || 0)
 
   const el = (

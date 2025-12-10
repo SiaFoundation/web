@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { ConfigViewMode, inputValues, getAdvancedDefaults } from './types'
-import { useForm as useHookForm } from 'react-hook-form'
+import { useForm as useHookForm, useWatch } from 'react-hook-form'
 import { useBusState } from '@siafoundation/renterd-react'
 import { getFields } from './fields'
 import useLocalStorageState from 'use-local-storage-state'
@@ -13,14 +13,29 @@ export function useForm({ resources }: { resources: ResourcesMaybeLoaded }) {
     mode: 'all',
     defaultValues: inputValues,
   })
-  const maxStoragePriceTBMonth = form.watch('maxStoragePriceTBMonth')
-  const maxDownloadPriceTB = form.watch('maxDownloadPriceTB')
-  const maxUploadPriceTB = form.watch('maxUploadPriceTB')
-  const storageTB = form.watch('storageTB')
-  const downloadTBMonth = form.watch('downloadTBMonth')
-  const uploadTBMonth = form.watch('uploadTBMonth')
-  const minShards = form.watch('minShards')
-  const totalShards = form.watch('totalShards')
+  const maxStoragePriceTBMonth = useWatch({
+    control: form.control,
+    name: 'maxStoragePriceTBMonth',
+  })
+  const maxDownloadPriceTB = useWatch({
+    control: form.control,
+    name: 'maxDownloadPriceTB',
+  })
+  const maxUploadPriceTB = useWatch({
+    control: form.control,
+    name: 'maxUploadPriceTB',
+  })
+  const storageTB = useWatch({ control: form.control, name: 'storageTB' })
+  const downloadTBMonth = useWatch({
+    control: form.control,
+    name: 'downloadTBMonth',
+  })
+  const uploadTBMonth = useWatch({
+    control: form.control,
+    name: 'uploadTBMonth',
+  })
+  const minShards = useWatch({ control: form.control, name: 'minShards' })
+  const totalShards = useWatch({ control: form.control, name: 'totalShards' })
   const redundancyMultiplier = useMemo(
     () => getRedundancyMultiplier(minShards, totalShards),
     [minShards, totalShards],

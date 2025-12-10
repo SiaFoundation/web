@@ -12,7 +12,7 @@ import {
 } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import { useCallback, useMemo } from 'react'
-import { UseFormReturn } from 'react-hook-form'
+import { UseFormReturn, useWatch } from 'react-hook-form'
 import { getFields } from './fields'
 import {
   ResourcesMaybeLoaded,
@@ -39,7 +39,7 @@ export function useAutopilotEvaluations({
   form: UseFormReturn<InputValues>
   resources: ResourcesMaybeLoaded
 }) {
-  const values = form.watch()
+  const values = useWatch({ control: form.control })
   const renterdState = useBusState()
 
   const hasDataToEvaluate = useMemo(() => {
@@ -67,7 +67,7 @@ export function useAutopilotEvaluations({
     const valuesWithPinnedOverrides = {
       ...values,
       ...pricing,
-    }
+    } as InputValues
     // We need to pass valid settings data into transformUp to get the payloads.
     // The form can be invalid or have empty fields depending on the mode, so we
     // need to merge in default data to make sure numbers are not undefined in
@@ -205,9 +205,18 @@ export function useAutopilotEvaluations({
   })
   const usableHostsAfterRecommendation = usableAfterRecsEval.data?.usable || 0
 
-  const shouldPinMaxStoragePrice = form.watch('shouldPinMaxStoragePrice')
-  const shouldPinMaxUploadPrice = form.watch('shouldPinMaxUploadPrice')
-  const shouldPinMaxDownloadPrice = form.watch('shouldPinMaxDownloadPrice')
+  const shouldPinMaxStoragePrice = useWatch({
+    control: form.control,
+    name: 'shouldPinMaxStoragePrice',
+  })
+  const shouldPinMaxUploadPrice = useWatch({
+    control: form.control,
+    name: 'shouldPinMaxUploadPrice',
+  })
+  const shouldPinMaxDownloadPrice = useWatch({
+    control: form.control,
+    name: 'shouldPinMaxDownloadPrice',
+  })
 
   const getIsFieldEnabled = useCallback(
     (key: string) => {

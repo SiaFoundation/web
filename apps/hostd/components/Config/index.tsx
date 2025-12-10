@@ -10,16 +10,32 @@ import {
   ConfigurationSiacoin,
   ConfigurationFiat,
 } from '@siafoundation/design-system'
+import { useWatch } from 'react-hook-form'
 import { useConfig } from '../../contexts/config'
 import { StateConnError } from './StateConnError'
 
 export function Config() {
   const { fields, form, remoteError, configRef } = useConfig()
-  const shouldPinStoragePrice = form.watch('shouldPinStoragePrice')
-  const shouldPinEgressPrice = form.watch('shouldPinEgressPrice')
-  const shouldPinIngressPrice = form.watch('shouldPinIngressPrice')
-  const shouldPinMaxCollateral = form.watch('shouldPinMaxCollateral')
-  const pinnedCurrency = form.watch('pinnedCurrency')
+  const shouldPinStoragePrice = useWatch({
+    control: form.control,
+    name: 'shouldPinStoragePrice',
+  })
+  const shouldPinEgressPrice = useWatch({
+    control: form.control,
+    name: 'shouldPinEgressPrice',
+  })
+  const shouldPinIngressPrice = useWatch({
+    control: form.control,
+    name: 'shouldPinIngressPrice',
+  })
+  const shouldPinMaxCollateral = useWatch({
+    control: form.control,
+    name: 'shouldPinMaxCollateral',
+  })
+  const pinnedCurrency = useWatch({
+    control: form.control,
+    name: 'pinnedCurrency',
+  })
   return remoteError ? (
     <StateConnError />
   ) : (

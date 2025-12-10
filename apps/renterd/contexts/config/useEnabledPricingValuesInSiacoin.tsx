@@ -1,6 +1,6 @@
 import { fiatToSiacoin } from '@siafoundation/units'
 import { useMemo } from 'react'
-import { UseFormReturn } from 'react-hook-form'
+import { UseFormReturn, useWatch } from 'react-hook-form'
 import { InputValues } from './types'
 import { useFormExchangeRate } from './useFormExchangeRate'
 
@@ -11,17 +11,42 @@ export function useEnabledPricingValuesInSiacoin({
 }: {
   form: UseFormReturn<InputValues>
 }) {
-  const shouldPinMaxStoragePrice = form.watch('shouldPinMaxStoragePrice')
-  const shouldPinMaxDownloadPrice = form.watch('shouldPinMaxDownloadPrice')
-  const shouldPinMaxUploadPrice = form.watch('shouldPinMaxUploadPrice')
-  const maxStoragePriceTBMonth = form.watch('maxStoragePriceTBMonth')
-  const maxStoragePriceTBMonthPinned = form.watch(
-    'maxStoragePriceTBMonthPinned',
-  )
-  const maxDownloadPriceTB = form.watch('maxDownloadPriceTB')
-  const maxDownloadPriceTBPinned = form.watch('maxDownloadPriceTBPinned')
-  const maxUploadPriceTB = form.watch('maxUploadPriceTB')
-  const maxUploadPriceTBPinned = form.watch('maxUploadPriceTBPinned')
+  const shouldPinMaxStoragePrice = useWatch({
+    control: form.control,
+    name: 'shouldPinMaxStoragePrice',
+  })
+  const shouldPinMaxDownloadPrice = useWatch({
+    control: form.control,
+    name: 'shouldPinMaxDownloadPrice',
+  })
+  const shouldPinMaxUploadPrice = useWatch({
+    control: form.control,
+    name: 'shouldPinMaxUploadPrice',
+  })
+  const maxStoragePriceTBMonth = useWatch({
+    control: form.control,
+    name: 'maxStoragePriceTBMonth',
+  })
+  const maxStoragePriceTBMonthPinned = useWatch({
+    control: form.control,
+    name: 'maxStoragePriceTBMonthPinned',
+  })
+  const maxDownloadPriceTB = useWatch({
+    control: form.control,
+    name: 'maxDownloadPriceTB',
+  })
+  const maxDownloadPriceTBPinned = useWatch({
+    control: form.control,
+    name: 'maxDownloadPriceTBPinned',
+  })
+  const maxUploadPriceTB = useWatch({
+    control: form.control,
+    name: 'maxUploadPriceTB',
+  })
+  const maxUploadPriceTBPinned = useWatch({
+    control: form.control,
+    name: 'maxUploadPriceTBPinned',
+  })
   const { rate } = useFormExchangeRate(form)
 
   const needsExchangeRate =

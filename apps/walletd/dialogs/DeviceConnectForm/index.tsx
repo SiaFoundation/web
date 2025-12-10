@@ -8,7 +8,7 @@ import {
 } from '@siafoundation/design-system'
 import { Password16 } from '@siafoundation/react-icons'
 import { useCallback, useEffect } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import useSWR from 'swr'
 import { useLedger } from '../../contexts/ledger'
 import {
@@ -52,7 +52,7 @@ export function DeviceConnectForm({
     mode: 'all',
     defaultValues,
   })
-  const transport = form.watch('transportType')
+  const transport = useWatch({ control: form.control, name: 'transportType' })
   const connected = !!device
   const verified = !!device?.publicKey0
 
@@ -125,9 +125,9 @@ export function DeviceConnectForm({
             title={device.transport.deviceModel.productName}
             actions={
               <Button variant="accent" onClick={runVerify}>
-                  <Password16 />
-                  Verify
-                </Button>
+                <Password16 />
+                Verify
+              </Button>
             }
             details={
               waitingForUser ? (
