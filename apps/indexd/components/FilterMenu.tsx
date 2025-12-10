@@ -19,19 +19,19 @@ export function FilterMenu<Filters extends ColumnFiltersState>({
   removeColumnFilter,
   removeLastColumnFilter,
   getFilterLabel,
-  children,
+  children: Children,
 }: {
   name: string
   columnFilters: Filters
   removeColumnFilter: (id: string) => void
   removeLastColumnFilter: () => void
   getFilterLabel: (filter: Filters[number]) => string
-  children: (props: {
+  children: React.ComponentType<{
     currentPage: Page
     beforeSelect: () => void
     afterSelect: () => void
     pushPage: (page: Page) => void
-  }) => React.ReactNode
+  }>
 }) {
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
@@ -76,6 +76,7 @@ export function FilterMenu<Filters extends ColumnFiltersState>({
   const { dialog } = useDialog()
   useEffect(() => {
     if (dialog) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setOpen(false)
     }
   }, [dialog])
@@ -135,12 +136,12 @@ export function FilterMenu<Filters extends ColumnFiltersState>({
                 <Label className="px-1.5 py-1">{currentPage.label}</Label>
               )}
               <Command.List>
-                {children({
-                  currentPage,
-                  beforeSelect,
-                  afterSelect,
-                  pushPage,
-                })}
+                <Children
+                  currentPage={currentPage}
+                  beforeSelect={beforeSelect}
+                  afterSelect={afterSelect}
+                  pushPage={pushPage}
+                />
               </Command.List>
             </ScrollArea>
           </Panel>

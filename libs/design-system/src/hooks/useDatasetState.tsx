@@ -35,6 +35,7 @@ export function useDatasetState({
   useEffect(() => {
     // Update last dataset size every time refetching completes.
     if (!isValidating && datasetPage) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLastDatasetSize(datasetPage.length)
     }
   }, [isValidating, datasetPage, setLastDatasetSize])

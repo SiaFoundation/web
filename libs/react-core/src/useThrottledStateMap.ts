@@ -1,6 +1,13 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  RefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { throttle } from '@technically/lodash'
 
 /**
@@ -16,7 +23,7 @@ import { throttle } from '@technically/lodash'
 export function useThrottledStateMap<T extends Record<string, unknown>>(
   initialValue: T,
   throttleMs = 1000,
-): [T, (value: T | ((prev: T) => T)) => void, T] {
+): [RefObject<T>, (value: T | ((prev: T) => T)) => void, T] {
   // Real-time value in ref.
   const valueRef = useRef<T>(initialValue)
   // Throttled state for renders.
@@ -26,6 +33,7 @@ export function useThrottledStateMap<T extends Record<string, unknown>>(
   const sync = useMemo(
     () =>
       throttle(
+        // eslint-disable-next-line react-hooks/refs -- throttle returns a function
         () => {
           setThrottledValue({ ...valueRef.current })
         },
@@ -55,5 +63,5 @@ export function useThrottledStateMap<T extends Record<string, unknown>>(
     [sync],
   )
 
-  return [valueRef.current, setValue, throttledValue]
+  return [valueRef, setValue, throttledValue]
 }

@@ -100,6 +100,7 @@ function useHostsMain() {
 
   useEffect(() => {
     if (!settings.siascan) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setViewMode('list')
     }
   }, [settings.siascan])

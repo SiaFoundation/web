@@ -7,6 +7,7 @@ import { hoursInMilliseconds } from '@siafoundation/units'
 export function useNowAtInterval(dataInterval: DataInterval) {
   const [now, setNow] = useState(new Date().getTime())
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setNow(new Date().getTime())
     // set a minimum refresh rate of every 1 hour
     const minIntervalMs = hoursInMilliseconds(1)

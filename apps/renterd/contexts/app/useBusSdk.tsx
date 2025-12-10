@@ -9,6 +9,7 @@ export function useBusSdk() {
   } = useAppSettings()
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setBus(
       Bus({
         api: `${api}/api`,

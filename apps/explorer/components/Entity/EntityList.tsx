@@ -59,6 +59,7 @@ export function EntityList({
       requestLock.current = false
 
       if (dataset?.length || children) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setHasLoadedOnce(true)
       }
 
