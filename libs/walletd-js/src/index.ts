@@ -122,8 +122,16 @@ import {
 } from '@siafoundation/walletd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
-export function Walletd({ api, password }: { api: string; password?: string }) {
-  const axios = initAxios(api, password)
+export function Walletd({
+  api,
+  password,
+  timeout,
+}: {
+  api: string
+  password?: string
+  timeout?: number
+}) {
+  const axios = initAxios(api, password, timeout)
   return {
     axios,
     state: buildRequestHandler<StateParams, StatePayload, StateResponse>(

@@ -173,11 +173,13 @@ import { buildRequestHandler, initAxios } from '@siafoundation/request'
 export function Explored({
   api,
   password,
+  timeout,
 }: {
   api: string
   password?: string
+  timeout?: number
 }) {
-  const axios = initAxios(api, password)
+  const axios = initAxios(api, password, timeout)
   return {
     axios,
     // Tx pool

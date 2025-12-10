@@ -17,11 +17,13 @@ import { buildRequestHandler, initAxios } from '@siafoundation/request'
 export function Autopilot({
   api,
   password,
+  timeout,
 }: {
   api: string
   password?: string
+  timeout?: number
 }) {
-  const axios = initAxios(api, password)
+  const axios = initAxios(api, password, timeout)
   return {
     axios,
     state: buildRequestHandler<

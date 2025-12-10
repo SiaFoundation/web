@@ -2,6 +2,7 @@
 
 import { Explored } from '@siafoundation/explored-js'
 import { createContext, useContext, useMemo } from 'react'
+import { exploredTimeout } from '../config/explored'
 
 /**
  * This context provides the API address and the explored SDK instance.
@@ -22,7 +23,10 @@ export function ApiProvider({
   exploredAddress: string
 }) {
   const api = exploredAddress
-  const explored = useMemo(() => Explored({ api }), [api])
+  const explored = useMemo(
+    () => Explored({ api, timeout: exploredTimeout }),
+    [api],
+  )
   return (
     <ApiContext.Provider value={{ api, explored }}>
       {children}

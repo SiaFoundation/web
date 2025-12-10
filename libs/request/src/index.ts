@@ -130,7 +130,11 @@ export async function to<T>(
   }
 }
 
-export function initAxios(api: string, password?: string): AxiosInstance {
+export function initAxios(
+  api: string,
+  password?: string,
+  timeout?: number,
+): AxiosInstance {
   const headers: RawAxiosRequestHeaders = {
     'Content-Type': 'application/json',
   }
@@ -140,5 +144,6 @@ export function initAxios(api: string, password?: string): AxiosInstance {
   return axios.create({
     baseURL: api,
     headers,
+    timeout,
   })
 }

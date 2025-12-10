@@ -1,7 +1,10 @@
 import { Explored } from '@siafoundation/explored-js'
 import { exploredApi } from '../config'
 import { cookies } from 'next/headers'
-import { exploredCustomApiCookieName } from '../config/explored'
+import {
+  exploredCustomApiCookieName,
+  exploredTimeout,
+} from '../config/explored'
 
 // Allow passing a custom explored address via a cookie for testing purposes.
 async function getExploredAddressCookie() {
@@ -21,11 +24,11 @@ export async function getExploredAddress() {
 
 export async function getExplored(explicitAddress?: string) {
   if (explicitAddress) {
-    return Explored({ api: explicitAddress })
+    return Explored({ api: explicitAddress, timeout: exploredTimeout })
   }
   if (process.env.NODE_ENV === 'development') {
     const exploredAddress = await getExploredAddress()
-    return Explored({ api: exploredAddress })
+    return Explored({ api: exploredAddress, timeout: exploredTimeout })
   }
-  return Explored({ api: exploredApi })
+  return Explored({ api: exploredApi, timeout: exploredTimeout })
 }
