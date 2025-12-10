@@ -21,8 +21,16 @@ import {
 } from '@siafoundation/renterd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
-export function Worker({ api, password }: { api: string; password?: string }) {
-  const axios = initAxios(api, password)
+export function Worker({
+  api,
+  password,
+  timeout,
+}: {
+  api: string
+  password?: string
+  timeout?: number
+}) {
+  const axios = initAxios(api, password, timeout)
   return {
     axios,
     workerState: buildRequestHandler<

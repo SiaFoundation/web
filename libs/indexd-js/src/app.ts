@@ -36,8 +36,16 @@ import {
 } from '@siafoundation/indexd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
-export function App({ api, password }: { api: string; password?: string }) {
-  const axios = initAxios(api, password)
+export function App({
+  api,
+  password,
+  timeout,
+}: {
+  api: string
+  password?: string
+  timeout?: number
+}) {
+  const axios = initAxios(api, password, timeout)
   return {
     axios,
     authConnect: buildRequestHandler<
