@@ -15,6 +15,7 @@ export function ClientSideOnly({
   const [shouldRender, setShouldRender] = useState(false)
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setShouldRender(true)
   }, [])
 

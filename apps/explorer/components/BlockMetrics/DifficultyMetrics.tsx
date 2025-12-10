@@ -8,7 +8,7 @@ import {
   triggerErrorToast,
 } from '@siafoundation/design-system'
 import { DifficultyMetricsChart } from './DifficultyMetricsChart'
-import { useCallback, useRef, useState, useEffect } from 'react'
+import { useCallback, useState } from 'react'
 import {
   useConsensusTip,
   useDifficultyMetrics,
@@ -60,12 +60,6 @@ export function DifficultyMetrics({ currentTip }: Props) {
     params: { start, end },
     config: { swr: { refreshInterval: 60000, keepPreviousData: true } },
   })
-
-  const prevDataRef = useRef<typeof data>(null)
-  useEffect(() => {
-    if (data) prevDataRef.current = data
-  }, [data])
-  const stableData = data ?? prevDataRef.current
 
   const handleManualRangeUpdate = useCallback(() => {
     if (proposedStart < 0 || proposedEnd < 0 || proposedStart >= proposedEnd) {
@@ -209,12 +203,12 @@ export function DifficultyMetrics({ currentTip }: Props) {
             <div className="flex justify-end">
               <Text color="subtle">
                 {(end - start).toLocaleString()} blocks across{' '}
-                {stableData?.blockTimes.length ?? 0} data points
+                {data?.blockTimes.length ?? 0} data points
               </Text>
             </div>
           </div>
         </div>
-        {!stableData ? (
+        {!data ? (
           <Skeleton className="h-[515px]" />
         ) : (
           <>
@@ -226,8 +220,8 @@ export function DifficultyMetrics({ currentTip }: Props) {
                 <DifficultyMetricsChart
                   yType="time"
                   timeUnit="m"
-                  values={stableData.blockTimes}
-                  blocksPerStep={stableData.blocksPerStep}
+                  values={data.blockTimes}
+                  blocksPerStep={data.blocksPerStep}
                   xFirstBlock={start}
                   onSelectRange={handleSelectedRangeUpdate}
                   onReset={handleReset}
@@ -243,8 +237,8 @@ export function DifficultyMetrics({ currentTip }: Props) {
               <div className="relative">
                 <DifficultyMetricsChart
                   yType="hash"
-                  values={stableData.difficulties.map(Number)}
-                  blocksPerStep={stableData.blocksPerStep}
+                  values={data.difficulties.map(Number)}
+                  blocksPerStep={data.blocksPerStep}
                   xFirstBlock={start}
                   onSelectRange={handleSelectedRangeUpdate}
                   onReset={handleReset}
@@ -262,8 +256,8 @@ export function DifficultyMetrics({ currentTip }: Props) {
                   yType="time"
                   timeUnit="h"
                   includeZero="always"
-                  values={stableData.drifts}
-                  blocksPerStep={stableData.blocksPerStep}
+                  values={data.drifts}
+                  blocksPerStep={data.blocksPerStep}
                   xFirstBlock={start}
                   onSelectRange={handleSelectedRangeUpdate}
                   onReset={handleReset}
@@ -278,9 +272,7 @@ export function DifficultyMetrics({ currentTip }: Props) {
 
       <ExplorerAccordion title="Difficulty Metrics JSON">
         <div className="p-2">
-          <ExplorerTextarea
-            value={JSON.stringify(stableData ?? null, null, 2)}
-          />
+          <ExplorerTextarea value={JSON.stringify(data ?? null, null, 2)} />
         </div>
       </ExplorerAccordion>
     </>

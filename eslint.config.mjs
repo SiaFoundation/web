@@ -35,9 +35,6 @@ export default [
           ],
         },
       ],
-      // TODO: Re-enable these rules.
-      'react-hooks/set-state-in-effect': 'off',
-      'react-hooks/refs': 'off',
     },
   },
   {

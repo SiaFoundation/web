@@ -62,7 +62,7 @@ function getContractFieldsFromV1(c: Contract): ContractData {
     },
     lockedCollateral: new BigNumber(c.lockedCollateral || 0),
     payout: new BigNumber(
-      c.status == 'active' || c.resolutionHeight > 0
+      c.status === 'active' || c.resolutionHeight > 0
         ? c.revision.validProofOutputs[1].value
         : c.revision.missedProofOutputs[1].value,
     ),
@@ -148,7 +148,7 @@ function getContractFieldsFromV2(c: V2Contract): ContractData {
       c.status === 'renewed'
         ? null
         : new BigNumber(
-            c.status == 'active' || c.resolutionIndex.height > 0
+            c.status === 'active' || c.resolutionIndex.height > 0
               ? c.hostOutput.value
               : c.missedHostValue,
           ),

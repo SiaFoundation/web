@@ -283,7 +283,7 @@ function useUploadsManagerMain() {
   const checkAndStartUploads = useCallback(
     () =>
       throttle('checkAndStartUploads', checkAndStartUploadsInterval, () => {
-        const uploadsListRef = Object.values(uploadsMapRef)
+        const uploadsListRef = Object.values(uploadsMapRef.current)
         // Active uploads should include uploads that are in either uploading state.
         const activeUploads = uploadsListRef.filter(
           (upload) =>
@@ -340,12 +340,12 @@ function useUploadsManagerMain() {
           })
           return
         }
-        if (uploadsMapRef[id]) {
+        if (uploadsMapRef.current[id]) {
           triggerErrorToast({
             title: `Already uploading file, aborting previous upload.`,
             body: path,
           })
-          uploadsMapRef[id].uploadAbort?.()
+          uploadsMapRef.current[id].uploadAbort?.()
         }
         addUploadToQueue({
           id,

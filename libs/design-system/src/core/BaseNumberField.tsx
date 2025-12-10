@@ -27,6 +27,7 @@ export function BaseNumberField({
   // navigator is not defined on the server.
   const [locale, setLocale] = useState<string>()
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLocale(navigator.language)
     // allows for dynamically changing language without refresh
     const onLanguageChange = () => {

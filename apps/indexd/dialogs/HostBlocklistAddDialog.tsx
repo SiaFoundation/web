@@ -115,6 +115,7 @@ export function HostBlocklistAddDialog({ hosts, open, onOpenChange }: Props) {
 
   useEffect(() => {
     if (!open) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSelectedReasons([])
     }
   }, [open])
