@@ -5,6 +5,7 @@ import { Background } from '../OGImage/Background'
 import { Header } from './Header'
 import { network } from '../../config'
 import { PreviewValue } from '../OGImage/Preview'
+import { generatePublicKeyAvatarGrid } from '@siafoundation/design-system'
 
 type Props = {
   id: string
@@ -27,6 +28,8 @@ export function Preview({
   statusColor = 'amber',
   values,
 }: Props) {
+  const avatarGrid = avatar ? generatePublicKeyAvatarGrid(id) : undefined
+
   return (
     <div tw="bg-black w-full h-full flex items-center justify-center">
       <Background />
@@ -36,7 +39,7 @@ export function Preview({
             title={title}
             subtitle={subtitle}
             initials={initials}
-            avatar={avatar ? id : undefined}
+            avatarGrid={avatarGrid}
           />
           {status && (
             <div
@@ -59,12 +62,12 @@ export function Preview({
           }}
         >
           <img
-            src="https://sia.tech/siascan/preview/logo.png"
-            height="40px"
-            width="40px"
-            alt="logo"
+            src="https://sia.tech/api/media/file/shard-bleed.png"
+            width="24"
+            height="24"
+            alt="siascan"
           />
-          <span tw="font-bold text-2xl relative -top-1 text-white tracking-tight">
+          <span tw="font-bold text-2xl relative -top-[2px] text-white tracking-tight">
             siascan
           </span>
         </div>
