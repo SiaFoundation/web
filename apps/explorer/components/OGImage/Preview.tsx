@@ -35,7 +35,7 @@ export function Preview({ title, subtitle, values }: Props) {
           }}
         >
           <img
-            src="https://sia.tech/siascan/preview/logo.png"
+            src="https://sia.tech/api/media/file/shard-bleed.png"
             height="40px"
             width="40px"
             alt="logo"
