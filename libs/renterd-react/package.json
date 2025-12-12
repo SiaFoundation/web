@@ -1,6 +1,6 @@
 {
   "name": "@siafoundation/renterd-react",
-  "version": "4.15.9",
+  "version": "4.16.0",
   "description": "React hooks for interacting with `renterd`.",
   "license": "MIT",
   "repository": {
@@ -9,8 +9,8 @@
   },
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@siafoundation/react-core": "^8.0.0",
-    "@siafoundation/renterd-types": "^0.17.5",
+    "@siafoundation/react-core": "^8.2.0",
+    "@siafoundation/renterd-types": "^0.18.0",
     "@siafoundation/units": "^3.7.0",
     "swr": "^2.3.7"
   }

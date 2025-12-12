@@ -1,5 +1,18 @@
 # @siafoundation/renterd-react
 
+## 4.16.0
+
+### Minor Changes
+
+- 55e41a9: Added system database backup APIs.
+
+### Patch Changes
+
+- Updated dependencies [55e41a9]
+- Updated dependencies [a8e7956]
+  - @siafoundation/renterd-types@0.18.0
+  - @siafoundation/react-core@8.2.0
+
 ## 4.15.9
 
 ### Patch Changes

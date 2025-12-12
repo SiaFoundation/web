@@ -1,5 +1,20 @@
 # @siafoundation/hostd-js
 
+## 0.6.0
+
+### Minor Changes
+
+- 948504d: Added timeout option to init methods.
+- 55e41a9: Added system database backup APIs.
+
+### Patch Changes
+
+- Updated dependencies [948504d]
+- Updated dependencies [55e41a9]
+- Updated dependencies [4d6cec1]
+  - @siafoundation/request@0.5.0
+  - @siafoundation/hostd-types@0.11.0
+
 ## 0.5.8
 
 ### Patch Changes
