@@ -9,6 +9,6 @@
   },
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@carbon/icons-react": "^10.47.0"
+    "@carbon/icons-react": "^11.71.0"
   }
 }
