@@ -1,5 +1,16 @@
 # @siafoundation/indexd-js
 
+## 0.7.0
+
+### Minor Changes
+
+- 948504d: Added timeout option to init methods.
+
+### Patch Changes
+
+- Updated dependencies [948504d]
+  - @siafoundation/request@0.5.0
+
 ## 0.6.1
 
 ### Patch Changes

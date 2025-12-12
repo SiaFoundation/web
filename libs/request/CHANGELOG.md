@@ -1,5 +1,11 @@
 # @siafoundation/request
 
+## 0.5.0
+
+### Minor Changes
+
+- 948504d: Added timeout option to initAxios.
+
 ## 0.4.0
 
 ### Minor Changes

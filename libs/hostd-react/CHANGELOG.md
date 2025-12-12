@@ -1,5 +1,19 @@
 # @siafoundation/hostd-react
 
+## 4.7.0
+
+### Minor Changes
+
+- 55e41a9: Added system database backup APIs.
+
+### Patch Changes
+
+- Updated dependencies [55e41a9]
+- Updated dependencies [a8e7956]
+- Updated dependencies [4d6cec1]
+  - @siafoundation/hostd-types@0.11.0
+  - @siafoundation/react-core@8.2.0
+
 ## 4.6.9
 
 ### Patch Changes

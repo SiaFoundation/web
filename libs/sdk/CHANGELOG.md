@@ -1,5 +1,11 @@
 # @siafoundation/sdk
 
+## 0.5.0
+
+### Minor Changes
+
+- 57ab9a3: Updated HostSettings.protocolVersion to string.
+
 ## 0.4.4
 
 ### Patch Changes
