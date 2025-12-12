@@ -12,6 +12,6 @@
     "@playwright/test": "^1.54.1",
     "@siafoundation/explored-types": "^0.20.0",
     "@siafoundation/react-core": "^8.0.0",
-    "playwright": "^1.54.1"
+    "playwright": "^1.55.1"
   }
 }
