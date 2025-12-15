@@ -1,5 +1,39 @@
 # explorer
 
+## 0.41.0
+
+### Minor Changes
+
+- 5ffc044: Host avatars now have a right-click context menu with image download options.
+- b08f758: 404 pages now use the main layout.
+- a8e7956: Updated Next in response to https://react.dev/blog/2025/12/03/critical-security-vulnerability-in-react-server-components.
+- 4b86f66: The explorer now displays shard avatars for hosts. These are assigned based on the host's public key. Closes https://github.com/SiaFoundation/web/issues/1296
+- 948504d: Requests to explored now have a 10 second timeout.
+- 2514de0: Host address rendering now prioritizes siamux, quic, and finally, displays 'unknown' if neither are found.
+- a782f67: Updated Next to 16.0.10.
+- 3b6fcc5: Host page opengraph images now use the host avatar.
+
+### Patch Changes
+
+- 9aa1311: Fixed an issue where errors would be rendered without the page layout. Closes https://github.com/SiaFoundation/web/issues/1297
+- 9dbaa0e: Updated react-hook-form to compiler memoization compatible watch API.
+- Updated dependencies [948504d]
+- Updated dependencies [9dbaa0e]
+- Updated dependencies [948504d]
+- Updated dependencies [4b86f66]
+- Updated dependencies [a8e7956]
+- Updated dependencies [bf2e73c]
+- Updated dependencies [1a0b645]
+- Updated dependencies [5ffc044]
+- Updated dependencies [5ffc044]
+- Updated dependencies [bf49561]
+- Updated dependencies [1a0b645]
+- Updated dependencies [d2b19ce]
+  - @siafoundation/request@0.5.0
+  - @siafoundation/design-system@11.3.0
+  - @siafoundation/explored-js@0.10.0
+  - @siafoundation/react-core@8.2.0
+
 ## 0.40.2
 
 ### Patch Changes

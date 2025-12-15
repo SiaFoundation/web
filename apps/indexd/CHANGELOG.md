@@ -1,5 +1,30 @@
 # indexd
 
+## 0.12.0
+
+### Minor Changes
+
+- a8e7956: Updated Next in response to https://react.dev/blog/2025/12/03/critical-security-vulnerability-in-react-server-components.
+- a782f67: Updated Next to 16.0.10.
+- d2b19ce: Adjusting filters, sorting, or pagination controls now resets the scroll position. Closes https://github.com/SiaFoundation/hostd/issues/591 Closes https://github.com/SiaFoundation/hostd/issues/206
+
+### Patch Changes
+
+- 9dbaa0e: Updated react-hook-form to compiler memoization compatible watch API.
+- 3eeb7a1: Fixed an issue where the onboarding wizard would show for a split second on initial load even if onboarding was complete. Closes https://github.com/SiaFoundation/hostd/issues/660
+- Updated dependencies [9dbaa0e]
+- Updated dependencies [4b86f66]
+- Updated dependencies [a8e7956]
+- Updated dependencies [bf2e73c]
+- Updated dependencies [1a0b645]
+- Updated dependencies [5ffc044]
+- Updated dependencies [5ffc044]
+- Updated dependencies [bf49561]
+- Updated dependencies [1a0b645]
+- Updated dependencies [d2b19ce]
+  - @siafoundation/design-system@11.3.0
+  - @siafoundation/react-core@8.2.0
+
 ## 0.11.0
 
 ### Minor Changes

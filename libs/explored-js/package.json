@@ -1,6 +1,6 @@
 {
   "name": "@siafoundation/explored-js",
-  "version": "0.9.1",
+  "version": "0.10.0",
   "description": "SDK for interacting with `explored`.",
   "license": "MIT",
   "repository": {
@@ -10,6 +10,6 @@
   "types": "./src/index.d.ts",
   "dependencies": {
     "@siafoundation/explored-types": "^0.20.0",
-    "@siafoundation/request": "^0.4.0"
+    "@siafoundation/request": "^0.5.0"
   }
 }

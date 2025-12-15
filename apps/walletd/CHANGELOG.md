@@ -1,5 +1,33 @@
 # walletd
 
+## 0.35.0
+
+### Minor Changes
+
+- f13a9c0: The rescan start time is now in the users locale, and validated. Closes https://github.com/SiaFoundation/walletd/issues/223
+- a8e7956: Updated Next in response to https://react.dev/blog/2025/12/03/critical-security-vulnerability-in-react-server-components.
+- a782f67: Updated Next to 16.0.10.
+- d2b19ce: Adjusting filters, sorting, or pagination controls now resets the scroll position. Closes https://github.com/SiaFoundation/hostd/issues/591 Closes https://github.com/SiaFoundation/hostd/issues/206
+- f13a9c0: The rescan status control now shows if there is an error.
+
+### Patch Changes
+
+- 9dbaa0e: Updated react-hook-form to compiler memoization compatible watch API.
+- Updated dependencies [9dbaa0e]
+- Updated dependencies [57ab9a3]
+- Updated dependencies [4b86f66]
+- Updated dependencies [a8e7956]
+- Updated dependencies [bf2e73c]
+- Updated dependencies [1a0b645]
+- Updated dependencies [5ffc044]
+- Updated dependencies [5ffc044]
+- Updated dependencies [bf49561]
+- Updated dependencies [1a0b645]
+- Updated dependencies [d2b19ce]
+  - @siafoundation/design-system@11.3.0
+  - @siafoundation/sdk@0.5.0
+  - @siafoundation/react-core@8.2.0
+
 ## 0.34.5
 
 ### Patch Changes

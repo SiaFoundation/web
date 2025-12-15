@@ -1,5 +1,16 @@
 # @siafoundation/explored-js
 
+## 0.10.0
+
+### Minor Changes
+
+- 948504d: Added timeout option to init methods.
+
+### Patch Changes
+
+- Updated dependencies [948504d]
+  - @siafoundation/request@0.5.0
+
 ## 0.9.1
 
 ### Patch Changes
