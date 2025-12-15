@@ -1,5 +1,25 @@
 # Changelog
 
+## 11.3.0
+
+### Minor Changes
+
+- 4b86f66: Added deterministic PublicKeyAvatar.
+- a8e7956: Updated Next in response to https://react.dev/blog/2025/12/03/critical-security-vulnerability-in-react-server-components.
+- bf2e73c: Added after prop support in ConfigurationText.
+- 1a0b645: Added trigger prop to DaemonProfile.
+- 5ffc044: Added ContextMenu.
+- 5ffc044: PublicKeyAvatar now has a context menu with download options.
+- bf49561: SiacoinField now displays a warning when fiat is enabled but the rate is unavailable. Closes https://github.com/SiaFoundation/web/issues/777
+- 1a0b645: Added PublicKeyShard.
+- d2b19ce: Adjusting filters, sorting, or pagination controls now resets the scroll position. Closes https://github.com/SiaFoundation/hostd/issues/591 Closes https://github.com/SiaFoundation/hostd/issues/206
+
+### Patch Changes
+
+- 9dbaa0e: Updated react-hook-form to compiler memoization compatible watch API.
+- Updated dependencies [a8e7956]
+  - @siafoundation/react-core@8.2.0
+
 ## 11.2.0
 
 ### Minor Changes

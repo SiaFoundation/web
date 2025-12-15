@@ -1,5 +1,16 @@
 # @siafoundation/react-core
 
+## 8.2.0
+
+### Minor Changes
+
+- a8e7956: Updated Next in response to https://react.dev/blog/2025/12/03/critical-security-vulnerability-in-react-server-components.
+
+### Patch Changes
+
+- Updated dependencies [948504d]
+  - @siafoundation/request@0.5.0
+
 ## 8.1.1
 
 ### Patch Changes

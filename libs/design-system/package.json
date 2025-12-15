@@ -1,6 +1,6 @@
 {
   "name": "@siafoundation/design-system",
-  "version": "11.2.0",
+  "version": "11.3.0",
   "description": "React-based design system used across Sia apps.",
   "license": "MIT",
   "repository": {
@@ -29,7 +29,7 @@
     "@radix-ui/react-tooltip": "^1.2.7",
     "@radix-ui/react-visually-hidden": "^1.2.3",
     "@react-spring/web": "^10.0.1",
-    "@siafoundation/react-core": "^8.1.1",
+    "@siafoundation/react-core": "^8.2.0",
     "@siafoundation/react-icons": "^0.5.0",
     "@siafoundation/types": "^0.13.0",
     "@siafoundation/units": "^3.8.0",

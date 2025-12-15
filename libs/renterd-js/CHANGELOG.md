@@ -1,5 +1,19 @@
 # @siafoundation/renterd-js
 
+## 0.15.0
+
+### Minor Changes
+
+- 948504d: Added timeout option to init methods.
+- 55e41a9: Added system database backup APIs.
+
+### Patch Changes
+
+- Updated dependencies [948504d]
+- Updated dependencies [55e41a9]
+  - @siafoundation/request@0.5.0
+  - @siafoundation/renterd-types@0.18.0
+
 ## 0.14.8
 
 ### Patch Changes

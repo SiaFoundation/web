@@ -1,5 +1,16 @@
 # @siafoundation/clusterd
 
+## 0.5.4
+
+### Patch Changes
+
+- Updated dependencies [948504d]
+- Updated dependencies [55e41a9]
+  - @siafoundation/explored-js@0.10.0
+  - @siafoundation/renterd-js@0.15.0
+  - @siafoundation/walletd-js@0.5.0
+  - @siafoundation/hostd-js@0.6.0
+
 ## 0.5.3
 
 ### Patch Changes
