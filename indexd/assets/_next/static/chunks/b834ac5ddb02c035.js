@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,748573,t=>{"use strict";var e=t.i(843476);t.i(387020);var i=t.i(398627);function o({children:t}){return(0,e.jsx)(i.AppRouterAppContentLayout,{title:"Metrics",children:t})}t.s(["default",()=>o])}]);

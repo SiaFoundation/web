@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,846820,t=>{"use strict";var e=t.i(843476);t.i(387020);var i=t.i(290869),o=t.i(515366);function u(){return(0,e.jsx)(i.AppLogin,{appName:"indexd",route:o.connectivityRoute,routes:o.routes})}function n(){return(0,e.jsx)(u,{})}t.s(["default",()=>n],846820)}]);
