@@ -42,18 +42,12 @@ export function useSyncStatus() {
       ? estimatedBlockHeight - nodeBlockHeight > 100
       : false
 
-  const firstTimeSyncing =
-    nodeBlockHeight && estimatedBlockHeight
-      ? estimatedBlockHeight - nodeBlockHeight > 50_000
-      : false
-
   return {
     isSynced: getIsSynced(tipState.data),
     nodeBlockHeight,
     estimatedBlockHeight,
     syncPercent,
     moreThan100BlocksToSync,
-    firstTimeSyncing,
   }
 }
 

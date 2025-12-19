@@ -51,11 +51,6 @@ export function useSyncStatus() {
       ? estimatedBlockHeight - nodeBlockHeight > 100
       : false
 
-  const firstTimeSyncing =
-    nodeBlockHeight && estimatedBlockHeight
-      ? estimatedBlockHeight - nodeBlockHeight > 50_000
-      : false
-
   return {
     isSynced,
     isWalletSynced: isSynced && scan.data?.height >= nodeBlockHeight - 1,
@@ -64,7 +59,6 @@ export function useSyncStatus() {
     syncPercent,
     walletScanPercent,
     moreThan100BlocksToSync,
-    firstTimeSyncing,
   }
 }
 

@@ -54,7 +54,6 @@ export function Profile() {
       syncPercent={syncStatus.syncPercent}
       nodeBlockHeight={syncStatus.nodeBlockHeight}
       estimatedBlockHeight={syncStatus.estimatedBlockHeight}
-      firstTimeSyncing={syncStatus.firstTimeSyncing}
       moreThan100BlocksToSync={syncStatus.moreThan100BlocksToSync}
     >
       <div className="flex gap-4 justify-between items-center">
