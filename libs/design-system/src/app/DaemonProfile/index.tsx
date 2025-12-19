@@ -1,9 +1,13 @@
+'use client'
+
 import { HoverCard } from '../../core/HoverCard'
 import { Logo } from '../../core/Logo'
 import { Separator } from '../../core/Separator'
 import { Text } from '../../core/Text'
 import { Header } from './Header'
 import { SyncStatus } from './SyncStatus'
+import { useEffect } from 'react'
+import useLocalStorageState from 'use-local-storage-state'
 
 type Props = {
   name: string
@@ -13,7 +17,6 @@ type Props = {
   syncPercent: number
   nodeBlockHeight: number
   estimatedBlockHeight: number
-  firstTimeSyncing: boolean
   moreThan100BlocksToSync: boolean
   children?: React.ReactNode
   trigger?: React.ReactNode
@@ -27,11 +30,11 @@ export function DaemonProfile({
   syncPercent,
   nodeBlockHeight,
   estimatedBlockHeight,
-  firstTimeSyncing,
   moreThan100BlocksToSync,
   children,
   trigger,
 }: Props) {
+  const showWelcome = useShowSyncWelcome(isSynced)
   return (
     <HoverCard
       rootProps={{
@@ -78,7 +81,7 @@ export function DaemonProfile({
             moreThan100BlocksToSync={moreThan100BlocksToSync}
           />
         )}
-        {firstTimeSyncing && (
+        {showWelcome && (
           <>
             <Text color="contrast" size="14">
               Welcome to Sia! The blockchain is syncing to the current network
@@ -91,4 +94,22 @@ export function DaemonProfile({
       </div>
     </HoverCard>
   )
+}
+
+function useShowSyncWelcome(isSynced: boolean) {
+  const [hasSeenWelcome, setHasSeenWelcome] = useLocalStorageState<boolean>(
+    'onboarding/syncing',
+    {
+      defaultValue: false,
+    },
+  )
+
+  // Mark as seen once synced.
+  useEffect(() => {
+    if (isSynced && !hasSeenWelcome) {
+      setHasSeenWelcome(true)
+    }
+  }, [isSynced, hasSeenWelcome, setHasSeenWelcome])
+
+  return !isSynced && !hasSeenWelcome
 }
