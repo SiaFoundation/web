@@ -133,6 +133,12 @@ import {
   adminStatsContractsRoute,
   AdminStatsContractsParams,
   AdminStatsContractsResponse,
+  adminConsensusStateRoute,
+  AdminConsensusStateParams,
+  AdminConsensusStateResponse,
+  adminConsensusNetworkRoute,
+  AdminConsensusNetworkParams,
+  AdminConsensusNetworkResponse,
 } from '@siafoundation/indexd-types'
 import useSWR from 'swr'
 import {
@@ -597,5 +603,28 @@ export function useAdminStatsContracts(
   return useGetSwr({
     ...args,
     route: adminStatsContractsRoute,
+  })
+}
+
+// consensus
+
+export function useAdminConsensusState(
+  args?: HookArgsSwr<AdminConsensusStateParams, AdminConsensusStateResponse>,
+) {
+  return useGetSwr({
+    ...args,
+    route: adminConsensusStateRoute,
+  })
+}
+
+export function useAdminConsensusNetwork(
+  args?: HookArgsSwr<
+    AdminConsensusNetworkParams,
+    AdminConsensusNetworkResponse
+  >,
+) {
+  return useGetSwr({
+    ...args,
+    route: adminConsensusNetworkRoute,
   })
 }

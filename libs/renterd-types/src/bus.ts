@@ -10,6 +10,7 @@ import {
   TransactionID,
   WalletEvent,
   Nullable,
+  ConsensusNetwork,
 } from '@siafoundation/types'
 import {
   ConsensusState,
@@ -117,7 +118,7 @@ export type ConsensusStateResponse = ConsensusState
 
 export type ConsensusNetworkParams = void
 export type ConsensusNetworkPayload = void
-export type ConsensusNetworkResponse = string
+export type ConsensusNetworkResponse = ConsensusNetwork
 
 export type ConsensusAcceptBlockParams = void
 export type ConsensusAcceptBlockPayload = Block
