@@ -148,6 +148,14 @@ import {
   AdminStatsContractsPayload,
   AdminStatsContractsResponse,
   adminStatsContractsRoute,
+  AdminConsensusStateParams,
+  AdminConsensusStatePayload,
+  AdminConsensusStateResponse,
+  adminConsensusStateRoute,
+  AdminConsensusNetworkParams,
+  AdminConsensusNetworkPayload,
+  AdminConsensusNetworkResponse,
+  adminConsensusNetworkRoute,
 } from '@siafoundation/indexd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
@@ -353,5 +361,15 @@ export function Admin({
       AdminStatsContractsPayload,
       AdminStatsContractsResponse
     >(axios, 'get', adminStatsContractsRoute),
+    consensusState: buildRequestHandler<
+      AdminConsensusStateParams,
+      AdminConsensusStatePayload,
+      AdminConsensusStateResponse
+    >(axios, 'get', adminConsensusStateRoute),
+    consensusNetwork: buildRequestHandler<
+      AdminConsensusNetworkParams,
+      AdminConsensusNetworkPayload,
+      AdminConsensusNetworkResponse
+    >(axios, 'get', adminConsensusNetworkRoute),
   }
 }

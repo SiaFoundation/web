@@ -6,6 +6,8 @@ import type {
   WalletEvent,
   TransactionID,
   Hash256,
+  ConsensusState,
+  ConsensusNetwork,
 } from '@siafoundation/types'
 import type {
   Contract,
@@ -53,6 +55,18 @@ export const adminTxpoolRecommendedFeeRoute = '/txpool/recommendedfee'
 export type AdminTxpoolRecommendedFeeParams = void
 export type AdminTxpoolRecommendedFeePayload = void
 export type AdminTxpoolRecommendedFeeResponse = string
+
+// consensus
+
+export const adminConsensusStateRoute = '/consensus/state'
+export type AdminConsensusStateParams = void
+export type AdminConsensusStatePayload = void
+export type AdminConsensusStateResponse = ConsensusState
+
+export const adminConsensusNetworkRoute = '/consensus/network'
+export type AdminConsensusNetworkParams = void
+export type AdminConsensusNetworkPayload = void
+export type AdminConsensusNetworkResponse = ConsensusNetwork
 
 // accounts
 
