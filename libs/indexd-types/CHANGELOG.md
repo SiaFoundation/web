@@ -1,5 +1,11 @@
 # @siafoundation/indexd-types
 
+## 0.11.0
+
+### Minor Changes
+
+- da46c3e: Added consensus APIs.
+
 ## 0.10.0
 
 ### Minor Changes

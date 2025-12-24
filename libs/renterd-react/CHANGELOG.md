@@ -1,5 +1,18 @@
 # @siafoundation/renterd-react
 
+## 4.17.0
+
+### Minor Changes
+
+- 28b27ce: Estimated block height now uses dynamic genesis timestamp. Closes https://github.com/SiaFoundation/walletd/issues/238
+
+### Patch Changes
+
+- Updated dependencies [da46c3e]
+- Updated dependencies [28b27ce]
+  - @siafoundation/renterd-types@0.18.1
+  - @siafoundation/units@3.9.0
+
 ## 4.16.0
 
 ### Minor Changes

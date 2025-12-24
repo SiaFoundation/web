@@ -1,5 +1,16 @@
 # @siafoundation/walletd-react
 
+## 4.6.0
+
+### Minor Changes
+
+- 28b27ce: Estimated block height now uses dynamic genesis timestamp. Closes https://github.com/SiaFoundation/walletd/issues/238
+
+### Patch Changes
+
+- Updated dependencies [28b27ce]
+  - @siafoundation/units@3.9.0
+
 ## 4.5.5
 
 ### Patch Changes
