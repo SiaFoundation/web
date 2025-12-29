@@ -12,6 +12,6 @@
     "@siafoundation/hostd-types": "^0.11.0",
     "@siafoundation/react-core": "^8.2.0",
     "@siafoundation/units": "^3.7.0",
-    "swr": "^2.3.7"
+    "swr": "^2.3.8"
   }
 }
