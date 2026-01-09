@@ -1,5 +1,18 @@
 # @siafoundation/indexd-react
 
+## 0.7.0
+
+### Minor Changes
+
+- da46c3e: Added consensus APIs.
+
+### Patch Changes
+
+- Updated dependencies [28b27ce]
+- Updated dependencies [da46c3e]
+  - @siafoundation/units@3.9.0
+  - @siafoundation/indexd-types@0.11.0
+
 ## 0.6.1
 
 ### Patch Changes
