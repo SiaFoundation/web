@@ -55,7 +55,7 @@ export function getFields({
       title: 'Address',
       description: (
         <>
-          The network address of the host without a port. Ports must be
+          The network address of the host without a port. Ports may be
           configured in the <Code>hostd.yml</Code> config file.
         </>
       ),
@@ -89,7 +89,7 @@ export function getFields({
                 </Text>
               </div>
             </Tooltip>
-            {lastAnnouncementAddress ? (
+            {state.data?.lastAnnouncement?.index?.height ? (
               <Tooltip
                 align="start"
                 side="bottom"
