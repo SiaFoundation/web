@@ -1,6 +1,6 @@
 {
   "name": "@siafoundation/renterd-types",
-  "version": "0.18.0",
+  "version": "0.18.1",
   "description": "Types for `renterd`.",
   "license": "MIT",
   "repository": {

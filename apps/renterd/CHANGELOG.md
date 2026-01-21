@@ -1,5 +1,19 @@
 # renterd
 
+## 0.88.0
+
+### Minor Changes
+
+- bb97ec0: The sync welcome message in the node profile is now based on a more accurate sync status and only shown during the first full sync.
+
+### Patch Changes
+
+- Updated dependencies [da46c3e]
+- Updated dependencies [28b27ce]
+  - @siafoundation/renterd-types@0.18.1
+  - @siafoundation/renterd-react@4.17.0
+  - @siafoundation/units@3.9.0
+
 ## 0.87.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @siafoundation/renterd-types
 
+## 0.18.1
+
+### Patch Changes
+
+- da46c3e: Fixed the network response type.
+
 ## 0.18.0
 
 ### Minor Changes

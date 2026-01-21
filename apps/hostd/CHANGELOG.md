@@ -1,5 +1,19 @@
 # hostd
 
+## 0.68.0
+
+### Minor Changes
+
+- bb97ec0: The sync welcome message in the node profile is now based on a more accurate sync status and only shown during the first full sync.
+
+### Patch Changes
+
+- f07ce07: Fixed the address configuration description to say ports "may" be configured instead of "must" since default ports are used if not specified. Closes https://github.com/SiaFoundation/hostd/issues/908
+- f07ce07: Fixed the announcement state to correctly show whether the host has been announced based on the announcement index height. Closes https://github.com/SiaFoundation/hostd/issues/908
+- Updated dependencies [28b27ce]
+  - @siafoundation/hostd-react@4.8.0
+  - @siafoundation/units@3.9.0
+
 ## 0.67.0
 
 ### Minor Changes

@@ -1,6 +1,6 @@
 {
   "name": "explorer",
-  "version": "0.41.0",
+  "version": "0.41.1",
   "private": true,
   "description": "The `explorer` user interface, a Sia blockchain explorer interface that powers siascan.com.",
   "license": "MIT",
@@ -14,7 +14,7 @@
     "@siafoundation/react-icons": "0.5.0",
     "@siafoundation/request": "0.5.0",
     "@siafoundation/types": "0.13.0",
-    "@siafoundation/units": "3.8.0",
+    "@siafoundation/units": "3.9.0",
     "@technically/lodash": "4.17.0",
     "@vercel/otel": "1.13.0",
     "@visx/axis": "3.12.0",

@@ -1,5 +1,16 @@
 # @siafoundation/indexd-js
 
+## 0.8.0
+
+### Minor Changes
+
+- da46c3e: Added consensus APIs.
+
+### Patch Changes
+
+- Updated dependencies [da46c3e]
+  - @siafoundation/indexd-types@0.11.0
+
 ## 0.7.0
 
 ### Minor Changes

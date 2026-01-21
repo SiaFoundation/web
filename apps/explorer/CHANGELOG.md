@@ -1,5 +1,12 @@
 # explorer
 
+## 0.41.1
+
+### Patch Changes
+
+- Updated dependencies [28b27ce]
+  - @siafoundation/units@3.9.0
+
 ## 0.41.0
 
 ### Minor Changes

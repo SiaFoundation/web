@@ -1,5 +1,11 @@
 # @siafoundation/units
 
+## 3.9.0
+
+### Minor Changes
+
+- 28b27ce: Estimated block height now uses dynamic genesis timestamp. Closes https://github.com/SiaFoundation/walletd/issues/238
+
 ## 3.8.0
 
 ### Minor Changes
