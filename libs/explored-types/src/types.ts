@@ -333,11 +333,12 @@ export type ExplorerFileContractRevision = ExplorerFileContract & {
 
 /**
  * An `ExplorerTransaction` differs from a core type `Transaction` in the `siacoinOutputs`,
- * `siafundOutputs`,`fileContracts`, and `fileContractRevisions` key values, which are custom
- * to explorerd.
+ * `siafundOutputs`, `fileContracts`, `fileContractRevisions`, and `unconfirmed` key values,
+ * which are custom to explorerd.
  */
 export type ExplorerTransaction = {
   id: string
+  unconfirmed?: boolean
   siacoinInputs?: ExplorerSiacoinInput[]
   siacoinOutputs?: ExplorerSiacoinOutput[]
   siafundInputs?: ExplorerSiafundInput[]
@@ -468,6 +469,7 @@ export type ExplorerV2FileContractResolution =
 
 export type ExplorerV2Transaction = {
   id: TransactionID
+  unconfirmed?: boolean
 
   siacoinInputs?: V2SiacoinInput[]
   siacoinOutputs?: ExplorerSiacoinOutput[]
