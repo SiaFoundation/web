@@ -6,10 +6,11 @@ import LoadingTimestamp from '../LoadingTimestamp'
 
 export type TransactionHeaderData = {
   id: string
-  blockHeight: number
-  confirmations: number
-  timestamp: string
+  blockHeight?: number
+  confirmations?: number
+  timestamp?: string
   version: 'v1' | 'v2'
+  unconfirmed?: boolean
 }
 
 type Props = {
@@ -23,7 +24,7 @@ export function TransactionHeader({
   transactionHeaderData,
   txType,
 }: Props) {
-  const { id, timestamp, blockHeight, confirmations, version } =
+  const { id, timestamp, blockHeight, confirmations, version, unconfirmed } =
     transactionHeaderData
   return (
     <div className="flex flex-col gap-4">
@@ -49,6 +50,7 @@ export function TransactionHeader({
       </div>
       <div className="flex flex-wrap justify-between gap-2">
         <div className="flex flex-wrap gap-2">
+          {unconfirmed && <Badge variant="amber">Unconfirmed</Badge>}
           {txType && <Badge variant="accent">{getTxTypeLabel(txType)}</Badge>}
         </div>
         <div className="flex flex-wrap gap-2">
@@ -60,7 +62,8 @@ export function TransactionHeader({
                 </Tooltip>
                 <div className="">|</div>
                 <div className="">
-                  {confirmations >= 72 ? '72+' : confirmations} confirmations
+                  {confirmations && confirmations >= 72 ? '72+' : confirmations}{' '}
+                  confirmations
                 </div>
               </div>
             </Badge>

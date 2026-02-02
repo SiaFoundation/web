@@ -57,20 +57,26 @@ export default async function Page({ params }: ExplorerPageProps) {
       throw transactionError
     }
 
-    const { data: parentBlock } = await explored.blockByID({
-      params: { id: transactionChainIndices[0].id },
-    })
+    // Unconfirmed transactions don't have a block, so we need to
+    // be able to succeed without it.
+    const { data: parentBlock } = transactionChainIndices?.[0]
+      ? await explored.blockByID({
+          params: { id: transactionChainIndices[0].id },
+        })
+      : { data: undefined }
     return (
       <Transaction
         txType={getV1TransactionType(transaction)}
         transaction={transaction}
         transactionHeaderData={{
           id: stripPrefix(transaction.id),
-          blockHeight: transactionChainIndices[0].height,
-          confirmations:
-            currentTip.height - transactionChainIndices[0].height + 1,
-          timestamp: parentBlock.timestamp,
+          blockHeight: transactionChainIndices?.[0]?.height,
+          confirmations: transactionChainIndices?.[0]
+            ? currentTip.height - transactionChainIndices[0].height + 1
+            : undefined,
+          timestamp: parentBlock?.timestamp,
           version: 'v1',
+          unconfirmed: transaction.unconfirmed,
         }}
       />
     )
@@ -90,9 +96,11 @@ export default async function Page({ params }: ExplorerPageProps) {
       throw transactionError
     }
 
-    const { data: parentBlock } = await explored.blockByID({
-      params: { id: transactionChainIndices[0].id },
-    })
+    const { data: parentBlock } = transactionChainIndices?.[0]
+      ? await explored.blockByID({
+          params: { id: transactionChainIndices[0].id },
+        })
+      : { data: undefined }
     return (
       <Transaction
         txType={getV2TransactionType(
@@ -101,11 +109,13 @@ export default async function Page({ params }: ExplorerPageProps) {
         transaction={transaction}
         transactionHeaderData={{
           id: stripPrefix(transaction.id),
-          blockHeight: transactionChainIndices[0].height,
-          confirmations:
-            currentTip.height - transactionChainIndices[0].height + 1,
-          timestamp: parentBlock.timestamp,
+          blockHeight: transactionChainIndices?.[0]?.height,
+          confirmations: transactionChainIndices?.[0]
+            ? currentTip.height - transactionChainIndices[0].height + 1
+            : undefined,
+          timestamp: parentBlock?.timestamp,
           version: 'v2',
+          unconfirmed: transaction.unconfirmed,
         }}
       />
     )
