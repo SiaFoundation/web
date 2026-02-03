@@ -20,7 +20,7 @@ import { ContentLayout } from '../ContentLayout'
 import { EntityList } from '../Entity/EntityList'
 import { EntityListItemProps } from '../Entity/EntityListItem'
 import { ExplorerAccordion } from '../ExplorerAccordion'
-import { ExplorerTextarea } from '../ExplorerTextarea'
+import { ExplorerCopyableCodeBlock } from '../ExplorerCopyableCodeBlock'
 
 import { TransactionHeader, TransactionHeaderData } from './TransactionHeader'
 import { OutputListItem } from './OutputListItem'
@@ -216,7 +216,7 @@ export function Transaction({
   const JSONAccordion = (
     <ExplorerAccordion title="JSON">
       <div className="p-2">
-        <ExplorerTextarea value={JSON.stringify(transaction, null, 2)} />
+        <ExplorerCopyableCodeBlock value={JSON.stringify(transaction, null, 2)} />
       </div>
     </ExplorerAccordion>
   )

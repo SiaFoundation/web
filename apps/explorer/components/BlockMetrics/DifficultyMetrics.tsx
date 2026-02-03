@@ -15,7 +15,7 @@ import {
 } from '@siafoundation/explored-react'
 import { exploredApi } from '../../config'
 import { ExplorerAccordion } from '../ExplorerAccordion'
-import { ExplorerTextarea } from '../ExplorerTextarea'
+import { ExplorerCopyableCodeBlock } from '../ExplorerCopyableCodeBlock'
 import { humanDate } from '@siafoundation/units'
 
 const ValidationIndicator = () => {
@@ -272,7 +272,7 @@ export function DifficultyMetrics({ currentTip }: Props) {
 
       <ExplorerAccordion title="Difficulty Metrics JSON">
         <div className="p-2">
-          <ExplorerTextarea value={JSON.stringify(data ?? null, null, 2)} />
+          <ExplorerCopyableCodeBlock value={JSON.stringify(data ?? null, null, 2)} />
         </div>
       </ExplorerAccordion>
     </>
