@@ -15,7 +15,7 @@ import { ContentLayout } from '../ContentLayout'
 import { EntityHeading } from '../EntityHeading'
 import { DatumProps, ExplorerDatum } from '../ExplorerDatum'
 import { ExplorerAccordion } from '../ExplorerAccordion'
-import { ExplorerTextarea } from '../ExplorerTextarea'
+import { ExplorerCopyableCodeBlock } from '../ExplorerCopyableCodeBlock'
 
 type Props = {
   outputElement: ExplorerSiacoinOutput | ExplorerSiafundOutput
@@ -93,7 +93,7 @@ export function Output({ outputElement: output }: Props) {
     >
       <ExplorerAccordion title="State">
         <div className="p-2">
-          <ExplorerTextarea
+          <ExplorerCopyableCodeBlock
             value={JSON.stringify(output.stateElement, null, 2)}
           />
         </div>

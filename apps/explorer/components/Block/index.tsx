@@ -24,7 +24,7 @@ import { ExplorerDatum, DatumProps } from '../ExplorerDatum'
 import { EntityHeading } from '../EntityHeading'
 import { ContentLayout } from '../ContentLayout'
 import { ExplorerAccordion } from '../ExplorerAccordion'
-import { ExplorerTextarea } from '../ExplorerTextarea'
+import { ExplorerCopyableCodeBlock } from '../ExplorerCopyableCodeBlock'
 import LoadingTimestamp from '../LoadingTimestamp'
 import { explorerV2TransactionToGetV2TransactionTypeParam } from '../../lib/tx'
 
@@ -190,7 +190,7 @@ export function Block({ block, blockID, currentHeight }: Props) {
         ) : null}
         <ExplorerAccordion title="JSON">
           <div className="p-2">
-            <ExplorerTextarea value={JSON.stringify(block, null, 2)} />
+            <ExplorerCopyableCodeBlock value={JSON.stringify(block, null, 2)} />
           </div>
         </ExplorerAccordion>
       </div>

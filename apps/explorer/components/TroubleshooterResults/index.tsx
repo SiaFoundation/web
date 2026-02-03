@@ -40,7 +40,7 @@ import { TroubleshooterResponse } from '../../lib/troubleshooter'
 import { ContentLayout } from '../ContentLayout'
 import { ExplorerAccordion } from '../ExplorerAccordion'
 import { DatumProps, ExplorerDatum } from '../ExplorerDatum'
-import { ExplorerTextarea } from '../ExplorerTextarea'
+import { ExplorerCopyableCodeBlock } from '../ExplorerCopyableCodeBlock'
 import LoadingCurrency from '../LoadingCurrency'
 
 type ResultsProps = {
@@ -358,7 +358,7 @@ export function TroubleshooterResults({ troubleshooterData }: ResultsProps) {
       </Panel>
       <ExplorerAccordion title="JSON">
         <div className="p-2">
-          <ExplorerTextarea
+          <ExplorerCopyableCodeBlock
             value={JSON.stringify(troubleshooterData, null, 2)}
           />
         </div>
