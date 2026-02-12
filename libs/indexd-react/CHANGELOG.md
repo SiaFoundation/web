@@ -1,5 +1,16 @@
 # @siafoundation/indexd-react
 
+## 0.8.0
+
+### Minor Changes
+
+- 9567a4e: Added quota types and updated connect key payloads to reference quotas.
+
+### Patch Changes
+
+- Updated dependencies [9567a4e]
+  - @siafoundation/indexd-types@0.12.0
+
 ## 0.7.0
 
 ### Minor Changes
