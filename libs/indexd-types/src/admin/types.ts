@@ -87,13 +87,25 @@ export type PinnedSettings = {
 export type ConnectKey = {
   key: string
   description: string
-  totalUses: number
+  quota: string
   remainingUses: number
   dateCreated: string
   lastUpdated: string
   lastUsed: string
-  maxPinnedData: number
   pinnedData: number
+}
+
+export type Quota = {
+  key: string
+  description: string
+  maxPinnedData: number
+  totalUses: number
+}
+
+export type PutQuotaRequest = {
+  description: string
+  maxPinnedData: number
+  totalUses: number
 }
 
 export type AlertSeverity = 'info' | 'warning' | 'error' | 'critical'

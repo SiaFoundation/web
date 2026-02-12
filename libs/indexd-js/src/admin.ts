@@ -156,6 +156,22 @@ import {
   AdminConsensusNetworkPayload,
   AdminConsensusNetworkResponse,
   adminConsensusNetworkRoute,
+  AdminQuotasParams,
+  AdminQuotasPayload,
+  AdminQuotasResponse,
+  adminQuotasRoute,
+  AdminQuotaParams,
+  AdminQuotaPayload,
+  AdminQuotaResponse,
+  adminQuotaRoute,
+  AdminQuotaUpdateParams,
+  AdminQuotaUpdatePayload,
+  AdminQuotaUpdateResponse,
+  adminQuotaUpdateRoute,
+  AdminQuotaDeleteParams,
+  AdminQuotaDeletePayload,
+  AdminQuotaDeleteResponse,
+  adminQuotaDeleteRoute,
 } from '@siafoundation/indexd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
@@ -371,5 +387,25 @@ export function Admin({
       AdminConsensusNetworkPayload,
       AdminConsensusNetworkResponse
     >(axios, 'get', adminConsensusNetworkRoute),
+    quotas: buildRequestHandler<
+      AdminQuotasParams,
+      AdminQuotasPayload,
+      AdminQuotasResponse
+    >(axios, 'get', adminQuotasRoute),
+    quota: buildRequestHandler<
+      AdminQuotaParams,
+      AdminQuotaPayload,
+      AdminQuotaResponse
+    >(axios, 'get', adminQuotaRoute),
+    quotaUpdate: buildRequestHandler<
+      AdminQuotaUpdateParams,
+      AdminQuotaUpdatePayload,
+      AdminQuotaUpdateResponse
+    >(axios, 'put', adminQuotaUpdateRoute),
+    quotaDelete: buildRequestHandler<
+      AdminQuotaDeleteParams,
+      AdminQuotaDeletePayload,
+      AdminQuotaDeleteResponse
+    >(axios, 'delete', adminQuotaDeleteRoute),
   }
 }

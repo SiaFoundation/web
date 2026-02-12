@@ -139,6 +139,20 @@ import {
   adminConsensusNetworkRoute,
   AdminConsensusNetworkParams,
   AdminConsensusNetworkResponse,
+  adminQuotasRoute,
+  AdminQuotasParams,
+  AdminQuotasResponse,
+  adminQuotaRoute,
+  AdminQuotaParams,
+  AdminQuotaResponse,
+  adminQuotaUpdateRoute,
+  AdminQuotaUpdateParams,
+  AdminQuotaUpdatePayload,
+  AdminQuotaUpdateResponse,
+  adminQuotaDeleteRoute,
+  AdminQuotaDeleteParams,
+  AdminQuotaDeletePayload,
+  AdminQuotaDeleteResponse,
 } from '@siafoundation/indexd-types'
 import useSWR from 'swr'
 import { getBlockHeightFromGenesis } from '@siafoundation/units'
@@ -618,5 +632,51 @@ export function useAdminConsensusNetwork(
   return useGetSwr({
     ...args,
     route: adminConsensusNetworkRoute,
+  })
+}
+
+// quotas
+
+export function useAdminQuotas(
+  args?: HookArgsSwr<AdminQuotasParams, AdminQuotasResponse>,
+) {
+  return useGetSwr({
+    ...args,
+    route: adminQuotasRoute,
+  })
+}
+
+export function useAdminQuota(
+  args?: HookArgsSwr<AdminQuotaParams, AdminQuotaResponse>,
+) {
+  return useGetSwr({
+    ...args,
+    route: adminQuotaRoute,
+  })
+}
+
+export function useAdminQuotaUpdate(
+  args?: HookArgsCallback<
+    AdminQuotaUpdateParams,
+    AdminQuotaUpdatePayload,
+    AdminQuotaUpdateResponse
+  >,
+) {
+  return usePutFunc({
+    ...args,
+    route: adminQuotaUpdateRoute,
+  })
+}
+
+export function useAdminQuotaDelete(
+  args?: HookArgsCallback<
+    AdminQuotaDeleteParams,
+    AdminQuotaDeletePayload,
+    AdminQuotaDeleteResponse
+  >,
+) {
+  return useDeleteFunc({
+    ...args,
+    route: adminQuotaDeleteRoute,
   })
 }
