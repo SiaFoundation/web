@@ -1,15 +1,14 @@
 import { Text, Button, DataTableState } from '@siafoundation/design-system'
 import { SidePanel } from '../SidePanel'
 import { useMemo } from 'react'
-import { KeyData } from '../../../lib/connectKey'
-import { BulkKeyQuotaReassign } from './BulkKeyQuotaReassign'
+import { QuotaData } from '../../../lib/quota'
 
-export function SidePanelKeyList({
+export function SidePanelQuotaList({
   table,
 }: {
-  table: DataTableState<KeyData>
+  table: DataTableState<QuotaData>
 }) {
-  const keys = useMemo(() => {
+  const quotas = useMemo(() => {
     return table.isSelection ? table.selectedRows : table.rows
   }, [table.isSelection, table.selectedRows, table.rows])
   return (
@@ -17,10 +16,10 @@ export function SidePanelKeyList({
       heading={
         <Text size="18" weight="medium">
           {table.isSelection
-            ? `Selected keys (${keys.length})`
+            ? `Selected quotas (${quotas.length})`
             : table.isFiltered
-              ? `Filtered keys (${keys.length})`
-              : 'All keys'}
+              ? `Filtered quotas (${quotas.length})`
+              : 'All quotas'}
         </Text>
       }
       customCloseAction={
@@ -30,14 +29,9 @@ export function SidePanelKeyList({
           </Button>
         ) : null
       }
-      actions={
-        table.isSelection ? (
-          <BulkKeyQuotaReassign keys={keys} />
-        ) : null
-      }
     >
       <Text color="subtle" className="flex justify-center pt-[50px]">
-        No information on keys yet
+        No information on quotas yet
       </Text>
     </SidePanel>
   )

@@ -4,7 +4,7 @@ import {
   useRemoteData,
   RemoteDataStates,
 } from '@siafoundation/design-system'
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useDialog } from '../../../contexts/dialog'
 import { Filter16, TrashCan16 } from '@siafoundation/react-icons'
 import { useKeysParams } from './useKeysParams'
@@ -13,9 +13,10 @@ import { SidePanelHeadingCopyable } from '../SidePanelHeadingCopyable'
 import {
   useAdminConnectKey,
   useAdminConnectKeyUpdate,
+  useAdminQuotas,
 } from '@siafoundation/indexd-react'
 import {
-  FieldNumber,
+  FieldSelect,
   FieldText,
   triggerErrorToast,
   triggerSuccessToast,
@@ -36,8 +37,6 @@ import { useAccountsParams } from '../Accounts/useAccountsParams'
 import { routes } from '../../../config/routes'
 import { useNavigateWithParams } from '../../../lib/navigation'
 
-const fields = getFields()
-
 export function SidePanelKey() {
   const { panelId, setPanelId } = useKeysParams()
   const { buildAddColumnFilterParams: buildAccountAddColumnFilterParams } =
@@ -46,12 +45,15 @@ export function SidePanelKey() {
   const { openDialog } = useDialog()
   const keyUpdate = useAdminConnectKeyUpdate()
   const mutate = useMutate()
+  const quotas = useAdminQuotas()
   const connectKey = useAdminConnectKey({
     disabled: !panelId,
     params: {
       key: panelId!,
     },
   })
+
+  const fields = useMemo(() => getFields(quotas.data), [quotas.data])
 
   const dataState = useRemoteData(
     {
@@ -136,19 +138,10 @@ export function SidePanelKey() {
               <SidePanelSection heading="Info">
                 <div className="flex flex-col gap-2">
                   <FieldText name="description" form={form} fields={fields} />
-                  <FieldNumber
-                    name="maxPinnedDataGB"
-                    form={form}
-                    fields={fields}
-                  />
-                  <FieldNumber
-                    name="remainingUses"
-                    form={form}
-                    fields={fields}
-                  />
+                  <FieldSelect name="quota" form={form} fields={fields} />
                   <InfoRow
-                    label="Total uses"
-                    value={connectKey.displayFields.totalUses}
+                    label="Remaining uses"
+                    value={connectKey.remainingUses.toString()}
                   />
                   <InfoRow
                     label="Pinned data"

@@ -13,6 +13,7 @@ import {
   useAdminWallet,
 } from '@siafoundation/indexd-react'
 import { HostData } from '../components/Data/Hosts/types'
+import { KeyData } from '../lib/connectKey'
 import { IndexdSendSiacoinDialog } from '../dialogs/IndexdSendSiacoinDialog'
 import { IndexdTransactionDetailsDialog } from '../dialogs/IndexdTransactionDetailsDialog'
 import { DebugDialog } from '../dialogs/DebugDialog'
@@ -21,6 +22,9 @@ import { ConnectKeyDeleteDialog } from '../dialogs/ConnectKeyDeleteDialog'
 import { ConnectKeyCreateDialog } from '../dialogs/ConnectKeyCreateDialog'
 import { HostBlocklistAddDialog } from '../dialogs/HostBlocklistAddDialog'
 import { AccountFilterConnectKeyDialog } from '../dialogs/AccountFilterConnectKeyDialog'
+import { QuotaCreateDialog } from '../dialogs/QuotaCreateDialog'
+import { QuotaDeleteDialog } from '../dialogs/QuotaDeleteDialog'
+import { KeyQuotaReassignDialog } from '../dialogs/KeyQuotaReassignDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -35,11 +39,17 @@ export type DialogType =
   | 'accountFilterConnectKey'
   | 'connectKeyDelete'
   | 'connectKeyCreate'
+  | 'quotaCreate'
+  | 'quotaDelete'
+  | 'keyQuotaReassign'
   | 'hostBlocklistAdd'
 
 type DialogData = {
   hostBlocklistAdd?: {
     hosts: HostData[]
+  }
+  keyQuotaReassign?: {
+    keys: KeyData[]
   }
 }
 
@@ -197,6 +207,24 @@ export function Dialogs() {
             : undefined
         }
         open={dialog === 'hostBlocklistAdd'}
+        onOpenChange={onOpenChange}
+      />
+      <QuotaCreateDialog
+        open={dialog === 'quotaCreate'}
+        onOpenChange={onOpenChange}
+      />
+      <QuotaDeleteDialog
+        id={id}
+        open={dialog === 'quotaDelete'}
+        onOpenChange={onOpenChange}
+      />
+      <KeyQuotaReassignDialog
+        keys={
+          dialog === 'keyQuotaReassign'
+            ? data?.keyQuotaReassign?.keys
+            : undefined
+        }
+        open={dialog === 'keyQuotaReassign'}
         onOpenChange={onOpenChange}
       />
       <AccountFilterConnectKeyDialog

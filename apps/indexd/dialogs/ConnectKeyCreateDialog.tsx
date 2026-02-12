@@ -6,10 +6,13 @@ import {
   FormSubmitButton,
   FieldText,
   triggerErrorToast,
-  FieldNumber,
+  FieldSelect,
 } from '@siafoundation/design-system'
-import { useAdminConnectKeyAdd } from '@siafoundation/indexd-react'
-import { useCallback } from 'react'
+import {
+  useAdminConnectKeyAdd,
+  useAdminQuotas,
+} from '@siafoundation/indexd-react'
+import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDialog } from '../contexts/dialog'
 import { useKeysParams } from '../components/Data/Keys/useKeysParams'
@@ -28,12 +31,12 @@ type Props = {
   onOpenChange: (val: boolean) => void
 }
 
-const fields = getFields()
-
 export function ConnectKeyCreateDialog({ trigger, open, onOpenChange }: Props) {
   const { closeDialog } = useDialog()
   const { setPanelId } = useKeysParams()
   const keyAdd = useAdminConnectKeyAdd()
+  const quotas = useAdminQuotas()
+  const fields = useMemo(() => getFields(quotas.data), [quotas.data])
 
   const form = useForm({
     mode: 'all',
@@ -83,8 +86,7 @@ export function ConnectKeyCreateDialog({ trigger, open, onOpenChange }: Props) {
       <div className="flex flex-col gap-4">
         <Paragraph size="14">Create a new connect key.</Paragraph>
         <FieldText name="description" form={form} fields={fields} />
-        <FieldNumber name="maxPinnedDataGB" form={form} fields={fields} />
-        <FieldNumber name="remainingUses" form={form} fields={fields} />
+        <FieldSelect name="quota" form={form} fields={fields} />
         <FormSubmitButton form={form}>Create connect key</FormSubmitButton>
       </div>
     </Dialog>
