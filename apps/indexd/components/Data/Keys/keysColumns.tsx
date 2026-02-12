@@ -34,14 +34,14 @@ export const keysColumns: ColumnDef<KeyData>[] = [
     meta: { className: 'justify-start', ...hashColumnWidth },
   },
   {
-    id: 'totalUses',
+    id: 'quota',
     header: ({ table, column }) => (
-      <TableHeader table={table} column={column} className="justify-end">
-        Total uses
+      <TableHeader table={table} column={column} className="justify-start">
+        Quota
       </TableHeader>
     ),
-    cell: ({ row }) => <Text>{row.original.totalUses}</Text>,
-    meta: { className: 'justify-end', ...smallColumnWidth },
+    cell: ({ row }) => <Text>{row.original.quota}</Text>,
+    meta: { className: 'justify-start', ...smallColumnWidth },
   },
   {
     id: 'remainingUses',
@@ -61,16 +61,6 @@ export const keysColumns: ColumnDef<KeyData>[] = [
       </TableHeader>
     ),
     cell: ({ row }) => <Text>{row.original.displayFields.pinnedData}</Text>,
-    meta: { className: 'justify-end', ...smallColumnWidth },
-  },
-  {
-    id: 'maxPinnedData',
-    header: ({ table, column }) => (
-      <TableHeader table={table} column={column} className="justify-end">
-        Max pinned data
-      </TableHeader>
-    ),
-    cell: ({ row }) => <Text>{row.original.displayFields.maxPinnedData}</Text>,
     meta: { className: 'justify-end', ...smallColumnWidth },
   },
   {

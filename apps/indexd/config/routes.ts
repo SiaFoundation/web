@@ -11,6 +11,9 @@ export const routes = {
   keys: {
     index: '/keys',
   },
+  quotas: {
+    index: '/quotas',
+  },
   accounts: {
     index: '/accounts',
   },

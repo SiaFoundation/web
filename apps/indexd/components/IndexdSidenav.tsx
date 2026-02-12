@@ -8,6 +8,7 @@ import {
   KeyIcon,
   BellIcon,
   UsersIcon,
+  GaugeIcon,
 } from '@siafoundation/react-icons'
 import { routes } from '../config/routes'
 import { useDialog } from '../contexts/dialog'
@@ -36,6 +37,12 @@ export function IndexdSidenav() {
         route={routeWithParams(routes.keys.index, params)}
       >
         <KeyIcon />
+      </SidenavItem>
+      <SidenavItem
+        title="Quotas"
+        route={routeWithParams(routes.quotas.index, params)}
+      >
+        <GaugeIcon />
       </SidenavItem>
       <SidenavItem
         title="Accounts"

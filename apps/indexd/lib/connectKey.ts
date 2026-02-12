@@ -1,24 +1,18 @@
 import { ConfigFields } from '@siafoundation/design-system'
-import { Maybe } from '@siafoundation/types'
-import BigNumber from 'bignumber.js'
-import { ConnectKey } from '@siafoundation/indexd-types'
-import { bytesToGB, GBToBytes } from '@siafoundation/units'
+import { ConnectKey, Quota } from '@siafoundation/indexd-types'
 import { humanBytes } from '@siafoundation/units'
 
 export type KeyData = {
   id: string
   key: string
   description: string
-  maxPinnedData: number
-  pinnedData: number
-  totalUses: number
+  quota: string
   remainingUses: number
+  pinnedData: number
   dateCreated: string
   lastUpdated: string
   lastUsed: string
   displayFields: {
-    totalUses: string
-    maxPinnedData: string
     pinnedData: string
     dateCreated: string
     lastUpdated: string
@@ -31,16 +25,13 @@ export function transformDownData(key: ConnectKey): KeyData {
     id: key.key,
     key: key.key,
     description: key.description,
-    maxPinnedData: key.maxPinnedData,
-    pinnedData: key.pinnedData,
-    totalUses: key.totalUses,
+    quota: key.quota,
     remainingUses: key.remainingUses,
+    pinnedData: key.pinnedData,
     dateCreated: key.dateCreated,
     lastUpdated: key.lastUpdated,
     lastUsed: key.lastUsed,
     displayFields: {
-      totalUses: key.totalUses.toString(),
-      maxPinnedData: humanBytes(key.maxPinnedData),
       pinnedData: humanBytes(key.pinnedData),
       dateCreated: Intl.DateTimeFormat('en-US', {
         dateStyle: 'short',
@@ -62,22 +53,20 @@ export function transformDownData(key: ConnectKey): KeyData {
 }
 
 function transformDownForm(
-  connectKey: Pick<KeyData, 'description' | 'maxPinnedData' | 'remainingUses'>,
+  connectKey: Pick<KeyData, 'description' | 'quota'>,
 ): Values {
   return {
     description: connectKey.description,
-    maxPinnedDataGB: bytesToGB(connectKey.maxPinnedData),
-    remainingUses: new BigNumber(connectKey.remainingUses),
+    quota: connectKey.quota,
   }
 }
 
 export function transformUpForm(
   values: Values,
-): Pick<ConnectKey, 'description' | 'maxPinnedData' | 'remainingUses'> {
+): Pick<ConnectKey, 'description' | 'quota'> {
   return {
     description: values.description,
-    maxPinnedData: GBToBytes(values.maxPinnedDataGB).toNumber(),
-    remainingUses: values.remainingUses.toNumber(),
+    quota: values.quota,
   }
 }
 
@@ -95,13 +84,14 @@ export function transformDown(response: ConnectKey): {
 
 export const defaultValues = {
   description: '',
-  maxPinnedDataGB: new BigNumber(1000),
-  remainingUses: new BigNumber(1000),
+  quota: '',
 }
 
 export type Values = typeof defaultValues
 
-export function getFields(): ConfigFields<typeof defaultValues, never> {
+export function getFields(
+  quotas: Quota[] | undefined,
+): ConfigFields<typeof defaultValues, never> {
   return {
     description: {
       type: 'text',
@@ -111,43 +101,15 @@ export function getFields(): ConfigFields<typeof defaultValues, never> {
         required: 'required',
       },
     },
-    maxPinnedDataGB: {
-      type: 'number',
-      title: 'Max pinned data',
-      placeholder: 'Max pinned data',
-      units: 'GB',
+    quota: {
+      type: 'select',
+      title: 'Quota',
+      options: (quotas || []).map((q) => ({
+        label: q.key,
+        value: q.key,
+      })),
       validation: {
         required: 'required',
-        validate: {
-          number: (value: Maybe<BigNumber>) => {
-            if (!value || value.isNaN()) {
-              return 'Must be a number'
-            }
-            return true
-          },
-        },
-      },
-    },
-    remainingUses: {
-      type: 'number',
-      title: 'Remaining uses',
-      placeholder: 'Remaining uses',
-      validation: {
-        required: 'required',
-        validate: {
-          max: (value: Maybe<BigNumber>) => {
-            if (value && value.gt(1_000)) {
-              return 'Max value is 1,000'
-            }
-            return true
-          },
-          min: (value: Maybe<BigNumber>) => {
-            if (value && value.lt(1)) {
-              return 'Min value is 1'
-            }
-            return true
-          },
-        },
       },
     },
   }
