@@ -18,6 +18,8 @@ import type {
   ConnectKey,
   Alert,
   Account,
+  Quota,
+  PutQuotaRequest,
 } from './types'
 import type { Host } from '../types'
 
@@ -305,8 +307,7 @@ export const adminConnectKeyAddRoute = '/apps/connect/keys'
 export type AdminConnectKeyAddParams = void
 export type AdminConnectKeyAddPayload = {
   description: string
-  maxPinnedData: number
-  remainingUses: number
+  quota: string
 }
 export type AdminConnectKeyAddResponse = ConnectKey
 
@@ -315,8 +316,7 @@ export type AdminConnectKeyUpdateParams = void
 export type AdminConnectKeyUpdatePayload = {
   key: string
   description: string
-  maxPinnedData?: number
-  remainingUses: number
+  quota: string
 }
 export type AdminConnectKeyUpdateResponse = void
 
@@ -379,3 +379,34 @@ export type AdminStatsContractsResponse = {
   totalCapacity: number
   totalSize: number
 }
+
+// quotas
+
+export const adminQuotasRoute = '/quotas'
+export type AdminQuotasParams = {
+  offset?: number
+  limit?: number
+}
+export type AdminQuotasPayload = void
+export type AdminQuotasResponse = Quota[]
+
+export const adminQuotaRoute = '/quotas/:key'
+export type AdminQuotaParams = {
+  key: string
+}
+export type AdminQuotaPayload = void
+export type AdminQuotaResponse = Quota
+
+export const adminQuotaUpdateRoute = '/quotas/:key'
+export type AdminQuotaUpdateParams = {
+  key: string
+}
+export type AdminQuotaUpdatePayload = PutQuotaRequest
+export type AdminQuotaUpdateResponse = void
+
+export const adminQuotaDeleteRoute = '/quotas/:key'
+export type AdminQuotaDeleteParams = {
+  key: string
+}
+export type AdminQuotaDeletePayload = void
+export type AdminQuotaDeleteResponse = void
