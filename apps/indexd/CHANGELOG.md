@@ -1,5 +1,17 @@
 # indexd
 
+## 0.14.0
+
+### Minor Changes
+
+- ce5a66e: Added quota management page and updated connect key forms to select quotas.
+
+### Patch Changes
+
+- Updated dependencies [9567a4e]
+  - @siafoundation/indexd-react@0.8.0
+  - @siafoundation/indexd-types@0.12.0
+
 ## 0.13.0
 
 ### Minor Changes

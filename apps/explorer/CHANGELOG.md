@@ -1,5 +1,11 @@
 # explorer
 
+## 0.42.0
+
+### Minor Changes
+
+- 4a05577: Improved JSON dropdown display.
+
 ## 0.41.1
 
 ### Patch Changes

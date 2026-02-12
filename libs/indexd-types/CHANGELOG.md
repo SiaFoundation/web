@@ -1,5 +1,11 @@
 # @siafoundation/indexd-types
 
+## 0.12.0
+
+### Minor Changes
+
+- 9567a4e: Added quota types and updated connect key payloads to reference quotas.
+
 ## 0.11.0
 
 ### Minor Changes
