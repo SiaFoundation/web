@@ -9,9 +9,9 @@
   },
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@playwright/test": "^1.54.1",
+    "@playwright/test": "^1.58.2",
     "@siafoundation/explored-types": "^0.20.0",
     "@siafoundation/react-core": "^8.0.0",
-    "playwright": "^1.54.1"
+    "playwright": "^1.58.2"
   }
 }
