@@ -22,6 +22,10 @@ export async function getExploredAddress() {
   return exploredApi
 }
 
+// Reuse a single Explored instance in production to avoid creating a new
+// Axios instance on every server-side render.
+let _explored: ReturnType<typeof Explored> | null = null
+
 export async function getExplored(explicitAddress?: string) {
   if (explicitAddress) {
     return Explored({ api: explicitAddress, timeout: exploredTimeout })
@@ -30,5 +34,8 @@ export async function getExplored(explicitAddress?: string) {
     const exploredAddress = await getExploredAddress()
     return Explored({ api: exploredAddress, timeout: exploredTimeout })
   }
-  return Explored({ api: exploredApi, timeout: exploredTimeout })
+  if (!_explored) {
+    _explored = Explored({ api: exploredApi, timeout: exploredTimeout })
+  }
+  return _explored
 }
