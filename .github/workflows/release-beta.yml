@@ -16,7 +16,7 @@ concurrency: commits-to-beta
 
 jobs:
   release:
-    runs-on: tenki-standard-autoscale
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout all commits
         uses: actions/checkout@v3
