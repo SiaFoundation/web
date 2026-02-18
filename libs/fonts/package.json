@@ -12,6 +12,6 @@
     "class-variance-authority": "^0.7.0"
   },
   "peerDependencies": {
-    "next": "^16.0.7"
+    "next": "^16.1.6"
   }
 }

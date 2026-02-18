@@ -27,7 +27,7 @@
     "formik": "2.4.6",
     "jszip": "3.10.1",
     "msw": "2.10.4",
-    "next": "16.0.10",
+    "next": "16.1.6",
     "next-themes": "0.2.1",
     "react": "19.2.1",
     "react-dropzone": "14.3.8",

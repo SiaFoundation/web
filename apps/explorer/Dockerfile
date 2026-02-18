@@ -1,4 +1,4 @@
-FROM node:20-alpine as runner
+FROM node:24-alpine as runner
 
 WORKDIR /app
 
@@ -15,7 +15,10 @@ COPY --chown=nextjs:nodejs ./dist/apps/explorer/.next/standalone ./
 COPY --chown=nextjs:nodejs ./dist/apps/explorer/.next/static ./dist/apps/explorer/.next/static
 COPY --chown=nextjs:nodejs ./dist/apps/explorer/public ./apps/explorer/public
 
+RUN mkdir -p /diagnostics && chown nextjs:nodejs /diagnostics
+
 USER nextjs
 EXPOSE 3000
 
+ENV NODE_OPTIONS="--heapsnapshot-near-heap-limit=3 --diagnostic-dir=/diagnostics"
 CMD node apps/explorer/server.js
