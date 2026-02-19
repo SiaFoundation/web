@@ -5,8 +5,8 @@
   "description": "The `walletd` user interface, includes a wallet with support for hot, cold, and hardware wallets.",
   "license": "MIT",
   "dependencies": {
-    "@ledgerhq/hw-transport-web-ble": "6.29.7",
-    "@ledgerhq/hw-transport-webhid": "6.30.3",
+    "@ledgerhq/hw-transport-web-ble": "6.31.0",
+    "@ledgerhq/hw-transport-webhid": "6.31.0",
     "@siacentral/ledgerjs-sia": "1.2.9",
     "@siafoundation/design-system": "11.3.0",
     "@siafoundation/fonts": "0.5.2",
@@ -21,13 +21,13 @@
     "bignumber.js": "9.3.1",
     "blakejs": "1.2.1",
     "class-variance-authority": "0.7.1",
-    "date-fns": "2.30.0",
+    "date-fns": "4.1.0",
     "next": "16.1.6",
-    "playwright": "1.54.1",
-    "react": "19.2.1",
-    "react-hook-form": "7.68.0",
+    "playwright": "1.58.2",
+    "react": "19.2.4",
+    "react-hook-form": "7.71.1",
     "react-idle-timer": "5.7.2",
-    "swr": "2.3.7",
+    "swr": "2.4.0",
     "use-local-storage-state": "19.5.0"
   }
 }
