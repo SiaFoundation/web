@@ -124,6 +124,11 @@ export function SidePanelQuota() {
                     form={form}
                     fields={fields}
                   />
+                  <FieldNumber
+                    name="fundTargetGB"
+                    form={form}
+                    fields={fields}
+                  />
                 </div>
               </SidePanelSection>
             )
