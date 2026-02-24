@@ -54,4 +54,16 @@ export const quotasColumns: ColumnDef<QuotaData>[] = [
     cell: ({ row }) => <Text>{row.original.totalUses}</Text>,
     meta: { className: 'justify-end', ...smallColumnWidth },
   },
+  {
+    id: 'fundTargetBytes',
+    header: ({ table, column }) => (
+      <TableHeader table={table} column={column} className="justify-end">
+        Fund target
+      </TableHeader>
+    ),
+    cell: ({ row }) => (
+      <Text>{row.original.displayFields.fundTargetBytes}</Text>
+    ),
+    meta: { className: 'justify-end', ...smallColumnWidth },
+  },
 ]

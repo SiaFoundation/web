@@ -100,12 +100,14 @@ export type Quota = {
   description: string
   maxPinnedData: number
   totalUses: number
+  fundTargetBytes: number
 }
 
 export type PutQuotaRequest = {
   description: string
   maxPinnedData: number
   totalUses: number
+  fundTargetBytes: number
 }
 
 export type AlertSeverity = 'info' | 'warning' | 'error' | 'critical'

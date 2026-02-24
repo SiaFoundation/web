@@ -18,11 +18,17 @@ import { useMutate } from '@siafoundation/react-core'
 import { adminQuotasRoute } from '@siafoundation/indexd-types'
 import BigNumber from 'bignumber.js'
 
+// 16 GiB default fund target (16 << 30 bytes = 17.179869184 GB)
+const defaultFundTargetGB = new BigNumber(16).times(
+  new BigNumber(2).pow(30).div(1e9)
+)
+
 const defaultValues = {
   key: '',
   description: '',
   maxPinnedDataGB: undefined as undefined | BigNumber,
   totalUses: undefined as undefined | BigNumber,
+  fundTargetGB: defaultFundTargetGB as undefined | BigNumber,
 }
 
 type CreateValues = typeof defaultValues
@@ -64,6 +70,16 @@ function getCreateFields(): ConfigFields<CreateValues, never> {
         required: 'required',
       },
     },
+    fundTargetGB: {
+      type: 'number',
+      title: 'Fund target',
+      units: 'GB',
+      decimalsLimit: 2,
+      placeholder: '17.18',
+      validation: {
+        required: 'required',
+      },
+    },
   }
 }
 
@@ -97,6 +113,9 @@ export function QuotaCreateDialog({ trigger, open, onOpenChange }: Props) {
             ? values.maxPinnedDataGB.times(1e9).toNumber()
             : 0,
           totalUses: values.totalUses ? values.totalUses.toNumber() : 0,
+          fundTargetBytes: values.fundTargetGB
+            ? values.fundTargetGB.times(1e9).toNumber()
+            : 0,
         },
       })
       if (response.error) {
@@ -139,6 +158,7 @@ export function QuotaCreateDialog({ trigger, open, onOpenChange }: Props) {
         <FieldText name="description" form={form} fields={fields} />
         <FieldNumber name="maxPinnedDataGB" form={form} fields={fields} />
         <FieldNumber name="totalUses" form={form} fields={fields} />
+        <FieldNumber name="fundTargetGB" form={form} fields={fields} />
         <FormSubmitButton form={form}>Create quota</FormSubmitButton>
       </div>
     </Dialog>
