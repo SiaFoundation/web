@@ -1,5 +1,11 @@
 # @siafoundation/fonts
 
+## 0.5.3
+
+### Patch Changes
+
+- fd8b617: Upgraded Next.js to v16.1.6 and Node.js to v24.
+
 ## 0.5.2
 
 ### Patch Changes

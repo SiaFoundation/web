@@ -1,5 +1,11 @@
 # @siafoundation/request
 
+## 0.5.1
+
+### Patch Changes
+
+- 6e67e45: Fixed security vulnerabilities by upgrading axios to 1.13.5 and playwright to 1.58.2.
+
 ## 0.5.0
 
 ### Minor Changes

@@ -1,5 +1,14 @@
 # @siafoundation/e2e
 
+## 0.6.11
+
+### Patch Changes
+
+- 6e67e45: Fixed security vulnerabilities by upgrading axios to 1.13.5 and playwright to 1.58.2.
+- Updated dependencies [6e67e45]
+- Updated dependencies [fd8b617]
+  - @siafoundation/react-core@8.2.1
+
 ## 0.6.10
 
 ### Patch Changes
