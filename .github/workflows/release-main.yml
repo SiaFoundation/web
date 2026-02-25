@@ -45,7 +45,7 @@ jobs:
           commit: 'chore: release packages'
           version: bun run version
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_PAT }}
       - name: Replace src code with dists for publishing
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: ./scripts/replace-src-with-dists-for-publishing.sh
