@@ -1,5 +1,16 @@
 # hostd
 
+## 0.68.1
+
+### Patch Changes
+
+- fd8b617: Upgraded Next.js to v16.1.6 and Node.js to v24.
+- Updated dependencies [6e67e45]
+- Updated dependencies [fd8b617]
+  - @siafoundation/design-system@11.3.1
+  - @siafoundation/react-core@8.2.1
+  - @siafoundation/fonts@0.5.3
+
 ## 0.68.0
 
 ### Minor Changes
