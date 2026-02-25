@@ -1,5 +1,11 @@
 # @siafoundation/indexd-types
 
+## 0.13.0
+
+### Minor Changes
+
+- cc7a716: Added fundTargetBytes to quota management.
+
 ## 0.12.0
 
 ### Minor Changes
