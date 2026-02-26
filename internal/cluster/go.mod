@@ -5,7 +5,7 @@ go 1.24.3
 require (
 	go.sia.tech/cluster v0.1.6-0.20260213101905-afd78a53bdeb
 	go.sia.tech/core v0.19.1-0.20251215141429-887336e35dd9
-	go.sia.tech/coreutils v0.21.1-0.20260218210936-16ee0158d195
+	go.sia.tech/coreutils v0.21.1
 	go.sia.tech/explored v1.0.0-beta.1.0.20260217175719-fa31eca24784
 	go.uber.org/zap v1.27.1
 )
