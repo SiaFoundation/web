@@ -1,8 +1,6 @@
 1:"$Sreact.fragment"
-2:I[897367,["/_next/static/chunks/d96012bcfc98706a.js","/_next/static/chunks/8182cba999306f4b.js"],"ViewportBoundary"]
-4:I[897367,["/_next/static/chunks/d96012bcfc98706a.js","/_next/static/chunks/8182cba999306f4b.js"],"MetadataBoundary"]
-5:"$Sreact.suspense"
-7:I[27201,["/_next/static/chunks/d96012bcfc98706a.js","/_next/static/chunks/8182cba999306f4b.js"],"IconMark"]
-0:{"buildId":"0-N8nZDLe05qvAmBQO1fW","rsc":["$","$1","h",{"children":[["$","meta",null,{"name":"robots","content":"noindex"}],["$","$L2",null,{"children":"$@3"}],["$","div",null,{"hidden":true,"children":["$","$L4",null,{"children":["$","$5",null,{"name":"Next.Metadata","children":"$@6"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"loading":null,"isPartial":false}
-3:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
-6:[["$","title","0",{"children":"indexd"}],["$","meta","1",{"name":"description","content":"Sia indexd daemon"}],["$","link","2",{"rel":"manifest","href":"/manifest.webmanifest"}],["$","link","3",{"rel":"icon","href":"/icon.png?icon.fdebe532.png","sizes":"1000x1000","type":"image/png"}],["$","$L7","4",{}]]
+2:I[897367,["/_next/static/chunks/d96012bcfc98706a.js","/_next/static/chunks/16ea27c3b926bc31.js"],"ViewportBoundary"]
+3:I[897367,["/_next/static/chunks/d96012bcfc98706a.js","/_next/static/chunks/16ea27c3b926bc31.js"],"MetadataBoundary"]
+4:"$Sreact.suspense"
+5:I[27201,["/_next/static/chunks/d96012bcfc98706a.js","/_next/static/chunks/16ea27c3b926bc31.js"],"IconMark"]
+0:{"buildId":"YrRZuUNmwS8D67cTrv5_B","rsc":["$","$1","h",{"children":[["$","meta",null,{"name":"robots","content":"noindex"}],["$","$L2",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L3",null,{"children":["$","$4",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"indexd"}],["$","meta","1",{"name":"description","content":"Sia indexd daemon"}],["$","link","2",{"rel":"manifest","href":"/manifest.webmanifest"}],["$","link","3",{"rel":"icon","href":"/icon.png?icon.fdebe532.png","sizes":"1000x1000","type":"image/png"}],["$","$L5","4",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"loading":null,"isPartial":false}
