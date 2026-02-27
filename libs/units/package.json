@@ -11,7 +11,7 @@
   "dependencies": {
     "@siafoundation/types": "^0.13.0",
     "@technically/lodash": "^4.17.0",
-    "bignumber.js": "^9.3.1",
+    "bignumber.js": "^10.0.2",
     "blakejs": "^1.2.1"
   }
 }
