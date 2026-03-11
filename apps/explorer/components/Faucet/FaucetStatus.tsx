@@ -127,7 +127,7 @@ export function FaucetStatus({ id: _id, setId }: Props) {
                 type="transaction"
                 value={status.data.transactionID}
                 href={routes.transaction.view.replace(
-                  '[id]',
+                  ':id',
                   status.data.transactionID,
                 )}
               />
