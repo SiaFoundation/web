@@ -1,5 +1,11 @@
 # indexd
 
+## 0.15.1
+
+### Patch Changes
+
+- @siafoundation/design-system@12.0.0
+
 ## 0.15.0
 
 ### Minor Changes

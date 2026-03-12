@@ -1,5 +1,13 @@
 # renterd
 
+## 0.88.2
+
+### Patch Changes
+
+- Updated dependencies [bd65646]
+  - @siafoundation/explored-types@0.21.0
+  - @siafoundation/design-system@12.0.0
+
 ## 0.88.1
 
 ### Patch Changes
