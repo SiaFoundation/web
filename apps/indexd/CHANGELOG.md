@@ -1,5 +1,19 @@
 # indexd
 
+## 0.16.0
+
+### Minor Changes
+
+- 76ee23f: Removed serviceAccount, as it is no longer supplied. Closes https://github.com/SiaFoundation/indexd/issues/794
+- c3a1939: Added Availability section to Host side panel. Closes https://github.com/SiaFoundation/indexd/issues/753
+
+### Patch Changes
+
+- Updated dependencies [76ee23f]
+  - @siafoundation/indexd-types@0.14.0
+  - @siafoundation/design-system@12.0.0
+  - @siafoundation/indexd-react@0.8.2
+
 ## 0.15.0
 
 ### Minor Changes

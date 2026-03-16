@@ -1,5 +1,11 @@
 # @siafoundation/indexd-types
 
+## 0.14.0
+
+### Minor Changes
+
+- 76ee23f: Removed serviceAccount, as it is no longer supplied. Closes https://github.com/SiaFoundation/indexd/issues/794
+
 ## 0.13.0
 
 ### Minor Changes
