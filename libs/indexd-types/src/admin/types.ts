@@ -125,7 +125,6 @@ export type Account = {
   description: string
   pinnedData: number
   maxPinnedData: number
-  serviceAccount: boolean
   lastUsed: string
   logoURL: string
   serviceURL: string

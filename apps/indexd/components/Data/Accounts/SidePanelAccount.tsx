@@ -71,10 +71,6 @@ export function SidePanelAccount() {
                 variant="column"
               />
               <InfoRow
-                label="Service account"
-                value={account.serviceAccount ? 'Yes' : 'No'}
-              />
-              <InfoRow
                 label="Max pinned data"
                 value={account.displayFields.maxPinnedData}
               />
