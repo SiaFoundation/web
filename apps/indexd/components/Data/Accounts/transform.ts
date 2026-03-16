@@ -7,7 +7,6 @@ export function transformAccount(account: Account): AccountData {
     id: account.accountKey,
     publicKey: account.accountKey,
     description: account.description,
-    serviceAccount: account.serviceAccount,
     maxPinnedData: account.maxPinnedData,
     pinnedData: account.pinnedData,
     lastUsed: account.lastUsed,

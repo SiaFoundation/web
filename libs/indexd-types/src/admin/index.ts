@@ -76,7 +76,6 @@ export const adminAccountsRoute = '/accounts'
 export type AdminAccountsParams = {
   offset?: number
   limit?: number
-  serviceaccount?: boolean
   connectkey?: string
 }
 export type AdminAccountsPayload = void

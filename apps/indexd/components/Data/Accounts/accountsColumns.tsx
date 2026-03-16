@@ -38,18 +38,6 @@ export const accountsColumns: ColumnDef<AccountData>[] = [
     meta: { className: 'justify-start', ...hashColumnWidth },
   },
   {
-    id: 'serviceAccount',
-    header: ({ table, column }) => (
-      <TableHeader table={table} column={column} className="justify-end">
-        Service account
-      </TableHeader>
-    ),
-    cell: ({ row }) => (
-      <Text>{row.original.serviceAccount ? 'Yes' : 'No'}</Text>
-    ),
-    meta: { className: 'justify-end', ...smallColumnWidth },
-  },
-  {
     id: 'maxPinnedData',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column} className="justify-end">
