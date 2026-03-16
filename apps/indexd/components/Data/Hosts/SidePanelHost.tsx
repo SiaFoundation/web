@@ -7,6 +7,7 @@ import {
   ValueWithTooltip,
   Tooltip,
 } from '@siafoundation/design-system'
+import { humanDate } from '@siafoundation/units'
 import { CheckmarkFilled16, CloseFilled16 } from '@siafoundation/react-icons'
 import { HostMapHost } from '@siafoundation/design-system'
 import { useMemo } from 'react'
@@ -208,6 +209,40 @@ export function SidePanelHost() {
               <InfoRow
                 label="Price Validity"
                 value={host.displayFields.priceValidity}
+              />
+            </div>
+          </SidePanelSection>
+          <SidePanelSection heading="Availability">
+            <div className="flex flex-col gap-2">
+              <InfoRow
+                label="Recent Uptime"
+                value={host.displayFields.uptime}
+              />
+              <InfoRow
+                label="Last Successful Scan"
+                value={
+                  host.lastSuccessfulScan === '0001-01-01T00:00:00Z'
+                    ? 'Never'
+                    : humanDate(host.lastSuccessfulScan, {
+                        timeStyle: 'short',
+                      })
+                }
+              />
+              <InfoRow
+                label="Last Failed Scan"
+                value={
+                  host.lastFailedScan === '0001-01-01T00:00:00Z'
+                    ? 'Never'
+                    : humanDate(host.lastFailedScan, { timeStyle: 'short' })
+                }
+              />
+              <InfoRow
+                label="Consecutive Failed Scans"
+                value={host.consecutiveFailedScans.toLocaleString()}
+              />
+              <InfoRow
+                label="Next Scan"
+                value={humanDate(host.nextScan, { timeStyle: 'short' })}
               />
             </div>
           </SidePanelSection>
