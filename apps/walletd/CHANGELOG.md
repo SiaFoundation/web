@@ -1,5 +1,11 @@
 # walletd
 
+## 0.36.2
+
+### Patch Changes
+
+- @siafoundation/design-system@12.0.0
+
 ## 0.36.1
 
 ### Patch Changes
