@@ -5,9 +5,10 @@ import { buildMetadata } from '../../../../lib/utils'
 import { notFound } from 'next/navigation'
 import { stripPrefix, truncate } from '@siafoundation/design-system'
 import { normalizeContract } from '../../../../lib/contracts'
-import { getExplored } from '../../../../lib/explored'
+import { generateTraceId, getExplored } from '../../../../lib/explored'
 import { to } from '@siafoundation/request'
 import { ExplorerPageProps } from '../../../../lib/pageProps'
+import { logger } from '../../../../lib/logger'
 
 export async function generateMetadata({
   params,
@@ -26,10 +27,11 @@ export async function generateMetadata({
 export const revalidate = 0
 
 export default async function Page({ params }: ExplorerPageProps) {
+  const traceId = generateTraceId()
   const p = await params
   const id = p?.id
 
-  const explored = await getExplored()
+  const explored = await getExplored(undefined, traceId)
   const [
     { data: searchResultType },
     {
@@ -48,6 +50,13 @@ export default async function Page({ params }: ExplorerPageProps) {
     )
 
     if (contractError) {
+      logger.error('page.contract', 'fetch_failed', {
+        trace_id: traceId,
+        id,
+        version: 'v1',
+        status: contractResponse?.status,
+        error: contractError.message,
+      })
       if (contractResponse?.status === 404) return notFound()
       throw contractError
     }
@@ -94,6 +103,12 @@ export default async function Page({ params }: ExplorerPageProps) {
     )
 
     if (contractError) {
+      logger.error('page.contract', 'fetch_failed', {
+        id,
+        version: 'v2',
+        status: contractResponse?.status,
+        error: contractError.message,
+      })
       if (contractResponse?.status === 404) return notFound()
       throw contractError
     }

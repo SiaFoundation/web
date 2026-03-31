@@ -4,10 +4,15 @@ import { Home } from '../../components/Home'
 import { buildMetadata } from '../../lib/utils'
 import { getLatestBlocks } from '../../lib/blocks'
 import { getTopHosts } from '../../lib/hosts'
-import { getExplored, getExploredAddress } from '../../lib/explored'
+import {
+  generateTraceId,
+  getExplored,
+  getExploredAddress,
+} from '../../lib/explored'
 import { unstable_cache } from 'next/cache'
 import { getNetworkVersion } from '../../lib/networkVersion'
 import { AutoRefresh } from '../../components/AutoRefresh'
+import { getTime, logger } from '../../lib/logger'
 
 export function generateMetadata(): Metadata {
   const title = 'siascan'
@@ -35,7 +40,9 @@ const getCachedTopHosts = unstable_cache(
 )
 
 export default async function HomePage() {
-  const explored = await getExplored()
+  const traceId = generateTraceId()
+  const start = getTime()
+  const explored = await getExplored(undefined, traceId)
 
   const [{ data: hostMetrics }, { data: blockMetrics }] = await Promise.all([
     explored.hostMetrics(),
@@ -45,16 +52,24 @@ export default async function HomePage() {
   const exploredAddress = await getExploredAddress()
   const selectedTopHosts = await getCachedTopHosts(exploredAddress)
 
-  const [latestBlocks, latestBlocksError] = await getLatestBlocks()
+  const [latestBlocks, latestBlocksError] = await getLatestBlocks(6, traceId)
   const latestHeight = latestBlocks ? latestBlocks[0].height : 0
-  const version = await getNetworkVersion()
+  const version = await getNetworkVersion(traceId)
 
   if (latestBlocksError) {
-    console.log(new Date().toISOString(), {
-      latestBlocksError,
+    logger.error('page.home', 'latest_blocks_failed', {
+      trace_id: traceId,
+      error: latestBlocksError.message,
       version,
     })
   }
+
+  logger.info('page.home', 'render_completed', {
+    trace_id: traceId,
+    duration_ms: getTime() - start,
+    block_height: latestHeight,
+    host_count: selectedTopHosts?.length ?? 0,
+  })
 
   return (
     <AutoRefresh interval={30000}>

@@ -2,6 +2,7 @@ import { ExplorerHost } from '@siafoundation/explored-types'
 import { to } from '@siafoundation/request'
 import { getExplored } from './explored'
 import { sectorsToBytes } from '@siafoundation/units'
+import { logger } from './logger'
 
 const weights = {
   age: 0.3,
@@ -171,6 +172,7 @@ function rankHosts(hosts: ExplorerHost[] | undefined) {
 }
 
 export async function getTopHosts(exploredAddress: string) {
+  const start = Date.now()
   const explored = await getExplored(exploredAddress)
   const [hosts, hostsError] = await to(
     explored.hostsList({
@@ -178,10 +180,15 @@ export async function getTopHosts(exploredAddress: string) {
       data: { online: true, acceptContracts: true },
     }),
   )
-  if (hostsError)
+  if (hostsError) {
+    logger.error('hosts', 'fetch_failed', {
+      error: hostsError.message,
+      duration_ms: Date.now() - start,
+    })
     throw new Error(
       'Error from getTopHosts /hosts request: ' + hostsError.message,
     )
+  }
   if (!hosts) throw new Error('No hosts found from getTopHosts /hosts request')
 
   const rankedHosts = rankHosts(hosts)
@@ -190,6 +197,12 @@ export async function getTopHosts(exploredAddress: string) {
 
   if (!rankedHosts.length)
     throw new Error('No ranked hosts returned from rankHosts')
+
+  logger.info('hosts', 'fetch_completed', {
+    count: hosts.length,
+    ranked: rankedHosts.length,
+    duration_ms: Date.now() - start,
+  })
 
   return rankedHosts
 }

@@ -3,10 +3,11 @@ import { Block } from '../../../../components/Block'
 import { routes } from '../../../../config/routes'
 import { Metadata } from 'next'
 import { buildMetadata } from '../../../../lib/utils'
-import { getExplored } from '../../../../lib/explored'
+import { generateTraceId, getExplored } from '../../../../lib/explored'
 import { to } from '@siafoundation/request'
 import { notFound } from 'next/navigation'
 import { ExplorerPageProps } from '../../../../lib/pageProps'
+import { getTime, logger } from '../../../../lib/logger'
 
 export async function generateMetadata({
   params,
@@ -36,10 +37,12 @@ export async function generateMetadata({
 export const revalidate = 0
 
 export default async function Page({ params }: ExplorerPageProps) {
+  const traceId = generateTraceId()
+  const start = getTime()
   const p = await params
   let id: string
 
-  const explored = await getExplored()
+  const explored = await getExplored(undefined, traceId)
   // Check if the incoming id is referencing height.
   if (!isNaN(Number(p?.id))) {
     // If it is, we need the block ID at that height.
@@ -61,10 +64,22 @@ export default async function Page({ params }: ExplorerPageProps) {
     ])
 
   if (blockError) {
+    logger.error('page.block', 'fetch_failed', {
+      trace_id: traceId,
+      id,
+      status: blockResponse?.status,
+      error: blockError.message,
+      duration_ms: getTime() - start,
+    })
     if (blockResponse?.status === 404) return notFound()
     throw blockError
   }
 
+  logger.info('page.block', 'render_completed', {
+    trace_id: traceId,
+    id,
+    duration_ms: getTime() - start,
+  })
   return (
     <Block block={block} blockID={id} currentHeight={currentTipInfo.height} />
   )
