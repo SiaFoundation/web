@@ -1,5 +1,21 @@
 # explorer
 
+## 0.43.0
+
+### Minor Changes
+
+- a0bade0: Unconfirmed transactions are now searchable and denoted by a badge. Closes https://github.com/SiaFoundation/explored/issues/291.
+
+### Patch Changes
+
+- 5c18ede: Fixed transaction ID link on the zen faucet status tab.
+- a4d5601: Add structured logging to the explorer app for debugging API requests and page renders.
+- Updated dependencies [bd65646]
+  - @siafoundation/explored-types@0.21.0
+  - @siafoundation/design-system@12.0.0
+  - @siafoundation/explored-js@0.10.1
+  - @siafoundation/explored-react@0.9.1
+
 ## 0.42.1
 
 ### Patch Changes
