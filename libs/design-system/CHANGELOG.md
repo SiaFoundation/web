@@ -1,5 +1,13 @@
 # Changelog
 
+## 12.0.0
+
+### Patch Changes
+
+- Updated dependencies [bd65646]
+  - @siafoundation/explored-types@0.21.0
+  - @siafoundation/explored-react@0.9.1
+
 ## 11.3.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # hostd
 
+## 0.68.2
+
+### Patch Changes
+
+- @siafoundation/design-system@12.0.0
+
 ## 0.68.1
 
 ### Patch Changes

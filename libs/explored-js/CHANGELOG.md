@@ -1,5 +1,12 @@
 # @siafoundation/explored-js
 
+## 0.10.1
+
+### Patch Changes
+
+- Updated dependencies [bd65646]
+  - @siafoundation/explored-types@0.21.0
+
 ## 0.10.0
 
 ### Minor Changes

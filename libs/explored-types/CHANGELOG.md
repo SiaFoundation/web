@@ -1,5 +1,11 @@
 # @siafoundation/explored-types
 
+## 0.21.0
+
+### Minor Changes
+
+- bd65646: Added unconfirmed field to ExplorerTransaction and ExplorerV2Transaction types.
+
 ## 0.20.0
 
 ### Minor Changes
