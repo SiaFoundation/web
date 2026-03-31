@@ -3,10 +3,11 @@ import { routes } from '../../../../config/routes'
 import { buildMetadata } from '../../../../lib/utils'
 import { Host } from '../../../../components/Host'
 import { truncate } from '@siafoundation/design-system'
-import { getExplored } from '../../../../lib/explored'
+import { generateTraceId, getExplored } from '../../../../lib/explored'
 import { to } from '@siafoundation/request'
 import { notFound } from 'next/navigation'
 import { ExplorerPageProps } from '../../../../lib/pageProps'
+import { getTime, logger } from '../../../../lib/logger'
 
 export async function generateMetadata({
   params,
@@ -25,17 +26,31 @@ export async function generateMetadata({
 export const revalidate = 0
 
 export default async function Page({ params }: ExplorerPageProps) {
+  const traceId = generateTraceId()
+  const start = getTime()
   const p = await params
   const id = p?.id
-  const explored = await getExplored()
+  const explored = await getExplored(undefined, traceId)
   const [host, hostError, hostResponse] = await to(
     explored.hostByPubkey({ params: { id } }),
   )
 
   if (hostError) {
+    logger.error('page.host', 'fetch_failed', {
+      trace_id: traceId,
+      id,
+      status: hostResponse?.status,
+      error: hostError.message,
+      duration_ms: getTime() - start,
+    })
     if (hostResponse?.status === 404) return notFound()
     throw hostError
   }
 
+  logger.info('page.host', 'render_completed', {
+    trace_id: traceId,
+    id,
+    duration_ms: getTime() - start,
+  })
   return <Host host={host} />
 }

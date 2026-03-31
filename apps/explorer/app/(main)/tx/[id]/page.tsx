@@ -4,7 +4,7 @@ import { Transaction } from '../../../../components/Transaction'
 import { buildMetadata } from '../../../../lib/utils'
 import { notFound } from 'next/navigation'
 import { stripPrefix, truncate } from '@siafoundation/design-system'
-import { getExplored } from '../../../../lib/explored'
+import { generateTraceId, getExplored } from '../../../../lib/explored'
 import { to } from '@siafoundation/request'
 import { ExplorerPageProps } from '../../../../lib/pageProps'
 import {
@@ -12,6 +12,7 @@ import {
   getV2TransactionType,
 } from '@siafoundation/units'
 import { explorerV2TransactionToGetV2TransactionTypeParam } from '../../../../lib/tx'
+import { logger } from '../../../../lib/logger'
 
 export async function generateMetadata({
   params,
@@ -31,10 +32,11 @@ export async function generateMetadata({
 export const revalidate = 0
 
 export default async function Page({ params }: ExplorerPageProps) {
+  const traceId = generateTraceId()
   const p = await params
   const id = p?.id
 
-  const explored = await getExplored()
+  const explored = await getExplored(undefined, traceId)
   // Do we have a v1 or v2 transaction?
   const { data: searchResult } = await explored.searchResultType({
     params: { id },
@@ -53,6 +55,13 @@ export default async function Page({ params }: ExplorerPageProps) {
     ])
 
     if (transactionError) {
+      logger.error('page.tx', 'fetch_failed', {
+        trace_id: traceId,
+        id,
+        version: 'v1',
+        status: transactionResponse?.status,
+        error: transactionError.message,
+      })
       if (transactionResponse?.status === 404) return notFound()
       throw transactionError
     }
@@ -92,6 +101,13 @@ export default async function Page({ params }: ExplorerPageProps) {
     ])
 
     if (transactionError) {
+      logger.error('page.tx', 'fetch_failed', {
+        trace_id: traceId,
+        id,
+        version: 'v2',
+        status: transactionResponse?.status,
+        error: transactionError.message,
+      })
       if (transactionResponse?.status === 404) return notFound()
       throw transactionError
     }

@@ -1,5 +1,6 @@
 import { ExplorerBlock } from '@siafoundation/explored-types'
 import { getExplored } from './explored'
+import { logger } from './logger'
 
 export async function getBlockByHeight(height: number) {
   const explored = await getExplored()
@@ -18,8 +19,10 @@ export async function getBlockByHeight(height: number) {
 
 export async function getLatestBlocks(
   n = 6,
+  traceId?: string,
 ): Promise<[ExplorerBlock[], undefined] | [undefined, Error]> {
-  const explored = await getExplored()
+  const start = Date.now()
+  const explored = await getExplored(undefined, traceId)
   // Grab the latest tip.
   const { data: latestTip } = await explored.consensusTip()
 
@@ -36,6 +39,12 @@ export async function getLatestBlocks(
   }
 
   if (fetchedBlocks.length) {
+    logger.info('blocks', 'fetch_completed', {
+      trace_id: traceId,
+      count: fetchedBlocks.length,
+      tip_height: latestTip.height,
+      duration_ms: Date.now() - start,
+    })
     return [fetchedBlocks, undefined]
   }
   return [undefined, Error('No blocks found')]
