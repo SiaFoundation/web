@@ -19,7 +19,7 @@ jobs:
     if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed' && !startsWith(github.head_ref, 'changeset-release/') }}
     steps:
       - name: Checkout all commits
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
       # Full setup required since building the JS SDK requires Go
@@ -60,7 +60,7 @@ jobs:
     if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed' && !startsWith(github.head_ref, 'changeset-release/') }}
     steps:
       - name: Checkout all commits
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: Setup Git

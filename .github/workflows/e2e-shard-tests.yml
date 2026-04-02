@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout all commits
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
       # Full setup required since building the JS SDK requires Go.
@@ -52,7 +52,7 @@ jobs:
         run: nx run ${{ inputs.project }}:e2e --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}
       - name: Upload blob report to GitHub Actions Artifacts
         if: ${{ steps.check.outputs.continue == 'true' && !cancelled() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ inputs.project }}-blob-report-${{ inputs.shardIndex }}
           path: blob-report
