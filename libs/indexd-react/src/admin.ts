@@ -577,10 +577,17 @@ export function useAdminAlertsDismiss(
     AdminAlertsDismissResponse
   >,
 ) {
-  return usePostFunc({
-    ...args,
-    route: adminAlertsDismissRoute,
-  })
+  return usePostFunc(
+    {
+      ...args,
+      route: adminAlertsDismissRoute,
+    },
+    async (mutate) => {
+      mutate((key) => {
+        return key.startsWith(adminAlertsRoute)
+      })
+    }
+  )
 }
 
 // stats
