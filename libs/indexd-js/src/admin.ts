@@ -148,6 +148,10 @@ import {
   AdminStatsContractsPayload,
   AdminStatsContractsResponse,
   adminStatsContractsRoute,
+  AdminStatsHostsParams,
+  AdminStatsHostsPayload,
+  AdminStatsHostsResponse,
+  adminStatsHostsRoute,
   AdminConsensusStateParams,
   AdminConsensusStatePayload,
   AdminConsensusStateResponse,
@@ -377,6 +381,11 @@ export function Admin({
       AdminStatsContractsPayload,
       AdminStatsContractsResponse
     >(axios, 'get', adminStatsContractsRoute),
+    statsHosts: buildRequestHandler<
+      AdminStatsHostsParams,
+      AdminStatsHostsPayload,
+      AdminStatsHostsResponse
+    >(axios, 'get', adminStatsHostsRoute),
     consensusState: buildRequestHandler<
       AdminConsensusStateParams,
       AdminConsensusStatePayload,
