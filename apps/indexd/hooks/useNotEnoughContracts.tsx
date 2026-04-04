@@ -1,21 +1,20 @@
 import {
-  useAdminContracts,
   useAdminSettingsContracts,
+  useAdminStatsHosts,
 } from '@siafoundation/indexd-react'
 
 export function useNotEnoughContracts() {
   const settingsContracts = useAdminSettingsContracts()
-  // TODO: active contracts
-  const contracts = useAdminContracts()
+  const statsHosts = useAdminStatsHosts()
 
   const active =
     settingsContracts.data &&
-    contracts.data &&
-    contracts.data.length < settingsContracts.data.wantedContracts
+    statsHosts.data &&
+    statsHosts.data.active < settingsContracts.data.wantedContracts
 
   return {
     active,
-    count: contracts.data?.length || 0,
+    count: statsHosts.data?.active || 0,
     required: settingsContracts.data?.wantedContracts || 0,
   }
 }
