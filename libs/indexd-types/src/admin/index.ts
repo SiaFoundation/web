@@ -379,6 +379,16 @@ export type AdminStatsContractsResponse = {
   totalSize: number
 }
 
+export const adminStatsHostsRoute = '/stats/hosts'
+export type AdminStatsHostsParams = void
+export type AdminStatsHostsPayload = void
+export type AdminStatsHostsResponse = {
+  active: number
+  goodForUpload: number
+  totalScans: number
+  failedScans: number
+}
+
 // quotas
 
 export const adminQuotasRoute = '/quotas'
