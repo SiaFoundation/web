@@ -175,6 +175,14 @@ export type AdminHostScanParams = {
 export type AdminHostScanPayload = void
 export type AdminHostScanResponse = Host
 
+export const adminHostResetLostSectorsRoute =
+  '/host/:hostkey/lostsectors/reset'
+export type AdminHostResetLostSectorsParams = {
+  hostkey: PublicKey
+}
+export type AdminHostResetLostSectorsPayload = void
+export type AdminHostResetLostSectorsResponse = void
+
 export const adminHostsRoute = '/hosts'
 export type AdminHostsSortBy =
   | 'recentUptime'
