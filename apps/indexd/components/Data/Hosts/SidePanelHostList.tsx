@@ -3,6 +3,7 @@ import { HostDataTableState } from './types'
 import { useMapHosts } from '../useMapHosts'
 import { BulkHostBlocklistAdd } from './bulkActions/BulkHostBlocklistAdd'
 import { BulkHostBlocklistRemove } from './bulkActions/BulkHostBlocklistRemove'
+import { BulkHostResetLostSectors } from './bulkActions/BulkHostResetLostSectors'
 import { SidePanel } from '../SidePanel'
 import { useMemo } from 'react'
 import { useHostsParams } from './useHostsParams'
@@ -29,6 +30,7 @@ export function SidePanelHostList({ table }: { table: HostDataTableState }) {
           <>
             <BulkHostBlocklistAdd hosts={hosts} />
             <BulkHostBlocklistRemove hosts={hosts} />
+            <BulkHostResetLostSectors hosts={hosts} />
           </>
         ) : null
       }
