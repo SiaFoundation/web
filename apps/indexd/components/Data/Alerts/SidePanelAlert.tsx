@@ -17,6 +17,7 @@ import {
   useAdminAlert,
   useAdminAlertsDismiss,
 } from '@siafoundation/indexd-react'
+import { humanDate } from '@siafoundation/units'
 import { getAlertTypeLabel } from './utils'
 import { SidePanelHeadingCopyable } from '../SidePanelHeadingCopyable'
 import { transformAlert } from './transform'
@@ -104,13 +105,15 @@ export function SidePanelAccount() {
                   <InfoRow label="Data" value={JSON.stringify(alert.data)} />
                 </div>
               )}
-              {alert.data && alert.data.type === 'lostSectors' && (
-                <InfoRow
-                  variant="column"
-                  label="Hint"
-                  value={alert.data.hint}
-                />
-              )}
+              {alert.data &&
+                'hint' in alert.data &&
+                alert.data.type !== 'unknown' && (
+                  <InfoRow
+                    variant="column"
+                    label="Hint"
+                    value={alert.data.hint}
+                  />
+                )}
             </div>
           </SidePanelSection>
           {alert.data && alert.data.type === 'lostSectors' && (
@@ -122,6 +125,35 @@ export function SidePanelAccount() {
                     label="Host Key"
                     value={<ValueCopyable value={hk} type="hostPublicKey" />}
                   />
+                ))}
+              </div>
+            </SidePanelSection>
+          )}
+          {alert.data && alert.data.type === 'stuckHosts' && (
+            <SidePanelSection heading="Stuck hosts">
+              <div className="flex flex-col gap-4">
+                {alert.data.hosts.map((host) => (
+                  <div key={host.publicKey} className="flex flex-col gap-2">
+                    <InfoRow
+                      label="Host Key"
+                      value={
+                        <ValueCopyable
+                          value={host.publicKey}
+                          type="hostPublicKey"
+                        />
+                      }
+                    />
+                    <InfoRow
+                      label="Stuck Since"
+                      value={humanDate(host.stuckSince, {
+                        timeStyle: 'short',
+                      })}
+                    />
+                    <InfoRow
+                      label="Unpinned Sectors"
+                      value={host.unpinnedSectors.toLocaleString()}
+                    />
+                  </div>
                 ))}
               </div>
             </SidePanelSection>
