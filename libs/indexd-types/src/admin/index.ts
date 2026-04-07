@@ -147,6 +147,7 @@ export type AdminContractsParams = {
   limit?: number
   revisable?: boolean
   good?: boolean
+  hostkey?: string[]
   sortby?: AdminContractsSortBy[]
   desc?: boolean[]
 }
@@ -204,6 +205,7 @@ export type AdminHostsParams = {
   usable?: boolean
   blocked?: boolean
   activecontracts?: boolean
+  hostkey?: string[]
   sortby?: AdminHostsSortBy[]
   desc?: boolean[]
 }
