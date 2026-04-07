@@ -25,6 +25,8 @@ import { AccountFilterConnectKeyDialog } from '../dialogs/AccountFilterConnectKe
 import { QuotaCreateDialog } from '../dialogs/QuotaCreateDialog'
 import { QuotaDeleteDialog } from '../dialogs/QuotaDeleteDialog'
 import { KeyQuotaReassignDialog } from '../dialogs/KeyQuotaReassignDialog'
+import { HostsFilterPublicKeyDialog } from '../dialogs/HostsFilterPublicKeyDialog'
+import { ContractsFilterPublicKeyDialog } from '../dialogs/ContractsFilterPublicKeyDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -43,6 +45,8 @@ export type DialogType =
   | 'quotaDelete'
   | 'keyQuotaReassign'
   | 'hostBlocklistAdd'
+  | 'hostsFilterPublicKey'
+  | 'contractsFilterPublicKey'
 
 type DialogData = {
   hostBlocklistAdd?: {
@@ -229,6 +233,14 @@ export function Dialogs() {
       />
       <AccountFilterConnectKeyDialog
         open={dialog === 'accountFilterConnectKey'}
+        onOpenChange={onOpenChange}
+      />
+      <HostsFilterPublicKeyDialog
+        open={dialog === 'hostsFilterPublicKey'}
+        onOpenChange={onOpenChange}
+      />
+      <ContractsFilterPublicKeyDialog
+        open={dialog === 'contractsFilterPublicKey'}
         onOpenChange={onOpenChange}
       />
     </>

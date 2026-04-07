@@ -26,6 +26,10 @@ export function useContracts() {
     if (revisable !== undefined) {
       filters.revisable = revisable
     }
+    const hostkey = columnFilters.find((f) => f.id === 'hostkey')?.value
+    if (hostkey !== undefined) {
+      filters.hostkey = [hostkey]
+    }
     // Map all active sorts to API sortby and desc arrays.
     if (columnSorts.length > 0) {
       const sortby: AdminContractsSortBy[] = []

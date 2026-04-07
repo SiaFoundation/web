@@ -1,4 +1,5 @@
 import { AdminHostsSortBy, Host } from '@siafoundation/indexd-types'
+import { truncate } from '@siafoundation/design-system'
 import { CurrencyOption } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 import {
@@ -21,10 +22,16 @@ export type HostFilterActiveContracts = {
   value: boolean
 }
 
+export type HostFilterPublicKey = {
+  id: 'hostkey'
+  value: string
+}
+
 export type HostFilter =
   | HostFilterUsable
   | HostFilterBlocked
   | HostFilterActiveContracts
+  | HostFilterPublicKey
 export type HostFilters = HostFilter[]
 
 export type HostSorts = DataTableSortColumn<AdminHostsSortBy>[]
@@ -37,6 +44,8 @@ export function getFilterLabel(filter: HostFilter): string {
       return filter.value ? 'Blocked' : 'Not Blocked'
     case 'activecontracts':
       return filter.value ? 'Active Contracts' : 'No Active Contracts'
+    case 'hostkey':
+      return `Public key is ${truncate(filter.value, 20)}`
     default:
       return ''
   }

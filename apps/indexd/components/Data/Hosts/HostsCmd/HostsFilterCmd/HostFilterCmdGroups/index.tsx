@@ -2,11 +2,12 @@ import { Page } from '../../../../../CmdRoot/types'
 import { UsableCmdGroup } from './Usable'
 import { BlockedCmdGroup } from './Blocked'
 import { ActiveContractsCmdGroup } from './ActiveContracts'
+import { PublicKeyCmdGroup } from './PublicKey'
 import { HostFilter } from '../../../types'
 
 type Props = {
   currentPage: Page
-  select: (filter: HostFilter) => void
+  select: (filter?: HostFilter) => void
 }
 
 export function HostFilterCmdGroups({ currentPage, select }: Props) {
@@ -15,6 +16,7 @@ export function HostFilterCmdGroups({ currentPage, select }: Props) {
       <UsableCmdGroup currentPage={currentPage} select={select} />
       <BlockedCmdGroup currentPage={currentPage} select={select} />
       <ActiveContractsCmdGroup currentPage={currentPage} select={select} />
+      <PublicKeyCmdGroup currentPage={currentPage} select={select} />
     </>
   )
 }
