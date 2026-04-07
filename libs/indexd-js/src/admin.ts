@@ -101,6 +101,10 @@ import {
   AdminHostScanPayload,
   AdminHostScanResponse,
   adminHostScanRoute,
+  AdminHostResetLostSectorsParams,
+  AdminHostResetLostSectorsPayload,
+  AdminHostResetLostSectorsResponse,
+  adminHostResetLostSectorsRoute,
   AdminConnectKeysParams,
   AdminConnectKeysPayload,
   AdminConnectKeysResponse,
@@ -256,6 +260,11 @@ export function Admin({
       AdminHostScanPayload,
       AdminHostScanResponse
     >(axios, 'post', adminHostScanRoute),
+    hostResetLostSectors: buildRequestHandler<
+      AdminHostResetLostSectorsParams,
+      AdminHostResetLostSectorsPayload,
+      AdminHostResetLostSectorsResponse
+    >(axios, 'post', adminHostResetLostSectorsRoute),
     hosts: buildRequestHandler<
       AdminHostsParams,
       AdminHostsPayload,

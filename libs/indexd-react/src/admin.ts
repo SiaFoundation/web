@@ -94,6 +94,10 @@ import {
   AdminHostScanPayload,
   AdminHostScanResponse,
   adminHostScanRoute,
+  AdminHostResetLostSectorsParams,
+  AdminHostResetLostSectorsPayload,
+  AdminHostResetLostSectorsResponse,
+  adminHostResetLostSectorsRoute,
   adminConnectKeysRoute,
   AdminConnectKeysParams,
   AdminConnectKeysResponse,
@@ -331,6 +335,19 @@ export function useAdminHostScan(
   return usePostFunc({
     ...args,
     route: adminHostScanRoute,
+  })
+}
+
+export function useAdminHostResetLostSectors(
+  args?: HookArgsCallback<
+    AdminHostResetLostSectorsParams,
+    AdminHostResetLostSectorsPayload,
+    AdminHostResetLostSectorsResponse
+  >,
+) {
+  return usePostFunc({
+    ...args,
+    route: adminHostResetLostSectorsRoute,
   })
 }
 
