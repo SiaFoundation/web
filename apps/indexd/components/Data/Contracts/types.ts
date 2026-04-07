@@ -1,4 +1,5 @@
 import { AdminContractsSortBy, Contract } from '@siafoundation/indexd-types'
+import { truncate } from '@siafoundation/design-system'
 import { CurrencyOption } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 import {
@@ -17,7 +18,15 @@ export type ContractFilterRevisable = {
   value: boolean
 }
 
-export type ContractFilter = ContractFilterStatus | ContractFilterRevisable
+export type ContractFilterPublicKey = {
+  id: 'hostkey'
+  value: string
+}
+
+export type ContractFilter =
+  | ContractFilterStatus
+  | ContractFilterRevisable
+  | ContractFilterPublicKey
 export type ContractFilters = ContractFilter[]
 
 export type ContractSorts = DataTableSortColumn<AdminContractsSortBy>[]
@@ -28,6 +37,9 @@ export function getFilterLabel(filter: ContractFilter): string {
   }
   if (filter.id === 'revisable') {
     return filter.value ? 'Revisable' : 'Not revisable'
+  }
+  if (filter.id === 'hostkey') {
+    return `Public key is ${truncate(filter.value, 20)}`
   }
   return ''
 }

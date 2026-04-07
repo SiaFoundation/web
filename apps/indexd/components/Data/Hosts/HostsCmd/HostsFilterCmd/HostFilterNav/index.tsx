@@ -3,6 +3,7 @@ import { Page } from '../../../../../CmdRoot/types'
 import { hostsFilterUsablePage } from '../HostFilterCmdGroups/Usable'
 import { hostsFilterBlockedPage } from '../HostFilterCmdGroups/Blocked'
 import { hostsFilterActiveContractsPage } from '../HostFilterCmdGroups/ActiveContracts'
+import { PublicKeyCmdNav } from '../HostFilterCmdGroups/PublicKey'
 import { HostFilter } from '../../../types'
 
 export const commandPage = {
@@ -14,10 +15,15 @@ type Props = {
   currentPage: Page
   parentPage?: Page
   pushPage: (page: Page) => void
-  select: (filter: HostFilter) => void
+  select: (filter?: HostFilter) => void
 }
 
-export function HostFilterNav({ currentPage, parentPage, pushPage }: Props) {
+export function HostFilterNav({
+  currentPage,
+  parentPage,
+  pushPage,
+  select,
+}: Props) {
   return (
     <>
       <CommandItemNav
@@ -50,6 +56,12 @@ export function HostFilterNav({ currentPage, parentPage, pushPage }: Props) {
       >
         {hostsFilterActiveContractsPage.label}
       </CommandItemNav>
+      <PublicKeyCmdNav
+        currentPage={currentPage}
+        parentPage={parentPage}
+        commandPage={commandPage}
+        select={select}
+      />
     </>
   )
 }

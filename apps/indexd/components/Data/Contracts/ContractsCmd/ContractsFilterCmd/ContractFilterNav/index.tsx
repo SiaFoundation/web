@@ -1,6 +1,7 @@
 import { CommandItemNav } from '../../../../../CmdRoot/Item'
 import { Page } from '../../../../../CmdRoot/types'
 import { contractsFilterStatusPage } from '../ContractFilterCmdGroups/Status'
+import { PublicKeyCmdNav } from '../ContractFilterCmdGroups/PublicKey'
 import { ContractFilter } from '../../../types'
 
 export const commandPage = {
@@ -12,16 +13,18 @@ type Props = {
   currentPage: Page
   parentPage?: Page
   pushPage: (page: Page) => void
-  select: (filter: ContractFilter) => void
+  select: (filter?: ContractFilter) => void
 }
 
 export function ContractFilterNav({
   currentPage,
   parentPage,
   pushPage,
+  select,
 }: Props) {
   return (
-    <CommandItemNav
+    <>
+      <CommandItemNav
         currentPage={currentPage}
         parentPage={parentPage}
         commandPage={commandPage}
@@ -31,5 +34,12 @@ export function ContractFilterNav({
       >
         {contractsFilterStatusPage.label}
       </CommandItemNav>
+      <PublicKeyCmdNav
+        currentPage={currentPage}
+        parentPage={parentPage}
+        commandPage={commandPage}
+        select={select}
+      />
+    </>
   )
 }

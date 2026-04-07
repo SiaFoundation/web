@@ -21,11 +21,13 @@ export function HostsFilterCmd({
   const { addColumnFilter } = useHostsParams()
 
   const select = useCallback(
-    (filter: HostFilter) => {
+    (filter?: HostFilter) => {
       if (beforeSelect) {
         beforeSelect()
       }
-      addColumnFilter(filter)
+      if (filter) {
+        addColumnFilter(filter)
+      }
       if (afterSelect) {
         afterSelect()
       }

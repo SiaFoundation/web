@@ -21,11 +21,13 @@ export function ContractsFilterCmd({
   const { addColumnFilter } = useContractsParams()
 
   const select = useCallback(
-    (filter: ContractFilter) => {
+    (filter?: ContractFilter) => {
       if (beforeSelect) {
         beforeSelect()
       }
-      addColumnFilter(filter)
+      if (filter) {
+        addColumnFilter(filter)
+      }
       if (afterSelect) {
         afterSelect()
       }
