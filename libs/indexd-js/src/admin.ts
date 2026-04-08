@@ -156,6 +156,10 @@ import {
   AdminStatsHostsPayload,
   AdminStatsHostsResponse,
   adminStatsHostsRoute,
+  AdminStatsConnectKeysParams,
+  AdminStatsConnectKeysPayload,
+  AdminStatsConnectKeysResponse,
+  adminStatsConnectKeysRoute,
   AdminConsensusStateParams,
   AdminConsensusStatePayload,
   AdminConsensusStateResponse,
@@ -395,6 +399,11 @@ export function Admin({
       AdminStatsHostsPayload,
       AdminStatsHostsResponse
     >(axios, 'get', adminStatsHostsRoute),
+    statsConnectKeys: buildRequestHandler<
+      AdminStatsConnectKeysParams,
+      AdminStatsConnectKeysPayload,
+      AdminStatsConnectKeysResponse
+    >(axios, 'get', adminStatsConnectKeysRoute),
     consensusState: buildRequestHandler<
       AdminConsensusStateParams,
       AdminConsensusStatePayload,
