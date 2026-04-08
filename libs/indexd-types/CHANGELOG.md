@@ -1,5 +1,15 @@
 # @siafoundation/indexd-types
 
+## 0.15.0
+
+### Minor Changes
+
+- 8dfbe56: Added hostkey filter param to hosts and contracts APIs.
+- 7d8c765: Added reset lost sectors API.
+- 91ce574: Added account slabs prune API.
+- 4c3d1df: Added stats/hosts API.
+- ffdd92d: Added connect key stats API.
+
 ## 0.14.0
 
 ### Minor Changes

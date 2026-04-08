@@ -1,5 +1,27 @@
 # indexd
 
+## 0.17.0
+
+### Minor Changes
+
+- ffdd92d: Added connect key stats to metrics page.
+- 9778fba: Added support for stuck host alerts. Closes https://github.com/SiaFoundation/indexd/issues/779
+- 98d2e81: Fixed setup dialogue showing invalid contract numbers using host stats endpoint. Closes https://github.com/SiaFoundation/indexd/issues/778
+- ceda5b4: Added button to reset lost sectors on hosts. Closes https://github.com/SiaFoundation/indexd/issues/732
+- b1add5c: Added public key filtering for hosts and contracts. Closes https://github.com/SiaFoundation/indexd/issues/752
+- 91ce574: Added prune slabs action to account side panel.
+
+### Patch Changes
+
+- Updated dependencies [f52a06a]
+- Updated dependencies [8dfbe56]
+- Updated dependencies [7d8c765]
+- Updated dependencies [91ce574]
+- Updated dependencies [4c3d1df]
+- Updated dependencies [ffdd92d]
+  - @siafoundation/indexd-react@0.9.0
+  - @siafoundation/indexd-types@0.15.0
+
 ## 0.16.0
 
 ### Minor Changes

@@ -1,5 +1,22 @@
 # @siafoundation/indexd-js
 
+## 0.10.0
+
+### Minor Changes
+
+- 7d8c765: Added reset lost sectors API.
+- 91ce574: Added account slabs prune API.
+- ffdd92d: Added connect key stats API.
+
+### Patch Changes
+
+- Updated dependencies [8dfbe56]
+- Updated dependencies [7d8c765]
+- Updated dependencies [91ce574]
+- Updated dependencies [4c3d1df]
+- Updated dependencies [ffdd92d]
+  - @siafoundation/indexd-types@0.15.0
+
 ## 0.9.2
 
 ### Patch Changes
