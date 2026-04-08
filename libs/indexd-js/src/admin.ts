@@ -17,6 +17,10 @@ import {
   AdminAccountDeleteParams,
   AdminAccountDeletePayload,
   AdminAccountDeleteResponse,
+  AdminAccountSlabsPruneParams,
+  AdminAccountSlabsPrunePayload,
+  AdminAccountSlabsPruneResponse,
+  adminAccountSlabsPruneRoute,
   AdminContractParams,
   AdminContractPayload,
   AdminContractResponse,
@@ -239,6 +243,11 @@ export function Admin({
       AdminAccountDeletePayload,
       AdminAccountDeleteResponse
     >(axios, 'delete', adminAccountRoute),
+    accountSlabsPrune: buildRequestHandler<
+      AdminAccountSlabsPruneParams,
+      AdminAccountSlabsPrunePayload,
+      AdminAccountSlabsPruneResponse
+    >(axios, 'post', adminAccountSlabsPruneRoute),
     contract: buildRequestHandler<
       AdminContractParams,
       AdminContractPayload,

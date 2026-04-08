@@ -23,6 +23,10 @@ import {
   AdminAccountDeleteParams,
   AdminAccountDeletePayload,
   AdminAccountDeleteResponse,
+  AdminAccountSlabsPruneParams,
+  AdminAccountSlabsPrunePayload,
+  AdminAccountSlabsPruneResponse,
+  adminAccountSlabsPruneRoute,
   adminContractRoute,
   AdminContractParams,
   AdminContractResponse,
@@ -282,6 +286,19 @@ export function useAdminAccountDelete(
   return useDeleteFunc({
     ...args,
     route: adminAccountRoute,
+  })
+}
+
+export function useAdminAccountSlabsPrune(
+  args?: HookArgsCallback<
+    AdminAccountSlabsPruneParams,
+    AdminAccountSlabsPrunePayload,
+    AdminAccountSlabsPruneResponse
+  >,
+) {
+  return usePostFunc({
+    ...args,
+    route: adminAccountSlabsPruneRoute,
   })
 }
 

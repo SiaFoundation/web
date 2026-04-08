@@ -109,6 +109,13 @@ export type AdminAccountDeleteParams = {
 export type AdminAccountDeletePayload = void
 export type AdminAccountDeleteResponse = void
 
+export const adminAccountSlabsPruneRoute = '/account/:accountkey/slabs/prune'
+export type AdminAccountSlabsPruneParams = {
+  accountkey: PublicKey
+}
+export type AdminAccountSlabsPrunePayload = void
+export type AdminAccountSlabsPruneResponse = void
+
 export const adminContractRoute = '/contract/:contractid'
 export type AdminContractParams = {
   contractid: FileContractID

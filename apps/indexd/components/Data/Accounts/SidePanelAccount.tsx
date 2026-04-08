@@ -2,6 +2,8 @@ import {
   Button,
   RemoteDataStates,
   Text,
+  triggerErrorToast,
+  triggerSuccessToast,
   useRemoteData,
 } from '@siafoundation/design-system'
 import { SidePanel } from '../SidePanel'
@@ -11,13 +13,17 @@ import { useAccountsParams } from './useAccountsParams'
 import { InfoRow } from '../PanelInfoRow'
 import { SidePanelSection } from '../SidePanelSection'
 import { SidePanelHeadingCopyable } from '../SidePanelHeadingCopyable'
-import { useAdminAccount } from '@siafoundation/indexd-react'
+import {
+  useAdminAccount,
+  useAdminAccountSlabsPrune,
+} from '@siafoundation/indexd-react'
 import { SidePanelSkeleton } from '../SidePanelSkeleton'
 import { transformAccount } from './transform'
 
 export function SidePanelAccount() {
   const { panelId, setPanelId } = useAccountsParams()
-  const { openDialog } = useDialog()
+  const { openDialog, openConfirmDialog } = useDialog()
+  const pruneSlabs = useAdminAccountSlabsPrune()
   const account = useAdminAccount({
     disabled: !panelId,
     params: {
@@ -54,13 +60,40 @@ export function SidePanelAccount() {
             />
           }
           actions={
-            <Button
-              onClick={() => openDialog('accountDelete', account.id)}
-              variant="red"
-            >
-              <TrashCan16 />
-              Delete account
-            </Button>
+            <div className="flex items-center justify-between w-full">
+              <Button
+                onClick={() =>
+                  openConfirmDialog({
+                    title: 'Prune orphaned slabs?',
+                    action: 'Prune',
+                    variant: 'accent',
+                    body: null,
+                    onConfirm: async () => {
+                      const response = await pruneSlabs.post({
+                        params: { accountkey: account.publicKey },
+                      })
+                      if (response.error) {
+                        triggerErrorToast({
+                          title: 'Failed to prune slabs',
+                          body: response.error,
+                        })
+                      } else {
+                        triggerSuccessToast({ title: 'Slabs pruned' })
+                      }
+                    },
+                  })
+                }
+              >
+                Prune slabs
+              </Button>
+              <Button
+                onClick={() => openDialog('accountDelete', account.id)}
+                variant="red"
+              >
+                <TrashCan16 />
+                Delete account
+              </Button>
+            </div>
           }
         >
           <SidePanelSection heading="Info">
