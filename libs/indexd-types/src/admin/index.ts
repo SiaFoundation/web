@@ -399,6 +399,17 @@ export type AdminStatsHostsResponse = {
   failedScans: number
 }
 
+export const adminStatsConnectKeysRoute = '/stats/connectkeys'
+export type AdminStatsConnectKeysParams = void
+export type AdminStatsConnectKeysPayload = void
+export type AdminStatsConnectKeysResponse = {
+  total: number
+  quotas: {
+    quota: string
+    total: number
+  }[]
+}
+
 // quotas
 
 export const adminQuotasRoute = '/quotas'

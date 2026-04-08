@@ -140,6 +140,9 @@ import {
   adminStatsHostsRoute,
   AdminStatsHostsParams,
   AdminStatsHostsResponse,
+  adminStatsConnectKeysRoute,
+  AdminStatsConnectKeysParams,
+  AdminStatsConnectKeysResponse,
   adminConsensusStateRoute,
   AdminConsensusStateParams,
   AdminConsensusStateResponse,
@@ -645,6 +648,18 @@ export function useAdminStatsHosts(
   return useGetSwr({
     ...args,
     route: adminStatsHostsRoute,
+  })
+}
+
+export function useAdminStatsConnectKeys(
+  args?: HookArgsSwr<
+    AdminStatsConnectKeysParams,
+    AdminStatsConnectKeysResponse
+  >,
+) {
+  return useGetSwr({
+    ...args,
+    route: adminStatsConnectKeysRoute,
   })
 }
 
