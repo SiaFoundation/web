@@ -24,6 +24,9 @@ import {
   AdminContractParams,
   AdminContractPayload,
   AdminContractResponse,
+  AdminContractDeleteParams,
+  AdminContractDeletePayload,
+  AdminContractDeleteResponse,
   adminContractRoute,
   AdminContractsParams,
   AdminContractsPayload,
@@ -253,6 +256,11 @@ export function Admin({
       AdminContractPayload,
       AdminContractResponse
     >(axios, 'get', adminContractRoute),
+    contractDelete: buildRequestHandler<
+      AdminContractDeleteParams,
+      AdminContractDeletePayload,
+      AdminContractDeleteResponse
+    >(axios, 'delete', adminContractRoute),
     contracts: buildRequestHandler<
       AdminContractsParams,
       AdminContractsPayload,

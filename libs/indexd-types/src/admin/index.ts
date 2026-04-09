@@ -123,6 +123,12 @@ export type AdminContractParams = {
 export type AdminContractPayload = void
 export type AdminContractResponse = Contract
 
+export type AdminContractDeleteParams = {
+  contractid: FileContractID
+}
+export type AdminContractDeletePayload = void
+export type AdminContractDeleteResponse = void
+
 export const adminContractsRoute = '/contracts'
 export type AdminContractsSortBy =
   | 'id'

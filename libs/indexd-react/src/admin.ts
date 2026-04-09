@@ -30,6 +30,9 @@ import {
   adminContractRoute,
   AdminContractParams,
   AdminContractResponse,
+  AdminContractDeleteParams,
+  AdminContractDeletePayload,
+  AdminContractDeleteResponse,
   AdminContractsParams,
   AdminContractsResponse,
   adminContractsRoute,
@@ -308,6 +311,19 @@ export function useAdminContract(
   args?: HookArgsSwr<AdminContractParams, AdminContractResponse>,
 ) {
   return useGetSwr({
+    ...args,
+    route: adminContractRoute,
+  })
+}
+
+export function useAdminContractDelete(
+  args?: HookArgsCallback<
+    AdminContractDeleteParams,
+    AdminContractDeletePayload,
+    AdminContractDeleteResponse
+  >,
+) {
+  return useDeleteFunc({
     ...args,
     route: adminContractRoute,
   })

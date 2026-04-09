@@ -17,6 +17,7 @@ import { SidePanelHeadingCopyable } from '../SidePanelHeadingCopyable'
 import { SidePanelSkeleton } from '../SidePanelSkeleton'
 import { useHost } from '../Hosts/useHost'
 import { countryCodeEmoji } from '@siafoundation/units'
+import { BulkContractDelete } from './bulkActions/BulkContractDelete'
 
 export function SidePanelContract() {
   const { panelId, setPanelId } = useContractsParams()
@@ -46,7 +47,7 @@ export function SidePanelContract() {
       loading={
         <SidePanelSkeleton
           withMap
-          withActions={false}
+          withActions
           onClose={() => setPanelId(undefined)}
         />
       }
@@ -67,6 +68,7 @@ export function SidePanelContract() {
               label="contract"
             />
           }
+          actions={<BulkContractDelete contracts={[contract]} />}
         >
           <HostMap
             hosts={mapContract ? [mapContract] : []}
