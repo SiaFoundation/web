@@ -383,6 +383,9 @@ export type AdminStatsAccountsParams = void
 export type AdminStatsAccountsPayload = void
 export type AdminStatsAccountsResponse = {
   registered: number
+  active: number
+  pinnedData: number
+  pinnedSize: number
 }
 
 export const adminStatsContractsRoute = '/stats/contracts'
