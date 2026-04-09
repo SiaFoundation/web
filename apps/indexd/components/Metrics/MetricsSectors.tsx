@@ -46,6 +46,18 @@ export function MetricsSectors() {
             label="Unpinned Sectors"
             value={<Skeleton className="h-12 w-[150px]" />}
           />
+          <InfoRow
+            label="Lost Sectors"
+            value={<Skeleton className="h-12 w-[150px]" />}
+          />
+          <InfoRow
+            label="Checked Sectors"
+            value={<Skeleton className="h-12 w-[150px]" />}
+          />
+          <InfoRow
+            label="Check Failed Sectors"
+            value={<Skeleton className="h-12 w-[150px]" />}
+          />
         </div>
       }
       notFound={<StateNoneYet message="No metrics found." />}
@@ -67,6 +79,18 @@ export function MetricsSectors() {
           <InfoRow
             label="Unpinned Sectors"
             value={stats.unpinned.toLocaleString()}
+          />
+          <InfoRow
+            label="Lost Sectors"
+            value={stats.lost.toLocaleString()}
+          />
+          <InfoRow
+            label="Checked Sectors"
+            value={stats.checked.toLocaleString()}
+          />
+          <InfoRow
+            label="Check Failed Sectors"
+            value={stats.checkFailed.toLocaleString()}
           />
         </div>
       )}

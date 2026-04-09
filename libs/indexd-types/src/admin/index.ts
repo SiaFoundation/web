@@ -376,6 +376,9 @@ export type AdminStatsSectorsResponse = {
   pinned: number
   unpinnable: number
   unpinned: number
+  lost: number
+  checked: number
+  checkFailed: number
 }
 
 export const adminStatsAccountsRoute = '/stats/accounts'
