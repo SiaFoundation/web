@@ -3,6 +3,7 @@ import { ContractDataTableState } from './types'
 import { SidePanel } from '../SidePanel'
 import { useMemo } from 'react'
 import { MetricsContracts } from '../../Metrics/MetricsContracts'
+import { BulkContractDelete } from './bulkActions/BulkContractDelete'
 
 export function SidePanelContractList({
   table,
@@ -22,6 +23,11 @@ export function SidePanelContractList({
               ? `Filtered contracts (${contracts.length})`
               : 'All contracts'}
         </Text>
+      }
+      actions={
+        table.isSelection ? (
+          <BulkContractDelete contracts={table.selectedRows} />
+        ) : null
       }
       customCloseAction={
         table.isSelection ? (
