@@ -1,6 +1,7 @@
 import {
   useDeleteFunc,
   useGetSwr,
+  usePatchFunc,
   usePutFunc,
   usePostFunc,
   HookArgsSwr,
@@ -20,6 +21,9 @@ import {
   AdminAccountRotateKeyResponse,
   AdminAccountRotateKeyPayload,
   AdminAccountRotateKeyParams,
+  AdminAccountUpdateParams,
+  AdminAccountUpdatePayload,
+  AdminAccountUpdateResponse,
   AdminAccountDeleteParams,
   AdminAccountDeletePayload,
   AdminAccountDeleteResponse,
@@ -274,6 +278,19 @@ export function useAdminAccountRotateKey(
   >,
 ) {
   return usePutFunc({
+    ...args,
+    route: adminAccountRoute,
+  })
+}
+
+export function useAdminAccountUpdate(
+  args?: HookArgsCallback<
+    AdminAccountUpdateParams,
+    AdminAccountUpdatePayload,
+    AdminAccountUpdateResponse
+  >,
+) {
+  return usePatchFunc({
     ...args,
     route: adminAccountRoute,
   })

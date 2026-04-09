@@ -1,11 +1,13 @@
 import {
   Button,
+  FieldNumber,
   RemoteDataStates,
   Text,
   triggerErrorToast,
   triggerSuccessToast,
   useRemoteData,
 } from '@siafoundation/design-system'
+import { EditablePanel } from '../EditablePanel'
 import { SidePanel } from '../SidePanel'
 import { useDialog } from '../../../contexts/dialog'
 import { TrashCan16 } from '@siafoundation/react-icons'
@@ -16,14 +18,39 @@ import { SidePanelHeadingCopyable } from '../SidePanelHeadingCopyable'
 import {
   useAdminAccount,
   useAdminAccountSlabsPrune,
+  useAdminAccountUpdate,
 } from '@siafoundation/indexd-react'
+import { useMutate } from '@siafoundation/react-core'
+import { adminAccountsRoute } from '@siafoundation/indexd-types'
 import { SidePanelSkeleton } from '../SidePanelSkeleton'
 import { transformAccount } from './transform'
+import { useCallback, useMemo } from 'react'
+import BigNumber from 'bignumber.js'
+import { ConfigFields } from '@siafoundation/design-system'
+
+type Values = {
+  maxPinnedDataGB: BigNumber | undefined
+}
+
+function getFields(): ConfigFields<Values, never> {
+  return {
+    maxPinnedDataGB: {
+      type: 'number',
+      title: 'Max pinned data (GB)',
+      decimalsLimit: 2,
+      validation: {
+        required: 'required',
+      },
+    },
+  }
+}
 
 export function SidePanelAccount() {
   const { panelId, setPanelId } = useAccountsParams()
   const { openDialog, openConfirmDialog } = useDialog()
   const pruneSlabs = useAdminAccountSlabsPrune()
+  const accountUpdate = useAdminAccountUpdate()
+  const mutate = useMutate()
   const account = useAdminAccount({
     disabled: !panelId,
     params: {
@@ -34,8 +61,47 @@ export function SidePanelAccount() {
     {
       account,
     },
-    ({ account }) => transformAccount(account),
+    ({ account }) => {
+      const transformed = transformAccount(account)
+      return {
+        account: transformed,
+        values: {
+          maxPinnedDataGB: new BigNumber(account.maxPinnedData).div(1e9),
+        } as Values,
+      }
+    },
   )
+
+  const fields = useMemo(() => getFields(), [])
+
+  const onSave = useCallback(
+    async (values: Values) => {
+      if (!data.data) {
+        return
+      }
+      const response = await accountUpdate.patch({
+        params: {
+          accountkey: data.data.account.publicKey,
+        },
+        payload: {
+          maxPinnedData: values.maxPinnedDataGB
+            ? values.maxPinnedDataGB.times(1e9).toNumber()
+            : 0,
+        },
+      })
+      if (response.error) {
+        triggerErrorToast({
+          title: 'Error updating account',
+          body: response.error,
+        })
+      } else {
+        triggerSuccessToast({ title: 'Account updated' })
+        await mutate((key) => key.startsWith(adminAccountsRoute))
+      }
+    },
+    [accountUpdate, mutate, data.data],
+  )
+
   return (
     <RemoteDataStates
       data={data}
@@ -49,9 +115,9 @@ export function SidePanelAccount() {
           </div>
         </SidePanel>
       }
-      loaded={(account) => (
-        <SidePanel
-          onClose={() => setPanelId(undefined)}
+      loaded={({ account, values }) => (
+        <EditablePanel
+          key={account.id}
           heading={
             <SidePanelHeadingCopyable
               heading="Account"
@@ -59,8 +125,12 @@ export function SidePanelAccount() {
               label="account"
             />
           }
-          actions={
-            <div className="flex items-center justify-between w-full">
+          onClose={() => setPanelId(undefined)}
+          remoteValues={values}
+          fields={fields}
+          onSave={onSave}
+          actionsLeft={
+            <div className="flex items-center gap-2">
               <Button
                 onClick={() =>
                   openConfirmDialog({
@@ -95,31 +165,39 @@ export function SidePanelAccount() {
               </Button>
             </div>
           }
-        >
-          <SidePanelSection heading="Info">
-            <div className="flex flex-col gap-2">
-              <InfoRow
-                label="Description"
-                value={account.description}
-                variant="column"
-              />
-              <InfoRow
-                label="Max pinned data"
-                value={account.displayFields.maxPinnedData}
-              />
-              <InfoRow
-                label="Pinned data"
-                value={account.displayFields.pinnedData}
-              />
-              <InfoRow
-                label="Last used"
-                value={account.displayFields.lastUsed}
-              />
-              <InfoRow label="Logo URL" value={account.logoURL} />
-              <InfoRow label="Service URL" value={account.serviceURL} />
-            </div>
-          </SidePanelSection>
-        </SidePanel>
+          render={(form, fields) => (
+            <>
+              <SidePanelSection heading="Storage">
+                <div className="flex flex-col gap-2">
+                  <FieldNumber
+                    name="maxPinnedDataGB"
+                    form={form}
+                    fields={fields}
+                  />
+                  <InfoRow
+                    label="Pinned data"
+                    value={account.displayFields.pinnedData}
+                  />
+                </div>
+              </SidePanelSection>
+              <SidePanelSection heading="Info">
+                <div className="flex flex-col gap-2">
+                  <InfoRow
+                    label="Description"
+                    value={account.description}
+                    variant="column"
+                  />
+                  <InfoRow
+                    label="Last used"
+                    value={account.displayFields.lastUsed}
+                  />
+                  <InfoRow label="Logo URL" value={account.logoURL} />
+                  <InfoRow label="Service URL" value={account.serviceURL} />
+                </div>
+              </SidePanelSection>
+            </>
+          )}
+        />
       )}
     />
   )

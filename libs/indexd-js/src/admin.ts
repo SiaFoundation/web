@@ -14,6 +14,9 @@ import {
   AdminAccountRotateKeyParams,
   AdminAccountRotateKeyPayload,
   AdminAccountRotateKeyResponse,
+  AdminAccountUpdateParams,
+  AdminAccountUpdatePayload,
+  AdminAccountUpdateResponse,
   AdminAccountDeleteParams,
   AdminAccountDeletePayload,
   AdminAccountDeleteResponse,
@@ -241,6 +244,11 @@ export function Admin({
       AdminAccountRotateKeyPayload,
       AdminAccountRotateKeyResponse
     >(axios, 'put', adminAccountRoute),
+    accountUpdate: buildRequestHandler<
+      AdminAccountUpdateParams,
+      AdminAccountUpdatePayload,
+      AdminAccountUpdateResponse
+    >(axios, 'patch', adminAccountRoute),
     accountDelete: buildRequestHandler<
       AdminAccountDeleteParams,
       AdminAccountDeletePayload,
