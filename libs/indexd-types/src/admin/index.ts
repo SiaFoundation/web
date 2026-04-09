@@ -103,6 +103,14 @@ export type AdminAccountRotateKeyPayload = {
 }
 export type AdminAccountRotateKeyResponse = void
 
+export type AdminAccountUpdateParams = {
+  accountkey: PublicKey
+}
+export type AdminAccountUpdatePayload = {
+  maxPinnedData: number
+}
+export type AdminAccountUpdateResponse = void
+
 export type AdminAccountDeleteParams = {
   accountkey: PublicKey
 }
