@@ -70,7 +70,9 @@ export function DeviceConnectForm({
       if (supportedTransports.data.length === 0) {
         setError(
           new Error(
-            'This browser does not support connecting to Ledger devices, please use a different browser.',
+            !window.isSecureContext
+              ? 'Connecting to Ledger devices requires a secure context (HTTPS). Your browser blocks access to USB and Bluetooth devices on non-HTTPS pages that are not localhost.'
+              : 'This browser does not support connecting to Ledger devices, please use a different browser.',
           ),
         )
       }
