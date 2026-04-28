@@ -343,7 +343,7 @@ func setupV2Contracts(nm *nodes.Manager, e *api.Client, w *swallet, cm *chain.Ma
 
 	fc3FinalRev := fc3
 	fc3FinalRev.RevisionNumber = types.MaxRevisionNumber
-	renewal, _ := proto4.RenewContract(fc3FinalRev, proto4.HostPrices{}, proto4.RPCRenewContractParams{
+	renewal, _ := proto4.RenewContract(fc3FinalRev, proto4.HostPrices{}, hostAddr, proto4.RPCRenewContractParams{
 		ProofHeight: fc3FinalRev.ProofHeight,
 		Allowance:   fc3FinalRev.RenterOutput.Value,
 		Collateral:  fc3FinalRev.HostOutput.Value,
