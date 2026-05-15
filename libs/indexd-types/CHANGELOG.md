@@ -1,5 +1,14 @@
 # @siafoundation/indexd-types
 
+## 0.16.0
+
+### Minor Changes
+
+- b9fbb89: Added account update API.
+- 6c275d1: Added contract delete API.
+- 51c4840: Expanded account stats response with active, pinnedData, and pinnedSize fields.
+- aa56baa: Expanded sector stats response with lost, checked, and checkFailed fields.
+
 ## 0.15.0
 
 ### Minor Changes

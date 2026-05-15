@@ -1,5 +1,20 @@
 # @siafoundation/indexd-react
 
+## 0.10.0
+
+### Minor Changes
+
+- b9fbb89: Added account update API.
+- 6c275d1: Added contract delete API.
+
+### Patch Changes
+
+- Updated dependencies [b9fbb89]
+- Updated dependencies [6c275d1]
+- Updated dependencies [51c4840]
+- Updated dependencies [aa56baa]
+  - @siafoundation/indexd-types@0.16.0
+
 ## 0.9.0
 
 ### Minor Changes
