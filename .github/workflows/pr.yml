@@ -19,7 +19,7 @@ jobs:
     if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed' && !startsWith(github.head_ref, 'changeset-release/') }}
     steps:
       - name: Checkout all commits
-        uses: actions/checkout@v5
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
         with:
           fetch-depth: 0
       # Full setup required since building the JS SDK requires Go
@@ -60,7 +60,7 @@ jobs:
     if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed' && !startsWith(github.head_ref, 'changeset-release/') }}
     steps:
       - name: Checkout all commits
-        uses: actions/checkout@v5
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
         with:
           fetch-depth: 0
       - name: Setup Git
@@ -71,12 +71,12 @@ jobs:
         with:
           go_version: 1.24.3
       - name: Lint Go
-        uses: golangci/golangci-lint-action@v4
+        uses: golangci/golangci-lint-action@d6238b002a20823d52840fda27e2d4891c5952dc # v4.0.1
         with:
           working-directory: ${{ matrix.module }}
           skip-cache: true
       - name: Test Go
-        uses: n8maninger/action-golang-test@v2
+        uses: n8maninger/action-golang-test@aa292dc81b16d34406a9551e629e0cdca00d9418 # v2.2.1
         with:
           args: '-race'
           working-directory: ${{ matrix.module }}
