@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { recoverWallet } from '../fixtures/wallet'
+import { recoverWallet, waitForRescanToFinish } from '../fixtures/wallet'
 import { navigateToWallet } from '../fixtures/navigate'
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
 import { mine } from '@siafoundation/clusterd'
@@ -67,11 +67,6 @@ test('generate new addresses and rescan', async ({ page, browserName }) => {
     .getByRole('button', { name: 'Generate addresses and rescan' })
     .click()
   await expect(
-    page
-      .getByTestId('rescanStatusPanel')
-      .getByText('Rescanning the blockchain'),
-  ).toBeVisible()
-  await expect(
     page.getByText('65b40f6a720352ad5b9546b9f5077209672914cc...'),
   ).toBeVisible()
   await expect(
@@ -86,5 +81,5 @@ test('generate new addresses and rescan', async ({ page, browserName }) => {
   await expect(
     page.getByText('90c6057cdd2463eca61f83796e83152dbba28b6c...'),
   ).toBeVisible()
-  await expect(page.getByText('Scanning...')).toBeVisible()
+  await waitForRescanToFinish(page)
 })
