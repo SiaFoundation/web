@@ -169,6 +169,7 @@ export type AdminContractsParams = {
   revisable?: boolean
   good?: boolean
   hostkey?: string[]
+  id?: FileContractID[]
   sortby?: AdminContractsSortBy[]
   desc?: boolean[]
 }
