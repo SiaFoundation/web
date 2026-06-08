@@ -30,6 +30,10 @@ export function useContracts() {
     if (hostkey !== undefined) {
       filters.hostkey = [hostkey]
     }
+    const contractid = columnFilters.find((f) => f.id === 'contractid')?.value
+    if (contractid !== undefined) {
+      filters.id = [contractid]
+    }
     // Map all active sorts to API sortby and desc arrays.
     if (columnSorts.length > 0) {
       const sortby: AdminContractsSortBy[] = []

@@ -9,6 +9,7 @@ import {
 import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { useHostsParams } from '../components/Data/Hosts/useHostsParams'
+import { normalizePublicKey } from '../lib/publicKey'
 
 type Props = {
   trigger?: React.ReactNode
@@ -55,7 +56,7 @@ export function HostsFilterPublicKeyDialog({
     async (values: Values) => {
       addColumnFilter({
         id: 'hostkey',
-        value: values.publicKey,
+        value: normalizePublicKey(values.publicKey),
       })
       closeAndReset()
     },

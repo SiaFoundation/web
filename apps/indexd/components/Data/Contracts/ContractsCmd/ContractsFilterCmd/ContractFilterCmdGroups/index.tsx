@@ -1,6 +1,7 @@
 import { Page } from '../../../../../CmdRoot/types'
 import { StatusCmdGroup } from './Status'
 import { PublicKeyCmdGroup } from './PublicKey'
+import { ContractIDCmdGroup } from './ContractID'
 import { ContractFilter } from '../../../types'
 
 type Props = {
@@ -13,6 +14,7 @@ export function ContractFilterCmdGroups({ currentPage, select }: Props) {
     <>
       <StatusCmdGroup currentPage={currentPage} select={select} />
       <PublicKeyCmdGroup currentPage={currentPage} select={select} />
+      <ContractIDCmdGroup currentPage={currentPage} select={select} />
     </>
   )
 }
