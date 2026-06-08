@@ -9,7 +9,6 @@ import {
 import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { useContractsParams } from '../components/Data/Contracts/useContractsParams'
-import { normalizePublicKey } from '../lib/publicKey'
 
 type Props = {
   trigger?: React.ReactNode
@@ -18,23 +17,23 @@ type Props = {
 }
 
 const defaultValues = {
-  publicKey: '',
+  contractID: '',
 }
 
 type Values = typeof defaultValues
 
 const fields: ConfigFields<Values, never> = {
-  publicKey: {
+  contractID: {
     type: 'text',
-    title: 'Public key',
-    placeholder: 'ed25519:b050c0c6...',
+    title: 'Contract ID',
+    placeholder: 'f0d3a8c1...',
     validation: {
       required: 'required',
     },
   },
 }
 
-export function ContractsFilterPublicKeyDialog({
+export function ContractsFilterContractIDDialog({
   trigger,
   open,
   onOpenChange,
@@ -55,8 +54,8 @@ export function ContractsFilterPublicKeyDialog({
   const onSubmit = useCallback(
     async (values: Values) => {
       addColumnFilter({
-        id: 'hostkey',
-        value: normalizePublicKey(values.publicKey),
+        id: 'contractid',
+        value: values.contractID,
       })
       closeAndReset()
     },
@@ -67,7 +66,7 @@ export function ContractsFilterPublicKeyDialog({
 
   return (
     <Dialog
-      title="Filter contracts by host public key"
+      title="Filter contracts by contract ID"
       trigger={trigger}
       open={open}
       onOpenChange={handleOpenChange}
@@ -77,7 +76,7 @@ export function ContractsFilterPublicKeyDialog({
       onSubmit={form.handleSubmit(onSubmit, onInvalid)}
     >
       <div className="flex flex-col gap-4">
-        <FieldText name="publicKey" form={form} fields={fields} />
+        <FieldText name="contractID" form={form} fields={fields} />
         <FormSubmitButton form={form}>Apply filter</FormSubmitButton>
       </div>
     </Dialog>

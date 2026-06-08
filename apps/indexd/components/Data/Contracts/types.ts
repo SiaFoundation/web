@@ -23,10 +23,16 @@ export type ContractFilterPublicKey = {
   value: string
 }
 
+export type ContractFilterContractID = {
+  id: 'contractid'
+  value: string
+}
+
 export type ContractFilter =
   | ContractFilterStatus
   | ContractFilterRevisable
   | ContractFilterPublicKey
+  | ContractFilterContractID
 export type ContractFilters = ContractFilter[]
 
 export type ContractSorts = DataTableSortColumn<AdminContractsSortBy>[]
@@ -40,6 +46,9 @@ export function getFilterLabel(filter: ContractFilter): string {
   }
   if (filter.id === 'hostkey') {
     return `Public key is ${truncate(filter.value, 20)}`
+  }
+  if (filter.id === 'contractid') {
+    return `Contract ID is ${truncate(filter.value, 20)}`
   }
   return ''
 }

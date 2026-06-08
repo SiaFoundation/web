@@ -2,6 +2,7 @@ import { CommandItemNav } from '../../../../../CmdRoot/Item'
 import { Page } from '../../../../../CmdRoot/types'
 import { contractsFilterStatusPage } from '../ContractFilterCmdGroups/Status'
 import { PublicKeyCmdNav } from '../ContractFilterCmdGroups/PublicKey'
+import { ContractIDCmdNav } from '../ContractFilterCmdGroups/ContractID'
 import { ContractFilter } from '../../../types'
 
 export const commandPage = {
@@ -35,6 +36,12 @@ export function ContractFilterNav({
         {contractsFilterStatusPage.label}
       </CommandItemNav>
       <PublicKeyCmdNav
+        currentPage={currentPage}
+        parentPage={parentPage}
+        commandPage={commandPage}
+        select={select}
+      />
+      <ContractIDCmdNav
         currentPage={currentPage}
         parentPage={parentPage}
         commandPage={commandPage}
