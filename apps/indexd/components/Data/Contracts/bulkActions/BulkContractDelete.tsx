@@ -14,8 +14,10 @@ import { useDialog } from '../../../../contexts/dialog'
 
 export function BulkContractDelete({
   contracts,
+  onSuccess,
 }: {
   contracts: ContractData[] | Row<ContractData>[]
+  onSuccess?: () => void
 }) {
   const contractDelete = useAdminContractDelete()
   const mutate = useMutate()
@@ -50,7 +52,8 @@ export function BulkContractDelete({
     await mutate((key) =>
       key.startsWith(adminContractRoute.replace(':contractid', ''))
     )
-  }, [normalized, contractDelete, mutate])
+    onSuccess?.()
+  }, [normalized, contractDelete, mutate, onSuccess])
 
   return (
     <Button

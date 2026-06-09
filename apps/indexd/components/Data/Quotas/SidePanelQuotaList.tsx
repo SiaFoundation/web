@@ -31,7 +31,12 @@ export function SidePanelQuotaList({
         ) : null
       }
       actions={
-        table.isSelection ? <BulkQuotaDelete quotas={quotas} /> : null
+        table.isSelection ? (
+          <BulkQuotaDelete
+            quotas={quotas}
+            onSuccess={() => table.setRowSelection({})}
+          />
+        ) : null
       }
     >
       <Text color="subtle" className="flex justify-center pt-[50px]">

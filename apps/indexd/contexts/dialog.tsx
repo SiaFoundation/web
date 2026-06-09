@@ -53,9 +53,11 @@ export type DialogType =
 type DialogData = {
   hostBlocklistAdd?: {
     hosts: HostData[]
+    onSuccess?: () => void
   }
   keyQuotaReassign?: {
     keys: KeyData[]
+    onSuccess?: () => void
   }
 }
 
@@ -212,6 +214,11 @@ export function Dialogs() {
             ? data?.hostBlocklistAdd?.hosts
             : undefined
         }
+        onSuccess={
+          dialog === 'hostBlocklistAdd'
+            ? data?.hostBlocklistAdd?.onSuccess
+            : undefined
+        }
         open={dialog === 'hostBlocklistAdd'}
         onOpenChange={onOpenChange}
       />
@@ -228,6 +235,11 @@ export function Dialogs() {
         keys={
           dialog === 'keyQuotaReassign'
             ? data?.keyQuotaReassign?.keys
+            : undefined
+        }
+        onSuccess={
+          dialog === 'keyQuotaReassign'
+            ? data?.keyQuotaReassign?.onSuccess
             : undefined
         }
         open={dialog === 'keyQuotaReassign'}

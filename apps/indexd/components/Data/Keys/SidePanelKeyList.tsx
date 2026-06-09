@@ -34,8 +34,14 @@ export function SidePanelKeyList({
       actions={
         table.isSelection ? (
           <>
-            <BulkKeyQuotaReassign keys={keys} />
-            <BulkKeyDelete keys={keys} />
+            <BulkKeyQuotaReassign
+              keys={keys}
+              onSuccess={() => table.setRowSelection({})}
+            />
+            <BulkKeyDelete
+              keys={keys}
+              onSuccess={() => table.setRowSelection({})}
+            />
           </>
         ) : null
       }

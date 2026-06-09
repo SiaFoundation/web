@@ -10,8 +10,10 @@ import { CheckmarkOutline16 } from '@siafoundation/react-icons'
 
 export function BulkHostBlocklistRemove({
   hosts,
+  onSuccess,
 }: {
   hosts: HostData[] | Row<HostData>[]
+  onSuccess?: () => void
 }) {
   const blocklistDelete = useAdminHostsBlocklistDelete()
   const mutate = useMutate()
@@ -48,7 +50,8 @@ export function BulkHostBlocklistRemove({
         ),
       ),
     )
-  }, [hosts, blocklistDelete, mutate])
+    onSuccess?.()
+  }, [hosts, blocklistDelete, mutate, onSuccess])
   return (
     <Button onClick={operation}>
       <CheckmarkOutline16 />

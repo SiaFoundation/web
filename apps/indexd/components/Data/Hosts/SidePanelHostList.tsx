@@ -28,9 +28,18 @@ export function SidePanelHostList({ table }: { table: HostDataTableState }) {
       actions={
         table.isSelection ? (
           <>
-            <BulkHostBlocklistAdd hosts={hosts} />
-            <BulkHostBlocklistRemove hosts={hosts} />
-            <BulkHostResetLostSectors hosts={hosts} />
+            <BulkHostBlocklistAdd
+              hosts={hosts}
+              onSuccess={() => table.setRowSelection({})}
+            />
+            <BulkHostBlocklistRemove
+              hosts={hosts}
+              onSuccess={() => table.setRowSelection({})}
+            />
+            <BulkHostResetLostSectors
+              hosts={hosts}
+              onSuccess={() => table.setRowSelection({})}
+            />
           </>
         ) : null
       }

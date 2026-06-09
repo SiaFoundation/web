@@ -7,8 +7,10 @@ import { useDialog } from '../../../../contexts/dialog'
 
 export function BulkHostBlocklistAdd({
   hosts,
+  onSuccess,
 }: {
   hosts: HostData[] | Row<HostData>[]
+  onSuccess?: () => void
 }) {
   const { openDialog } = useDialog()
 
@@ -23,7 +25,7 @@ export function BulkHostBlocklistAdd({
     <Button
       onClick={() =>
         openDialog('hostBlocklistAdd', undefined, {
-          hostBlocklistAdd: { hosts: normalizedHosts },
+          hostBlocklistAdd: { hosts: normalizedHosts, onSuccess },
         })
       }
     >

@@ -7,8 +7,10 @@ import { useDialog } from '../../../contexts/dialog'
 
 export function BulkKeyQuotaReassign({
   keys,
+  onSuccess,
 }: {
   keys: KeyData[] | Row<KeyData>[]
+  onSuccess?: () => void
 }) {
   const { openDialog } = useDialog()
 
@@ -21,7 +23,7 @@ export function BulkKeyQuotaReassign({
     <Button
       onClick={() =>
         openDialog('keyQuotaReassign', undefined, {
-          keyQuotaReassign: { keys: normalizedKeys },
+          keyQuotaReassign: { keys: normalizedKeys, onSuccess },
         })
       }
     >

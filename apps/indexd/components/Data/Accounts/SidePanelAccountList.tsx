@@ -32,7 +32,12 @@ export function SidePanelAccountList({
         ) : null
       }
       actions={
-        table.isSelection ? <BulkAccountDelete accounts={accounts} /> : null
+        table.isSelection ? (
+          <BulkAccountDelete
+            accounts={accounts}
+            onSuccess={() => table.setRowSelection({})}
+          />
+        ) : null
       }
     >
       {table.isSelection ? (

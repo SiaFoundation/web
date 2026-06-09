@@ -11,8 +11,10 @@ import { useDialog } from '../../../../contexts/dialog'
 
 export function BulkHostResetLostSectors({
   hosts,
+  onSuccess,
 }: {
   hosts: HostData[] | Row<HostData>[]
+  onSuccess?: () => void
 }) {
   const resetLostSectors = useAdminHostResetLostSectors()
   const mutate = useMutate()
@@ -57,7 +59,8 @@ export function BulkHostResetLostSectors({
         )
       )
     )
-  }, [hostsWithLostSectors, resetLostSectors, mutate])
+    onSuccess?.()
+  }, [hostsWithLostSectors, resetLostSectors, mutate, onSuccess])
 
   if (hostsWithLostSectors.length === 0) {
     return null
