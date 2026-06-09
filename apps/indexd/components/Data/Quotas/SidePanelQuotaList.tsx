@@ -2,6 +2,7 @@ import { Text, Button, DataTableState } from '@siafoundation/design-system'
 import { SidePanel } from '../SidePanel'
 import { useMemo } from 'react'
 import { QuotaData } from '../../../lib/quota'
+import { BulkQuotaDelete } from './bulkActions/BulkQuotaDelete'
 
 export function SidePanelQuotaList({
   table,
@@ -28,6 +29,9 @@ export function SidePanelQuotaList({
             Clear selection
           </Button>
         ) : null
+      }
+      actions={
+        table.isSelection ? <BulkQuotaDelete quotas={quotas} /> : null
       }
     >
       <Text color="subtle" className="flex justify-center pt-[50px]">

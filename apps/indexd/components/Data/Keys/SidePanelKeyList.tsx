@@ -3,6 +3,7 @@ import { SidePanel } from '../SidePanel'
 import { useMemo } from 'react'
 import { KeyData } from '../../../lib/connectKey'
 import { BulkKeyQuotaReassign } from './BulkKeyQuotaReassign'
+import { BulkKeyDelete } from './bulkActions/BulkKeyDelete'
 
 export function SidePanelKeyList({
   table,
@@ -32,7 +33,10 @@ export function SidePanelKeyList({
       }
       actions={
         table.isSelection ? (
-          <BulkKeyQuotaReassign keys={keys} />
+          <>
+            <BulkKeyQuotaReassign keys={keys} />
+            <BulkKeyDelete keys={keys} />
+          </>
         ) : null
       }
     >

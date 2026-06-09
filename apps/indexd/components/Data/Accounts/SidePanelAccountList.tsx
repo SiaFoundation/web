@@ -3,6 +3,7 @@ import { AccountData } from './types'
 import { SidePanel } from '../SidePanel'
 import { useMemo } from 'react'
 import { MetricsAccounts } from '../../Metrics/MetricsAccounts'
+import { BulkAccountDelete } from './bulkActions/BulkAccountDelete'
 
 export function SidePanelAccountList({
   table,
@@ -29,6 +30,9 @@ export function SidePanelAccountList({
             Clear selection
           </Button>
         ) : null
+      }
+      actions={
+        table.isSelection ? <BulkAccountDelete accounts={accounts} /> : null
       }
     >
       {table.isSelection ? (
