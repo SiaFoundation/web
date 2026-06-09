@@ -27,6 +27,7 @@ const defaultValues = {
 
 type Props = {
   keys: KeyData[] | undefined
+  onSuccess?: () => void
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
@@ -34,6 +35,7 @@ type Props = {
 
 export function KeyQuotaReassignDialog({
   keys,
+  onSuccess,
   trigger,
   open,
   onOpenChange,
@@ -92,11 +94,12 @@ export function KeyQuotaReassignDialog({
             await mutate((key) => key.startsWith(adminConnectKeysRoute))
             form.reset()
             closeDialog()
+            onSuccess?.()
           },
         },
       )
     },
-    [keys, keyUpdate, mutate, form, closeDialog],
+    [keys, keyUpdate, mutate, form, closeDialog, onSuccess],
   )
 
   const onInvalid = useOnInvalid(fields)

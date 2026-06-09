@@ -46,11 +46,17 @@ function getFields(): ConfigFields<typeof defaultValues, never> {
 
 type Props = {
   hosts: HostData[] | undefined
+  onSuccess?: () => void
   open: boolean
   onOpenChange: (val: boolean) => void
 }
 
-export function HostBlocklistAddDialog({ hosts, open, onOpenChange }: Props) {
+export function HostBlocklistAddDialog({
+  hosts,
+  onSuccess,
+  open,
+  onOpenChange,
+}: Props) {
   const { closeDialog } = useDialog()
   const blocklistUpdate = useAdminHostsBlocklistUpdate()
   const mutate = useMutate()
@@ -104,7 +110,16 @@ export function HostBlocklistAddDialog({ hosts, open, onOpenChange }: Props) {
     form.reset(defaultValues)
     setSelectedReasons([])
     closeDialog()
-  }, [blocklistUpdate, closeDialog, form, hosts, mutate, selectedReasons])
+    onSuccess?.()
+  }, [
+    blocklistUpdate,
+    closeDialog,
+    form,
+    hosts,
+    mutate,
+    selectedReasons,
+    onSuccess,
+  ])
 
   const { handleOpenChange } = useDialogFormHelpers({
     form,

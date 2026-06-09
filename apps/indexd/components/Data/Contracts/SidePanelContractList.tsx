@@ -26,7 +26,10 @@ export function SidePanelContractList({
       }
       actions={
         table.isSelection ? (
-          <BulkContractDelete contracts={table.selectedRows} />
+          <BulkContractDelete
+            contracts={table.selectedRows}
+            onSuccess={() => table.setRowSelection({})}
+          />
         ) : null
       }
       customCloseAction={

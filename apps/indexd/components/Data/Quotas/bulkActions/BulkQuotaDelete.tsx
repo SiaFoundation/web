@@ -11,8 +11,10 @@ import { useDialog } from '../../../../contexts/dialog'
 
 export function BulkQuotaDelete({
   quotas,
+  onSuccess,
 }: {
   quotas: QuotaData[] | Row<QuotaData>[]
+  onSuccess?: () => void
 }) {
   const quotaDelete = useAdminQuotaDelete()
   const mutate = useMutate()
@@ -42,7 +44,8 @@ export function BulkQuotaDelete({
       }
     )
     await mutate((key) => key.startsWith(adminQuotasRoute))
-  }, [normalized, quotaDelete, mutate])
+    onSuccess?.()
+  }, [normalized, quotaDelete, mutate, onSuccess])
 
   return (
     <Button

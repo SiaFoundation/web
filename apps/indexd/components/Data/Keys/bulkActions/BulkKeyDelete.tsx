@@ -11,8 +11,10 @@ import { useDialog } from '../../../../contexts/dialog'
 
 export function BulkKeyDelete({
   keys,
+  onSuccess,
 }: {
   keys: KeyData[] | Row<KeyData>[]
+  onSuccess?: () => void
 }) {
   const keyDelete = useAdminConnectKeyDelete()
   const mutate = useMutate()
@@ -42,7 +44,8 @@ export function BulkKeyDelete({
       }
     )
     await mutate((key) => key.startsWith(adminConnectKeysRoute))
-  }, [normalized, keyDelete, mutate])
+    onSuccess?.()
+  }, [normalized, keyDelete, mutate, onSuccess])
 
   return (
     <Button

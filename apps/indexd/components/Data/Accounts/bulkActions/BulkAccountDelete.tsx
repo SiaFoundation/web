@@ -11,8 +11,10 @@ import { useDialog } from '../../../../contexts/dialog'
 
 export function BulkAccountDelete({
   accounts,
+  onSuccess,
 }: {
   accounts: AccountData[] | Row<AccountData>[]
+  onSuccess?: () => void
 }) {
   const accountDelete = useAdminAccountDelete()
   const mutate = useMutate()
@@ -42,7 +44,8 @@ export function BulkAccountDelete({
       }
     )
     await mutate((key) => key.startsWith(adminAccountsRoute))
-  }, [normalized, accountDelete, mutate])
+    onSuccess?.()
+  }, [normalized, accountDelete, mutate, onSuccess])
 
   return (
     <Button
