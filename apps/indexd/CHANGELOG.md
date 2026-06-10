@@ -1,5 +1,27 @@
 # indexd
 
+## 0.18.0
+
+### Minor Changes
+
+- b9fbb89: Added editable max pinned data field to account side panel.
+- e8b43a2: Added bulk delete actions for quotas, keys, and accounts. Closes https://github.com/SiaFoundation/indexd/issues/960
+- 6c275d1: Added contract delete action to contract side panel and bulk actions.
+- 06011ab: Added a contract ID filter to the contracts table and implicitly prefixed host public key filters with `ed25519:`. Closes https://github.com/SiaFoundation/indexd/issues/929
+- 51c4840: Expanded account stats metrics with active accounts, pinned data, and pinned size.
+- aa56baa: Expanded sector stats metrics with lost, checked, and check failed sectors.
+
+### Patch Changes
+
+- 38b2b5a: Fixed bulk actions leaving stale row selection after completing, which kept the side panel in selection mode with rows that no longer existed.
+- Updated dependencies [b9fbb89]
+- Updated dependencies [6c275d1]
+- Updated dependencies [a49074d]
+- Updated dependencies [51c4840]
+- Updated dependencies [aa56baa]
+  - @siafoundation/indexd-types@0.16.0
+  - @siafoundation/indexd-react@0.10.0
+
 ## 0.17.0
 
 ### Minor Changes
