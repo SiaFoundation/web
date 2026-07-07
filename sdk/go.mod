@@ -3,12 +3,12 @@ module go.sia.tech/web/sdk
 go 1.26.0
 
 require (
-	go.sia.tech/core v0.21.1
-	go.sia.tech/coreutils v0.22.0
+	go.sia.tech/core v0.21.5
+	go.sia.tech/coreutils v0.23.4
 )
 
 require (
-	github.com/stretchr/testify v1.10.0 // indirect
+	github.com/stretchr/testify v1.11.1 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.28.0 // indirect
 	golang.org/x/crypto v0.53.0 // indirect
