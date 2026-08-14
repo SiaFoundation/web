@@ -7,7 +7,7 @@ import { getTopHosts } from '../../lib/hosts'
 import {
   generateTraceId,
   getExplored,
-  getExploredAddress,
+  getExploredInternalAddress,
 } from '../../lib/explored'
 import { unstable_cache } from 'next/cache'
 import { getNetworkVersion } from '../../lib/networkVersion'
@@ -49,7 +49,7 @@ export default async function HomePage() {
     explored.blockMetrics(),
   ])
 
-  const exploredAddress = await getExploredAddress()
+  const exploredAddress = await getExploredInternalAddress()
   const selectedTopHosts = await getCachedTopHosts(exploredAddress)
 
   const [latestBlocks, latestBlocksError] = await getLatestBlocks(6, traceId)

@@ -1,7 +1,7 @@
 import { Explored } from '@siafoundation/explored-js'
 import { randomBytes } from 'crypto'
 import { AxiosInstance, InternalAxiosRequestConfig } from 'axios'
-import { exploredApi } from '../config'
+import { exploredApi, exploredInternalApi } from '../config'
 import { cookies } from 'next/headers'
 import {
   exploredCustomApiCookieName,
@@ -65,11 +65,23 @@ async function getExploredAddressCookie() {
   return customExploredAddress
 }
 
+// The public explored address. This is passed through to the browser, so it
+// must always be the publicly reachable address.
 export async function getExploredAddress() {
   if (process.env.NODE_ENV === 'development') {
     return (await getExploredAddressCookie()) || exploredApi
   }
   return exploredApi
+}
+
+// The address server-side requests should use. This prefers the internal
+// address when one is configured, so requests do not route back out over the
+// public internet. Never pass the result to a client component.
+export async function getExploredInternalAddress() {
+  if (process.env.NODE_ENV === 'development') {
+    return (await getExploredAddressCookie()) || exploredInternalApi
+  }
+  return exploredInternalApi
 }
 
 export async function getExplored(
@@ -79,11 +91,9 @@ export async function getExplored(
   let explored
   if (explicitAddress) {
     explored = Explored({ api: explicitAddress, timeout: exploredTimeout })
-  } else if (process.env.NODE_ENV === 'development') {
-    const exploredAddress = await getExploredAddress()
-    explored = Explored({ api: exploredAddress, timeout: exploredTimeout })
   } else {
-    explored = Explored({ api: exploredApi, timeout: exploredTimeout })
+    const exploredAddress = await getExploredInternalAddress()
+    explored = Explored({ api: exploredAddress, timeout: exploredTimeout })
   }
   addLoggingInterceptors(explored.axios, traceId ?? generateTraceId())
   return explored

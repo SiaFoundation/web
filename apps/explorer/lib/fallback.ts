@@ -15,6 +15,10 @@ export async function buildFallbackDataExchangeRate(currency: CurrencyID) {
   return {
     // Hooks build with react-core have keys of the form:
     // ['method', `${api}${route}${params}${JSON.stringify(args.payload)}`]
+    // The key must be built from the public address even though the request
+    // above may have used the internal one. The client hooks build their keys
+    // from the public address, and a mismatch means the fallback silently
+    // stops matching and every page refetches on hydration.
     [unstable_serialize([
       'get',
       path.join(exploredApi, exchangeRateRoute.replace(':currency', currency)),
