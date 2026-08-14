@@ -31,4 +31,15 @@ export const appName = config.appName
 export const appLink = config.appLink
 export const isMainnet = config.isMainnet
 export const faucetApi = config.faucetApi
+
+// The public explored API address. This is the address that is handed to the
+// browser, so it must always be publicly reachable.
 export const exploredApi = config.exploredApi
+
+// An optional internal explored API address used for server-side requests.
+// When the app runs alongside explored in a private network, this lets server
+// requests reach it directly rather than routing back out over the public
+// internet. Read at runtime so a single build can be deployed with different
+// values, and never exposed to the browser. Falls back to the public address.
+export const exploredInternalApi =
+  process.env.EXPLORED_INTERNAL_API || config.exploredApi
