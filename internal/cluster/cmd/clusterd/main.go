@@ -140,11 +140,11 @@ func main() {
 	}
 	defer bdb.Close()
 
-	dbstore, tipState, err := chain.NewDBStore(bdb, n, genesis, nil)
+	dbstore, err := chain.NewDBStore(bdb, n, genesis, nil)
 	if err != nil {
 		log.Panic("failed to create dbstore", zap.Error(err))
 	}
-	cm := chain.NewManager(dbstore, tipState)
+	cm := chain.NewManager(dbstore)
 
 	syncerListener, err := net.Listen("tcp", ":0")
 	if err != nil {
