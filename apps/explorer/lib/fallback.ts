@@ -10,7 +10,7 @@ import { getExplored } from './explored'
 export async function buildFallbackDataExchangeRate(currency: CurrencyID) {
   const explored = await getExplored()
   const { data: rate } = await explored.exchangeRate({
-    params: { currency: 'usd' },
+    params: { currency },
   })
   return {
     // Hooks build with react-core have keys of the form:
