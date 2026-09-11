@@ -45,7 +45,9 @@ export function useOnValid({
           throw Error(settings.error)
         }
 
-        if (state.data?.explorer.enabled) {
+        // Without the current pinned settings there is nothing to base an
+        // update on, and writing the form defaults would unpin every price.
+        if (state.data?.explorer.enabled && resources.settingsPinned.data) {
           const settingsPinned = await settingsPinnedUpdate.put({
             payload: transformUpSettingsPinned(
               values,

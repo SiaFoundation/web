@@ -19,6 +19,13 @@ export const expectTextInputByName = step(
   },
 )
 
+export const expectTextInputVisible = step(
+  'expect text input visible',
+  async (page: Page, name: string) => {
+    await expect(page.locator(`input[name="${name}"]`)).toBeVisible()
+  },
+)
+
 export const expectTextInputNotVisible = step(
   'expect text input not visible',
   async (page: Page, name: string) => {

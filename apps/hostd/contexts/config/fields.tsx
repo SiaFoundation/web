@@ -157,7 +157,7 @@ export function getFields({
     // Pricing
     pinnedCurrency: {
       title: 'Pinned currency',
-      description: 'Currency to use for fields where price pinning is enabled.',
+      description: 'Currency to use when price pinning is enabled.',
       type: 'select',
       options: [
         ...currencyOptions.map(({ id, label }) => ({
@@ -205,9 +205,17 @@ export function getFields({
       },
     },
 
-    shouldPinStoragePrice: {
-      title: 'Pin storage price',
-      description: '',
+    shouldPinPrices: {
+      title: 'Pin prices',
+      description: (
+        <>
+          Pin your prices to fixed fiat values. hostd tracks the exchange rate
+          and keeps the siacoin price in sync with the fiat value, so your fiat
+          revenue stays consistent as the price of siacoin moves. Pinning
+          applies to all of your prices at once - storage, egress, ingress, and
+          max collateral are pinned together or not at all.
+        </>
+      ),
       type: 'boolean',
       category: 'pricing',
       hidden: !pinningEnabled,
@@ -253,7 +261,7 @@ export function getFields({
           range: requiredIfPinningEnabled(
             validationContext,
             (value: BigNumber, values) =>
-              !values.shouldPinStoragePrice ||
+              values.shouldPinPrices === false ||
               value?.gte(0) ||
               'storage price must not be negative',
           ),
@@ -261,14 +269,6 @@ export function getFields({
       },
     },
 
-    shouldPinEgressPrice: {
-      title: 'Pin egress price',
-      description: '',
-      type: 'boolean',
-      category: 'pricing',
-      hidden: !pinningEnabled,
-      validation: {},
-    },
     egressPrice: {
       title: 'Egress price',
       description: (
@@ -310,7 +310,7 @@ export function getFields({
           range: requiredIfPinningEnabled(
             validationContext,
             (value: BigNumber, values) =>
-              !values.shouldPinEgressPrice ||
+              values.shouldPinPrices === false ||
               value?.gte(0) ||
               'egress price must not be negative',
           ),
@@ -318,14 +318,6 @@ export function getFields({
       },
     },
 
-    shouldPinIngressPrice: {
-      title: 'Pin ingress price',
-      description: '',
-      type: 'boolean',
-      category: 'pricing',
-      hidden: !pinningEnabled,
-      validation: {},
-    },
     ingressPrice: {
       title: 'Ingress price',
       description: (
@@ -366,7 +358,7 @@ export function getFields({
           range: requiredIfPinningEnabled(
             validationContext,
             (value: BigNumber, values) =>
-              !values.shouldPinIngressPrice ||
+              values.shouldPinPrices === false ||
               value?.gte(0) ||
               'ingress price must not be negative',
           ),
@@ -391,14 +383,6 @@ export function getFields({
       },
     },
 
-    shouldPinMaxCollateral: {
-      title: 'Pin max collateral',
-      description: '',
-      type: 'boolean',
-      category: 'pricing',
-      hidden: !pinningEnabled,
-      validation: {},
-    },
     maxCollateral: {
       title: 'Max collateral',
       description: (
@@ -427,7 +411,7 @@ export function getFields({
       description: '',
       type: 'fiat',
       category: 'pricing',
-      hidden: !pinningEnabled || configViewMode === 'basic',
+      hidden: !pinningEnabled,
       validation: {
         validate: {
           required: requiredIfPinningEnabled(validationContext),
@@ -439,7 +423,7 @@ export function getFields({
           range: requiredIfPinningEnabled(
             validationContext,
             (value: BigNumber, values) =>
-              !values.shouldPinMaxCollateral ||
+              values.shouldPinPrices === false ||
               value?.gte(0) ||
               'max collateral must not be negative',
           ),

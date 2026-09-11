@@ -138,24 +138,41 @@ export function transformUpSettingsPinned(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   existingValues: any,
 ): HostSettingsPinned {
+  // A host with a mixed pinning configuration has not made an all or nothing
+  // choice yet, so their existing configuration is kept until they do. This
+  // means unrelated edits elsewhere in the config do not pin or unpin prices.
+  const pinned =
+    values.shouldPinPrices === null
+      ? {
+          storage: existingValues?.storage?.pinned ?? false,
+          egress: existingValues?.egress?.pinned ?? false,
+          ingress: existingValues?.ingress?.pinned ?? false,
+          maxCollateral: existingValues?.maxCollateral?.pinned ?? false,
+        }
+      : {
+          storage: values.shouldPinPrices,
+          egress: values.shouldPinPrices,
+          ingress: values.shouldPinPrices,
+          maxCollateral: values.shouldPinPrices,
+        }
   return {
     ...existingValues,
     currency: values.pinnedCurrency,
     threshold: values.pinnedThreshold.div(100).toNumber(),
     storage: {
-      pinned: values.shouldPinStoragePrice,
+      pinned: pinned.storage,
       value: values.storagePricePinned.toNumber(),
     },
     ingress: {
-      pinned: values.shouldPinIngressPrice,
+      pinned: pinned.ingress,
       value: values.ingressPricePinned.toNumber(),
     },
     egress: {
-      pinned: values.shouldPinEgressPrice,
+      pinned: pinned.egress,
       value: values.egressPricePinned.toNumber(),
     },
     maxCollateral: {
-      pinned: values.shouldPinMaxCollateral,
+      pinned: pinned.maxCollateral,
       value: values.maxCollateralPinned.toNumber(),
     },
   }
@@ -263,22 +280,42 @@ export function transformDown({
       ? {
           pinnedCurrency: settingsPinned.currency,
           pinnedThreshold: new BigNumber(settingsPinned.threshold).times(100),
-          shouldPinMaxCollateral: settingsPinned.maxCollateral.pinned,
+          // Pinning reads as on when every price is pinned and off when none
+          // are. A mixed configuration reads as `null`, which the switch shows
+          // as off but which tells the form the host has not chosen yet.
+          shouldPinPrices: getShouldPinPrices(settingsPinned),
           maxCollateralPinned: new BigNumber(
             settingsPinned.maxCollateral.value,
           ),
-
-          shouldPinStoragePrice: settingsPinned.storage.pinned,
           storagePricePinned: new BigNumber(settingsPinned.storage.value),
-
-          shouldPinEgressPrice: settingsPinned.egress.pinned,
           egressPricePinned: new BigNumber(settingsPinned.egress.value),
-
-          shouldPinIngressPrice: settingsPinned.ingress.pinned,
           ingressPricePinned: new BigNumber(settingsPinned.ingress.value),
         }
       : defaultValuesSettingsPinned),
   }
+}
+
+/**
+ * Whether every price is pinned, no price is pinned, or the daemon has a mixed
+ * configuration saved before pinning became all or nothing, in which case the
+ * host has not made a choice yet.
+ */
+export function getShouldPinPrices(
+  settingsPinned: HostSettingsPinned,
+): boolean | null {
+  const pinned = [
+    settingsPinned.storage.pinned,
+    settingsPinned.egress.pinned,
+    settingsPinned.ingress.pinned,
+    settingsPinned.maxCollateral.pinned,
+  ]
+  if (pinned.every((p) => p)) {
+    return true
+  }
+  if (pinned.every((p) => !p)) {
+    return false
+  }
+  return null
 }
 
 /**

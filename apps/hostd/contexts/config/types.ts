@@ -31,15 +31,25 @@ export const dnsProviderOptions: { value: DNSProvider; label: string }[] = [
 export const defaultValuesSettingsPinned = {
   pinnedCurrency: '' as CurrencyId | '',
   pinnedThreshold: new BigNumber(0),
-  shouldPinStoragePrice: false,
+  // Pinning is all or nothing - either every price is pinned to a fiat value
+  // or none are. Hosts configured before this was enforced may still have a
+  // mixed set of pinned prices, which reads as `null`: the host has not made
+  // an all or nothing choice yet, so their configuration is left as it is
+  // until they do. `null` is reserved for that confirmed mixed response - the
+  // default here is `false` so that pinned settings which are missing or
+  // errored are not mistaken for a mixed configuration.
+  shouldPinPrices: false as boolean | null,
   storagePricePinned: new BigNumber(0),
-  shouldPinEgressPrice: false,
   egressPricePinned: new BigNumber(0),
-  shouldPinIngressPrice: false,
   ingressPricePinned: new BigNumber(0),
-  shouldPinMaxCollateral: false,
   maxCollateralPinned: new BigNumber(0),
 }
+
+/**
+ * The prices that can be pinned to a fiat value, as keyed on the daemon's
+ * pinned settings.
+ */
+export type PinnablePrice = 'storage' | 'egress' | 'ingress' | 'maxCollateral'
 
 export const defaultValuesSettings = {
   // Host settings

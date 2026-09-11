@@ -25,31 +25,20 @@ export const configResetAllSettings = step(
     await fillSelectInputByName(page, 'pinnedCurrency', 'USD')
     await fillTextInputByName(page, 'pinnedThreshold', '3')
 
-    await setSwitchByLabel(page, 'shouldPinStoragePrice', false)
-    await fillTextInputByName(page, 'storagePrice', '10')
-    await setSwitchByLabel(page, 'shouldPinStoragePrice', true)
+    // Pinning is all or nothing - set the pinned values, then turn pinning
+    // off so the siacoin values are the ones in effect.
+    await setSwitchByLabel(page, 'shouldPinPrices', true)
     await fillTextInputByName(page, 'storagePricePinned', '5')
-    await setSwitchByLabel(page, 'shouldPinStoragePrice', false)
-
-    await setSwitchByLabel(page, 'shouldPinEgressPrice', false)
-    await fillTextInputByName(page, 'egressPrice', '10')
-    await setSwitchByLabel(page, 'shouldPinEgressPrice', true)
     await fillTextInputByName(page, 'egressPricePinned', '5')
-    await setSwitchByLabel(page, 'shouldPinEgressPrice', false)
-
-    await setSwitchByLabel(page, 'shouldPinIngressPrice', false)
-    await fillTextInputByName(page, 'ingressPrice', '10')
-    await setSwitchByLabel(page, 'shouldPinIngressPrice', true)
     await fillTextInputByName(page, 'ingressPricePinned', '5')
-    await setSwitchByLabel(page, 'shouldPinIngressPrice', false)
-
-    await fillTextInputByName(page, 'collateralMultiplier', '2')
-
-    await setSwitchByLabel(page, 'shouldPinMaxCollateral', false)
-    await fillTextInputByName(page, 'maxCollateral', '10')
-    await setSwitchByLabel(page, 'shouldPinMaxCollateral', true)
     await fillTextInputByName(page, 'maxCollateralPinned', '5')
-    await setSwitchByLabel(page, 'shouldPinMaxCollateral', false)
+    await setSwitchByLabel(page, 'shouldPinPrices', false)
+
+    await fillTextInputByName(page, 'storagePrice', '10')
+    await fillTextInputByName(page, 'egressPrice', '10')
+    await fillTextInputByName(page, 'ingressPrice', '10')
+    await fillTextInputByName(page, 'collateralMultiplier', '2')
+    await fillTextInputByName(page, 'maxCollateral', '10')
 
     await fillTextInputByName(page, 'contractPrice', '0.2')
     await fillTextInputByName(page, 'baseRPCPrice', '1')

@@ -1,41 +1,41 @@
 import {
-  Text,
   ConfigurationPanel,
   PanelMenuSection,
-  PanelMenuSetting,
-  FieldSwitch,
   ConfigurationPanelSetting,
   shouldShowField,
-  Tooltip,
-  ConfigurationSiacoin,
-  ConfigurationFiat,
+  Alert,
 } from '@siafoundation/design-system'
 import { useWatch } from 'react-hook-form'
 import { useConfig } from '../../contexts/config'
+import { PinnablePrice } from '../../contexts/config/types'
 import { StateConnError } from './StateConnError'
+import { MixedPinningNotice, PricingSetting } from './PricingSetting'
 
 export function Config() {
-  const { fields, form, remoteError, configRef } = useConfig()
-  const shouldPinStoragePrice = useWatch({
+  const {
+    fields,
+    form,
+    remoteError,
+    configRef,
+    pinningEnabled,
+    settingsPinned,
+  } = useConfig()
+  const shouldPinPrices = useWatch({
     control: form.control,
-    name: 'shouldPinStoragePrice',
-  })
-  const shouldPinEgressPrice = useWatch({
-    control: form.control,
-    name: 'shouldPinEgressPrice',
-  })
-  const shouldPinIngressPrice = useWatch({
-    control: form.control,
-    name: 'shouldPinIngressPrice',
-  })
-  const shouldPinMaxCollateral = useWatch({
-    control: form.control,
-    name: 'shouldPinMaxCollateral',
+    name: 'shouldPinPrices',
   })
   const pinnedCurrency = useWatch({
     control: form.control,
     name: 'pinnedCurrency',
   })
+  // Until the host resolves a mixed configuration `shouldPinPrices` is null,
+  // and each price keeps the pinned state the daemon reports for it so the
+  // host can see what is pinned. Without the explorer there is no exchange
+  // rate and pinned settings are never saved, so every price is in siacoin.
+  const isPinned = (price: PinnablePrice) =>
+    !!pinningEnabled &&
+    (shouldPinPrices ?? !!settingsPinned.data?.[price].pinned)
+  const showMixedPinningNotice = !!pinningEnabled && shouldPinPrices === null
   return remoteError ? (
     <StateConnError />
   ) : (
@@ -49,6 +49,17 @@ export function Config() {
       <PanelMenuSection title="Pricing">
         <ConfigurationPanelSetting
           autoVisibility
+          name="shouldPinPrices"
+          form={form}
+          fields={fields}
+        />
+        {showMixedPinningNotice && (
+          <Alert>
+            <MixedPinningNotice form={form} />
+          </Alert>
+        )}
+        <ConfigurationPanelSetting
+          autoVisibility
           name="pinnedCurrency"
           form={form}
           fields={fields}
@@ -59,155 +70,44 @@ export function Config() {
           fields={fields}
           name="pinnedThreshold"
         />
-        <PanelMenuSetting
+        <PricingSetting
           id="storagePriceGroup"
           title="Storage price"
-          description={fields.storagePrice.description}
-          control={
-            <div className="flex flex-col gap-1 w-[250px]">
-              {shouldShowField({
-                form,
-                fields,
-                name: 'shouldPinStoragePrice',
-              }) && (
-                <Tooltip
-                  align="end"
-                  content="Pin the value to a fixed fiat amount. The daemon will automatically keep the value in sync."
-                >
-                  <div className="flex w-full justify-between">
-                    <Text weight="medium" color="verySubtle" size="14">
-                      Pin
-                    </Text>
-                    <FieldSwitch
-                      name="shouldPinStoragePrice"
-                      form={form}
-                      fields={fields}
-                      size="small"
-                      group={false}
-                    />
-                  </div>
-                </Tooltip>
-              )}
-              {shouldShowField({
-                form,
-                fields,
-                name: 'shouldPinStoragePrice',
-              }) && shouldPinStoragePrice ? (
-                <ConfigurationFiat
-                  name="storagePricePinned"
-                  form={form}
-                  fields={fields}
-                  currency={pinnedCurrency || undefined}
-                />
-              ) : (
-                <ConfigurationSiacoin
-                  name="storagePrice"
-                  form={form}
-                  fields={fields}
-                />
-              )}
-            </div>
+          form={form}
+          fields={fields}
+          name="storagePrice"
+          pinnedName="storagePricePinned"
+          pinned={isPinned('storage')}
+          showLegacyPinnedBadge={
+            showMixedPinningNotice && !!settingsPinned.data?.storage.pinned
           }
+          pinnedCurrency={pinnedCurrency}
         />
-        <PanelMenuSetting
+        <PricingSetting
           id="egressPriceGroup"
           title="Egress price"
-          description={fields.egressPrice.description}
-          control={
-            <div className="flex flex-col gap-1 w-[250px]">
-              {shouldShowField({
-                form,
-                fields,
-                name: 'shouldPinEgressPrice',
-              }) && (
-                <Tooltip
-                  align="end"
-                  content="Pin the value to a fixed fiat amount. The daemon will automatically keep the value in sync."
-                >
-                  <div className="flex w-full justify-between">
-                    <Text weight="medium" color="verySubtle" size="14">
-                      Pin
-                    </Text>
-                    <FieldSwitch
-                      name="shouldPinEgressPrice"
-                      form={form}
-                      fields={fields}
-                      size="small"
-                      group={false}
-                    />
-                  </div>
-                </Tooltip>
-              )}
-              {shouldShowField({
-                form,
-                fields,
-                name: 'shouldPinEgressPrice',
-              }) && shouldPinEgressPrice ? (
-                <ConfigurationFiat
-                  name="egressPricePinned"
-                  form={form}
-                  fields={fields}
-                  currency={pinnedCurrency}
-                />
-              ) : (
-                <ConfigurationSiacoin
-                  name="egressPrice"
-                  form={form}
-                  fields={fields}
-                />
-              )}
-            </div>
+          form={form}
+          fields={fields}
+          name="egressPrice"
+          pinnedName="egressPricePinned"
+          pinned={isPinned('egress')}
+          showLegacyPinnedBadge={
+            showMixedPinningNotice && !!settingsPinned.data?.egress.pinned
           }
+          pinnedCurrency={pinnedCurrency}
         />
-        <PanelMenuSetting
+        <PricingSetting
           id="ingressPriceGroup"
           title="Ingress price"
-          description={fields.ingressPrice.description}
-          control={
-            <div className="flex flex-col gap-1 w-[250px]">
-              {shouldShowField({
-                form,
-                fields,
-                name: 'shouldPinIngressPrice',
-              }) && (
-                <Tooltip
-                  align="end"
-                  content="Pin the value to a fixed fiat amount. The daemon will automatically keep the value in sync."
-                >
-                  <div className="flex w-full justify-between">
-                    <Text weight="medium" color="verySubtle" size="14">
-                      Pin
-                    </Text>
-                    <FieldSwitch
-                      name="shouldPinIngressPrice"
-                      form={form}
-                      fields={fields}
-                      size="small"
-                      group={false}
-                    />
-                  </div>
-                </Tooltip>
-              )}
-              {shouldShowField({
-                form,
-                fields,
-                name: 'shouldPinIngressPrice',
-              }) && shouldPinIngressPrice ? (
-                <ConfigurationFiat
-                  name="ingressPricePinned"
-                  form={form}
-                  fields={fields}
-                  currency={pinnedCurrency}
-                />
-              ) : (
-                <ConfigurationSiacoin
-                  name="ingressPrice"
-                  form={form}
-                  fields={fields}
-                />
-              )}
-            </div>
+          form={form}
+          fields={fields}
+          name="ingressPrice"
+          pinnedName="ingressPricePinned"
+          pinned={isPinned('ingress')}
+          showLegacyPinnedBadge={
+            showMixedPinningNotice && !!settingsPinned.data?.ingress.pinned
           }
+          pinnedCurrency={pinnedCurrency}
         />
         <ConfigurationPanelSetting
           name="collateralMultiplier"
@@ -219,55 +119,19 @@ export function Config() {
           fields,
           name: 'maxCollateral',
         }) && (
-          <PanelMenuSetting
+          <PricingSetting
             id="maxCollateralGroup"
             title="Max collateral"
-            description={fields.maxCollateral.description}
-            control={
-              <div className="flex flex-col gap-1 w-[250px]">
-                {shouldShowField({
-                  form,
-                  fields,
-                  name: 'shouldPinMaxCollateral',
-                }) && (
-                  <Tooltip
-                    align="end"
-                    content="Pin the value to a fixed fiat amount. The daemon will automatically keep the value in sync."
-                  >
-                    <div className="flex w-full justify-between">
-                      <Text weight="medium" color="verySubtle" size="14">
-                        Pin
-                      </Text>
-                      <FieldSwitch
-                        name="shouldPinMaxCollateral"
-                        form={form}
-                        fields={fields}
-                        size="small"
-                        group={false}
-                      />
-                    </div>
-                  </Tooltip>
-                )}
-                {shouldShowField({
-                  form,
-                  fields,
-                  name: 'shouldPinMaxCollateral',
-                }) && shouldPinMaxCollateral ? (
-                  <ConfigurationFiat
-                    name="maxCollateralPinned"
-                    form={form}
-                    fields={fields}
-                    currency={pinnedCurrency}
-                  />
-                ) : (
-                  <ConfigurationSiacoin
-                    name="maxCollateral"
-                    form={form}
-                    fields={fields}
-                  />
-                )}
-              </div>
+            form={form}
+            fields={fields}
+            name="maxCollateral"
+            pinnedName="maxCollateralPinned"
+            pinned={isPinned('maxCollateral')}
+            showLegacyPinnedBadge={
+              showMixedPinningNotice &&
+              !!settingsPinned.data?.maxCollateral.pinned
             }
+            pinnedCurrency={pinnedCurrency}
           />
         )}
         <ConfigurationPanelSetting
