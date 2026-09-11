@@ -56,6 +56,7 @@ export function useConfigMain() {
 
   const state = useHostState()
   const pinningEnabled = state.data?.explorer.enabled
+
   const revalidateAndResetForm = useCallback(async () => {
     const _settings = await settings.mutate()
     const _settingsPinned = await settingsPinned.mutate()
@@ -111,6 +112,7 @@ export function useConfigMain() {
   return {
     fields,
     settings,
+    settingsPinned,
     dynDNSCheck,
     changeCount,
     revalidateAndResetForm,
