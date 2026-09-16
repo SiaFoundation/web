@@ -21,7 +21,7 @@ import { buildMutateMatcherFn } from './mutate'
 
 type DeleteFunc<Params extends RequestParams, Result> = {
   delete: (
-    args: InternalCallbackArgs<Params, undefined, Result>,
+    args: InternalCallbackArgs<Params, void, Result>,
   ) => Promise<Response<Result>>
 }
 
