@@ -25,6 +25,8 @@ export function FilesActionsMenu() {
 
   const { getRootProps, getInputProps } = useDropzone({
     noDrag: true,
+    // Pasted files are handled by the files table dropzone.
+    noPaste: true,
     noClick: !canUpload,
     onDrop: uploadFiles,
   })

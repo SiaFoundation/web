@@ -16,6 +16,7 @@ import {
 import { useChartXY } from './useChartXY'
 import { ChartXYConfig } from './ChartXYConfig'
 import { LoadingDots } from '../LoadingDots'
+import { StateNoData } from '../EmptyState/StateNoData'
 
 export type { Chart, ChartPoint, ChartData, ChartStats, ChartConfig, ChartType }
 
@@ -64,8 +65,10 @@ export function ChartXY<Key extends string, Cat extends string>({
             <div className="flex items-center justify-center h-full">
               <LoadingDots className="scale-150" />
             </div>
-          ) : data.length === 0 && emptyState ? (
-            emptyState
+          ) : data.length === 0 ? (
+            // @visx/xychart draws no axes until a series has data, so an empty
+            // dataset would render as bare gridlines.
+            (emptyState ?? <StateNoData className="h-full" />)
           ) : (
             <ChartXYGraph {...props} width={width} height={height} />
           )
