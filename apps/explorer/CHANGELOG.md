@@ -1,5 +1,13 @@
 # explorer
 
+## 0.43.1
+
+### Patch Changes
+
+- Updated dependencies [4a4a36d]
+- Updated dependencies [4a4a36d]
+  - @siafoundation/design-system@12.0.1
+
 ## 0.43.0
 
 ### Minor Changes

@@ -1,5 +1,13 @@
 # walletd
 
+## 0.36.3
+
+### Patch Changes
+
+- Updated dependencies [4a4a36d]
+- Updated dependencies [4a4a36d]
+  - @siafoundation/design-system@12.0.1
+
 ## 0.36.2
 
 ### Patch Changes
