@@ -1,6 +1,5 @@
 import { Button, ChartXY, stripPrefix } from '@siafoundation/design-system'
 import { useContracts } from '../../contexts/contracts'
-import { StateNoData } from './StateNoData'
 
 export function ContractMetrics() {
   const {
@@ -43,7 +42,6 @@ export function ContractMetrics() {
           config={allContractsSpendingMetrics.config}
           isLoading={allContractsSpendingMetrics.isLoading}
           actionsLeft={tabsEl}
-          emptyState={<StateNoData />}
         />
       )}
       {graphMode === 'spending' && selectedContract && (
@@ -54,7 +52,6 @@ export function ContractMetrics() {
           config={selectedContractSpendingMetrics.config}
           isLoading={selectedContractSpendingMetrics.isLoading}
           actionsLeft={tabsEl}
-          emptyState={<StateNoData />}
         />
       )}
     </div>

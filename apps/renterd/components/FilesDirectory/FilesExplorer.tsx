@@ -30,6 +30,7 @@ export function FilesExplorer() {
         onDrop={uploadFiles}
         noClick={!canUpload || datasetPageTotal > 0}
         noDrag={!canUpload}
+        noPaste={!canUpload}
       >
         <Table
           testId={isViewingBuckets ? 'bucketsTable' : 'filesTable'}
