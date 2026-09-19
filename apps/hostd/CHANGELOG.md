@@ -1,5 +1,14 @@
 # hostd
 
+## 0.69.1
+
+### Patch Changes
+
+- 4a4a36d: Charts with no data now show the no data state instead of gridlines without axes.
+- Updated dependencies [4a4a36d]
+- Updated dependencies [4a4a36d]
+  - @siafoundation/design-system@12.0.1
+
 ## 0.69.0
 
 ### Minor Changes

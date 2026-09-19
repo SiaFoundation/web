@@ -1,5 +1,12 @@
 # Changelog
 
+## 12.0.1
+
+### Patch Changes
+
+- 4a4a36d: Charts with no data now show the no data state instead of gridlines without axes.
+- 4a4a36d: Fixed scroll area scrollbars keeping a stale length and position after their content changed size.
+
 ## 12.0.0
 
 ### Patch Changes

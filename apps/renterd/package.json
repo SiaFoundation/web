@@ -1,13 +1,13 @@
 {
   "name": "renterd",
-  "version": "0.88.2",
+  "version": "0.88.3",
   "private": true,
   "description": "The `renterd` user interface, dedicated to renter related functionality.",
   "license": "MIT",
   "dependencies": {
     "@carbon/icons-react": "10.49.6",
     "@dnd-kit/core": "6.3.1",
-    "@siafoundation/design-system": "12.0.0",
+    "@siafoundation/design-system": "12.0.1",
     "@siafoundation/explored-types": "0.21.0",
     "@siafoundation/fonts": "0.5.3",
     "@siafoundation/react-core": "8.2.1",
