@@ -10,7 +10,7 @@
   "types": "./src/index.d.ts",
   "dependencies": {
     "@siafoundation/request": "^0.5.1",
-    "axios": "^1.20.0",
+    "axios": "^1.13.5",
     "detect-gpu": "^5.0.34",
     "swr": "^2.5.1",
     "use-local-storage-state": "^20.0.0"
@@ -18,7 +18,7 @@
   "peerDependencies": {
     "@siafoundation/types": "^0.13.0",
     "@technically/lodash": "^4.17.0",
-    "next": "^16.2.6",
+    "next": "^16.3.5",
     "react": "^19.2.1"
   }
 }
