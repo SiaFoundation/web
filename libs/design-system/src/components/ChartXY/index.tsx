@@ -79,14 +79,14 @@ export function ChartXY<Key extends string, Cat extends string>({
 
   if (variant === 'panel') {
     return (
-      <Panel className="relative p-px" style={{ height }}>
+      <Panel data-testid="chartXY" className="relative p-px" style={{ height }}>
         {body}
       </Panel>
     )
   }
 
   return (
-    <div className="relative p-px" style={{ height }}>
+    <div data-testid="chartXY" className="relative p-px" style={{ height }}>
       {body}
     </div>
   )
