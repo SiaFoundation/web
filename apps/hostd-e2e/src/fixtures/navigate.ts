@@ -4,7 +4,7 @@ import { step } from '@siafoundation/e2e'
 export const navigateToDashboard = step(
   'navigate to dashboard',
   async ({ page }: { page: Page }) => {
-    await page.getByTestId('sidenav').getByLabel('Overview').click()
+    await page.getByTestId('sidenav').getByLabel('Dashboard').click()
     await expect(page.getByTestId('navbar').getByText('Overview')).toBeVisible()
   },
 )
