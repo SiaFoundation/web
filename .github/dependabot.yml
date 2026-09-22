@@ -25,7 +25,30 @@ updates:
     directory: '/'
     schedule:
       interval: 'weekly'
+    # A dependency joins the first group it matches, so nx is listed first.
     groups:
+      # A partial nx upgrade does not build: the plugins and the runner resolve
+      # each other's versions.
+      nx:
+        patterns:
+          - 'nx'
+          - '@nx/*'
+          - '@nx-tools/*'
+      # Majors are left out so each one arrives as its own pull request. Grouped
+      # with everything else they are unreviewable and a single unbuildable
+      # major blocks the whole batch.
       dependencies:
         patterns:
           - '*'
+        update-types:
+          - 'minor'
+          - 'patch'
+    ignore:
+      # TypeScript 7 ships no compiler API until 7.1, and nx and typescript-eslint
+      # both call it while building. Revisit once all three line up.
+      - dependency-name: 'typescript'
+        update-types: ['version-update:semver-major']
+      # Tailwind 4 changes several default styles across every app and breaks the
+      # theme preset the design system publishes; it needs its own migration.
+      - dependency-name: 'tailwindcss'
+        update-types: ['version-update:semver-major']
