@@ -80,8 +80,5 @@
   "packageManager": "bun@1.2.18",
   "engines": {
     "node": "24.x"
-  },
-  "overrides": {
-    "axios": "1.13.5"
   }
 }
