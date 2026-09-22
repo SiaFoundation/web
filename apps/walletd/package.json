@@ -2,7 +2,7 @@
   "name": "walletd",
   "version": "0.36.2",
   "private": true,
-  "description": "The `walletd` user interface, includes a wallet with support for hot, cold, and hardware wallets.",
+  "description": "The `walletd` user interface includes a wallet with support for hot, cold, and hardware wallets.",
   "license": "MIT",
   "dependencies": {
     "@ledgerhq/hw-transport-web-ble": "6.35.0",
@@ -22,7 +22,7 @@
     "blakejs": "1.2.1",
     "class-variance-authority": "0.7.1",
     "date-fns": "4.4.0",
-    "next": "16.2.6",
+    "next": "16.3.5",
     "playwright": "1.63.0",
     "react": "19.3.0",
     "react-hook-form": "7.87.0",
