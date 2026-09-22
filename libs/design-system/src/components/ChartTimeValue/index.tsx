@@ -7,12 +7,13 @@ import { scaleTime, scaleLinear } from '@visx/scale'
 import { PatternLines } from '@visx/pattern'
 import { withTooltip, TooltipWithBounds, defaultStyles } from '@visx/tooltip'
 import { Brush } from '@visx/brush'
-import { Bounds } from '@visx/brush/lib/types'
-import BaseBrush, {
+import type {
+  Bounds,
   BaseBrushState,
+  BrushProps,
   UpdateBrush,
-} from '@visx/brush/lib/BaseBrush'
-import { WithTooltipProvidedProps } from '@visx/tooltip/lib/enhancers/withTooltip'
+} from '@visx/brush'
+import type { WithTooltipProvidedProps } from '@visx/tooltip'
 import { localPoint } from '@visx/event'
 import { LinearGradient } from '@visx/gradient'
 import { max, extent, bisector, min } from 'd3-array'
@@ -28,6 +29,10 @@ import { getPointTime, getPointValue, Point } from './utils'
 import { useTheme } from 'next-themes'
 import { colors } from '../../lib/colors'
 import { humanDate } from '@siafoundation/units'
+
+// See the note in ChartBrush: visx does not export the brush instance class and
+// blocks the deep path, so the ref type is derived from the prop it feeds.
+type BrushRef = NonNullable<BrushProps['innerRef']>
 
 export type { Point }
 
@@ -172,7 +177,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
       return paddedDataset
     }, [datasets, selectedDatasetName])
 
-    const brushRef = useRef<BaseBrush | null>(null)
+    const brushRef = useRef<BrushRef['current']>(null)
     const [filteredDataset, setFilteredDataset] = useState(dataset)
 
     useEffect(() => {
@@ -296,8 +301,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
     const handleTooltip = useCallback(
       (
         event:
-          | React.TouchEvent<SVGRectElement>
-          | React.MouseEvent<SVGRectElement>,
+          React.TouchEvent<SVGRectElement> | React.MouseEvent<SVGRectElement>,
       ) => {
         throttled(() => {
           const { x } = localPoint(event) || { x: 0 }

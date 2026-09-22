@@ -1,10 +1,12 @@
 'use client'
 
 import { useCallback, useMemo, useState } from 'react'
-import { AnimationTrajectory } from '@visx/react-spring/lib/types'
+import type { AnimationTrajectory } from '@visx/react-spring'
 import { GlyphCross, GlyphDot, GlyphStar } from '@visx/glyph'
 import { curveLinear, curveStep, curveCardinal } from '@visx/curve'
-import { RenderTooltipGlyphProps } from '@visx/xychart/lib/components/Tooltip'
+// visx does not re-export this from the package root, and its package exports
+// map blocks the deep path at runtime, so this has to stay type-only.
+import type { RenderTooltipGlyphProps } from '@visx/xychart/lib/components/Tooltip'
 import { lightTheme, darkTheme } from './customTheme'
 import { getChartComponents } from './getChartComponents'
 import { useTheme } from 'next-themes'

@@ -1,15 +1,20 @@
 'use client'
 
-import { MutableRefObject, useMemo } from 'react'
+import { useMemo } from 'react'
 import { scaleTime, scaleLinear } from '@visx/scale'
 import { PatternLines } from '@visx/pattern'
 import { Brush } from '@visx/brush'
-import { Bounds } from '@visx/brush/lib/types'
-import BaseBrush from '@visx/brush/lib/BaseBrush'
+import type { Bounds, BrushProps } from '@visx/brush'
 import { ParentSize } from '@visx/responsive'
 import { AreaChart } from '../ChartTimeValue/AreaChart'
 import { Panel } from '../../core/Panel'
 import { daysInMilliseconds } from '@siafoundation/units'
+
+// visx does not export the brush instance class and its package exports block
+// the deep path, so the ref type comes from the prop it gets passed to. Taking
+// it from the deep path instead compiles here and then fails for anyone
+// consuming the published types under node16 or bundler resolution.
+type BrushRef = NonNullable<BrushProps['innerRef']>
 
 const accentColor = 'var(--colors-accent9)'
 const patternColor = 'var(--colors-accent9)'
@@ -31,7 +36,7 @@ type ChartProps = {
   width: number
   height: number
   onChange?: OnBrushChange
-  brushRef?: MutableRefObject<BaseBrush>
+  brushRef?: BrushRef
 }
 
 function Chart({
@@ -141,7 +146,7 @@ type Props = {
   height: number
   curve?: 'step' | 'monotone'
   onChange?: OnBrushChange
-  brushRef?: MutableRefObject<BaseBrush>
+  brushRef?: BrushRef
 }
 
 export function ChartBrush({
