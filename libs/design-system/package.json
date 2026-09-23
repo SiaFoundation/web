@@ -53,7 +53,7 @@
     "@visx/shape": "^4.0.0",
     "@visx/tooltip": "^4.0.0",
     "@visx/xychart": "^4.0.0",
-    "axios": "^1.13.5",
+    "axios": "^1.18.0",
     "bignumber.js": "^9.3.1",
     "class-variance-authority": "^0.7.1",
     "clipboard-polyfill": "^4.1.1",
