@@ -1,5 +1,18 @@
 # explorer
 
+## 0.43.1
+
+### Patch Changes
+
+- 7dce4cc: Updated axios to 1.20.0, which carries a run of security fixes including stricter header validation and prototype-pollution guards on request config.
+- Updated dependencies [7dce4cc]
+- Updated dependencies [4a4a36d]
+- Updated dependencies [b56b863]
+- Updated dependencies [4a4a36d]
+  - @siafoundation/design-system@12.1.0
+  - @siafoundation/react-core@8.2.2
+  - @siafoundation/request@0.5.2
+
 ## 0.43.0
 
 ### Minor Changes

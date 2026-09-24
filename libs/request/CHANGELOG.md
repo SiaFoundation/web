@@ -1,5 +1,11 @@
 # @siafoundation/request
 
+## 0.5.2
+
+### Patch Changes
+
+- 7dce4cc: Updated axios to 1.20.0, which carries a run of security fixes including stricter header validation and prototype-pollution guards on request config.
+
 ## 0.5.1
 
 ### Patch Changes

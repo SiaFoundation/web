@@ -1,5 +1,19 @@
 # Changelog
 
+## 12.1.0
+
+### Minor Changes
+
+- b56b863: Removed the tailwind-scrollbar plugin from the published theme preset. It requires Tailwind 4 while the preset targets Tailwind 3, and the only style it contributed was a no-op reset. Anything using its scrollbar utilities needs to add the plugin directly.
+
+### Patch Changes
+
+- 7dce4cc: Updated axios to 1.20.0, which carries a run of security fixes including stricter header validation and prototype-pollution guards on request config.
+- 4a4a36d: Charts with no data now show the no data state instead of gridlines without axes.
+- 4a4a36d: Fixed scroll area scrollbars keeping a stale length and position after their content changed size.
+- Updated dependencies [7dce4cc]
+  - @siafoundation/react-core@8.2.2
+
 ## 12.0.0
 
 ### Patch Changes
