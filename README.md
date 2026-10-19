@@ -1,4 +1,4 @@
-[![Sia Web](https://sia.tech/assets/banners/sia-banner-web.png)](http://sia.tech)
+[![Sia Web](.github/assets/banner.png)](http://sia.tech)
 
 # Web
 
