@@ -1,5 +1,16 @@
 # walletd
 
+## 0.36.3
+
+### Patch Changes
+
+- Updated dependencies [7dce4cc]
+- Updated dependencies [4a4a36d]
+- Updated dependencies [b56b863]
+- Updated dependencies [4a4a36d]
+  - @siafoundation/design-system@12.1.0
+  - @siafoundation/react-core@8.2.2
+
 ## 0.36.2
 
 ### Patch Changes
