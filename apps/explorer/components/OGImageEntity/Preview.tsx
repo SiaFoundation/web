@@ -4,6 +4,7 @@ import { cx } from 'class-variance-authority'
 import { Background } from '../OGImage/Background'
 import { Header } from './Header'
 import { network } from '../../config'
+import { ogImage } from '../OGImage/asset'
 import { PreviewValue } from '../OGImage/Preview'
 import { generatePublicKeyAvatarGrid } from '@siafoundation/design-system'
 
@@ -62,7 +63,7 @@ export function Preview({
           }}
         >
           <img
-            src="https://sia.tech/api/media/file/shard-bleed.png"
+            src={ogImage('shard-bleed.png')}
             width="24"
             height="24"
             alt="siascan"

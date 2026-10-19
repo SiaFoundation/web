@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { ogImage } from './asset'
 
 export function Background() {
   return (
@@ -6,7 +7,7 @@ export function Background() {
       <img
         tw="absolute w-full h-full opacity-10"
         alt="bg"
-        src="https://sia.tech/siascan/preview/pattern.png"
+        src={ogImage('pattern.png')}
       />
     </div>
   )
