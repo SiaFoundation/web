@@ -3,6 +3,7 @@ import { Header } from './Header'
 import { Background } from './Background'
 import { cx } from 'class-variance-authority'
 import { network } from '../../config'
+import { ogImage } from './asset'
 
 export type PreviewValue = {
   label?: string
@@ -35,7 +36,7 @@ export function Preview({ title, subtitle, values }: Props) {
           }}
         >
           <img
-            src="https://sia.tech/api/media/file/shard-bleed.png"
+            src={ogImage('shard-bleed.png')}
             height="40px"
             width="40px"
             alt="logo"

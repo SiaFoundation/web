@@ -1,19 +1,14 @@
 import { ImageResponse } from 'next/og'
 import { Preview } from './Preview'
+import { ogFile } from './asset'
 
 export async function getOGImage(
   props: React.ComponentProps<typeof Preview>,
   size: { width: number; height: number },
 ) {
-  const medium = await fetch(
-    new URL('https://sia.tech/siascan/preview/fonts/plex-sans-medium.ttf'),
-  ).then((res) => res.arrayBuffer())
-  const semibold = await fetch(
-    new URL('https://sia.tech/siascan/preview/fonts/plex-sans-semibold.ttf'),
-  ).then((res) => res.arrayBuffer())
-  const bold = await fetch(
-    new URL('https://sia.tech/siascan/preview/fonts/plex-sans-bold.ttf'),
-  ).then((res) => res.arrayBuffer())
+  const medium = ogFile('fonts/plex-sans-medium.ttf')
+  const semibold = ogFile('fonts/plex-sans-semibold.ttf')
+  const bold = ogFile('fonts/plex-sans-bold.ttf')
 
   return new ImageResponse(<Preview {...props} />, {
     ...size,
