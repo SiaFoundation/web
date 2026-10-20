@@ -80,3 +80,21 @@ jobs:
     uses: ./.github/workflows/e2e-merge-reports.yml
     with:
       project: explorer-e2e
+  indexd-e2e-shard-tests:
+    if: ${{ (github.event_name == 'pull_request' && github.event.action != 'closed') || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2, 3, 4, 5, 6]
+        shardTotal: [6]
+    uses: ./.github/workflows/e2e-shard-tests.yml
+    with:
+      project: indexd-e2e
+      shardIndex: ${{ matrix.shardIndex }}
+      shardTotal: ${{ matrix.shardTotal }}
+  indexd-e2e-merge-reports:
+    if: ${{ !cancelled() }}
+    needs: [indexd-e2e-shard-tests]
+    uses: ./.github/workflows/e2e-merge-reports.yml
+    with:
+      project: indexd-e2e
