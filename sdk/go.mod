@@ -4,7 +4,7 @@ go 1.26.0
 
 require (
 	go.sia.tech/core v0.21.7
-	go.sia.tech/coreutils v0.24.1
+	go.sia.tech/coreutils v0.25.0
 )
 
 require (
