@@ -3,6 +3,7 @@ module go.sia.tech/web/cluster
 go 1.27.0
 
 require (
+	github.com/fergusstrange/embedded-postgres v1.34.0
 	go.sia.tech/cluster v0.1.6-0.20261027202640-9485e52a675a
 	go.sia.tech/core v0.21.8
 	go.sia.tech/coreutils v0.25.2
@@ -33,6 +34,7 @@ require (
 	github.com/klauspost/compress v1.20.1 // indirect
 	github.com/klauspost/cpuid/v2 v2.3.0 // indirect
 	github.com/klauspost/reedsolomon v1.14.2 // indirect
+	github.com/lib/pq v1.10.9 // indirect
 	github.com/mattn/go-sqlite3 v1.14.52 // indirect
 	github.com/montanaflynn/stats v0.13.0 // indirect
 	github.com/oschwald/geoip2-golang v1.13.0 // indirect
@@ -45,6 +47,7 @@ require (
 	github.com/shopspring/decimal v1.6.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/x448/float16 v0.8.4 // indirect
+	github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8 // indirect
 	go.etcd.io/bbolt v1.5.0 // indirect
 	go.sia.tech/gofakes3 v0.0.5 // indirect
 	go.sia.tech/hostd/v2 v2.11.0 // indirect

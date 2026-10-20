@@ -24,7 +24,10 @@ testnet.
 
 Each node has a unique api address to interact with its respective daemon.
 
-CTRL-C or SIGINT will shut down the cluster and cleanup the resources
+Running indexd nodes with `-indexd` also starts an embedded postgres server
+that the indexd nodes share. The postgres binaries are downloaded on first use.
+
+CTRL-C, SIGINT, or SIGTERM will shut down the cluster and cleanup the resources
 
 ### `[GET] /nodes`
 
