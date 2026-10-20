@@ -7,6 +7,7 @@ import { Hostd } from '@siafoundation/hostd-js'
 import { Maybe } from '@siafoundation/types'
 import { Explored } from '@siafoundation/explored-js'
 import { Walletd } from '@siafoundation/walletd-js'
+import { Admin } from '@siafoundation/indexd-js'
 import BigNumber from 'bignumber.js'
 
 export type ClusterNodeRenterd = {
@@ -35,11 +36,19 @@ export type ClusterNodeExplored = {
   password: string
 }
 
+export type ClusterNodeIndexd = {
+  type: 'indexd'
+  apiAddress: string
+  password: string
+  walletAddress: string
+}
+
 export type ClusterNode =
   | ClusterNodeRenterd
   | ClusterNodeHostd
   | ClusterNodeWalletd
   | ClusterNodeExplored
+  | ClusterNodeIndexd
 
 export const clusterd = {
   process: undefined as child.ChildProcessWithoutNullStreams | undefined,
@@ -62,6 +71,7 @@ export async function setupCluster({
   hostdCount = 0,
   walletdCount = 0,
   exploredCount = 0,
+  indexdCount = 0,
   siafundAddr = randomAddress,
   testContracts = 'none',
 }: {
@@ -69,6 +79,7 @@ export async function setupCluster({
   hostdCount?: number
   walletdCount?: number
   exploredCount?: number
+  indexdCount?: number
   siafundAddr?: string
   testContracts?: TestContracts
 } = {}) {
@@ -80,6 +91,7 @@ export async function setupCluster({
     `-hostd=${hostdCount}`,
     `-walletd=${walletdCount}`,
     `-explored=${exploredCount}`,
+    `-indexd=${indexdCount}`,
     `-api=:${clusterd.managementPort}`,
     `-siafund=${siafundAddr}`,
     `-testContracts=${testContracts}`,
@@ -110,7 +122,7 @@ export async function setupCluster({
         })
         const runningCount = nodes.data?.length
         const totalCount =
-          renterdCount + hostdCount + walletdCount + exploredCount
+          renterdCount + hostdCount + walletdCount + exploredCount + indexdCount
         if (nodes.data?.length === totalCount) {
           clusterd.nodes = nodes.data?.map((n) => {
             if ('apiAddress' in n) {
@@ -143,13 +155,14 @@ export async function setupCluster({
   await mine(10)
 
   console.log(
-    `started: ${renterdCount} renterd, ${hostdCount} hostd, ${walletdCount} walletd, and ${exploredCount} explored nodes`,
+    `started: ${renterdCount} renterd, ${hostdCount} hostd, ${walletdCount} walletd, ${exploredCount} explored, and ${indexdCount} indexd nodes`,
   )
 
   const explored = clusterd.nodes.filter((n) => n.type === 'explored')
   const renterds = clusterd.nodes.filter((n) => n.type === 'renterd')
   const hostds = clusterd.nodes.filter((n) => n.type === 'hostd')
   const walletds = clusterd.nodes.filter((n) => n.type === 'walletd')
+  const indexds = clusterd.nodes.filter((n) => n.type === 'indexd')
 
   const daemons = {
     exploreds: explored.map((e) => ({
@@ -180,6 +193,13 @@ export async function setupCluster({
         password: w.password,
       }),
     })),
+    indexds: indexds.map((i) => ({
+      node: i,
+      api: Admin({
+        api: `${i.apiAddress}/api`,
+        password: i.password,
+      }),
+    })),
   }
   console.log(`
     clusterd: http://localhost:${clusterd.managementPort}
@@ -187,6 +207,7 @@ export async function setupCluster({
     renterds: ${daemons.renterds.map((r) => r.node.apiAddress)}
     hostds: ${daemons.hostds.map((h) => h.node.apiAddress)}
     walletds: ${daemons.walletds.map((w) => w.node.apiAddress)}
+    indexds: ${daemons.indexds.map((i) => i.node.apiAddress)}
   `)
 
   return {
