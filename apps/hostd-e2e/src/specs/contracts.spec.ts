@@ -106,8 +106,14 @@ test('paginating contracts with known total and client side pagination', async (
 async function interceptApiContactsAndEnsure3Results(page: Page) {
   await page.route(`**/api${v2ContractsRoute}*`, async (route) => {
     console.log('Intercepted contracts API request')
-    // Fetch the original response.
-    const response = await route.fetch()
+    // hostd answers Firefox's Accept-Encoding with zstd, which route.fetch hands
+    // back still encoded, so ask only for encodings it decodes.
+    const response = await route.fetch({
+      headers: {
+        ...route.request().headers(),
+        'accept-encoding': 'gzip, deflate, br',
+      },
+    })
 
     // Parse the response body as JSON.
     const originalData: ContractsResponse = await response.json()

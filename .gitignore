@@ -46,11 +46,15 @@ Thumbs.db
 
 # Env
 .env
+.env.*
+!.env.example
 deploy.log
 
 # Next.js
 .next
 .next-*
+.open-next
+.wrangler
 **/next-env.d.ts
 
 # builds

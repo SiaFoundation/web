@@ -1,0 +1,40 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  // The explorer's Next server, built by the OpenNext adapter. The top level is the
+  // mainnet explorer, and env.zen is the Zen testnet explorer, which wrangler names
+  // explorer-zen. The network is compiled in, so scripts/cloudflare builds each one
+  // separately before shipping it.
+  "name": "explorer",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-10-15",
+  // global_fetch_strictly_public sends fetches to explored over the public internet
+  // even when it shares a zone with the Worker.
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  // Pull request previews are served on workers.dev, so it stays on after a custom
+  // domain is added.
+  "workers_dev": true,
+  "preview_urls": true,
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS",
+  },
+  // Next's cache, for unstable_cache results and pages rendered at build time. Every
+  // key includes the build ID, so mainnet, Zen and every preview version keep separate
+  // entries in the one bucket. The bucket expires objects after 30 days, which clears
+  // out old builds.
+  "r2_buckets": [
+    { "binding": "NEXT_INC_CACHE_R2_BUCKET", "bucket_name": "explorer-cache" },
+  ],
+  "env": {
+    // Wrangler does not carry bindings into an environment, so the bucket is named
+    // again. Everything else comes from the top level.
+    "zen": {
+      "r2_buckets": [
+        {
+          "binding": "NEXT_INC_CACHE_R2_BUCKET",
+          "bucket_name": "explorer-cache",
+        },
+      ],
+    },
+  },
+}

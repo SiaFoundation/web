@@ -1,0 +1,115 @@
+name: Preview
+
+# Each pull request gets a Cloudflare preview of every app it changes, at
+# https://<branch>-<worker>.sia-foundation.workers.dev, listed in one comment on the
+# pull request. A push to the branch uploads new versions under the same URLs, and
+# production keeps serving whatever main last deployed.
+#
+# Cloudflare has no way to delete a preview alias. It keeps the 1000 most recent for
+# each Worker and drops the oldest, so closing or merging the pull request only marks
+# the comment, and the links keep serving the branch's last version until then.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+# A newer push supersedes an upload still running.
+concurrency:
+  group: preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  COMMENT_MARKER: '<!-- cloudflare-previews -->'
+
+jobs:
+  preview:
+    # Secrets are not available to pull requests from forks.
+    if: github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository && !startsWith(github.head_ref, 'changeset-release/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        with:
+          # The branch as pushed, rather than its merge into the base branch.
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      # Go builds the SDK that walletd's export includes.
+      - uses: ./.github/actions/setup-all
+
+      - name: Find the apps this pull request changes
+        id: affected
+        run: |
+          set -euo pipefail
+          workers=$(bun cf affected "$BASE" "$HEAD")
+          echo "workers=$workers" >> "$GITHUB_OUTPUT"
+          echo "Workers to preview: ${workers:-none}"
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+
+      # The token needs Workers and R2 edit access on the Sia Foundation account. The
+      # account's ID is a secret rather than a field in each wrangler.jsonc, since this
+      # repository is public.
+      - name: Build and upload previews
+        if: steps.affected.outputs.workers != ''
+        run: bun cf preview "$GITHUB_HEAD_REF" "$WORKERS" > previews.md
+        env:
+          WORKERS: ${{ steps.affected.outputs.workers }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Comment with the preview links
+        if: steps.affected.outputs.workers != ''
+        run: |
+          {
+            echo "$COMMENT_MARKER"
+            echo "**Cloudflare previews** for ${{ github.event.pull_request.head.sha }}"
+            echo
+            cat previews.md
+          } > comment.md
+          id=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR/comments" --paginate \
+            --jq ".[] | select(.body | startswith(\"$COMMENT_MARKER\")) | .id" | head -n 1)
+          if [ -n "$id" ]; then
+            gh api --method PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$id" -F body=@comment.md > /dev/null
+          else
+            gh pr comment "$PR" --body-file comment.md
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+
+  mark-closed:
+    if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      # The notice goes above the comment's table, which keeps the links in it. A pull
+      # request closed a second time already has a notice, so it is replaced.
+      - name: Mark the preview comment closed
+        run: |
+          set -euo pipefail
+          id=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR/comments" --paginate \
+            --jq ".[] | select(.body | startswith(\"$COMMENT_MARKER\")) | .id" | head -n 1)
+          if [ -z "$id" ]; then
+            echo "No preview comment to edit."
+            exit 0
+          fi
+          previous=$(gh api "repos/$GITHUB_REPOSITORY/issues/comments/$id" --jq .body \
+            | sed "1{/^$COMMENT_MARKER\$/d;}" | sed '/^Preview closed: /,/^$/d')
+          {
+            echo "$COMMENT_MARKER"
+            echo "Preview closed: this pull request was $STATE. The links below still serve this branch's last version until Cloudflare recycles them."
+            echo
+            printf '%s\n' "$previous"
+          } > comment.md
+          gh api --method PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$id" -F body=@comment.md > /dev/null
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          STATE: ${{ github.event.pull_request.merged && 'merged' || 'closed without merging' }}
