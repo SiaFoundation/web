@@ -1,0 +1,63 @@
+name: Deploy
+
+# Deploys every app that changed since the last successful run of this workflow to
+# its production Worker at https://<worker>.sia-foundation.workers.dev. Running it by
+# hand deploys the apps named in the input, or all of them.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      workers:
+        description: Workers to deploy, separated by spaces, or all
+        required: true
+        default: all
+
+# Two deploys never race, and a deploy is never cancelled halfway through its apps.
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  # nx-set-shas reads this workflow's earlier runs to find the last successful one.
+  actions: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        with:
+          fetch-depth: 0
+      # Go builds the SDK that walletd's export includes.
+      - uses: ./.github/actions/setup-all
+        with:
+          base_ref: last_successful
+
+      - name: Choose the apps to deploy
+        id: workers
+        run: |
+          set -euo pipefail
+          if [ "$GITHUB_EVENT_NAME" = workflow_dispatch ]; then
+            workers="$INPUT_WORKERS"
+          else
+            workers=$(bun cf affected "$NX_BASE" "$NX_HEAD")
+          fi
+          echo "workers=$workers" >> "$GITHUB_OUTPUT"
+          echo "Workers to deploy: ${workers:-none}"
+        env:
+          INPUT_WORKERS: ${{ inputs.workers }}
+
+      # The token needs Workers and R2 edit access on the Sia Foundation account. The
+      # account's ID is a secret rather than a field in each wrangler.jsonc, since this
+      # repository is public.
+      - name: Build and deploy
+        if: steps.workers.outputs.workers != ''
+        # From the environment so a hand-typed input cannot inject a command.
+        run: bun cf deploy "$WORKERS"
+        env:
+          WORKERS: ${{ steps.workers.outputs.workers }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

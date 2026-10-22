@@ -3,7 +3,7 @@ import { Header } from './Header'
 import { Background } from './Background'
 import { cx } from 'class-variance-authority'
 import { network } from '../../config'
-import { ogImage } from './asset'
+import type { OGPictures } from './asset'
 
 export type PreviewValue = {
   label?: string
@@ -15,12 +15,13 @@ type Props = {
   title: string
   subtitle?: string
   values?: PreviewValue[]
+  pictures: OGPictures
 }
 
-export function Preview({ title, subtitle, values }: Props) {
+export function Preview({ title, subtitle, values, pictures }: Props) {
   return (
     <div tw="bg-black w-full h-full flex items-center justify-center">
-      <Background />
+      <Background pattern={pictures.pattern} />
       <div tw="flex flex-col justify-between absolute top-0 left-0 w-full h-full">
         <div tw="flex items-center justify-between w-full px-10 pt-10 pb-10">
           <Header title={title} subtitle={subtitle} />
@@ -35,12 +36,7 @@ export function Preview({ title, subtitle, values }: Props) {
             gap: '8px',
           }}
         >
-          <img
-            src={ogImage('shard-bleed.png')}
-            height={40}
-            width={40}
-            alt="logo"
-          />
+          <img src={pictures.logo} height={40} width={40} alt="logo" />
           <span tw="font-bold text-2xl relative -top-1 text-white tracking-tight">
             siascan
           </span>

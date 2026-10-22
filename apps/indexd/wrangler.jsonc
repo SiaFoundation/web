@@ -1,0 +1,16 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  // Static files only, with no Worker script. scripts/cloudflare builds and ships it.
+  "name": "indexd",
+  "compatibility_date": "2026-10-15",
+  // Pull request previews are served on workers.dev, so it stays on after a custom
+  // domain is added.
+  "workers_dev": true,
+  "preview_urls": true,
+  "assets": {
+    // The same static export the indexd daemon embeds.
+    "directory": "../../dist/apps/indexd-export/.next",
+    // An address with no page gets the export's 404 page, as the daemon serves it.
+    "not_found_handling": "404-page",
+  },
+}

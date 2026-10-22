@@ -37,6 +37,11 @@ jobs:
       - name: Test TypeScript
         shell: bash
         run: nx affected --target=test --parallel=5
+      # The Cloudflare deploy script belongs to no Nx project, so nx affected never runs
+      # its tests.
+      - name: Test the Cloudflare deploy script
+        shell: bash
+        run: bun test scripts/cloudflare
       - name: Build
         shell: bash
         run: nx affected --target=build --configuration=production --parallel=5

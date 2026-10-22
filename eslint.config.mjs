@@ -7,7 +7,15 @@ export default [
   ...nx.configs['flat/react'],
   ...nx.configs['flat/react-typescript'],
   {
-    ignores: ['node_modules', '**/dist', '**/.next', '**/.next-*', '**/output'],
+    ignores: [
+      'node_modules',
+      '**/dist',
+      '**/.next',
+      '**/.next-*',
+      '**/.open-next',
+      '**/.wrangler',
+      '**/output',
+    ],
   },
   {
     files: ['**/*.json'],

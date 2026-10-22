@@ -4,7 +4,7 @@ import { cx } from 'class-variance-authority'
 import { Background } from '../OGImage/Background'
 import { Header } from './Header'
 import { network } from '../../config'
-import { ogImage } from '../OGImage/asset'
+import type { OGPictures } from '../OGImage/asset'
 import { PreviewValue } from '../OGImage/Preview'
 import { generatePublicKeyAvatarGrid } from '@siafoundation/design-system'
 
@@ -17,6 +17,7 @@ type Props = {
   status?: string
   statusColor?: string
   values?: PreviewValue[]
+  pictures: OGPictures
 }
 
 export function Preview({
@@ -28,12 +29,13 @@ export function Preview({
   status,
   statusColor = 'amber',
   values,
+  pictures,
 }: Props) {
   const avatarGrid = avatar ? generatePublicKeyAvatarGrid(id) : undefined
 
   return (
     <div tw="bg-black w-full h-full flex items-center justify-center">
-      <Background />
+      <Background pattern={pictures.pattern} />
       <div tw="flex flex-col absolute top-0 left-0 w-full h-full">
         <div tw="flex items-center justify-between w-full px-10 pt-10">
           <Header
@@ -62,12 +64,7 @@ export function Preview({
             gap: '8px',
           }}
         >
-          <img
-            src={ogImage('shard-bleed.png')}
-            width={24}
-            height={24}
-            alt="siascan"
-          />
+          <img src={pictures.logo} width={24} height={24} alt="siascan" />
           <span tw="font-bold text-2xl relative -top-[2px] text-white tracking-tight">
             siascan
           </span>

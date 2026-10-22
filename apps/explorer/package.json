@@ -5,6 +5,7 @@
   "description": "The `explorer` user interface, a Sia blockchain explorer that powers siascan.com.",
   "license": "MIT",
   "dependencies": {
+    "@opennextjs/cloudflare": "1.20.12",
     "@siafoundation/design-system": "12.1.0",
     "@siafoundation/explored-js": "0.10.1",
     "@siafoundation/explored-react": "0.9.1",
