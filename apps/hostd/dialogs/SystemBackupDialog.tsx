@@ -10,7 +10,7 @@ import {
   triggerSuccessToast,
 } from '@siafoundation/design-system'
 import { useSystemBackup } from '@siafoundation/hostd-react'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import useLocalStorageState from 'use-local-storage-state'
 
@@ -78,6 +78,15 @@ export function SystemBackupDialog({ trigger, open, onOpenChange }: Props) {
   })
 
   const fields = useMemo(() => getFields(), [])
+
+  // The dialog stays mounted, so the default path would otherwise keep the
+  // timestamp from when the page loaded. Generate a fresh one on every open.
+  useEffect(() => {
+    if (open) {
+      form.reset(getDefaultValues(savedDirectory))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open])
 
   const onValid = useCallback(
     async (values: Values) => {
