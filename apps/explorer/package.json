@@ -1,6 +1,6 @@
 {
   "name": "explorer",
-  "version": "0.43.1",
+  "version": "0.43.2",
   "private": true,
   "description": "The `explorer` user interface, a Sia blockchain explorer that powers siascan.com.",
   "license": "MIT",
