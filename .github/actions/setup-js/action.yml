@@ -6,7 +6,7 @@ inputs:
   bun_version:
     description: Bun version
     required: false
-    default: 1.2.18
+    default: 1.4.4
   base_ref:
     description: Determines which base SHA to use ('base' for a specific SHA/branch, 'last_successful' for the last successful workflow)
     required: false

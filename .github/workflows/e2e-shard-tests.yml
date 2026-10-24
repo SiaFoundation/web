@@ -29,7 +29,7 @@ jobs:
       - name: Setup environment
         uses: ./.github/actions/setup-all
         with:
-          bun_version: 1.2.18
+          bun_version: 1.4.4
           go_version: 1.24.3
       - name: Only run if ${{ inputs.project }} is affected
         id: check

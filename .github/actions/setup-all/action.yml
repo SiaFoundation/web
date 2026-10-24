@@ -6,7 +6,7 @@ inputs:
   bun_version:
     description: Bun version
     required: false
-    default: 1.2.18
+    default: 1.4.4
   go_version:
     description: Go version
     required: false

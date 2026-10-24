@@ -28,7 +28,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup-all
         with:
-          bun_version: 1.2.18
+          bun_version: 1.4.4
           go_version: 1.24.3
       - name: Build for publishing
         shell: bash
@@ -68,7 +68,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup-all
         with:
-          bun_version: 1.2.18
+          bun_version: 1.4.4
           go_version: 1.24.3
       - uses: docker/setup-buildx-action@885d1462b80bc1c1c7f0b00334ad271f09369c55 # v2.10.0
       - uses: docker/login-action@465a07811f14bebb1938fbed4728c6a1ff8901fc # v2.2.0
