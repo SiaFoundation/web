@@ -1,5 +1,11 @@
 # explorer
 
+## 0.43.2
+
+### Patch Changes
+
+- 4fa9612: Updated nodejs to v24.22.1.
+
 ## 0.43.1
 
 ### Patch Changes
