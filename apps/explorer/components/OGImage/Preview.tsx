@@ -37,8 +37,8 @@ export function Preview({ title, subtitle, values }: Props) {
         >
           <img
             src={ogImage('shard-bleed.png')}
-            height="40px"
-            width="40px"
+            height={40}
+            width={40}
             alt="logo"
           />
           <span tw="font-bold text-2xl relative -top-1 text-white tracking-tight">
