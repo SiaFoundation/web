@@ -64,8 +64,8 @@ export function Preview({
         >
           <img
             src={ogImage('shard-bleed.png')}
-            width="24"
-            height="24"
+            width={24}
+            height={24}
             alt="siascan"
           />
           <span tw="font-bold text-2xl relative -top-[2px] text-white tracking-tight">
