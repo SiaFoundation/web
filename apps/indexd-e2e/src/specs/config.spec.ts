@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test'
 import {
+  expectSelectInputByName,
   expectSwitchByLabel,
   expectTextInputByName,
   fillSelectInputByName,
@@ -19,7 +20,8 @@ test.afterEach(async () => {
 
 test('save contract and pricing settings', async ({ page }) => {
   await navigateToConfig(page)
-  await fillSelectInputByName(page, 'pinnedCurrency', 'usd')
+  // A fresh indexd has no pinned currency, saving does not require one.
+  await expectSelectInputByName(page, 'pinnedCurrency', '')
   await fillTextInputByName(page, 'wantedContracts', '20')
   await fillTextInputByName(page, 'periodWeeks', '6')
   await fillTextInputByName(page, 'renewWindowWeeks', '2')
@@ -63,6 +65,23 @@ test('pin a price to a fiat currency', async ({ page }) => {
   await page.reload()
   await expectSwitchByLabel(page, 'shouldPinMaxStoragePrice', true)
   await expectTextInputByName(page, 'maxStoragePriceTBMonthPinned', '$3')
+})
+
+test('turn off price pinning by clearing the currency', async ({ page }) => {
+  await navigateToConfig(page)
+  await fillSelectInputByName(page, 'pinnedCurrency', 'usd')
+  await page.getByRole('button', { name: 'Save changes' }).click()
+  await expect(page.getByText('Configuration has been saved')).toBeVisible()
+  await page.reload()
+  await expectSelectInputByName(page, 'pinnedCurrency', 'usd')
+
+  await fillSelectInputByName(page, 'pinnedCurrency', '')
+  await page.getByRole('button', { name: 'Save changes' }).click()
+  await expect(page.getByText('Configuration has been saved')).toBeVisible()
+
+  // The currency stays cleared across a reload.
+  await page.reload()
+  await expectSelectInputByName(page, 'pinnedCurrency', '')
 })
 
 test('reject an invalid protocol version', async ({ page }) => {

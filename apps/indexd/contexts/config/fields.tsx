@@ -326,9 +326,7 @@ export function getFields(): ConfigFields<InputValues, Categories> {
         label: string
         value: string
       }[],
-      validation: {
-        required: 'required',
-      },
+      validation: {},
     },
     minProtocolVersion: {
       category: 'other',
