@@ -182,6 +182,7 @@ export function SidePanelAccount() {
               </SidePanelSection>
               <SidePanelSection heading="Info">
                 <div className="flex flex-col gap-2">
+                  <InfoRow label="App" value={account.name} />
                   <InfoRow
                     label="Description"
                     value={account.description}

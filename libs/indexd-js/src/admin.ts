@@ -7,13 +7,7 @@ import {
   AdminAccountsPayload,
   AdminAccountsResponse,
   adminAccountsRoute,
-  AdminAccountAddParams,
-  AdminAccountAddPayload,
-  AdminAccountAddResponse,
   adminAccountRoute,
-  AdminAccountRotateKeyParams,
-  AdminAccountRotateKeyPayload,
-  AdminAccountRotateKeyResponse,
   AdminAccountUpdateParams,
   AdminAccountUpdatePayload,
   AdminAccountUpdateResponse,
@@ -234,16 +228,6 @@ export function Admin({
       AdminAccountsPayload,
       AdminAccountsResponse
     >(axios, 'get', adminAccountsRoute),
-    accountAdd: buildRequestHandler<
-      AdminAccountAddParams,
-      AdminAccountAddPayload,
-      AdminAccountAddResponse
-    >(axios, 'post', adminAccountRoute),
-    accountRotateKey: buildRequestHandler<
-      AdminAccountRotateKeyParams,
-      AdminAccountRotateKeyPayload,
-      AdminAccountRotateKeyResponse
-    >(axios, 'put', adminAccountRoute),
     accountUpdate: buildRequestHandler<
       AdminAccountUpdateParams,
       AdminAccountUpdatePayload,

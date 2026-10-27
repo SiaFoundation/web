@@ -25,7 +25,36 @@ test('list a registered account', async ({ page }) => {
   await navigateToAccounts(page)
   const row = getRow(page, accountKey)
   await expect(row).toBeVisible()
+  await expect(
+    row.getByRole('cell', { name: 'E2E App', exact: true }),
+  ).toBeVisible()
+  await expect(
+    row.getByRole('cell', { name: 'E2E app description' }),
+  ).toBeVisible()
   await expect(row.getByRole('cell', { name: '0 B' })).toBeVisible()
+})
+
+test('view the app details of an account', async ({ page }) => {
+  const { accountKey } = await registerAccount({
+    indexdNode: getIndexdNode(),
+    app: {
+      name: 'Photos',
+      description: 'Photo backup app',
+      logoURL: 'https://photos.example.com/logo.png',
+      serviceURL: 'https://photos.example.com',
+    },
+  })
+  await navigateToAccounts(page)
+  await openRow(page, accountKey)
+  const panel = getSidePanel(page)
+  for (const value of [
+    'Photos',
+    'Photo backup app',
+    'https://photos.example.com/logo.png',
+    'https://photos.example.com',
+  ]) {
+    await expect(panel.getByText(value, { exact: true })).toBeVisible()
+  }
 })
 
 test('view the accounts of a connect key', async ({ page }) => {
