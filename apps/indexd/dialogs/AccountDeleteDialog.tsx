@@ -17,6 +17,8 @@ import { useForm } from 'react-hook-form'
 import { useDialog } from '../contexts/dialog'
 import { Warning16 } from '@siafoundation/react-icons'
 import { useAccountsParams } from '../components/Data/Accounts/useAccountsParams'
+import { useMutate } from '@siafoundation/react-core'
+import { adminAccountsRoute } from '@siafoundation/indexd-types'
 
 const defaultValues = {
   name: '',
@@ -61,6 +63,7 @@ export function AccountDeleteDialog({
     defaultValues,
   })
 
+  const mutate = useMutate()
   const onSubmit = useCallback(async () => {
     if (!id) {
       return
@@ -77,13 +80,14 @@ export function AccountDeleteDialog({
       })
     } else {
       triggerSuccessToast({ title: 'Account permanently deleted' })
+      mutate((key) => key.startsWith(adminAccountsRoute))
       form.reset()
       closeDialog()
       if (panelId === id) {
         setPanelId(undefined)
       }
     }
-  }, [form, id, accountDelete, closeDialog, panelId, setPanelId])
+  }, [form, id, accountDelete, closeDialog, panelId, setPanelId, mutate])
 
   const fields = useMemo(() => getFields(), [])
 

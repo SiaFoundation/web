@@ -118,8 +118,8 @@ test('delete an account from its side panel', async ({ page }) => {
   await expect(dialog).toBeHidden()
   await expect(page.getByRole('button', { name: 'Close drawer' })).toBeHidden()
 
-  // The account is gone after a reload.
-  await page.reload()
+  // The list updates without a reload.
+  await expect(getRow(page, accountKey)).toBeHidden()
   await expect(page.getByText('There are no accounts yet.')).toBeVisible()
 })
 
