@@ -172,18 +172,11 @@ export function Dialogs() {
       <IndexdTransactionDetailsDialog />
       <SyncerConnectPeerDialog
         open={dialog === 'connectPeer'}
-        connect={async (address: string) => {
-          try {
-            await connect.post({
-              payload: {
-                addr: address,
-              },
-            })
-            return { error: undefined, status: 200 }
-          } catch (error) {
-            return { error: (error as Error).message, status: 500 }
-          }
-        }}
+        connect={(address: string) =>
+          connect.post({
+            payload: address,
+          })
+        }
         onOpenChange={onOpenChange}
       />
       <DebugDialog open={dialog === 'bugReport'} onOpenChange={onOpenChange} />

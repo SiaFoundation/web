@@ -1,11 +1,11 @@
 import { Page, expect } from '@playwright/test'
-import { ClusterNodeHostd, clusterd } from '@siafoundation/clusterd'
+import { clusterd } from '@siafoundation/clusterd'
 import { clearToasts, step } from '@siafoundation/e2e'
 
 // Cluster node IDs are the first 8 bytes of the node's public key.
 export function getHostdKeyPrefixes() {
   return clusterd.nodes
-    .filter((n): n is ClusterNodeHostd & { id: string } => n.type === 'hostd')
+    .filter((n) => n.type === 'hostd')
     .map((n) => `ed25519:${n.id}`)
 }
 

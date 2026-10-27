@@ -46,9 +46,7 @@ export type AdminStateResponse = {
 
 export const adminSyncerConnectRoute = '/syncer/connect'
 export type AdminSyncerConnectParams = void
-export type AdminSyncerConnectPayload = {
-  addr: Address
-}
+export type AdminSyncerConnectPayload = string
 export type AdminSyncerConnectResponse = void
 
 // txpool
