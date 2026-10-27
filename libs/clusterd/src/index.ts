@@ -11,35 +11,45 @@ import { Admin } from '@siafoundation/indexd-js'
 import BigNumber from 'bignumber.js'
 
 export type ClusterNodeRenterd = {
+  id: string
   type: 'renterd'
   apiAddress: string
   password: string
+  syncerAddress: string
   walletAddress: string
 }
 
 export type ClusterNodeHostd = {
+  id: string
   type: 'hostd'
   apiAddress: string
   password: string
+  syncerAddress: string
   walletAddress: string
 }
 
 export type ClusterNodeWalletd = {
+  id: string
   type: 'walletd'
   apiAddress: string
   password: string
+  syncerAddress: string
 }
 
 export type ClusterNodeExplored = {
+  id: string
   type: 'explored'
   apiAddress: string
   password: string
+  syncerAddress: string
 }
 
 export type ClusterNodeIndexd = {
+  id: string
   type: 'indexd'
   apiAddress: string
   password: string
+  syncerAddress: string
   walletAddress: string
 }
 
