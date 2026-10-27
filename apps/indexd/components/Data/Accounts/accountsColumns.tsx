@@ -28,6 +28,16 @@ export const accountsColumns: ColumnDef<AccountData>[] = [
     meta: { className: 'justify-start', ...hashColumnWidth },
   },
   {
+    id: 'name',
+    header: ({ table, column }) => (
+      <TableHeader table={table} column={column} className="justify-start">
+        App
+      </TableHeader>
+    ),
+    cell: ({ row }) => <Text>{row.original.name}</Text>,
+    meta: { className: 'justify-start', ...hashColumnWidth },
+  },
+  {
     id: 'description',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column} className="justify-start">

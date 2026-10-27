@@ -15,12 +15,6 @@ import {
   AdminStateResponse,
   adminStateRoute,
   adminAccountRoute,
-  AdminAccountAddParams,
-  AdminAccountAddPayload,
-  AdminAccountAddResponse,
-  AdminAccountRotateKeyResponse,
-  AdminAccountRotateKeyPayload,
-  AdminAccountRotateKeyParams,
   AdminAccountUpdateParams,
   AdminAccountUpdatePayload,
   AdminAccountUpdateResponse,
@@ -254,32 +248,6 @@ export function useAdminAccounts(
   return useGetSwr({
     ...args,
     route: adminAccountsRoute,
-  })
-}
-
-export function useAdminAccountAdd(
-  args?: HookArgsCallback<
-    AdminAccountAddParams,
-    AdminAccountAddPayload,
-    AdminAccountAddResponse
-  >,
-) {
-  return usePostFunc({
-    ...args,
-    route: adminAccountRoute,
-  })
-}
-
-export function useAdminAccountRotateKey(
-  args?: HookArgsCallback<
-    AdminAccountRotateKeyParams,
-    AdminAccountRotateKeyPayload,
-    AdminAccountRotateKeyResponse
-  >,
-) {
-  return usePutFunc({
-    ...args,
-    route: adminAccountRoute,
   })
 }
 

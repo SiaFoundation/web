@@ -120,12 +120,23 @@ export type Alert = {
   timestamp: string
 }
 
-export type Account = {
-  accountKey: string
+export type AppMeta = {
+  id: Hash256
+  name: string
   description: string
-  pinnedData: number
-  maxPinnedData: number
-  lastUsed: string
   logoURL: string
   serviceURL: string
+}
+
+export type Account = {
+  accountKey: PublicKey
+  connectKey: string
+  maxPinnedData: number
+  quotaMaxPinnedData: number
+  connectKeyPinnedData: number
+  pinnedData: number
+  pinnedSize: number
+  ready: boolean
+  app: AppMeta
+  lastUsed: string
 }

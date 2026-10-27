@@ -6,12 +6,13 @@ export function transformAccount(account: Account): AccountData {
   const datum: AccountData = {
     id: account.accountKey,
     publicKey: account.accountKey,
-    description: account.description,
+    name: account.app.name,
+    description: account.app.description,
     maxPinnedData: account.maxPinnedData,
     pinnedData: account.pinnedData,
     lastUsed: account.lastUsed,
-    logoURL: account.logoURL,
-    serviceURL: account.serviceURL,
+    logoURL: account.app.logoURL,
+    serviceURL: account.app.serviceURL,
     displayFields: {
       maxPinnedData: humanBytes(account.maxPinnedData),
       pinnedData: humanBytes(account.pinnedData),

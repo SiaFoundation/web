@@ -18,6 +18,7 @@ export function getFilterLabel(filter: AccountFilter): string {
 export type AccountData = {
   id: string
   publicKey: string
+  name: string
   description: string
   maxPinnedData: number
   pinnedData: number

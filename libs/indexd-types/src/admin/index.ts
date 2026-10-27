@@ -89,25 +89,11 @@ export type AdminAccountParams = {
 export type AdminAccountPayload = void
 export type AdminAccountResponse = Account
 
-export type AdminAccountAddParams = {
-  accountkey: PublicKey
-}
-export type AdminAccountAddPayload = void
-export type AdminAccountAddResponse = void
-
-export type AdminAccountRotateKeyParams = {
-  accountkey: PublicKey
-}
-export type AdminAccountRotateKeyPayload = {
-  newAccountKey: PublicKey
-}
-export type AdminAccountRotateKeyResponse = void
-
 export type AdminAccountUpdateParams = {
   accountkey: PublicKey
 }
 export type AdminAccountUpdatePayload = {
-  maxPinnedData: number
+  maxPinnedData?: number
 }
 export type AdminAccountUpdateResponse = void
 

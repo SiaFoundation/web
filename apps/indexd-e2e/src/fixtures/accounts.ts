@@ -2,13 +2,7 @@ import { randomBytes } from 'crypto'
 import { Admin } from '@siafoundation/indexd-js'
 import { ClusterNodeIndexd } from '@siafoundation/clusterd'
 import { step } from '@siafoundation/e2e'
-
-export type AppMeta = {
-  name: string
-  description: string
-  logoURL: string
-  serviceURL: string
-}
+import { AppMeta } from '@siafoundation/indexd-types'
 
 // Accounts cannot be created from the UI, they are registered by apps. This
 // registers an app account through the admin API the same way an app would,
@@ -29,7 +23,7 @@ export const registerAccount = step(
     indexdNode: ClusterNodeIndexd
     quota?: string
     connectKeyDescription?: string
-    app?: AppMeta
+    app?: Omit<AppMeta, 'id'>
   }) => {
     const admin = Admin({
       api: `${indexdNode.apiAddress}/api`,
