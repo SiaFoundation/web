@@ -1,5 +1,13 @@
 # explorer
 
+## 0.43.2
+
+### Patch Changes
+
+- bb05efa: The explorer can now run on Cloudflare Workers. Link preview images read their fonts and pictures from the Worker's static files there, and tracing loads only when OTEL_SERVICE_NAME is set.
+- 9869e69: The siascan logo now shows in link preview images.
+- 4fa9612: Updated nodejs to v24.22.1.
+
 ## 0.43.1
 
 ### Patch Changes
