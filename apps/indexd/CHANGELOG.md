@@ -1,5 +1,21 @@
 # indexd
 
+## 0.19.0
+
+### Minor Changes
+
+- e0c2415: Fixed account app metadata not being shown and added the app name to the accounts table and side panel.
+- 0c66ec9: Fixed deleted accounts remaining in the accounts list until the page was refreshed.
+- c3c13df: Fixed the configuration not saving when no pinned currency is selected, which also prevented turning price pinning off.
+- 795b29d: Fixed connecting to a peer, which always failed while reporting success.
+
+### Patch Changes
+
+- Updated dependencies [e0c2415]
+- Updated dependencies [795b29d]
+  - @siafoundation/indexd-types@0.17.0
+  - @siafoundation/indexd-react@0.11.0
+
 ## 0.18.1
 
 ### Patch Changes

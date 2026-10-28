@@ -1,5 +1,12 @@
 # @siafoundation/indexd-types
 
+## 0.17.0
+
+### Minor Changes
+
+- e0c2415: Aligned the account API with indexd. App metadata is now nested under app, connectKey, quotaMaxPinnedData, connectKeyPinnedData, pinnedSize, and ready were added, and accountAdd and accountRotateKey were removed as indexd has no such routes.
+- 795b29d: Fixed the syncer connect payload, which is the peer address string rather than an object.
+
 ## 0.16.0
 
 ### Minor Changes
