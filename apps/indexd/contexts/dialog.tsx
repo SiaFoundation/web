@@ -18,6 +18,7 @@ import { IndexdSendSiacoinDialog } from '../dialogs/IndexdSendSiacoinDialog'
 import { IndexdTransactionDetailsDialog } from '../dialogs/IndexdTransactionDetailsDialog'
 import { DebugDialog } from '../dialogs/DebugDialog'
 import { AccountDeleteDialog } from '../dialogs/AccountDeleteDialog'
+import { AccountSlabsPruneDialog } from '../dialogs/AccountSlabsPruneDialog'
 import { ConnectKeyDeleteDialog } from '../dialogs/ConnectKeyDeleteDialog'
 import { ConnectKeyCreateDialog } from '../dialogs/ConnectKeyCreateDialog'
 import { HostBlocklistAddDialog } from '../dialogs/HostBlocklistAddDialog'
@@ -39,6 +40,7 @@ export type DialogType =
   | 'bugReport'
   | 'confirm'
   | 'accountDelete'
+  | 'accountSlabsPrune'
   | 'accountFilterConnectKey'
   | 'connectKeyDelete'
   | 'connectKeyCreate'
@@ -190,6 +192,11 @@ export function Dialogs() {
       <AccountDeleteDialog
         id={id}
         open={dialog === 'accountDelete'}
+        onOpenChange={onOpenChange}
+      />
+      <AccountSlabsPruneDialog
+        id={id}
+        open={dialog === 'accountSlabsPrune'}
         onOpenChange={onOpenChange}
       />
       <ConnectKeyDeleteDialog
