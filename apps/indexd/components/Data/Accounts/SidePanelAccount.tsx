@@ -17,7 +17,6 @@ import { SidePanelSection } from '../SidePanelSection'
 import { SidePanelHeadingCopyable } from '../SidePanelHeadingCopyable'
 import {
   useAdminAccount,
-  useAdminAccountSlabsPrune,
   useAdminAccountUpdate,
 } from '@siafoundation/indexd-react'
 import { useMutate } from '@siafoundation/react-core'
@@ -47,8 +46,7 @@ function getFields(): ConfigFields<Values, never> {
 
 export function SidePanelAccount() {
   const { panelId, setPanelId } = useAccountsParams()
-  const { openDialog, openConfirmDialog } = useDialog()
-  const pruneSlabs = useAdminAccountSlabsPrune()
+  const { openDialog } = useDialog()
   const accountUpdate = useAdminAccountUpdate()
   const mutate = useMutate()
   const account = useAdminAccount({
@@ -132,27 +130,7 @@ export function SidePanelAccount() {
           actionsLeft={
             <div className="flex items-center gap-2">
               <Button
-                onClick={() =>
-                  openConfirmDialog({
-                    title: 'Prune orphaned slabs?',
-                    action: 'Prune',
-                    variant: 'accent',
-                    body: null,
-                    onConfirm: async () => {
-                      const response = await pruneSlabs.post({
-                        params: { accountkey: account.publicKey },
-                      })
-                      if (response.error) {
-                        triggerErrorToast({
-                          title: 'Failed to prune slabs',
-                          body: response.error,
-                        })
-                      } else {
-                        triggerSuccessToast({ title: 'Slabs pruned' })
-                      }
-                    },
-                  })
-                }
+                onClick={() => openDialog('accountSlabsPrune', account.id)}
               >
                 Prune slabs
               </Button>

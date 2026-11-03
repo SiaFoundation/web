@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, Request } from '@playwright/test'
 import { fillTextInputByName } from '@siafoundation/e2e'
 import { afterTest, beforeTest, getIndexdNode } from '../fixtures/beforeTest'
 import { navigateToAccounts, navigateToKeys } from '../fixtures/navigate'
@@ -97,6 +97,102 @@ test('edit the max pinned data of an account', async ({ page }) => {
   await expect(
     getRow(page, accountKey).getByRole('cell', { name: '10.00 GB' }),
   ).toBeVisible()
+})
+
+test('prune slabs with the default cutoff', async ({ page }) => {
+  const { accountKey } = await registerAccount({ indexdNode: getIndexdNode() })
+  await navigateToAccounts(page)
+  await openRow(page, accountKey)
+  const request = page.waitForRequest(
+    (r) => r.url().includes('/slabs/prune') && r.method() === 'POST',
+  )
+  await page.getByRole('button', { name: 'Prune slabs' }).click()
+  const dialog = page.getByRole('dialog')
+  await dialog.getByRole('button', { name: 'Prune slabs' }).click()
+  await expect(page.getByText('Slabs pruned')).toBeVisible()
+  await expect(dialog).toBeHidden()
+
+  // Without an age, indexd picks the cutoff.
+  const url = new URL((await request).url())
+  expect(url.searchParams.has('before')).toBe(false)
+})
+
+function isRefetch(r: Request, path: string, after: boolean) {
+  return (
+    after && r.method() === 'GET' && decodeURIComponent(r.url()).includes(path)
+  )
+}
+
+test('refresh the account after pruning slabs', async ({ page }) => {
+  const { accountKey } = await registerAccount({ indexdNode: getIndexdNode() })
+  await navigateToAccounts(page)
+  await openRow(page, accountKey)
+
+  // The test account has no orphaned slabs, so its pinned data does not
+  // change. Check that the panel and the list refetch after the prune.
+  let pruned = false
+  page.on('response', (r) => {
+    if (r.url().includes('/slabs/prune')) {
+      pruned = true
+    }
+  })
+  const accountRefetch = page.waitForRequest((r) =>
+    isRefetch(r, `/api/account/${accountKey}`, pruned),
+  )
+  const accountsRefetch = page.waitForRequest((r) =>
+    isRefetch(r, '/api/accounts', pruned),
+  )
+
+  await page.getByRole('button', { name: 'Prune slabs' }).click()
+  await page
+    .getByRole('dialog')
+    .getByRole('button', { name: 'Prune slabs' })
+    .click()
+  await expect(page.getByText('Slabs pruned')).toBeVisible()
+  await accountRefetch
+  await accountsRefetch
+})
+
+test('prune slabs pinned before a cutoff', async ({ page }) => {
+  const { accountKey } = await registerAccount({ indexdNode: getIndexdNode() })
+  await navigateToAccounts(page)
+  await openRow(page, accountKey)
+  const request = page.waitForRequest(
+    (r) => r.url().includes('/slabs/prune') && r.method() === 'POST',
+  )
+  await page.getByRole('button', { name: 'Prune slabs' }).click()
+  const dialog = page.getByRole('dialog')
+  await fillTextInputByName(page, 'minAgeHours', '24')
+  const submittedAt = Date.now()
+  await dialog.getByRole('button', { name: 'Prune slabs' }).click()
+  await expect(page.getByText('Slabs pruned')).toBeVisible()
+
+  // The cutoff is 24 hours before the prune was submitted.
+  const url = new URL((await request).url())
+  const before = Date.parse(url.searchParams.get('before') ?? '')
+  const expected = submittedAt - 24 * 60 * 60 * 1000
+  expect(Math.abs(before - expected)).toBeLessThan(60_000)
+})
+
+test('reject a negative prune cutoff', async ({ page }) => {
+  const { accountKey } = await registerAccount({ indexdNode: getIndexdNode() })
+  await navigateToAccounts(page)
+  await openRow(page, accountKey)
+  let pruned = false
+  page.on('request', (r) => {
+    if (r.url().includes('/slabs/prune')) {
+      pruned = true
+    }
+  })
+  await page.getByRole('button', { name: 'Prune slabs' }).click()
+  const dialog = page.getByRole('dialog')
+  await fillTextInputByName(page, 'minAgeHours', '-24')
+  await dialog.getByRole('button', { name: 'Prune slabs' }).click()
+  await expect(
+    dialog.getByText('must be between 0 and 1,000,000'),
+  ).toBeVisible()
+  await expect(dialog).toBeVisible()
+  expect(pruned).toBe(false)
 })
 
 test('delete an account from its side panel', async ({ page }) => {
