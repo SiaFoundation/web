@@ -104,6 +104,9 @@ export type AdminAccountDeleteResponse = void
 export const adminAccountSlabsPruneRoute = '/account/:accountkey/slabs/prune'
 export type AdminAccountSlabsPruneParams = {
   accountkey: PublicKey
+  // RFC 3339 timestamp, only slabs pinned before it are pruned. Defaults to
+  // 72 hours ago.
+  before?: string
 }
 export type AdminAccountSlabsPrunePayload = void
 export type AdminAccountSlabsPruneResponse = void
