@@ -9,6 +9,7 @@ import { useAppSettings } from '@siafoundation/react-core'
 import { AdminHostsParams, AdminHostsSortBy } from '@siafoundation/indexd-types'
 import { useHostsParams } from './useHostsParams'
 import { columns } from './hostsColumns'
+import { defaultDatasetRefreshInterval } from '../../../config/swr'
 
 export function useHosts() {
   const { columnFilters, columnSorts, offset, limit } = useHostsParams()
@@ -52,6 +53,12 @@ export function useHosts() {
   }, [columnFilters, columnSorts, offset, limit])
   const hosts = useAdminHosts({
     params,
+    config: {
+      swr: {
+        // Background scans update hosts without notifying the app.
+        refreshInterval: defaultDatasetRefreshInterval,
+      },
+    },
   })
   const exchangeRate = useActiveDaemonExplorerExchangeRate()
   const { settings } = useAppSettings()

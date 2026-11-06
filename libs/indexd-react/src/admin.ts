@@ -6,6 +6,7 @@ import {
   usePostFunc,
   HookArgsSwr,
   HookArgsCallback,
+  throttle,
 } from '@siafoundation/react-core'
 import {
   AdminAccountsParams,
@@ -54,6 +55,10 @@ import {
   AdminHostsBlocklistDeleteParams,
   AdminHostsBlocklistDeletePayload,
   AdminHostsBlocklistDeleteResponse,
+  adminHostsScanRoute,
+  AdminHostsScanParams,
+  AdminHostsScanPayload,
+  AdminHostsScanResponse,
   adminSettingsContractsRoute,
   AdminSettingsContractsParams,
   AdminSettingsContractsResponse,
@@ -353,10 +358,34 @@ export function useAdminHostScan(
     AdminHostScanResponse
   >,
 ) {
-  return usePostFunc({
-    ...args,
-    route: adminHostScanRoute,
-  })
+  return usePostFunc(
+    {
+      ...args,
+      route: adminHostScanRoute,
+    },
+    async (mutate, { params: { hostkey } }, response) => {
+      // The scan returns the updated host, so patch it into the cache without
+      // revalidating, then refresh the lists once per burst of scans in case
+      // the host no longer matches a list's filters.
+      const host = response.data
+      mutate<AdminHostResponse>(
+        (key) => key === adminHostRoute.replace(':hostkey', hostkey),
+        () => host,
+        false,
+      )
+      mutate<AdminHostsResponse>(
+        (key) => key.startsWith(adminHostsRoute),
+        (data) =>
+          Array.isArray(data)
+            ? data.map((h) => (h?.publicKey === host.publicKey ? host : h))
+            : data,
+        false,
+      )
+      throttle(adminHostsRoute, 5_000, () => {
+        mutate((key) => key.startsWith(adminHostsRoute))
+      })
+    },
+  )
 }
 
 export function useAdminHostResetLostSectors(
@@ -413,6 +442,19 @@ export function useAdminHostsBlocklistDelete(
   return useDeleteFunc({
     ...args,
     route: adminHostsBlocklistDeleteRoute,
+  })
+}
+
+export function useAdminHostsScan(
+  args?: HookArgsCallback<
+    AdminHostsScanParams,
+    AdminHostsScanPayload,
+    AdminHostsScanResponse
+  >,
+) {
+  return usePostFunc({
+    ...args,
+    route: adminHostsScanRoute,
   })
 }
 
