@@ -7,6 +7,9 @@ import { UseMutateReturn, useMutate } from './mutate'
 import { setupServer } from 'msw/node'
 import { HttpResponse, http } from 'msw'
 import { usePostFunc, usePostSwr } from './usePost'
+import { usePutFunc } from './usePut'
+import { usePatchFunc } from './usePatch'
+import { useDeleteFunc } from './useDelete'
 import { RequestConfig, Response } from './request'
 import { delay } from './utils'
 import { WorkflowPayload, useWorkflows } from './workflows'
@@ -212,6 +215,81 @@ describe('react-core', () => {
       expect(el.getByText('response2')).toBeTruthy()
     })
   })
+
+  type FailingFunc = (args: {
+    config?: RequestConfig<void, string> | undefined
+  }) => Promise<Response<string>>
+
+  // The cleanup is duplicated in each method's hook, so check every one.
+  test.each<{
+    method: 'post' | 'put' | 'patch' | 'delete'
+    useFunc: (route: string) => FailingFunc
+  }>([
+    {
+      method: 'post',
+      useFunc: (route) => usePostFunc<void, void, string>({ route }).post,
+    },
+    {
+      method: 'put',
+      useFunc: (route) => usePutFunc<void, void, string>({ route }).put,
+    },
+    {
+      method: 'patch',
+      useFunc: (route) => usePatchFunc<void, void, string>({ route }).patch,
+    },
+    {
+      method: 'delete',
+      useFunc: (route) => useDeleteFunc<void, string>({ route }).delete,
+    },
+  ])(
+    '$method func removes its workflow when the request fails',
+    async ({ method, useFunc }) => {
+      server.use(
+        http[method]('/api/failroute', async () => {
+          await delay(50)
+          return HttpResponse.json('request failed', { status: 500 })
+        }),
+      )
+
+      let func: FailingFunc = () => {
+        throw new Error('not implemented')
+      }
+      let workflows: { workflows: WorkflowPayload[] } = { workflows: [] }
+
+      function Component() {
+        workflows = useWorkflows()
+        func = useFunc('/failroute')
+        return null
+      }
+
+      render(
+        <CoreProvider>
+          <AppSettingsProvider>
+            <Component />
+          </AppSettingsProvider>
+        </CoreProvider>,
+      )
+
+      const isPending = () =>
+        workflows.workflows.some(
+          (w?: { route?: string }) => w?.route === '/failroute',
+        )
+
+      let promise: Promise<Response<string>> | undefined
+      act(() => {
+        promise = func({})
+      })
+      expect(isPending()).toBe(true)
+
+      let response: Response<string> | undefined
+      await act(async () => {
+        response = await promise
+      })
+      expect(isPending()).toBe(false)
+      expect(response?.status).toBe(500)
+      expect(response?.error).toBe('request failed')
+    },
+  )
 })
 
 let networkCallCount = 0

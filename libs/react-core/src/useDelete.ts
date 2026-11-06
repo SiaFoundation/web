@@ -36,6 +36,7 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
   return {
     delete: async (args: InternalCallbackArgs<Params, void, Result>) => {
       const callArgs = mergeInternalCallbackArgs(args)
+      let workflowKey: string | undefined
       try {
         const reqConfig = buildAxiosConfig(requestSettings, hookArgs, callArgs)
         const reqRoute = buildRouteWithParams(
@@ -56,7 +57,7 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           callArgs as any,
         )
-        const workflowKey = key.join('')
+        workflowKey = key.join('')
         setWorkflow(workflowKey, {
           route,
         })
@@ -77,7 +78,6 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
             response,
           )
         }
-        removeWorkflow(workflowKey)
         return {
           status: response.status,
           data: response.data,
@@ -91,6 +91,11 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
           status: e.response?.status,
           error: e.response?.data || e.message,
         } as Response<Result>
+      } finally {
+        // Remove the workflow on errors too, otherwise it stays pending.
+        if (workflowKey) {
+          removeWorkflow(workflowKey)
+        }
       }
     },
   }
