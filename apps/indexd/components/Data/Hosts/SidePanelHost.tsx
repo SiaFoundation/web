@@ -23,6 +23,7 @@ import { SidePanelHeadingCopyable } from '../SidePanelHeadingCopyable'
 import { SidePanelSkeleton } from '../SidePanelSkeleton'
 import { BlockReasons } from './BlockReasons'
 import { BulkHostResetLostSectors } from './bulkActions/BulkHostResetLostSectors'
+import { BulkHostScan } from './bulkActions/BulkHostScan'
 
 export function SidePanelHost() {
   const { panelId, setPanelId } = useHostsParams()
@@ -84,6 +85,7 @@ export function SidePanelHost() {
                   <BulkHostBlocklistAdd hosts={[host]} />
                 )}
                 <BulkHostResetLostSectors hosts={[host]} />
+                <BulkHostScan hosts={[host]} />
               </>
             ) : null
           }

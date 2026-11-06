@@ -52,6 +52,10 @@ import {
   AdminHostsBlocklistDeleteParams,
   AdminHostsBlocklistDeletePayload,
   AdminHostsBlocklistDeleteResponse,
+  adminHostsScanRoute,
+  AdminHostsScanParams,
+  AdminHostsScanPayload,
+  AdminHostsScanResponse,
   adminHostsBlocklistDeleteRoute,
   AdminSettingsContractsParams,
   AdminSettingsContractsPayload,
@@ -298,6 +302,11 @@ export function Admin({
       AdminHostsBlocklistDeletePayload,
       AdminHostsBlocklistDeleteResponse
     >(axios, 'delete', adminHostsBlocklistDeleteRoute),
+    hostsScan: buildRequestHandler<
+      AdminHostsScanParams,
+      AdminHostsScanPayload,
+      AdminHostsScanResponse
+    >(axios, 'post', adminHostsScanRoute),
     settingsContracts: buildRequestHandler<
       AdminSettingsContractsParams,
       AdminSettingsContractsPayload,
