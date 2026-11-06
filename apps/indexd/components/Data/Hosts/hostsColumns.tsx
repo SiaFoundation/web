@@ -5,7 +5,14 @@ import {
   ValueCopyable,
   ValueWithTooltip,
 } from '@siafoundation/design-system'
-import { CheckmarkFilled16, CloseFilled16 } from '@siafoundation/react-icons'
+import {
+  CheckmarkFilled16,
+  CheckmarkOutline16,
+  CloseFilled16,
+  CloseOutline16,
+  InProgress16,
+} from '@siafoundation/react-icons'
+import { humanDate } from '@siafoundation/units'
 import { HostData } from './types'
 import { TableHeader } from '../ColumnHeader'
 import { UsabilityBadges, UsabilityIndicator } from '../UsabilityBadges'
@@ -20,6 +27,7 @@ import {
 } from '../sharedColumns/sizes'
 import { BlockReasons } from './BlockReasons'
 import { type AdminHostsSortBy } from '@siafoundation/indexd-types'
+import { useIsHostScanning } from './useHostScanning'
 
 export const columns: DataTableColumnDef<HostData, AdminHostsSortBy>[] = [
   selectColumn(),
@@ -154,6 +162,50 @@ export const columns: DataTableColumnDef<HostData, AdminHostsSortBy>[] = [
     meta: { className: 'justify-end', ...smallColumnWidth },
   },
   {
+    id: 'lastScan',
+    header: ({ table, column }) => (
+      <TableHeader table={table} column={column}>
+        Last Scan
+      </TableHeader>
+    ),
+    cell: function LastScan({ row }) {
+      const host = row.original
+      const isHostScanning = useIsHostScanning()
+      if (isHostScanning(host.publicKey)) {
+        return (
+          <div className="flex w-full items-center justify-center gap-1">
+            {/* animate-spin sets transform, so it can't share an element
+            with scale-75. */}
+            <span className="flex scale-75">
+              <InProgress16 className="animate-spin text-gray-700 dark:text-graydark-800" />
+            </span>
+            <Text>Scanning</Text>
+          </div>
+        )
+      }
+      const lastScan = getLastScan(host)
+      if (!lastScan) {
+        return <Text color="verySubtle">Never</Text>
+      }
+      const date = humanDate(lastScan.time, { timeStyle: 'short' })
+      return (
+        <div className="flex items-center justify-end gap-1">
+          <Tooltip
+            content={`host scan ${lastScan.success ? 'succeeded' : 'failed'}`}
+          >
+            {lastScan.success ? (
+              <CheckmarkOutline16 className="text-green-600 scale-75" />
+            ) : (
+              <CloseOutline16 className="text-red-600 scale-75" />
+            )}
+          </Tooltip>
+          <Text>{date}</Text>
+        </div>
+      )
+    },
+    meta: { className: 'justify-end', width: 180 },
+  },
+  {
     id: 'location',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column}>
@@ -284,3 +336,24 @@ export const columns: DataTableColumnDef<HostData, AdminHostsSortBy>[] = [
     meta: { className: 'justify-end', width: 160 },
   },
 ]
+
+const zeroTime = '0001-01-01T00:00:00Z'
+
+// indexd records the time of the last successful and the last failed scan,
+// the later of the two is the most recent scan.
+function getLastScan(host: HostData) {
+  const success =
+    host.lastSuccessfulScan === zeroTime
+      ? 0
+      : new Date(host.lastSuccessfulScan).getTime()
+  const failure =
+    host.lastFailedScan === zeroTime
+      ? 0
+      : new Date(host.lastFailedScan).getTime()
+  if (!success && !failure) {
+    return undefined
+  }
+  return success >= failure
+    ? { time: success, success: true }
+    : { time: failure, success: false }
+}

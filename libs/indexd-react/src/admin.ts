@@ -54,6 +54,10 @@ import {
   AdminHostsBlocklistDeleteParams,
   AdminHostsBlocklistDeletePayload,
   AdminHostsBlocklistDeleteResponse,
+  adminHostsScanRoute,
+  AdminHostsScanParams,
+  AdminHostsScanPayload,
+  AdminHostsScanResponse,
   adminSettingsContractsRoute,
   AdminSettingsContractsParams,
   AdminSettingsContractsResponse,
@@ -413,6 +417,19 @@ export function useAdminHostsBlocklistDelete(
   return useDeleteFunc({
     ...args,
     route: adminHostsBlocklistDeleteRoute,
+  })
+}
+
+export function useAdminHostsScan(
+  args?: HookArgsCallback<
+    AdminHostsScanParams,
+    AdminHostsScanPayload,
+    AdminHostsScanResponse
+  >,
+) {
+  return usePostFunc({
+    ...args,
+    route: adminHostsScanRoute,
   })
 }
 

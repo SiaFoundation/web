@@ -244,6 +244,14 @@ export type AdminHostsBlocklistDeleteParams = {
 export type AdminHostsBlocklistDeletePayload = void
 export type AdminHostsBlocklistDeleteResponse = void
 
+export const adminHostsScanRoute = '/hosts/scan'
+export type AdminHostsScanParams = {
+  // Scan every known host instead of only those that are due.
+  force?: boolean
+}
+export type AdminHostsScanPayload = void
+export type AdminHostsScanResponse = void
+
 export const adminSettingsContractsRoute = '/settings/contracts'
 export type AdminSettingsContractsParams = void
 export type AdminSettingsContractsPayload = void
