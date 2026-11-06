@@ -212,6 +212,56 @@ describe('react-core', () => {
       expect(el.getByText('response2')).toBeTruthy()
     })
   })
+
+  test('func removes its workflow when the request fails', async () => {
+    server.use(
+      http.post('/api/failroute', async () => {
+        await delay(50)
+        return HttpResponse.json('scan failed', { status: 500 })
+      }),
+    )
+
+    let post: (args: {
+      api?: string | undefined
+      config?: RequestConfig<void, string> | undefined
+    }) => Promise<Response<string>> = () => {
+      throw new Error('not implemented')
+    }
+    let workflows: { workflows: WorkflowPayload[] } = { workflows: [] }
+
+    function Component() {
+      workflows = useWorkflows()
+      post = usePostFunc<void, void, string>({ route: '/failroute' }).post
+      return null
+    }
+
+    render(
+      <CoreProvider>
+        <AppSettingsProvider>
+          <Component />
+        </AppSettingsProvider>
+      </CoreProvider>,
+    )
+
+    const isPending = () =>
+      workflows.workflows.some(
+        (w?: { route?: string }) => w?.route === '/failroute',
+      )
+
+    let promise: Promise<Response<string>> | undefined
+    act(() => {
+      promise = post({})
+    })
+    expect(isPending()).toBe(true)
+
+    let response: Response<string> | undefined
+    await act(async () => {
+      response = await promise
+    })
+    expect(isPending()).toBe(false)
+    expect(response?.status).toBe(500)
+    expect(response?.error).toBe('scan failed')
+  })
 })
 
 let networkCallCount = 0

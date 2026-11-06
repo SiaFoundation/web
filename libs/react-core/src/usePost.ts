@@ -95,6 +95,7 @@ export function usePostFunc<Params extends RequestParams, Payload, Result>(
   return {
     post: async (args: InternalCallbackArgs<Params, Payload, Result>) => {
       const callArgs = mergeInternalCallbackArgs(args)
+      let workflowKey: string | undefined
       try {
         const reqConfig = buildAxiosConfig(requestSettings, hookArgs, callArgs)
         const reqRoute = buildRouteWithParams(
@@ -121,7 +122,7 @@ export function usePostFunc<Params extends RequestParams, Payload, Result>(
           callArgs as any,
         )
 
-        const workflowKey = key.join('')
+        workflowKey = key.join('')
         setWorkflow(workflowKey, {
           route,
           payload,
@@ -143,7 +144,6 @@ export function usePostFunc<Params extends RequestParams, Payload, Result>(
             response,
           )
         }
-        removeWorkflow(workflowKey)
         return {
           status: response.status,
           data: response.data,
@@ -157,6 +157,11 @@ export function usePostFunc<Params extends RequestParams, Payload, Result>(
           status: e.response?.status,
           error: e.response?.data || e.message,
         } as Response<Result>
+      } finally {
+        // Remove the workflow on errors too, otherwise it stays pending.
+        if (workflowKey) {
+          removeWorkflow(workflowKey)
+        }
       }
     },
   }
