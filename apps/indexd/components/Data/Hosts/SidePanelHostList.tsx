@@ -4,6 +4,8 @@ import { useMapHosts } from '../useMapHosts'
 import { BulkHostBlocklistAdd } from './bulkActions/BulkHostBlocklistAdd'
 import { BulkHostBlocklistRemove } from './bulkActions/BulkHostBlocklistRemove'
 import { BulkHostResetLostSectors } from './bulkActions/BulkHostResetLostSectors'
+import { BulkHostScan } from './bulkActions/BulkHostScan'
+import { HostsScan } from './HostsScan'
 import { SidePanel } from '../SidePanel'
 import { useMemo } from 'react'
 import { useHostsParams } from './useHostsParams'
@@ -40,8 +42,12 @@ export function SidePanelHostList({ table }: { table: HostDataTableState }) {
               hosts={hosts}
               onSuccess={() => table.setRowSelection({})}
             />
+            {/* The selection is kept so the scan results stay in view. */}
+            <BulkHostScan hosts={hosts} />
           </>
-        ) : null
+        ) : (
+          <HostsScan />
+        )
       }
       heading={
         <Text size="18" weight="medium">
