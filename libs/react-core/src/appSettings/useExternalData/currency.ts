@@ -3,6 +3,7 @@ export type CurrencyId =
   | 'cad'
   | 'eur'
   | 'gbp'
+  | 'chf'
   | 'jpy'
   | 'aud'
   | 'cny'
@@ -39,6 +40,12 @@ export const currencyOptions: CurrencyOption[] = [
     id: 'gbp',
     label: 'GBP',
     prefix: '£',
+    fixed: 2,
+  },
+  {
+    id: 'chf',
+    label: 'CHF',
+    prefix: 'CHF ',
     fixed: 2,
   },
   {

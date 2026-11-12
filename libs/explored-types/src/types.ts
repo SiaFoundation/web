@@ -193,6 +193,7 @@ export type CurrencyID =
   | 'cad'
   | 'eur'
   | 'gbp'
+  | 'chf'
   | 'jpy'
   | 'aud'
   | 'cny'
