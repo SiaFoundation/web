@@ -22,7 +22,6 @@ import {
 import { ExplorerHost } from '@siafoundation/explored-types'
 import LoadingCurrency from '../LoadingCurrency'
 import { hastingsToFiat } from '../../lib/currency'
-import { useApi } from '../../contexts/api'
 import { getHostNetAddress } from '../../lib/hostType'
 
 type Props = {
@@ -30,9 +29,7 @@ type Props = {
 }
 
 export function HostSettings({ host }: Props) {
-  const { api } = useApi()
   const exchange = useActiveSiascanExchangeRate({
-    api,
     config: {
       swr: {
         keepPreviousData: true,

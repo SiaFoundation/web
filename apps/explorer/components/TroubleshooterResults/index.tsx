@@ -32,7 +32,6 @@ import {
   sectorsToBytes,
 } from '@siafoundation/units'
 
-import { useApi } from '../../contexts/api'
 import { routes } from '../../config/routes'
 import { hastingsToFiat } from '../../lib/currency'
 import { TroubleshooterResponse } from '../../lib/troubleshooter'
@@ -48,9 +47,7 @@ type ResultsProps = {
 }
 
 export function TroubleshooterResults({ troubleshooterData }: ResultsProps) {
-  const { api } = useApi()
   const exchange = useActiveSiascanExchangeRate({
-    api,
     config: {
       swr: {
         keepPreviousData: true,

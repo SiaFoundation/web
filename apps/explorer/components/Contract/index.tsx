@@ -19,7 +19,6 @@ import { hastingsToFiat } from '../../lib/currency'
 import LoadingCurrency from '../LoadingCurrency'
 import LoadingTimestamp from '../LoadingTimestamp'
 import { ContractData, contractResolutionLabels } from '../../lib/contracts'
-import { useApi } from '../../contexts/api'
 
 type Props = {
   contractRevisions:
@@ -37,9 +36,7 @@ export function Contract({
   contract,
   formationTxnChainIndex,
 }: Props) {
-  const { api } = useApi()
   const exchange = useActiveSiascanExchangeRate({
-    api,
     config: {
       swr: {
         keepPreviousData: true,

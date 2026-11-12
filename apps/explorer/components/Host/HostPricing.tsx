@@ -18,16 +18,13 @@ import {
   displayStoragePricePerTBPerMonth,
 } from '@siafoundation/units'
 import LoadingCurrency from '../LoadingCurrency'
-import { useApi } from '../../contexts/api'
 
 type Props = {
   host: ExplorerHost
 }
 
 export function HostPricing({ host }: Props) {
-  const { api } = useApi()
   const exchange = useActiveSiascanExchangeRate({
-    api,
     config: {
       swr: {
         keepPreviousData: true,

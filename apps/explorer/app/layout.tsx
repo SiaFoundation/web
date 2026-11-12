@@ -5,6 +5,7 @@ import Script from 'next/script'
 import { rootFontClasses } from '@siafoundation/fonts'
 import { cookies } from 'next/headers'
 import { CurrencyID } from '@siafoundation/explored-types'
+import { currencyOptions } from '@siafoundation/react-core'
 import { buildFallbackDataExchangeRate } from '../lib/fallback'
 import { ApiProvider } from '../contexts/api'
 import { getExploredAddress } from '../lib/explored'
@@ -19,10 +20,12 @@ export const metadata = {
   ),
 }
 
-async function getUserCurrencyPreferenceCookie() {
+// The cookie value goes unencoded into the server's exchange rate request
+// path, so only a currency the app offers is accepted.
+async function getUserCurrencyPreferenceCookie(): Promise<CurrencyID> {
   const cookieStore = await cookies()
-  const currency = cookieStore.get('currency')?.value as CurrencyID
-  return currency || 'usd'
+  const currency = cookieStore.get('currency')?.value
+  return currencyOptions.find((c) => c.id === currency)?.id ?? 'usd'
 }
 
 export default async function RootLayout({
