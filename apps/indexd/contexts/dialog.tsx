@@ -27,6 +27,7 @@ import { QuotaCreateDialog } from '../dialogs/QuotaCreateDialog'
 import { QuotaDeleteDialog } from '../dialogs/QuotaDeleteDialog'
 import { KeyQuotaReassignDialog } from '../dialogs/KeyQuotaReassignDialog'
 import { HostsFilterPublicKeyDialog } from '../dialogs/HostsFilterPublicKeyDialog'
+import { HostImportDialog } from '../dialogs/HostImportDialog'
 import { ContractsFilterPublicKeyDialog } from '../dialogs/ContractsFilterPublicKeyDialog'
 import { ContractsFilterContractIDDialog } from '../dialogs/ContractsFilterContractIDDialog'
 
@@ -48,6 +49,7 @@ export type DialogType =
   | 'quotaDelete'
   | 'keyQuotaReassign'
   | 'hostBlocklistAdd'
+  | 'hostImport'
   | 'hostsFilterPublicKey'
   | 'contractsFilterPublicKey'
   | 'contractsFilterContractID'
@@ -251,6 +253,10 @@ export function Dialogs() {
       />
       <HostsFilterPublicKeyDialog
         open={dialog === 'hostsFilterPublicKey'}
+        onOpenChange={onOpenChange}
+      />
+      <HostImportDialog
+        open={dialog === 'hostImport'}
         onOpenChange={onOpenChange}
       />
       <ContractsFilterPublicKeyDialog

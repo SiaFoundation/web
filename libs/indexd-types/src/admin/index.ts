@@ -21,7 +21,7 @@ import type {
   Quota,
   PutQuotaRequest,
 } from './types'
-import type { Host } from '../types'
+import type { Host, HostAddress } from '../types'
 
 export const adminStateRoute = '/state'
 export type AdminStateParams = void
@@ -251,6 +251,15 @@ export type AdminHostsScanParams = {
 }
 export type AdminHostsScanPayload = void
 export type AdminHostsScanResponse = void
+
+export const adminHostImportRoute = '/hosts'
+export type AdminHostImportParams = void
+export type AdminHostImportPayload = {
+  publicKey: PublicKey
+  // At most 4 addresses, and at most 2 per protocol.
+  addresses: HostAddress[]
+}
+export type AdminHostImportResponse = Host
 
 export const adminSettingsContractsRoute = '/settings/contracts'
 export type AdminSettingsContractsParams = void
