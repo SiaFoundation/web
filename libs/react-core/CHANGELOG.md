@@ -1,5 +1,11 @@
 # @siafoundation/react-core
 
+## 8.2.3
+
+### Patch Changes
+
+- 3caeca9: Fixed request workflows staying pending after a request failed.
+
 ## 8.2.2
 
 ### Patch Changes
