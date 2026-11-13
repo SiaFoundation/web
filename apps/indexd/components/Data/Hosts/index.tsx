@@ -16,6 +16,7 @@ import { Layout } from '../Layout'
 import { useHostsParams } from './useHostsParams'
 import { HostsFilterMenu } from './HostsFilterMenu'
 import { SortControl } from '../SortControl'
+import { AddHostButton } from './AddHostButton'
 
 export function Hosts() {
   const {
@@ -61,7 +62,12 @@ export function Hosts() {
           {...table}
           localStorage="indexd/hosts"
           header={<HostsFilterMenu />}
-          actions={<SortControl table={table.table} columns={columns} />}
+          actions={
+            <>
+              <SortControl table={table.table} columns={columns} />
+              <AddHostButton />
+            </>
+          }
           noneOnPage={
             <StateNoneOnPage message="No hosts on this page, reset pagination to continue." />
           }

@@ -59,6 +59,10 @@ import {
   AdminHostsScanParams,
   AdminHostsScanPayload,
   AdminHostsScanResponse,
+  adminHostImportRoute,
+  AdminHostImportParams,
+  AdminHostImportPayload,
+  AdminHostImportResponse,
   adminSettingsContractsRoute,
   AdminSettingsContractsParams,
   AdminSettingsContractsResponse,
@@ -456,6 +460,27 @@ export function useAdminHostsScan(
     ...args,
     route: adminHostsScanRoute,
   })
+}
+
+export function useAdminHostImport(
+  args?: HookArgsCallback<
+    AdminHostImportParams,
+    AdminHostImportPayload,
+    AdminHostImportResponse
+  >,
+) {
+  return usePostFunc(
+    {
+      ...args,
+      route: adminHostImportRoute,
+    },
+    async (mutate, { payload }) => {
+      mutate((key) =>
+        key.startsWith(adminHostRoute.replace(':hostkey', payload.publicKey)),
+      )
+      mutate((key) => key.startsWith(adminHostsRoute))
+    },
+  )
 }
 
 // settings

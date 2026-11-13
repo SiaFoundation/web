@@ -56,6 +56,10 @@ import {
   AdminHostsScanParams,
   AdminHostsScanPayload,
   AdminHostsScanResponse,
+  adminHostImportRoute,
+  AdminHostImportParams,
+  AdminHostImportPayload,
+  AdminHostImportResponse,
   adminHostsBlocklistDeleteRoute,
   AdminSettingsContractsParams,
   AdminSettingsContractsPayload,
@@ -307,6 +311,11 @@ export function Admin({
       AdminHostsScanPayload,
       AdminHostsScanResponse
     >(axios, 'post', adminHostsScanRoute),
+    hostImport: buildRequestHandler<
+      AdminHostImportParams,
+      AdminHostImportPayload,
+      AdminHostImportResponse
+    >(axios, 'post', adminHostImportRoute),
     settingsContracts: buildRequestHandler<
       AdminSettingsContractsParams,
       AdminSettingsContractsPayload,
