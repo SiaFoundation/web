@@ -1,5 +1,12 @@
 # hostd
 
+## 0.69.2
+
+### Patch Changes
+
+- Updated dependencies [3caeca9]
+  - @siafoundation/react-core@8.2.3
+
 ## 0.69.1
 
 ### Patch Changes
