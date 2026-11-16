@@ -35,6 +35,9 @@ jobs:
         run: nx run-many --target=build --configuration=production --all --parallel=5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check packed libs load
+        shell: bash
+        run: ./scripts/check-packed-libs.sh
       # If there are changesets, then we are in PR prep mode and will
       # update the release pull request. Note that if there are no changesets
       # this step will be skipped because no publish script is specified.

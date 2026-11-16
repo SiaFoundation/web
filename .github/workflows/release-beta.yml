@@ -45,6 +45,10 @@ jobs:
         run: nx run-many --target=build --configuration=production --all --parallel=5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check packed libs load
+        if: steps.check_pre.outputs.run == 'true'
+        shell: bash
+        run: ./scripts/check-packed-libs.sh
       - name: Replace src code with dists for publishing
         if: steps.check_pre.outputs.run == 'true'
         run: ./scripts/replace-src-with-dists-for-publishing.sh
