@@ -9,7 +9,8 @@
   },
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@siafoundation/types": "^0.13.0"
+    "@siafoundation/types": "^0.13.0",
+    "tslib": "^2.8.1"
   },
   "devDependencies": {
     "@rollup/plugin-wasm": "^6.2.2"

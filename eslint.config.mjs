@@ -60,7 +60,8 @@ export default [
           ],
           // Ignore this for now because the dist import in tsconfig.base.json
           // breaks the nx dependency check lint rule.
-          ignoredDependencies: ['@siafoundation/sdk'],
+          // tslib imports are emitted by tsc (importHelpers), not in source.
+          ignoredDependencies: ['@siafoundation/sdk', 'tslib'],
         },
       ],
     },
