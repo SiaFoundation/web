@@ -47,6 +47,9 @@ jobs:
         run: nx affected --target=build --configuration=production --parallel=5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check packed libs load
+        shell: bash
+        run: ./scripts/check-packed-libs.sh
       - name: Export
         shell: bash
         # issue with parallelism
