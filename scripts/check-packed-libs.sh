@@ -1,7 +1,9 @@
 #!/bin/bash
-# Packs every built lib in dist/libs, installs the tarballs into a clean
-# project and checks that each package loads via require and import.
-# Catches builds that reference files npm pack drops (see #1606).
+# Checks that every built lib in dist/libs still loads once npm has packed it.
+# npm pack drops files a build can depend on, such as anything under
+# node_modules (#1606). Each tarball is unpacked into a folder inside the repo,
+# so the libs' own dependencies resolve from the repo's node_modules and the
+# check installs nothing from the registry.
 set -euo pipefail
 
 # next/font only works inside the Next.js compiler.
@@ -9,17 +11,19 @@ skip=" @siafoundation/fonts "
 # ESM builds import next/* without extensions, which only bundlers resolve.
 skip_esm=" @siafoundation/design-system @siafoundation/react-core "
 
-root=$(pwd)
-tmp=$(mktemp -d)
-trap 'rm -rf "$tmp"' EXIT
+mkdir -p dist
+packed=$(mktemp -d "$PWD/dist/packed.XXXXXX")
+trap 'rm -rf "$packed"' EXIT
 
 names=()
 for dir in dist/libs/*/; do
   [ -f "$dir/package.json" ] || continue
-  [ "$(node -p "require('./$dir/package.json').private === true")" = "true" ] && continue
-  name=$(node -p "require('./$dir/package.json').name")
+  name=$(node -p "const p = require('./${dir}package.json'); p.private ? '' : p.name")
+  [ -n "$name" ] || continue
+  tarball=$(cd "$dir" && npm pack --silent --ignore-scripts --pack-destination "$packed")
+  mkdir -p "$packed/node_modules/$name"
+  tar -xzf "$packed/$tarball" -C "$packed/node_modules/$name" --strip-components=1
   [[ "$skip" == *" $name "* ]] || names+=("$name")
-  (cd "$dir" && npm pack --silent --pack-destination "$tmp" >/dev/null)
 done
 
 if [ ${#names[@]} -eq 0 ]; then
@@ -27,12 +31,7 @@ if [ ${#names[@]} -eq 0 ]; then
   exit 0
 fi
 
-react=$(node -p "require('./package.json').dependencies.react.split('.')[0]")
-cd "$tmp"
-npm init -y >/dev/null
-# Pin react so npm's peer resolution doesn't pick conflicting majors.
-npm install --silent --no-audit --no-fund ./*.tgz "react@$react" "react-dom@$react"
-
+cd "$packed"
 failed=0
 for name in "${names[@]}"; do
   # Node ignores "module", so import the ESM build by path.
@@ -47,5 +46,4 @@ for name in "${names[@]}"; do
   fi
 done
 
-cd "$root"
 exit $failed
