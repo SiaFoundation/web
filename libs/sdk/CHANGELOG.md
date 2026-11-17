@@ -1,5 +1,11 @@
 # @siafoundation/sdk
 
+## 0.5.1
+
+### Patch Changes
+
+- b4a0c00: Fixed the published build referencing missing tslib helper files under node_modules.
+
 ## 0.5.0
 
 ### Minor Changes

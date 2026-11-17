@@ -1,5 +1,15 @@
 # Changelog
 
+## 12.1.1
+
+### Patch Changes
+
+- Updated dependencies [d8d2e10]
+- Updated dependencies [3caeca9]
+  - @siafoundation/react-core@8.3.0
+  - @siafoundation/explored-types@0.22.0
+  - @siafoundation/explored-react@0.9.2
+
 ## 12.1.0
 
 ### Minor Changes

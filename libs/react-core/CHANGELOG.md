@@ -1,5 +1,15 @@
 # @siafoundation/react-core
 
+## 8.3.0
+
+### Minor Changes
+
+- d8d2e10: Added CHF as a currency option.
+
+### Patch Changes
+
+- 3caeca9: Fixed request workflows staying pending after a request failed.
+
 ## 8.2.2
 
 ### Patch Changes

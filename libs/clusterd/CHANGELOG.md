@@ -1,5 +1,21 @@
 # @siafoundation/clusterd
 
+## 0.6.0
+
+### Minor Changes
+
+- 64c8fa5: Added support for indexd nodes.
+- 795b29d: Added the node ID and syncer address to cluster nodes.
+
+### Patch Changes
+
+- Updated dependencies [e0c2415]
+- Updated dependencies [7d45402]
+- Updated dependencies [123bfab]
+- Updated dependencies [795b29d]
+  - @siafoundation/indexd-js@0.12.0
+  - @siafoundation/explored-js@0.10.2
+
 ## 0.5.6
 
 ### Patch Changes

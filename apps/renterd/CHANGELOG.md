@@ -1,5 +1,19 @@
 # renterd
 
+## 0.89.0
+
+### Minor Changes
+
+- d8d2e10: Added CHF as a currency option.
+
+### Patch Changes
+
+- Updated dependencies [d8d2e10]
+- Updated dependencies [3caeca9]
+  - @siafoundation/react-core@8.3.0
+  - @siafoundation/explored-types@0.22.0
+  - @siafoundation/design-system@12.1.1
+
 ## 0.88.3
 
 ### Patch Changes

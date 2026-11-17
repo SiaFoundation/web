@@ -1,5 +1,26 @@
 # @siafoundation/indexd-react
 
+## 0.11.0
+
+### Minor Changes
+
+- e0c2415: Aligned the account API with indexd. App metadata is now nested under app, connectKey, quotaMaxPinnedData, connectKeyPinnedData, pinnedSize, and ready were added, and accountAdd and accountRotateKey were removed as indexd has no such routes.
+- 7d45402: Added host import API.
+- 123bfab: Added hosts scan API.
+- 795b29d: Fixed the syncer connect payload, which is the peer address string rather than an object.
+
+### Patch Changes
+
+- Updated dependencies [d8d2e10]
+- Updated dependencies [e0c2415]
+- Updated dependencies [7d45402]
+- Updated dependencies [123bfab]
+- Updated dependencies [ac4dd20]
+- Updated dependencies [795b29d]
+- Updated dependencies [3caeca9]
+  - @siafoundation/react-core@8.3.0
+  - @siafoundation/indexd-types@0.17.0
+
 ## 0.10.0
 
 ### Minor Changes
