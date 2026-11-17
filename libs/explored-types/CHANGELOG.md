@@ -1,5 +1,11 @@
 # @siafoundation/explored-types
 
+## 0.22.0
+
+### Minor Changes
+
+- d8d2e10: Added CHF as a currency option.
+
 ## 0.21.0
 
 ### Minor Changes

@@ -1,5 +1,20 @@
 # walletd
 
+## 0.37.0
+
+### Minor Changes
+
+- d8d2e10: Added CHF as a currency option.
+
+### Patch Changes
+
+- Updated dependencies [d8d2e10]
+- Updated dependencies [3caeca9]
+- Updated dependencies [b4a0c00]
+  - @siafoundation/react-core@8.3.0
+  - @siafoundation/sdk@0.5.1
+  - @siafoundation/design-system@12.1.1
+
 ## 0.36.3
 
 ### Patch Changes

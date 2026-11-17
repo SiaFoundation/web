@@ -1,5 +1,14 @@
 # @siafoundation/explored-react
 
+## 0.9.2
+
+### Patch Changes
+
+- Updated dependencies [d8d2e10]
+- Updated dependencies [3caeca9]
+  - @siafoundation/react-core@8.3.0
+  - @siafoundation/explored-types@0.22.0
+
 ## 0.9.1
 
 ### Patch Changes

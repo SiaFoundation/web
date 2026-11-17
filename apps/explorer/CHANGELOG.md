@@ -1,5 +1,25 @@
 # explorer
 
+## 0.44.0
+
+### Minor Changes
+
+- d8d2e10: Added CHF as a currency option.
+
+### Patch Changes
+
+- bb05efa: The explorer can now run on Cloudflare Workers. Link preview images read their fonts and pictures from the Worker's static files there, and tracing loads only when OTEL_SERVICE_NAME is set.
+- 9869e69: The siascan logo now shows in link preview images.
+- a6f3cbe: Fiat values now show on page load in the selected currency, instead of appearing only after the browser fetched the exchange rate.
+- 4fa9612: Updated nodejs to v24.22.1.
+- Updated dependencies [d8d2e10]
+- Updated dependencies [3caeca9]
+  - @siafoundation/react-core@8.3.0
+  - @siafoundation/explored-types@0.22.0
+  - @siafoundation/design-system@12.1.1
+  - @siafoundation/explored-js@0.10.2
+  - @siafoundation/explored-react@0.9.2
+
 ## 0.43.1
 
 ### Patch Changes
