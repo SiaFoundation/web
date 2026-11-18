@@ -26,28 +26,28 @@ export function MetricsAccounts() {
         <StateError message="Error loading metrics. Please try again later." />
       }
       loading={
-        <div className="flex flex-col gap-5 w-full">
+        <div className="flex flex-col gap-2 w-full">
           <InfoRow
             label="Registered Accounts"
-            value={<Skeleton className="h-12 w-[150px]" />}
+            value={<Skeleton className="h-5 w-[150px]" />}
           />
           <InfoRow
             label="Active Accounts"
-            value={<Skeleton className="h-12 w-[150px]" />}
+            value={<Skeleton className="h-5 w-[150px]" />}
           />
           <InfoRow
             label="Pinned Data"
-            value={<Skeleton className="h-12 w-[150px]" />}
+            value={<Skeleton className="h-5 w-[150px]" />}
           />
           <InfoRow
             label="Pinned Size"
-            value={<Skeleton className="h-12 w-[150px]" />}
+            value={<Skeleton className="h-5 w-[150px]" />}
           />
         </div>
       }
       notFound={<StateNoneYet message="No metrics found." />}
       loaded={(stats) => (
-        <div className="flex flex-col gap-5 w-full">
+        <div className="flex flex-col gap-2 w-full">
           <InfoRow
             label="Registered Accounts"
             value={stats.registered.toLocaleString()}

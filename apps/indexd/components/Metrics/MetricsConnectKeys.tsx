@@ -25,25 +25,33 @@ export function MetricsConnectKeys() {
         <StateError message="Error loading metrics. Please try again later." />
       }
       loading={
-        <div className="flex flex-col gap-5 w-full">
+        <div className="flex flex-col gap-2 w-full">
           <InfoRow
             label="Total Connect Keys"
-            value={<Skeleton className="h-12 w-[150px]" />}
+            value={<Skeleton className="h-5 w-[150px]" />}
+          />
+          <InfoRow
+            label="Active Connect Keys"
+            value={<Skeleton className="h-5 w-[150px]" />}
           />
         </div>
       }
       notFound={<StateNoneYet message="No metrics found." />}
       loaded={(stats) => (
-        <div className="flex flex-col gap-5 w-full">
+        <div className="flex flex-col gap-2 w-full">
           <InfoRow
             label="Total Connect Keys"
             value={stats.total.toLocaleString()}
+          />
+          <InfoRow
+            label="Active Connect Keys"
+            value={stats.active.toLocaleString()}
           />
           {stats.quotas?.map((q) => (
             <InfoRow
               key={q.quota}
               label={q.quota}
-              value={q.total.toLocaleString()}
+              value={`${q.active.toLocaleString()} active of ${q.total.toLocaleString()}`}
             />
           ))}
         </div>

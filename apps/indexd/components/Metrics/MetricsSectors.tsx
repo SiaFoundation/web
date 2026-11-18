@@ -25,45 +25,39 @@ export function MetricsSectors() {
         <StateError message="Error loading sector metrics. Please try again later." />
       }
       loading={
-        <div className="flex flex-col gap-5 w-full">
-          <InfoRow
-            label="Slabs"
-            value={<Skeleton className="h-12 w-[150px]" />}
-          />
-          <InfoRow
-            label="Migrated Sectors"
-            value={<Skeleton className="h-12 w-[150px]" />}
-          />
-          <InfoRow
-            label="Pinned Sectors"
-            value={<Skeleton className="h-12 w-[150px]" />}
-          />
-          <InfoRow
-            label="Unpinnable Sectors"
-            value={<Skeleton className="h-12 w-[150px]" />}
-          />
-          <InfoRow
-            label="Unpinned Sectors"
-            value={<Skeleton className="h-12 w-[150px]" />}
-          />
-          <InfoRow
-            label="Lost Sectors"
-            value={<Skeleton className="h-12 w-[150px]" />}
-          />
-          <InfoRow
-            label="Checked Sectors"
-            value={<Skeleton className="h-12 w-[150px]" />}
-          />
-          <InfoRow
-            label="Check Failed Sectors"
-            value={<Skeleton className="h-12 w-[150px]" />}
-          />
+        <div className="flex flex-col gap-2 w-full">
+          {[
+            'Slabs',
+            'Stuck Slabs',
+            'Unrecoverable Slabs',
+            'Migrated Sectors',
+            'Pinned Sectors',
+            'Unpinnable Sectors',
+            'Unpinned Sectors',
+            'Lost Sectors',
+            'Checked Sectors',
+            'Check Failed Sectors',
+          ].map((label) => (
+            <InfoRow
+              key={label}
+              label={label}
+              value={<Skeleton className="h-5 w-[150px]" />}
+            />
+          ))}
         </div>
       }
       notFound={<StateNoneYet message="No metrics found." />}
       loaded={(stats) => (
-        <div className="flex flex-col gap-5 w-full">
+        <div className="flex flex-col gap-2 w-full">
           <InfoRow label="Slabs" value={stats.slabs.toLocaleString()} />
+          <InfoRow
+            label="Stuck Slabs"
+            value={stats.stuckSlabs.toLocaleString()}
+          />
+          <InfoRow
+            label="Unrecoverable Slabs"
+            value={stats.unrecoverableSlabs.toLocaleString()}
+          />
           <InfoRow
             label="Migrated Sectors"
             value={stats.migrated.toLocaleString()}
