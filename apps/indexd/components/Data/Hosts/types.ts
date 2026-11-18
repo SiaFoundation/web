@@ -81,6 +81,9 @@ export type HostData = Host & {
     egressPrice: CurrencyDisplayProps
     freeSectorPrice: CurrencyDisplayProps
     maxCollateral: CurrencyDisplayProps
+    accountFunding: CurrencyDisplayProps
+    totalSpent: CurrencyDisplayProps
+    stuckSince?: string
     maxContractDuration: string
     protocolVersion: string
     priceValidity: string

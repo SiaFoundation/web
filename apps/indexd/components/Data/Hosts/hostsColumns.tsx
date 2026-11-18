@@ -326,6 +326,30 @@ export const columns: DataTableColumnDef<HostData, AdminHostsSortBy>[] = [
     meta: { className: 'justify-end', ...smallColumnWidth },
   },
   {
+    id: 'totalSpent',
+    header: ({ table, column }) => (
+      <TableHeader table={table} column={column}>
+        Total Spent
+      </TableHeader>
+    ),
+    cell: ({ row }) => (
+      <ValueWithTooltip {...row.original.displayFields.totalSpent} />
+    ),
+    meta: { className: 'justify-end', ...smallColumnWidth },
+  },
+  {
+    id: 'accountFunding',
+    header: ({ table, column }) => (
+      <TableHeader table={table} column={column}>
+        Account Funding
+      </TableHeader>
+    ),
+    cell: ({ row }) => (
+      <ValueWithTooltip {...row.original.displayFields.accountFunding} />
+    ),
+    meta: { className: 'justify-end', ...smallColumnWidth },
+  },
+  {
     id: 'release',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column}>
