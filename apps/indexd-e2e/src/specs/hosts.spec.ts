@@ -54,6 +54,18 @@ test('view host details', async ({ page }) => {
   await openRow(page, host)
   await expect(page.getByText('Consecutive Failed Scans')).toBeVisible()
   await expect(page.getByText(/^localhost:\d+$/).first()).toBeVisible()
+  // Total Spent is also a column, so look in the panel. The host panel is not
+  // a form, so find it from its close button.
+  const panel = page
+    .getByRole('button', { name: 'Close drawer' })
+    .locator('xpath=../..')
+  await expect(panel.getByText('Total Spent')).toBeVisible()
+  await expect(panel.getByText('Unpinned Sectors')).toBeVisible()
+  // The cluster hosts are not stuck.
+  const stuckSince = panel.getByText('Stuck Since', { exact: true })
+  await expect(stuckSince.locator('xpath=../..')).toHaveText(
+    /^Stuck Since\s*-$/,
+  )
 })
 
 test('block and unblock a host', async ({ page }) => {

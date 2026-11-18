@@ -15,6 +15,7 @@ import {
   storagePriceInHastingsPerTBPerMonth,
   sectorsToBytes,
   blocksToWeeks,
+  humanDate,
 } from '@siafoundation/units'
 import { getCurrencyDisplayPropsPreferred } from '@siafoundation/design-system'
 import { getV2HostSettingsProtcolVersion } from '@siafoundation/types'
@@ -101,6 +102,21 @@ function transformHostDisplayFields(
       currencyDisplay,
       exchange,
     }),
+    accountFunding: getCurrencyDisplayPropsPreferred({
+      sc: new BigNumber(host.accountFunding),
+      currencyDisplay,
+      exchange,
+    }),
+    totalSpent: getCurrencyDisplayPropsPreferred({
+      sc: new BigNumber(host.totalSpent),
+      currencyDisplay,
+      exchange,
+    }),
+    // indexd sends the zero time when the host is not stuck.
+    stuckSince:
+      host.stuckSince !== '0001-01-01T00:00:00Z'
+        ? humanDate(host.stuckSince, { timeStyle: 'short' })
+        : undefined,
     maxContractDuration: `${blocksToWeeks(host.settings.maxContractDuration).toFixed(1)} weeks`,
     protocolVersion: getV2HostSettingsProtcolVersion(host.settings),
     priceValidity: new Date(host.settings.prices.validUntil).toLocaleString(),

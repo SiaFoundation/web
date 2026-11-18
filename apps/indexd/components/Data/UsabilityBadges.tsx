@@ -27,7 +27,7 @@ export function UsabilityBadges({
           <UsabilityBadge
             key={key}
             status="unusable"
-            name={camelCaseToLowerCaseSentence(key)}
+            name={getLabel(key as keyof Usability)}
           />
         )),
     [usability],
@@ -41,7 +41,7 @@ export function UsabilityBadges({
           <UsabilityBadge
             key={key}
             status="usable"
-            name={camelCaseToLowerCaseSentence(key)}
+            name={getLabel(key as keyof Usability)}
           />
         )),
     [usability],
@@ -101,6 +101,15 @@ export function UsabilityIndicator({
       )}
     </Tooltip>
   )
+}
+
+const labels: Partial<Record<keyof Usability, string>> = {
+  quic: 'QUIC',
+  siamux: 'SiaMux',
+}
+
+function getLabel(key: keyof Usability) {
+  return labels[key] ?? camelCaseToLowerCaseSentence(key)
 }
 
 function camelCaseToLowerCaseSentence(str: string) {

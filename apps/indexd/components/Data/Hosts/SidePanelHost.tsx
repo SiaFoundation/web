@@ -218,6 +218,32 @@ export function SidePanelHost() {
               />
             </div>
           </SidePanelSection>
+          <SidePanelSection heading="Spending">
+            <div className="flex flex-col gap-2">
+              <InfoRow
+                label="Total Spent"
+                value={<ValueWithTooltip {...host.displayFields.totalSpent} />}
+              />
+              <InfoRow
+                label="Account Funding"
+                value={
+                  <ValueWithTooltip {...host.displayFields.accountFunding} />
+                }
+              />
+            </div>
+          </SidePanelSection>
+          <SidePanelSection heading="Sectors">
+            <div className="flex flex-col gap-2">
+              <InfoRow
+                label="Lost Sectors"
+                value={host.lostSectors.toLocaleString()}
+              />
+              <InfoRow
+                label="Unpinned Sectors"
+                value={host.unpinnedSectors.toLocaleString()}
+              />
+            </div>
+          </SidePanelSection>
           <SidePanelSection heading="Availability">
             <div className="flex flex-col gap-2">
               <InfoRow
@@ -245,6 +271,10 @@ export function SidePanelHost() {
               <InfoRow
                 label="Consecutive Failed Scans"
                 value={host.consecutiveFailedScans.toLocaleString()}
+              />
+              <InfoRow
+                label="Stuck Since"
+                value={host.displayFields.stuckSince}
               />
               <InfoRow
                 label="Next Scan"
