@@ -17,6 +17,7 @@ import type {
   WalletBalance,
   ConnectKey,
   Alert,
+  AlertSeverity,
   Account,
   Quota,
   PutQuotaRequest,
@@ -368,6 +369,7 @@ export const adminAlertsRoute = '/alerts'
 export type AdminAlertsParams = {
   offset?: number
   limit?: number
+  severity?: AlertSeverity
 }
 export type AdminAlertsPayload = void
 export type AdminAlertsResponse = Alert[]
@@ -398,6 +400,8 @@ export type AdminStatsSectorsResponse = {
   lost: number
   checked: number
   checkFailed: number
+  unrecoverableSlabs: number
+  stuckSlabs: number
 }
 
 export const adminStatsAccountsRoute = '/stats/accounts'
@@ -417,6 +421,9 @@ export type AdminStatsContractsResponse = {
   contracts: number
   badContracts: number
   renewing: number
+  contractTax: Currency
+  lockedAllowance: Currency
+  remainingAllowance: Currency
   totalCapacity: number
   totalSize: number
 }
@@ -436,9 +443,11 @@ export type AdminStatsConnectKeysParams = void
 export type AdminStatsConnectKeysPayload = void
 export type AdminStatsConnectKeysResponse = {
   total: number
+  active: number
   quotas: {
     quota: string
     total: number
+    active: number
   }[]
 }
 

@@ -1,4 +1,4 @@
-import { PublicKey, V2HostSettings } from '@siafoundation/types'
+import { Currency, PublicKey, V2HostSettings } from '@siafoundation/types'
 
 // Usability represents a series of host checks that can be used to
 // determine whether the host is usable or not.
@@ -9,6 +9,8 @@ export type Usability = {
   protocolVersion: boolean
   priceValidity: boolean
   acceptingContracts: boolean
+  quic: boolean
+  siamux: boolean
   contractPrice: boolean
   collateral: boolean
   storagePrice: boolean
@@ -31,7 +33,6 @@ export type Host = {
   consecutiveFailedScans: number
   recentUptime: number
   addresses: HostAddress[]
-  networks: string[]
   countryCode: string
   latitude: number
   longitude: number
@@ -40,4 +41,9 @@ export type Host = {
   blocked: boolean
   blockedReasons?: string[]
   lostSectors: number
+  unpinnedSectors: number
+  accountFunding: Currency
+  totalSpent: Currency
+  // The zero time when the host is not stuck.
+  stuckSince: string
 }
