@@ -93,6 +93,7 @@ export type ConnectKey = {
   lastUpdated: string
   lastUsed: string
   pinnedData: number
+  pinnedSize: number
 }
 
 export type Quota = {
