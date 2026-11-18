@@ -3,7 +3,12 @@ import { fillTextInputByName } from '@siafoundation/e2e'
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
 import { navigateToContracts } from '../fixtures/navigate'
 import { buildContract, mockApiContracts } from '../fixtures/contracts'
-import { confirmDialog, getRow, selectRow } from '../fixtures/table'
+import {
+  confirmDialog,
+  getRow,
+  selectRow,
+  setColumnFilter,
+} from '../fixtures/table'
 
 const contractA = buildContract({
   id: 'aa'.repeat(32),
@@ -51,6 +56,18 @@ test('filter contracts by contract ID', async ({ page }) => {
   })
   await fillTextInputByName(page, 'contractID', contractA.id)
   await dialog.getByRole('button', { name: 'Apply filter' }).click()
+  await expect(getRow(page, contractA.id.slice(0, 12))).toBeVisible()
+  await expect(getRow(page, contractB.id.slice(0, 12))).toBeHidden()
+})
+
+test('filter contracts by status', async ({ page }) => {
+  await mockApiContracts({ page, contracts: [contractA, contractB] })
+  await navigateToContracts(page)
+  await setColumnFilter(page, 'Status', 'Bad')
+  await expect(getRow(page, contractB.id.slice(0, 12))).toBeVisible()
+  await expect(getRow(page, contractA.id.slice(0, 12))).toBeHidden()
+
+  await setColumnFilter(page, 'Status', 'Good')
   await expect(getRow(page, contractA.id.slice(0, 12))).toBeVisible()
   await expect(getRow(page, contractB.id.slice(0, 12))).toBeHidden()
 })

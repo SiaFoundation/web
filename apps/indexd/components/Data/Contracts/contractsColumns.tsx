@@ -36,6 +36,8 @@ export const contractsColumns: DataTableColumnDef<
   },
   {
     id: 'status',
+    // A column needs an accessor to show its filter.
+    accessorFn: (row) => row.good,
     header: ({ table, column }) => (
       <TableHeader table={table} column={column} filter={<ColumnGoodFilter />}>
         Status

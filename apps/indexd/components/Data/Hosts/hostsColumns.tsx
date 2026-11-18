@@ -49,6 +49,8 @@ export const columns: DataTableColumnDef<HostData, AdminHostsSortBy>[] = [
   },
   {
     id: 'usable',
+    // A column needs an accessor to show its filter.
+    accessorFn: (row) => row.usable,
     header: ({ table, column }) => (
       <TableHeader
         table={table}
@@ -88,6 +90,8 @@ export const columns: DataTableColumnDef<HostData, AdminHostsSortBy>[] = [
   },
   {
     id: 'blocked',
+    // A column needs an accessor to show its filter.
+    accessorFn: (row) => row.blocked,
     header: ({ table, column }) => (
       <TableHeader
         table={table}

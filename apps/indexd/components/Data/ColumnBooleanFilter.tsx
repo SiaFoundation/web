@@ -8,6 +8,7 @@ export function ColumnBooleanFilter<Filters extends ColumnFiltersState>({
   labelNegative,
   columnFilters,
   setColumnFilters,
+  defaultValue,
 }: {
   table?: Table<{ [id: string]: boolean }>
   id: string
@@ -15,6 +16,9 @@ export function ColumnBooleanFilter<Filters extends ColumnFiltersState>({
   labelNegative?: string
   columnFilters: Filters
   setColumnFilters: OnChangeFn<Filters>
+  // The value the table uses when there is no filter. When set, there is no
+  // "All" option, and picking the default removes the filter.
+  defaultValue?: boolean
 }) {
   const meta = table?.getColumn(id)?.columnDef.meta as {
     filterLabelPositive?: string
@@ -23,11 +27,12 @@ export function ColumnBooleanFilter<Filters extends ColumnFiltersState>({
   const positive = labelPositive || meta?.filterLabelPositive || 'Yes'
   const negative = labelNegative || meta?.filterLabelNegative || 'No'
   const options = [
-    { value: '', label: 'All' },
+    ...(defaultValue === undefined ? [{ value: '', label: 'All' }] : []),
     { value: 'true', label: positive },
     { value: 'false', label: negative },
   ]
-  const filterValue = columnFilters.find((f) => f.id === id)?.value
+  const filterValue =
+    columnFilters.find((f) => f.id === id)?.value ?? defaultValue
 
   return (
     <div className="flex flex-col gap-1">
@@ -35,7 +40,10 @@ export function ColumnBooleanFilter<Filters extends ColumnFiltersState>({
         aria-label={`${id} filter`}
         value={filterValue === undefined ? '' : String(filterValue)}
         onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-          if (e.target.value === '') {
+          if (
+            e.target.value === '' ||
+            e.target.value === String(defaultValue)
+          ) {
             setColumnFilters((filters) => {
               return filters.filter((f) => f.id !== id) as Filters
             })

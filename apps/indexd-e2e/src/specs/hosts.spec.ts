@@ -8,7 +8,13 @@ import {
   showUnusableHosts,
   waitForHostRows,
 } from '../fixtures/hosts'
-import { confirmDialog, getRow, openRow, selectRow } from '../fixtures/table'
+import {
+  confirmDialog,
+  getRow,
+  openRow,
+  selectRow,
+  setColumnFilter,
+} from '../fixtures/table'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page, { hostdCount: 2 })
@@ -44,6 +50,28 @@ test('filter hosts by public key', async ({ page }) => {
   await dialog.getByRole('button', { name: 'Apply filter' }).click()
   await expect(getRow(page, hostA)).toBeVisible()
   await expect(getRow(page, hostB)).toBeHidden()
+})
+
+test('filter hosts from the column headers', async ({ page }) => {
+  await navigateToHosts(page)
+  // The hosts list shows usable hosts unless filtered, and the filter says so.
+  await page.getByRole('button', { name: 'Filter usable' }).click()
+  await expect(page.getByLabel('usable filter')).toHaveValue('true')
+  await page.keyboard.press('Escape')
+
+  // The cluster hosts are never usable, see showUnusableHosts.
+  // Waiting for rows reloads the page, so wait for the filter to reach the
+  // URL first.
+  await setColumnFilter(page, 'Usable', 'Unusable')
+  await expect(page).toHaveURL(/usable.*false/)
+  await waitForHostRows(page, 2)
+
+  await setColumnFilter(page, 'Blocked', 'Blocked')
+  await expect(page.getByText('No hosts matching filters.')).toBeVisible()
+
+  await setColumnFilter(page, 'Blocked', 'Not Blocked')
+  await expect(page).toHaveURL(/blocked.*false/)
+  await waitForHostRows(page, 2)
 })
 
 test('view host details', async ({ page }) => {

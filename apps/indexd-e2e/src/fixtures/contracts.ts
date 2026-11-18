@@ -54,10 +54,12 @@ export async function mockApiContracts({
       const params = new URL(route.request().url()).searchParams
       const ids = params.getAll('id')
       const hostKeys = params.getAll('hostkey')
+      const good = params.get('good')
       const list = current.filter(
         (c) =>
           (ids.length === 0 || ids.includes(c.id)) &&
-          (hostKeys.length === 0 || hostKeys.includes(c.hostKey)),
+          (hostKeys.length === 0 || hostKeys.includes(c.hostKey)) &&
+          (good === null || String(c.good) === good),
       )
       await route.fulfill({ json: list })
     },

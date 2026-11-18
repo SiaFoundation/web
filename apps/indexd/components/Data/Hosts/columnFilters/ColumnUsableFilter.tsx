@@ -9,6 +9,8 @@ export function ColumnUsableFilter() {
       id="usable"
       labelPositive="Usable"
       labelNegative="Unusable"
+      // The hosts list only shows usable hosts unless filtered.
+      defaultValue={true}
       columnFilters={columnFilters}
       setColumnFilters={setColumnFilters}
     />
