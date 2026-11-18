@@ -9,11 +9,13 @@ export type KeyData = {
   quota: string
   remainingUses: number
   pinnedData: number
+  pinnedSize: number
   dateCreated: string
   lastUpdated: string
   lastUsed: string
   displayFields: {
     pinnedData: string
+    pinnedSize: string
     dateCreated: string
     lastUpdated: string
     lastUsed?: string
@@ -28,11 +30,13 @@ export function transformDownData(key: ConnectKey): KeyData {
     quota: key.quota,
     remainingUses: key.remainingUses,
     pinnedData: key.pinnedData,
+    pinnedSize: key.pinnedSize,
     dateCreated: key.dateCreated,
     lastUpdated: key.lastUpdated,
     lastUsed: key.lastUsed,
     displayFields: {
       pinnedData: humanBytes(key.pinnedData),
+      pinnedSize: humanBytes(key.pinnedSize),
       dateCreated: Intl.DateTimeFormat('en-US', {
         dateStyle: 'short',
         timeStyle: 'short',
