@@ -8,6 +8,7 @@ import {
   smallColumnWidth,
   timestampColumnWidth,
 } from '../sharedColumns/sizes'
+import { ColumnSeverityFilter } from './ColumnSeverityFilter'
 
 export const alertsColumns: ColumnDef<AlertData>[] = [
   selectColumn(),
@@ -35,8 +36,15 @@ export const alertsColumns: ColumnDef<AlertData>[] = [
   },
   {
     id: 'severity',
+    // A column needs an accessor to show its filter.
+    accessorFn: (row) => row.severity,
     header: ({ table, column }) => (
-      <TableHeader table={table} column={column} className="justify-start">
+      <TableHeader
+        table={table}
+        column={column}
+        className="justify-start"
+        filter={<ColumnSeverityFilter />}
+      >
         Severity
       </TableHeader>
     ),

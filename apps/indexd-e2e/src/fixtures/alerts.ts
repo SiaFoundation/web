@@ -12,11 +12,21 @@ export async function mockApiAlerts({
 }) {
   let current = [...alerts]
   const dismissed: string[] = []
+  const severities: (string | null)[] = []
 
+  // indexd filters alerts by severity, so the mock does too.
   await page.route(
     (url) => url.pathname === '/api/alerts',
     async (route) => {
-      await route.fulfill({ json: current })
+      const severity = new URL(route.request().url()).searchParams.get(
+        'severity',
+      )
+      severities.push(severity)
+      await route.fulfill({
+        json: severity
+          ? current.filter((a) => a.severity === severity)
+          : current,
+      })
     },
   )
 
@@ -45,5 +55,5 @@ export async function mockApiAlerts({
     },
   )
 
-  return { dismissed }
+  return { dismissed, severities }
 }

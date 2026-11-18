@@ -148,6 +148,10 @@ export function SidePanelKey() {
                     value={connectKey.displayFields.pinnedData}
                   />
                   <InfoRow
+                    label="Pinned size"
+                    value={connectKey.displayFields.pinnedSize}
+                  />
+                  <InfoRow
                     label="Date created"
                     value={connectKey.displayFields.dateCreated}
                   />

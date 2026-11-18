@@ -64,6 +64,16 @@ export const keysColumns: ColumnDef<KeyData>[] = [
     meta: { className: 'justify-end', ...smallColumnWidth },
   },
   {
+    id: 'pinnedSize',
+    header: ({ table, column }) => (
+      <TableHeader table={table} column={column} className="justify-end">
+        Pinned size
+      </TableHeader>
+    ),
+    cell: ({ row }) => <Text>{row.original.displayFields.pinnedSize}</Text>,
+    meta: { className: 'justify-end', ...smallColumnWidth },
+  },
+  {
     id: 'dateCreated',
     header: ({ table, column }) => (
       <TableHeader table={table} column={column} className="justify-end">

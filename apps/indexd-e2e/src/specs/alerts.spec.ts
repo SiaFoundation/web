@@ -41,6 +41,29 @@ test('list alerts', async ({ page }) => {
   ).toBeVisible()
 })
 
+test('filter alerts by severity', async ({ page }) => {
+  const { severities } = await mockApiAlerts({
+    page,
+    alerts: [lostSectorsAlert, infoAlert],
+  })
+  await navigateToAlerts(page)
+  await expect(getRow(page, 'Maintenance completed')).toBeVisible()
+
+  await page
+    .getByRole('columnheader', { name: 'Severity' })
+    .getByRole('button')
+    .click()
+  const filter = page.getByLabel('severity filter')
+  await filter.selectOption('critical')
+  await expect(getRow(page, 'Maintenance completed')).toBeHidden()
+  await expect(getRow(page, 'Hosts lost sectors')).toBeVisible()
+  expect(severities).toContain('critical')
+
+  await filter.selectOption('')
+  await expect(getRow(page, 'Maintenance completed')).toBeVisible()
+  await expect(getRow(page, 'Hosts lost sectors')).toBeVisible()
+})
+
 test('view and dismiss an alert', async ({ page }) => {
   const { dismissed } = await mockApiAlerts({
     page,
