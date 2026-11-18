@@ -4,10 +4,10 @@ go 1.27.0
 
 require (
 	github.com/fergusstrange/embedded-postgres v1.34.0
-	go.sia.tech/cluster v0.1.6-0.20261027202640-9485e52a675a
+	go.sia.tech/cluster v0.1.8
 	go.sia.tech/core v0.21.8
-	go.sia.tech/coreutils v0.25.2
-	go.sia.tech/explored v0.4.5
+	go.sia.tech/coreutils v0.25.3
+	go.sia.tech/explored v0.4.7
 	go.uber.org/zap v1.28.0
 )
 
@@ -27,8 +27,8 @@ require (
 	github.com/jackc/pgerrcode v0.0.0-20240316143900-6e2875d9b438 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
-	github.com/jackc/pgx/v5 v5.11.0 // indirect
-	github.com/jackc/puddle/v2 v2.2.2 // indirect
+	github.com/jackc/pgx/v5 v5.12.0 // indirect
+	github.com/jackc/puddle/v2 v2.2.3 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/julienschmidt/httprouter v1.3.0 // indirect
 	github.com/klauspost/compress v1.20.1 // indirect
@@ -55,7 +55,7 @@ require (
 	go.sia.tech/jape v0.14.4 // indirect
 	go.sia.tech/mux v1.5.4 // indirect
 	go.sia.tech/renterd/v2 v2.9.5 // indirect
-	go.sia.tech/walletd/v2 v2.15.2 // indirect
+	go.sia.tech/walletd/v2 v2.16.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/arch v0.0.0-20210923205945-b76863e36670 // indirect
 	golang.org/x/crypto v0.58.0 // indirect
