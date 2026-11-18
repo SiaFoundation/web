@@ -29,6 +29,7 @@ export function ColumnFilter<T>({
           variant="ghost"
           size="none"
           icon={isFiltered ? 'contrast' : 'verySubtle'}
+          aria-label={`Filter ${columnId}`}
         >
           <Filter16 />
         </Button>

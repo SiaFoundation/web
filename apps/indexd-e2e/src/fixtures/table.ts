@@ -13,6 +13,21 @@ export const selectRow = step(
   },
 )
 
+// Picks an option from the filter in a column's header. The filter's button
+// and select are labeled with the column's name.
+export const setColumnFilter = step(
+  'set column filter',
+  async (page: Page, column: string, option: string) => {
+    await page
+      .getByRole('button', { name: `Filter ${column.toLowerCase()}` })
+      .click()
+    await page
+      .getByLabel(`${column.toLowerCase()} filter`)
+      .selectOption({ label: option })
+    await page.keyboard.press('Escape')
+  },
+)
+
 // Opens the side panel for a row. The first cell is the selection checkbox
 // and the second holds a copy button, so click a plain data cell.
 export const openRow = step('open row', async (page: Page, text: string) => {
