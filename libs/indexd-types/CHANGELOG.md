@@ -1,5 +1,11 @@
 # @siafoundation/indexd-types
 
+## 0.18.0
+
+### Minor Changes
+
+- 9235602: Updated the host, usability, connect key, and stats types to match indexd v0.6.3, and added the severity filter to the alerts params. Removed the host networks field, which indexd no longer returns.
+
 ## 0.17.0
 
 ### Minor Changes

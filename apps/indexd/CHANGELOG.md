@@ -1,5 +1,20 @@
 # indexd
 
+## 0.20.0
+
+### Minor Changes
+
+- abf4e4a: Added total spent and account funding to the hosts list and host panel, and unpinned sectors, lost sectors, and when the host became stuck to the host panel. The QUIC and SiaMux usability checks are now labeled.
+- 8d331d3: Added pinned size to connect keys, and a severity filter to alerts.
+- f3de3ad: Added contract tax, locked and remaining allowance, stuck and unrecoverable slabs, and active connect keys to the metrics page, and tightened the spacing between metrics.
+
+### Patch Changes
+
+- 729955f: Fixed the filters in the hosts Usable and Blocked column headers and the contracts Status column header, which were not shown. The Usable filter defaults to usable hosts, matching the hosts list.
+- Updated dependencies [9235602]
+  - @siafoundation/indexd-types@0.18.0
+  - @siafoundation/indexd-react@0.11.1
+
 ## 0.19.0
 
 ### Minor Changes
