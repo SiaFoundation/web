@@ -3,6 +3,8 @@ import {
   ConfigFields,
   useOnInvalid,
   FormSubmitButton,
+  Button,
+  LoadingDots,
   useDialogFormHelpers,
   FieldText,
   Paragraph,
@@ -10,7 +12,7 @@ import {
   triggerSuccessToast,
 } from '@siafoundation/design-system'
 import { useSystemBackup } from '@siafoundation/hostd-react'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import useLocalStorageState from 'use-local-storage-state'
 
@@ -65,6 +67,9 @@ export function SystemBackupDialog({ trigger, open, onOpenChange }: Props) {
     [savedDirectory],
   )
   const backup = useSystemBackup()
+  // The dialog stays mounted when closed, so this survives the user closing
+  // and reopening it while a backup is still running.
+  const [isBackingUp, setIsBackingUp] = useState(false)
 
   const form = useForm({
     mode: 'all',
@@ -81,12 +86,18 @@ export function SystemBackupDialog({ trigger, open, onOpenChange }: Props) {
 
   const onValid = useCallback(
     async (values: Values) => {
-      const response = await backup.post({
-        payload: {
-          database: 'main',
-          path: values.path,
-        },
-      })
+      if (isBackingUp) {
+        return
+      }
+      setIsBackingUp(true)
+      const response = await backup
+        .post({
+          payload: {
+            database: 'main',
+            path: values.path,
+          },
+        })
+        .finally(() => setIsBackingUp(false))
 
       if (response.error) {
         triggerErrorToast({
@@ -103,7 +114,7 @@ export function SystemBackupDialog({ trigger, open, onOpenChange }: Props) {
         closeAndReset()
       }
     },
-    [backup, closeAndReset, setSavedDirectory],
+    [backup, closeAndReset, isBackingUp, setSavedDirectory],
   )
 
   const onInvalid = useOnInvalid(fields)
@@ -120,9 +131,15 @@ export function SystemBackupDialog({ trigger, open, onOpenChange }: Props) {
       onSubmit={form.handleSubmit(onValid, onInvalid)}
       controls={
         <div className="flex justify-end">
-          <FormSubmitButton form={form} variant="accent" size="medium">
-            Create backup
-          </FormSubmitButton>
+          {isBackingUp ? (
+            <Button variant="accent" size="medium" state="waiting" disabled>
+              <LoadingDots />
+            </Button>
+          ) : (
+            <FormSubmitButton form={form} variant="accent" size="medium">
+              Create backup
+            </FormSubmitButton>
+          )}
         </div>
       }
     >
@@ -131,6 +148,12 @@ export function SystemBackupDialog({ trigger, open, onOpenChange }: Props) {
           Create a backup of the database. The backup will be saved to the
           specified path on the server.
         </Paragraph>
+        {isBackingUp && (
+          <Paragraph size="14" color="subtle">
+            A backup is already in progress. Wait for it to finish before
+            creating another one.
+          </Paragraph>
+        )}
         <FieldText name="path" form={form} fields={fields} autoComplete="off" />
       </div>
     </Dialog>
