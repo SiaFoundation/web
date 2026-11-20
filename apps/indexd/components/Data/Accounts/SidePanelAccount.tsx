@@ -75,7 +75,7 @@ export function SidePanelAccount() {
   const onSave = useCallback(
     async (values: Values) => {
       if (!data.data) {
-        return
+        return false
       }
       const response = await accountUpdate.patch({
         params: {
@@ -92,10 +92,11 @@ export function SidePanelAccount() {
           title: 'Error updating account',
           body: response.error,
         })
-      } else {
-        triggerSuccessToast({ title: 'Account updated' })
-        await mutate((key) => key.startsWith(adminAccountsRoute))
+        return false
       }
+      triggerSuccessToast({ title: 'Account updated' })
+      await mutate((key) => key.startsWith(adminAccountsRoute))
+      return true
     },
     [accountUpdate, mutate, data.data],
   )

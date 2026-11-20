@@ -56,6 +56,23 @@ export const saveSidePanel = step(
   },
 )
 
+// Makes the side panel's save request fail until the returned function is
+// called.
+export async function failSidePanelSave(
+  page: Page,
+  { method, path }: { method: string; path: RegExp },
+) {
+  const matcher = (url: URL) => path.test(url.pathname)
+  await page.route(matcher, async (route) => {
+    if (route.request().method() === method) {
+      await route.fulfill({ status: 500, body: 'save failed' })
+    } else {
+      await route.fallback()
+    }
+  })
+  return () => page.unroute(matcher)
+}
+
 export const confirmDialog = step(
   'confirm dialog',
   async (page: Page, action: string) => {

@@ -6,6 +6,7 @@ import { createQuota, e2eQuota } from '../fixtures/quotas'
 import {
   closeSidePanel,
   confirmDialog,
+  failSidePanelSave,
   getRow,
   openRow,
   saveSidePanel,
@@ -62,4 +63,32 @@ test('delete a quota', async ({ page }) => {
   await expect(getRow(page, 'e2e-quota')).toBeHidden()
   // The default quota is untouched.
   await expect(getRow(page, 'default')).toBeVisible()
+})
+
+test('keep the changes when saving a quota fails', async ({ page }) => {
+  await navigateToQuotas(page)
+  await createQuota(page, e2eQuota)
+  await openRow(page, 'e2e-quota')
+  await fillTextInputByName(page, 'description', 'Edited quota')
+
+  const restore = await failSidePanelSave(page, {
+    method: 'PUT',
+    path: /^\/api\/quotas\/e2e-quota$/,
+  })
+  await saveSidePanel(page, 'description')
+  await expect(page.getByText('Error saving quota')).toBeVisible()
+  // The edit is still there and still counts as a change to save.
+  await expect(page.locator('input[name=description]')).toHaveValue(
+    'Edited quota',
+  )
+  await expect(page.getByText('1 change')).toBeVisible()
+
+  // Saving again works once the API does.
+  await restore()
+  await saveSidePanel(page, 'description')
+  await expect(page.getByText('Quota updated')).toBeVisible()
+  await expect(page.getByText('1 change')).toBeHidden()
+  await expect(
+    getRow(page, 'e2e-quota').getByRole('cell', { name: 'Edited quota' }),
+  ).toBeVisible()
 })

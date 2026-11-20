@@ -65,7 +65,7 @@ export function SidePanelKey() {
   const onSave = useCallback(
     async (values: Values) => {
       if (!dataState.data) {
-        return
+        return false
       }
       const response = await keyUpdate.put({
         payload: {
@@ -75,10 +75,11 @@ export function SidePanelKey() {
       })
       if (response.error) {
         triggerErrorToast({ title: 'Error saving key', body: response.error })
-      } else {
-        triggerSuccessToast({ title: 'Key updated' })
-        await mutate((key) => key.startsWith(adminConnectKeysRoute))
+        return false
       }
+      triggerSuccessToast({ title: 'Key updated' })
+      await mutate((key) => key.startsWith(adminConnectKeysRoute))
+      return true
     },
     [keyUpdate, mutate, dataState.data],
   )

@@ -54,7 +54,7 @@ export function SidePanelQuota() {
   const onSave = useCallback(
     async (values: Values) => {
       if (!dataState.data) {
-        return
+        return false
       }
       const response = await quotaUpdate.put({
         params: {
@@ -67,10 +67,11 @@ export function SidePanelQuota() {
           title: 'Error saving quota',
           body: response.error,
         })
-      } else {
-        triggerSuccessToast({ title: 'Quota updated' })
-        await mutate((key) => key.startsWith(adminQuotasRoute))
+        return false
       }
+      triggerSuccessToast({ title: 'Quota updated' })
+      await mutate((key) => key.startsWith(adminQuotasRoute))
+      return true
     },
     [quotaUpdate, mutate, dataState.data],
   )
