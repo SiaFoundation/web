@@ -196,6 +196,26 @@ import {
   AdminQuotaDeletePayload,
   AdminQuotaDeleteResponse,
   adminQuotaDeleteRoute,
+  AdminObjectAccountsParams,
+  AdminObjectAccountsPayload,
+  AdminObjectAccountsResponse,
+  adminObjectAccountsRoute,
+  AdminObjectsBlocklistParams,
+  AdminObjectsBlocklistPayload,
+  AdminObjectsBlocklistResponse,
+  adminObjectsBlocklistRoute,
+  AdminObjectBlocklistEntryParams,
+  AdminObjectBlocklistEntryPayload,
+  AdminObjectBlocklistEntryResponse,
+  adminObjectBlocklistEntryRoute,
+  AdminObjectBlocklistAddParams,
+  AdminObjectBlocklistAddPayload,
+  AdminObjectBlocklistAddResponse,
+  adminObjectBlocklistAddRoute,
+  AdminObjectBlocklistRemoveParams,
+  AdminObjectBlocklistRemovePayload,
+  AdminObjectBlocklistRemoveResponse,
+  adminObjectBlocklistRemoveRoute,
 } from '@siafoundation/indexd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
@@ -461,5 +481,30 @@ export function Admin({
       AdminQuotaDeletePayload,
       AdminQuotaDeleteResponse
     >(axios, 'delete', adminQuotaDeleteRoute),
+    objectAccounts: buildRequestHandler<
+      AdminObjectAccountsParams,
+      AdminObjectAccountsPayload,
+      AdminObjectAccountsResponse
+    >(axios, 'get', adminObjectAccountsRoute),
+    objectsBlocklist: buildRequestHandler<
+      AdminObjectsBlocklistParams,
+      AdminObjectsBlocklistPayload,
+      AdminObjectsBlocklistResponse
+    >(axios, 'get', adminObjectsBlocklistRoute),
+    objectBlocklistEntry: buildRequestHandler<
+      AdminObjectBlocklistEntryParams,
+      AdminObjectBlocklistEntryPayload,
+      AdminObjectBlocklistEntryResponse
+    >(axios, 'get', adminObjectBlocklistEntryRoute),
+    objectBlocklistAdd: buildRequestHandler<
+      AdminObjectBlocklistAddParams,
+      AdminObjectBlocklistAddPayload,
+      AdminObjectBlocklistAddResponse
+    >(axios, 'put', adminObjectBlocklistAddRoute),
+    objectBlocklistRemove: buildRequestHandler<
+      AdminObjectBlocklistRemoveParams,
+      AdminObjectBlocklistRemovePayload,
+      AdminObjectBlocklistRemoveResponse
+    >(axios, 'delete', adminObjectBlocklistRemoveRoute),
   }
 }

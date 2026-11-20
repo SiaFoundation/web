@@ -17,6 +17,9 @@ export const routes = {
   accounts: {
     index: '/accounts',
   },
+  blockedObjects: {
+    index: '/blocked-objects',
+  },
   alerts: {
     index: '/alerts',
   },

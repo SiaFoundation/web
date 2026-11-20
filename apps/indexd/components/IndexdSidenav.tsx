@@ -9,6 +9,7 @@ import {
   BellIcon,
   UsersIcon,
   GaugeIcon,
+  BanIcon,
 } from '@siafoundation/react-icons'
 import { routes } from '../config/routes'
 import { useDialog } from '../contexts/dialog'
@@ -49,6 +50,12 @@ export function IndexdSidenav() {
         route={routeWithParams(routes.accounts.index, params)}
       >
         <UsersIcon />
+      </SidenavItem>
+      <SidenavItem
+        title="Blocked objects"
+        route={routeWithParams(routes.blockedObjects.index, params)}
+      >
+        <BanIcon />
       </SidenavItem>
       <SidenavItem
         title="Alerts"

@@ -21,6 +21,8 @@ import type {
   Account,
   Quota,
   PutQuotaRequest,
+  BlockedObject,
+  ObjectAccount,
 } from './types'
 import type { Host, HostAddress } from '../types'
 
@@ -362,6 +364,49 @@ export type AdminConnectKeyDeleteParams = {
 }
 export type AdminConnectKeyDeletePayload = void
 export type AdminConnectKeyDeleteResponse = void
+
+// objects
+
+export const adminObjectAccountsRoute = '/object/:objectkey/accounts'
+export type AdminObjectAccountsParams = {
+  objectkey: Hash256
+  offset?: number
+  limit?: number
+}
+export type AdminObjectAccountsPayload = void
+export type AdminObjectAccountsResponse = ObjectAccount[]
+
+export const adminObjectsBlocklistRoute = '/objects/blocklist'
+export type AdminObjectsBlocklistParams = {
+  offset?: number
+  limit?: number
+}
+export type AdminObjectsBlocklistPayload = void
+export type AdminObjectsBlocklistResponse = BlockedObject[]
+
+export const adminObjectBlocklistEntryRoute = '/objects/blocklist/:objectkey'
+export type AdminObjectBlocklistEntryParams = {
+  objectkey: Hash256
+}
+export type AdminObjectBlocklistEntryPayload = void
+export type AdminObjectBlocklistEntryResponse = BlockedObject
+
+// Blocks the object, or updates the reason if it is already blocked.
+export const adminObjectBlocklistAddRoute = '/objects/blocklist/:objectkey'
+export type AdminObjectBlocklistAddParams = {
+  objectkey: Hash256
+}
+export type AdminObjectBlocklistAddPayload = {
+  reason: string
+}
+export type AdminObjectBlocklistAddResponse = void
+
+export const adminObjectBlocklistRemoveRoute = '/objects/blocklist/:objectkey'
+export type AdminObjectBlocklistRemoveParams = {
+  objectkey: Hash256
+}
+export type AdminObjectBlocklistRemovePayload = void
+export type AdminObjectBlocklistRemoveResponse = void
 
 // alerts
 

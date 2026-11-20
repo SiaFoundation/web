@@ -30,6 +30,8 @@ import { HostsFilterPublicKeyDialog } from '../dialogs/HostsFilterPublicKeyDialo
 import { HostImportDialog } from '../dialogs/HostImportDialog'
 import { ContractsFilterPublicKeyDialog } from '../dialogs/ContractsFilterPublicKeyDialog'
 import { ContractsFilterContractIDDialog } from '../dialogs/ContractsFilterContractIDDialog'
+import { ObjectBlockDialog } from '../dialogs/ObjectBlockDialog'
+import { ObjectFindDialog } from '../dialogs/ObjectFindDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -53,6 +55,8 @@ export type DialogType =
   | 'hostsFilterPublicKey'
   | 'contractsFilterPublicKey'
   | 'contractsFilterContractID'
+  | 'objectBlock'
+  | 'objectFind'
 
 type DialogData = {
   hostBlocklistAdd?: {
@@ -265,6 +269,14 @@ export function Dialogs() {
       />
       <ContractsFilterContractIDDialog
         open={dialog === 'contractsFilterContractID'}
+        onOpenChange={onOpenChange}
+      />
+      <ObjectBlockDialog
+        open={dialog === 'objectBlock'}
+        onOpenChange={onOpenChange}
+      />
+      <ObjectFindDialog
+        open={dialog === 'objectFind'}
         onOpenChange={onOpenChange}
       />
     </>
