@@ -20,7 +20,9 @@ export type EditablePanelProps<Values extends FieldValues> = {
   onClose?: () => void
   remoteValues: Values | undefined
   fields: ConfigFields<Values, never>
-  onSave: (values: Values) => Promise<void>
+  // Resolves true when the save succeeded. On failure the form keeps its
+  // changes so they can be retried or reset.
+  onSave: (values: Values) => Promise<boolean>
   actionsLeft?: React.ReactNode
   actionsRight?: React.ReactNode
   render: (
@@ -47,8 +49,9 @@ export function EditablePanel<Values extends FieldValues>({
 
   const onSubmit = useCallback(
     async (values: Values) => {
-      await onSave(values)
-      form.reset(values)
+      if (await onSave(values)) {
+        form.reset(values)
+      }
     },
     [onSave, form],
   )

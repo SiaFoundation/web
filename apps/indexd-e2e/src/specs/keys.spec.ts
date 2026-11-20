@@ -7,6 +7,7 @@ import { createQuota, e2eQuota } from '../fixtures/quotas'
 import {
   closeSidePanel,
   confirmDialog,
+  failSidePanelSave,
   getRow,
   openRow,
   saveSidePanel,
@@ -86,4 +87,30 @@ test('delete a connect key', async ({ page }) => {
   await expect(page.getByText('Deleted 1 key')).toBeVisible()
   await expect(getRow(page, 'E2E key')).toBeHidden()
   await expect(page.getByText('There are no keys yet.')).toBeVisible()
+})
+
+test('keep the changes when saving a connect key fails', async ({ page }) => {
+  await navigateToKeys(page)
+  await createKey(page, { description: 'E2E key', quota: 'default' })
+  await openRow(page, 'E2E key')
+  await fillTextInputByName(page, 'description', 'Edited key')
+
+  const restore = await failSidePanelSave(page, {
+    method: 'PUT',
+    path: /^\/api\/apps\/connect\/keys$/,
+  })
+  await saveSidePanel(page, 'description')
+  await expect(page.getByText('Error saving key')).toBeVisible()
+  // The edit is still there and still counts as a change to save.
+  await expect(page.locator('input[name=description]')).toHaveValue(
+    'Edited key',
+  )
+  await expect(page.getByText('1 change')).toBeVisible()
+
+  // Saving again works once the API does.
+  await restore()
+  await saveSidePanel(page, 'description')
+  await expect(page.getByText('Key updated')).toBeVisible()
+  await expect(page.getByText('1 change')).toBeHidden()
+  await expect(getRow(page, 'Edited key')).toBeVisible()
 })

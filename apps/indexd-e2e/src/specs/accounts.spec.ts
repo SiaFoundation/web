@@ -5,6 +5,7 @@ import { navigateToAccounts, navigateToKeys } from '../fixtures/navigate'
 import { registerAccount } from '../fixtures/accounts'
 import {
   confirmDialog,
+  failSidePanelSave,
   getRow,
   getSidePanel,
   openRow,
@@ -227,4 +228,30 @@ test('delete an account with a bulk action', async ({ page }) => {
   await confirmDialog(page, 'Delete')
   await expect(page.getByText('Deleted 1 account')).toBeVisible()
   await expect(getRow(page, accountKey)).toBeHidden()
+})
+
+test('keep the changes when saving an account fails', async ({ page }) => {
+  const { accountKey } = await registerAccount({ indexdNode: getIndexdNode() })
+  await navigateToAccounts(page)
+  await openRow(page, accountKey)
+  await fillTextInputByName(page, 'maxPinnedDataGB', '10')
+
+  const restore = await failSidePanelSave(page, {
+    method: 'PATCH',
+    path: /^\/api\/account\/[^/]+$/,
+  })
+  await saveSidePanel(page, 'maxPinnedDataGB')
+  await expect(page.getByText('Error updating account')).toBeVisible()
+  // The edit is still there and still counts as a change to save.
+  await expect(page.locator('input[name=maxPinnedDataGB]')).toHaveValue('10')
+  await expect(page.getByText('1 change')).toBeVisible()
+
+  // Saving again works once the API does.
+  await restore()
+  await saveSidePanel(page, 'maxPinnedDataGB')
+  await expect(page.getByText('Account updated')).toBeVisible()
+  await expect(page.getByText('1 change')).toBeHidden()
+  await expect(
+    getRow(page, accountKey).getByRole('cell', { name: '10.00 GB' }),
+  ).toBeVisible()
 })
