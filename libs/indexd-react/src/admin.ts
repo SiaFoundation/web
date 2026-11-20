@@ -177,6 +177,26 @@ import {
   AdminQuotaDeleteParams,
   AdminQuotaDeletePayload,
   AdminQuotaDeleteResponse,
+  adminObjectAccountsRoute,
+  AdminObjectAccountsParams,
+  AdminObjectAccountsPayload,
+  AdminObjectAccountsResponse,
+  adminObjectsBlocklistRoute,
+  AdminObjectsBlocklistParams,
+  AdminObjectsBlocklistPayload,
+  AdminObjectsBlocklistResponse,
+  adminObjectBlocklistEntryRoute,
+  AdminObjectBlocklistEntryParams,
+  AdminObjectBlocklistEntryPayload,
+  AdminObjectBlocklistEntryResponse,
+  adminObjectBlocklistAddRoute,
+  AdminObjectBlocklistAddParams,
+  AdminObjectBlocklistAddPayload,
+  AdminObjectBlocklistAddResponse,
+  adminObjectBlocklistRemoveRoute,
+  AdminObjectBlocklistRemoveParams,
+  AdminObjectBlocklistRemovePayload,
+  AdminObjectBlocklistRemoveResponse,
 } from '@siafoundation/indexd-types'
 import useSWR from 'swr'
 import { getBlockHeightFromGenesis } from '@siafoundation/units'
@@ -815,4 +835,75 @@ export function useAdminQuotaDelete(
     ...args,
     route: adminQuotaDeleteRoute,
   })
+}
+
+// objects
+
+export function useAdminObjectAccounts(
+  args?: HookArgsSwr<AdminObjectAccountsParams, AdminObjectAccountsResponse>,
+) {
+  return useGetSwr({
+    ...args,
+    route: adminObjectAccountsRoute,
+  })
+}
+
+export function useAdminObjectsBlocklist(
+  args?: HookArgsSwr<
+    AdminObjectsBlocklistParams,
+    AdminObjectsBlocklistResponse
+  >,
+) {
+  return useGetSwr({
+    ...args,
+    route: adminObjectsBlocklistRoute,
+  })
+}
+
+export function useAdminObjectBlocklistEntry(
+  args?: HookArgsSwr<
+    AdminObjectBlocklistEntryParams,
+    AdminObjectBlocklistEntryResponse
+  >,
+) {
+  return useGetSwr({
+    ...args,
+    route: adminObjectBlocklistEntryRoute,
+  })
+}
+
+export function useAdminObjectBlocklistAdd(
+  args?: HookArgsCallback<
+    AdminObjectBlocklistAddParams,
+    AdminObjectBlocklistAddPayload,
+    AdminObjectBlocklistAddResponse
+  >,
+) {
+  return usePutFunc(
+    {
+      ...args,
+      route: adminObjectBlocklistAddRoute,
+    },
+    async (mutate) => {
+      mutate((key) => key.startsWith(adminObjectsBlocklistRoute))
+    },
+  )
+}
+
+export function useAdminObjectBlocklistRemove(
+  args?: HookArgsCallback<
+    AdminObjectBlocklistRemoveParams,
+    AdminObjectBlocklistRemovePayload,
+    AdminObjectBlocklistRemoveResponse
+  >,
+) {
+  return useDeleteFunc(
+    {
+      ...args,
+      route: adminObjectBlocklistRemoveRoute,
+    },
+    async (mutate) => {
+      mutate((key) => key.startsWith(adminObjectsBlocklistRoute))
+    },
+  )
 }

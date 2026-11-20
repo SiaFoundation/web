@@ -141,3 +141,14 @@ export type Account = {
   app: AppMeta
   lastUsed: string
 }
+
+export type BlockedObject = {
+  key: Hash256
+  reason: string
+  createdAt: string
+}
+
+export type ObjectAccount = {
+  accountKey: PublicKey
+  connectKey: string
+}

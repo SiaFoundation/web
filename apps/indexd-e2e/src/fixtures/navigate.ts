@@ -15,6 +15,10 @@ export const navigateToContracts = navigateTo('Contracts', '/contracts')
 export const navigateToKeys = navigateTo('Connect keys', '/keys')
 export const navigateToQuotas = navigateTo('Quotas', '/quotas')
 export const navigateToAccounts = navigateTo('Accounts', '/accounts')
+export const navigateToBlockedObjects = navigateTo(
+  'Blocked objects',
+  '/blocked-objects',
+)
 export const navigateToAlerts = navigateTo('Alerts', '/alerts')
 export const navigateToConfig = navigateTo('Configuration', '/config')
 export const navigateToMetrics = navigateTo('Metrics', '/metrics')
